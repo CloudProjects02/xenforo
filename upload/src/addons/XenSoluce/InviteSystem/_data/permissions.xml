@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<permissions>
+  <permission permission_group_id="xs_is" permission_id="xs_is_can_invite_per_m" permission_type="integer" interface_group_id="xs_is" display_order="2"/>
+  <permission permission_group_id="xs_is" permission_id="xs_is_can_invite_someone" permission_type="flag" interface_group_id="xs_is" display_order="1"/>
+</permissions>

@@ -1,0 +1,1586 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="option_template_xs_is_invitation_code_time" version_id="2010200" version_string="2.1.2"><![CDATA[<xf:formrow
+	label="{$option.title}"
+	hint="{$hintHtml}"
+	explain="{$explainHtml}"
+	html="{$listedHtml}">
+	<xf:radio name="{$inputName}[Choose]" value="{$option.option_value.Choose}">
+		<xf:option value="permanent" label="{{ phrase('permanent') }}"/>
+		<xf:option value="until" label="{{ phrase('until') }}">
+			<xf:dependent>
+				<div class="inputGroup">
+					<xf:numberbox name="{$inputName}[time]"  value="{$option.option_value.time}" min="0"/>
+					<span class="inputGroup-text">{{ phrase('day') }}</span>
+				</div>
+			</xf:dependent>
+		</xf:option>
+	</xf:radio>
+</xf:formrow>]]></template>
+  <template type="admin" title="option_template_xs_is_invite_goup" version_id="2010200" version_string="2.1.2"><![CDATA[<xf:formrow
+	label="{$option.title}"
+	hint="{$hintHtml}"
+	explain="{$explainHtml}"
+	html="{$listedHtml}">
+	<xf:radio name="{$inputName}[mandatory]" value="{$option.option_value.mandatory}">
+		<xf:option value="yes" label="{{ phrase('yes') }}"/>
+		<xf:option value="no" label="{{ phrase('no') }}">
+			<xf:dependent>
+				<xf:select name="{$inputName}[user_group_id]" value="{$option.option_value.user_group_id}" >
+					<xf:option value="0" label="{{ phrase('(none)') }}" />
+					<xf:foreach loop="{$UserGroups}" value="$UserGroup">
+						<xf:option value="{$UserGroup.user_group_id}" label="{$UserGroup.title}" />
+					</xf:foreach>
+				</xf:select>
+				<div class="formRow-explain">{{ phrase('xs_is_user_group_id_select_explaine') }}</div>
+			</xf:dependent>
+		</xf:option>
+	</xf:radio>
+</xf:formrow>]]></template>
+  <template type="admin" title="xs_is_banning_edit" version_id="2000000" version_string="2.0.0"><![CDATA[<xf:if is="$Ban.isInsert()">
+	<xf:title>{{ phrase('ban_user') }}</xf:title>
+<xf:else />
+	<xf:title>{{ phrase('edit_banned_user:') }} {$Ban.User.username}</xf:title>
+</xf:if>
+
+<xf:pageaction if="$Ban.isUpdate()">
+	<xf:button href="{{ link('banning/users/lift', $Ban) }}" overlay="true">{{ phrase('lift_ban') }}</xf:button>
+</xf:pageaction>
+
+<xf:form action="{{ link('invitation/banning/save', $Ban) }}" ajax="true" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:if is="!$Ban.user_id">
+				<xf:textboxrow name="username" ac="single" value="{$addName}"
+					label="{{ phrase('user_name') }}" />
+			<xf:else />
+				<xf:formrow label="{{ phrase('user_name') }}">{$Ban.User.username}</xf:formrow>
+
+				<xf:formrow label="{{ phrase('banned_by') }}">{$Ban.BanUser.username}</xf:formrow>
+
+				<xf:formrow label="{{ phrase('ban_started') }}">{{ date($Ban.ban_date) }}</xf:formrow>
+
+				<xf:formrow label="{{ phrase('ban_ends') }}">
+					<xf:if is="$Ban.end_date">
+						{{ date($Ban.end_date) }}
+					<xf:else />
+						{{ phrase('never') }}
+					</xf:if>
+				</xf:formrow>
+			</xf:if>
+
+			<xf:radiorow name="ban_length" value="{{ !$Ban.end_date ? 'permanent' : 'temporary' }}"
+				label="{{ phrase('ban_length') }}">
+
+				<xf:option label="{{ phrase('permanent') }}" value="permanent" />
+				<xf:option label="{{ phrase('until:') }}" value="temporary">
+					<xf:dateinput name="end_date" value="{{ $Ban.end_date ? date($Ban.end_date, 'Y-m-d') : '' }}" />
+				</xf:option>
+			</xf:radiorow>
+
+			<xf:textboxrow name="ban_reason" value="{$Ban.ban_reason}" maxlength="{{ max_length($Ban, 'ban_reason') }}"
+				label="{{ phrase('reason_for_banning') }}"
+				explain="{{ phrase('this_will_be_shown_to_user_if_provided') }}" />
+		</div>
+
+		<xf:submitrow icon="save" sticky="true" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="xs_is_banning_lift" version_id="2000000" version_string="2.0.0"><![CDATA[<xf:title>{{ phrase('confirm_action') }}</xf:title>
+
+<xf:form action="{{ link('invitation/banning/lift', $Ban) }}" ajax="true" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:inforow rowtype="confirm">
+				{{ phrase('please_confirm_that_you_want_to_lift_ban_on_following_user:') }}
+				<strong><a href="{{ link('invitation/banning', $Ban) }}">{$Ban.User.username}</a></strong>
+			</xf:inforow>
+			<xf:formrow label="{{ phrase('banned_by') }}">{$Ban.BanUser.username}</xf:formrow>
+			<xf:formrow label="{{ phrase('ban_started') }}">{{ date($Ban.ban_date) }}</xf:formrow>
+			<xf:formrow label="{{ phrase('ban_ends') }}">
+				<xf:if is="$Ban.end_date">
+					{{ date($Ban.end_date) }}
+				<xf:else />
+					{{ phrase('never') }}
+				</xf:if>
+			</xf:formrow>
+
+			<xf:if is="$Ban.ban_reason">
+				<xf:formrow label="{{ phrase('reason_for_ban') }}">
+					{$Ban.ban_reason}
+				</xf:formrow>
+			</xf:if>
+		</div>
+		<xf:submitrow submit="{{ phrase('lift') }}" sticky="true" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="xs_is_banning_view" version_id="2010100" version_string="2.1.1"><![CDATA[<xf:title>{{ phrase('banned_users') }}</xf:title>
+
+<xf:pageaction>
+	<xf:button href="{{ link('invitation/banning/add') }}" icon="add">{{ phrase('ban_user') }}</xf:button>
+</xf:pageaction>
+
+<xf:if is="$Banning is not empty">
+	<div class="block">
+		<div class="block-container">
+			<div class="block-body">
+				<xf:datalist data-xf-init="responsive-data-list">
+					<xf:datarow rowtype="header">
+						<xf:cell>{{ phrase('user_name') }}</xf:cell>
+						<xf:cell>{{ phrase('end_date') }}</xf:cell>
+						<xf:cell>{{ phrase('reason') }}</xf:cell>
+						<xf:cell>&nbsp;</xf:cell>
+						<xf:cell>&nbsp;</xf:cell>
+					</xf:datarow>
+					<xf:foreach loop="$Banning" value="$Ban">
+						<xf:datarow>
+							<xf:cell href="{{ link('invitation/banning', $Ban.User) }}">{$Ban.User.username}</xf:cell>
+							<xf:cell href="{{ link('invitation/banning', $Ban.User) }}">{{ $Ban.end_date ? date($Ban.end_date) : phrase('permanent') }}</xf:cell>
+							<xf:cell href="{{ link('invitation/banning', $Ban.User) }}">{{ $Ban.ban_reason ?: phrase('n_a') }}</xf:cell>
+							<xf:action href="{{ link('users/edit', $Ban.User) }}">{{ phrase('user') }}</xf:action>
+							<xf:delete href="{{ link('invitation/banning/lift', $Ban.User) }}" tooltip="{{ phrase('lift_ban') }}" />
+						</xf:datarow>
+					</xf:foreach>
+				</xf:datalist>
+			</div>
+			<div class="block-footer">
+				<span class="block-footer-counter">{{ display_totals($Banning, $total) }}</span>
+			</div>
+		</div>
+
+		<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+			link="invitation/banning"
+			wrapperclass="block-outer block-outer--after" />
+	</div>
+<xf:else />
+	<div class="blockMessage">{{ phrase('there_no_banned_users') }}</div>
+</xf:if>]]></template>
+  <template type="admin" title="xs_is_criteria_macro" version_id="2010000" version_string="2.1.0"><![CDATA[<xf:macro name="criteria" arg-criteria="!">
+	<xf:checkboxrow label="{{ phrase('xs_is_most_invitations') }}">
+		<xf:option name="user_criteria[min_invite][rule]" value="min_invite" 
+				   selected="{$criteria.min_invite}"
+				   label="{{ phrase('xs_is_user_has_invited_at_least_x_users:') }}">
+			<xf:numberbox name="user_criteria[min_invite][data][invite]" value="{$criteria.min_invite.invite}"
+						  size="5" min="0" step="1" />
+		</xf:option>
+		<xf:option name="user_criteria[max_invite][rule]" value="max_invite" selected="{$criteria.max_invite}"
+			   label="{{ phrase('xs_is_user_has_invited_no_more_than_x_users:') }}">
+			<xf:numberbox name="user_criteria[max_invite][data][invite]" value="{$criteria.max_invite.invite}"
+						  size="5" min="0" step="1" />
+		</xf:option>
+	</xf:checkboxrow>
+</xf:macro>
+<xf:macro name="search_criteria" arg-criteria="!">
+	<xf:formrow rowtype="input"
+	label="{{ phrase('xs_is_most_invitations_between') }}"
+	explain="{{ phrase('use_negative_one_specify_no_max') }}">
+		<div class="inputGroup">
+			<xf:numberbox name="criteria[xs_is_invite_count][start]" 
+						  value="{$criteria.xs_is_invite_count.start}" 
+						  min="0" readonly="{$readOnly}" />
+			<span class="inputGroup-text">-</span>
+			<xf:numberbox name="criteria[xs_is_invite_count][end]" 
+						  value="{$criteria.xs_is_invite_count.end}" 
+						  min="-1" readonly="{$readOnly}" />
+		</div>
+	</xf:formrow>
+</xf:macro>]]></template>
+  <template type="admin" title="xs_is_filters_macro" version_id="2000000" version_string="2.0.0"><![CDATA[<xf:macro name="filters" arg-Token="!" arg-filters="!" arg-user="!" arg-url="!">
+	<xf:form action="{{ ($url) ? link('invitation/tokens/filters', $Token) : link('invitation/tokens-user/filters', $Token) }}">
+		
+	<div class="menu-row menu-row--separated">
+		<label>{{ phrase('xs_is_code_created_by:') }}</label>
+		<div class="u-inputSpacer">
+			<xf:textbox name="user" value="{$user.username}" ac="single"
+				maxlength="{{ max_length($xf.visitor, 'username') }}"/>
+		</div>
+	</div>
+	<div class="menu-row menu-row--separated">
+		{{ phrase('sort_by:') }}
+		<div class="u-inputSpacer">
+		<xf:checkbox>
+			<xf:option name="code_use" 
+					   label="{{ phrase('xs_is_code_use') }}" 
+					   value="1" selected="{$filters.code_use}"/>
+			<xf:option name="code_not_use" 
+					   label="{{ phrase('xs_is_code_not_use') }}"
+					   value="1" selected="{$filters.code_not_use}"/>
+		</xf:checkbox>
+		</div>
+	</div>
+
+	<div class="menu-footer">
+		<span class="menu-footer-controls">
+			<xf:button type="submit" class="button--primary">{{ phrase('filter') }}</xf:button>
+		</span>
+	</div>
+	<xf:hiddenval name="apply">1</xf:hiddenval>
+</xf:form>
+</xf:macro>]]></template>
+  <template type="admin" title="xs_is_invitation" version_id="2000000" version_string="2.0.0"><![CDATA[<xf:title>{{ phrase('admin_navigation.xsISinvitation') }}</xf:title>
+
+<xf:macro template="section_nav_macros" name="section_nav" arg-section="xsISinvitation" />]]></template>
+  <template type="admin" title="xs_is_list_code" version_id="2000000" version_string="2.0.0"><![CDATA[<xf:title>{{ phrase('xs_is_list_code') }}</xf:title>
+
+<xf:if is="$codes is not empty || $filters is not empty">
+	<div class="block">
+		<div class="block-container">
+			<div class="block-filterBar">
+				<div class="filterBar">
+					<xf:if contentcheck="true">
+						<ul class="filterBar-filters">
+							<xf:contentcheck>
+								<xf:if is="$filters.user is not empty">
+									<li><a href="{{ link('invitation/list-code', '', $filters|replace('user', null)) }}"
+										   class="filterBar-filterToggle" data-xf-init="tooltip" title="{{ phrase('remove_this_filter')|for_attr }}">
+										<span class="filterBar-filterToggle-label">{{ phrase('xs_is_code_created_by:') }}</span>
+										{$user.username}</a></li>
+								</xf:if>
+								<xf:if is="$filters.code_use is not empty">
+									<li><a href="{{ link('invitation/list-code', '', $filters|replace('code_use', null)) }}"
+										   class="filterBar-filterToggle" data-xf-init="tooltip" title="{{ phrase('remove_this_filter')|for_attr }}">
+										<span class="filterBar-filterToggle-label">{{ phrase('sort_by:') }}</span>
+										{{ phrase('xs_is_code_use') }}</a></li>
+								</xf:if>
+								<xf:if is="$filters.code_not_use is not empty">
+									<li><a href="{{ link('invitation/list-code', '', $filters|replace('code_not_use', null)) }}"
+										   class="filterBar-filterToggle" data-xf-init="tooltip" title="{{ phrase('remove_this_filter')|for_attr }}">
+										<span class="filterBar-filterToggle-label">{{ phrase('sort_by:') }}</span>
+										{{ phrase('xs_is_code_not_use') }}</a></li>
+								</xf:if>
+							</xf:contentcheck>
+						</ul>
+					</xf:if>
+					<a class="filterBar-menuTrigger" data-xf-click="menu" role="button" tabindex="0" 
+					   aria-expanded="false" aria-haspopup="true">{{ phrase('filters') }}</a>
+					<div class="menu menu--wide" data-menu="menu" aria-hidden="true"
+						 data-href="{{ link('invitation/list-code/filters', '', $filters) }}"
+						 data-load-target=".js-filterMenuBody">
+						<div class="menu-content">
+							<h4 class="menu-header">{{ phrase('show_only:') }}</h4>
+							<div class="js-filterMenuBody">
+								<div class="menu-row">{{ phrase('loading...') }}</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="block-body">
+				<xf:datalist>
+					<xf:foreach loop="$codes" value="$code">
+						<xf:datarow overlay="true"
+							label="{{ phrase('xs_is_code:') }} {$code.code}"
+							href="{{ link('invitation/list-code', $code) }}"
+							delete="{{ link('invitation/list-code/delete', $code) }}"
+							dir="auto">
+							<xf:explain>
+								<ul class="listInline listInline--bullet">
+									<li><xf:date time="{$code.invitation_date}" /></li>
+									<li>{$code.Token.title} : {$code.Token.token}</li>
+									<li>{$code.User.username}</li>
+									<li>{{ $code.registered_user_id ? {$code.RegisteredUser.username} : phrase('n_a') }}</li>
+								</ul>
+							</xf:explain>
+						</xf:datarow>
+					</xf:foreach>
+				</xf:datalist>
+			</div>
+			<div class="block-footer">
+				<span class="block-footer-counter">{{ display_totals($codes, $total) }}</span>
+			</div>
+		</div>
+		<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+			link="invitation/list-code" params="{$filters}"
+			wrapperclass="block-outer block-outer--after" />
+	</div>
+<xf:else />
+	<div class="blockMessage">{{ phrase('xs_is_no_code_has_been_generated') }}</div>
+</xf:if>]]></template>
+  <template type="admin" title="xs_is_list_code_delete" version_id="2000000" version_string="2.0.0"><![CDATA[<xf:title>{{ phrase('confirm_action') }}</xf:title>
+
+<xf:form action="{{ link('invitation/list-code/delete', $code) }}" ajax="true" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:inforow rowtype="confirm">
+				{{ phrase('please_confirm_that_you_want_to_delete_following:') }}
+				<strong>{$code.code}</strong>
+			</xf:inforow>
+		</div>
+		<xf:submitrow rowtype="simple" icon="delete" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="xs_is_list_code_filters" version_id="2000000" version_string="2.0.0"><![CDATA[<xf:form action="{{ link('invitation/list-code/filters') }}">
+	<div class="menu-row menu-row--separated">
+		<label>{{ phrase('xs_is_code_created_by:') }}</label>
+		<div class="u-inputSpacer">
+			<xf:textbox name="user" value="{$user.username}" ac="single"
+				maxlength="{{ max_length($xf.visitor, 'username') }}"/>
+		</div>
+	</div>
+	<div class="menu-row menu-row--separated">
+		{{ phrase('sort_by:') }}
+		<div class="u-inputSpacer">
+		<xf:checkbox>
+			<xf:option name="code_use" 
+					   label="{{ phrase('xs_is_code_use') }}" 
+					   value="1" selected="{$filters.code_use}"/>
+			<xf:option name="code_not_use" 
+					   label="{{ phrase('xs_is_code_not_use') }}"
+					   value="1" selected="{$filters.code_not_use}"/>
+		</xf:checkbox>
+		</div>
+	</div>
+
+	<div class="menu-footer">
+		<span class="menu-footer-controls">
+			<xf:button type="submit" class="button--primary">{{ phrase('filter') }}</xf:button>
+		</span>
+	</div>
+	<xf:hiddenval name="apply">1</xf:hiddenval>
+</xf:form>]]></template>
+  <template type="admin" title="xs_is_list_code_view" version_id="2000000" version_string="2.0.0"><![CDATA[<xf:title>{{ phrase('xs_is_list_code') }}</xf:title>
+
+<div class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:formrow label="{{ phrase('xs_is_user_create') }}">
+				<a href="{{ link('users/edit', $code.User) }}">{$code.User.username}</a>
+			</xf:formrow>
+			<xf:formrow label="{{ phrase('xs_is_code') }}">
+				{$code.code}
+			</xf:formrow>
+			<xf:formrow label="{{ phrase('date') }}">
+				<xf:date time="{$code.invitation_date}" />
+			</xf:formrow>
+			<hr class="formRowSep" />
+			<xf:formrow label="{{ phrase('xs_is_token') }}">
+				<a href="{{ link('invitation/tokens', $code.Token) }}">
+					{$code.Token.token}
+				</a>
+			</xf:formrow>
+			<xf:formrow label="{{ phrase('xs_is_token_title') }}">
+				<a href="{{ link('invitation/tokens', $code.Token) }}">
+					{$code.Token.title}
+				</a>
+			</xf:formrow>
+			<hr class="formRowSep" />
+			<xf:formrow label="{{ phrase('xs_is_registered_user') }}">
+				{{ $code.registered_user_id ? {$code.RegisteredUser.username} : phrase('n_a') }}
+			</xf:formrow>
+		</div>
+	</div>
+</div>]]></template>
+  <template type="admin" title="xs_is_personalized_invitation_code" version_id="2010400" version_string="2.1.4"><![CDATA[<xf:title>{{ phrase('xs_is_personalized_invitation_code') }}</xf:title>
+
+<xf:pageaction>
+    <div class="buttonGroup">
+		<xf:button href="{{ link('invitation/personalized-invitation-code/add') }}" icon="add">{{ phrase('xs_is_add_personalized_invitation_code') }}</xf:button>
+    </div>
+</xf:pageaction>
+
+<xf:if is="$Invitations is not empty">
+	<xf:form action="{{ link('invitation/personalized-invitation-code/toggle', $upgrade) }}" class="block" ajax="true">
+		<div class="block-container">
+			<div class="block-body">
+				<xf:datalist>
+					<xf:foreach loop="{$Invitations}" value="$Invitation">
+						<xf:datarow>
+							<xf:main href="{{ link('invitation/personalized-invitation-code', $Invitation) }}"
+								label="{$Invitation.title}" hint="{$Invitation.code}"/>
+							<xf:action>
+								<label>
+									<xf:if is="{$validCode.{$Invitation.ic_personalize_id}}">
+										<xf:fa icon="fas fa-check" style="color: #4ecd32;font-size: 20px;" />
+										<xf:else/>
+										<xf:fa icon="fas fa-times" style="color: #d13530;font-size: 20px;" />
+									</xf:if>
+								</label>
+							</xf:action>
+							<xf:action>
+								<label>
+									<xf:if is="{$Invitation.limit_use} == -1">
+										{{ phrase('unlimited') }}
+										<xf:else/>
+										{{ count($Invitation.registered_user_id) }} / {$Invitation.limit_use}
+									</xf:if>
+								</label>
+							</xf:action>
+							<xf:action>
+								<label>
+									<xf:if is="{$Invitation.limit_time} == -1">
+										{{ phrase('unlimited') }}
+										<xf:else/>
+										<xf:date time="{$Invitation.limit_time}" />
+									</xf:if>
+								</label>
+							</xf:action>
+							<xf:toggle name="enable[{$Invitation.ic_personalize_id}]" selected="$Invitation.enable"
+									   class="dataList-cell--separated" submit="true"
+									   tooltip="{{ phrase('enable_disable_x', {'title' : $Invitation.title}) }}" />
+							<xf:delete href="{{ link('invitation/personalized-invitation-code/delete', $Invitation) }}" />
+						</xf:datarow>
+					</xf:foreach>
+				</xf:datalist>
+			</div>
+		</div>
+	</xf:form>
+<xf:else />
+	<div class="blockMessage">{{ phrase('xs_is_no_invitation_tokens_have_been_created') }}</div>
+</xf:if>]]></template>
+  <template type="admin" title="xs_is_personalized_invitation_code_delete" version_id="2010400" version_string="2.1.4"><![CDATA[<xf:title>{{ phrase('confirm_action') }}</xf:title>
+
+<xf:form action="{{ link('invitation/personalized-invitation-code/delete', $code) }}" ajax="true" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:inforow rowtype="confirm">
+				{{ phrase('please_confirm_that_you_want_to_delete_following:') }}
+				<strong><a href="{{ link('invitation/personalized-invitation-code/edit', $code) }}">{$code.title}</a></strong>
+			</xf:inforow>
+		</div>
+		<xf:submitrow rowtype="simple" icon="delete" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="xs_is_personalized_invitation_code_edit" version_id="2010400" version_string="2.1.4"><![CDATA[<xf:if is="$code.isInsert()">
+	<xf:title>{{ phrase('xs_is_add_personalized_invitation_code') }}</xf:title>
+<xf:else />
+    <xf:title>{{ phrase('xs_is_edit_personalized_invitation_code:') }} {$code.code}</xf:title>
+</xf:if>
+
+<xf:pageaction if="$code.isUpdate()">
+	<xf:button href="{{ link('invitation/personalized-invitation-code/delete', $code) }}" icon="delete" overlay="true" />
+</xf:pageaction>
+
+<xf:form action="{{ link('invitation/personalized-invitation-code/save', $code) }}" ajax="true" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:textboxrow name="title" value="{$code.title}" maxlength="{{ max_length($code, 'title') }}"
+						   label="{{ phrase('title') }}"  />
+			<xf:if is="$code.isUpdate()">
+				<xf:formrow label="{{ phrase('xs_is_invitation_code') }}">
+					{$code.code} 
+					<a  href="#" class="xs_is_copy_token button button--link" 
+							data-clipboard-text="{$code.code}" 
+							style="font-size: 10px; padding: 2px 5px;">
+					{{ phrase('xs_is_copy') }}
+					</a>
+				</xf:formrow>
+				<xf:else/>
+				<xf:textboxrow name="code" value="{$code.code}" maxlength="{{ max_length($code, 'code') }}"
+						   label="{{ phrase('xs_is_invitation_code') }}" explain="{{ phrase('xs_is_invitation_code_explain') }}" />
+			</xf:if>
+			<xf:radiorow label="{{ phrase('xs_is_number_times_usable') }}" name="limit_use">
+				<xf:option value="unlimited" label="{{ phrase('unlimited') }}"
+						   selected="{{ $code.limit_use == -1 ? true : false }}"/>
+				<xf:option value="limited_use" label="{{ phrase('xs_is_limited_use') }}" 
+						   selected="{{ $code.limit_use >= 1 ? true : false }}">
+					<xf:numberbox value="{{ $code.limit_use == -1 ? 0 : $code.limit_use }}" name="limit_use_number"/>
+				</xf:option>
+			</xf:radiorow>
+			<xf:radiorow label="{{ phrase('xs_is_limit_in_time') }}" name="limit_time">
+				<xf:option value="unlimited" label="{{ phrase('unlimited') }}"
+						   selected="{{ $code.limit_time == -1 ? true : false }}"/>
+				<xf:option value="limited_time" label="{{ phrase('xs_is_limited_time') }}" 
+						   selected="{{ $code.limit_time >= 1 ? true : false }}">
+					<xf:dependent>
+						<xf:if is="$code.limit_time == -1">		
+							<xf:dateinput name="limit_time_number" value="{{ date($xf.time, 'picker') }}" />
+							<xf:else/>
+							<xf:dateinput name="limit_time_number" value="{{ $code.isUpdate() ? date($code.limit_time, 'picker') : date($xf.time, 'picker') }}" />
+						</xf:if>
+					</xf:dependent>
+				</xf:option>
+			</xf:radiorow>
+			<xf:checkboxrow label="{{ phrase('enable') }}" >
+				<xf:option name="enable" selected="{$code.enable}" label="{{ phrase('xs_is_enable_this_invitation') }}" />
+			</xf:checkboxrow>
+		</div>
+		<xf:submitrow icon="save" sticky="true" />
+	</div>
+</xf:form>
+<xf:if is="$users is not empty && $code.isUpdate()">
+	<div class="block">
+		<div class="block-outer">
+			<xf:macro template="filter_macros" 
+					  name="quick_filter" 
+					  arg-key="invitation/personalized-invitation-code/{$code.ic_personalize_id}" 
+					  arg-class="block-outer-opposite" />
+		</div>
+		<div class="block-container">
+			<div class="block-body">
+				<xf:datalist>
+					<xf:foreach loop="$users" value="$user">
+						<xf:datarow>
+							<xf:cell class="dataList-cell--min dataList-cell--image dataList-cell--imageSmall"
+								href="{{ link('users/edit', $user) }}">
+								<xf:avatar user="$user" size="s" href="" />
+							</xf:cell>
+							<xf:main href="{{ link('users/edit', $user) }}" label="{$user.username}"/>
+						</xf:datarow>
+					</xf:foreach>
+				</xf:datalist>
+			</div>
+			<div class="block-footer block-footer--split">
+				<span class="block-footer-counter">{{ display_totals($users, $total) }}</span>
+			</div>
+		</div>
+
+		<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+			link="invitation/personalized-invitation-code"
+			data="{$code}"
+			wrapperclass="js-filterHide block-outer block-outer--after" />
+	</div>
+<xf:elseif is="$code.isUpdate()" />
+	<div class="blockMessage">{{ phrase('no_records_matched') }}</div>
+</xf:if>]]></template>
+  <template type="admin" title="xs_is_token_delete" version_id="2000000" version_string="2.0.0"><![CDATA[<xf:title>{{ phrase('confirm_action') }}</xf:title>
+
+<xf:form action="{{ link('invitation/tokens/delete', $token) }}" ajax="true" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:inforow rowtype="confirm">
+				{{ phrase('please_confirm_that_you_want_to_delete_following:') }}
+				<strong><a href="{{ link('invitation/tokens/edit', $token) }}">{$token.title}</a></strong>
+			</xf:inforow>
+		</div>
+		<xf:submitrow rowtype="simple" icon="delete" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="xs_is_token_edit" version_id="2000000" version_string="2.0.0"><![CDATA[<xf:if is="$token.isInsert()">
+    <xf:title>{{ phrase('xs_is_add_tokens') }}</xf:title>
+<xf:else />
+    <xf:title>{{ phrase('xs_is_edit_tokens:') }} {$token.title}</xf:title>
+</xf:if>
+
+<xf:pageaction if="$token.isUpdate()">
+	<xf:button href="{{ link('invitation/tokens/delete', $token) }}" icon="delete" overlay="true" />
+</xf:pageaction>
+
+<xf:form action="{{ link('invitation/tokens/save', $token) }}" ajax="true" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:if is="$token.isUpdate()">
+				<xf:formrow label="{{ phrase('xs_is_token') }}">
+					{$token.token} 
+					<a  href="#" class="xs_is_copy_token button button--link" 
+							data-clipboard-text="{$token.token}" 
+							style="font-size: 10px; padding: 2px 5px;">
+					{{ phrase('xs_is_copy') }}
+					</a>
+				</xf:formrow>
+			</xf:if>
+			<xf:textboxrow name="title" value="{$token.title}" maxlength="{{ max_length($token, 'title') }}"
+						   label="{{ phrase('xs_is_title') }}" explain="{{ phrase('xs_is_title_explain') }}" />
+			<xf:checkboxrow name="user" value="{$token.user}" 
+							listclass="listColumns"
+							label="{{ phrase('xs_is_user_group') }}" explain="{{ phrase('xs_is_user_group_explain') }}" >
+				<xf:options source="$userGroups"/>
+			</xf:checkboxrow>
+			<xf:numberboxrow name="number_use" value="{$token.number_use}" min="0"
+							 label="{{ phrase('xs_is_maximum_usable') }}" 
+							 explain="{{ phrase('xs_is_maximum_usable_explain') }}" />
+		</div>
+		<xf:submitrow icon="save" sticky="true" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="xs_is_token_list" version_id="2000000" version_string="2.0.0"><![CDATA[<xf:title>{{ phrase('xs_is_invitation_tokens') }}</xf:title>
+
+<xf:pageaction>
+    <div class="buttonGroup">
+		<xf:button href="{{ link('invitation/tokens/add') }}" icon="add">{{ phrase('xs_is_add_tokens') }}</xf:button>
+    </div>
+</xf:pageaction>
+<xf:css src="xs_is_token_view.less"/>
+
+<xf:if is="$tokens is not empty">
+		<div class="block-container">
+			<div class="block-body">
+				<xf:datalist>
+					<xf:foreach loop="{$tokens}" value="$token">
+						<xf:datarow>
+							<xf:main href="{{ link('invitation/tokens', $token) }}"
+								label="{$token.title}" hint="{$token.token}"/>
+							<xf:action href="{{ link('invitation/tokens/list', $token) }}">
+								{{ phrase('xs_is_use') }}
+							</xf:action>
+							<xf:action>
+								<label>{$token.number_use}</label>
+							</xf:action>
+							<xf:action class="xs_is_user_group">
+								<label>
+									<xf:foreach loop="{$userGroups}" key="$userGroupkey" value="$userGroup">
+										<xf:if is="in_array($userGroupkey, $token.user)">
+											{$userGroup}<span>,</span>
+										</xf:if>
+									</xf:foreach>
+								</label>
+							</xf:action>
+							<xf:delete href="{{ link('invitation/tokens/delete', $token) }}" />
+						</xf:datarow>
+					</xf:foreach>
+				</xf:datalist>
+			</div>
+		</div>
+<xf:else />
+	<div class="blockMessage">{{ phrase('xs_is_no_invitation_tokens_have_been_created') }}</div>
+</xf:if>]]></template>
+  <template type="admin" title="xs_is_token_user_add_user" version_id="2000000" version_string="2.0.0"><![CDATA[<xf:title>{{ phrase('xs_is_add_user') }}</xf:title>
+
+<xf:form action="{{ link('invitation/tokens-user/add-user', $token) }}" ajax="true" class="block">
+	<div class="block-container">
+		<div class="block-body">
+				<xf:tokeninputrow name="username"  href="{{ link('users/find') }}" label="{{ phrase('xs_is_usernames') }}"
+								  explain="{{ phrase('separate_names_with_comma') }}"/>
+		</div>
+		<xf:submitrow icon="save" sticky="true" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="xs_is_token_user_delete" version_id="2000000" version_string="2.0.0"><![CDATA[<xf:title>{{ phrase('confirm_action') }}</xf:title>
+
+<xf:form action="{{ link('invitation/tokens-user/delete', $token) }}" ajax="true" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:inforow rowtype="confirm">
+				{{ phrase('please_confirm_that_you_want_to_delete_following:') }}
+				<strong><a href="{{ link('invitation/tokens/edit', $token) }}">{$token.title}</a></strong>
+			</xf:inforow>
+		</div>
+		<xf:submitrow rowtype="simple" icon="delete" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="xs_is_token_user_delete_user" version_id="2000000" version_string="2.0.0"><![CDATA[<xf:title>{{ phrase('confirm_action') }}</xf:title>
+
+<xf:form action="{{ link('invitation/tokens-user/delete-user', $token) }}&user={$user.user_id}" ajax="true" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:inforow rowtype="confirm">
+				{{ phrase('xs_is_please_confirm_that_you_want_the_user_x_of_this_token_y', 
+				{
+					'user':{$user.username}, 
+					'token':{$token.title}
+				})}}
+			</xf:inforow>
+		</div>
+		<xf:submitrow rowtype="simple" icon="delete" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="xs_is_token_user_edit" version_id="2000000" version_string="2.0.0"><![CDATA[<xf:if is="$token.isInsert()">
+	<xf:title>{{ phrase('xs_is_add_tokens_user') }}</xf:title>
+<xf:else />
+    <xf:title>{{ phrase('xs_is_edit_tokens_user:') }} {$token.title}</xf:title>
+</xf:if>
+
+<xf:pageaction if="$token.isUpdate()">
+	<xf:button href="{{ link('invitation/tokens-user/add-user', $token) }}" overlay="true" icon="add">{{ phrase('xs_is_add_user') }}</xf:button>
+	<xf:button href="{{ link('invitation/tokens-user/delete', $token) }}" icon="delete" overlay="true" />
+</xf:pageaction>
+
+
+<xf:form action="{{ link('invitation/tokens-user/save', $token) }}" ajax="true" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:if is="$token.isUpdate()">
+				<xf:formrow label="{{ phrase('xs_is_token') }}">
+					{$token.token} 
+					<a  href="#" class="xs_is_copy_token button button--link" 
+							data-clipboard-text="{$token.token}" 
+							style="font-size: 10px; padding: 2px 5px;">
+					{{ phrase('xs_is_copy') }}
+					</a>
+				</xf:formrow>
+			</xf:if>
+			<xf:textboxrow name="title" value="{$token.title}" maxlength="{{ max_length($token, 'title') }}"
+						   label="{{ phrase('xs_is_title') }}" explain="{{ phrase('xs_is_title_explain') }}" />
+			<xf:if is="$token.isInsert()">
+				<xf:tokeninputrow name="username"  href="{{ link('users/find') }}" label="{{ phrase('xs_is_usernames') }}"
+								  explain="{{ phrase('separate_names_with_comma') }}"/>
+			</xf:if>
+			<xf:numberboxrow name="number_use" value="{$token.number_use}" min="0"
+							 label="{{ phrase('xs_is_maximum_usable') }}" 
+							 explain="{{ phrase('xs_is_maximum_usable_explain') }}" />
+		</div>
+		<xf:submitrow icon="save" sticky="true" />
+	</div>
+</xf:form>
+
+<xf:if is="$users is not empty && $token.isUpdate()">
+	<div class="block">
+		<div class="block-outer">
+			<xf:macro template="filter_macros" 
+					  name="quick_filter" 
+					  arg-key="invitation/tokens-user/{$token.token_id}" 
+					  arg-class="block-outer-opposite" />
+		</div>
+		<div class="block-container">
+			<div class="block-body">
+				<xf:datalist>
+					<xf:foreach loop="$users" value="$user">
+						<xf:datarow>
+							<xf:cell class="dataList-cell--min dataList-cell--image dataList-cell--imageSmall"
+								href="{{ link('users/edit', $user) }}">
+								<xf:avatar user="$user" size="s" href="" />
+							</xf:cell>
+							<xf:main href="{{ link('users/edit', $user) }}" label="{$user.username}"/>
+							<xf:action>
+								<label>
+									{$CodeUser.{$user.user_id}.count}
+								</label>
+							</xf:action>
+							<xf:action>
+								<xf:if is="{$CodeUser.{$user.user_id}.code}">
+									<xf:if is="{$CodeUser.{$user.user_id}.registered}">
+										<label><xf:fa icon="fas fa-check" style="color: #4ecd32;font-size: 20px;" /></label>
+										<xf:else/>
+										<label><xf:fa icon="fas fa-check" style="color: #cd8232;font-size: 20px;" /></label>
+									</xf:if>
+									<xf:else/>
+									<label><xf:fa icon="fas fa-times" style="color: #d13530;font-size: 20px;" /></label>
+								</xf:if>
+							</xf:action>
+							<xf:delete href="{{ link('invitation/tokens-user/delete-user', $token) }}&user={$user.user_id}" />
+						</xf:datarow>
+					</xf:foreach>
+				</xf:datalist>
+			</div>
+			<div class="block-footer block-footer--split">
+				<span class="block-footer-counter">{{ display_totals($users, $total) }}</span>
+			</div>
+		</div>
+
+		<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+			link="invitation/tokens-user"
+			data="{$token}"
+			wrapperclass="js-filterHide block-outer block-outer--after" />
+	</div>
+<xf:elseif is="$token.isUpdate()" />
+	<div class="blockMessage">{{ phrase('no_records_matched') }}</div>
+</xf:if>]]></template>
+  <template type="admin" title="xs_is_token_user_filters" version_id="2000000" version_string="2.0.0"><![CDATA[<xf:macro template="xs_is_filters_macro" name="filters" 
+		  arg-Token="{$Token}" arg-filters="{$filters}" 
+		  arg-user="{$user}" arg-url="0"/>]]></template>
+  <template type="admin" title="xs_is_token_user_list" version_id="2000000" version_string="2.0.0"><![CDATA[<xf:title>{{ phrase('xs_is_token_user') }}</xf:title>
+
+<xf:pageaction>
+    <div class="buttonGroup">
+		<xf:button href="{{ link('invitation/tokens-user/add') }}" icon="add">{{ phrase('xs_is_add_tokens_user') }}</xf:button>
+    </div>
+</xf:pageaction>
+
+<xf:if is="$tokens is not empty">
+		<div class="block-container">
+			<div class="block-body">
+				<xf:datalist>
+					<xf:foreach loop="{$tokens}" value="$token">
+						<xf:datarow>
+							<xf:main href="{{ link('invitation/tokens-user', $token) }}"
+								label="{$token.title}" hint="{$token.token}"/>
+							<xf:action>
+								<label>{$token.number_use}</label>
+							</xf:action>
+							<xf:action>
+								<label>{$count.{$token.token_id}}</label>
+							</xf:action>
+							<xf:action href="{{ link('invitation/tokens-user/list', $token) }}">
+								{{ phrase('xs_is_use') }}
+							</xf:action>
+							<xf:delete href="{{ link('invitation/tokens-user/delete', $token) }}" />
+						</xf:datarow>
+					</xf:foreach>
+				</xf:datalist>
+			</div>
+		</div>
+<xf:else />
+	<div class="blockMessage">{{ phrase('xs_is_no_invitation_tokens_have_been_created') }}</div>
+</xf:if>]]></template>
+  <template type="admin" title="xs_is_token_user_list_code" version_id="2000000" version_string="2.0.0"><![CDATA[<xf:title>{{ phrase('xs_is_list_code') }}</xf:title>
+
+<xf:if is="$codes is not empty || $filters is not empty">
+	<div class="block">
+		<div class="block-container">
+			<div class="block-filterBar">
+				<div class="filterBar">
+					<xf:if contentcheck="true">
+						<ul class="filterBar-filters">
+							<xf:contentcheck>
+								<xf:if is="$filters.user is not empty">
+									<li><a href="{{ link('invitation/tokens-user/list', $Token, $filters|replace('user', null)) }}"
+										   class="filterBar-filterToggle" data-xf-init="tooltip" title="{{ phrase('remove_this_filter')|for_attr }}">
+										<span class="filterBar-filterToggle-label">{{ phrase('xs_is_code_created_by:') }}</span>
+										{$user.username}</a></li>
+								</xf:if>
+								<xf:if is="$filters.code_use is not empty">
+									<li><a href="{{ link('invitation/tokens-user/list', $Token, $filters|replace('code_use', null)) }}"
+										   class="filterBar-filterToggle" data-xf-init="tooltip" title="{{ phrase('remove_this_filter')|for_attr }}">
+										<span class="filterBar-filterToggle-label">{{ phrase('sort_by:') }}</span>
+										{{ phrase('xs_is_code_use') }}</a></li>
+								</xf:if>
+								<xf:if is="$filters.code_not_use is not empty">
+									<li><a href="{{ link('invitation/tokens-user/list', $Token, $filters|replace('code_not_use', null)) }}"
+										   class="filterBar-filterToggle" data-xf-init="tooltip" title="{{ phrase('remove_this_filter')|for_attr }}">
+										<span class="filterBar-filterToggle-label">{{ phrase('sort_by:') }}</span>
+										{{ phrase('xs_is_code_not_use') }}</a></li>
+								</xf:if>
+							</xf:contentcheck>
+						</ul>
+					</xf:if>
+					<a class="filterBar-menuTrigger" data-xf-click="menu" role="button" tabindex="0" 
+					   aria-expanded="false" aria-haspopup="true">{{ phrase('filters') }}</a>
+					<div class="menu menu--wide" data-menu="menu" aria-hidden="true"
+						 data-href="{{ link('invitation/tokens-user/filters', $Token, $filters) }}"
+						 data-load-target=".js-filterMenuBody">
+						<div class="menu-content">
+							<h4 class="menu-header">{{ phrase('show_only:') }}</h4>
+							<div class="js-filterMenuBody">
+								<div class="menu-row">{{ phrase('loading...') }}</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="block-body">
+				<xf:datalist>
+					<xf:foreach loop="$codes" value="$code">
+						<xf:datarow overlay="true"
+							label="{{ phrase('xs_is_code:') }} {$code.code}"
+							href="{{ link('invitation/tokens-user/list', $code) }}"
+							delete="{{ link('invitation/tokens/delete-code', $code) }}"
+							dir="auto">
+							<xf:explain>
+								<ul class="listInline listInline--bullet">
+									<li><xf:date time="{$code.invitation_date}" /></li>
+									<li>{$code.Token.title} : {$code.Token.token}</li>
+									<li>{$code.User.username}</li>
+									<li>{{ $code.registered_user_id ? {$code.RegisteredUser.username} : phrase('n_a') }}</li>
+								</ul>
+							</xf:explain>
+						</xf:datarow>
+					</xf:foreach>
+				</xf:datalist>
+			</div>
+			<div class="block-footer">
+				<span class="block-footer-counter">{{ display_totals($codes, $total) }}</span>
+			</div>
+		</div>
+		<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+			link="invitation/list-code" params="{$filters}"
+			wrapperclass="block-outer block-outer--after" />
+	</div>
+<xf:else />
+	<div class="blockMessage">{{ phrase('xs_is_no_code_has_been_generated') }}</div>
+</xf:if>]]></template>
+  <template type="admin" title="xs_is_token_user_view_code" version_id="2000000" version_string="2.0.0"><![CDATA[<xf:title>{{ phrase('xs_is_list_code') }}</xf:title>
+
+<div class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:formrow label="{{ phrase('xs_is_user_create') }}">
+				<a href="{{ link('users/edit', $code.User) }}">{$code.User.username}</a>
+			</xf:formrow>
+			<xf:formrow label="{{ phrase('xs_is_code') }}">
+				{$code.code}
+			</xf:formrow>
+			<xf:formrow label="{{ phrase('date') }}">
+				<xf:date time="{$code.invitation_date}" />
+			</xf:formrow>
+			<hr class="formRowSep" />
+			<xf:formrow label="{{ phrase('xs_is_token') }}">
+				<a href="{{ link('invitation/tokens-user', $code.Token) }}">
+					{$code.Token.token}
+				</a>
+			</xf:formrow>
+			<xf:formrow label="{{ phrase('xs_is_token_title') }}">
+				<a href="{{ link('invitation/tokens-user', $code.Token) }}">
+					{$code.Token.title}
+				</a>
+			</xf:formrow>
+			<hr class="formRowSep" />
+			<xf:formrow label="{{ phrase('xs_is_registered_user') }}">
+				{{ $code.registered_user_id ? {$code.RegisteredUser.username} : phrase('n_a') }}
+			</xf:formrow>
+		</div>
+	</div>
+</div>]]></template>
+  <template type="admin" title="xs_is_token_view.less" version_id="2000000" version_string="2.0.0"><![CDATA[.xs_is_user_group
+{
+	width: 30%!important; 
+	white-space: normal!important;
+	span:last-child {
+		display:none;
+	}
+}]]></template>
+  <template type="admin" title="xs_is_tokens_delete_code" version_id="2000000" version_string="2.0.0"><![CDATA[<xf:title>{{ phrase('confirm_action') }}</xf:title>
+
+<xf:form action="{{ link('invitation/tokens/delete-code', $code) }}" ajax="true" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:inforow rowtype="confirm">
+				{{ phrase('please_confirm_that_you_want_to_delete_following:') }}
+				<strong>{$code.code}</strong>
+			</xf:inforow>
+		</div>
+		<xf:submitrow rowtype="simple" icon="delete" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="xs_is_tokens_filters" version_id="2000000" version_string="2.0.0"><![CDATA[<xf:macro template="xs_is_filters_macro" name="filters" 
+		  arg-Token="{$Token}" arg-filters="{$filters}" 
+		  arg-user="{$user}" arg-url="1"/>]]></template>
+  <template type="admin" title="xs_is_tokens_list_code" version_id="2000000" version_string="2.0.0"><![CDATA[<xf:title>{{ phrase('xs_is_list_code') }}</xf:title>
+
+<xf:if is="$codes is not empty || $filters is not empty">
+	<div class="block">
+		<div class="block-container">
+			<div class="block-filterBar">
+				<div class="filterBar">
+					<xf:if contentcheck="true">
+						<ul class="filterBar-filters">
+							<xf:contentcheck>
+								<xf:if is="$filters.user is not empty">
+									<li><a href="{{ link('invitation/tokens/list', $Token, $filters|replace('user', null)) }}"
+										   class="filterBar-filterToggle" data-xf-init="tooltip" title="{{ phrase('remove_this_filter')|for_attr }}">
+										<span class="filterBar-filterToggle-label">{{ phrase('xs_is_code_created_by:') }}</span>
+										{$user.username}</a></li>
+								</xf:if>
+								<xf:if is="$filters.code_use is not empty">
+									<li><a href="{{ link('invitation/tokens/list', $Token, $filters|replace('code_use', null)) }}"
+										   class="filterBar-filterToggle" data-xf-init="tooltip" title="{{ phrase('remove_this_filter')|for_attr }}">
+										<span class="filterBar-filterToggle-label">{{ phrase('sort_by:') }}</span>
+										{{ phrase('xs_is_code_use') }}</a></li>
+								</xf:if>
+								<xf:if is="$filters.code_not_use is not empty">
+									<li><a href="{{ link('invitation/tokens/list', $Token, $filters|replace('code_not_use', null)) }}"
+										   class="filterBar-filterToggle" data-xf-init="tooltip" title="{{ phrase('remove_this_filter')|for_attr }}">
+										<span class="filterBar-filterToggle-label">{{ phrase('sort_by:') }}</span>
+										{{ phrase('xs_is_code_not_use') }}</a></li>
+								</xf:if>
+							</xf:contentcheck>
+						</ul>
+					</xf:if>
+					<a class="filterBar-menuTrigger" data-xf-click="menu" role="button" tabindex="0" 
+					   aria-expanded="false" aria-haspopup="true">{{ phrase('filters') }}</a>
+					<div class="menu menu--wide" data-menu="menu" aria-hidden="true"
+						 data-href="{{ link('invitation/tokens/filters', $Token, $filters) }}"
+						 data-load-target=".js-filterMenuBody">
+						<div class="menu-content">
+							<h4 class="menu-header">{{ phrase('show_only:') }}</h4>
+							<div class="js-filterMenuBody">
+								<div class="menu-row">{{ phrase('loading...') }}</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="block-body">
+				<xf:datalist>
+					<xf:foreach loop="$codes" value="$code">
+						<xf:datarow overlay="true"
+							label="{{ phrase('xs_is_code:') }} {$code.code}"
+							href="{{ link('invitation/tokens/list', $code) }}"
+							delete="{{ link('invitation/tokens/delete-code', $code) }}"
+							dir="auto">
+							<xf:explain>
+								<ul class="listInline listInline--bullet">
+									<li><xf:date time="{$code.invitation_date}" /></li>
+									<li>{$code.Token.title} : {$code.Token.token}</li>
+									<li>{$code.User.username}</li>
+									<li>{{ $code.registered_user_id ? {$code.RegisteredUser.username} : phrase('n_a') }}</li>
+								</ul>
+							</xf:explain>
+						</xf:datarow>
+					</xf:foreach>
+				</xf:datalist>
+			</div>
+			<div class="block-footer">
+				<span class="block-footer-counter">{{ display_totals($codes, $total) }}</span>
+			</div>
+		</div>
+		<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+			link="invitation/list-code" params="{$filters}"
+			wrapperclass="block-outer block-outer--after" />
+	</div>
+<xf:else />
+	<div class="blockMessage">{{ phrase('xs_is_no_code_has_been_generated') }}</div>
+</xf:if>]]></template>
+  <template type="admin" title="xs_is_tokens_view_code" version_id="2000000" version_string="2.0.0"><![CDATA[<xf:title>{{ phrase('xs_is_list_code') }}</xf:title>
+
+<div class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:formrow label="{{ phrase('xs_is_user_create') }}">
+				<a href="{{ link('users/edit', $code.User) }}">{$code.User.username}</a>
+			</xf:formrow>
+			<xf:formrow label="{{ phrase('xs_is_code') }}">
+				{$code.code}
+			</xf:formrow>
+			<xf:formrow label="{{ phrase('date') }}">
+				<xf:date time="{$code.invitation_date}" />
+			</xf:formrow>
+			<hr class="formRowSep" />
+			<xf:formrow label="{{ phrase('xs_is_token') }}">
+				<a href="{{ link('invitation/tokens', $code.Token) }}">
+					{$code.Token.token}
+				</a>
+			</xf:formrow>
+			<xf:formrow label="{{ phrase('xs_is_token_title') }}">
+				<a href="{{ link('invitation/tokens', $code.Token) }}">
+					{$code.Token.title}
+				</a>
+			</xf:formrow>
+			<hr class="formRowSep" />
+			<xf:formrow label="{{ phrase('xs_is_registered_user') }}">
+				{{ $code.registered_user_id ? {$code.RegisteredUser.username} : phrase('n_a') }}
+			</xf:formrow>
+		</div>
+	</div>
+</div>]]></template>
+  <template type="public" title="alert_user_xs_is_invitations_alert" version_id="2000000" version_string="2.0.0"><![CDATA[{{ phrase('xs_is_x_has_registered_using_your_invitation_code', {
+	'user': username_link($user, false, {'defaultname': $alert.username})
+}) }}]]></template>
+  <template type="public" title="xs_is_account_Invitation" version_id="2010400" version_string="2.1.4"><![CDATA[<xf:title>{{ phrase('xs_is_invitation_code') }}</xf:title>
+
+<xf:wrap template="account_wrapper" />
+
+<xf:if is="$code">
+	<div class="blockMessage blockMessage--success">
+		{{ phrase('xs_is_code_generate:') }} {$code}
+		<xf:button  class="xs_is_copy_token button button--link" 
+		   data-clipboard-text="{$code}" 
+		   style="font-size: 10px; padding: 2px 5px;">
+			{{ phrase('xs_is_copy') }}
+		</xf:button>
+	</div>
+</xf:if>
+
+{{ phrase('xs_is_token:') }}{$Invitations.total}
+
+<xf:set var="$phraseCopy">{{ phrase('xs_is_copy') }}</xf:set>
+<div class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:datalist data-xf-init="responsive-data-list">
+				<thead>
+					<xf:datarow rowtype="header">
+						<xf:if is="$xf.options.xs_is_enable_token_in_account">
+							<xf:cell>{{ phrase('xs_is_token') }}</xf:cell>
+						</xf:if>
+						<xf:cell>{{ phrase('date') }}</xf:cell>
+						<xf:cell>{{ phrase('xs_is_code') }}</xf:cell>
+						<xf:cell>{{ phrase('xs_is_registered_user') }}</xf:cell>
+						<xf:cell>&nbsp;</xf:cell>
+					</xf:datarow>
+				</thead>
+				<xf:foreach loop="$Codes" value="$Invitation">
+					<xf:datarow>
+						<xf:if is="$xf.options.xs_is_enable_token_in_account">
+							<xf:cell>{$Invitation.token}</xf:cell>
+						</xf:if>
+						<xf:cell>
+							<xf:date time="{$Invitation.invitation_date}" />
+						</xf:cell>
+						<xf:cell>
+							{$Invitation.code}
+						</xf:cell>
+						<xf:cell>
+							<xf:if is="$Invitation.registered_user_id && $Invitation.user_id == {$xf.visitor.user_id}">
+								<xf:username user="$Invitation.RegisteredUser" rich="true" />
+							<xf:else />
+								--
+							</xf:if>
+						</xf:cell>
+						<xf:cell href="{{ !$Invitation.registered_user_id  ? '#' : null }}" data-clipboard-text="{$Invitation.code}" 
+								 class="xs_is_copy_code dataList-cell--separated" style="text-align: center;" 
+								 data-xf-init="{{ !$Invitation.registered_user_id  ? 'tooltip' : '' }}" 
+								 title="{{ !$Invitation.registered_user_id  ? {$phraseCopy} : '' }}">
+							<xf:fa icon="far fa-copy"/>
+						</xf:cell>
+					</xf:datarow>
+					<xf:else />
+					<xf:datarow rowclass="dataList-row--noHover dataList-row--note" colspan="4">
+						<xf:cell class="dataList-cell--noSearch">
+							{{ phrase('xs_is_no_invitation_has_been_created') }}
+						</xf:cell>
+					</xf:datarow>
+				</xf:foreach>
+			</xf:datalist>
+		</div>
+	</div>
+	<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+				link="account/invitation"
+				wrapperclass="block-outer block-outer--after" />
+</div>
+<xf:if is="$Invitations.tokenGenerate && $Invitations.Between">
+	<xf:form action="{{ link('account/invitation') }}" ajax="true" class="block">
+		<div class="block-container">
+			<div class="block-body">
+				<xf:formrow label="{{ phrase('xs_is_token') }}">
+					{$Invitations.tokenGenerate.token} 
+				</xf:formrow>
+				<xf:hiddenval name="tokenID">{$Invitations.tokenGenerate.tokenID}</xf:hiddenval>
+				<xf:hiddenval name="token">{$Invitations.tokenGenerate.token}</xf:hiddenval>
+			</div>
+			<xf:submitrow icon="add" submit="{{ phrase('xs_is_generate') }}"/>
+		</div>
+	</xf:form>
+	<xf:elseif is="!$Invitations.Between"/>
+	<div class="block-container">
+		<div class="block-body">
+			<div class="formInfoRow">
+				{{ phrase('xs_is_general_code_limit_reached', {'PerMonth': {$Invitations.PerMonth} }) }}
+			</div>
+		</div>
+	</div>
+</xf:if>]]></template>
+  <template type="public" title="xs_is_account_Invitation_ban" version_id="2000000" version_string="2.0.0"><![CDATA[<xf:title>{{ phrase('oops_we_ran_into_some_problems') }}</xf:title>
+
+<div class="blockMessage">
+	<xf:set var="$message">{ phrase('xs_is_account_ban_reason:') }} {$Ban.ban_reason}</xf:set>
+	{{ $Ban.ban_reason ? {$message} : phrase('xs_is_account_ban') }}
+</div>]]></template>
+  <template type="public" title="xs_is_clipboard_js" version_id="2000000" version_string="2.0.0"><![CDATA[<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+	$(function() {
+		var clipboard = new Clipboard('.xs_is_copy_token');
+		clipboard.on('success', function(e) {
+			e.trigger.textContent = "{{ phrase('xs_is_copied')|escape('js') }}";
+		});
+	});
+</script>
+
+<script>
+	$(function() {
+		var clipboard = new Clipboard('.xs_is_copy_code');
+		clipboard.on('success', function(e) {
+			e.clearSelection();
+		});
+	});
+</script>]]></template>
+  <template type="public" title="xs_is_member_invitation" version_id="2010010" version_string="2.1.0 Fix 1"><![CDATA[<xf:title>{{ phrase('xs_is_list_of_invitations_by_x', {'user': $user.username}) }}</xf:title>
+
+<div class="block">
+	<div class="block-container">
+		<ol class="block-body">
+			<xf:foreach loop="$Codes" value="$Code">
+				<li class="block-row block-row--separated">
+					<xf:macro template="member_list_macros" name="item"
+							  arg-user="{$Code.RegisteredUser}"
+							  arg-extraData="{{ date_time($Code.RegisteredUser.register_date) }}" />
+				</li>
+				<xf:else />
+				<li class="blockMessage">{{ phrase('xs_is_no_intation') }}</li>
+			</xf:foreach>
+		</ol>
+	</div>
+
+	<xf:pagenav link="members/invitations" page="{$page}" perpage="{$perPage}" total="{$total}" data="{$user}"
+				wrapperclass="block-outer block-outer--after" />
+</div>]]></template>
+  <template type="public" title="cloudcheats_theme.less" version_id="2030471" version_string="2.3.4.1 CloudCheats"><![CDATA[/*
+	CloudCheats 2026 theme
+	Visual direction based on the supplied VACBAN references.
+*/
+
+:root {
+	--cc-bg: #101019;
+	--cc-bg-soft: #151521;
+	--cc-surface: #1e1e2d;
+	--cc-surface-raised: #252537;
+	--cc-border: rgba(146, 150, 255, .14);
+	--cc-border-strong: rgba(146, 150, 255, .28);
+	--cc-text: #f7f8fc;
+	--cc-text-muted: #a1a5b7;
+	--cc-accent: #009ef7;
+	--cc-accent-2: #6c63ff;
+	--cc-success: #50cd89;
+	--cc-warning: #ffc700;
+	--cc-danger: #f1416c;
+	--cc-radius-sm: 8px;
+	--cc-radius: 12px;
+	--cc-radius-lg: 18px;
+	--cc-shadow: 0 18px 55px rgba(0, 0, 0, .28);
+}
+
+html {
+	color-scheme: dark;
+	background: var(--cc-bg);
+}
+
+body {
+	font-family: Poppins, Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+	font-size: 15px;
+	line-height: 1.6;
+	color: var(--cc-text);
+	background:
+		radial-gradient(circle at 12% -10%, rgba(0, 158, 247, .16), transparent 34rem),
+		radial-gradient(circle at 88% 0%, rgba(108, 99, 255, .12), transparent 30rem),
+		var(--cc-bg);
+}
+
+a {
+	color: #68c7ff;
+	transition: color .18s ease, opacity .18s ease;
+}
+
+a:hover,
+a:focus {
+	color: #a7dfff;
+}
+
+.p-pageWrapper {
+	background: transparent;
+}
+
+.p-header {
+	background: rgba(16, 16, 25, .92);
+	border-bottom: 1px solid var(--cc-border);
+	box-shadow: 0 10px 35px rgba(0, 0, 0, .22);
+	backdrop-filter: blur(16px);
+}
+
+.p-header-logo a {
+	color: var(--cc-text);
+	font-weight: 800;
+	letter-spacing: -.03em;
+}
+
+.p-header-logo img {
+	display: none;
+}
+
+.p-header-logo a::before {
+	content: "CloudCheats";
+	display: inline-block;
+	font-size: clamp(1.35rem, 3vw, 1.8rem);
+	font-weight: 800;
+	letter-spacing: -.045em;
+	color: #fff;
+	text-shadow: 0 0 24px rgba(0, 158, 247, .24);
+}
+
+.p-header-logo a::after {
+	content: ".cc";
+	font-size: .82rem;
+	font-weight: 700;
+	color: var(--cc-accent);
+}
+
+.p-nav {
+	background: rgba(21, 21, 33, .94);
+	border-bottom: 1px solid var(--cc-border);
+}
+
+.p-nav-list .p-navEl,
+.p-navgroup-link {
+	border-radius: var(--cc-radius-sm);
+}
+
+.p-nav-list .p-navEl.is-selected,
+.p-nav-list .p-navEl:hover,
+.p-navgroup-link:hover {
+	background: rgba(0, 158, 247, .12);
+	color: #fff;
+}
+
+.p-sectionLinks {
+	background: rgba(30, 30, 45, .96);
+	border-bottom: 1px solid var(--cc-border);
+}
+
+.p-body-inner {
+	max-width: 1320px;
+}
+
+.p-body-header {
+	margin-bottom: 24px;
+}
+
+.p-title-value {
+	font-size: clamp(1.65rem, 3vw, 2.35rem);
+	font-weight: 750;
+	letter-spacing: -.035em;
+	color: #fff;
+}
+
+.p-description,
+.formRow-explain,
+.formRow-hint,
+.contentRow-minor,
+.pairs > dt {
+	color: var(--cc-text-muted);
+}
+
+.block-container,
+.blockMessage,
+.overlay,
+.menu-content,
+.memberHeader,
+.message-cell,
+.structItemContainer,
+.formSubmitRow-bar {
+	background: rgba(30, 30, 45, .96);
+	border: 1px solid var(--cc-border);
+	border-radius: var(--cc-radius);
+	box-shadow: var(--cc-shadow);
+}
+
+.block-header,
+.block-minorHeader,
+.block-filterBar,
+.menu-header {
+	color: #fff;
+	background: linear-gradient(135deg, rgba(43, 43, 64, .98), rgba(30, 30, 45, .98));
+	border-color: var(--cc-border);
+}
+
+.block-header {
+	font-size: 1rem;
+	font-weight: 700;
+	letter-spacing: -.01em;
+	padding: 14px 18px;
+}
+
+.block-row,
+.structItem,
+.node,
+.dataList-row,
+.formRow {
+	border-color: var(--cc-border);
+}
+
+.block-row:hover,
+.structItem:hover,
+.dataList-row:hover {
+	background: rgba(43, 43, 64, .72);
+}
+
+.node + .node,
+.structItem + .structItem {
+	border-top: 1px solid var(--cc-border);
+}
+
+.node-icon,
+.structItem-iconContainer,
+.contentRow-figure {
+	color: var(--cc-accent);
+}
+
+.node-title,
+.structItem-title,
+.contentRow-title {
+	font-weight: 650;
+}
+
+.input,
+.inputGroup-text,
+select.input,
+textarea.input {
+	color: var(--cc-text);
+	background: #151521;
+	border: 1px solid rgba(161, 165, 183, .2);
+	border-radius: var(--cc-radius-sm);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, .025);
+	transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+}
+
+.input:focus,
+select.input:focus,
+textarea.input:focus {
+	background: #181825;
+	border-color: var(--cc-accent);
+	box-shadow: 0 0 0 3px rgba(0, 158, 247, .14);
+}
+
+.input::placeholder {
+	color: #6f7284;
+}
+
+.button,
+a.button {
+	min-height: 38px;
+	padding-inline: 16px;
+	font-weight: 650;
+	color: #e9eaf2;
+	background: #2b2b40;
+	border: 1px solid var(--cc-border-strong);
+	border-radius: var(--cc-radius-sm);
+	box-shadow: none;
+	transition: transform .16s ease, background .16s ease, border-color .16s ease, box-shadow .16s ease;
+}
+
+.button:hover,
+a.button:hover {
+	color: #fff;
+	background: #35354e;
+	border-color: rgba(146, 150, 255, .42);
+	transform: translateY(-1px);
+}
+
+.button--primary,
+a.button--primary,
+.button.button--cta,
+a.button.button--cta {
+	color: #fff;
+	background: linear-gradient(135deg, var(--cc-accent), #5271ff);
+	border-color: transparent;
+	box-shadow: 0 10px 24px rgba(0, 158, 247, .22);
+}
+
+.button--primary:hover,
+a.button--primary:hover,
+.button.button--cta:hover,
+a.button.button--cta:hover {
+	background: linear-gradient(135deg, #26adfa, #7068ff);
+	box-shadow: 0 12px 30px rgba(0, 158, 247, .32);
+}
+
+.button--link,
+a.button--link {
+	color: #68c7ff;
+	background: transparent;
+}
+
+.menu-content {
+	overflow: hidden;
+}
+
+.menu-linkRow,
+.menu-row {
+	color: var(--cc-text);
+	border-color: var(--cc-border);
+}
+
+.menu-linkRow:hover,
+.menu-linkRow.is-selected {
+	color: #fff;
+	background: rgba(0, 158, 247, .12);
+}
+
+.tabs,
+.block-tabHeader {
+	color: var(--cc-text-muted);
+	background: #191927;
+	border-color: var(--cc-border);
+}
+
+.tabs-tab.is-active,
+.block-tabHeader .tabs-tab.is-active {
+	color: #fff;
+	border-color: var(--cc-accent);
+}
+
+.message--post .message-cell--user {
+	background: rgba(21, 21, 33, .74);
+	border-color: var(--cc-border);
+}
+
+.message-attribution,
+.message-footer,
+.message-userExtras,
+.memberHeader-separator {
+	border-color: var(--cc-border);
+}
+
+.avatar {
+	box-shadow: 0 0 0 2px rgba(0, 158, 247, .2);
+}
+
+.label {
+	border-radius: 999px;
+	font-weight: 650;
+}
+
+.blockMessage--success {
+	color: #9ce7bb;
+	background: rgba(80, 205, 137, .1);
+	border-color: rgba(80, 205, 137, .3);
+}
+
+.blockMessage--warning,
+.blockMessage--important {
+	color: #ffe58a;
+	background: rgba(255, 199, 0, .09);
+	border-color: rgba(255, 199, 0, .28);
+}
+
+.blockMessage--error {
+	color: #ff9ab4;
+	background: rgba(241, 65, 108, .1);
+	border-color: rgba(241, 65, 108, .3);
+}
+
+.pageNav-page > a,
+.pageNav-jump,
+.pageNavSimple-el {
+	color: var(--cc-text-muted);
+	background: var(--cc-surface);
+	border-color: var(--cc-border);
+	border-radius: 7px;
+}
+
+.pageNav-page.pageNav-page--current > a {
+	color: #fff;
+	background: var(--cc-accent);
+	border-color: var(--cc-accent);
+}
+
+.p-footer {
+	color: var(--cc-text-muted);
+	background: #0c0c13;
+	border-top: 1px solid var(--cc-border);
+}
+
+body[data-template="login"] .p-body-pageContent,
+body[data-template="register_form"] .p-body-pageContent {
+	width: min(100%, 680px);
+	margin-inline: auto;
+}
+
+body[data-template="login"] .block-container,
+body[data-template="register_form"] .block-container {
+	border-top: 3px solid var(--cc-accent);
+	box-shadow: 0 28px 80px rgba(0, 0, 0, .38);
+}
+
+body[data-template^="xs_is_"] .block-container {
+	border-top: 2px solid rgba(0, 158, 247, .72);
+}
+
+.xs_is_copy_code {
+	font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+	letter-spacing: .06em;
+}
+
+@media (max-width: 650px) {
+	body {
+		font-size: 14px;
+	}
+
+	.p-body-inner {
+		padding-inline: 12px;
+	}
+
+	.block-container,
+	.blockMessage,
+	.overlay,
+	.menu-content,
+	.memberHeader {
+		border-radius: 10px;
+	}
+
+	.formRow > dt,
+	.formRow > dd {
+		padding-inline: 14px;
+	}
+
+	.button,
+	a.button {
+		min-height: 42px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*, *::before, *::after {
+		scroll-behavior: auto !important;
+		transition-duration: .01ms !important;
+		animation-duration: .01ms !important;
+		animation-iteration-count: 1 !important;
+	}
+}]]></template>
+</templates>
