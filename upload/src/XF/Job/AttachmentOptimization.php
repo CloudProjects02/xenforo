@@ -28,7 +28,6 @@ class AttachmentOptimization extends AbstractImageOptimizationJob
 		/** @var AttachmentData $attachmentData */
 		$attachmentData = $this->app->em()->find(AttachmentData::class, $id);
 
-		/** @var PreparerService $attachmentPreparer */
 		$attachmentPreparer = $this->app->service(PreparerService::class);
 		$attachmentPreparer->optimizeExistingAttachment($attachmentData);
 	}

@@ -8,7 +8,6 @@ class StyleAssetRebuild extends AbstractJob
 {
 	public function run($maxRunTime)
 	{
-		/** @var AssetRebuildService $rebuildService */
 		$rebuildService = $this->app->service(AssetRebuildService::class);
 
 		$rebuildService->rebuildAssetStyleCache();

@@ -3,6 +3,7 @@
 namespace XF\Entity;
 
 use XF\Behavior\DevOutputWritable;
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XF\Phrase;
@@ -20,6 +21,7 @@ use XF\Repository\IconRepository;
  * @property string $admin_permission_id
  * @property bool $debug_only
  * @property bool $development_only
+ * @property bool $super_admin_only
  * @property bool $hide_no_children
  * @property string $addon_id
  *
@@ -29,7 +31,7 @@ use XF\Repository\IconRepository;
  * RELATIONS
  * @property-read AddOn|null $AddOn
  * @property-read AdminNavigation|null $Parent
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\AdminNavigation> $Children
+ * @property-read AbstractCollection<AdminNavigation> $Children
  * @property-read \XF\Entity\Phrase|null $MasterTitle
  */
 class AdminNavigation extends Entity
@@ -159,7 +161,6 @@ class AdminNavigation extends Entity
 
 	protected function _setupDefaults()
 	{
-		/** @var AddOnRepository $addOnRepo */
 		$addOnRepo = $this->_em->getRepository(AddOnRepository::class);
 		$this->addon_id = $addOnRepo->getDefaultAddOnId();
 	}
@@ -182,6 +183,7 @@ class AdminNavigation extends Entity
 			'admin_permission_id' => ['type' => self::STR, 'maxLength' => 25, 'default' => ''],
 			'debug_only' => ['type' => self::BOOL, 'default' => false],
 			'development_only' => ['type' => self::BOOL, 'default' => false],
+			'super_admin_only' => ['type' => self::BOOL, 'default' => false],
 			'hide_no_children' => ['type' => self::BOOL, 'default' => false],
 			'addon_id' => ['type' => self::BINARY, 'maxLength' => 50, 'default' => ''],
 		];

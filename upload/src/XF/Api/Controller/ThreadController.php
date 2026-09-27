@@ -211,7 +211,6 @@ class ThreadController extends AbstractController
 
 		if ($extraFetchIds)
 		{
-			/** @var PostFinder $finder */
 			$extraFinder = $this->finder(PostFinder::class)
 				->inThread($thread)
 				->where('post_id', $extraFetchIds)
@@ -230,7 +229,6 @@ class ThreadController extends AbstractController
 			$posts = $posts->merge($fetchPinnedPosts);
 		}
 
-		/** @var AttachmentRepository $attachmentRepo */
 		$attachmentRepo = $this->repository(AttachmentRepository::class);
 		$attachmentRepo->addAttachmentsToContent($posts, 'post');
 
@@ -292,7 +290,6 @@ class ThreadController extends AbstractController
 	 */
 	protected function setupPostFinder(Thread $thread)
 	{
-		/** @var PostFinder $finder */
 		$finder = $this->finder(PostFinder::class);
 		$finder
 			->inThread($thread)
@@ -309,7 +306,6 @@ class ThreadController extends AbstractController
 	 */
 	protected function setupThreadEdit(Thread $thread)
 	{
-		/** @var EditorService $editor */
 		$editor = $this->service(EditorService::class, $thread);
 
 		$input = $this->filter([
@@ -449,7 +445,6 @@ class ThreadController extends AbstractController
 			$type = 'hard';
 		}
 
-		/** @var DeleterService $deleter */
 		$deleter = $this->service(DeleterService::class, $thread);
 
 		if ($this->filter('starter_alert', 'bool'))
@@ -521,7 +516,6 @@ class ThreadController extends AbstractController
 			'title' => '?str',
 		]);
 
-		/** @var MoverService $mover */
 		$mover = $this->service(MoverService::class, $thread);
 
 		if ($options['starter_alert'])
@@ -640,7 +634,6 @@ class ThreadController extends AbstractController
 			'allow_uncreatable_type' => 'bool',
 		]);
 
-		/** @var ChangeTypeService $typeChanger */
 		$typeChanger = $this->service(ChangeTypeService::class, $thread);
 
 		$allowUncreatable = \XF::isApiBypassingPermissions() && $input['allow_uncreatable_type'];

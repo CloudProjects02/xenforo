@@ -12,8 +12,8 @@ use XF\Util\File;
  * @property int|null $batch_id
  * @property int $start_date
  * @property int $complete_date
- * @property array $addon_ids
- * @property array $results
+ * @property array|null $addon_ids
+ * @property array|null $results
  */
 class AddOnInstallBatch extends Entity
 {
@@ -31,7 +31,6 @@ class AddOnInstallBatch extends Entity
 
 	public function getAbstractedAddOnBatchPath($addOnId)
 	{
-		/** @var AddOnRepository $addOnRepo */
 		$addOnRepo = $this->repository(AddOnRepository::class);
 
 		$addOnIdPath = $addOnRepo->convertAddOnIdToUrlVersion($addOnId);

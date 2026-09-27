@@ -106,7 +106,7 @@ class FileCleanUp extends Command
 
 		$io->section(\XF::phrase('deleting_legacy_files...'));
 
-		foreach ($io->progressIterate($deletableFiles, $count) AS $file)
+		foreach ($io->progressIterate($filteredFiles, $count) AS $file)
 		{
 			$path = File::canonicalizePath($file);
 			if (file_exists($path) && !File::isWritable($path))

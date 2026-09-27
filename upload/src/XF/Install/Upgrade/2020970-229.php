@@ -15,7 +15,6 @@ class Version2020970 extends AbstractUpgrade
 	{
 		\XF::runOnce('nodeNestedSetRebuild', function ()
 		{
-			/** @var RebuildNestedSetService $service */
 			$service = \XF::service(RebuildNestedSetService::class, 'XF:Node', [
 				'parentField' => 'parent_node_id',
 			]);

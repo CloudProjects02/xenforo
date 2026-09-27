@@ -194,7 +194,6 @@ abstract class AbstractStatement
 	 */
 	protected function getException($message, $code = 0, $sqlStateCode = null)
 	{
-		$eType = null;
 		$class = null;
 
 		if ($sqlStateCode)
@@ -204,25 +203,21 @@ abstract class AbstractStatement
 				case '23000':
 					if (preg_match('/(^|\s)duplicate($|\s)/i', $message))
 					{
-						$eType = 'DuplicateKey';
+						$class = DuplicateKeyException::class;
 					}
 					break;
 
 				case '40001':
-					$eType = 'Deadlock';
+					$class = DeadlockException::class;
 					break;
 
 				case '42000':
-					$eType = 'InvalidQuery';
+					$class = InvalidQueryException::class;
 					break;
 			}
 		}
 
-		if ($eType)
-		{
-			$class = 'XF\Db\\' . $eType . 'Exception';
-		}
-		else if (!$class)
+		if (!$class)
 		{
 			$class = Exception::class;
 		}

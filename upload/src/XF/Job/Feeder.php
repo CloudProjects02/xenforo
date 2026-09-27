@@ -2,8 +2,6 @@
 
 namespace XF\Job;
 
-use XF\Entity\Feed;
-use XF\Mvc\Entity\ArrayCollection;
 use XF\Repository\FeedRepository;
 use XF\Service\Feed\FeederService;
 
@@ -19,13 +17,10 @@ class Feeder extends AbstractJob
 
 		$this->data['steps']++;
 
-		/** @var FeedRepository $feedRepo */
 		$feedRepo = $this->app->repository(FeedRepository::class);
 
-		/** @var FeederService $feederService */
 		$feederService = $this->app->service(FeederService::class);
 
-		/** @var Feed[]|ArrayCollection $dueFeeds */
 		$dueFeeds = $feedRepo->findDueFeeds()->fetch();
 		if (!$dueFeeds->count())
 		{

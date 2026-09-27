@@ -288,7 +288,6 @@ class Install extends AbstractController
 			$options['options']['boardUrl'] = rtrim($options['boardUrl'], '/');
 		}
 
-		/** @var OptionRepository $optionRepo */
 		$optionRepo = $this->repository(OptionRepository::class);
 
 		// if applicable, updating collectServerStats will enqueue stats collection automatically

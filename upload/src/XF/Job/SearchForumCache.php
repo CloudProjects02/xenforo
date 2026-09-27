@@ -41,7 +41,6 @@ class SearchForumCache extends AbstractJob
 			return $this->complete();
 		}
 
-		/** @var SearchForumRepository $searchForumRepo */
 		$searchForumRepo = $this->app->repository(SearchForumRepository::class);
 		$searchForumRepo->rebuildThreadsForSearchForum($searchForum);
 

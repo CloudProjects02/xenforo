@@ -2,15 +2,16 @@
 
 namespace XF\Finder;
 
+use XF\Entity\NewsFeed;
 use XF\Entity\User;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Finder;
 
 /**
- * @method AbstractCollection<\XF\Entity\NewsFeed> fetch(?int $limit = null, ?int $offset = null)
- * @method AbstractCollection<\XF\Entity\NewsFeed> fetchDeferred(?int $limit = null, ?int $offset = null)
- * @method \XF\Entity\NewsFeed|null fetchOne(?int $offset = null)
- * @extends Finder<\XF\Entity\NewsFeed>
+ * @method AbstractCollection<NewsFeed> fetch(?int $limit = null, ?int $offset = null)
+ * @method AbstractCollection<NewsFeed> fetchDeferred(?int $limit = null, ?int $offset = null)
+ * @method NewsFeed|null fetchOne(?int $offset = null)
+ * @extends Finder<NewsFeed>
  */
 class NewsFeedFinder extends Finder
 {

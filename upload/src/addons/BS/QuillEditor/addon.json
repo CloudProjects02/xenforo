@@ -1,0 +1,17 @@
+{
+    "legacy_addon_id": "",
+    "title": "[021] Quill Editor",
+    "description": "Allows you to use a modern editor built on Quill.",
+    "version_id": 1000170,
+    "version_string": "1.0.1",
+    "dev": "021",
+    "dev_url": "https://devsell.io",
+    "faq_url": "",
+    "support_url": "https://github.com/021-projects/quill-editor/issues",
+    "extra_urls": [],
+    "require": {
+        "XF": [2030000, "XenForo 2.3.0+"],
+        "php": ["8.0.0", "PHP 8.0.0+"]
+    },
+    "icon": "icon.png"
+}

@@ -4,13 +4,12 @@ namespace XF\Repository;
 
 use XF\Entity\BbCodeMediaSite;
 use XF\Finder\BbCodeMediaSiteFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 class BbCodeMediaSiteRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return BbCodeMediaSiteFinder
 	 */
 	public function findBbCodeMediaSitesForList()
 	{
@@ -18,7 +17,7 @@ class BbCodeMediaSiteRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return BbCodeMediaSiteFinder
 	 */
 	public function findActiveMediaSites()
 	{

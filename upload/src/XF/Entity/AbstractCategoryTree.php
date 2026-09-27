@@ -17,7 +17,7 @@ use XF\Mvc\Router;
  * @property array $breadcrumb_data
  *
  * RELATIONS
- * @property-read AbstractCollection|PermissionCacheContent[] $Permissions
+ * @property-read AbstractCollection<PermissionCacheContent> $Permissions
  */
 abstract class AbstractCategoryTree extends Entity
 {

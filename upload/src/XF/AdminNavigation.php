@@ -4,7 +4,7 @@ namespace XF;
 
 use XF\Entity\User;
 
-use function boolval, is_array;
+use function array_key_exists, boolval, is_array;
 
 class AdminNavigation
 {
@@ -152,6 +152,14 @@ class AdminNavigation
 			}
 
 			if ($entry['development_only'] && !$isDevelopment)
+			{
+				continue;
+			}
+
+			if (array_key_exists('super_admin_only', $entry)
+				&& $entry['super_admin_only']
+				&& !$visitor->is_super_admin
+			)
 			{
 				continue;
 			}

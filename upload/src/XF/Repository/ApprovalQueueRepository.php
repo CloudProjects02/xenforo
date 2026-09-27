@@ -7,9 +7,7 @@ use XF\Entity\ApprovalQueue;
 use XF\Entity\LinkableInterface;
 use XF\Finder\ApprovalQueueFinder;
 use XF\Mvc\Entity\AbstractCollection;
-use XF\Mvc\Entity\ArrayCollection;
 use XF\Mvc\Entity\Entity;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 class ApprovalQueueRepository extends Repository
@@ -17,7 +15,7 @@ class ApprovalQueueRepository extends Repository
 	protected $handlerCache = [];
 
 	/**
-	 * @return Finder
+	 * @return ApprovalQueueFinder
 	 */
 	public function findUnapprovedContent()
 	{
@@ -103,7 +101,7 @@ class ApprovalQueueRepository extends Repository
 	}
 
 	/**
-	 * @param ArrayCollection $unapprovedItems
+	 * @param AbstractCollection<ApprovalQueue> $unapprovedItems
 	 */
 	public function filterViewableUnapprovedItems($unapprovedItems)
 	{
@@ -161,7 +159,7 @@ class ApprovalQueueRepository extends Repository
 	}
 
 	/**
-	 * @param ApprovalQueue[] $unapprovedItems
+	 * @param AbstractCollection<ApprovalQueue> $unapprovedItems
 	 */
 	public function cleanUpInvalidRecords($unapprovedItems)
 	{
@@ -222,7 +220,6 @@ class ApprovalQueueRepository extends Repository
 		bool $notifiableOnly = false
 	)
 	{
-		/** @var ModeratorRepository $moderatorRepo */
 		$moderatorRepo = $this->repository(ModeratorRepository::class);
 
 		$moderators = $moderatorRepo

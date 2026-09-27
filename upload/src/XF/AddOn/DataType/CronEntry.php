@@ -93,7 +93,6 @@ class CronEntry extends AbstractDataType
 	{
 		\XF::runOnce('rebuild_active_' . $this->getContainerTag(), function ()
 		{
-			/** @var CalculateNextRunService $runService */
 			$runService = \XF::app()->service(CalculateNextRunService::class);
 			$runService->updateMinimumNextRunTime();
 		});

@@ -342,7 +342,7 @@ class Gd extends AbstractDriver
 						$rNew = 0;
 					}
 					$gNew = ($amount * ($gOrig - $gBlur)) + $gOrig;
-					if($gNew > 255)
+					if ($gNew > 255)
 					{
 						$gNew = 255;
 					}
@@ -365,8 +365,11 @@ class Gd extends AbstractDriver
 			}
 		}
 
-		imagedestroy($imageCanvas);
-		imagedestroy($imageBlur);
+		if (\PHP_VERSION_ID < 80000)
+		{
+			imagedestroy($imageCanvas);
+			imagedestroy($imageBlur);
+		}
 
 		$this->setImage($image);
 
@@ -476,7 +479,11 @@ class Gd extends AbstractDriver
 	{
 		if ($this->image)
 		{
-			imagedestroy($this->image);
+			if (\PHP_VERSION_ID < 80000)
+			{
+				imagedestroy($this->image);
+			}
+
 			$this->image = null;
 		}
 	}

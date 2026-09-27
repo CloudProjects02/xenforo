@@ -54,7 +54,6 @@ class ApproverService extends AbstractService
 
 		if ($post)
 		{
-			/** @var NotifierService $notifier */
 			$notifier = $this->service(NotifierService::class, $post, 'thread');
 			$notifier->notifyAndEnqueue($this->notifyRunTime);
 		}

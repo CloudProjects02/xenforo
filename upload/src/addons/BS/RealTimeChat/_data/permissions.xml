@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<permissions>
+  <permission permission_group_id="bsChat" permission_id="aibGptMaxRepliesPerDay" permission_type="integer" interface_group_id="bsRtcAiBots" display_order="20"/>
+  <permission permission_group_id="bsChat" permission_id="canBan" permission_type="flag" interface_group_id="bsRtc" display_order="80"/>
+  <permission permission_group_id="bsChat" permission_id="canBanAny" permission_type="flag" interface_group_id="bsRtcModerator" display_order="40"/>
+  <permission permission_group_id="bsChat" permission_id="canDelete" permission_type="flag" interface_group_id="bsRtc" display_order="30"/>
+  <permission permission_group_id="bsChat" permission_id="canDeleteAny" permission_type="flag" interface_group_id="bsRtcModerator" display_order="10"/>
+  <permission permission_group_id="bsChat" permission_id="canEdit" permission_type="flag" interface_group_id="bsRtc" display_order="40"/>
+  <permission permission_group_id="bsChat" permission_id="canEditAny" permission_type="flag" interface_group_id="bsRtcModerator" display_order="30"/>
+  <permission permission_group_id="bsChat" permission_id="canReact" permission_type="flag" interface_group_id="bsRtc" display_order="60"/>
+  <permission permission_group_id="bsChat" permission_id="canView" permission_type="flag" interface_group_id="bsRtc" display_order="10"/>
+  <permission permission_group_id="bsChat" permission_id="canWrite" permission_type="flag" interface_group_id="bsRtc" display_order="20"/>
+  <permission permission_group_id="bsChat" permission_id="clearAnyRoom" permission_type="flag" interface_group_id="bsRtcModerator" display_order="20"/>
+  <permission permission_group_id="bsChat" permission_id="clearOwnRooms" permission_type="flag" interface_group_id="bsRtc" display_order="100"/>
+  <permission permission_group_id="bsChat" permission_id="createRoom" permission_type="flag" interface_group_id="bsRtc" display_order="70"/>
+  <permission permission_group_id="bsChat" permission_id="deleteAnyRoom" permission_type="flag" interface_group_id="bsRtcModerator" display_order="50"/>
+  <permission permission_group_id="bsChat" permission_id="deleteOwnRooms" permission_type="flag" interface_group_id="bsRtc" display_order="90"/>
+  <permission permission_group_id="bsChat" permission_id="editAnyRoom" permission_type="flag" interface_group_id="bsRtcModerator" display_order="45"/>
+  <permission permission_group_id="bsChat" permission_id="editOwnRooms" permission_type="flag" interface_group_id="bsRtc" display_order="75"/>
+  <permission permission_group_id="bsChat" permission_id="setIndividualWallpaper" permission_type="flag" interface_group_id="bsRtc" display_order="120"/>
+  <permission permission_group_id="bsChat" permission_id="setWallpaperInOwnRooms" permission_type="flag" interface_group_id="bsRtc" display_order="110"/>
+  <permission permission_group_id="bsChat" permission_id="translateMessages" permission_type="flag" interface_group_id="bsRtc" display_order="130"/>
+  <permission permission_group_id="bsChat" permission_id="uploadAttachment" permission_type="flag" interface_group_id="bsRtc" display_order="65"/>
+  <permission permission_group_id="bsChat" permission_id="useAiBots" permission_type="flag" interface_group_id="bsRtcAiBots" display_order="10"/>
+  <permission permission_group_id="bsChat" permission_id="viewBannedList" permission_type="flag" interface_group_id="bsRtc" display_order="85"/>
+</permissions>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<routes>
+  <route route_type="admin" route_prefix="chat" controller="BS\RealTimeChat:Chat" context="bsRtc"/>
+  <route route_type="admin" route_prefix="chat" sub_name="rooms" format="rooms/:int&lt;room_id&gt;/" controller="BS\RealTimeChat:Room" context="bsRtcRooms"/>
+  <route route_type="public" route_prefix="chat" format=":str&lt;tag&gt;/" build_class="BS\RealTimeChat\Route" build_method="buildLinkWithTag" controller="BS\RealTimeChat:Chat"/>
+  <route route_type="public" route_prefix="chat" sub_name="l" format="l/:str&lt;link_id&gt;/" controller="BS\RealTimeChat:RoomLink"/>
+  <route route_type="public" route_prefix="chat" sub_name="messages" format=":str&lt;tag&gt;/messages/:str&lt;message_id&gt;/" build_class="BS\RealTimeChat\Route" build_method="buildLinkWithTag" controller="BS\RealTimeChat:Message" context="bsRtc"/>
+  <route route_type="public" route_prefix="chat" sub_name="rooms" format="rooms/:str&lt;tag&gt;/" build_class="BS\RealTimeChat\Route" build_method="buildLinkWithTag" controller="BS\RealTimeChat:Room" context="bsRtc"/>
+</routes>

@@ -59,6 +59,16 @@ class DraftRepository extends Repository
 			$cutOff = \XF::$time - 3600 * $this->options()->saveDrafts['lifetime'];
 		}
 
-		return $this->db()->delete('xf_draft', 'last_update < ?', $cutOff);
+		$db = $this->db();
+		$totalDeleted = 0;
+
+		do
+		{
+			$deleted = $db->delete('xf_draft', 'last_update < ?', $cutOff, '', '', 1000);
+			$totalDeleted += $deleted;
+		}
+		while ($deleted >= 1000);
+
+		return $totalDeleted;
 	}
 }

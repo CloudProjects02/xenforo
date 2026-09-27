@@ -75,7 +75,6 @@ class ModeratorController extends AbstractController
 		?ModeratorContent $contentModerator = null
 	)
 	{
-		/** @var PermissionEntryRepository $permissionEntryRepo */
 		$permissionEntryRepo = $this->repository(PermissionEntryRepository::class);
 
 		$modRepo = $this->getModRepo();
@@ -235,7 +234,6 @@ class ModeratorController extends AbstractController
 			'is_staff' => $input['is_staff'],
 		]);
 
-		/** @var UpdatePermissionsService $permissionUpdater */
 		$permissionUpdater = $this->service(UpdatePermissionsService::class);
 		$permissionUpdater->setUser($user);
 

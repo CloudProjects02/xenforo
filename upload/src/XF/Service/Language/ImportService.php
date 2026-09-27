@@ -119,7 +119,6 @@ class ImportService extends AbstractService
 
 		$language = $this->getTargetLanguage($document);
 
-		/** @var \XF\Service\Phrase\ImportService $phraseImporter */
 		$phraseImporter = $this->service(\XF\Service\Phrase\ImportService::class, $language);
 		$phraseImporter->importFromXml($document, $addOnId);
 

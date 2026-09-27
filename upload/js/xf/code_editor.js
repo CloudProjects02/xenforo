@@ -47,8 +47,8 @@
 		initEditor ()
 		{
 			const textarea = this.target
-			let lang = {}
-			let config = {}
+			let lang
+			let config
 
 			if (textarea.dataset.cmInitialized)
 			{

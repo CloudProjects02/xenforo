@@ -144,8 +144,8 @@ class SchemaManager
 	}
 
 	/**
-	 * @param $tableName
-	 * @param \Closure $toApply
+	 * @param string $tableName
+	 * @param \Closure(Alter): void $toApply
 	 */
 	public function alterTable($tableName, \Closure $toApply)
 	{
@@ -182,7 +182,7 @@ class SchemaManager
 
 	/**
 	 * @param $tableName
-	 * @param \Closure $toApply
+	 * @param \Closure(Create): void $toApply
 	 */
 	public function createTable($tableName, \Closure $toApply)
 	{
@@ -201,7 +201,7 @@ class SchemaManager
 
 	/**
 	 * @param $tableName
-	 * @param \Closure|null $toApply
+	 * @param (\Closure(Drop): void)|null $toApply
 	 */
 	public function dropTable($tableName, ?\Closure $toApply = null)
 	{

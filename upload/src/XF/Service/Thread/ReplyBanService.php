@@ -146,7 +146,6 @@ class ReplyBanService extends AbstractService
 				'expiry' => $replyBan->expiry_date,
 			];
 
-			/** @var UserAlertRepository $alertRepo */
 			$alertRepo = $this->repository(UserAlertRepository::class);
 			$alertRepo->alert(
 				$replyBan->User,

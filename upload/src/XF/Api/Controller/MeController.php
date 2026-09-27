@@ -82,7 +82,6 @@ class MeController extends AbstractController
 
 			if ($visitor->canEditSignature())
 			{
-				/** @var SignatureEditService $sigEditor */
 				$sigEditor = $this->service(SignatureEditService::class, $visitor);
 				if ($sigEditor->setSignature($signature, $errors))
 				{
@@ -146,7 +145,6 @@ class MeController extends AbstractController
 		$password = $this->filter('current_password', 'str');
 		$email = $this->filter('email', 'str');
 
-		/** @var EmailChangeService $emailChange */
 		$emailChange = $this->service(EmailChangeService::class, $visitor, $email);
 
 		if (!$visitor->authenticate($password))
@@ -201,7 +199,6 @@ class MeController extends AbstractController
 			return $this->error(\XF::phrase('your_existing_password_is_not_correct'));
 		}
 
-		/** @var PasswordChangeService $passwordChange */
 		$passwordChange = $this->service(PasswordChangeService::class, $visitor, $newPassword);
 		$passwordChange->save();
 

@@ -146,7 +146,6 @@ class SmilieController extends AbstractController
 				$smilies[$smilieId] = $this->filterSmilieImportInput($input['smilies'][$smilieId]);
 			}
 
-			/** @var ImportService $smilieImporter */
 			$smilieImporter = $this->service(ImportService::class);
 			$smilieImporter->importSmilies($smilies, $input['categories'], $errors);
 
@@ -194,7 +193,6 @@ class SmilieController extends AbstractController
 			'directory' => 'str',
 		]);
 
-		/** @var ImportService $smilieImporter */
 		$smilieImporter = $this->service(ImportService::class);
 
 		if ($input['mode'] == 'directory')

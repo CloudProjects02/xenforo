@@ -7,7 +7,6 @@ use XF\Finder\ModeratorContentFinder;
 use XF\Finder\ModeratorFinder;
 use XF\Moderator\AbstractModerator;
 use XF\Mvc\Entity\AbstractCollection;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 use function count;
@@ -15,7 +14,7 @@ use function count;
 class ModeratorRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return ModeratorFinder
 	 */
 	public function findModeratorsForList($isSuperModerator = false)
 	{
@@ -32,7 +31,7 @@ class ModeratorRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return ModeratorContentFinder
 	 */
 	public function findContentModeratorsForList()
 	{
@@ -78,7 +77,6 @@ class ModeratorRepository extends Repository
 
 	public function getModeratorPermissionData($contentType = null)
 	{
-		/** @var PermissionRepository $permissionRepo */
 		$permissionRepo = $this->repository(PermissionRepository::class);
 
 		$contentHandler = $contentType ? $permissionRepo->getPermissionHandler($contentType) : null;

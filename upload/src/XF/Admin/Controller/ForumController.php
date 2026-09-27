@@ -33,6 +33,9 @@ class ForumController extends AbstractNode
 			case 'index':
 				break;
 
+			case 'prefixes':
+				break;
+
 			default:
 				parent::preDispatchController($action, $params);
 		}
@@ -93,21 +96,17 @@ class ForumController extends AbstractNode
 
 		if ($reply instanceof View)
 		{
-			/** @var ThreadFieldRepository $fieldRepo */
 			$fieldRepo = $this->repository(ThreadFieldRepository::class);
 			$availableFields = $fieldRepo->findFieldsForList()->fetch();
 
-			/** @var ThreadPrefixRepository $prefixRepo */
 			$prefixRepo = $this->repository(ThreadPrefixRepository::class);
 			$availablePrefixes = $prefixRepo->findPrefixesForList()->fetch()->pluckNamed('title', 'prefix_id');
 			$prefixListData = $prefixRepo->getPrefixListData();
 
-			/** @var ThreadPromptRepository $promptRepo */
 			$promptRepo = $this->repository(ThreadPromptRepository::class);
 			$availablePrompts = $promptRepo->findPromptsForList()->fetch()->pluckNamed('title', 'prompt_id');
 			$promptListData = $promptRepo->getPromptListData();
 
-			/** @var UserGroupRepository $userGroupRepo */
 			$userGroupRepo = $this->repository(UserGroupRepository::class);
 			$userGroups = $userGroupRepo->findUserGroupsForList()->fetch();
 
@@ -202,7 +201,6 @@ class ForumController extends AbstractNode
 		$prefixIds = $this->filter('available_prefixes', 'array-uint');
 		$form->complete(function () use ($data, $prefixIds)
 		{
-			/** @var ForumPrefixRepository $repo */
 			$repo = $this->repository(ForumPrefixRepository::class);
 			$repo->updateContentAssociations($data->node_id, $prefixIds);
 		});
@@ -215,7 +213,6 @@ class ForumController extends AbstractNode
 		$fieldIds = $this->filter('available_fields', 'array-str');
 		$form->complete(function () use ($data, $fieldIds)
 		{
-			/** @var ForumFieldRepository $repo */
 			$repo = $this->repository(ForumFieldRepository::class);
 			$repo->updateContentAssociations($data->node_id, $fieldIds);
 		});
@@ -223,7 +220,6 @@ class ForumController extends AbstractNode
 		$promptIds = $this->filter('available_prompts', 'array-uint');
 		$form->complete(function () use ($data, $promptIds)
 		{
-			/** @var ForumPromptRepository $repo */
 			$repo = $this->repository(ForumPromptRepository::class);
 			$repo->updateContentAssociations($data->node_id, $promptIds);
 		});

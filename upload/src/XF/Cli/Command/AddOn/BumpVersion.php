@@ -70,7 +70,6 @@ class BumpVersion extends AbstractCommand
 			return 1;
 		}
 
-		/** @var AddOnRepository $addOnRepo */
 		$addOnRepo = \XF::repository(AddOnRepository::class);
 
 		/** @var QuestionHelper $helper */

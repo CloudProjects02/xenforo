@@ -8,6 +8,9 @@ use XF\Entity\Thread;
 use XF\Entity\User;
 use XF\Mvc\Entity\Entity;
 
+/**
+ * @extends AbstractHandler<Thread>
+ */
 class ThreadHandler extends AbstractHandler
 {
 	public function isLoggable(Entity $content, $action, User $actor)
@@ -28,7 +31,6 @@ class ThreadHandler extends AbstractHandler
 
 	protected function getLogActionForChange(Entity $content, $field, $newValue, $oldValue)
 	{
-		/** @var Thread $content */
 		switch ($field)
 		{
 			case 'custom_fields':
@@ -98,13 +100,12 @@ class ThreadHandler extends AbstractHandler
 
 	protected function setupLogEntityContent(ModeratorLog $log, Entity $content)
 	{
-		/** @var Thread $content */
 		$log->content_user_id = $content->user_id;
 		$log->content_username = $content->username;
 		$log->content_title = $content->title;
 		$log->content_url = \XF::app()->router('public')->buildLink('nopath:threads', $content);
 		$log->discussion_content_type = 'thread';
-		$log->discussion_content_id = $content->thread_id;
+		$log->discussion_content_id = $content->thread_id ?? 0;
 	}
 
 	protected function getActionPhraseParams(ModeratorLog $log)

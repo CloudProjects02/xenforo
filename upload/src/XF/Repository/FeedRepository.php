@@ -3,13 +3,12 @@
 namespace XF\Repository;
 
 use XF\Finder\FeedFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 class FeedRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return FeedFinder
 	 */
 	public function findFeedsForList()
 	{
@@ -17,11 +16,10 @@ class FeedRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return FeedFinder
 	 */
 	public function findDueFeeds($time = null)
 	{
-		/** @var FeedFinder $finder */
 		$finder = $this->finder(FeedFinder::class);
 
 		return $finder

@@ -15,7 +15,6 @@ class UserGroupPromotion extends AbstractJob
 
 	public function run($maxRunTime)
 	{
-		/** @var UserGroupPromotionRepository $promotionRepo */
 		$promotionRepo = $this->app->repository(UserGroupPromotionRepository::class);
 
 		$promotions = $promotionRepo->getActiveUserGroupPromotions();
@@ -44,7 +43,6 @@ class UserGroupPromotion extends AbstractJob
 			return $this->complete();
 		}
 
-		/** @var UserFinder $userFinder */
 		$userFinder = $this->app->finder(UserFinder::class);
 		$userFinder->where('user_id', $ids)
 			->with(['Profile', 'Option'])

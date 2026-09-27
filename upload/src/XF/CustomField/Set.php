@@ -184,7 +184,6 @@ class Set implements \ArrayAccess, \IteratorAggregate, \Countable
 
 			if ($field->field_type == 'bbcode')
 			{
-				/** @var PreparerService $messagePreparer */
 				$messagePreparer = \XF::app()->service(PreparerService::class, 'custom_field');
 				$messagePreparer->setConstraint('allowEmpty', true);
 				$value = $messagePreparer->prepare($value);

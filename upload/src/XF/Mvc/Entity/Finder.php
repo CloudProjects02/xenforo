@@ -166,6 +166,12 @@ class Finder implements \IteratorAggregate
 		return $this;
 	}
 
+	/**
+	 * @param array      $conditionA
+	 * @param array|null $conditionB
+	 * @param array ...$conditions
+	 * @return static
+	 */
 	public function whereOr(array $conditionA, ?array $conditionB = null)
 	{
 		$args = $conditionB === null ? $conditionA : func_get_args();
@@ -544,6 +550,11 @@ class Finder implements \IteratorAggregate
 		return $this;
 	}
 
+	/**
+	 * @param string $sql
+	 * @param mixed ...$arguments
+	 * @return static
+	 */
 	public function whereSql($sql)
 	{
 		$args = func_get_args();
@@ -624,6 +635,11 @@ class Finder implements \IteratorAggregate
 		return "`$table`.`$field`";
 	}
 
+	/**
+	 * @param string $sqlExpression
+	 * @param mixed ...$arguments
+	 * @return static
+	 */
 	public function expression($sqlExpression)
 	{
 		$args = func_get_args();
@@ -1146,27 +1162,27 @@ class Finder implements \IteratorAggregate
 			{
 				if (is_array($entry))
 				{
-					$direction = strtoupper($entry[1] ?? 'ASC');
-					if (!$direction)
+					$entryDirection = strtoupper($entry[1] ?? $direction);
+					if (!$entryDirection)
 					{
-						$direction = 'ASC';
+						$entryDirection = $direction;
 					}
 
-					switch ($direction)
+					switch ($entryDirection)
 					{
 						case 'ASC':
 						case 'DESC':
 							break;
 
 						default:
-							throw new \InvalidArgumentException("Unknown order by direction $direction");
+							throw new \InvalidArgumentException("Unknown order by direction $entryDirection");
 					}
 
-					$output[] = [$entry[0], $direction];
+					$output[] = [$entry[0], $entryDirection];
 				}
 				else
 				{
-					$output[] = [$entry, 'ASC'];
+					$output[] = [$entry, $direction];
 				}
 			}
 
@@ -1463,8 +1479,8 @@ class Finder implements \IteratorAggregate
 	{
 		$checkOffset = $offset ?? $this->offset;
 		if (
-			$checkOffset === null ||
-			$checkOffset < static::SKIP_DEFERRED_FETCH_THRESHOLD
+			$checkOffset === null
+			|| $checkOffset < static::SKIP_DEFERRED_FETCH_THRESHOLD
 		)
 		{
 			return $this->fetch($limit, $offset);
@@ -1494,6 +1510,10 @@ class Finder implements \IteratorAggregate
 		while ($row = $results->fetchAliasGrouped())
 		{
 			$entity = $this->em->hydrateFromGrouped($row, $map);
+			if ($entity === null)
+			{
+				continue;
+			}
 			$id = $keyedBy ? $keyedBy($entity) : $entity->getIdentifier();
 			if ($pluckFrom)
 			{
@@ -1545,6 +1565,11 @@ class Finder implements \IteratorAggregate
 		return $results->fetchAll();
 	}
 
+	/**
+	 * @param string|string[] $column
+	 * @param string ...$columns
+	 * @return array
+	 */
 	public function fetchColumns($column)
 	{
 		if (is_array($column) && func_num_args() == 1)

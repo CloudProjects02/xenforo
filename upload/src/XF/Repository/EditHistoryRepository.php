@@ -7,7 +7,6 @@ use XF\Entity\EditHistory;
 use XF\Entity\User;
 use XF\Finder\EditHistoryFinder;
 use XF\Mvc\Entity\Entity;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 class EditHistoryRepository extends Repository
@@ -16,7 +15,7 @@ class EditHistoryRepository extends Repository
 	 * @param $contentType
 	 * @param null $contentId
 	 *
-	 * @return Finder
+	 * @return EditHistoryFinder
 	 */
 	public function findEditHistoryForContent($contentType, $contentId = null)
 	{
@@ -35,7 +34,7 @@ class EditHistoryRepository extends Repository
 	/**
 	 * @param $userId
 	 *
-	 * @return Finder
+	 * @return EditHistoryFinder
 	 */
 	public function findEditHistoryByUser($userId)
 	{
@@ -136,7 +135,6 @@ class EditHistoryRepository extends Repository
 
 		if ($logIp)
 		{
-			/** @var IpRepository $ipRepo */
 			$ipRepo = $this->repository(IpRepository::class);
 			$ipRepo->logIp($editHistory->edit_user_id, $logIp, 'edit_history', $editHistory->edit_history_id, 'insert');
 		}

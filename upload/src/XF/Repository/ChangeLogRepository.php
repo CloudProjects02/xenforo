@@ -6,7 +6,6 @@ use XF\ChangeLog\AbstractHandler;
 use XF\Entity\ChangeLog;
 use XF\Finder\ChangeLogFinder;
 use XF\Mvc\Entity\AbstractCollection;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 use XF\PrintableException;
 
@@ -18,7 +17,7 @@ class ChangeLogRepository extends Repository
 	 * @param string $contentType
 	 * @param int $contentId
 	 *
-	 * @return Finder
+	 * @return ChangeLogFinder
 	 */
 	public function findChangeLogsByContent($contentType, $contentId)
 	{
@@ -31,7 +30,7 @@ class ChangeLogRepository extends Repository
 	/**
 	 * @param string $contentType
 	 *
-	 * @return Finder
+	 * @return ChangeLogFinder
 	 */
 	public function findChangeLogsByContentType($contentType)
 	{

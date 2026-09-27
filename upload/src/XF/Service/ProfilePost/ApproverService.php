@@ -42,7 +42,6 @@ class ApproverService extends AbstractService
 
 	protected function onApprove()
 	{
-		/** @var NotifierService $notifier */
 		$notifier = $this->service(NotifierService::class, $this->profilePost);
 		$notifier->notify();
 	}

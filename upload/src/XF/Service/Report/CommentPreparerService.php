@@ -76,7 +76,6 @@ class CommentPreparerService extends AbstractService
 	 */
 	protected function getMessagePreparer($format = true)
 	{
-		/** @var PreparerService $preparer */
 		$preparer = $this->service(PreparerService::class, 'report_comment', $this->comment);
 		if (!$format)
 		{

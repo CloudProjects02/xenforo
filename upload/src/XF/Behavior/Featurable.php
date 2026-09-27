@@ -62,9 +62,9 @@ class Featurable extends Behavior
 				/** @var FeatureTrait $entity */
 				$entity = $this->entity;
 				if (
-					$visibilityChange &&
-					$entity->isFeatured() &&
-					$entity->Feature
+					$visibilityChange
+					&& $entity->isFeatured()
+					&& $entity->Feature
 				)
 				{
 					/** @var FeaturedContent $feature */
@@ -92,7 +92,6 @@ class Featurable extends Behavior
 
 	protected function getHandler(): ?AbstractHandler
 	{
-		/** @var FeaturedContentRepository $featureRepo */
 		$featureRepo = $this->repository(FeaturedContentRepository::class);
 		return $featureRepo->getFeatureHandler($this->contentType());
 	}

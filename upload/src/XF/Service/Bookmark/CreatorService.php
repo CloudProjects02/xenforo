@@ -7,6 +7,7 @@ use XF\Db\DuplicateKeyException;
 use XF\Entity\BookmarkItem;
 use XF\Entity\BookmarkTrait;
 use XF\Mvc\Entity\Entity;
+use XF\Repository\WebhookRepository;
 use XF\Service\AbstractService;
 use XF\Service\ValidateAndSavableTrait;
 
@@ -121,6 +122,13 @@ class CreatorService extends AbstractService
 		{
 			$this->preparer->afterInsert();
 			$this->labelChanger->save();
+
+			$this->repository(WebhookRepository::class)->queueWebhook(
+				$bookmark->content_type,
+				$bookmark->content_id,
+				'bookmark',
+				$this->content
+			);
 		}
 
 		$this->db()->commit();

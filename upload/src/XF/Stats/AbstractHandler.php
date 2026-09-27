@@ -7,6 +7,9 @@ use XF\Db\AbstractAdapter;
 
 abstract class AbstractHandler
 {
+	/**
+	 * @var string
+	 */
 	protected $contentType;
 
 	/**
@@ -14,6 +17,9 @@ abstract class AbstractHandler
 	 */
 	protected $app;
 
+	/**
+	 * @param string $contentType
+	 */
 	public function __construct($contentType, App $app)
 	{
 		$this->contentType = $contentType;
@@ -28,16 +34,26 @@ abstract class AbstractHandler
 		return $this->app->db();
 	}
 
+	/**
+	 * @return array<string, string|\Stringable>
+	 */
 	abstract public function getStatsTypes();
+
+	/**
+	 * @param int $start
+	 * @param int $end
+	 *
+	 * @return array<string, array<int, int>>
+	 */
 	abstract public function getData($start, $end);
 
 	/**
 	 * Manipulates a statistic type before display. Must still return a number (no formatting).
 	 *
 	 * @param string $statsType
-	 * @param number $counter
+	 * @param int $counter
 	 *
-	 * @return number
+	 * @return int
 	 */
 	public function adjustStatValue($statsType, $counter)
 	{
@@ -47,10 +63,10 @@ abstract class AbstractHandler
 	/**
 	 * Returns SQL for a basic stats prepared statement.
 	 *
-	 * @param string	Name of table from which to select data
-	 * @param string	Name of date field
-	 * @param string	Extra SQL conditions
-	 * @param string	SQL calculation function (COUNT(*), SUM(field_name)...)
+	 * @param string $tableName Name of table from which to select data
+	 * @param string $dateField Name of date field
+	 * @param string $extraWhere Extra SQL conditions
+	 * @param string $calcFunction SQL calculation function (COUNT(*), SUM(field_name)...)
 	 *
 	 * @return string
 	 */

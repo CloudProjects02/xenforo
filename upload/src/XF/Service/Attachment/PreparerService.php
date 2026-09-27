@@ -9,6 +9,7 @@ use XF\Entity\User;
 use XF\FileWrapper;
 use XF\Finder\AttachmentFinder;
 use XF\PrintableException;
+use XF\Repository\AttachmentRepository;
 use XF\Service\AbstractService;
 use XF\Util\File;
 
@@ -59,21 +60,28 @@ class PreparerService extends AbstractService
 		}
 
 		$sourceFile = $file->getFilePath();
-		$width = $data->width;
-		$height = $data->height;
 
-		if ($width && $height && $this->app->imageManager()->canResize($width, $height))
+		if ($data->canCreateThumbnails())
 		{
-			$tempThumbFile = $this->generateAttachmentThumbnail($sourceFile, $thumbWidth, $thumbHeight);
-			if ($tempThumbFile)
+			$thumbnails = $this->generateAttachmentThumbnails($sourceFile);
+
+			foreach ($thumbnails AS $size => $thumbnail)
 			{
-				$data->set('thumbnail_width', $thumbWidth, ['forceSet' => true]);
-				$data->set('thumbnail_height', $thumbHeight, ['forceSet' => true]);
+				if ($size === 1)
+				{
+					$data->set('thumbnail_width', $thumbnail['width'], ['forceSet' => true]);
+					$data->set('thumbnail_height', $thumbnail['height'], ['forceSet' => true]);
+				}
+
+				if ($size === 2)
+				{
+					$data->set('thumbnail_retina', true, ['forceSet' => true]);
+				}
 			}
 		}
 		else
 		{
-			$tempThumbFile = null;
+			$thumbnails = [];
 		}
 
 		$this->db()->beginTransaction();
@@ -81,16 +89,19 @@ class PreparerService extends AbstractService
 		$data->save(true, false);
 
 		$dataPath = $data->getAbstractedDataPath();
-		$thumbnailPath = $data->getAbstractedThumbnailPath();
 
 		// if one of the writes fail, remove the data record
 		try
 		{
 			File::copyFileToAbstractedPath($sourceFile, $dataPath);
 
-			if ($tempThumbFile)
+			foreach ($thumbnails AS $size => $thumbnail)
 			{
-				File::copyFileToAbstractedPath($tempThumbFile, $thumbnailPath);
+				$thumbnailPath = $data->getAbstractedThumbnailPathForSize($size);
+				File::copyFileToAbstractedPath(
+					$thumbnail['path'],
+					$thumbnailPath
+				);
 			}
 		}
 		catch (\Exception $e)
@@ -100,10 +111,11 @@ class PreparerService extends AbstractService
 
 			File::deleteFromAbstractedPath($dataPath);
 
-			if ($tempThumbFile)
+			foreach ($thumbnails AS $size => $thumbnail)
 			{
+				$thumbnailPath = $data->getAbstractedThumbnailPathForSize($size);
 				File::deleteFromAbstractedPath($thumbnailPath);
-				@unlink($tempThumbFile);
+				@unlink($thumbnail['path']);
 			}
 
 			throw $e;
@@ -206,19 +218,25 @@ class PreparerService extends AbstractService
 		}
 
 		$sourceFile = $file->getFilePath();
-		$width = $data->width;
-		$height = $data->height;
 
-		$tempThumbFile = false;
+		$thumbnails = [];
 		if ($data->isChanged('file_hash'))
 		{
-			if ($width && $height && $this->app->imageManager()->canResize($width, $height))
+			if ($data->canCreateThumbnails())
 			{
-				$tempThumbFile = $this->generateAttachmentThumbnail($sourceFile, $thumbWidth, $thumbHeight);
-				if ($tempThumbFile)
+				$thumbnails = $this->generateAttachmentThumbnails($sourceFile);
+				foreach ($thumbnails AS $size => $thumbnail)
 				{
-					$data->set('thumbnail_width', $thumbWidth, ['forceSet' => true]);
-					$data->set('thumbnail_height', $thumbHeight, ['forceSet' => true]);
+					if ($size === 1)
+					{
+						$data->set('thumbnail_width', $thumbnail['width'], ['forceSet' => true]);
+						$data->set('thumbnail_height', $thumbnail['height'], ['forceSet' => true]);
+					}
+
+					if ($size === 2)
+					{
+						$data->set('thumbnail_retina', true, ['forceSet' => true]);
+					}
 				}
 			}
 		}
@@ -226,13 +244,11 @@ class PreparerService extends AbstractService
 		$this->db()->beginTransaction();
 
 		$previousDataPath = null;
-		$previousThumbnailPath = null;
 
 		$fileIsChanged = $data->isChanged(['file_hash', 'file_path']);
 		if ($fileIsChanged)
 		{
 			$previousDataPath = $data->getExistingAbstractedDataPath();
-			$previousThumbnailPath = $data->getExistingAbstractedThumbnailPath();
 		}
 
 		$data->saveIfChanged($dataChanged, true, false);
@@ -240,15 +256,18 @@ class PreparerService extends AbstractService
 		if ($fileIsChanged && $dataChanged)
 		{
 			$dataPath = $data->getAbstractedDataPath();
-			$thumbnailPath = $data->getAbstractedThumbnailPath();
 
 			try
 			{
 				File::copyFileToAbstractedPath($sourceFile, $dataPath);
 
-				if ($tempThumbFile)
+				foreach ($thumbnails AS $size => $thumbnail)
 				{
-					File::copyFileToAbstractedPath($tempThumbFile, $thumbnailPath);
+					$thumbnailPath = $data->getAbstractedThumbnailPathForSize($size);
+					File::copyFileToAbstractedPath(
+						$thumbnail['path'],
+						$thumbnailPath
+					);
 				}
 			}
 			catch (\Exception $e)
@@ -263,8 +282,16 @@ class PreparerService extends AbstractService
 			{
 				File::deleteFromAbstractedPath($previousDataPath);
 			}
-			if ($thumbnailPath !== $previousThumbnailPath)
+
+			foreach ($thumbnails AS $size => $thumbnail)
 			{
+				$thumbnailPath = $data->getAbstractedThumbnailPathForSize($size);
+				$previousThumbnailPath = $data->getExistingAbstractedThumbnailPathForSize($size);
+				if ($thumbnailPath === $previousThumbnailPath)
+				{
+					continue;
+				}
+
 				File::deleteFromAbstractedPath($previousThumbnailPath);
 			}
 		}
@@ -297,33 +324,63 @@ class PreparerService extends AbstractService
 		}
 	}
 
+	/**
+	 * @return array<int, array{path: string, width: int, height: int}>
+	 */
+	public function generateAttachmentThumbnails(string $sourceFile): array
+	{
+		$thumbnails = [];
+
+		$attachmentRepo = \XF::repository(AttachmentRepository::class);
+		$sizes = $attachmentRepo->getThumbnailSizes();
+
+		foreach ($sizes AS $sizeCode => $size)
+		{
+			$image = $this->app->imageManager()->imageFromFile($sourceFile);
+			if (!$image)
+			{
+				continue;
+			}
+
+			$image->resizeShortEdge($size);
+			$newTempFile = File::getTempFile();
+			if (!$newTempFile)
+			{
+				continue;
+			}
+
+			if (!$image->save($newTempFile))
+			{
+				continue;
+			}
+
+			$thumbnails[$sizeCode] = [
+				'path' => $newTempFile,
+				'width' => $image->getWidth(),
+				'height' => $image->getHeight(),
+			];
+		}
+
+		return $thumbnails;
+	}
+
+	/**
+	 * @deprecated Use generateAttachmentThumbnails() instead
+	 */
 	public function generateAttachmentThumbnail($sourceFile, &$width = null, &$height = null)
 	{
-		$image = $this->app->imageManager()->imageFromFile($sourceFile);
-		if (!$image)
+		$thumbnails = $this->generateAttachmentThumbnails($sourceFile);
+
+		$m = $thumbnails[1] ?? null;
+		if (!$m)
 		{
 			return null;
 		}
 
-		// Core thumbnails will always be the size.
-		// Content specific thumbs can be generated by handlers using onAttachment.
-		$thumbSize = $this->app->options()->attachmentThumbnailDimensions;
+		$width = $m['width'];
+		$height = $m['height'];
 
-		// XF 2.2 - we will be showing square previews, so optimise for the short side
-		$image->resizeShortEdge($thumbSize);
-
-		$newTempFile = File::getTempFile();
-		if ($newTempFile && $image->save($newTempFile))
-		{
-			$width = $image->getWidth();
-			$height = $image->getHeight();
-
-			return $newTempFile;
-		}
-		else
-		{
-			return null;
-		}
+		return $m['path'];
 	}
 
 	public function insertTemporaryAttachment(

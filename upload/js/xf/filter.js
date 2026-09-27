@@ -228,7 +228,7 @@
 					prefix: prefix ? 1 : 0,
 				}).map(([key, value]) => `_xfFilter[${key}]=${encodeURIComponent(value)}`).join('&')
 
-				const ajaxUrl = this.options.ajax + '&' + params
+				const ajaxUrl = this.options.ajax + (this.options.ajax.includes('?') ? '&' : '?') + params
 
 				this.xhrFilter = {
 					text,
@@ -456,7 +456,7 @@
 			{
 				this.displayTotals.dataset.count = count
 
-				let phrase = ''
+				let phrase
 				const total = this.displayTotals.dataset.total
 
 				if (count < 1)

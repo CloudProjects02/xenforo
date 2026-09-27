@@ -54,6 +54,7 @@ class ApiDocs extends AbstractSubContainer
 			return [
 				'simpleHtml' => 'XF:SimpleHtml',
 				'xf2Html' => 'XF:Xf2Html',
+				'markdown' => 'XF:Markdown',
 			];
 		};
 	}

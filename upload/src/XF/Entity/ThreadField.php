@@ -2,6 +2,7 @@
 
 namespace XF\Entity;
 
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Structure;
 use XF\Phrase;
 use XF\Repository\ForumFieldRepository;
@@ -11,9 +12,9 @@ use XF\Repository\ForumFieldRepository;
  * @property string $field_id
  * @property int $display_order
  * @property string $field_type
- * @property array $field_choices
+ * @property array|null $field_choices
  * @property string $match_type
- * @property array $match_params
+ * @property array|null $match_params
  * @property int $max_length
  * @property bool $required
  * @property string $display_template
@@ -28,7 +29,7 @@ use XF\Repository\ForumFieldRepository;
  * RELATIONS
  * @property-read \XF\Entity\Phrase|null $MasterTitle
  * @property-read \XF\Entity\Phrase|null $MasterDescription
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\ForumField> $ForumFields
+ * @property-read AbstractCollection<ForumField> $ForumFields
  */
 class ThreadField extends AbstractField
 {
@@ -46,7 +47,6 @@ class ThreadField extends AbstractField
 	{
 		parent::_postDelete();
 
-		/** @var ForumFieldRepository $repo */
 		$repo = $this->repository(ForumFieldRepository::class);
 		$repo->removeFieldAssociations($this);
 

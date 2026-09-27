@@ -2,14 +2,15 @@
 
 namespace XF\Finder;
 
+use XF\Entity\HelpPage;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Finder;
 
 /**
- * @method AbstractCollection<\XF\Entity\HelpPage> fetch(?int $limit = null, ?int $offset = null)
- * @method AbstractCollection<\XF\Entity\HelpPage> fetchDeferred(?int $limit = null, ?int $offset = null)
- * @method \XF\Entity\HelpPage|null fetchOne(?int $offset = null)
- * @extends Finder<\XF\Entity\HelpPage>
+ * @method AbstractCollection<HelpPage> fetch(?int $limit = null, ?int $offset = null)
+ * @method AbstractCollection<HelpPage> fetchDeferred(?int $limit = null, ?int $offset = null)
+ * @method HelpPage|null fetchOne(?int $offset = null)
+ * @extends Finder<HelpPage>
  */
 class HelpPageFinder extends Finder
 {

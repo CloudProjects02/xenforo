@@ -18,6 +18,11 @@ class Container implements \ArrayAccess
 	protected $factory = [];
 	protected $factoryObjects = [];
 
+	/**
+	 * @var int
+	 */
+	protected $locked = 0;
+
 	#[\ReturnTypeWillChange]
 	public function offsetGet($key)
 	{
@@ -81,6 +86,8 @@ class Container implements \ArrayAccess
 
 	public function offsetUnset($key): void
 	{
+		$this->assertNotLocked();
+
 		unset($this->data[$key], $this->cache[$key], $this->cacheable[$key]);
 	}
 
@@ -101,6 +108,8 @@ class Container implements \ArrayAccess
 
 	public function set($key, $value, $cache = null)
 	{
+		$this->assertNotLocked();
+
 		$this->data[$key] = $value;
 
 		if ($cache === null)
@@ -147,6 +156,8 @@ class Container implements \ArrayAccess
 
 	public function extend($key, $callable)
 	{
+		$this->assertNotLocked();
+
 		if (!$this->isInvokable($callable))
 		{
 			throw new \InvalidArgumentException("Extension must be invokable");
@@ -184,6 +195,8 @@ class Container implements \ArrayAccess
 
 	public function factory($type, $callable, $cacheable = true)
 	{
+		$this->assertNotLocked();
+
 		if (!$this->isInvokable($callable))
 		{
 			throw new \InvalidArgumentException("Factory must be invokable");
@@ -194,6 +207,8 @@ class Container implements \ArrayAccess
 
 	public function extendFactory($type, $callable)
 	{
+		$this->assertNotLocked();
+
 		if (!$this->isInvokable($callable))
 		{
 			throw new \InvalidArgumentException("Extension must be invokable");
@@ -213,6 +228,8 @@ class Container implements \ArrayAccess
 
 	public function removeFactory($type)
 	{
+		$this->assertNotLocked();
+
 		unset($this->factory[$type], $this->factoryObjects[$type]);
 	}
 
@@ -278,6 +295,34 @@ class Container implements \ArrayAccess
 	protected function isInvokable($value)
 	{
 		return is_object($value) && method_exists($value, '__invoke');
+	}
+
+	public function lock(): void
+	{
+		$this->locked++;
+	}
+
+	public function unlock(): void
+	{
+		if ($this->locked > 0)
+		{
+			$this->locked--;
+		}
+	}
+
+	public function isLocked(): bool
+	{
+		return $this->locked > 0;
+	}
+
+	public function assertNotLocked(): void
+	{
+		if (!$this->isLocked())
+		{
+			return;
+		}
+
+		throw new \LogicException('Cannot modify container while locked');
 	}
 
 	public function __sleep()

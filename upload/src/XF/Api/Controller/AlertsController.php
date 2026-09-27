@@ -3,7 +3,6 @@
 namespace XF\Api\Controller;
 
 use XF\Entity\User;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\ParameterBag;
 use XF\Repository\UserAlertRepository;
 use XF\Repository\UserRepository;
@@ -66,7 +65,7 @@ class AlertsController extends AbstractController
 	}
 
 	/**
-	 * @return Finder
+	 * @return UserAlertFinder
 	 */
 	protected function setupAlertsFinder()
 	{

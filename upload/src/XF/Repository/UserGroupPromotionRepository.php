@@ -8,13 +8,12 @@ use XF\Entity\UserGroupPromotion;
 use XF\Entity\UserGroupPromotionLog;
 use XF\Finder\UserGroupPromotionFinder;
 use XF\Finder\UserGroupPromotionLogFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 class UserGroupPromotionRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return UserGroupPromotionFinder
 	 */
 	public function findUserGroupPromotionsForList()
 	{
@@ -30,7 +29,7 @@ class UserGroupPromotionRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return UserGroupPromotionFinder
 	 */
 	public function findUserGroupPromotionLogsForList()
 	{

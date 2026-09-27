@@ -108,8 +108,8 @@ class SpriteGeneratorService extends AbstractService
 		$icons = $this->icons[$variant] ?? [];
 
 		if (
-			!empty($this->icons['default']) &&
-			in_array($variant, $this->defaultVariants)
+			!empty($this->icons['default'])
+			&& in_array($variant, $this->defaultVariants)
 		)
 		{
 			$icons = array_merge($icons, $this->icons['default']);

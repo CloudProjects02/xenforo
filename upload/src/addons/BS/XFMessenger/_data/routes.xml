@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<routes>
+  <route route_type="public" route_prefix="conversations" sub_name="messenger" format="messenger/:str&lt;tag&gt;/" build_class="BS\RealTimeChat\Route" build_method="buildLinkWithTag" controller="BS\XFMessenger:Messenger"/>
+  <route route_type="public" route_prefix="conversations" sub_name="messenger/messages" format="messenger/:str&lt;tag&gt;/messages/:str&lt;message_id&gt;/" build_class="BS\RealTimeChat\Route" build_method="buildLinkWithTag" controller="BS\XFMessenger:Message"/>
+</routes>

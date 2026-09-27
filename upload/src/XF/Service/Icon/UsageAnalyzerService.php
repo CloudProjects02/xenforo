@@ -885,6 +885,14 @@ class UsageAnalyzerService extends AbstractService
 
 		foreach ($matches AS $icon)
 		{
+			if (
+				$icon['variant'] !== null
+				&& !in_array($icon['variant'], IconRepository::ICON_VARIANTS)
+			)
+			{
+				$icon['variant'] = 'regular';
+			}
+
 			if ($icon['variant'] === 'default')
 			{
 				$icon['variant'] = null;

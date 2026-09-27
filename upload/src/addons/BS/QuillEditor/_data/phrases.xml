@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="qle_said" version_id="1000070" version_string="1.0.0"><![CDATA[said]]></phrase>
+  <phrase title="style_prop.quillEditorButton" version_id="1000070" version_string="1.0.0"><![CDATA[Button]]></phrase>
+  <phrase title="style_prop.quillEditorButtonHover" version_id="1000070" version_string="1.0.0"><![CDATA[Button [Hovered]]]></phrase>
+  <phrase title="style_prop.quillEditorContainer" version_id="1000070" version_string="1.0.0"><![CDATA[Container]]></phrase>
+  <phrase title="style_prop.quillEditorInput" version_id="1000070" version_string="1.0.0"><![CDATA[Editor]]></phrase>
+  <phrase title="style_prop.quillEditorTooltip" version_id="1000070" version_string="1.0.0"><![CDATA[Tooltip]]></phrase>
+  <phrase title="style_prop.quillEditorTooltipButton" version_id="1000070" version_string="1.0.0"><![CDATA[Tooltip: Button]]></phrase>
+  <phrase title="style_prop.quillEditorTooltipFormats" version_id="1000070" version_string="1.0.0"><![CDATA[Tooltip: Button section]]></phrase>
+  <phrase title="style_prop_desc.quillEditorButton" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.quillEditorButtonHover" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.quillEditorContainer" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.quillEditorInput" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.quillEditorTooltip" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.quillEditorTooltipButton" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.quillEditorTooltipFormats" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_group.bsQuillEditor" version_id="1000070" version_string="1.0.0"><![CDATA[Quill editor]]></phrase>
+  <phrase title="style_prop_group_desc.bsQuillEditor" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+</phrases>

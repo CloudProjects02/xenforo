@@ -10,9 +10,9 @@ use XF\Phrase;
  * @property string $field_id
  * @property int $display_order
  * @property string $field_type
- * @property array $field_choices
+ * @property array|null $field_choices
  * @property string $match_type
- * @property array $match_params
+ * @property array|null $match_params
  * @property int $max_length
  * @property bool $required
  * @property string $display_template

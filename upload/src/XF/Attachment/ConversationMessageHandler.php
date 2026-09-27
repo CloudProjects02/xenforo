@@ -10,18 +10,29 @@ use XF\Repository\AttachmentRepository;
 
 use function intval;
 
+/**
+ * @phpstan-type TContext array{
+ *     message_id?: int|null,
+ *     conversation_id?: int|null,
+ * }
+ *
+ * @extends AbstractHandler<ConversationMessage, TContext>
+ */
 class ConversationMessageHandler extends AbstractHandler
 {
 	public function canView(Attachment $attachment, Entity $container, &$error = null)
 	{
-		/** @var ConversationMessage $container */
 		if (!$container->canView())
 		{
 			return false;
 		}
 
-		/** @var ConversationMaster $conversation */
 		$conversation = $container->Conversation;
+		if ($conversation === null)
+		{
+			return false;
+		}
+
 		return $conversation->canView($error);
 	}
 
@@ -38,14 +49,12 @@ class ConversationMessageHandler extends AbstractHandler
 			return;
 		}
 
-		/** @var ConversationMessage $container */
 		$container->attach_count--;
 		$container->save();
 	}
 
 	public function getConstraints(array $context)
 	{
-		/** @var AttachmentRepository $attachRepo */
 		$attachRepo = \XF::repository(AttachmentRepository::class);
 
 		$constraints = $attachRepo->getDefaultAttachmentConstraints();
@@ -86,13 +95,17 @@ class ConversationMessageHandler extends AbstractHandler
 		return $extraContext;
 	}
 
+	/**
+	 * @param TContext $context
+	 *
+	 * @return ConversationMaster|null
+	 */
 	protected function getConversationFromContext(array $context)
 	{
 		$em = \XF::em();
 
 		if (!empty($context['message_id']))
 		{
-			/** @var ConversationMessage $message */
 			$message = $em->find(ConversationMessage::class, intval($context['message_id']), ['Conversation']);
 			if (!$message || !$message->canView() || !$message->canEdit())
 			{
@@ -103,7 +116,6 @@ class ConversationMessageHandler extends AbstractHandler
 		}
 		else if (!empty($context['conversation_id']))
 		{
-			/** @var ConversationMaster $conversation */
 			$conversation = $em->find(ConversationMaster::class, intval($context['conversation_id']));
 			if (!$conversation || !$conversation->canView())
 			{

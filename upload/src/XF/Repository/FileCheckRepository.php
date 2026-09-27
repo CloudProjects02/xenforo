@@ -4,13 +4,12 @@ namespace XF\Repository;
 
 use XF\Entity\FileCheck;
 use XF\Finder\FileCheckFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 class FileCheckRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return FileCheckFinder
 	 */
 	public function findFileChecksForList()
 	{

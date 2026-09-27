@@ -28,7 +28,6 @@ class UserTitleLadder extends Entity
 
 	protected function rebuildLadderCache()
 	{
-		/** @var UserTitleLadderRepository $repo */
 		$repo = $this->repository(UserTitleLadderRepository::class);
 
 		\XF::runOnce('userTitleLadderCacheRebuild', function () use ($repo)

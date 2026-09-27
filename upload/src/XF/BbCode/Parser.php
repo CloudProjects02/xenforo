@@ -258,6 +258,12 @@ class Parser
 			return;
 		}
 
+		if ($this->depth >= $this->maxDepth)
+		{
+			$this->pushText($originalText);
+			return;
+		}
+
 		$this->finalizeText();
 
 		$i = count($this->astReference);

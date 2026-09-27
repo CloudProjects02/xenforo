@@ -2,6 +2,7 @@
 
 namespace XF\Entity;
 
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Structure;
 use XF\Phrase;
 
@@ -15,7 +16,7 @@ use XF\Phrase;
  *
  * RELATIONS
  * @property-read \XF\Entity\Phrase|null $MasterTitle
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\ThreadPrompt> $Prompts
+ * @property-read AbstractCollection<ThreadPrompt> $Prompts
  */
 class ThreadPromptGroup extends AbstractPromptGroup
 {

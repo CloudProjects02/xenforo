@@ -109,8 +109,8 @@ class SearchForum extends AbstractWidget
 				}
 
 				if (
-					$this->options['style'] != 'expanded' &&
-					$visitor->isIgnoring($thread->last_post_user_id)
+					$this->options['style'] != 'expanded'
+					&& $visitor->isIgnoring($thread->last_post_user_id)
 				)
 				{
 					return false;

@@ -32,5 +32,3 @@ ErrorDocument 503 default
 	RewriteRule ^(data/|js/|styles/|install/|favicon\.ico|crossdomain\.xml|robots\.txt) - [NC,L]
 	RewriteRule ^.*$ index.php [NC,L]
 </IfModule>
-
-# 765BZVBQDGDUW9845J

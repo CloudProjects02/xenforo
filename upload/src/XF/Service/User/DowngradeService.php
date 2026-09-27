@@ -93,7 +93,6 @@ class DowngradeService extends AbstractService
 		$db = $this->db();
 		$db->beginTransaction();
 
-		/** @var UserGroupChangeService $userGroupChange */
 		$userGroupChange = $this->service(UserGroupChangeService::class);
 		$userGroupChange->removeUserGroupChange(
 			$user->user_id,
@@ -102,13 +101,11 @@ class DowngradeService extends AbstractService
 
 		if ($active)
 		{
-			/** @var UserUpgradeRepository $upgradeRepo */
 			$upgradeRepo = $this->repository(UserUpgradeRepository::class);
 			$upgradeRepo->expireActiveUpgrade($active, $expired);
 
 			if (!$upgrade->recurring && $upgrade->can_purchase && $this->sendAlert)
 			{
-				/** @var UserAlertRepository $alertRepo */
 				$alertRepo = $this->app->repository(UserAlertRepository::class);
 				$alertRepo->alert(
 					$user,

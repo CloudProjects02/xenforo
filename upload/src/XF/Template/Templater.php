@@ -26,10 +26,9 @@ use XF\Util\Ip;
 use XF\Util\Json;
 use XF\Util\Php;
 use XF\Util\Str;
-
 use XF\Util\Url;
 
-use function array_key_exists, array_slice, boolval, call_user_func, call_user_func_array, count, func_get_args, get_class, gettype, in_array, intval, is_array, is_int, is_integer, is_object, is_scalar, is_string, ord, strlen, strval;
+use function array_key_exists, array_slice, boolval, call_user_func, call_user_func_array, count, func_get_args, func_num_args, get_class, gettype, in_array, intval, is_array, is_int, is_integer, is_object, is_scalar, is_string, ord, strlen, strval;
 
 class Templater
 {
@@ -188,8 +187,14 @@ class Templater
 	protected $defaultFunctions = [
 		'anchor_target'         => 'fnAnchorTarget',
 		'anon_referer'          => 'fnAnonReferer',
+		'array_diff'            => 'fnArrayDiff',
+		'array_first'           => 'fnArrayFirst',
+		'array_is_list'         => 'fnArrayIsList',
 		'array_keys'            => 'fnArrayKeys',
+		'array_last'            => 'fnArrayLast',
 		'array_merge'           => 'fnArrayMerge',
+		'array_reverse'         => 'fnArrayReverse',
+		'array_sum'             => 'fnArraySum',
 		'array_values'          => 'fnArrayValues',
 		'asset'                 => 'fnAsset',
 		'asset_display'         => 'fnAssetDisplay',
@@ -317,6 +322,11 @@ class Templater
 		'data-follow-redirects',
 	];
 
+	/**
+	 * @param string $compiledPath
+	 *
+	 * @return void
+	 */
 	public function __construct(App $app, Language $language, $compiledPath)
 	{
 		$this->app = $app;
@@ -865,6 +875,7 @@ class Templater
 
 		try
 		{
+			$this->app->container()->lock();
 			$macro = $this->getTemplateMacro($type, $template, $name);
 			if (is_array($macro))
 			{
@@ -936,6 +947,7 @@ class Templater
 		finally
 		{
 			$this->isExtensionDummyRender = $isExtensionDummyRender;
+			$this->app->container()->unlock();
 		}
 
 		if ($this->wrapTemplateName)
@@ -944,8 +956,8 @@ class Templater
 		}
 
 		if (
-			\XF::visitor()->is_admin &&
-			\XF::options()->embedTemplateNames
+			\XF::visitor()->is_admin
+			&& \XF::options()->embedTemplateNames
 		)
 		{
 			$output = $this->embedTemplateName($output, "{$type}:{$template}", $name);
@@ -1090,12 +1102,17 @@ class Templater
 
 		try
 		{
+			$this->app->container()->lock();
 			$output = $extensionDef['code']($this, $params, $extensions);
 		}
 		catch (\Throwable $e)
 		{
 			$errorPrefix = "$this->currentTemplateType:$this->currentTemplateName :: $name()";
 			$output = $this->handleTemplateException($e, $errorPrefix, "Extension $errorPrefix error: ");
+		}
+		finally
+		{
+			$this->app->container()->unlock();
 		}
 
 		if ($this->wrapTemplateName)
@@ -1526,8 +1543,8 @@ class Templater
 
 			case E_WARNING:
 				if (
-					str_contains($file, '/src/vendor/league/flysystem/src/Adapter/Local.php') &&
-					$errorString === 'chmod(): Operation not permitted'
+					str_contains($file, '/src/vendor/league/flysystem/src/Adapter/Local.php')
+					&& $errorString === 'chmod(): Operation not permitted'
 				)
 				{
 					// chmod can fail during on-demand template compilation
@@ -1546,9 +1563,12 @@ class Templater
 				}
 				break;
 
-			// deprecated in PHP 8.4, should be evaluated last
+			case E_USER_WARNING:
+				// do not ignore user warnings
+				break;
+
 			case E_STRICT:
-				// these are only logged in debug mode
+				// deprecated in PHP 8.4, should be evaluated last
 				if (!\XF::$debugMode)
 				{
 					return;
@@ -1764,6 +1784,7 @@ class Templater
 
 		try
 		{
+			$this->app->container()->lock();
 			$data = $this->getTemplateData($type, $template);
 
 			if (!empty($data['extensions']))
@@ -1808,11 +1829,12 @@ class Templater
 		finally
 		{
 			$this->isExtensionDummyRender = $isExtensionDummyRender;
+			$this->app->container()->unlock();
 		}
 
 		if (
-			\XF::visitor()->is_admin &&
-			\XF::options()->embedTemplateNames
+			\XF::visitor()->is_admin
+			&& \XF::options()->embedTemplateNames
 		)
 		{
 			$output = $this->embedTemplateName($output, "{$type}:{$template}");
@@ -1880,7 +1902,7 @@ class Templater
 		{
 			return $errorPhrase;
 		}
-		if (!Php::nameIndicatesReadOnly($method))
+		if (!Php::nameIndicatesReadOnly($method, count($params)))
 		{
 			return $this->phrase('callback_method_x_does_not_appear_to_indicate_read_only', ['method' => $method]);
 		}
@@ -2042,8 +2064,8 @@ class Templater
 		else if (strpos($class, 'button--icon') !== false)
 		{
 			if (
-				preg_match('#(^|\s)button--icon(\s|$)#', $class) &&
-				preg_match('#button--icon--(\w+)#', $class, $matches)
+				preg_match('#(^|\s)button--icon(\s|$)#', $class)
+				&& preg_match('#button--icon--(\w+)#', $class, $matches)
 			)
 			{
 				$icon = $matches[1];
@@ -2214,6 +2236,8 @@ class Templater
 
 	public function fnArrayKeys($templater, &$escape, $array, $searchValue = null, $strict = null)
 	{
+		$array = $array instanceof AbstractCollection ? $array->toArray() : $array;
+
 		if (!is_array($array))
 		{
 			$array = [];
@@ -2242,17 +2266,98 @@ class Templater
 		unset($arrays[0]);
 		unset($arrays[1]);
 
+		foreach ($arrays AS &$arr)
+		{
+			$arr = $arr instanceof AbstractCollection ? $arr->toArray() : $arr;
+		}
+
 		return call_user_func_array('array_merge', $arrays);
 	}
 
 	public function fnArrayValues($templater, &$escape, $array)
 	{
+		$array = $array instanceof AbstractCollection ? $array->toArray() : $array;
+
 		if (!is_array($array))
 		{
 			$array = [];
 		}
 
 		return array_values($array);
+	}
+
+	public function fnArrayDiff($templater, &$escape, $array)
+	{
+		$arrays = func_get_args();
+		unset($arrays[0]);
+		unset($arrays[1]);
+
+		foreach ($arrays AS &$arr)
+		{
+			$arr = $arr instanceof AbstractCollection ? $arr->toArray() : $arr;
+		}
+
+		return call_user_func_array('array_diff', $arrays);
+	}
+
+	public function fnArrayFirst($templater, &$escape, $array)
+	{
+		$array = $array instanceof AbstractCollection ? $array->toArray() : $array;
+
+		if (!is_array($array))
+		{
+			$array = [];
+		}
+
+		return Arr::arrayFirst($array);
+	}
+
+	public function fnArrayIsList($templater, &$escape, $array)
+	{
+		$array = $array instanceof AbstractCollection ? $array->toArray() : $array;
+
+		if (!is_array($array))
+		{
+			$array = [];
+		}
+
+		return Arr::arrayIsList($array);
+	}
+
+	public function fnArrayLast($templater, &$escape, $array)
+	{
+		$array = $array instanceof AbstractCollection ? $array->toArray() : $array;
+
+		if (!is_array($array))
+		{
+			$array = [];
+		}
+
+		return Arr::arrayLast($array);
+	}
+
+	public function fnArrayReverse($templater, &$escape, $array, $preserveKeys = false)
+	{
+		$array = $array instanceof AbstractCollection ? $array->toArray() : $array;
+
+		if (!is_array($array))
+		{
+			$array = [];
+		}
+
+		return array_reverse($array, $preserveKeys);
+	}
+
+	public function fnArraySum($templater, &$escape, $array)
+	{
+		$array = $array instanceof AbstractCollection ? $array->toArray() : $array;
+
+		if (!is_array($array))
+		{
+			$array = [];
+		}
+
+		return array_sum($array);
 	}
 
 	public function fnAsset($templater, &$escape, $key, $suffix = '', $fallback = null, $withPath = true)
@@ -2329,7 +2434,15 @@ class Templater
 
 		if ($user instanceof User)
 		{
-			$username = $user->username;
+			if (isset($attributes['username']))
+			{
+				$username = $attributes['username'];
+			}
+			else
+			{
+				$username = $user->username;
+			}
+
 			if (isset($attributes['href']))
 			{
 				$href = $attributes['href'];
@@ -2358,7 +2471,11 @@ class Templater
 		}
 		else
 		{
-			if (isset($attributes['defaultname']))
+			if (isset($attributes['username']))
+			{
+				$username = $attributes['username'];
+			}
+			else if (isset($attributes['defaultname']))
 			{
 				$username = $attributes['defaultname'];
 			}
@@ -2649,7 +2766,7 @@ class Templater
 
 	public function fnCallMacro($templater, &$escape, $template, $name, array $arguments = [])
 	{
-		if (count(func_get_args()) < 5)
+		if (func_num_args() < 5)
 		{
 			$arguments = $name;
 			$name = $template;
@@ -3699,6 +3816,11 @@ class Templater
 			return $value;
 		}
 
+		if (trim($value) === '')
+		{
+			return null;
+		}
+
 		// normalize color to its rgb components (TODO: support alpha channel in future)
 		$rgbColor = Color::colorToRgb($value);
 		if ($rgbColor)
@@ -3708,14 +3830,17 @@ class Templater
 			return '#' . $hex;
 		}
 
-		/** @var CssRenderer $renderer */
 		$rendererClass = $this->app->extendClass(CssRenderer::class);
+		/** @var CssRenderer $renderer */
 		$renderer = new $rendererClass($this->app, $this);
 		$renderer->setStyle($this->style);
 
 		return $renderer->parseLessColorValue($value);
 	}
 
+	/**
+	 * @deprecated use fab fa-passkey as an icon as usual instead
+	 */
 	public function fnPasskeyIcon($templater, &$escape, string $class = ''): string
 	{
 		$escape = false;
@@ -4396,8 +4521,8 @@ class Templater
 		$html = '<a href="javascript:"'
 			. ' class="showIgnoredLink is-hidden js-showIgnored' . $class . '" data-xf-init="tooltip"'
 			. ' title="' . $this->filterForAttr($this, $this->phrase('show_hidden_content_by_x', ['names' => '{{names}}']), $null) . '"'
-			. ' ' . $unhandledAttrs . '>' .
-			$this->phrase('show_ignored_content')
+			. ' ' . $unhandledAttrs . '>'
+			. $this->phrase('show_ignored_content')
 			. '</a>';
 
 		if ($wrapper)
@@ -4561,7 +4686,6 @@ class Templater
 
 		if (!$user || !($user instanceof User) || !$user->user_id)
 		{
-			/** @var UserRepository $userRepo */
 			$userRepo = $this->app->repository(UserRepository::class);
 			$user = $userRepo->getGuestUser();
 		}
@@ -4983,6 +5107,9 @@ class Templater
 		}
 	}
 
+	/**
+	 * @deprecated use fab fa-x as an icon as usual instead
+	 */
 	public function fnXLogo($templater, &$escape, $class = '')
 	{
 		$escape = false;
@@ -5914,6 +6041,7 @@ class Templater
 				$defaultValueInput = '';
 			}
 
+			$listItemClass = $this->processAttributeToNamedHtmlAttribute($choice, 'listitemclass', 'class', 'inputChoices-choice', true);
 			$attributes = $this->processUnhandledAttributes($choice);
 
 			if ($label !== '')
@@ -5931,7 +6059,7 @@ class Templater
 			}
 			else
 			{
-				return "<li class=\"inputChoices-choice\">{$checkboxHtml}</li>\n";
+				return "<li{$listItemClass}>{$checkboxHtml}</li>\n";
 			}
 		};
 		$groupFormatter = function (array $group, $html)
@@ -6308,6 +6436,15 @@ class Templater
 			{
 				$label = '&nbsp;';
 			}
+
+			$stringFormatter = $this->app->stringFormatter();
+			$label = $stringFormatter->moveHtmlEntitiesToPlaceholders(
+				$label,
+				$restorePlaceholders
+			);
+			$label = \XF::escapeString($label);
+			$label = $restorePlaceholders($label);
+
 			$valueAttr = $this->processAttributeToHtmlAttribute($choice, 'value');
 			if (!$valueAttr)
 			{
@@ -7109,10 +7246,6 @@ class Templater
 		$min = $controlOptions['min'] ?? null;
 		$max = $controlOptions['max'] ?? null;
 		$step = $controlOptions['step'] ?? 1;
-		if ($step === 'any')
-		{
-			$step = 1;
-		}
 
 		$minAttr = '';
 		$maxAttr = '';
@@ -7134,18 +7267,6 @@ class Templater
 		if ($typeAttr = $this->processAttributeToRaw($controlOptions, 'type', '', true))
 		{
 			$type = $typeAttr;
-		}
-
-		// This is mostly targeting iOS which presents a symbol + number keyboard by default for the number input.
-		// If step contains a decimal point or could support negative values then don't force a pattern, otherwise
-		// assume it's \d* which will force the numeric only keypad on iOS.
-		if ($step == 'any' || strpos($step, '.') !== false || ($min === null || $min < 0))
-		{
-			$pattern = '';
-		}
-		else
-		{
-			$pattern = '\d*';
 		}
 
 		if (isset($controlOptions['value']))
@@ -7218,7 +7339,7 @@ class Templater
 		$unhandledAttrs = $this->processUnhandledAttributes($controlOptions);
 
 		$input = "<div class=\"inputGroup inputGroup--numbers inputNumber{$groupClass}\" data-xf-init=\"number-box\"{$buttonSmallerAttr}{$stepOverrideAttr}>"
-			. "{$fa}<input type=\"{$type}\" pattern=\"{$pattern}\" class=\"input input--number js-numberBoxTextInput{$class}\" value=\"{$value}\" {$minAttr}{$maxAttr}{$stepAttr}{$requiredAttr}{$readOnlyAttr}{$xfInitAttr}{$unhandledAttrs} />"
+			. "{$fa}<input type=\"{$type}\" class=\"input input--number js-numberBoxTextInput{$class}\" value=\"{$value}\" {$minAttr}{$maxAttr}{$stepAttr}{$requiredAttr}{$readOnlyAttr}{$xfInitAttr}{$unhandledAttrs} />"
 			. "</div>";
 
 		if ($units)

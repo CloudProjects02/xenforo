@@ -12,7 +12,6 @@ class PreRegAction extends AbstractOption
 {
 	public static function renderOption(Option $option, array $htmlParams)
 	{
-		/** @var UserGroupRepository $userGroupRepo */
 		$userGroupRepo = \XF::repository(UserGroupRepository::class);
 
 		$userGroups = $userGroupRepo->getUserGroupOptionsData(false, 'option');
@@ -37,7 +36,6 @@ class PreRegAction extends AbstractOption
 
 		sort($value['userGroups'], SORT_NUMERIC);
 
-		/** @var PermissionCombinationRepository $permComboRepo */
 		$permComboRepo = \XF::app()->repository(PermissionCombinationRepository::class);
 		$combination = $permComboRepo->getPermissionCombinationOrPlaceholder($value['userGroups']);
 		if (!$combination->exists())

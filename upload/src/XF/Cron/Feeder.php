@@ -16,7 +16,6 @@ class Feeder
 	{
 		$app = \XF::app();
 
-		/** @var FeedRepository $feedRepo */
 		$feedRepo = $app->repository(FeedRepository::class);
 
 		$dueFeeds = $feedRepo->findDueFeeds()->fetch();

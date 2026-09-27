@@ -8,6 +8,9 @@ use XF\Mvc\Entity\Entity;
 use XF\Repository\UsernameChangeRepository;
 use XF\Service\User\UsernameChangeService;
 
+/**
+ * @extends AbstractHandler<UsernameChange>
+ */
 class UsernameChangeHandler extends AbstractHandler
 {
 	protected function canViewContent(Entity $content, &$error = null)
@@ -29,10 +32,8 @@ class UsernameChangeHandler extends AbstractHandler
 	{
 		$templateData = parent::getTemplateData($unapprovedItem);
 
-		/** @var UsernameChange $change */
 		$change = $unapprovedItem->Content;
 
-		/** @var UsernameChangeRepository $usernameChangeRepo */
 		$usernameChangeRepo = \XF::repository(UsernameChangeRepository::class);
 		$changeFinder = $usernameChangeRepo->findUsernameChangesForList();
 
@@ -55,7 +56,6 @@ class UsernameChangeHandler extends AbstractHandler
 
 		$notify = $this->getInput('notify', $usernameChange->change_id);
 
-		/** @var UsernameChangeService $changeService */
 		$changeService = \XF::app()->service(UsernameChangeService::class, $usernameChange);
 		$changeService->setModeratorApproval($notify);
 		$changeService->save();
@@ -71,7 +71,6 @@ class UsernameChangeHandler extends AbstractHandler
 		$notify = $this->getInput('notify', $usernameChange->change_id);
 		$reason = $this->getInput('reason', $usernameChange->change_id);
 
-		/** @var UsernameChangeService $changeService */
 		$changeService = \XF::app()->service(UsernameChangeService::class, $usernameChange);
 		$changeService->setModeratorRejection($notify, $reason);
 		$changeService->save();

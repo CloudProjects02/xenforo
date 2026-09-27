@@ -17,7 +17,7 @@ use function is_array;
  * @property string $provider_id
  * @property string $provider_class
  * @property int $display_order
- * @property array $options
+ * @property array|null $options
  *
  * GETTERS
  * @property-read Phrase|string $title

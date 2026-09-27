@@ -124,7 +124,6 @@ class ContentTypeField extends AbstractDataType
 	{
 		\XF::runOnce('rebuild_active_' . $this->getContainerTag(), function ()
 		{
-			/** @var ContentTypeFieldRepository $repo */
 			$repo = $this->em->getRepository(ContentTypeFieldRepository::class);
 			$repo->rebuildContentTypeCache();
 		});

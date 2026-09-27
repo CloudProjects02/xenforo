@@ -19,7 +19,6 @@ class TemplatePartialCompile extends AbstractJob
 	{
 		$s = microtime(true);
 
-		/** @var CompileService $compileService */
 		$compileService = $this->app->service(CompileService::class);
 
 		foreach ($this->data['templateIds'] AS $k => $templateId)
@@ -60,7 +59,6 @@ class TemplatePartialCompile extends AbstractJob
 
 		if (!$this->data['templateIds'])
 		{
-			/** @var StyleRepository $repo */
 			$repo = $this->app->repository(StyleRepository::class);
 			$repo->updateAllStylesLastModifiedDateLater();
 

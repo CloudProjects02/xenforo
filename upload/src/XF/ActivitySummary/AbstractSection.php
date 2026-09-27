@@ -122,7 +122,6 @@ abstract class AbstractSection
 
 	public function getActivityCutOff()
 	{
-		/** @var ActivitySummaryRepository $repo */
 		$repo = $this->repository(ActivitySummaryRepository::class);
 		return $repo->getMinLastActivityCutOff();
 	}

@@ -2,9 +2,9 @@
 
 namespace XF\ConnectedAccount\Provider;
 
-use OAuth\OAuth1\Service\Twitter as TwitterService;
 use XF\ConnectedAccount\Http\HttpResponseException;
 use XF\ConnectedAccount\ProviderData\TwitterProviderData;
+use XF\ConnectedAccount\Service\XService;
 use XF\Entity\ConnectedAccountProvider;
 
 use function is_array, is_string;
@@ -19,7 +19,7 @@ class TwitterProvider extends AbstractProvider
 
 	public function getOAuthServiceName()
 	{
-		return TwitterService::class;
+		return XService::class;
 	}
 
 	public function getProviderDataClass(): string
@@ -68,6 +68,6 @@ class TwitterProvider extends AbstractProvider
 
 	public function getIconClass(): ?string
 	{
-		return 'fab fa-twitter';
+		return 'fab fa-x';
 	}
 }

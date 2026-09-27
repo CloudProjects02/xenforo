@@ -13,7 +13,6 @@ class AdminTemplateHandler extends PublicTemplateHandler
 
 	public function isSearchable()
 	{
-		/** @var StyleRepository $styleRepo */
 		$styleRepo = $this->app->repository(StyleRepository::class);
 		if (!$styleRepo->getMasterStyle()->canEdit())
 		{

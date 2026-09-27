@@ -1,0 +1,11 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use XF\Mvc\Entity\Repository;
+
+class {{ class }} extends Repository
+{
+}

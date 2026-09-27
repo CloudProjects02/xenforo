@@ -2,7 +2,7 @@
 
 namespace XF\Proxy;
 
-use League\Flysystem\FileNotFoundException;
+use League\Flysystem\FilesystemException;
 use XF\App;
 use XF\Entity\ImageProxy;
 use XF\Http\Request;
@@ -46,6 +46,7 @@ class Controller
 	public const ERROR_INVALID_REFERRER = 3;
 	public const ERROR_DISABLED = 4;
 	public const ERROR_FAILED = 5;
+	public const ERROR_LOCAL_URL = 6;
 
 	public function __construct(App $app, Linker $linker, ?Request $request = null)
 	{
@@ -124,7 +125,6 @@ class Controller
 	{
 		if ($this->validateImageRequest($url, $hash, $error))
 		{
-			/** @var ImageProxyService $imageProxy */
 			$imageProxy = $this->app->service(ImageProxyService::class);
 			$image = $imageProxy->getImage($url);
 			if (!$image || !$image->isValid())
@@ -144,7 +144,6 @@ class Controller
 				$error = self::ERROR_FAILED;
 			}
 
-			/** @var ImageProxyRepository $proxyRepo */
 			$proxyRepo = $this->app->repository(ImageProxyRepository::class);
 			$image = $proxyRepo->getPlaceholderImage();
 		}
@@ -156,7 +155,6 @@ class Controller
 
 		if (!$error)
 		{
-			/** @var ImageProxyRepository $proxyRepo */
 			$proxyRepo = $this->app->repository(ImageProxyRepository::class);
 
 			$proxyRepo->logImageView($image);
@@ -180,7 +178,7 @@ class Controller
 				$stream = $this->app->fs()->readStream($image->getAbstractedImagePath());
 				$body = $response->responseStream($stream, $image->file_size);
 			}
-			catch (FileNotFoundException $e)
+			catch (FilesystemException $e)
 			{
 				// the file was pruned mid-request
 				$proxyRepo = $this->app->repository(ImageProxyRepository::class);
@@ -286,7 +284,6 @@ class Controller
 
 		if ($this->validateLinkRequest($url, $hash, $error))
 		{
-			/** @var LinkProxyRepository $proxyRepo */
 			$proxyRepo = $this->app->repository(LinkProxyRepository::class);
 
 			$link = $proxyRepo->logLinkVisit($url);
@@ -347,6 +344,12 @@ class Controller
 			return false;
 		}
 
+		if ($this->isLocalUrl($urlParts))
+		{
+			$error = self::ERROR_LOCAL_URL;
+			return false;
+		}
+
 		if (!$this->linker->verifyHash($url, $hash))
 		{
 			$error = self::ERROR_INVALID_HASH;
@@ -382,5 +385,22 @@ class Controller
 		}
 
 		return ($requestParts['host'] === $referrerParts['host']);
+	}
+
+	protected function isLocalUrl(array $urlParts): bool
+	{
+		$boardUrl = $this->app->options()->boardUrl;
+		if (!$boardUrl)
+		{
+			return false;
+		}
+
+		$boardParts = @parse_url($boardUrl);
+		if (!$boardParts || empty($boardParts['host']))
+		{
+			return false;
+		}
+
+		return (strtolower($urlParts['host']) === strtolower($boardParts['host']));
 	}
 }

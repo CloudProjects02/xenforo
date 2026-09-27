@@ -18,7 +18,7 @@ use function boolval;
  * @property int $content_id
  * @property int $bookmark_date
  * @property string $message
- * @property array $labels
+ * @property array|null $labels
  *
  * GETTERS
  * @property-read BookmarkTrait|Entity|null $Content

@@ -40,7 +40,6 @@ class TagRecache extends AbstractJob
 			return $this->complete();
 		}
 
-		/** @var TagRepository $tagRepo */
 		$tagRepo = $em->getRepository(TagRepository::class);
 
 		$db->beginTransaction();

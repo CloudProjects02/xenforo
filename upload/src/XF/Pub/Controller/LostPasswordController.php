@@ -40,7 +40,6 @@ class LostPasswordController extends AbstractController
 				return $this->error(\XF::phrase('requested_member_not_found'));
 			}
 
-			/** @var PasswordResetService $passwordConfirmation */
 			$passwordConfirmation = $this->service(PasswordResetService::class, $user);
 			if (!$passwordConfirmation->canTriggerConfirmation($error))
 			{
@@ -71,7 +70,6 @@ class LostPasswordController extends AbstractController
 		/** @var User $user */
 		$user = $this->assertRecordExists(User::class, $params->user_id);
 
-		/** @var PasswordResetService $lostPassword */
 		$lostPassword = $this->service(PasswordResetService::class, $user);
 
 		$confirmationKey = $this->filter('c', 'str');

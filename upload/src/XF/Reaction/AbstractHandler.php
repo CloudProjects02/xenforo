@@ -4,27 +4,55 @@ namespace XF\Reaction;
 
 use XF\Entity\ReactionContent;
 use XF\Entity\User;
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Repository\NewsFeedRepository;
 use XF\Repository\UserAlertRepository;
 
+/**
+ * @template T of Entity
+ */
 abstract class AbstractHandler
 {
+	/**
+	 * @var string
+	 */
 	protected $contentType;
 
+	/**
+	 * @var array{
+	 *     score: string,
+	 *     counts: string,
+	 *     recent: string,
+	 * }
+	 */
 	protected $contentCacheFields = [
 		'score' => 'reaction_score',
 		'counts' => 'reactions',
 		'recent' => 'reaction_users',
 	];
 
+	/**
+	 * @param string $contentType
+	 */
 	public function __construct($contentType)
 	{
 		$this->contentType = $contentType;
 	}
 
+	/**
+	 * @param T $entity
+	 *
+	 * @return bool
+	 */
 	abstract public function reactionsCounted(Entity $entity);
 
+	/**
+	 * @param T $entity
+	 * @param string|\Stringable|null $error
+	 *
+	 * @return bool
+	 */
 	public function canViewContent(Entity $entity, &$error = null)
 	{
 		if (method_exists($entity, 'canView'))
@@ -35,11 +63,22 @@ abstract class AbstractHandler
 		throw new \LogicException("Could not determine content viewability; please override");
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getTemplateName()
 	{
 		return 'public:reaction_item_' . $this->contentType;
 	}
 
+	/**
+	 * @param T|null $content
+	 *
+	 * @return array{
+	 *     reaction: ReactionContent,
+	 *     content: T|null,
+	 * }
+	 */
 	public function getTemplateData(ReactionContent $reaction, ?Entity $content = null)
 	{
 		if (!$content)
@@ -53,6 +92,11 @@ abstract class AbstractHandler
 		];
 	}
 
+	/**
+	 * @param T|null $content
+	 *
+	 * @return string
+	 */
 	public function render(ReactionContent $reaction, ?Entity $content = null)
 	{
 		if (!$content)
@@ -70,12 +114,24 @@ abstract class AbstractHandler
 		return \XF::app()->templater()->renderTemplate($template, $data);
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function isRenderable(ReactionContent $reaction)
 	{
 		$template = $this->getTemplateName();
 		return \XF::app()->templater()->isKnownTemplate($template);
 	}
 
+	/**
+	 * @param T $entity
+	 * @param array<int, int> $counts
+	 * @param list<array{
+	 *     user_id: int,
+	 *     username: string,
+	 *     reaction_id: int
+	 * }> $latestReactions
+	 */
 	public function updateContentReactions(Entity $entity, $counts, array $latestReactions)
 	{
 		$scoreField = $this->contentCacheFields['score'] ?? false;
@@ -116,6 +172,12 @@ abstract class AbstractHandler
 		$entity->save();
 	}
 
+	/**
+	 * @param int $oldUserId
+	 * @param int $newUserId
+	 * @param string $oldUsername
+	 * @param string $newUsername
+	 */
 	public function updateRecentCacheForUserChange($oldUserId, $newUserId, $oldUsername, $newUsername)
 	{
 		if (empty($this->contentCacheFields['recent']))
@@ -151,11 +213,29 @@ abstract class AbstractHandler
 		", [$this->contentType, $newUserId, $oldFind, $newReplace, '%' . \XF::db()->escapeLike($oldFind) . '%']);
 	}
 
+	/**
+	 * @param int $userId
+	 * @param string $username
+	 *
+	 * @return string
+	 */
 	protected function getUserStringForReactionUsers($userId, $username)
 	{
 		return substr(json_encode(['user_id' => $userId, 'username' => $username]), 1, -1);
 	}
 
+	/**
+	 * @param T $entity
+	 *
+	 * @return array{
+	 *     counts: array<int, int>,
+	 *     recent: list<array{
+	 *         user_id: int,
+	 *         username: string,
+	 *         reaction_id: int,
+	 *     }>,
+	 * }
+	 */
 	public function getContentReactionCaches(Entity $entity)
 	{
 		$countsField = $this->getCountsFieldName();
@@ -174,6 +254,13 @@ abstract class AbstractHandler
 		return $output;
 	}
 
+	/**
+	 * @param int $contentId
+	 * @param T $content
+	 * @param int $reactionId
+	 *
+	 * @return bool
+	 */
 	public function sendReactionAlert(User $receiver, User $sender, $contentId, Entity $content, $reactionId)
 	{
 		$canView = \XF::asVisitor($receiver, function () use ($content)
@@ -185,7 +272,6 @@ abstract class AbstractHandler
 			return false;
 		}
 
-		/** @var UserAlertRepository $alertRepo */
 		$alertRepo = \XF::repository(UserAlertRepository::class);
 		return $alertRepo->alertFromUser(
 			$receiver,
@@ -199,14 +285,17 @@ abstract class AbstractHandler
 
 	public function removeReactionAlert(ReactionContent $reactionContent)
 	{
-		/** @var UserAlertRepository $alertRepo */
 		$alertRepo = \XF::repository(UserAlertRepository::class);
 		$alertRepo->fastDeleteAlertsFromUser($reactionContent->reaction_user_id, $this->contentType, $reactionContent->content_id, 'reaction');
 	}
 
+	/**
+	 * @param int $contentId
+	 * @param T $content
+	 * @param int $reactionId
+	 */
 	public function publishReactionNewsFeed(User $sender, $contentId, Entity $content, $reactionId)
 	{
-		/** @var NewsFeedRepository $newsFeedRepo */
 		$newsFeedRepo = \XF::repository(NewsFeedRepository::class);
 		$newsFeedRepo->publish(
 			$this->contentType,
@@ -220,16 +309,26 @@ abstract class AbstractHandler
 
 	public function unpublishReactionNewsFeed(ReactionContent $reactionContent)
 	{
-		/** @var NewsFeedRepository $newsFeedRepo */
 		$newsFeedRepo = \XF::repository(NewsFeedRepository::class);
 		$newsFeedRepo->unpublish($this->contentType, $reactionContent->content_id, $reactionContent->reaction_user_id, 'reaction');
 	}
 
+	/**
+	 * @param T $content
+	 * @param string $context
+	 *
+	 * @return array<string, mixed>
+	 */
 	protected function getExtraDataForAlertOrFeed(Entity $content, $context)
 	{
 		return [];
 	}
 
+	/**
+	 * @param T $entity
+	 *
+	 * @return int
+	 */
 	public function getContentUserId(Entity $entity)
 	{
 		if (isset($entity->user_id))
@@ -252,31 +351,51 @@ abstract class AbstractHandler
 		throw new \LogicException("Could not determine content user ID; please override");
 	}
 
+	/**
+	 * @return list<string>
+	 */
 	public function getEntityWith()
 	{
 		return [];
 	}
 
+	/**
+	 * @param int|list<int> $id
+	 *
+	 * @return T|AbstractCollection<T>
+	 */
 	public function getContent($id)
 	{
 		return \XF::app()->findByContentType($this->contentType, $id, $this->getEntityWith());
 	}
 
+	/**
+	 * @return string|false
+	 */
 	public function getCountsFieldName()
 	{
 		return $this->contentCacheFields['counts'] ?? false;
 	}
 
+	/**
+	 * @return string|false
+	 */
 	public function getRecentFieldName()
 	{
 		return $this->contentCacheFields['recent'] ?? false;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getContentType()
 	{
 		return $this->contentType;
 	}
 
+	/**
+	 * @return list<string>
+	 */
 	public static function getWebhookEvents(): array
 	{
 		return ['react', 'unreact'];

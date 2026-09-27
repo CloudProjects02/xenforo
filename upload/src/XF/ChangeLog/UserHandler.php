@@ -51,7 +51,7 @@ class UserHandler extends AbstractHandler
 
 			'allow_view_profile'               => 'view_your_details_on_your_profile_page',
 			'allow_post_profile'               => 'post_messages_on_your_profile_page',
-			'allow_send_personal_conversation' => 'send_direct_messages_you',
+			'allow_send_personal_conversation' => 'send_direct_messages_to_you',
 			'allow_view_identities'            => 'view_your_identities',
 			'allow_receive_news_feed'          => 'receive_your_news_feed',
 
@@ -133,7 +133,6 @@ class UserHandler extends AbstractHandler
 	{
 		if (!is_array($this->groupMap))
 		{
-			/** @var UserGroupRepository $groupRepo */
 			$groupRepo = \XF::repository(UserGroupRepository::class);
 			$this->groupMap = $groupRepo->getUserGroupTitlePairs();
 		}

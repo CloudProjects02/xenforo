@@ -10,14 +10,29 @@ use function count, strlen;
 
 class ResponseEditor
 {
-	/** @var Poll  */
+	/**
+	 * @var Poll
+	 */
 	protected $poll;
 
-	/** @var PollResponse[] */
+	/**
+	 * @var array<int, PollResponse>
+	 */
 	protected $existingResponses = [];
 
+	/**
+	 * @var array<int, int>
+	 */
 	protected $deleteResponses = [];
+
+	/**
+	 * @var array<int, string>
+	 */
 	protected $replaceResponses = [];
+
+	/**
+	 * @var list<string>
+	 */
 	protected $addResponses = [];
 
 	public function __construct(Poll $poll)
@@ -35,11 +50,19 @@ class ResponseEditor
 		$this->existingResponses = $responses;
 	}
 
+	/**
+	 * @return array<int, PollResponse>
+	 */
 	public function getExistingResponses()
 	{
 		return $this->existingResponses;
 	}
 
+	/**
+	 * @param list<string> $responses
+	 *
+	 * @return void
+	 */
 	public function addResponses(array $responses)
 	{
 		foreach ($responses AS $response)
@@ -48,6 +71,11 @@ class ResponseEditor
 		}
 	}
 
+	/**
+	 * @param string $response
+	 *
+	 * @return bool
+	 */
 	public function addResponse($response)
 	{
 		$response = trim($response);
@@ -62,11 +90,19 @@ class ResponseEditor
 		}
 	}
 
+	/**
+	 * @return list<string>
+	 */
 	public function getAddedResponses()
 	{
 		return $this->addResponses;
 	}
 
+	/**
+	 * @param int $responseId
+	 *
+	 * @return bool
+	 */
 	public function deleteResponse($responseId)
 	{
 		if (!isset($this->existingResponses[$responseId]))
@@ -78,11 +114,20 @@ class ResponseEditor
 		return true;
 	}
 
+	/**
+	 * @return array<int, int>
+	 */
 	public function getDeletedResponses()
 	{
 		return $this->deleteResponses;
 	}
 
+	/**
+	 * @param int $responseId
+	 * @param string $newResponse
+	 *
+	 * @return bool
+	 */
 	public function replaceResponse($responseId, $newResponse)
 	{
 		if (!isset($this->existingResponses[$responseId]))
@@ -103,11 +148,19 @@ class ResponseEditor
 		return true;
 	}
 
+	/**
+	 * @return array<int, string>
+	 */
 	public function getReplacedResponses()
 	{
 		return $this->replaceResponses;
 	}
 
+	/**
+	 * @param array<int, string> $responses
+	 *
+	 * @return void
+	 */
 	public function updateResponses(array $responses)
 	{
 		foreach ($responses AS $id => $response)
@@ -117,11 +170,17 @@ class ResponseEditor
 		}
 	}
 
+	/**
+	 * @return int
+	 */
 	public function countResponses()
 	{
 		return count($this->existingResponses) + count($this->addResponses) - count($this->deleteResponses);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function saveChanges()
 	{
 		if (!$this->poll->poll_id)
@@ -165,6 +224,11 @@ class ResponseEditor
 		$this->poll->clearCache('Responses');
 	}
 
+	/**
+	 * @param int|null $maxResponses
+	 *
+	 * @return string|\Stringable|null
+	 */
 	public function getResponseCountErrorMessage($maxResponses = null)
 	{
 		$count = $this->countResponses();

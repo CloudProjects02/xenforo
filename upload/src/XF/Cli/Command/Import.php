@@ -170,6 +170,7 @@ class Import extends AbstractCommand
 		{
 			$command = $this->getApplication()->find('xf:import-finalize');
 			$childInput = new ArrayInput(['command' => 'xf:import-finalize']);
+			$childInput->setInteractive($input->isInteractive());
 			$command->run($childInput, $output);
 			$output->writeln("");
 		}

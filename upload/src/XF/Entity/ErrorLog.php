@@ -16,7 +16,7 @@ use XF\Mvc\Entity\Structure;
  * @property string $filename
  * @property int $line
  * @property string $trace_string
- * @property array $request_state
+ * @property array|null $request_state
  *
  * RELATIONS
  * @property-read User|null $User

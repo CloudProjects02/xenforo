@@ -2,14 +2,15 @@
 
 namespace XF\Finder;
 
+use XF\Entity\Feed;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Finder;
 
 /**
- * @method AbstractCollection<\XF\Entity\Feed> fetch(?int $limit = null, ?int $offset = null)
- * @method AbstractCollection<\XF\Entity\Feed> fetchDeferred(?int $limit = null, ?int $offset = null)
- * @method \XF\Entity\Feed|null fetchOne(?int $offset = null)
- * @extends Finder<\XF\Entity\Feed>
+ * @method AbstractCollection<Feed> fetch(?int $limit = null, ?int $offset = null)
+ * @method AbstractCollection<Feed> fetchDeferred(?int $limit = null, ?int $offset = null)
+ * @method Feed|null fetchOne(?int $offset = null)
+ * @extends Finder<Feed>
  */
 class FeedFinder extends Finder
 {

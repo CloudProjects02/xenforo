@@ -33,7 +33,6 @@ class UserGroup extends AbstractOption
 
 	protected static function getSelectData(Option $option, array $htmlParams)
 	{
-		/** @var UserGroupRepository $userGroupRepo */
 		$userGroupRepo = \XF::repository(UserGroupRepository::class);
 
 		$choices = $userGroupRepo->getUserGroupOptionsData(true, 'option');

@@ -75,7 +75,6 @@ class ConversationMessagesController extends AbstractController
 	 */
 	protected function setupConversationReply(ConversationMaster $conversation)
 	{
-		/** @var ReplierService $replier */
 		$replier = $this->service(ReplierService::class, $conversation, \XF::visitor());
 
 		$message = $this->filter('message', 'str');

@@ -32,8 +32,8 @@ abstract class AbstractPrompt extends AbstractController
 
 	public function actionIndex()
 	{
-		$viewParams = $this->getRepo()->getPromptListData() +
-		[
+		$viewParams = $this->getRepo()->getPromptListData()
+		+ [
 			'linkPrefix' => $this->getLinkPrefix(),
 			'groupLinkPrefix' => $this->getGroupLinkPrefix(),
 		];

@@ -2,7 +2,6 @@
 
 namespace XF\Repository;
 
-use XF\Entity\Passkey;
 use XF\Entity\TfaProvider;
 use XF\Entity\User;
 use XF\Entity\UserTfa;
@@ -35,7 +34,7 @@ class PasskeyRepository extends Repository
 
 	public function findPasskeysForUser(User $user): Finder
 	{
-		return $this->finder(Passkey::class)
+		return $this->finder(PasskeyFinder::class)
 			->where('user_id', $user->user_id)
 			->order('last_use_date', 'ASC');
 	}

@@ -38,7 +38,7 @@ class JobResult
 		$result->result = self::RESULT_RESUME;
 		$result->jobId = $jobId;
 		$result->data = $data;
-		$result->statusMessage = $statusMessage;
+		$result->statusMessage = $statusMessage ?: '';
 		$result->canCancel = $canCancel;
 
 		return $result;
@@ -74,8 +74,8 @@ class JobResult
 		{
 			case 'completed':
 				return (
-					$this->result === self::RESULT_COMPLETED ||
-					$this->result === self::RESULT_FAILED
+					$this->result === self::RESULT_COMPLETED
+					|| $this->result === self::RESULT_FAILED
 				);
 		}
 

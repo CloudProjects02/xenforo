@@ -34,7 +34,6 @@ class UserMerge extends AbstractJob
 			return $this->complete();
 		}
 
-		/** @var MergeService $merger */
 		$merger = $this->app->service(MergeService::class);
 		$merger->setSource($source)->setTarget($target);
 		$merger->restoreState($this->data['currentStep'], $this->data['lastOffset']);

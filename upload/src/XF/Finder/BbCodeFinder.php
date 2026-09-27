@@ -2,14 +2,15 @@
 
 namespace XF\Finder;
 
+use XF\Entity\BbCode;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Finder;
 
 /**
- * @method AbstractCollection<\XF\Entity\BbCode> fetch(?int $limit = null, ?int $offset = null)
- * @method AbstractCollection<\XF\Entity\BbCode> fetchDeferred(?int $limit = null, ?int $offset = null)
- * @method \XF\Entity\BbCode|null fetchOne(?int $offset = null)
- * @extends Finder<\XF\Entity\BbCode>
+ * @method AbstractCollection<BbCode> fetch(?int $limit = null, ?int $offset = null)
+ * @method AbstractCollection<BbCode> fetchDeferred(?int $limit = null, ?int $offset = null)
+ * @method BbCode|null fetchOne(?int $offset = null)
+ * @extends Finder<BbCode>
  */
 class BbCodeFinder extends Finder
 {

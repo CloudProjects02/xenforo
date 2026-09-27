@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<options>
+  <option option_id="madCheckCooldown" edit_format="spinbox" data_type="numeric" advanced="0">
+    <default_value>10</default_value>
+    <edit_format_params>units={{ phrase('units_minutes') }}
+min=1</edit_format_params>
+    <relation group_id="multiAccountDetectorOptions" display_order="200"/>
+  </option>
+  <option option_id="madCloseIfBan" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="multiAccountDetectorOptions" display_order="30"/>
+  </option>
+  <option option_id="madEnableReports" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="multiAccountDetectorOptions" display_order="10"/>
+  </option>
+  <option option_id="madEvercookie" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="multiAccountDetectorOptions" display_order="110"/>
+  </option>
+  <option option_id="madEvercookieDetectedUserGroup" edit_format="callback" data_type="unsigned_integer" advanced="0">
+    <default_value>0</default_value>
+    <edit_format_params>XF\Option\UserGroup::renderSelect</edit_format_params>
+    <relation group_id="multiAccountDetectorOptions" display_order="65"/>
+  </option>
+  <option option_id="madFingerprint" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="multiAccountDetectorOptions" display_order="100"/>
+  </option>
+  <option option_id="madFingerprintDetectedUserGroup" edit_format="callback" data_type="unsigned_integer" advanced="0">
+    <default_value>0</default_value>
+    <edit_format_params>XF\Option\UserGroup::renderSelect</edit_format_params>
+    <relation group_id="multiAccountDetectorOptions" display_order="60"/>
+  </option>
+  <option option_id="madFingerprintProToken" edit_format="textbox" data_type="string" advanced="0">
+    <default_value></default_value>
+    <relation group_id="multiAccountDetectorOptions" display_order="101"/>
+  </option>
+  <option option_id="madReportOnNewUser" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="multiAccountDetectorOptions" display_order="40"/>
+  </option>
+  <option option_id="madShowReportsLinkAlways" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="multiAccountDetectorOptions" display_order="21"/>
+  </option>
+  <option option_id="madThreadReportCreator" edit_format="username" data_type="string" advanced="0">
+    <default_value></default_value>
+    <relation group_id="multiAccountDetectorOptions" display_order="55"/>
+  </option>
+  <option option_id="madThreadReportForum" edit_format="callback" data_type="integer" advanced="0">
+    <default_value>0</default_value>
+    <edit_format_params>XF\Option\Forum::renderSelect</edit_format_params>
+    <relation group_id="multiAccountDetectorOptions" display_order="50"/>
+  </option>
+</options>

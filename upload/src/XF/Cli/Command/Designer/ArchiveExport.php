@@ -65,7 +65,6 @@ class ArchiveExport extends AbstractCommand
 			$this->runExport($style->designer_mode, $output);
 		}
 
-		/** @var ArchiveExportService $styleArchiveExporter */
 		$styleArchiveExporter = \XF::service(ArchiveExportService::class, $style);
 
 		$addOnId = $input->getOption('addon-id');

@@ -157,7 +157,6 @@ class Processor
 			return null;
 		}
 
-		/** @var OptionRepository $optionRepo */
 		$optionRepo = $app->repository(OptionRepository::class);
 		$handler = $optionRepo->refreshEmailAccessTokenIfNeeded('emailUnsubscribeHandler');
 

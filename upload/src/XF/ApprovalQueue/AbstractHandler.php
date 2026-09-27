@@ -5,12 +5,16 @@ namespace XF\ApprovalQueue;
 use XF\Entity\ApprovalQueue;
 use XF\Entity\User;
 use XF\InputFiltererArray;
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Repository\SpamRepository;
 use XF\Util\Php;
 
 use function call_user_func_array, func_get_args, is_array;
 
+/**
+ * @template T of Entity
+ */
 abstract class AbstractHandler
 {
 	/**
@@ -19,13 +23,26 @@ abstract class AbstractHandler
 	protected $inputFilterer;
 
 	protected $filterCache = [];
+
+	/**
+	 * @var string
+	 */
 	protected $contentType;
 
+	/**
+	 * @param string $contentType
+	 */
 	public function __construct($contentType)
 	{
 		$this->contentType = $contentType;
 	}
 
+	/**
+	 * @param T $content
+	 * @param string|\Stringable|null &$error
+	 *
+	 * @return bool
+	 */
 	public function canView(Entity $content, &$error = null)
 	{
 		if (!$this->canViewContent($content, $error))
@@ -41,6 +58,12 @@ abstract class AbstractHandler
 		return true;
 	}
 
+	/**
+	 * @param T $content
+	 * @param string|\Stringable|null &$error
+	 *
+	 * @return bool
+	 */
 	protected function canViewContent(Entity $content, &$error = null)
 	{
 		if (method_exists($content, 'canView'))
@@ -51,11 +74,20 @@ abstract class AbstractHandler
 		throw new \LogicException("Could not determine content viewability; please override");
 	}
 
+	/**
+	 * @param T $content
+	 * @param string|\Stringable|null &$error
+	 *
+	 * @return bool
+	 */
 	protected function canActionContent(Entity $content, &$error = null)
 	{
 		return true;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getTemplateName()
 	{
 		return 'public:approval_item_' . $this->contentType;
@@ -75,6 +107,14 @@ abstract class AbstractHandler
 		return $template;
 	}
 
+	/**
+	 * @return array{
+	 *     unapprovedItem: ApprovalQueue,
+	 *     content: T|null,
+	 *     spamDetails: array|null,
+	 *     handler: static,
+	 * }
+	 */
 	public function getTemplateData(ApprovalQueue $unapprovedItem)
 	{
 		return [
@@ -85,6 +125,9 @@ abstract class AbstractHandler
 		];
 	}
 
+	/**
+	 * @return string
+	 */
 	public function render(ApprovalQueue $unapprovedItem)
 	{
 		$template = $this->getTemplateName();
@@ -96,19 +139,31 @@ abstract class AbstractHandler
 		return \XF::app()->templater()->renderTemplate($template, $this->getTemplateData($unapprovedItem));
 	}
 
+	/**
+	 * @return list<string>
+	 */
 	public function getEntityWith()
 	{
 		return [];
 	}
 
+	/**
+	 * @param int|list<int> $id
+	 *
+	 * @return T|AbstractCollection<T>
+	 */
 	public function getContent($id)
 	{
 		return \XF::app()->findByContentType($this->contentType, $id, $this->getEntityWith());
 	}
 
+	/**
+	 * @param int|list<int> $id
+	 *
+	 * @return array<int, string>
+	 */
 	public function getSpamDetails($id)
 	{
-		/** @var SpamRepository $spamRepo */
 		$spamRepo = \XF::app()->repository(SpamRepository::class);
 
 		$spamTriggerLogsFinder = $spamRepo->findSpamTriggerLogs()->forContent($this->contentType, $id);
@@ -116,6 +171,9 @@ abstract class AbstractHandler
 		return $spamTriggerLogsFinder->fetch()->pluckNamed('details', 'content_id');
 	}
 
+	/**
+	 * @return array<string, string|\Stringable>
+	 */
 	public function getDefaultActions()
 	{
 		return [
@@ -125,6 +183,11 @@ abstract class AbstractHandler
 		];
 	}
 
+	/**
+	 * @param string $action
+	 * @param T $entity
+	 * @param mixed ...$arguments
+	 */
 	public function performAction($action, Entity $entity)
 	{
 		$args = func_get_args();
@@ -147,6 +210,12 @@ abstract class AbstractHandler
 		);
 	}
 
+	/**
+	 * @param string $key
+	 * @param int $id
+	 *
+	 * @return mixed
+	 */
 	protected function getInput($key, $id)
 	{
 		if (!isset($this->filterCache[$key]))
@@ -157,6 +226,11 @@ abstract class AbstractHandler
 		return !empty($this->filterCache[$key][$this->contentType][$id]) ? $this->filterCache[$key][$this->contentType][$id] : '';
 	}
 
+	/**
+	 * @param T $entity
+	 * @param string $field
+	 * @param mixed|null $value
+	 */
 	protected function quickUpdate(Entity $entity, $field, $value = null)
 	{
 		$values = $field;
@@ -196,6 +270,9 @@ abstract class AbstractHandler
 		$cleaner->finalize();
 	}
 
+	/**
+	 * @return string|\Stringable
+	 */
 	public function getContentTypePhrase()
 	{
 		return \XF::app()->getContentTypePhrase($this->contentType);

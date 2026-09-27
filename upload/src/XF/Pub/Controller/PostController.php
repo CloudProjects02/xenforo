@@ -70,7 +70,6 @@ class PostController extends AbstractController
 	{
 		$message = $this->plugin(EditorPlugin::class)->fromInput('message');
 
-		/** @var EditorService $editor */
 		$editor = $this->service(EditorService::class, $post);
 		if ($post->canEditSilently())
 		{
@@ -108,7 +107,6 @@ class PostController extends AbstractController
 	 */
 	protected function setupFirstPostThreadEdit(Thread $thread, &$threadChanges)
 	{
-		/** @var \XF\Service\Thread\EditorService $threadEditor */
 		$threadEditor = $this->service(\XF\Service\Thread\EditorService::class, $thread);
 
 		if ($thread->isPrefixEditable())
@@ -208,7 +206,6 @@ class PostController extends AbstractController
 			$forum = $post->Thread->Forum;
 			if ($forum->canUploadAndManageAttachments())
 			{
-				/** @var AttachmentRepository $attachmentRepo */
 				$attachmentRepo = $this->repository(AttachmentRepository::class);
 				$attachmentData = $attachmentRepo->getEditorData('post', $post);
 			}
@@ -256,7 +253,6 @@ class PostController extends AbstractController
 
 		if ($thread->Forum->canUploadAndManageAttachments())
 		{
-			/** @var AttachmentRepository $attachmentRepo */
 			$attachmentRepo = $this->repository(AttachmentRepository::class);
 			$attachmentData = $attachmentRepo->getEditorData('post', $post, $tempHash);
 			$attachments = $attachmentData['attachments'];
@@ -292,7 +288,6 @@ class PostController extends AbstractController
 			/** @var Thread $thread */
 			$thread = $post->Thread;
 
-			/** @var DeleterService $deleter */
 			$deleter = $this->service(DeleterService::class, $post);
 
 			if ($this->filter('author_alert', 'bool') && $post->canSendModeratorActionAlert())
@@ -480,7 +475,6 @@ class PostController extends AbstractController
 			&& ($type != 'replace' || $this->filter('confirm', 'bool'))
 		)
 		{
-			/** @var MarkSolutionService $markSolution */
 			$markSolution = $this->service(MarkSolutionService::class, $thread);
 
 			if ($type == 'remove')

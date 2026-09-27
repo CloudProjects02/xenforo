@@ -2,6 +2,7 @@
 
 namespace XF\Entity;
 
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XF\Util\File;
@@ -27,7 +28,7 @@ use XF\Util\File;
  *
  * RELATIONS
  * @property-read BbCodeMediaSite|null $BbCodeMediaSite
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\OembedReferrer> $Referrers
+ * @property-read AbstractCollection<OembedReferrer> $Referrers
  */
 class Oembed extends Entity
 {

@@ -338,7 +338,6 @@ class ReleaseBuilderService extends AbstractService
 
 		foreach ($minify AS $file)
 		{
-			/** @var JsMinifierService $minifier */
 			$minifier = $this->service(JsMinifierService::class, $uploadRoot . $ds . $file);
 
 			try
@@ -487,6 +486,7 @@ class ReleaseBuilderService extends AbstractService
 			'_no_upload',
 			'_output',
 			'_releases',
+			'_stubs',
 			'.git',
 			'.svn',
 		];

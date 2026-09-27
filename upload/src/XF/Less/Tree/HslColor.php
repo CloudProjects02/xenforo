@@ -170,10 +170,10 @@ class HslColor extends Tree
 		$alpha = $this->getAlpha();
 
 		return (
-			$hue instanceof Dimension &&
-			$saturation instanceof Dimension &&
-			$light instanceof Dimension &&
-			$alpha instanceof Dimension
+			$hue instanceof Dimension
+			&& $saturation instanceof Dimension
+			&& $light instanceof Dimension
+			&& $alpha instanceof Dimension
 		);
 	}
 
@@ -185,19 +185,19 @@ class HslColor extends Tree
 		$alpha = $this->getAlpha();
 
 		if (
-			!($hue instanceof HslColorVariable) ||
-			!($saturation instanceof HslColorVariable) ||
-			!($light instanceof HslColorVariable) ||
-			!($alpha instanceof HslColorVariable)
+			!($hue instanceof HslColorVariable)
+			|| !($saturation instanceof HslColorVariable)
+			|| !($light instanceof HslColorVariable)
+			|| !($alpha instanceof HslColorVariable)
 		)
 		{
 			return false;
 		}
 
 		return (
-			$hue->getName() === $saturation->getName() &&
-			$hue->getName() === $light->getName() &&
-			$hue->getName() === $alpha->getName()
+			$hue->getName() === $saturation->getName()
+			&& $hue->getName() === $light->getName()
+			&& $hue->getName() === $alpha->getName()
 		);
 	}
 

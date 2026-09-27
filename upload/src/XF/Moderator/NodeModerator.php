@@ -14,7 +14,6 @@ class NodeModerator extends AbstractModerator
 	 */
 	public function getAddModeratorOption($selectedContentId, $contentType)
 	{
-		/** @var NodeRepository $nodeRepo */
 		$nodeRepo = \XF::repository(NodeRepository::class);
 
 		$options = [
@@ -35,7 +34,6 @@ class NodeModerator extends AbstractModerator
 	{
 		if ($this->nodeTitleCache === null)
 		{
-			/** @var NodeRepository $nodeRepo */
 			$nodeRepo = \XF::repository(NodeRepository::class);
 
 			$nodes = $nodeRepo->getFullNodeListCached('NodeModerator')->toArray();

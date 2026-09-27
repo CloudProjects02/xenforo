@@ -106,7 +106,6 @@ class BbCodeMediaSite extends AbstractDataType
 	{
 		\XF::runOnce('rebuild_active_' . $this->getContainerTag(), function ()
 		{
-			/** @var BbCodeMediaSiteRepository $repo */
 			$repo = $this->em->getRepository(BbCodeMediaSiteRepository::class);
 			$repo->rebuildBbCodeMediaSiteCache();
 		});

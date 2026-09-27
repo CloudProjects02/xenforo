@@ -20,7 +20,6 @@ class TemplateRepository extends Repository
 	 */
 	public function findEffectiveTemplatesInStyle(Style $style, $type = null)
 	{
-		/** @var TemplateMapFinder $finder */
 		$finder = $this->finder(TemplateMapFinder::class);
 		$finder
 			->where('style_id', $style->style_id)
@@ -45,7 +44,6 @@ class TemplateRepository extends Repository
 	 */
 	public function findEffectiveTemplateInStyle(Style $style, $title, $type)
 	{
-		/** @var TemplateMapFinder $finder */
 		$finder = $this->finder(TemplateMapFinder::class);
 		$finder
 			->where('style_id', $style->style_id)
@@ -65,7 +63,6 @@ class TemplateRepository extends Repository
 	 */
 	public function findTemplatesInStyle(Style $style, $type = null)
 	{
-		/** @var TemplateFinder $templateFinder */
 		$templateFinder = $this->finder(TemplateFinder::class);
 		$templateFinder
 			->where('style_id', $style->style_id)

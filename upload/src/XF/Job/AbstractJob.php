@@ -38,6 +38,10 @@ abstract class AbstractJob
 	 * @return JobResult
 	 */
 	abstract public function run($maxRunTime);
+
+	/**
+	 * @return string|null
+	 */
 	abstract public function getStatusMessage();
 
 	/**
@@ -67,6 +71,8 @@ abstract class AbstractJob
 
 	/**
 	 * @param array<string, mixed> $data
+	 *
+	 * @return array<string, mixed>
 	 */
 	protected function setupData(array $data)
 	{

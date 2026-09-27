@@ -1,0 +1,23 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use XF\Mvc\ParameterBag;
+use XF\Mvc\Reply\AbstractReply;
+use XF\Pub\Controller\AbstractController;
+
+class {{ class }} extends AbstractController
+{
+	public function actionIndex(ParameterBag $params): AbstractReply
+	{
+		$viewParams = [];
+
+		return $this->view(
+			'{{ addOnId }}:{{ viewClass }}',
+			'{{ templateName }}',
+			$viewParams
+		);
+	}
+}

@@ -4,7 +4,6 @@ namespace XF\Repository;
 
 use XF\Entity\Route;
 use XF\Finder\RouteFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 use function strlen;
@@ -12,7 +11,7 @@ use function strlen;
 class RouteRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return RouteFinder
 	 */
 	public function findRoutesForList()
 	{

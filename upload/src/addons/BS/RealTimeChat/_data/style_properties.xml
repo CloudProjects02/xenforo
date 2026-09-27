@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style_properties>
+  <style_property property_name="rtcChatFormReturnBack" group_name="rtcRooms" title="Action form: Return back" property_type="css" display_order="140" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "color": "var(--surface-color-secondary)",
+    "extra": "margin-right: 1.5rem;\ncursor: pointer;\n-webkit-tap-highlight-color: rgba(0,0,0,0);\n-webkit-tap-highlight-color: transparent;"
+}</value>
+  </style_property>
+  <style_property property_name="rtcChatFormTitle" group_name="rtcRooms" title="Action form: Title" property_type="css" display_order="130" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "font-size": "1.25rem",
+    "font-weight": "@xf-fontWeightHeavy",
+    "padding": "7px 4px 15px",
+    "extra": "display: flex;\nalign-items: center;\nbox-shadow: none;\nborder: none;"
+}</value>
+  </style_property>
+  <style_property property_name="rtcConnectingNotice" group_name="rtcContainer" title="Connecting notice" property_type="css" display_order="80" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "background-color": "@xf-contentBg",
+    "border-radius": "15px",
+    "padding": "10px 15px",
+    "extra": "box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.12),0 1px 5px 0 rgba(0,0,0,.2);"
+}</value>
+  </style_property>
+  <style_property property_name="rtcContainer" group_name="rtcContainer" title="Container" property_type="css" display_order="5" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "border-radius": "15px",
+    "padding": "0",
+    "extra": "box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;\nheight: 650px;\nposition: relative;\noverflow: hidden;\n--chat-font-family: system-ui, -apple-system, BlinkMacSystemFont, \"Roboto\", \"Apple Color Emoji\", \"Helvetica Neue\", sans-serif;\n--beside-buttons-padding: 7px;\n--beside-button-size: 33px;\n--beside-button-font-size: 16px;\n--message-font-size: 15px;\n--link-color: @xf-linkColor;\n--chat-button-border-radius: 10px;\n--chat-input-border-radius: 12px;"
+}</value>
+  </style_property>
+  <style_property property_name="rtcCornerButton" group_name="rtcRooms" title="Corner button" property_type="css" display_order="110" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "font-size": "19px",
+    "color": "var(--primary-color-contrast)",
+    "background-color": "var(--primary-color)",
+    "border-radius": "50%",
+    "extra": "outline: none;\nborder: none;\nposition: absolute;\nbottom: 20px;\nright: 20px;\nheight: 54px;\nwidth: 54px;\ncursor: pointer;\nz-index: 20;\nbox-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;\n-webkit-tap-highlight-color: rgba(0,0,0,0);\n-webkit-tap-highlight-color: transparent;"
+}</value>
+  </style_property>
+  <style_property property_name="rtcDefaultRoomAvatar" group_name="rtcRooms" title="Default room avatar" description="Image URL" property_type="value" value_type="string" display_order="10">
+    <value>""</value>
+  </style_property>
+  <style_property property_name="rtcDefaultRoomIcon" group_name="rtcRooms" title="Default room icon" description="Font awesome class" property_type="value" value_type="string" display_order="20">
+    <value>"fa-users"</value>
+  </style_property>
+  <style_property property_name="rtcDefaultThemeIndex" group_name="rtcContainer" title="Default theme index" description="Specify the index of the theme to be used by default. Theme Index is the order of the theme in the themes setting minus one. For example, for the first theme, the index would be 0." property_type="value" value_type="number" display_order="10">
+    <value>"0"</value>
+  </style_property>
+  <style_property property_name="rtcHeader" group_name="rtcContainer" title="Header" property_type="css" display_order="10" css_components="text,background,border,border_radius,padding,extra">
+    <value>{
+    "font-size": "16px",
+    "color": "var(--surface-color-contrast)",
+    "background-color": "var(--surface-color)",
+    "padding": "0px 16px",
+    "extra": "display: none;\nalign-items: center;\nbox-shadow: 0 1px 5px -1px rgba(0,0,0,.21);\nmin-height: 56px;\nheight: 56px;\nz-index: 100;\nfont-weight: 500;"
+}</value>
+  </style_property>
+  <style_property property_name="rtcHeaderButton" group_name="rtcContainer" title="Header: Button" property_type="css" display_order="30" css_components="text,background,padding,extra">
+    <value>{
+    "font-size": "1.2rem",
+    "color": "var(--surface-color-muted)",
+    "padding": "12px 15px",
+    "extra": "display: flex;\nalign-items: center;\ncursor: pointer;\n-webkit-tap-highlight-color: rgba(0,0,0,0);\n-webkit-tap-highlight-color: transparent;"
+}</value>
+  </style_property>
+  <style_property property_name="rtcHeaderButtonHover" group_name="rtcContainer" title="Header: Button [Hovered]" property_type="css" display_order="40" css_components="text,background,padding,extra">
+    <value>{
+    "text-decoration": "none"
+}</value>
+  </style_property>
+  <style_property property_name="rtcMessage" group_name="rtcMessages" title="Message" property_type="css" display_order="50" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "extra": "margin-bottom: 2px;\ntransition: all .25s;"
+}</value>
+  </style_property>
+  <style_property property_name="rtcMessageBubble" group_name="rtcMessages" title="Bubble" property_type="css" display_order="20" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "font-size": "var(--message-font-size)",
+    "background-color": "var(--bubble-background)",
+    "border-radius": "12px",
+    "padding": "6px 10px",
+    "extra": "box-shadow: rgba(16, 35, 47, 0.15) 0px 1px 2px 0px;"
+}</value>
+  </style_property>
+  <style_property property_name="rtcMessageReactionsBar" group_name="rtcMessages" title="Message: Reactions bar" property_type="css" display_order="80" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "font-size": "15px",
+    "background-color": "var(--primary-color-light-filled)",
+    "border-radius": "7px",
+    "padding": "4px 7px",
+    "extra": "display: inline-block;\nborder: none;\ncursor: pointer;\nmargin-top: 0;"
+}</value>
+  </style_property>
+  <style_property property_name="rtcMessagesWrapper" group_name="rtcMessages" title="Wrapper" property_type="css" display_order="10" css_components="padding,extra">
+    <value>{
+    "padding-top": "6px",
+    "extra": "max-width: 740px;"
+}</value>
+  </style_property>
+  <style_property property_name="rtcPinnedNotice" group_name="rtcContainer" title="Pinned notice" property_type="css" display_order="70" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "padding": "10px 25px"
+}</value>
+  </style_property>
+  <style_property property_name="rtcPinnedNotices" group_name="rtcContainer" title="Pinned notices" property_type="css" display_order="60" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "background-color": "@xf-contentBg",
+    "border-bottom-width": "1px",
+    "border-bottom-color": "@xf-borderColorFaint",
+    "border-left-width": "1px",
+    "border-left-color": "@xf-borderColorFaint"
+}</value>
+  </style_property>
+  <style_property property_name="rtcPrivateMessageBubble" group_name="rtcMessages" title="Bubble [Private]" description="Message sent to private messages" property_type="css" display_order="30" css_components="background,extra">
+    <value>[]</value>
+  </style_property>
+  <style_property property_name="rtcRoom" group_name="rtcRooms" title="Item" property_type="css" display_order="20" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "border-radius": "10px",
+    "padding": "0 10px",
+    "extra": "display: flex;\ntransition: all .2s;\nmin-height: 4.5rem;\nalign-items: center;\nmargin-top: 0;"
+}</value>
+  </style_property>
+  <style_property property_name="rtcRoomAvatar" group_name="rtcRooms" title="Avatar" property_type="css" display_order="49" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "font-size": "21px"
+}</value>
+  </style_property>
+  <style_property property_name="rtcRoomExtraInfo" group_name="rtcRooms" title="Additional Information" description="Dates, icons and other small markers" property_type="css" display_order="80" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "font-size": "12px",
+    "color": "var(--surface-color-muted)",
+    "extra": "display: flex;\nalign-items: center;\nlist-style: none;\npadding: 0;\nmargin: 0;\ntext-align: right;"
+}</value>
+  </style_property>
+  <style_property property_name="rtcRoomExtraItem" group_name="rtcRooms" title="Additional Information: Item" property_type="css" display_order="90" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "font-size": "17px",
+    "extra": "line-height: 1.375rem;"
+}</value>
+  </style_property>
+  <style_property property_name="rtcRoomExtraItemAttention" group_name="rtcRooms" title="Additional Information: Item [Attention]" property_type="css" display_order="100" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "color": "var(--secondary-color)"
+}</value>
+  </style_property>
+  <style_property property_name="rtcRoomHovered" group_name="rtcRooms" title="Item [Hovered]" property_type="css" display_order="40" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "background-color": "var(--primary-color-light-filled)"
+}</value>
+  </style_property>
+  <style_property property_name="rtcRoomLatestMessage" group_name="rtcRooms" title="Latest message" property_type="css" display_order="60" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "font-size": "16px",
+    "color": "var(--surface-color-secondary)",
+    "extra": "display: flex;\nmax-height: 24px;\noverflow: hidden;\nmargin-top: .125rem;"
+}</value>
+  </style_property>
+  <style_property property_name="rtcRoomList" group_name="rtcRooms" title="List" property_type="css" display_order="10" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "background-color": "var(--surface-color)",
+    "padding": "10px 0",
+    "extra": "display: flex;\nalign-items: start;\nflex: 1 1 auto;\nflex-direction: column;\nmax-width: 350px;\nwidth: 350px;\nborder-top-left-radius: var(--chat-border-radius);\nborder-bottom-left-radius: var(--chat-border-radius);\nposition: relative;\nz-index: 10;\ntransition: all .25s;"
+}</value>
+  </style_property>
+  <style_property property_name="rtcRoomSelected" group_name="rtcRooms" title="Item [Selected]" property_type="css" display_order="30" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "color": "var(--primary-color-contrast)",
+    "background-color": "var(--primary-color)"
+}</value>
+  </style_property>
+  <style_property property_name="rtcRoomStatus" group_name="rtcContainer" title="Header: Online status" property_type="css" display_order="50" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "font-size": "14px",
+    "color": "var(--surface-color-muted)",
+    "font-weight": "@xf-fontWeightNormal"
+}</value>
+  </style_property>
+  <style_property property_name="rtcRoomTitle" group_name="rtcRooms" title="Title" property_type="css" display_order="50" css_components="text,extra">
+    <value>{
+    "font-size": "16px",
+    "color": "@xf-textColor",
+    "extra": "font-weight: 500;"
+}</value>
+  </style_property>
+  <style_property property_name="rtcSendButton" group_name="rtcContainer" title="Editor: Send button" property_type="css" display_order="90" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "font-size": "20px",
+    "color": "contrast(@xf-buttonPrimaryBg)",
+    "background-color": "var(--primary-color)",
+    "border-radius": "50%",
+    "padding-right": "2px",
+    "extra": "cursor: pointer;\nbox-shadow: 0 1px 8px 1px rgba(0,0,0,.12);\nheight: 49px;\nwidth: 49px;\ndisplay: flex;\nalign-items: center;\njustify-content: center;\ntransition: all .25s;\n-webkit-tap-highlight-color: rgba(0,0,0,0);\n-webkit-tap-highlight-color: transparent;"
+}</value>
+  </style_property>
+  <style_property property_name="rtcSystemMessage" group_name="rtcMessages" title="Message [System]" property_type="css" display_order="70" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "color": "#fff",
+    "background-color": "var(--highlighted-message-bg)",
+    "border-radius": "14px",
+    "padding": "4.5px 10px"
+}</value>
+  </style_property>
+  <style_property property_name="rtcThemes" group_name="rtcContainer" title="Themes" property_type="value" value_type="template" display_order="20">
+    <value_parameters>template=style_property_template_rtcThemes
+type=array</value_parameters>
+    <value>[
+    {
+        "primary_color": "@xf-buttonBg",
+        "surface_color": "@xf-contentBg",
+        "top_left": "saturate(lighten(desaturate(@xf-buttonPrimaryBg, 40%), 15%), 40%)",
+        "top_right": "desaturate(@xf-buttonPrimaryBg, 40%)",
+        "bottom_left": "darken(desaturate(@xf-buttonPrimaryBg, 40%), 3%)",
+        "bottom_right": "lighten(desaturate(@xf-buttonPrimaryBg, 40%), 15%)",
+        "bubble": "@xf-contentBg",
+        "bubble_details": "@xf-textColorMuted",
+        "visitor_bubble": "@xf-contentHighlightBg",
+        "visitor_bubble_details": "desaturate(@xf-buttonBg, 15%)",
+        "highlighted_message": "fade(darken(@xf-contentHighlightBg, 60%), 40%)",
+        "pattern": "styles/default/bs/real_time_chat/pattern.svg"
+    },
+    {
+        "primary_color": "#3390ec",
+        "surface_color": "#fff",
+        "top_left": "#d5d88d",
+        "top_right": "#88b884",
+        "bottom_left": "#6ba587",
+        "bottom_right": "#dbddbb",
+        "bubble": "#fff",
+        "bubble_details": "#707579",
+        "visitor_bubble": "#e9f5e9",
+        "visitor_bubble_details": "rgb(79, 174, 78)",
+        "highlighted_message": "rgba(121, 165, 65, 0.4)",
+        "pattern": "styles/default/bs/real_time_chat/pattern.svg"
+    },
+    {
+        "primary_color": "rgb(39, 177, 112)",
+        "surface_color": "#fff",
+        "top_left": "#d5d88c",
+        "top_right": "#87bda5",
+        "bottom_left": "#b9dd83",
+        "bottom_right": "#87bda5",
+        "bubble": "#fff",
+        "bubble_details": "#707579",
+        "visitor_bubble": "#eef5e0",
+        "visitor_bubble_details": "#51b269",
+        "highlighted_message": "rgba(114, 170, 57, 0.4)",
+        "pattern": "styles/default/bs/real_time_chat/pattern-zoo.svg"
+    },
+    {
+        "primary_color": "rgb(54, 132, 172)",
+        "surface_color": "#fff",
+        "top_left": "#aeded2",
+        "top_right": "#c0c4ec",
+        "bottom_left": "#9ed3f4",
+        "bottom_right": "#81a9f0",
+        "bubble": "#fff",
+        "bubble_details": "#707579",
+        "visitor_bubble": "#e6f3f8",
+        "visitor_bubble_details": "#3b8fba",
+        "highlighted_message": "rgba(42, 136, 212, 0.4)",
+        "pattern": "styles/default/bs/real_time_chat/pattern-snow.svg"
+    },
+    {
+        "primary_color": "#c15cda",
+        "surface_color": "#fff",
+        "top_left": "#c6b1ef",
+        "top_right": "#efb7dc",
+        "bottom_left": "#97beeb",
+        "bottom_right": "#b1e9ea",
+        "bubble": "#fff",
+        "bubble_details": "#707579",
+        "visitor_bubble": "#e6f5fb",
+        "visitor_bubble_details": "rgb(49, 177, 224)",
+        "highlighted_message": "rgba(65, 81, 208, 0.4)",
+        "pattern": "styles/default/bs/real_time_chat/pattern-sea.svg"
+    },
+    {
+        "primary_color": "#20b5a5",
+        "surface_color": "#fff",
+        "top_left": "#76b8e6",
+        "top_right": "#91d69a",
+        "bottom_left": "#d1e395",
+        "bottom_right": "#91d2cc",
+        "bubble": "#fff",
+        "bubble_details": "#707579",
+        "visitor_bubble": "#e3f7e0",
+        "visitor_bubble_details": "rgb(73, 174, 105)",
+        "highlighted_message": "rgba(63, 174, 127, 0.4)",
+        "pattern": "styles/default/bs/real_time_chat/pattern-math.svg"
+    },
+    {
+        "primary_color": "#e3568b",
+        "surface_color": "#fff",
+        "top_left": "#eba0c1",
+        "top_right": "#c7b1eb",
+        "bottom_left": "#ecae8e",
+        "bottom_right": "#e8c583",
+        "bubble": "#fff",
+        "bubble_details": "#707579",
+        "visitor_bubble": "#faeee0",
+        "visitor_bubble_details": "rgb(244, 162, 85)",
+        "highlighted_message": "rgba(205, 56, 56, 0.4)",
+        "pattern": "styles/default/bs/real_time_chat/pattern-magic.svg"
+    },
+    {
+        "primary_color": "#9964d8",
+        "surface_color": "#fff",
+        "top_left": "#b79fe9",
+        "top_right": "#ecb074",
+        "bottom_left": "#e998c3",
+        "bottom_right": "#e9a4d6",
+        "bubble": "#fff",
+        "bubble_details": "#707579",
+        "visitor_bubble": "#f8ebf0",
+        "visitor_bubble_details": "rgb(198, 89, 137)",
+        "highlighted_message": "rgba(190, 56, 138, 0.4)",
+        "pattern": "styles/default/bs/real_time_chat/pattern-love.svg"
+    },
+    {
+        "primary_color": "#2aa02f",
+        "surface_color": "#fff",
+        "top_left": "#ee9d68",
+        "top_right": "#e0d07e",
+        "bottom_left": "#e99d57",
+        "bottom_right": "#eed171",
+        "bubble": "#fff",
+        "bubble_details": "#707579",
+        "visitor_bubble": "#fbf6e0",
+        "visitor_bubble_details": "rgb(245, 186, 72)",
+        "highlighted_message": "rgba(202, 121, 19, 0.4)",
+        "pattern": "styles/default/bs/real_time_chat/pattern-happy.svg"
+    },
+    {
+        "primary_color": "#597de9",
+        "surface_color": "#fff",
+        "top_left": "#e984d8",
+        "top_right": "#efd359",
+        "bottom_left": "#40cdde",
+        "bottom_right": "#ac86ed",
+        "bubble": "#fff",
+        "bubble_details": "#707579",
+        "visitor_bubble": "#e0f2fb",
+        "visitor_bubble_details": "#5cb3e8",
+        "highlighted_message": "rgba(89, 80, 158, 0.4)",
+        "pattern": "styles/default/bs/real_time_chat/pattern-game.svg"
+    }
+]</value>
+  </style_property>
+  <style_property property_name="rtcVisitorMessageBubble" group_name="rtcMessages" title="Bubble [Visitor]" property_type="css" display_order="40" css_components="background">
+    <value>{
+    "background-color": "@xf-contentHighlightBg"
+}</value>
+  </style_property>
+</style_properties>

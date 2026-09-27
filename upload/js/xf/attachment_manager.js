@@ -22,6 +22,7 @@
 			templateView: '.js-attachmentView',
 			allowDrop: false,
 			resizeImages: true,
+            resizeImagesConvertType: true,
 			maxImageWidth: null,
 			maxImageHeight: null,
 			checkVideoSize: true,
@@ -390,32 +391,53 @@
 				{
 					const exif = {}
 
-					for (const tag of Object.values(exifData))
+					for (const [tag, data] of Object.entries(exifData))
 					{
-						const id = tag.id
+						if (tag === 'MakerNote')
+						{
+							continue
+						}
+
+						const id = data.id
 						if (!id)
 						{
 							continue
 						}
 
-						let value = tag.value
-						if (Array.isArray(value))
+						try
 						{
-							if (value.length === 1)
-							{
-								value = value[0]
-							}
-							else if (value.length === 2)
-							{
-								value = value.join('/')
-							}
-							else
-							{
-								value = tag.description
-							}
-						}
+							let value = Array.isArray(data.value)
+								? data.value.join('/')
+								: data.value
 
-						exif[id] = value
+							switch (tag)
+							{
+								case 'ComponentsConfiguration':
+								case 'ExifVersion':
+								case 'FileSource':
+								case 'FlashpixVersion':
+								case 'InteroperabilityVersion':
+								case 'SceneType':
+								case 'UserComment':
+									value = data.description
+									break
+
+								case 'GPSLatitude':
+								case 'GPSLongitude':
+								case 'GPSTimeStamp':
+									value = Array.isArray(data.value)
+										? data.value.map((v) => Array.isArray(v) ? v.join('/') : v)
+										: data.value
+									break
+							}
+
+							exif[tag] = {id, value}
+						}
+						catch (e)
+						{
+							// Skip tags that cannot be processed
+							continue
+						}
 					}
 
 					this.exifMap[fileObj.uniqueIdentifier] = exif
@@ -429,7 +451,7 @@
 			{
 				try
 				{
-					const asType = XF.config.imageOptimization === 'optimize'
+					const asType = this.options.resizeImagesConvertType && XF.config.imageOptimization === 'optimize'
 						? 'image/webp'
 						: null
 					const file = await XF.ImageTools.resize(
@@ -443,6 +465,9 @@
 					fileObj.size = file.size
 					fileObj.relativePath = file.relativePath || file.webkitRelativePath || file.name
 					fileObj.bootstrap()
+
+					// if the file was resized, remove exif orientation
+					delete this.exifMap[fileObj.uniqueIdentifier]['Orientation']
 				}
 				catch (e)
 				{
@@ -1047,9 +1072,9 @@
 					return
 				}
 
-				if (file.type === 'image/gif' || file.type === 'image/webp')
+				if (file.type === 'image/gif' || file.type === 'image/webp' || file.type === 'image/svg+xml')
 				{
-					// browsers do not support animated GIFs or WebPs
+					// browsers do not support animated GIFs or WebPs and skip SVGs
 					resolve(file)
 					return
 				}

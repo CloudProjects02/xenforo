@@ -27,11 +27,9 @@ class ClassExtensionController extends AbstractController
 
 	public function actionIndex()
 	{
-		/** @var ClassExtensionRepository $extensionRepo */
 		$extensionRepo = $this->getExtensionRepo();
 		$extensions = $extensionRepo->findExtensionsForList()->fetch();
 
-		/** @var AddOnRepository $addOnRepo */
 		$addOnRepo = $this->repository(AddOnRepository::class);
 		$addOns = $addOnRepo->findAddOnsForList()->fetch();
 

@@ -11,8 +11,7 @@ class Weekly extends AbstractGrouper
 
 	public function getLabel($groupValue, $timestamp)
 	{
-		[$year, $week] = explode('-', $groupValue);
-		return "{$year}W{$week}";
+		return $this->language->date($timestamp, 'W o');
 	}
 
 	public function getDefaultStartDate()

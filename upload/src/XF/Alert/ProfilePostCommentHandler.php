@@ -2,6 +2,9 @@
 
 namespace XF\Alert;
 
+/**
+ * @extends AbstractHandler<\XF\Entity\ProfilePostComment>
+ */
 class ProfilePostCommentHandler extends AbstractHandler
 {
 	public function getOptOutActions()

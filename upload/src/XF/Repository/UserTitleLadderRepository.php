@@ -4,13 +4,12 @@ namespace XF\Repository;
 
 use XF\Entity\UserTitleLadder;
 use XF\Finder\UserTitleLadderFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 class UserTitleLadderRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return UserTitleLadderFinder
 	 */
 	public function findLadder()
 	{

@@ -31,6 +31,7 @@ class AvatarOptimization extends AbstractImageOptimizationJob
 		$avatarService = $this->app->service(AvatarService::class, $user);
 		$avatarService->silentRunning(true);
 		$avatarService->logIp(false);
+		$avatarService->logChange(false);
 		$avatarService->optimizeExistingAvatar();
 	}
 

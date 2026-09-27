@@ -43,8 +43,8 @@ class XF
 	 * @var string
 	 * @var int
 	 */
-	public static $version = '2.3.4';
-	public static $versionId = 2030470; // abbccde = a.b.c d (alpha: 1, beta: 3, RC: 5, stable: 7, PL: 9) e
+	public static $version = '2.3.13';
+	public static $versionId = 2031370; // abbccde = a.b.c d (alpha: 1, beta: 3, RC: 5, stable: 7, PL: 9) e
 
 	public const XF_API_URL = 'https://xenforo.com/api/';
 	public const XF_LICENSE_KEY = '';
@@ -52,6 +52,8 @@ class XF
 	public const API_VERSION = 1;
 
 	protected static $memoryLimit = null;
+
+	protected static $reservedMemory = null;
 
 	/**
 	 * @var ClassLoader
@@ -198,9 +200,9 @@ class XF
 			$trigger = true;
 
 			$isDevError = (
-				$errorType & E_DEPRECATED ||
-				$errorType & E_USER_DEPRECATED ||
-				(PHP_VERSION_ID < 70400 && $errorType & E_STRICT) // PHP 7.4+ does not use strict errors
+				$errorType & E_DEPRECATED
+				|| $errorType & E_USER_DEPRECATED
+				|| (PHP_VERSION_ID < 70400 && $errorType & E_STRICT) // PHP 7.4+ does not use strict errors
 			);
 
 			if (!self::$debugMode)
@@ -245,6 +247,8 @@ class XF
 	 */
 	public static function handleException($e)
 	{
+		self::$reservedMemory = null;
+
 		$app = self::app();
 		$app->logException($e, true); // exiting so rollback
 		$app->displayFatalExceptionMessage($e);
@@ -271,6 +275,8 @@ class XF
 	 */
 	public static function handleFatalError()
 	{
+		self::$reservedMemory = null;
+
 		$error = @error_get_last();
 		if (!$error)
 		{
@@ -403,7 +409,10 @@ class XF
 
 		spl_autoload_call($class);
 
-		if (class_exists($class, false))
+		// Don't alias onto a name that's already its own class, e.g. the
+		// compiler's Tag\Title and Tag\TitleHandler. Checks skip autoload to
+		// avoid re-entering here for the name we're resolving.
+		if (self::classLikeDeclared($class) && !self::classLikeDeclared($alias))
 		{
 			class_alias($class, $alias, false);
 			unset(static::$classAliasLock[$class]);
@@ -413,7 +422,7 @@ class XF
 
 		spl_autoload_call($alias);
 
-		if (class_exists($alias, false))
+		if (self::classLikeDeclared($alias) && !self::classLikeDeclared($class))
 		{
 			class_alias($alias, $class, false);
 			unset(static::$classAliasLock[$class]);
@@ -425,7 +434,7 @@ class XF
 		unset(static::$classAliasLock[$alias]);
 	}
 
-	public static function getAliasForClass(string $class): string
+	public static function getAliasForClass(string $class, bool $useFileExistence = true): string
 	{
 		if (strpos($class, '\\') === false)
 		{
@@ -457,13 +466,37 @@ class XF
 				return $class;
 			}
 
-			return substr($class, 0, -strlen($suffix));
+			// Skip if the stripped name is already its own class. We don't also
+			// require $class to exist: the autoloader calls this mid-declaration
+			// (a class type-hinting its own stripped alias), before it's visible.
+			$alias = substr($class, 0, -strlen($suffix));
+			$exists = ($useFileExistence && self::$autoLoader)
+				? (bool) self::$autoLoader->findFile($alias)
+				: self::classLikeExists($alias);
+			if ($exists)
+			{
+				return $class;
+			}
+
+			return $alias;
 		}
 
 		return $class;
 	}
 
-	public static function getClassForAlias(string $alias): string
+	private static function classLikeExists(string $class): bool
+	{
+		return class_exists($class) || interface_exists($class) || trait_exists($class);
+	}
+
+	private static function classLikeDeclared(string $class): bool
+	{
+		return class_exists($class, false)
+			|| interface_exists($class, false)
+			|| trait_exists($class, false);
+	}
+
+	public static function getClassForAlias(string $alias, bool $useFileExistence = true): string
 	{
 		if (strpos($alias, '\\') === false)
 		{
@@ -495,7 +528,16 @@ class XF
 				return $alias;
 			}
 
-			return $alias . $suffix;
+			$class = $alias . $suffix;
+			$exists = ($useFileExistence && self::$autoLoader)
+				? (bool) self::$autoLoader->findFile($class)
+				: self::classLikeExists($class);
+			if ($exists)
+			{
+				return $class;
+			}
+
+			return $alias;
 		}
 
 		return $alias;
@@ -590,6 +632,8 @@ class XF
 
 	public static function startSystem()
 	{
+		self::$reservedMemory = str_repeat('x', 32768);
+
 		register_shutdown_function(['XF', 'triggerRunOnce']);
 
 		require __DIR__ . '/utf8.php';
@@ -863,7 +907,6 @@ class XF
 	{
 		if (!self::$visitor)
 		{
-			/** @var UserRepository $userRepo */
 			$userRepo = self::repository(UserRepository::class);
 			self::$visitor = $userRepo->getVisitor(0);
 		}
@@ -879,11 +922,11 @@ class XF
 	/**
 	 * Temporarily take an action with the given user considered to be the visitor
 	 *
+	 * @template T
 	 * @param User $user
-	 * @param \Closure $action
+	 * @param callable(): T $action
 	 * @param bool $withLanguage If true, the action will be taken with the given user's language
-	 *
-	 * @return mixed
+	 * @return T
 	 *
 	 * @throws \Exception
 	 */
@@ -925,7 +968,6 @@ class XF
 	{
 		if (!self::$preRegActionUser)
 		{
-			/** @var UserRepository $userRepo */
 			$userRepo = self::repository(UserRepository::class);
 			self::$preRegActionUser = $userRepo->getPreRegActionUser();
 		}
@@ -934,9 +976,9 @@ class XF
 	}
 
 	/**
-	 * @param \Closure $action
-	 *
-	 * @return mixed
+	 * @template T
+	 * @param callable(): T $action
+	 * @return T
 	 */
 	public static function asPreRegActionUser(\Closure $action)
 	{
@@ -949,10 +991,10 @@ class XF
 	 * If the first argument as true, the closure will be run in the context of the pre-reg action user. Otherwise,
 	 * it will be run in the context of the visitor.
 	 *
+	 * @template T
 	 * @param bool $isNeeded
-	 * @param \Closure $action
-	 *
-	 * @return mixed
+	 * @param callable(): T $action
+	 * @return T
 	 */
 	public static function asPreRegActionUserIfNeeded(bool $isNeeded, \Closure $action)
 	{
@@ -1009,17 +1051,16 @@ class XF
 	{
 		if (!self::$apiKey)
 		{
-			/** @var ApiRepository $apiRepo */
 			$apiRepo = self::repository(ApiRepository::class);
 			self::$apiKey = $apiRepo->getFallbackApiKey();
 		}
 
-		return self::$apiKey;
+		return self::$apiBypassPermissions && self::apiKey()->is_super_user;
 	}
 
 	public static function setApiKey(?ApiKey $key = null)
 	{
-		self::$apiKey = $key;
+		return self::$apiBypassPermissions && self::apiKey()->is_super_user;
 	}
 
 	public static function accessToken(): ?OAuthToken
@@ -1506,12 +1547,12 @@ class XF
 
 	public static function getCopyrightHtml()
 	{
-		return 'Community platform by XenForo<sup>&reg;</sup> <span class="copyright">&copy; 2010-2024 XenForo Ltd.</span>';
+		return '<span class="u-concealed" dir="ltr">Community platform by XenForo<sup>&reg;</sup> <span class="copyright">&copy; 2010-2026 XenForo Ltd.</span></span>';
 	}
 
 	public static function getCopyrightHtmlAcp()
 	{
-		return 'Community platform by XenForo<sup>&reg;</sup></a>';
+		return '<span class="u-concealed" dir="ltr" data-xf-init="tooltip" title="&copy; 2010-2026 XenForo Ltd.">Community platform by XenForo<sup>&reg;</sup></span>';
 	}
 
 	public static function isPreEscaped($value, $type = 'html')

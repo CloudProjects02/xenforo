@@ -24,6 +24,16 @@ class Manager
 	 */
 	protected $allAddOns;
 
+	/**
+	 * @var string[]|null
+	 */
+	protected $availableAddOnIds;
+
+	/**
+	 * @var array<string, string>|null Uppercase add-on ID => correct case add-on ID
+	 */
+	protected $addOnIdLookup;
+
 	public function __construct($addOnDir)
 	{
 		$this->addOnDir = rtrim($addOnDir, '/\\');
@@ -34,7 +44,7 @@ class Manager
 	 */
 	public function getAllAddOns()
 	{
-		if (!is_array($this->allAddOns))
+		if ($this->allAddOns === null)
 		{
 			$installed = $this->getInstalledEntities();
 			$handlers = [];
@@ -128,16 +138,19 @@ class Manager
 
 	protected function coerceAddOnId($addOnId)
 	{
-		$addOnIds = $this->getAvailableAddOnIds();
-
-		$index = array_search(strtoupper($addOnId), array_map('strtoupper', $addOnIds));
-
-		if ($index !== false)
+		if ($this->addOnIdLookup === null)
 		{
-			return $addOnIds[$index];
+			$addOnIds = $this->getAvailableAddOnIds();
+			$this->addOnIdLookup = [];
+
+			foreach ($addOnIds AS $id)
+			{
+				$this->addOnIdLookup[strtoupper($id)] = $id;
+			}
 		}
 
-		return $addOnId;
+		$upper = strtoupper($addOnId);
+		return $this->addOnIdLookup[$upper] ?? $addOnId;
 	}
 
 	/**
@@ -145,7 +158,7 @@ class Manager
 	 */
 	protected function getInstalledEntities()
 	{
-		if (!is_array($this->installedAddOns))
+		if ($this->installedAddOns === null)
 		{
 			$installedAddOns = \XF::em()->getFinder(AddOnFinder::class)->fetch();
 			unset($installedAddOns['XF']);
@@ -160,6 +173,8 @@ class Manager
 	{
 		$this->installedAddOns = null;
 		$this->allAddOns = null;
+		$this->availableAddOnIds = null;
+		$this->addOnIdLookup = null;
 	}
 
 	protected function isValidDir(\DirectoryIterator $entry)
@@ -206,41 +221,46 @@ class Manager
 
 	public function getAvailableAddOnIds()
 	{
-		$addOnIds = [];
-		foreach (new \DirectoryIterator($this->addOnDir) AS $entry)
+		if ($this->availableAddOnIds === null)
 		{
-			if (!$this->isValidDir($entry))
+			$addOnIds = [];
+			foreach (new \DirectoryIterator($this->addOnDir) AS $entry)
 			{
-				continue;
-			}
-
-			if ($this->isDirAddOnRoot($entry) || $entry->getBasename() == 'XF')
-			{
-				$addOnIds[] = $entry->getBasename();
-			}
-			else
-			{
-				$vendorPrefix = $entry->getBasename();
-				foreach (new \DirectoryIterator($entry->getPathname()) AS $addOnDir)
+				if (!$this->isValidDir($entry))
 				{
-					if (!$this->isValidDir($addOnDir))
-					{
-						continue;
-					}
+					continue;
+				}
 
-					if ($this->isDirAddOnRoot($addOnDir))
+				if ($this->isDirAddOnRoot($entry) || $entry->getBasename() == 'XF')
+				{
+					$addOnIds[] = $entry->getBasename();
+				}
+				else
+				{
+					$vendorPrefix = $entry->getBasename();
+					foreach (new \DirectoryIterator($entry->getPathname()) AS $addOnDir)
 					{
-						$addOnIds[] = "$vendorPrefix/{$addOnDir->getBasename()}";
+						if (!$this->isValidDir($addOnDir))
+						{
+							continue;
+						}
+
+						if ($this->isDirAddOnRoot($addOnDir))
+						{
+							$addOnIds[] = "$vendorPrefix/{$addOnDir->getBasename()}";
+						}
 					}
 				}
 			}
+			$this->availableAddOnIds = $addOnIds;
 		}
-		return $addOnIds;
+
+		return $this->availableAddOnIds;
 	}
 
 	protected function getAllJsonInfo()
 	{
-		if (!is_array($this->jsonInfo))
+		if ($this->jsonInfo === null)
 		{
 			$available = [];
 

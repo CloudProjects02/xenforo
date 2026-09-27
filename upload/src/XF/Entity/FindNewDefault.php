@@ -10,7 +10,7 @@ use XF\Mvc\Entity\Structure;
  * @property int|null $find_new_default_id
  * @property int $user_id
  * @property string $content_type
- * @property array $filters
+ * @property array|null $filters
  *
  * RELATIONS
  * @property-read User|null $User

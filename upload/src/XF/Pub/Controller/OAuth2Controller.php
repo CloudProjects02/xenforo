@@ -59,7 +59,7 @@ class OAuth2Controller extends AbstractController
 		$authRequestService->setResponseType($input['response_type']);
 		$authRequestService->setRedirectUri($input['redirect_uri']);
 
-		if ($input['state'])
+		if ($input['state'] !== null && $input['state'] !== '')
 		{
 			$authRequestService->setState($input['state']);
 		}
@@ -72,7 +72,7 @@ class OAuth2Controller extends AbstractController
 			$requestedScopes = array_flip($requestedScopes);
 
 			$allowedScopes = $this->repository(ApiRepository::class)
-				->getApiScopesByIds($client->allowed_scopes);
+				->getApiScopesByIds(array_flip($client->allowed_scopes));
 
 			if (!$allowedScopes)
 			{
@@ -162,28 +162,10 @@ class OAuth2Controller extends AbstractController
 		}
 
 		$inputRedirectUri = new Uri($input['redirect_uri']);
-		$redirectUris = $client->redirect_uris;
-		$validUri = false;
 
-		foreach ($redirectUris AS $redirectUri)
+		if (!$this->repository(OAuthRepository::class)->isValidRedirectUri($client, $input['redirect_uri']))
 		{
-			$clientRedirectUri = new Uri($redirectUri);
-
-			if ($clientRedirectUri->getAbsoluteUri() === $inputRedirectUri->getAbsoluteUri())
-			{
-				$validUri = true;
-				break;
-			}
-		}
-
-		if (!$validUri)
-		{
-			$errorRedirectUri = $this->buildRedirectUri($inputRedirectUri, [
-				'error' => 'invalid_request',
-				'error_description' => 'Provided redirect_uri does not match redirect_uri registered',
-			], $input['state']);
-
-			throw $this->exception($this->redirect($errorRedirectUri));
+			throw $this->exception($this->error(\XF::phrase('provided_redirect_uri_is_not_valid'), 400));
 		}
 
 		if ($input['response_type'] !== OAuthRepository::RESPONSE_TYPE_CODE)
@@ -240,7 +222,7 @@ class OAuth2Controller extends AbstractController
 			$redirectUri->addToQuery($key, $value);
 		}
 
-		if ($state)
+		if ($state !== null && $state !== '')
 		{
 			$redirectUri->addToQuery('state', $state);
 		}

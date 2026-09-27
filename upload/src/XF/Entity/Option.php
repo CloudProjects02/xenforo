@@ -3,6 +3,7 @@
 namespace XF\Entity;
 
 use XF\Behavior\DevOutputWritable;
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XF\Phrase;
@@ -30,13 +31,13 @@ use function call_user_func, call_user_func_array, count, floatval, intval, is_a
  *
  * GETTERS
  * @property-read array $formatParams
- * @property array|string|null $option_value
- * @property array|string|null $default_value
+ * @property array|bool|int|float|string|null $option_value
+ * @property array|bool|int|float|string|null $default_value
  * @property-read Phrase $title
  * @property-read Phrase $explain
  *
  * RELATIONS
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\OptionGroupRelation> $Relations
+ * @property-read AbstractCollection<OptionGroupRelation> $Relations
  * @property-read AddOn|null $AddOn
  * @property-read \XF\Entity\Phrase|null $MasterTitle
  * @property-read \XF\Entity\Phrase|null $MasterExplain
@@ -148,49 +149,79 @@ class Option extends Entity
 	}
 
 	/**
-	 * @return array|string|null
+	 * @return array|bool|int|float|string|null
 	 */
 	public function getOptionValue()
 	{
 		$v = $this->getValue('option_value');
 
-		if ($this->data_type == 'array')
+		if ($this->isDataTypeNumeric())
+		{
+			switch ($this->data_type)
+			{
+				case 'integer':
+				case 'unsigned_integer':
+				case 'positive_integer':
+					return intval($v);
+
+				default: // numeric, unsigned_numeric
+					return strval(floatval($v)) + 0;
+			}
+		}
+		else if ($this->data_type === 'boolean')
+		{
+			return (bool) $v;
+		}
+		else if ($this->data_type === 'array')
 		{
 			$value = json_decode($v, true);
 			if (!is_array($value))
 			{
-				$value = [];
+				return [];
 			}
 
 			return $value;
 		}
-		else
-		{
-			return $v;
-		}
+
+		return $v;
 	}
 
 	/**
-	 * @return array|string|null
+	 * @return array|bool|int|float|string|null
 	 */
 	public function getDefaultValue()
 	{
 		$v = $this->getValue('default_value');
 
-		if ($this->data_type == 'array')
+		if ($this->isDataTypeNumeric())
+		{
+			switch ($this->data_type)
+			{
+				case 'integer':
+				case 'unsigned_integer':
+				case 'positive_integer':
+					return intval($v);
+
+				default: // numeric, unsigned_numeric
+					return strval(floatval($v)) + 0;
+			}
+		}
+		else if ($this->data_type === 'boolean')
+		{
+			return (bool) $v;
+		}
+		else if ($this->data_type === 'array')
 		{
 			$value = json_decode($v, true);
 			if (!is_array($value))
 			{
-				$value = [];
+				return [];
 			}
 
 			return $value;
 		}
-		else
-		{
-			return $v;
-		}
+
+		return $v;
 	}
 
 	protected function verifyOptionValue(&$optionValue)
@@ -273,7 +304,6 @@ class Option extends Entity
 				return;
 
 			case 'array':
-				/** @var UserRepository $userRepo */
 				$userRepo = $this->repository(UserRepository::class);
 
 				$usernames = Arr::stringToArray($optionValue, '#\s*,\s*#');
@@ -702,7 +732,6 @@ class Option extends Entity
 
 	protected function _setupDefaults()
 	{
-		/** @var AddOnRepository $addOnRepo */
 		$addOnRepo = $this->_em->getRepository(AddOnRepository::class);
 		$this->addon_id = $addOnRepo->getDefaultAddOnId();
 	}

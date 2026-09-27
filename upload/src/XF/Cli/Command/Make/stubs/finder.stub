@@ -1,0 +1,19 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use {{ entity }};
+use XF\Mvc\Entity\AbstractCollection;
+use XF\Mvc\Entity\Finder;
+
+/**
+ * @method AbstractCollection<{{ entityShort }}> fetch(?int $limit = null, ?int $offset = null)
+ * @method AbstractCollection<{{ entityShort }}> fetchDeferred(?int $limit = null, ?int $offset = null)
+ * @method {{ entityShort }}|null fetchOne(?int $offset = null)
+ * @extends Finder<{{ entityShort }}>
+ */
+class {{ class }} extends Finder
+{
+}

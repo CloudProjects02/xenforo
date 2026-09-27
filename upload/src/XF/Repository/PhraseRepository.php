@@ -5,7 +5,7 @@ namespace XF\Repository;
 use XF\Entity\Language;
 use XF\Entity\Phrase;
 use XF\Finder\PhraseMapFinder;
-use XF\Mvc\Entity\ArrayCollection;
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Repository;
 
 use function count;
@@ -19,7 +19,6 @@ class PhraseRepository extends Repository
 	 */
 	public function findEffectivePhrasesInLanguage(Language $language)
 	{
-		/** @var PhraseMapFinder $finder */
 		$finder = $this->finder(PhraseMapFinder::class);
 		$finder
 			->where('language_id', $language->language_id)
@@ -50,7 +49,7 @@ class PhraseRepository extends Repository
 	 * @param Language $language
 	 * @param array $titles
 	 *
-	 * @return ArrayCollection|Phrase[]
+	 * @return AbstractCollection<Phrase>
 	 */
 	public function getEffectivePhrasesByTitles(Language $language, array $titles)
 	{

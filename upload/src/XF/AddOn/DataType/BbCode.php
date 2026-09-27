@@ -99,7 +99,6 @@ class BbCode extends AbstractDataType
 	{
 		\XF::runOnce('rebuild_active_' . $this->getContainerTag(), function ()
 		{
-			/** @var BbCodeRepository $repo */
 			$repo = $this->em->getRepository(BbCodeRepository::class);
 			$repo->rebuildBbCodeCache();
 		});

@@ -30,6 +30,11 @@ class OAuthRefreshToken extends Entity
 			return false;
 		}
 
+		if ($this->OAuthToken->revoked_date)
+		{
+			return false;
+		}
+
 		if ($this->revoked_date)
 		{
 			return false;

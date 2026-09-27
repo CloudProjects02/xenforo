@@ -44,7 +44,8 @@ class ContentIndexNow extends AbstractJob
 
 			if (!$content instanceof Entity)
 			{
-				throw new \InvalidArgumentException('Cannot make a request to IndexNow without a valid content entity.');
+				// content probably deleted
+				return $this->complete();
 			}
 
 			if (!method_exists($content, 'canView'))
@@ -85,7 +86,7 @@ class ContentIndexNow extends AbstractJob
 
 		if (!$result)
 		{
-			$this->attemptLaterOrComplete();
+			return $this->attemptLaterOrComplete();
 		}
 
 		return $this->complete();

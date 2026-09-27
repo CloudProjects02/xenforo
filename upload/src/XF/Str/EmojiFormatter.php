@@ -4,7 +4,6 @@ namespace XF\Str;
 
 use JoyPixels\Client;
 use JoyPixels\Ruleset;
-
 use XF\Util\Str;
 
 use function array_key_exists, in_array, is_array;

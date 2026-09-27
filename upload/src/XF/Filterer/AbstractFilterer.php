@@ -41,9 +41,9 @@ abstract class AbstractFilterer
 
 	public function __construct(array $setupData = [])
 	{
+		$this->setupData = $setupData;
 		$this->finderType = $this->getFinderType();
 		$this->finder = $this->setupFinder($setupData);
-		$this->setupData = $setupData;
 
 		$lookupTypes = $this->getLookupTypeList();
 		$this->lookupMap = array_fill_keys($lookupTypes, true);

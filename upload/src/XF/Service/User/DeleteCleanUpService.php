@@ -25,8 +25,10 @@ class DeleteCleanUpService extends AbstractService
 
 	protected $userId;
 	protected $userName;
+	protected $originalUserName;
 
 	protected $steps = [
+		'stepDeleteOAuthRefreshTokens',
 		'stepDeleteContent',
 		'stepDeleteProfilePosts',
 		'stepDeleteContentVotes',
@@ -38,6 +40,7 @@ class DeleteCleanUpService extends AbstractService
 	protected $deletes = [
 		'xf_admin' => 'user_id = ?',
 		'xf_admin_permission_entry' => 'user_id = ?',
+		'xf_api_login_token' => 'user_id = ?',
 		'xf_approval_queue' => "content_type = 'user' AND content_id = ?",
 		'xf_change_log' => "content_type = 'user' AND content_id = ?",
 		'xf_conversation_user' => 'owner_user_id = ?', // leave recipient record for others
@@ -51,6 +54,9 @@ class DeleteCleanUpService extends AbstractService
 		'xf_moderator' => 'user_id = ?',
 		'xf_moderator_content' => 'user_id = ?',
 		'xf_notice_dismissed' => 'user_id = ? ',
+		'xf_oauth_request' => 'user_id = ?',
+		'xf_oauth_token' => 'user_id = ?',
+		'xf_passkey' => 'user_id = ?',
 		'xf_permission_combination' => 'user_id = ?',
 		'xf_permission_entry' => 'user_id = ?',
 		'xf_permission_entry_content' => 'user_id = ?',
@@ -101,6 +107,31 @@ class DeleteCleanUpService extends AbstractService
 		$app->fire('user_delete_clean_init', [$this, &$this->deletes]);
 	}
 
+	public function setOriginalUserName($username)
+	{
+		$this->originalUserName = $username;
+
+		return $this;
+	}
+
+	public function getUserId()
+	{
+		return $this->userId;
+	}
+
+	public function getUserName()
+	{
+		return $this->userName;
+	}
+
+	public function getOriginalUserName()
+	{
+		return $this->originalUserName;
+	}
+
+	/**
+	 * @return list<string>
+	 */
 	protected function getSteps()
 	{
 		$steps = $this->steps;
@@ -115,6 +146,24 @@ class DeleteCleanUpService extends AbstractService
 		$result = $this->runLoop($maxRunTime);
 
 		return $result;
+	}
+
+	protected function stepDeleteOAuthRefreshTokens()
+	{
+		if (!$this->userId)
+		{
+			return null;
+		}
+
+		$this->db()->query(
+			"DELETE refresh
+				FROM xf_oauth_refresh_token AS refresh
+				INNER JOIN xf_oauth_token AS token ON token.token_id = refresh.token_id
+				WHERE token.user_id = ?",
+			$this->userId
+		);
+
+		return null;
 	}
 
 	protected function stepDeleteContent($lastOffset, $maxRunTime)
@@ -316,8 +365,17 @@ class DeleteCleanUpService extends AbstractService
 
 	protected function stepChangeOwner($lastOffset, $maxRunTime)
 	{
-		/** @var ContentChangeService $contentChanger */
-		$contentChanger = $this->service(ContentChangeService::class, $this->userId, $this->userName);
+		$contentChanger = $this->service(
+			ContentChangeService::class,
+			$this->userId,
+			$this->originalUserName ?: $this->userName
+		);
+
+		if ($this->originalUserName)
+		{
+			$contentChanger->setDeleteTargetUserName($this->userName);
+		}
+
 		$contentChanger->setupForDelete();
 
 		if (is_array($lastOffset))
@@ -359,7 +417,6 @@ class DeleteCleanUpService extends AbstractService
 
 		// determine if there are any pending username changes for this user and delete them via entity
 		// this is to ensure caches are rebuilt and the approval queue record is removed.
-		/** @var UsernameChangeRepository $usernameChangeRepo */
 		$usernameChangeRepo = $this->repository(UsernameChangeRepository::class);
 		$pendingChanges = $usernameChangeRepo->findPendingUsernameChanges()
 			->where('user_id', $this->userId)
@@ -375,7 +432,6 @@ class DeleteCleanUpService extends AbstractService
 		// TODO: they could be useful to keep but then we don't currently keep normal change logs either
 		$this->db()->delete('xf_username_change', 'user_id = ?', $this->userId);
 
-		/** @var ApprovalQueueRepository $approvalRepo */
 		$approvalRepo = $this->repository(ApprovalQueueRepository::class);
 		$approvalRepo->rebuildUnapprovedCounts();
 	}

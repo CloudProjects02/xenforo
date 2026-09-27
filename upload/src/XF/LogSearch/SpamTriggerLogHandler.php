@@ -45,7 +45,7 @@ class SpamTriggerLogHandler extends AbstractHandler
 	{
 		return [
 			\XF::app()->getContentTypePhrase($record->content_type),
-			$record->User->username,
+			$record->User->username ?? \XF::phrase('deleted_member'),
 			\XF::phrase($record->result == 'moderated' ? 'moderated' : 'rejected'),
 			$record->details,
 		];

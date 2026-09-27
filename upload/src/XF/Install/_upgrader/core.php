@@ -544,6 +544,178 @@ class XFUpgraderExtractAction
 }
 
 /**
+ * Class XFUpgraderFileUtil
+ *
+ * Duplicates the archive path handling from src/XF/Util/File.php. These methods may not exist in the
+ * version being upgraded from, so they cannot be called from there.
+ */
+class XFUpgraderFileUtil
+{
+	public static function normalizeArchivePath(string $path): ?string
+	{
+		if (!is_string($path) || $path === '' || strpos($path, "\0") !== false)
+		{
+			return null;
+		}
+
+		$path = str_replace('\\', '/', $path);
+		if (
+			$path[0] === '/'
+			|| preg_match('#^[A-Za-z]:#', $path)
+			|| strpos($path, '//') !== false
+			|| preg_match('#(^|/)(?:\\.|\\.\\.)(?:/|$)#', $path)
+		)
+		{
+			return null;
+		}
+
+		return $path;
+	}
+
+	public static function getArchivePathWithinPrefix(
+		string $path,
+		string $prefix
+	): ?string
+	{
+		$path = static::normalizeArchivePath($path);
+		if (
+			$path === null
+			|| $prefix === ''
+			|| substr($path, -1) === '/'
+			|| strpos($path, $prefix) !== 0
+		)
+		{
+			return null;
+		}
+
+		$relativePath = substr($path, strlen($prefix));
+		return $relativePath === '' ? null : $relativePath;
+	}
+
+	public static function validateZipEntryNames(\ZipArchive $zip): bool
+	{
+		for ($i = 0; $i < $zip->numFiles; $i++)
+		{
+			$fileName = $zip->getNameIndex($i);
+			if (
+				!is_string($fileName)
+				|| static::normalizeArchivePath($fileName) === null
+			)
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	public static function getArchivePathWithinDirectory(
+		string $targetDir,
+		string $relativePath
+	): ?string
+	{
+		$relativePath = static::normalizeArchivePath($relativePath);
+		$targetDir = realpath($targetDir);
+		if ($relativePath === null || $targetDir === false)
+		{
+			return null;
+		}
+
+		$finalFileName = $targetDir . \XF::$DS . str_replace('/', \XF::$DS, $relativePath);
+		$normalizedTargetDir = rtrim(str_replace('\\', '/', $targetDir), '/');
+		$normalizedFinalFileName = str_replace('\\', '/', $finalFileName);
+		if (strpos($normalizedFinalFileName, $normalizedTargetDir . '/') !== 0)
+		{
+			return null;
+		}
+
+		return $finalFileName;
+	}
+
+	public static function getSafeArchivePathWithinDirectory(
+		string $targetDir,
+		string $relativePath
+	): ?string
+	{
+		$finalFileName = static::getArchivePathWithinDirectory(
+			$targetDir,
+			$relativePath
+		);
+		if (
+			$finalFileName === null
+			|| !static::isPathSafeForExtraction($targetDir, $finalFileName)
+		)
+		{
+			return null;
+		}
+
+		return $finalFileName;
+	}
+
+	public static function isPathSafeForExtraction(
+		string $targetDir,
+		string $finalFileName
+	): bool
+	{
+		$targetDir = realpath($targetDir);
+		if ($targetDir === false)
+		{
+			return false;
+		}
+
+		$normalizedTargetDir = rtrim(str_replace('\\', '/', $targetDir), '/');
+		$normalizedFinalFileName = str_replace('\\', '/', $finalFileName);
+		if (strpos($normalizedFinalFileName, $normalizedTargetDir . '/') !== 0)
+		{
+			return false;
+		}
+
+		$path = $targetDir;
+		$pathParts = explode(
+			'/',
+			substr($normalizedFinalFileName, strlen($normalizedTargetDir) + 1)
+		);
+		array_pop($pathParts);
+		foreach ($pathParts AS $pathPart)
+		{
+			$path .= \XF::$DS . $pathPart;
+			if (is_link($path) || (file_exists($path) && !is_dir($path)))
+			{
+				return false;
+			}
+		}
+
+		$parentDir = dirname($finalFileName);
+		$resolvedParentDir = $parentDir;
+		while (!file_exists($resolvedParentDir))
+		{
+			$nextParentDir = dirname($resolvedParentDir);
+			if ($nextParentDir === $resolvedParentDir)
+			{
+				return false;
+			}
+			$resolvedParentDir = $nextParentDir;
+		}
+		$resolvedParentDir = realpath($resolvedParentDir);
+		$normalizedResolvedParentDir = $resolvedParentDir === false
+			? false
+			: str_replace('\\', '/', $resolvedParentDir);
+		if (
+			$normalizedResolvedParentDir === false
+			|| (
+				$normalizedResolvedParentDir !== $normalizedTargetDir
+				&& strpos($normalizedResolvedParentDir, $normalizedTargetDir . '/') !== 0
+			)
+		)
+		{
+			return false;
+		}
+
+		return !is_link($finalFileName);
+	}
+}
+
+/**
  * Class XFUpgraderExtractor
  *
  * Manages extracting files from the upgrade zip.
@@ -628,6 +800,12 @@ class XFUpgraderExtractor
 	public function copyFiles(\XFUpgraderExtractAction $action, &$error)
 	{
 		$zip = $this->zip;
+		if (!\XFUpgraderFileUtil::validateZipEntryNames($zip))
+		{
+			$error = 'Archive contains an invalid file name';
+			return false;
+		}
+
 		$start = $action->getStart();
 		$maxTime = $action->getMaxTime();
 
@@ -697,7 +875,14 @@ class XFUpgraderExtractor
 			return true;
 		}
 
-		$finalFileName = $this->getFinalFsFileName($fsFileName);
+		$finalFileName = \XFUpgraderFileUtil::getSafeArchivePathWithinDirectory(
+			\XF::getRootDirectory(),
+			$fsFileName
+		);
+		if ($finalFileName === null)
+		{
+			return false;
+		}
 
 		if ($checkWriteNeeded)
 		{
@@ -710,6 +895,11 @@ class XFUpgraderExtractor
 		}
 
 		$dataStream = $this->zip->getStream($zipFileName);
+		if (!is_resource($dataStream))
+		{
+			return false;
+		}
+
 		return @File::writeFile($finalFileName, $dataStream, false);
 	}
 
@@ -726,19 +916,7 @@ class XFUpgraderExtractor
 
 	protected function getFsFileNameFromZipName($fileName)
 	{
-		if (substr($fileName, -1) === '/')
-		{
-			// this is a directory we can just skip this
-			return null;
-		}
-
-		if (!preg_match("#^upload/.#", $fileName))
-		{
-			// file outside of "upload" so we can just skip this
-			return null;
-		}
-
-		return substr($fileName, 7); // remove "upload/"
+		return \XFUpgraderFileUtil::getArchivePathWithinPrefix($fileName, 'upload/');
 	}
 
 	protected function getFinalFsFileName($fileName)

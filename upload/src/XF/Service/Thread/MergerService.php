@@ -252,12 +252,10 @@ class MergerService extends AbstractService
 		$target->rebuildCounters();
 		$target->save();
 
-		/** @var ThreadRepository $threadRepo */
 		$threadRepo = $this->repository(ThreadRepository::class);
 		$threadRepo->rebuildThreadPostPositions($target->thread_id);
 		$threadRepo->rebuildThreadUserPostCounters($target->thread_id);
 
-		/** @var TagRepository $tagRepo */
 		$tagRepo = $this->repository(TagRepository::class);
 		$tagRepo->rebuildContentTagCache('thread', $target->thread_id);
 	}
@@ -356,13 +354,11 @@ class MergerService extends AbstractService
 
 		if ($reactionsDisable)
 		{
-			/** @var ReactionRepository $reactionRepo */
 			$reactionRepo = $this->repository(ReactionRepository::class);
 			$reactionRepo->fastUpdateReactionIsCounted('post', $reactionsDisable, false);
 		}
 		if ($reactionsEnable)
 		{
-			/** @var ReactionRepository $reactionRepo */
 			$reactionRepo = $this->repository(ReactionRepository::class);
 			$reactionRepo->fastUpdateReactionIsCounted('post', $reactionsEnable, true);
 		}
@@ -402,7 +398,6 @@ class MergerService extends AbstractService
 		$target = $this->target;
 		$actor = \XF::visitor();
 
-		/** @var ThreadRepository $threadRepo */
 		$threadRepo = $this->repository(ThreadRepository::class);
 
 		$alertExtras = [
@@ -430,7 +425,6 @@ class MergerService extends AbstractService
 	{
 		$target = $this->target;
 
-		/** @var ThreadRedirectRepository $redirectRepo */
 		$redirectRepo = $this->repository(ThreadRedirectRepository::class);
 
 		foreach ($this->sourceThreads AS $sourceThread)

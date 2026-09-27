@@ -3,13 +3,12 @@
 namespace XF\Repository;
 
 use XF\Finder\CodeEventFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 class CodeEventRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return CodeEventFinder
 	 */
 	public function findEventsForList()
 	{

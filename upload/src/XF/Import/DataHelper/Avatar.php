@@ -31,7 +31,6 @@ class Avatar extends AbstractHelper
 
 	public function setAvatarFromFile($sourceFile, User $user)
 	{
-		/** @var AvatarService $avatarService */
 		$avatarService = $this->dataManager->app()->service(AvatarService::class, $user);
 		$avatarService->logIp(false);
 		$avatarService->logChange(false);

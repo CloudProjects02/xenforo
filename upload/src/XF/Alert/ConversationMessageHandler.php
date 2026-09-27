@@ -2,6 +2,9 @@
 
 namespace XF\Alert;
 
+/**
+ * @extends AbstractHandler<\XF\Entity\ConversationMessage>
+ */
 class ConversationMessageHandler extends AbstractHandler
 {
 	public function getEntityWith()

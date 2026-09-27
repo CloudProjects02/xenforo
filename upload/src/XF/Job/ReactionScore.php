@@ -25,7 +25,6 @@ class ReactionScore extends AbstractRebuildJob
 	{
 		$db = $this->app->db();
 
-		/** @var ReactionRepository $reactionRepo */
 		$reactionRepo = $this->app->repository(ReactionRepository::class);
 
 		$db->beginTransaction();

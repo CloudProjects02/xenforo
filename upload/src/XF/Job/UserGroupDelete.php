@@ -75,7 +75,6 @@ class UserGroupDelete extends AbstractJob
 	protected function finalActions()
 	{
 		// there will likely be permission combinations involving this group, so clean them up
-		/** @var PermissionCombinationRepository $combinationRepo */
 		$combinationRepo = $this->app->repository(PermissionCombinationRepository::class);
 		$combinationRepo->deleteUnusedPermissionCombinations();
 	}

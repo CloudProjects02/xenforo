@@ -6,13 +6,12 @@ use XF\Entity\TemplateModification;
 use XF\Finder\TemplateModificationFinder;
 use XF\Finder\TemplateModificationLogFinder;
 use XF\Mvc\Entity\AbstractCollection;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 class TemplateModificationRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return TemplateModificationFinder
 	 */
 	public function findTemplateModificationsForList($type)
 	{

@@ -7,7 +7,6 @@ use XF\Entity\ReactionContent;
 use XF\Entity\User;
 use XF\Finder\ReactionContentFinder;
 use XF\Finder\ReactionFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 use XF\Reaction\AbstractHandler;
 
@@ -16,7 +15,7 @@ use function intval, is_array;
 class ReactionRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return ReactionFinder
 	 */
 	public function findReactionsForList($activeOnly = false)
 	{
@@ -60,7 +59,7 @@ class ReactionRepository extends Repository
 	 * @param string $contentType
 	 * @param int $contentId
 	 *
-	 * @return Finder
+	 * @return ReactionContentFinder
 	 */
 	public function findContentReactions($contentType, $contentId, $reactionId = null)
 	{
@@ -89,7 +88,7 @@ class ReactionRepository extends Repository
 	/**
 	 * @param $reactionUserId
 	 *
-	 * @return Finder
+	 * @return ReactionContentFinder
 	 */
 	public function findReactionsByReactionUserId($reactionUserId)
 	{
@@ -129,6 +128,22 @@ class ReactionRepository extends Repository
 		{
 			$existingReaction->setOption('is_like_only', $isLike);
 			$existingReaction->delete();
+
+			$reactionHandler = $this->getReactionHandler($contentType, false, $isLike);
+			if ($reactionHandler)
+			{
+				$entity = $reactionHandler->getContent($contentId);
+				if ($entity)
+				{
+					$this->repository(WebhookRepository::class)->queueWebhook(
+						$contentType,
+						$contentId,
+						'unreact',
+						$entity
+					);
+				}
+			}
+
 			return null;
 		}
 		else if ($existingReaction && $existingReaction->reaction_id != $reactionId)
@@ -226,6 +241,13 @@ class ReactionRepository extends Repository
 				}
 			}
 		}
+
+		$this->repository(WebhookRepository::class)->queueWebhook(
+			$contentType,
+			$contentId,
+			'react',
+			$entity
+		);
 
 		return $reaction;
 	}
@@ -620,7 +642,7 @@ class ReactionRepository extends Repository
 	/**
 	 * @param $userId
 	 *
-	 * @return Finder
+	 * @return ReactionContentFinder
 	 */
 	public function findUserReactions($userId)
 	{

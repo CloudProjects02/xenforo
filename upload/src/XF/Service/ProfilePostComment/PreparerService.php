@@ -81,7 +81,6 @@ class PreparerService extends AbstractService
 	 */
 	protected function getMessagePreparer($format = true)
 	{
-		/** @var \XF\Service\Message\PreparerService $preparer */
 		$preparer = $this->service(\XF\Service\Message\PreparerService::class, 'profile_post_comment', $this->comment);
 		$preparer->enableFilter('structuredText');
 		if (!$format)
@@ -157,7 +156,6 @@ class PreparerService extends AbstractService
 	{
 		$comment = $this->comment;
 
-		/** @var \XF\Service\Attachment\PreparerService $inserter */
 		$inserter = $this->service(\XF\Service\Attachment\PreparerService::class);
 		$associated = $inserter->associateAttachmentsWithContent($hash, 'profile_post_comment', $comment->profile_post_comment_id);
 		if ($associated)
@@ -174,7 +172,6 @@ class PreparerService extends AbstractService
 			return;
 		}
 
-		/** @var IpRepository $ipRepo */
 		$ipRepo = $this->repository(IpRepository::class);
 		$ipEnt = $ipRepo->logIp($comment->user_id, $ip, 'profile_post_comment', $comment->profile_post_comment_id);
 		if ($ipEnt)

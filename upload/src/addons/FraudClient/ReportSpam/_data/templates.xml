@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="public" title="ms_fc_check_user_view" version_id="1010170" version_string="1.1.1"><![CDATA[
+<xf:title>{{ phrase('fraud_client_check_results_for') }} {$user.username}</xf:title>
+
+<div class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:if is="{$results.reports}">
+				<div class="dataList">
+					<table class="dataList-table">
+						<tr class="dataList-row dataList-row--header">
+							<th class="dataList-cell">{{ phrase('reason') }}</th>
+							<th class="dataList-cell">{{ phrase('ms_fc_report_details') }}</th>
+							<th class="dataList-cell">{{ phrase('reporter') }}</th>
+							<th class="dataList-cell">{{ phrase('date') }}</th>
+						</tr>
+						<xf:foreach loop="{$results.reports}" value="$report">
+							<tr class="dataList-row">
+								<td class="dataList-cell">
+									{$report.reason}
+								</td>
+								<td class="dataList-cell">{$report.details}</td>
+								<td class="dataList-cell">{$report.reporterCompany}</td>
+								<td class="dataList-cell"><xf:date time="{$report.createdAtTimestamp}" data-full-date="true" /></td>
+							</tr>
+						</xf:foreach>
+					</table>
+				</div>
+			<xf:else />
+				<div class="block-row">{{ phrase('no_fraud_reports_found') }}</div>
+			</xf:if>
+		</div>
+	</div>
+</div>
+]]></template>
+  <template type="public" title="ms_fc_check_confirm" version_id="1010170" version_string="1.1.1"><![CDATA[
+<xf:title>{{ phrase('ms_fc_confirm_check_title') }}</xf:title>
+
+<xf:form action="{$confirmUrl}" class="block" ajax="true">
+	<div class="block-container">
+		<div class="block-body">
+			<div class="block-row">
+				{{ phrase('ms_fc_confirm_check_explain', {'username': $user.username}) }}
+			</div>
+		</div>
+		<xf:submitrow submit="{{ phrase('check_fraud_client') }}" />
+	</div>
+</xf:form>
+]]></template>
+  <template type="public" title="ms_fc_report_create" version_id="1010170" version_string="1.1.1"><![CDATA[<xf:title>{{ phrase('ms_fc_report_user') }}</xf:title>
+
+<xf:form action="{$confirmUrl}" class="block" ajax="true"
+	data-skip-overlay-redirect="true">
+
+	<div class="block-container">
+		<div class="block-body">
+			<div class="block-row block-row--minor">
+				{{ phrase('ms_fc_report_confirmation_explain', {'username': $content.username}) }}
+			</div>
+			<xf:textarearow name="message" autosize="true" autofocus="autofocus"
+				minlength="20" maxlength="5000" required="true"
+				label="{{ phrase('ms_fc_report_details') }}"
+				explain="{{ phrase('ms_fc_report_details_explain') }}" />
+			
+			<xf:selectrow name="reason" required="true" label="{{ phrase('ms_fc_report_reason') }}">
+				<xf:option value="">{{ phrase('ms_fc_please_select') }}</xf:option>
+				<xf:foreach loop="{{ $reportReasonPoints}}" key="$key" value="$reason">
+					<xf:option value="{$key}">{$reason}</xf:option>
+				</xf:foreach>
+			</xf:selectrow>
+		</div>
+		<xf:submitrow submit="{{ phrase('ms_fc_confirm_and_report') }}" />
+	</div>
+</xf:form>]]></template>
+</templates>

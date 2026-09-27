@@ -1,0 +1,45 @@
+# Core Test Policy
+
+## Decide Whether a Test Adds Confidence
+
+Add or change a test when it protects observable behavior that is important, easy to regress, or difficult to verify reliably by inspection. Good candidates include:
+
+- a reported bug with a stable reproduction;
+- parsing, normalization, validation, permissions, or state transitions with meaningful edge cases;
+- a public contract whose behavior is not obvious from the language or a dependency;
+- an upgrade or compatibility invariant;
+- a defect-prone interaction between a small number of framework components.
+
+Do not add a test solely because a line or branch is new. Avoid tests that prove:
+
+- PHP, PHPUnit, or a vendor library behaves as documented;
+- a constant, trivial getter, or direct assignment returns itself;
+- mocks received the exact internal call sequence while no user-visible result is asserted;
+- the assertion repeats the implementation's algorithm or fixture data;
+- every syntactic branch deserves a separate near-duplicate case.
+
+If the only possible assertion is that “the code did what the code says,” improve the design or skip the test.
+
+## Test the Contract
+
+- Assert externally meaningful results, state changes, persisted data, emitted work, or failures.
+- Prefer the lowest test level that exercises the real contract. Do not boot the application for a pure function, and do not isolate away the integration that the test is meant to cover.
+- Keep each test focused on one behavior. A data provider is useful when inputs vary but setup and intent remain the same.
+- Name the behavior and condition. A failure should tell the reviewer which contract broke.
+- Include boundary and failure cases that carry distinct risk; do not enumerate arbitrary values for the sake of volume.
+- Use mocks or fakes at slow, nondeterministic, or external boundaries. Prefer real collaborators when they are cheap and part of the behavior under test.
+- Control time, randomness, network, and global state. Restore modified state during teardown.
+
+## Regression Tests
+
+For a bug fix, reproduce the failure first when practical, then make the smallest assertion that distinguishes broken from correct behavior. The test should remain valid if the internal implementation changes while the contract stays the same.
+
+## Run Narrowly
+
+Start with the affected file, class, or method, for example:
+
+```text
+xf composer run phpunit -- --filter UrlTest
+```
+
+Expand to the related directory or full suite only when shared state, framework-wide behavior, or the diff makes that useful. Report what was actually run; do not imply full-suite coverage from a filtered command.

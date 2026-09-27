@@ -6,17 +6,18 @@ use XF\Entity\Poll;
 use XF\Entity\Thread;
 use XF\Mvc\Entity\Entity;
 
+/**
+ * @extends AbstractHandler<Thread>
+ */
 class ThreadHandler extends AbstractHandler
 {
 	public function canCreate(Entity $content, &$error = null)
 	{
-		/** @var Thread $content */
 		return $content->canCreatePoll($error);
 	}
 
 	public function canEdit(Entity $content, Poll $poll, &$error = null)
 	{
-		/** @var Thread $content */
 		$visitor = \XF::visitor();
 		if (!$visitor->user_id)
 		{
@@ -59,14 +60,12 @@ class ThreadHandler extends AbstractHandler
 
 	public function canAlwaysEditDetails(Entity $content, Poll $poll, &$error = null)
 	{
-		/** @var Thread $content */
 		$visitor = \XF::visitor();
 		return ($visitor->user_id && $visitor->hasNodePermission($content->node_id, 'manageAnyThread'));
 	}
 
 	public function canDelete(Entity $content, Poll $poll, &$error = null)
 	{
-		/** @var Thread $content */
 		$visitor = \XF::visitor();
 		if (!$visitor->user_id)
 		{
@@ -88,7 +87,6 @@ class ThreadHandler extends AbstractHandler
 
 	public function canVote(Entity $content, Poll $poll, &$error = null)
 	{
-		/** @var Thread $content */
 		$visitor = \XF::visitor();
 		if (!$visitor->user_id)
 		{
@@ -124,7 +122,6 @@ class ThreadHandler extends AbstractHandler
 
 	public function finalizeCreation(Entity $content, Poll $poll)
 	{
-		/** @var Thread $content */
 		if ($content->discussion_type != 'poll')
 		{
 			$content->discussion_type = 'poll';
@@ -134,7 +131,6 @@ class ThreadHandler extends AbstractHandler
 
 	public function finalizeDeletion(Entity $content, Poll $poll)
 	{
-		/** @var Thread $content */
 		if ($content->discussion_type == 'poll')
 		{
 			$content->discussion_type = '';

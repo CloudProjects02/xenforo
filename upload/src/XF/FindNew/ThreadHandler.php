@@ -9,6 +9,9 @@ use XF\Http\Request;
 use XF\Mvc\Controller;
 use XF\Mvc\Entity\AbstractCollection;
 
+/**
+ * @extends AbstractHandler<Thread>
+ */
 class ThreadHandler extends AbstractHandler
 {
 	public function getRoute()
@@ -22,7 +25,6 @@ class ThreadHandler extends AbstractHandler
 	{
 		$canInlineMod = false;
 
-		/** @var Thread $thread */
 		foreach ($results AS $thread)
 		{
 			if ($thread->canUseInlineModeration())
@@ -101,7 +103,6 @@ class ThreadHandler extends AbstractHandler
 	{
 		$visitor = \XF::visitor();
 
-		/** @var ThreadFinder $threadFinder */
 		$threadFinder = \XF::finder(ThreadFinder::class)
 			->with('Forum', true)
 			->with('Forum.Node.Permissions|' . $visitor->permission_combination_id)
@@ -126,7 +127,6 @@ class ThreadHandler extends AbstractHandler
 
 		$ids = array_map('intval', $ids);
 
-		/** @var ThreadFinder $threadFinder */
 		$threadFinder = \XF::finder(ThreadFinder::class)
 			->where('thread_id', $ids)
 			->with('fullForum')

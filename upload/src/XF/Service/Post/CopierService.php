@@ -311,7 +311,6 @@ class CopierService extends AbstractService
 		$target->Forum->rebuildCounters();
 		$target->Forum->save();
 
-		/** @var ThreadRepository $threadRepo */
 		$threadRepo = $this->repository(ThreadRepository::class);
 		$threadRepo->rebuildThreadPostPositions($target->thread_id);
 		$threadRepo->rebuildThreadUserPostCounters($target->thread_id);
@@ -339,7 +338,6 @@ class CopierService extends AbstractService
 	{
 		$target = $this->target;
 
-		/** @var PostRepository $postRepo */
 		$postRepo = $this->repository(PostRepository::class);
 
 		foreach ($this->sourcePosts AS $sourcePost)

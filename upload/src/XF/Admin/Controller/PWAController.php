@@ -126,9 +126,9 @@ class PWAController extends AbstractController
 		$visitor = \XF::visitor();
 
 		if (
-			!$visitor->hasAdminPermission('option') ||
-			!$visitor->hasAdminPermission('language') ||
-			!$visitor->hasAdminPermission('style')
+			!$visitor->hasAdminPermission('option')
+			|| !$visitor->hasAdminPermission('language')
+			|| !$visitor->hasAdminPermission('style')
 		)
 		{
 			throw $this->exception($this->noPermission(

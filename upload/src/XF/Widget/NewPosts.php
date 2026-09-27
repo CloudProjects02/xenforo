@@ -45,7 +45,6 @@ class NewPosts extends AbstractWidget
 
 		$router = $this->app->router('public');
 
-		/** @var ThreadRepository $threadRepo */
 		$threadRepo = $this->repository(ThreadRepository::class);
 
 		switch ($filter)

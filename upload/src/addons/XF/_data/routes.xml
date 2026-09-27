@@ -138,6 +138,8 @@
   <route route_type="api" route_prefix="profile-post-comments" sub_name="-" format=":+int&lt;profile_post_comment_id&gt;/" controller="XF:ProfilePostComment"/>
   <route route_type="api" route_prefix="profile-posts" controller="XF:ProfilePosts"/>
   <route route_type="api" route_prefix="profile-posts" sub_name="-" format=":+int&lt;profile_post_id&gt;/" controller="XF:ProfilePost"/>
+  <route route_type="api" route_prefix="search" controller="XF:Searches"/>
+  <route route_type="api" route_prefix="search" sub_name="-" format=":+int&lt;search_id&gt;/" controller="XF:Search"/>
   <route route_type="api" route_prefix="search-forums" sub_name="-" format=":+int&lt;node_id&gt;/" controller="XF:SearchForum"/>
   <route route_type="api" route_prefix="stats" controller="XF:Stats"/>
   <route route_type="api" route_prefix="threads" controller="XF:Threads"/>
@@ -145,7 +147,7 @@
   <route route_type="api" route_prefix="users" controller="XF:Users"/>
   <route route_type="api" route_prefix="users" sub_name="-" format=":+int&lt;user_id&gt;/" controller="XF:User"/>
   <route route_type="public" route_prefix="account" controller="XF:Account" context="account"/>
-  <route route_type="public" route_prefix="account" sub_name="applications" format="applications/:int&lt;client_id&gt;/" controller="XF:Account" context="account" action_prefix="applications"/>
+  <route route_type="public" route_prefix="account" sub_name="applications" format="applications/:str&lt;client_id&gt;/" controller="XF:Account" context="account" action_prefix="applications"/>
   <route route_type="public" route_prefix="account" sub_name="connected-accounts" format="connected-accounts/:str&lt;provider_id&gt;/" controller="XF:Account" context="account" action_prefix="connectedAccount"/>
   <route route_type="public" route_prefix="account" sub_name="passkeys" format="passkeys/:int&lt;passkey_id&gt;/" controller="XF:Account" action_prefix="Passkey"/>
   <route route_type="public" route_prefix="account" sub_name="two-step" format="two-step/:str&lt;provider_id&gt;/" controller="XF:Account" action_prefix="TwoStep"/>

@@ -14,7 +14,7 @@ use function chr;
  * @property int $user_id
  * @property int $request_date
  * @property string $request_url_
- * @property array $request_data
+ * @property array|null $request_data
  * @property string $ip_address
  *
  * GETTERS

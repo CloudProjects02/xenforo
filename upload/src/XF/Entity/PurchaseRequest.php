@@ -15,7 +15,7 @@ use XF\Mvc\Entity\Structure;
  * @property string $purchasable_type_id
  * @property float $cost_amount
  * @property string $cost_currency
- * @property array $extra_data
+ * @property array|null $extra_data
  * @property string|null $provider_metadata
  *
  * RELATIONS

@@ -153,7 +153,6 @@ abstract class AbstractHandler
 
 	protected function sendFailureAlert(PreRegAction $action, User $newUser)
 	{
-		/** @var UserAlertRepository $alertRepo */
 		$alertRepo = \XF::repository(UserAlertRepository::class);
 
 		$alertRepo->alertFromUser(
@@ -259,7 +258,6 @@ abstract class AbstractHandler
 			return false;
 		}
 
-		/** @var FloodCheckService $floodChecker */
 		$floodChecker = \XF::service(FloodCheckService::class);
 		$timeRemaining = $floodChecker->checkFlooding($checkAction, $newUser->user_id, $floodingLimit);
 		if ($timeRemaining)

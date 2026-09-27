@@ -47,8 +47,11 @@ class AttachmentController extends AbstractController
 		$total = $finder->total();
 		$this->assertValidPage($page, $perPage, $total, 'attachments');
 
+		$attachments = $finder->fetchDeferred();
+		$attachmentRepo->addContainersToAttachments($attachments);
+
 		$viewParams = [
-			'attachments' => $finder->fetch(),
+			'attachments' => $attachments,
 			'handlers' => $attachmentRepo->getAttachmentHandlers(),
 
 			'page' => $page,
@@ -110,6 +113,11 @@ class AttachmentController extends AbstractController
 			{
 				/** @var \XF\Entity\Attachment $attachment */
 				$attachment = $this->em()->find(\XF\Entity\Attachment::class, $attachmentId);
+				if (!$attachment)
+				{
+					continue;
+				}
+
 				$attachment->delete(false);
 			}
 

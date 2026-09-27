@@ -16,7 +16,7 @@ use XF\Repository\PreRegActionRepository;
  * @property string $ip_address
  * @property int $last_update
  * @property string $action_class
- * @property array $action_data_
+ * @property array|null $action_data_
  *
  * GETTERS
  * @property-read AbstractHandler|null $Handler

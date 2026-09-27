@@ -3,6 +3,7 @@
 namespace XF\Cli\Command\Rebuild;
 
 use Symfony\Component\Console\Input\InputOption;
+use XF\Job\Stats;
 
 class RebuildStats extends AbstractRebuildCommand
 {
@@ -18,7 +19,7 @@ class RebuildStats extends AbstractRebuildCommand
 
 	protected function getRebuildClass(): string
 	{
-		return 'XF:Stats';
+		return Stats::class;
 	}
 
 	protected function configureOptions()

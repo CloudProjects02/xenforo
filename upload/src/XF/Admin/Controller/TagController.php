@@ -162,7 +162,6 @@ class TagController extends AbstractController
 				return $this->error(\XF::phrase('you_may_not_merge_tag_with_itself'));
 			}
 
-			/** @var MergerService $merger */
 			$merger = $this->service(MergerService::class, $targetTag);
 			$merger->merge($sourceTag);
 

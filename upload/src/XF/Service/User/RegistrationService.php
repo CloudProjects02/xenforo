@@ -188,12 +188,17 @@ class RegistrationService extends AbstractService
 		return $this->preRegContent;
 	}
 
+	protected function getSpamCheckExtraData(): array
+	{
+		return ['preRegActionKey' => $this->preRegActionKey];
+	}
+
 	public function checkForSpam()
 	{
 		$user = $this->user;
 
 		$userChecker = $this->app->spam()->userChecker();
-		$userChecker->check($user, ['preRegActionKey' => $this->preRegActionKey]);
+		$userChecker->check($user, $this->getSpamCheckExtraData());
 
 		$decision = $userChecker->getFinalDecision();
 		switch ($decision)
@@ -329,7 +334,6 @@ class RegistrationService extends AbstractService
 
 		if ($this->preRegActionKey)
 		{
-			/** @var PreRegActionRepository $preRegActionRepo */
 			$preRegActionRepo = $this->repository(PreRegActionRepository::class);
 			$preRegActionRepo->associateActionWithUser($this->preRegActionKey, $user->user_id);
 		}
@@ -359,14 +363,12 @@ class RegistrationService extends AbstractService
 	{
 		$user = $this->user;
 
-		/** @var IpRepository $ipRepo */
 		$ipRepo = $this->repository(IpRepository::class);
 		$ipRepo->logIp($user->user_id, $ip, 'user', $user->user_id, 'register');
 	}
 
 	protected function writeInitialChangeLogs()
 	{
-		/** @var ChangeLogRepository $changeLogRepo */
 		$changeLogRepo = $this->repository(ChangeLogRepository::class);
 
 		$user = $this->user;
@@ -394,13 +396,11 @@ class RegistrationService extends AbstractService
 
 	protected function updateUserAchievements()
 	{
-		/** @var UserGroupPromotionRepository $userGroupPromotionRepo */
 		$userGroupPromotionRepo = $this->repository(UserGroupPromotionRepository::class);
 		$userGroupPromotionRepo->updatePromotionsForUser($this->user);
 
 		if ($this->app->options()->enableTrophies)
 		{
-			/** @var TrophyRepository $trophyRepo */
 			$trophyRepo = $this->repository(TrophyRepository::class);
 			$trophyRepo->updateTrophiesForUser($this->user);
 		}
@@ -412,13 +412,11 @@ class RegistrationService extends AbstractService
 
 		if ($user->user_state == 'email_confirm')
 		{
-			/** @var EmailConfirmationService $emailConfirmation */
 			$emailConfirmation = $this->service(EmailConfirmationService::class, $user);
 			$emailConfirmation->triggerConfirmation();
 		}
 		else if ($user->user_state == 'valid')
 		{
-			/** @var RegistrationCompleteService $regComplete */
 			$regComplete = $this->service(RegistrationCompleteService::class, $user);
 			$regComplete->triggerCompletionActions();
 			$this->preRegContent = $regComplete->getPreRegContent();
@@ -444,7 +442,6 @@ class RegistrationService extends AbstractService
 		$tempFile = File::getTempFile();
 		if ($app->http()->reader()->getUntrusted($url, [], $tempFile))
 		{
-			/** @var AvatarService $avatarService */
 			$avatarService = $this->service(AvatarService::class, $this->user);
 			$avatarService->logIp(false);
 			if (!$avatarService->setImage($tempFile))

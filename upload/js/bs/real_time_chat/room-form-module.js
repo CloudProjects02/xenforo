@@ -1,0 +1,11 @@
+devsell.cdn(window.__rtc__.devsell.cdn).import({
+  version: '2.0.0',
+  package: 'BS/RealTimeChat2',
+  names: ['room-form.js']
+}).then(() => {
+  XF.Element.initialize($('*[data-xf-init*="rtc-avatar-box"]'))
+
+  $('*[data-xf-click*="element-value-setter"]').each(function () {
+    XF.Click.initElement(this)
+  })
+})

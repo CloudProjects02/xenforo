@@ -19,7 +19,6 @@ class ModeratorLogPlugin extends AbstractPlugin
 			throw new \InvalidArgumentException("Provided entity must defined a content type in its structure");
 		}
 
-		/** @var ModeratorLogRepository $modLogRepo */
 		$modLogRepo = $this->repository(ModeratorLogRepository::class);
 
 		$page = $this->filterPage();

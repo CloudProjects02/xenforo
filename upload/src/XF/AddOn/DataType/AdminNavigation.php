@@ -92,7 +92,6 @@ class AdminNavigation extends AbstractDataType
 	{
 		\XF::runOnce('rebuild_active_' . $this->getContainerTag(), function ()
 		{
-			/** @var AdminNavigationRepository $repo */
 			$repo = $this->em->getRepository(AdminNavigationRepository::class);
 			$repo->rebuildNavigationCache();
 		});

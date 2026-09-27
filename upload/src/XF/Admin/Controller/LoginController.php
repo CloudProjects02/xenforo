@@ -50,9 +50,7 @@ class LoginController extends AbstractController
 				return $this->error($error);
 			}
 
-			/** @var LoginPlugin $loginPlugin */
-			$loginPlugin = $this->plugin(LoginPlugin::class);
-			$loginPlugin->completeLogin($passkey->getPasskeyUser(), true);
+			$this->completeLogin($passkey->getPasskeyUser());
 
 			return $this->redirect($redirect, '');
 		}
@@ -64,7 +62,6 @@ class LoginController extends AbstractController
 
 		$ip = $this->request->getIp();
 
-		/** @var LoginService $loginService */
 		$loginService = $this->service(LoginService::class, $input['login'], $ip);
 		if ($loginService->isLoginLimited($limitType))
 		{

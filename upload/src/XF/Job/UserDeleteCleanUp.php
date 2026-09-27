@@ -11,6 +11,7 @@ class UserDeleteCleanUp extends AbstractJob
 	protected $defaultData = [
 		'userId' => null,
 		'username' => null,
+		'originalUserName' => null,
 
 		'currentStep' => 0,
 		'lastOffset' => null,
@@ -33,6 +34,12 @@ class UserDeleteCleanUp extends AbstractJob
 			$this->data['userId'],
 			$this->data['username']
 		);
+
+		if ($this->data['originalUserName'])
+		{
+			$deleter->setOriginalUserName($this->data['originalUserName']);
+		}
+
 		$deleter->restoreState($this->data['currentStep'], $this->data['lastOffset']);
 
 		$result = $deleter->cleanUp($maxRunTime);

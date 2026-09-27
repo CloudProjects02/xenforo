@@ -20,7 +20,6 @@ class Trophy
 			return;
 		}
 
-		/** @var TrophyRepository $trophyRepo */
 		$trophyRepo = \XF::repository(TrophyRepository::class);
 		$trophies = $trophyRepo->findTrophiesForList()->fetch();
 		if (!$trophies)

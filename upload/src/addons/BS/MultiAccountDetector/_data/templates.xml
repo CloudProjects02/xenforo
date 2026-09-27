@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="public" title="mad_member_evercookies" version_id="1030071" version_string="1.3.0a"><![CDATA[<xf:title>{{ phrase('mad_common_evercookies') }} {$user.username}</xf:title>
+
+<xf:head option="metaNoindex"><meta name="robots" content="noindex" /></xf:head>
+
+<xf:breadcrumb href="{{ link('members', $user) }}">{$user.username}</xf:breadcrumb>
+
+<div class="block">
+	<div class="block-container">
+		<ol class="block-body">
+			<xf:if is="$evercookies is not empty">
+				<xf:foreach loop="$evercookies" value="$evercookie">
+					<li class="block-row block-row--separated">
+						<xf:macro template="member_list_macros" name="item"
+								  arg-user="{$evercookie.User}"
+								  arg-extraData="{{ date_time($evercookie.evercookie_date) }}"/>
+					</li>
+				</xf:foreach>
+				<xf:else />
+				<div class="block-row">{{ phrase('mad_users_found_with_the_same_evercookie') }}</div>
+			</xf:if>
+		</ol>
+	</div>
+	
+	<xf:pagenav link="members/evercookies" page="{$page}" perpage="{$perPage}" total="{$total}"
+				data="{$user}"
+				wrapperclass="block-outer block-outer--after" />
+</div>]]></template>
+  <template type="public" title="mad_member_fingerprints" version_id="1040070" version_string="1.4.0"><![CDATA[<xf:title>{{ phrase('mad_common_fingerprints') }} {$user.username}</xf:title>
+
+<xf:head option="metaNoindex"><meta name="robots" content="noindex" /></xf:head>
+
+<xf:breadcrumb href="{{ link('members', $user) }}">{$user.username}</xf:breadcrumb>
+
+<div class="block">
+	<div class="block-container">
+		<ol class="block-body">
+			<xf:if is="$fingerprints is not empty">
+				<xf:foreach loop="$fingerprints" value="$fingerprint">
+					<li class="block-row block-row--separated">
+						<xf:set var="$extraData">
+							{{ date_time($fingerprint.fingerprint_date) }}
+							<xf:if is="$fingerprint.is_pro">
+								<span class="u-muted">{{ phrase('mad_fingerprintjs_pro') }}</span>
+							</xf:if>
+						</xf:set>
+						<xf:macro template="member_list_macros" name="item"
+								  arg-user="{$fingerprint.User}"
+								  arg-extraData="{$extraData}"/>
+					</li>
+				</xf:foreach>
+				<xf:else />
+				<div class="block-row">{{ phrase('mad_users_found_with_the_same_fingerprint') }}</div>
+			</xf:if>
+		</ol>
+	</div>
+	
+	<xf:pagenav link="members/fingerprints" page="{$page}" perpage="{$perPage}" total="{$total}"
+				data="{$user}"
+				wrapperclass="block-outer block-outer--after" />
+</div>]]></template>
+  <template type="public" title="multi_account_list" version_id="1040070" version_string="1.4.0"><![CDATA[<xf:title>{{ phrase('mad_multi_accounts') }}</xf:title>
+
+<xf:css src="multi_account_list.less" />
+<xf:css src="approval_queue.less" />
+<xf:js src="xf/approval_queue.js" />
+
+<div class="block">
+	<h2 class="menu-tabHeader tabs" style="margin-bottom: 10px;">
+		<a href="{{ link('multi-accounts') }}" class="tabs-tab {{ $activeTab === 'open' ? 'is-active' : '' }}">{{ phrase('active_reports') }}</a>
+		<a href="{{ link('multi-accounts/closed') }}" class="tabs-tab {{ $activeTab === 'closed' ? 'is-active' : '' }}">{{ phrase('closed_reports') }}</a>
+	</h2>
+	<xf:if is="$reports is not empty">
+		<xf:form action="{{ link('multi-accounts/process') }}" ajax="true" class="js-stickyParent approvalQueue">
+			<div class="blocks">
+				<xf:foreach loop="$reports" value="$report">
+					<div class="block">
+						<div class="block-container approvalQueue-item js-approvalQueue-item">
+							<div class="block-body">
+								<xf:macro template="multi_account_list_macros" name="item" arg-report="{$report}" />
+							</div>
+						</div>
+					</div>
+				</xf:foreach>
+			</div>
+
+			<div class="block">
+				<div class="block-container block-container--none">
+					<xf:submitrow icon="save" sticky=".js-stickyParent" rowtype="standalone" />
+				</div>
+			</div>
+		</xf:form>
+		<xf:else />
+		<div class="block-container">
+			<div class="block-row">{{ phrase('mad_multi_account_list_is_empty') }}</div>
+		</div>
+	</xf:if>
+
+	<xf:pagenav link="{{ $activeTab === 'open' ? 'multi-accounts' : 'multi-accounts/closed' }}" page="{$page}" perpage="{$perPage}" total="{$total}"
+				wrapperclass="block-outer block-outer--after" />
+</div>]]></template>
+  <template type="public" title="multi_account_list.less" version_id="1040070" version_string="1.4.0"><![CDATA[.mad-report {
+	.message-main {
+		.pairs {
+			margin-right: 30px;
+		}
+	}
+}]]></template>
+  <template type="public" title="multi_account_list_macros" version_id="1040070" version_string="1.4.0"><![CDATA[<xf:macro name="item"
+		  arg-report="!">
+
+	<div class="message mad-report">
+		<xf:css src="message.less" />
+		<div class="message-inner">
+			<div class="message-cell message-cell--user">
+
+				<section itemscope itemtype="https://schema.org/Person" class="message-user">
+					<div class="message-avatar">
+						<div class="message-avatar-wrapper">
+							<xf:avatar user="$report.User" size="m" itemprop="image" />
+						</div>
+					</div>
+					<div class="message-userDetails">
+						<h4 class="message-name"><xf:username user="$report.User" rich="true" itemprop="name" /></h4>
+					</div>
+
+					<span class="message-userArrow"></span>
+				</section>
+
+			</div>
+			<div class="message-cell message-cell--main">
+				<div class="message-main">
+
+					<header class="message-attribution">
+						<span class="message-attribution-main"><xf:date time="{{ $report.multi_account_date }}" /></span>
+					</header>
+
+					<div class="message-content">
+
+						<div class="message-userContent">
+							<article class="message-body">
+								<xf:if is="$report.FingerprintJSUsers is not empty">
+									<dl class="pairs pairs--rows">
+										<dt><h3 class="block-minorHeader" style="padding: 0;">{{ phrase('mad_fingerprintjs') }}</h3></dt>
+										<dd>
+											<ul class="listInline listInline--comma">
+												<xf:foreach loop="$report.FingerprintJSUsers" value="$fpUser"><xf:trim>
+													<li><xf:username user="$fpUser.User" rich="true" /></li>
+												</xf:trim></xf:foreach>
+											</ul>
+										</dd>
+									</dl>
+								</xf:if>
+
+								<xf:if is="$report.FingerprintJSProUsers is not empty">
+									<dl class="pairs pairs--rows">
+										<dt><h3 class="block-minorHeader" style="padding: 0;">{{ phrase('mad_fingerprintjs_pro') }}</h3></dt>
+										<dd>
+											<ul class="listInline listInline--comma">
+												<xf:foreach loop="$report.FingerprintJSProUsers" value="$fpUser"><xf:trim>
+													<li><xf:username user="$fpUser.User" rich="true" /></li>
+												</xf:trim></xf:foreach>
+											</ul>
+										</dd>
+									</dl>
+								</xf:if>
+
+								<xf:if is="$report.EvercookieUsers is not empty">
+									<dl class="pairs pairs--rows">
+										<dt><h3 class="block-minorHeader" style="padding: 0;">{{ phrase('mad_evercookie') }}</h3></dt>
+										<dd>
+											<ul class="listInline listInline--comma">
+												<xf:foreach loop="$report.EvercookieUsers" value="$ecUser"><xf:trim>
+													<li><xf:username user="$ecUser.User" rich="true" /></li>
+												</xf:trim></xf:foreach>
+											</ul>
+										</dd>
+									</dl>	
+								</xf:if>
+							</article>
+						</div>
+					</div>
+
+					<xf:if is="$report.is_closed && $report.close_reason">
+						<footer class="message-footer">
+							<dl class="pairs pairs--inline">
+								<dt>{{ phrase('reason') }}</dt>
+								<dd>{{ $report.close_reason }}</dd>
+							</dl>
+						</footer>
+					</xf:if>
+				</div>
+			</div>
+			<div class="message-cell message-cell--extra">
+				<div class="js-approvalQueue-itemControls">
+					<xf:radio name="queue[{$report.multi_account_id}][action]">
+						<xf:option value="" checked="checked" data-xf-click="approval-control">
+							{{ phrase('do_nothing') }}
+						</xf:option>
+						<xf:if is="$report.canClose()">
+							<xf:option 
+									   label="{{ phrase('close') }}"
+									   value="delete" 
+									   data-xf-click="approval-control" 
+									   data-hide="true"
+									   >
+								<xf:dependent>
+									<xf:textarea 
+												 name="queue[{$report.multi_account_id}][close_reason]" 
+												 placeholder="{{ phrase('reason') }}"
+												 />
+								</xf:dependent>
+							</xf:option>
+						</xf:if>
+						<xf:if is="$report.canOpen()">
+							<xf:option 
+									   label="{{ phrase('open') }}"
+									   value="open" 
+									   data-xf-click="approval-control" />
+						</xf:if>
+					</xf:radio>
+				</div>
+			</div>
+		</div>
+	</div>
+</xf:macro>]]></template>
+</templates>

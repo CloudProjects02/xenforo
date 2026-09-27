@@ -11,7 +11,7 @@ use XF\Util\File;
 // Much of this code is similar to the XFUpgraderExtractor class in src/XF/Install/_upgrader/core.php.
 // Changes should be mirrored when appropriate.
 
-use function is_array;
+use function is_array, is_resource;
 
 class ExtractorService extends AbstractService
 {
@@ -127,6 +127,14 @@ class ExtractorService extends AbstractService
 	public function copyFiles(?array $changeset = null, $start = 0, ?Timer $timer = null)
 	{
 		$zip = $this->zip();
+		if (!File::validateZipEntryNames($zip))
+		{
+			return [
+				'status' => 'error',
+				'error' => 'Archive contains an invalid file name',
+			];
+		}
+
 		$lastComplete = $start;
 
 		for ($i = $start; $i < $zip->numFiles; $i++)
@@ -146,9 +154,27 @@ class ExtractorService extends AbstractService
 				continue;
 			}
 
-			$finalFileName = $this->getFinalFsFileName($fsFileName);
+			$finalFileName = File::getSafeArchivePathWithinDirectory(
+				\XF::getRootDirectory(),
+				$fsFileName
+			);
+			if ($finalFileName === null)
+			{
+				return [
+					'status' => 'error',
+					'error' => "Failed write to {$fsFileName}",
+				];
+			}
 
 			$dataStream = $zip->getStream($zipFileName);
+			if (!is_resource($dataStream))
+			{
+				return [
+					'status' => 'error',
+					'error' => "Failed write to {$fsFileName}",
+				];
+			}
+
 			$targetWritten = @File::writeFile($finalFileName, $dataStream, false);
 
 			if (!$targetWritten)
@@ -204,25 +230,7 @@ class ExtractorService extends AbstractService
 
 	protected function getFsFileNameFromZipName($fileName)
 	{
-		if (substr($fileName, -1) === '/')
-		{
-			// this is a directory we can just skip this
-			return null;
-		}
-
-		if (!preg_match("#^upload/.#", $fileName))
-		{
-			// file outside of "upload" so we can just skip this
-			return null;
-		}
-
-		if (strpos($fileName, '/../') !== false)
-		{
-			// file contains relative path, skip this to prevent escaping the upload dir
-			return null;
-		}
-
-		return substr($fileName, 7); // remove "upload/"
+		return File::getArchivePathWithinPrefix($fileName, 'upload/');
 	}
 
 	protected function getFinalFsFileName($fileName)

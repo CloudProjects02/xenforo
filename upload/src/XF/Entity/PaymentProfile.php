@@ -12,7 +12,7 @@ use XF\Repository\PaymentRepository;
  * @property string $provider_id
  * @property string $title
  * @property string $display_title
- * @property array $options
+ * @property array|null $options
  * @property bool $active_
  *
  * GETTERS

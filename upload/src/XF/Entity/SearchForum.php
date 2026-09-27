@@ -4,13 +4,14 @@ namespace XF\Entity;
 
 use XF\Api\Result\EntityResult;
 use XF\Db\DuplicateKeyException;
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Structure;
 use XF\Repository\SearchForumRepository;
 
 /**
  * COLUMNS
  * @property int $node_id
- * @property array $search_criteria
+ * @property array|null $search_criteria
  * @property string $sort_order
  * @property string $sort_direction
  * @property int $max_results
@@ -34,7 +35,7 @@ use XF\Repository\SearchForumRepository;
  *
  * RELATIONS
  * @property-read SearchForumCache|null $Cache
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\SearchForumUserCache> $UserCaches
+ * @property-read AbstractCollection<SearchForumUserCache> $UserCaches
  * @property-read Post|null $LastPost
  * @property-read User|null $LastPostUser
  * @property-read Thread|null $LastThread

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<code_event_listeners>
+  <listener event_id="app_setup" execute_order="10" callback_class="BS\RealTimeChat\Listener" callback_method="appSetup" active="1" description="Add themes cache"/>
+  <listener event_id="bb_code_rules" execute_order="10" callback_class="BS\RealTimeChat\Listener" callback_method="bbCodeRules" active="1" hint="chat"/>
+  <listener event_id="broadcast_channels" execute_order="10" callback_class="BS\RealTimeChat\Listener" callback_method="broadcastChannels" active="1" description="Add chat room channel"/>
+  <listener event_id="entity_post_delete" execute_order="10" callback_class="BS\RealTimeChat\Listener" callback_method="entityPostDeleteUser" active="1" hint="XF\Entity\User"/>
+  <listener event_id="entity_pre_save" execute_order="10" callback_class="BS\RealTimeChat\Listener" callback_method="entityPreSaveStyleProperty" active="1" hint="XF\Entity\StyleProperty" description="Add themes validator"/>
+  <listener event_id="templater_macro_pre_render" execute_order="10" callback_class="BS\RealTimeChat\Template\Templater" callback_method="helperJsGlobalPreRender" active="1" hint="public:helper_js_global:head" description="Add cdn config to helper_js_global"/>
+  <listener event_id="templater_setup" execute_order="10" callback_class="BS\RealTimeChat\Template\Templater" callback_method="templaterSetup" active="1" description="Add rtc_room_avatar function"/>
+</code_event_listeners>

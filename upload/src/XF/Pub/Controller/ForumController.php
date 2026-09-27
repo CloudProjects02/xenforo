@@ -17,7 +17,6 @@ use XF\Entity\ThreadPrefix;
 use XF\Entity\User;
 use XF\Finder\ForumFinder;
 use XF\Finder\ThreadFinder;
-use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\ParameterBag;
 use XF\Mvc\Reply\Exception;
 use XF\Mvc\Reply\Reroute;
@@ -258,7 +257,6 @@ class ForumController extends AbstractController
 		{
 			$stickyThreadList = clone $threadList;
 
-			/** @var Thread[]|AbstractCollection $stickyThreads */
 			$stickyThreads = $stickyThreadList->where('sticky', 1)->fetch();
 		}
 		else
@@ -271,7 +269,6 @@ class ForumController extends AbstractController
 		$threadList->where('sticky', 0)
 			->limitByPage($page, $perPage);
 
-		/** @var Thread[]|AbstractCollection $threads */
 		$threads = $threadList->fetch();
 		$totalThreads = $threadList->total();
 
@@ -686,7 +683,6 @@ class ForumController extends AbstractController
 		$title = $this->filter('title', 'str');
 		$message = $this->plugin(EditorPlugin::class)->fromInput('message');
 
-		/** @var CreatorService $creator */
 		$creator = $this->service(CreatorService::class, $forum);
 
 		$isPreRegAction = $forum->canCreateThreadPreReg();
@@ -765,7 +761,6 @@ class ForumController extends AbstractController
 				$watch = $this->filter('watch_thread', 'bool');
 				if ($watch)
 				{
-					/** @var ThreadWatchRepository $threadWatchRepo */
 					$threadWatchRepo = $this->repository(ThreadWatchRepository::class);
 
 					$state = $this->filter('watch_thread_email', 'bool') ? 'watch_email' : 'watch_no_email';
@@ -984,7 +979,6 @@ class ForumController extends AbstractController
 
 		if ($forum->canUploadAndManageAttachments())
 		{
-			/** @var AttachmentRepository $attachmentRepo */
 			$attachmentRepo = $this->repository(AttachmentRepository::class);
 			$attachmentData = $attachmentRepo->getEditorData(
 				'post',
@@ -1194,7 +1188,6 @@ class ForumController extends AbstractController
 			$sendAlert = $this->filter('send_alert', 'bool');
 			$sendEmail = $this->filter('send_email', 'bool');
 
-			/** @var ForumWatchRepository $watchRepo */
 			$watchRepo = $this->repository(ForumWatchRepository::class);
 			$watchRepo->setWatchState($forum, $visitor, $notifyType, $sendAlert, $sendEmail);
 

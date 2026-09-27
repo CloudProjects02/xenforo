@@ -1,0 +1,55 @@
+# Template and Phrase Checklist
+
+## Scope
+
+1. Identify the exact core/add-on owner and public, admin, or email template type.
+2. Identify every touched output type: template, phrase, template modification, style property, or mixed.
+3. Find the closest first-party UI and naming pattern before creating markup.
+
+## Implementation
+
+1. Create templates and phrases with make commands.
+2. Use components and existing classes before custom markup or LESS.
+3. Keep templates focused on rendering prepared view data.
+4. Use links, CSRF forms, controls, icons, dates, usernames, and phrases through supported template tags/functions.
+5. Keep copy, phrase keys, and UI behavior easy to review.
+
+## Phrase Workflow
+
+1. Use stable, add-on-prefixed keys for third-party phrases, for example `vendor_addon_no_results`.
+2. Render phrases with `{{ phrase('key') }}` in templates and `\XF::phrase('key')` in PHP.
+3. Preserve `~~phrase boundary~~` markers used by development phrase tooling unless the task is converting them.
+4. Do not add phrase-boundary markers to JavaScript; that tooling is not supported there.
+5. Reuse a semantically identical phrase before adding a duplicate, but do not overload a phrase whose wording only happens to match today.
+
+## Syntax Rules
+
+1. Confirm every tag, function, and filter exists locally.
+2. Reject Blade and raw PHP constructs.
+3. Preserve escaping and expression/interpolation context.
+4. Compile/import templates before judging syntax by appearance.
+
+## Canonical Block Structure
+
+For an ordinary form page, start from the established block/form structure and adapt only what the neighboring page requires:
+
+```html
+<xf:form action="{{ link('...') }}" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			...
+		</div>
+		<xf:submitrow icon="save" />
+	</div>
+</xf:form>
+```
+
+Do not treat this skeleton as universal. Overlays, filter bars, data lists, menus, and simple confirmations have their own first-party patterns.
+
+## Lifecycle
+
+1. Import manually edited templates/phrases with the type-specific command and `--addon`.
+2. Review compilation errors rather than attempting syntax from another engine.
+3. Confirm only the expected payload and generated metadata changed.
+4. Check rendered behavior, keyboard/focus behavior where interactive, responsive layout, and representative content states.
+5. Never run export as a UI synchronization step; import the changed development files.

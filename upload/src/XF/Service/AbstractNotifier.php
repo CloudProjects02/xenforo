@@ -82,6 +82,8 @@ abstract class AbstractNotifier extends AbstractService
 
 				$user = $users[$userId];
 
+				$notifier->setNotifyData($notify);
+
 				if (!$this->canUserViewContent($user) || !$notifier->canNotify($user))
 				{
 					continue;

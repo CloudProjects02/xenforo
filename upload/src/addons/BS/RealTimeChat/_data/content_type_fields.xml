@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<content_type_fields>
+  <field content_type="chat_message" field_name="alert_handler_class">BS\RealTimeChat\Alert\Message</field>
+  <field content_type="chat_message" field_name="attachment_handler_class">BS\RealTimeChat\Attachment\Message</field>
+  <field content_type="chat_message" field_name="entity">BS\RealTimeChat:Message</field>
+  <field content_type="chat_message" field_name="moderator_log_handler_class">BS\RealTimeChat\ModeratorLog\Message</field>
+  <field content_type="chat_message" field_name="phrase">chat_message</field>
+  <field content_type="chat_message" field_name="phrase_plural">chat_messages</field>
+  <field content_type="chat_message" field_name="reaction_handler_class">BS\RealTimeChat\Reaction\Message</field>
+  <field content_type="chat_message" field_name="report_handler_class">BS\RealTimeChat\Report\ChatMessage</field>
+  <field content_type="chat_message" field_name="search_handler_class">BS\RealTimeChat\Search\Data\Message</field>
+  <field content_type="rtc_room" field_name="entity">BS\RealTimeChat:Room</field>
+  <field content_type="rtc_room" field_name="moderator_log_handler_class">BS\RealTimeChat\ModeratorLog\Room</field>
+  <field content_type="rtc_room" field_name="phrase">rtc_room</field>
+  <field content_type="rtc_room" field_name="phrase_plural">rtc_rooms</field>
+</content_type_fields>

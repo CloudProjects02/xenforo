@@ -88,7 +88,6 @@ class Attachment extends AbstractEmulatedData
 				}
 			}
 
-			/** @var PreparerService $attachPreparer */
 			$attachPreparer = $this->app()->service(PreparerService::class);
 			$this->data = $attachPreparer->insertDataFromFile($this->sourceFile, $this->dataUserId, $this->dataExtras);
 		}

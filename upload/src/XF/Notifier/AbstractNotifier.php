@@ -13,9 +13,19 @@ abstract class AbstractNotifier
 	 */
 	protected $app;
 
+	/**
+	 * @var array
+	 */
+	protected $notifyData = [];
+
 	public function __construct(App $app)
 	{
 		$this->app = $app;
+	}
+
+	public function setNotifyData(array $notifyData)
+	{
+		$this->notifyData = $notifyData;
 	}
 
 	public function canNotify(User $user)

@@ -33,7 +33,7 @@ use function in_array, is_array, strlen;
  * @property bool $has_variations
  * @property string $depends_on
  * @property string $value_group
- * @property array|null $property_value
+ * @property scalar|array|null $property_value
  * @property int $display_order
  * @property string $addon_id
  *
@@ -448,9 +448,9 @@ class StyleProperty extends Entity
 					else
 					{
 						if (
-							$this->isUpdate() &&
-							$this->isChanged('has_variations') &&
-							!$this->isChanged('property_value')
+							$this->isUpdate()
+							&& $this->isChanged('has_variations')
+							&& !$this->isChanged('property_value')
 						)
 						{
 							if ($this->has_variations)
@@ -550,8 +550,8 @@ class StyleProperty extends Entity
 		}
 
 		if (
-			$this->getOption('rebuild_style') &&
-			$this->isChanged([
+			$this->getOption('rebuild_style')
+			&& $this->isChanged([
 				'property_value',
 				'property_name',
 				'property_type',
@@ -723,7 +723,6 @@ class StyleProperty extends Entity
 
 	protected function _setupDefaults()
 	{
-		/** @var AddOnRepository $addOnRepo */
 		$addOnRepo = $this->_em->getRepository(AddOnRepository::class);
 		$this->addon_id = $addOnRepo->getDefaultAddOnId();
 	}

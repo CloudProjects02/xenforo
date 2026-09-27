@@ -41,7 +41,6 @@ class ApplyPrefix extends AbstractAction
 			return;
 		}
 
-		/** @var EditorService $editor */
 		$editor = $this->app()->service(EditorService::class, $entity);
 		$editor->setPerformValidations(false);
 		$editor->setPrefix($options['prefix_id']);

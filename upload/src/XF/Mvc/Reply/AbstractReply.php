@@ -64,9 +64,12 @@ abstract class AbstractReply
 		$this->responseHeaders[$name] = $value;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getSectionContext()
 	{
-		return $this->sectionContext;
+		return $this->sectionContext ?? '';
 	}
 
 	public function setSectionContext($context)

@@ -7,6 +7,8 @@ use XF\Api\Docs\Annotation\RouteBlock;
 use XF\Api\Docs\Annotation\TypeBlock;
 use XF\Mvc\Entity\Entity;
 
+use function strlen;
+
 class ClassParser
 {
 	/**
@@ -14,12 +16,17 @@ class ClassParser
 	 */
 	protected $annotationParser;
 
+	/**
+	 * @var array[]|null
+	 */
+	protected $actionPrefixes = null;
+
 	public function __construct(AnnotationParser $annotationParser)
 	{
 		$this->annotationParser = $annotationParser;
 	}
 
-	public function parseControllerClass($shortName, $baseRoute = '')
+	public function parseControllerClass($shortName, $baseRoute = '', $actionPrefix = '')
 	{
 		$className = \XF::stringToClass($shortName, '%s\%s\Controller\%s', 'Api');
 
@@ -56,6 +63,22 @@ class ClassParser
 				continue;
 			}
 
+			$actionSuffix = $nameMatch[2];
+
+			if ($actionPrefix !== '')
+			{
+				if (strpos($actionSuffix, $actionPrefix) !== 0)
+				{
+					continue;
+				}
+
+				$actionSuffix = substr($actionSuffix, strlen($actionPrefix));
+			}
+			else if ($actionSuffix !== '' && $this->hasActionPrefixedRoutes($shortName, $actionSuffix))
+			{
+				continue;
+			}
+
 			$docComment = $method->getDocComment();
 			if ($docComment)
 			{
@@ -74,7 +97,7 @@ class ClassParser
 			}
 			if (!$block->route)
 			{
-				$block->route = $baseRoute . '/' . $this->convertActionToRoute($nameMatch[2]);
+				$block->route = $baseRoute . '/' . $this->convertActionToRoute($actionSuffix);
 			}
 			if (!$block->group)
 			{
@@ -85,6 +108,36 @@ class ClassParser
 		}
 
 		return $routes;
+	}
+
+	protected function hasActionPrefixedRoutes($controllerShortName, $actionSuffix)
+	{
+		if ($this->actionPrefixes === null)
+		{
+			$this->actionPrefixes = [];
+
+			$prefixes = \XF::db()->fetchAll("
+				SELECT controller, action_prefix
+				FROM xf_route
+				WHERE route_type = 'api'
+					AND action_prefix != ''
+			");
+			foreach ($prefixes AS $row)
+			{
+				$this->actionPrefixes[$row['controller']][] = $row['action_prefix'];
+			}
+		}
+
+		$prefixes = $this->actionPrefixes[$controllerShortName] ?? [];
+		foreach ($prefixes AS $prefix)
+		{
+			if (strpos($actionSuffix, $prefix) === 0)
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	protected function convertActionToRoute($string)

@@ -1485,14 +1485,14 @@
 							{
 								clearTimeout(holdTimer)
 							},
-							'contextmenu.tooltip': (e) =>
-							{
-								if (XF.DataStore.get(target, 'tooltip:touching'))
-								{
-									e.preventDefault()
-								}
-							},
 						}, null, { passive: true })
+						XF.onPointer(target, 'contextmenu.tooltip', (e) =>
+						{
+							if (XF.DataStore.get(target, 'tooltip:touching'))
+							{
+								e.preventDefault()
+							}
+						});
 
 						break
 					}
@@ -1543,7 +1543,10 @@
 				if (!this.tooltip.isShownFully())
 				{
 					// a click before the tooltip has finished animating or loading, so act as if the click triggered
-					e.preventDefault()
+					if (e.cancelable)
+					{
+						e.preventDefault()
+					}
 					this.clickShow(e)
 					return
 				}
@@ -1552,7 +1555,10 @@
 			}
 			else
 			{
-				e.preventDefault()
+                if (e.cancelable)
+                {
+					e.preventDefault()
+                }
 				this.clickShow(e)
 			}
 		},
@@ -1995,6 +2001,7 @@
 			extraParams: {},
 			jsonContainer: 'results',
 			autosubmit: false,
+			wrapperClasses: '',
 		},
 
 		abortController: null,
@@ -2015,6 +2022,7 @@
 
 			this.results = new XF.AutoCompleteResults({
 				onInsert: this.addValue.bind(this),
+				wrapperClasses: this.options.wrapperClasses,
 			})
 
 			input.setAttribute('autocomplete', 'off')
@@ -2182,7 +2190,7 @@
 			this.results.showResults(this.getPartialValue(), results, this.target)
 		},
 
-		addValue (value)
+		addValue (value, res, e)
 		{
 			if (this.options.single)
 			{
@@ -2207,6 +2215,7 @@
 			XF.trigger(this.target, XF.customEvent('auto-complete:insert', {
 				inserted: value.trim(),
 				current: this.target.value,
+				result: res
 			}))
 
 			if (this.options.autosubmit)
@@ -2226,7 +2235,7 @@
 		getFullValues ()
 		{
 			let val = this.target.value
-			let splitPos = ''
+			let splitPos
 
 			if (val == '')
 			{
@@ -2452,14 +2461,15 @@
 
 		scrollToEnd ()
 		{
-			this.scrollTo(this.scrollTarget.scrollWidth)
+			const target = this.scrollTarget
+			this.scrollTo(target.scrollWidth - target.offsetWidth)
 		},
 
-		scrollTo (action)
+		scrollTo (target)
 		{
-			const target = this.scrollTarget
-			const currentScroll = target.scrollLeft
-			const scrollDistance = typeof action === 'number' ? action - currentScroll : Number(action.replace('+=', ''))
+			const el = this.scrollTarget
+			const currentScroll = XF.normalizedScrollLeft(el)
+			const scrollDistance = target - currentScroll
 			let startTime = null
 
 			const animateScroll = currentTime =>
@@ -2470,9 +2480,9 @@
 				}
 
 				let progress = currentTime - startTime
-				let newScrollPosition = currentScroll + (scrollDistance * progress / 150)
+				let newScrollPosition = currentScroll + (scrollDistance * Math.min(progress, 150) / 150)
 
-				target.scrollLeft = newScrollPosition
+				XF.normalizedScrollLeft(el, newScrollPosition)
 
 				if (progress < 150)
 				{
@@ -2502,17 +2512,15 @@
 
 		step (dir)
 		{
-			const scrollAmount = Math.max(125, Math.floor(this.scrollTarget.clientWidth * 0.25))
-			let op = '+='
-
-			switch (XF.scrollLeftType())
+			if (XF.isRtl())
 			{
-				case 'inverted':
-				case 'negative':
-					op = '-='
+				dir *= -1
 			}
 
-			this.scrollTo(op + (dir * scrollAmount))
+			const scrollAmount = Math.max(125, Math.floor(this.scrollTarget.clientWidth * 0.25))
+			const left = XF.normalizedScrollLeft(this.scrollTarget)
+
+			this.scrollTo(left + dir * scrollAmount)
 		},
 
 		updateScroll ()
@@ -2887,7 +2895,19 @@
 			{
 				textInput.value = textInput.getAttribute('min') || 0
 			}
+
+			const stepAny = textInput.step === 'any'
+			if (stepAny)
+			{
+				textInput.step = 1
+			}
+
 			textInput[fnName]()
+
+			if (stepAny)
+			{
+				textInput.step = 'any'
+			}
 
 			XF.trigger(textInput, 'change')
 			XF.trigger(textInput, 'input')
@@ -4260,6 +4280,8 @@
 			{
 				this.anchor.scrollIntoView()
 			}
+
+			XF.activate(this.containerElement)
 		},
 
 		supportsTemplateElement ()
@@ -4598,27 +4620,7 @@
 
 		getShareOptions ()
 		{
-			const shareOptions = {
-				url: this.url,
-				title: '',
-				text: '',
-			}
-
-			if (this.title)
-			{
-				shareOptions.title = this.title
-			}
-
-			if (this.text)
-			{
-				shareOptions.text = this.text
-			}
-			else
-			{
-				shareOptions.text = shareOptions.title
-			}
-
-			return shareOptions
+			return { url: this.url }
 		},
 	})
 

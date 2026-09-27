@@ -3,26 +3,46 @@
 namespace XF\Bookmark;
 
 use XF\Entity\BookmarkItem;
-use XF\Entity\BookmarkTrait;
 use XF\Entity\LinkableInterface;
+use XF\Entity\User;
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 
 use function get_class;
 
+/**
+ * @template T of Entity
+ */
 abstract class AbstractHandler
 {
+	/**
+	 * @var string
+	 */
 	protected $contentType;
 
+	/**
+	 * @param string $contentType
+	 */
 	public function __construct($contentType)
 	{
 		$this->contentType = $contentType;
 	}
 
+	/**
+	 * @param T $content
+	 *
+	 * @return User|null
+	 */
 	public function getContentUser(Entity $content)
 	{
 		return $content->User ?? null;
 	}
 
+	/**
+	 * @param T $content
+	 *
+	 * @return string|\Stringable
+	 */
 	public function getContentTitle(Entity $content)
 	{
 		if ($content instanceof LinkableInterface)
@@ -36,6 +56,11 @@ abstract class AbstractHandler
 		);
 	}
 
+	/**
+	 * @param T $content
+	 *
+	 * @return string
+	 */
 	public function getContentLink(Entity $content)
 	{
 		if ($content instanceof LinkableInterface)
@@ -46,6 +71,11 @@ abstract class AbstractHandler
 		return \XF::app()->router('public')->buildLink('canonical:' . $this->getContentRoute($content), $content);
 	}
 
+	/**
+	 * @param T $content
+	 *
+	 * @return string
+	 */
 	public function getContentRoute(Entity $content)
 	{
 		if ($content instanceof LinkableInterface)
@@ -59,16 +89,32 @@ abstract class AbstractHandler
 		);
 	}
 
+	/**
+	 * @param T $content
+	 *
+	 * @return string
+	 */
 	public function getEditLink(Entity $content)
 	{
 		return \XF::app()->router('public')->buildLink($this->getContentRoute($content) . '/bookmark', $content);
 	}
 
+	/**
+	 * @param T $content
+	 *
+	 * @return string
+	 */
 	public function getDeleteLink(Entity $content)
 	{
 		return \XF::app()->router('public')->buildLink($this->getContentRoute($content) . '/bookmark', $content, ['delete' => 1]);
 	}
 
+	/**
+	 * @param T $content
+	 * @param string|\Stringable|null $error
+	 *
+	 * @return bool
+	 */
 	public function canViewContent(Entity $content, &$error = null)
 	{
 		if (method_exists($content, 'canView'))
@@ -79,6 +125,15 @@ abstract class AbstractHandler
 		throw new \LogicException("Could not determine content viewability; please override");
 	}
 
+	/**
+	 * @param T|null $content
+	 *
+	 * @return array{
+	 *     bookmark: BookmarkItem,
+	 *     user: User|null,
+	 *     content: T|null,
+	 * }
+	 */
 	protected function getDefaultTemplateData(BookmarkItem $bookmark, ?Entity $content = null)
 	{
 		if (!$content)
@@ -94,18 +149,32 @@ abstract class AbstractHandler
 	}
 
 	/**
-	 * @return null|string
+	 * @return string|null
 	 */
 	public function getCustomIconTemplateName()
 	{
 		return null;
 	}
 
+	/**
+	 * @param T|null $content
+	 *
+	 * @return array{
+	 *     bookmark: BookmarkItem,
+	 *     user: User|null,
+	 *     content: T|null,
+	 * }
+	 */
 	public function getCustomIconTemplateData(BookmarkItem $bookmark, ?Entity $content = null)
 	{
 		return $this->getDefaultTemplateData($bookmark, $content);
 	}
 
+	/**
+	 * @param T|null $content
+	 *
+	 * @return string
+	 */
 	public function renderCustomIcon(BookmarkItem $bookmark, ?Entity $content = null)
 	{
 		if (!$this->getCustomIconTemplateName())
@@ -137,10 +206,13 @@ abstract class AbstractHandler
 	}
 
 	/**
-	 * @param BookmarkItem $bookmark
-	 * @param Entity|BookmarkTrait|null $content
+	 * @param T|null $content
 	 *
-	 * @return array
+	 * @return array{
+	 *     bookmark: BookmarkItem,
+	 *     user: User|null,
+	 *     content: T|null,
+	 * }
 	 */
 	public function getItemTemplateData(BookmarkItem $bookmark, ?Entity $content = null)
 	{
@@ -148,8 +220,7 @@ abstract class AbstractHandler
 	}
 
 	/**
-	 * @param BookmarkItem $bookmark
-	 * @param Entity|BookmarkTrait|null $content
+	 * @param T|null $content
 	 *
 	 * @return string
 	 */
@@ -170,25 +241,35 @@ abstract class AbstractHandler
 		return \XF::app()->templater()->renderTemplate($template, $data);
 	}
 
+	/**
+	 * @return list<string>
+	 */
 	public function getEntityWith()
 	{
 		return [];
 	}
 
 	/**
-	 * @param $id
-	 * @return BookmarkTrait|Entity|null
+	 * @param int|list<int> $id
+	 *
+	 * @return T|AbstractCollection<T>
 	 */
 	public function getContent($id)
 	{
 		return \XF::app()->findByContentType($this->contentType, $id, $this->getEntityWith());
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getContentType()
 	{
 		return $this->contentType;
 	}
 
+	/**
+	 * @return list<string>
+	 */
 	public static function getWebhookEvents(): array
 	{
 		return ['bookmark'];

@@ -36,10 +36,16 @@ class GenerateApiDocs extends AbstractCommand
 				InputOption::VALUE_NONE,
 				'Force writing to the target'
 			)
+			->addOption(
+				'filters',
+				null,
+				InputOption::VALUE_IS_ARRAY | InputOption::VALUE_REQUIRED,
+				'List of routes to include e.g. --filters \'GET threads/\' --filters \'GET threads/{id}/\''
+			)
 			->addArgument(
 				'ids',
 				InputArgument::IS_ARRAY | InputArgument::REQUIRED,
-				'List of add-on IDs to include (space separated'
+				'List of add-on IDs to include (space separated)'
 			);
 	}
 
@@ -93,7 +99,15 @@ class GenerateApiDocs extends AbstractCommand
 			// TODO: output unknown lines
 		}
 
-		$output->write($compiler->render($renderer));
+		$filters = $input->getOption('filters');
+		if ($filters)
+		{
+			$output->write($compiler->renderFiltered($renderer, $filters));
+		}
+		else
+		{
+			$output->write($compiler->render($renderer));
+		}
 
 		return 0;
 	}

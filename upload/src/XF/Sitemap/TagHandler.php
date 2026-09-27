@@ -2,9 +2,12 @@
 
 namespace XF\Sitemap;
 
-use XF\Entity\Node;
+use XF\Entity\Tag;
 use XF\Finder\TagFinder;
 
+/**
+ * @extends AbstractHandler<Tag>
+ */
 class TagHandler extends AbstractHandler
 {
 	public function getRecords($start)
@@ -24,7 +27,6 @@ class TagHandler extends AbstractHandler
 
 	public function getEntry($record)
 	{
-		/** @var Node $record */
 		$url = $this->app->router('public')->buildLink('canonical:tags', $record);
 		return Entry::create($url, [
 			'lastmod' => $record->last_use_date,

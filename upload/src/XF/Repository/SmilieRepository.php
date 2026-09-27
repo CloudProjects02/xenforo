@@ -3,7 +3,6 @@
 namespace XF\Repository;
 
 use XF\Finder\SmilieFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 use XF\Util\Arr;
 
@@ -12,7 +11,7 @@ use function is_array;
 class SmilieRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return SmilieFinder
 	 */
 	public function findSmiliesForList($displayInEditorOnly = false)
 	{

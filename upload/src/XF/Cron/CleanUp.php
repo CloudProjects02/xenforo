@@ -12,6 +12,7 @@ use XF\Repository\ChangeLogRepository;
 use XF\Repository\CookieConsentRepository;
 use XF\Repository\DraftRepository;
 use XF\Repository\EditHistoryRepository;
+use XF\Repository\ErrorLogRepository;
 use XF\Repository\FileCheckRepository;
 use XF\Repository\FindNewRepository;
 use XF\Repository\ForumRepository;
@@ -55,11 +56,9 @@ class CleanUp
 	{
 		$app = \XF::app();
 
-		/** @var ThreadRepository $threadRepo */
 		$threadRepo = $app->repository(ThreadRepository::class);
 		$threadRepo->pruneThreadReadLogs();
 
-		/** @var ForumRepository $forumRepo */
 		$forumRepo = $app->repository(ForumRepository::class);
 		$forumRepo->pruneForumReadLogs();
 
@@ -67,59 +66,45 @@ class CleanUp
 		$templateRepo = $app->repository(TemplateRepository::class);
 		$templateRepo->pruneEditHistory();
 
-		/** @var IpRepository $ipRepo */
 		$ipRepo = $app->repository(IpRepository::class);
 		$ipRepo->pruneIps();
 
-		/** @var DraftRepository $draftRepo */
 		$draftRepo = $app->repository(DraftRepository::class);
 		$draftRepo->pruneDrafts();
 
-		/** @var PreRegActionRepository $preRegActionRepo */
 		$preRegActionRepo = $app->repository(PreRegActionRepository::class);
 		$preRegActionRepo->pruneActions();
 
-		/** @var SearchRepository $searchRepo */
 		$searchRepo = $app->repository(SearchRepository::class);
 		$searchRepo->pruneSearches();
 
-		/** @var FindNewRepository $findNewRepo */
 		$findNewRepo = $app->repository(FindNewRepository::class);
 		$findNewRepo->pruneFindNewResults();
 
-		/** @var ModeratorLogRepository $modLogRepo */
 		$modLogRepo = $app->repository(ModeratorLogRepository::class);
 		$modLogRepo->pruneModeratorLogs();
 
-		/** @var AdminLogRepository $adminLogRepo */
 		$adminLogRepo = $app->repository(AdminLogRepository::class);
 		$adminLogRepo->pruneAdminLogs();
 
-		/** @var CookieConsentRepository $cookieConsentRepo */
 		$cookieConsentRepo = $app->repository(CookieConsentRepository::class);
 		$cookieConsentRepo->pruneCookieConsentLogs();
 
-		/** @var TagRepository $tagRepo */
 		$tagRepo = $app->repository(TagRepository::class);
 		$tagRepo->pruneTagResultsCache();
 
-		/** @var UserTfaTrustedRepository $tfaTrustRepo */
 		$tfaTrustRepo = $app->repository(UserTfaTrustedRepository::class);
 		$tfaTrustRepo->pruneTrustedKeys();
 
-		/** @var EditHistoryRepository $editHistoryRepo */
 		$editHistoryRepo = $app->repository(EditHistoryRepository::class);
 		$editHistoryRepo->pruneEditHistory();
 
-		/** @var FileCheckRepository $fileCheckRepo */
 		$fileCheckRepo = $app->repository(FileCheckRepository::class);
 		$fileCheckRepo->pruneFileChecks();
 
-		/** @var AddOnRepository $addOnRepo */
 		$addOnRepo = $app->repository(AddOnRepository::class);
 		$addOnRepo->cleanUpAddOnBatches();
 
-		/** @var UpgradeCheckRepository $upgradeCheckRepo */
 		$upgradeCheckRepo = $app->repository(UpgradeCheckRepository::class);
 		$upgradeCheckRepo->pruneUpgradeChecks();
 
@@ -147,92 +132,90 @@ class CleanUp
 		$adminSessionStorage = $app->container('session.admin.storage');
 		$adminSessionStorage->deleteExpiredSessions();
 
-		/** @var SessionActivityRepository $activityRepo */
 		$activityRepo = $app->repository(SessionActivityRepository::class);
 		$activityRepo->updateUserLastActivityFromSession();
 		$activityRepo->pruneExpiredActivityRecords();
 
-		/** @var UserRememberRepository $rememberRepo */
 		$rememberRepo = $app->repository(UserRememberRepository::class);
 		$rememberRepo->pruneExpiredRememberRecords();
 
-		/** @var CaptchaQuestionRepository $captchaQuestion */
 		$captchaQuestion = $app->repository(CaptchaQuestionRepository::class);
 		$captchaQuestion->cleanUpCaptchaLog();
 
-		/** @var LoginAttemptRepository $loginRepo */
 		$loginRepo = $app->repository(LoginAttemptRepository::class);
 		$loginRepo->cleanUpLoginAttempts();
 
-		/** @var TfaAttemptRepository $tfaAttemptRepo */
 		$tfaAttemptRepo = $app->repository(TfaAttemptRepository::class);
 		$tfaAttemptRepo->cleanUpTfaAttempts();
 
-		/** @var UserConfirmationRepository $userConfirmationRepo */
 		$userConfirmationRepo = $app->repository(UserConfirmationRepository::class);
 		$userConfirmationRepo->cleanUpUserConfirmationRecords();
 
-		/** @var AttachmentRepository $attachmentRepo */
 		$attachmentRepo = $app->repository(AttachmentRepository::class);
 		$attachmentRepo->deleteUnassociatedAttachments();
 		$attachmentRepo->deleteUnusedAttachmentData();
 
-		/** @var ApiRepository $apiRepo */
 		$apiRepo = $app->repository(ApiRepository::class);
 		$apiRepo->pruneAttachmentKeys();
 		$apiRepo->pruneLoginTokens();
 
-		/** @var UserAlertRepository $alertRepo */
 		$alertRepo = $app->repository(UserAlertRepository::class);
-		$alertRepo->pruneViewedAlerts();
-		$alertRepo->pruneUnviewedAlerts();
 
-		/** @var ThreadRedirectRepository $redirectRepo */
+		$iterations = 0;
+		do
+		{
+			$deleted = $alertRepo->pruneViewedAlerts();
+			$iterations++;
+		}
+		while ($deleted >= 1000 && $iterations < 50);
+
+		$iterations = 0;
+		do
+		{
+			$deleted = $alertRepo->pruneUnviewedAlerts();
+			$iterations++;
+		}
+		while ($deleted >= 1000 && $iterations < 50);
+
 		$redirectRepo = $app->repository(ThreadRedirectRepository::class);
 		$redirectRepo->pruneThreadRedirects();
 
-		/** @var FloodCheckService $floodChecker */
 		$floodChecker = $app->service(FloodCheckService::class);
 		$floodChecker->pruneFloodCheckData();
 
-		/** @var SpamRepository $spamRepo */
 		$spamRepo = $app->repository(SpamRepository::class);
 		$spamRepo->cleanUpRegistrationResultCache();
 		$spamRepo->cleanupContentSpamCheck();
 		$spamRepo->cleanupSpamTriggerLog();
 
-		/** @var ImageProxyRepository $imageProxyRepo */
 		$imageProxyRepo = $app->repository(ImageProxyRepository::class);
 		$imageProxyRepo->pruneImageCache();
 		$imageProxyRepo->pruneImageProxyLogs();
 		$imageProxyRepo->pruneImageReferrerLogs();
 
-		/** @var OembedRepository $oembedRepo */
 		$oembedRepo = $app->repository(OembedRepository::class);
 		$oembedRepo->pruneOembedCache();
 		$oembedRepo->pruneOembedLogs();
 		$oembedRepo->pruneOembedReferrerLogs();
 
-		/** @var LinkProxyRepository $linkProxyRepo */
 		$linkProxyRepo = $app->repository(LinkProxyRepository::class);
 		$linkProxyRepo->pruneLinkProxyLogs();
 		$linkProxyRepo->pruneLinkReferrerLogs();
 
-		/** @var ThreadReplyBanRepository $threadReplyBanRepo */
 		$threadReplyBanRepo = $app->repository(ThreadReplyBanRepository::class);
 		$threadReplyBanRepo->cleanUpExpiredBans();
 
-		/** @var NewsFeedRepository $newsFeedRepo */
 		$newsFeedRepo = $app->repository(NewsFeedRepository::class);
 		$newsFeedRepo->cleanUpNewsFeedItems();
 
-		/** @var ActivityLogRepository $activityLogRepo */
 		$activityLogRepo = $app->repository(ActivityLogRepository::class);
 		$activityLogRepo->pruneLogs();
 
-		/** @var ChangeLogRepository $changeLogRepo */
 		$changeLogRepo = $app->repository(ChangeLogRepository::class);
 		$changeLogRepo->pruneChangeLogs();
+
+		$errorLogRepo = $app->repository(ErrorLogRepository::class);
+		$errorLogRepo->pruneErrorLogs();
 
 		File::cleanUpPersistentTempFiles();
 	}

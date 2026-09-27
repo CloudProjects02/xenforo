@@ -28,7 +28,6 @@ class NodeRepository extends Repository
 
 	public function getFullNodeList(?Node $withinNode = null, $with = null)
 	{
-		/** @var NodeFinder $finder */
 		$finder = $this->finder(NodeFinder::class)->order('lft');
 		if ($withinNode)
 		{
@@ -67,7 +66,6 @@ class NodeRepository extends Repository
 
 	public function findNodesForList(?Node $withinNode = null)
 	{
-		/** @var NodeFinder $finder */
 		$finder = $this->finder(NodeFinder::class);
 		if ($withinNode)
 		{
@@ -81,7 +79,6 @@ class NodeRepository extends Repository
 
 	public function findSiblings(Node $node, $listable = true)
 	{
-		/** @var NodeFinder $finder */
 		$finder = $this->finder(NodeFinder::class);
 
 		$finder->where('parent_node_id', $node->parent_node_id);
@@ -98,7 +95,6 @@ class NodeRepository extends Repository
 
 	public function findChildren(Node $node, $listable = true)
 	{
-		/** @var NodeFinder $finder */
 		$finder = $this->finder(NodeFinder::class);
 
 		$finder->where('parent_node_id', $node->node_id);
@@ -115,7 +111,6 @@ class NodeRepository extends Repository
 
 	public function findDescendants(Node $node, $listable = true)
 	{
-		/** @var NodeFinder $finder */
 		$finder = $this->finder(NodeFinder::class);
 
 		$finder->descendantOf($node);

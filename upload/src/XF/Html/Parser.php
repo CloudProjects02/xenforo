@@ -2,7 +2,7 @@
 
 namespace XF\Html;
 
-use function strlen;
+use function array_slice, in_array, strlen;
 
 /**
  * Parses HTML into a tree of tags.
@@ -41,6 +41,42 @@ class Parser
 	protected $_currentTag = null;
 
 	/**
+	 * @var int
+	 */
+	protected $_currentDepth = 0;
+
+	/**
+	 * @var int
+	 */
+	protected $_maxDepth = 20;
+
+	/**
+	 * @var list<string>
+	 */
+	protected $_voidTags = [
+		'area',
+		'base',
+		'br',
+		'col',
+		'command',
+		'embed',
+		'hr',
+		'img',
+		'input',
+		'keygen',
+		'link',
+		'meta',
+		'param',
+		'source',
+		'wbr',
+	];
+
+	/**
+	 * @var list<string>
+	 */
+	protected $_ignoredTags = [];
+
+	/**
 	 * Constructor. Sets up HTML.
 	 *
 	 * @param string $html HTML to parse
@@ -59,6 +95,8 @@ class Parser
 	public function parse()
 	{
 		$this->_currentTag = $this->_rootTag = new Tag('');
+		$this->_currentDepth = 0;
+		$this->_ignoredTags = [];
 
 		do
 		{
@@ -158,9 +196,15 @@ class Parser
 		else
 		{
 			$childTag = $this->pushTagOpen($tagName, $attributes);
-			if ($isSelfClose && !$childTag->isVoid())
+			if ($isSelfClose)
 			{
-				$this->pushTagClose($tagName);
+				$isVoid = $childTag !== null
+					? $childTag->isVoid()
+					: in_array($tagName, $this->_voidTags, true);
+				if (!$isVoid)
+				{
+					$this->pushTagClose($tagName);
+				}
 			}
 		}
 
@@ -400,10 +444,39 @@ class Parser
 	 */
 	public function pushTagClose($tagName)
 	{
+		$tagName = strtolower($tagName);
+
+		if ($this->_ignoredTags)
+		{
+			$key = array_search($tagName, array_reverse($this->_ignoredTags, true), true);
+			if ($key !== false)
+			{
+				$this->_ignoredTags = array_slice($this->_ignoredTags, 0, $key);
+			}
+
+			return;
+		}
+
 		$this->_currentTag = $this->_currentTag->closeTag($tagName);
 		if (!$this->_currentTag)
 		{
 			$this->_currentTag = $this->_rootTag;
+		}
+
+		$this->recalculateDepth();
+	}
+
+	/**
+	 * Recalculates the current nesting depth from the actual parent chain of the
+	 * current tag. This is necessary as adding or closing a tag may promote elements
+	 * to siblings (such as li and p tags), which doesn't affect the tree depth.
+	 */
+	protected function recalculateDepth()
+	{
+		$this->_currentDepth = 0;
+		for ($tag = $this->_currentTag; $tag && $tag->tagName() !== ''; $tag = $tag->parent())
+		{
+			$this->_currentDepth++;
 		}
 	}
 
@@ -413,7 +486,7 @@ class Parser
 	 * @param string $tagName
 	 * @param array $attributes Key-value attributes; cleaned of HTML entities within function
 	 *
-	 * @return Tag Child tag that was added
+	 * @return Tag|null Child tag that was added, or null when the nesting depth cap was reached
 	 */
 	public function pushTagOpen($tagName, array $attributes)
 	{
@@ -428,10 +501,21 @@ class Parser
 			$cleanAttributes['style'] = $this->parseCss($cleanAttributes['style']);
 		}
 
+		if ($this->_ignoredTags || $this->_currentDepth >= $this->_maxDepth)
+		{
+			if (!in_array($tagName, $this->_voidTags, true))
+			{
+				$this->_ignoredTags[] = $tagName;
+			}
+
+			return null;
+		}
+
 		$childTag = $this->_currentTag->addChildTag($tagName, $cleanAttributes);
 		if (!$childTag->isVoid())
 		{
 			$this->_currentTag = $childTag;
+			$this->recalculateDepth();
 		}
 
 		return $childTag;

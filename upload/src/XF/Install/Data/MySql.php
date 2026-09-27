@@ -89,6 +89,7 @@ class MySql extends AbstractMySql
 			$table->addColumn('admin_permission_id', 'varbinary', 25)->setDefault('');
 			$table->addColumn('debug_only', 'tinyint', 3)->setDefault(0);
 			$table->addColumn('development_only', 'tinyint', 3)->setDefault(0);
+			$table->addColumn('super_admin_only', 'tinyint')->setDefault(0);
 			$table->addColumn('hide_no_children', 'tinyint', 3)->setDefault(0);
 			$table->addColumn('addon_id', 'varbinary', 50)->setDefault('');
 			$table->addPrimaryKey('navigation_id');
@@ -227,6 +228,7 @@ class MySql extends AbstractMySql
 			$table->addColumn('height', 'int')->setDefault(0);
 			$table->addColumn('thumbnail_width', 'int')->setDefault(0);
 			$table->addColumn('thumbnail_height', 'int')->setDefault(0);
+			$table->addColumn('thumbnail_retina', 'tinyint')->setDefault(0);
 			$table->addColumn('attach_count', 'int')->setDefault(0);
 			$table->addKey(['user_id', 'upload_date']);
 			$table->addKey('attach_count');
@@ -331,6 +333,7 @@ class MySql extends AbstractMySql
 			$table->addColumn('bookmark_id', 'int');
 			$table->addColumn('use_date', 'int')->setDefault(0);
 			$table->addPrimaryKey(['label_id', 'bookmark_id']);
+			$table->addKey('bookmark_id');
 		};
 
 		$tables['xf_captcha_question'] = function (Create $table)
@@ -389,6 +392,8 @@ class MySql extends AbstractMySql
 		{
 			$table->addColumn('event_id', 'varbinary', 50);
 			$table->addColumn('description', 'text');
+			$table->addColumn('arguments', 'mediumblob')->nullable();
+			$table->addColumn('hint_description', 'text')->nullable();
 			$table->addColumn('addon_id', 'varbinary', 50)->setDefault('');
 			$table->addPrimaryKey('event_id');
 		};
@@ -1337,7 +1342,7 @@ class MySql extends AbstractMySql
 
 		$tables['xf_oauth_client'] = function (Create $table)
 		{
-			$table->addColumn('client_id', 'varchar', 16);
+			$table->addColumn('client_id', 'varchar', 16)->primaryKey();
 			$table->addColumn('client_secret', 'varchar', 32);
 			$table->addColumn('client_type', 'enum')->values(['confidential', 'public'])->setDefault('confidential');
 			$table->addColumn('title', 'varchar', 50);
@@ -1372,7 +1377,7 @@ class MySql extends AbstractMySql
 
 		$tables['xf_oauth_request'] = function (Create $table)
 		{
-			$table->addColumn('oauth_request_id', 'varchar', 255);
+			$table->addColumn('oauth_request_id', 'varchar', 255)->primaryKey();
 			$table->addColumn('client_id', 'text');
 			$table->addColumn('user_id', 'int');
 			$table->addColumn('response_type', 'text');
@@ -1417,11 +1422,12 @@ class MySql extends AbstractMySql
 		$tables['xf_passkey'] = function (Create $table)
 		{
 			$table->addColumn('passkey_id', 'int')->autoIncrement();
-			$table->addColumn('credential_id', 'varchar', 128);
+			$table->addColumn('credential_id', 'varbinary', 1024);
 			$table->addColumn('credential_public_key', 'text');
 			$table->addColumn('user_id', 'int');
 			$table->addColumn('name', 'varchar', 100);
 			$table->addColumn('aaguid', 'varchar', 32);
+			$table->addColumn('signature_counter', 'int')->setDefault(0);
 			$table->addColumn('create_date', 'int')->setDefault(0);
 			$table->addColumn('create_ip_address', 'varbinary', 16)->setDefault('');
 			$table->addColumn('last_use_date', 'int')->setDefault(0);
@@ -1711,7 +1717,7 @@ class MySql extends AbstractMySql
 			$table->addColumn('cost_amount', 'decimal', '10,2');
 			$table->addColumn('cost_currency', 'varchar', 3);
 			$table->addColumn('extra_data', 'blob')->nullable();
-			$table->addColumn('provider_metadata', 'varbinary', 100)->nullable();
+			$table->addColumn('provider_metadata', 'varbinary', 500)->nullable();
 			$table->addUniqueKey('request_key');
 			$table->addKey(['provider_id', 'provider_metadata'], 'provider_id_metadata');
 		};
@@ -2381,6 +2387,7 @@ class MySql extends AbstractMySql
 			$table->addColumn('result_id', 'int')->autoIncrement();
 			$table->addColumn('url', 'text');
 			$table->addColumn('url_hash', 'varbinary', 32);
+			$table->addColumn('unfurl_key', 'varbinary', 32)->setDefault('');
 			$table->addColumn('title', 'text')->nullable();
 			$table->addColumn('description', 'text')->nullable();
 			$table->addColumn('image_url', 'text')->nullable();
@@ -3035,15 +3042,6 @@ class MySql extends AbstractMySql
 				('Page', 'XF:Page', 'page', 'pages', 'pages', 'XF:Page')
 		";
 
-		$data['xf_user_field'] = "
-			INSERT INTO xf_user_field
-				(field_id, display_group, display_order, field_type, field_choices, match_type, match_params, max_length, display_template, wrapper_template)
-			VALUES
-				('skype', 'contact', 50, 'textbox', '', 'regex', '{\"regex\":\"^[a-zA-Z0-9-_.,@:]+$\"}', 30, '', ''),
-				('facebook', 'contact', 70, 'textbox', '', 'validator', '{\"validator\":\"Facebook\"}', 0, '', ''),
-				('twitter', 'contact', 80, 'textbox', '', 'validator', '{\"validator\":\"Twitter\"}', 0, '', '')
-		";
-
 		$data['xf_warning_definition'] = "
 			INSERT INTO xf_warning_definition
 				(warning_definition_id, points_default, expiry_type, expiry_default, extra_user_group_ids, is_editable)
@@ -3058,13 +3056,6 @@ class MySql extends AbstractMySql
 			INSERT INTO xf_phrase
 				(language_id, title, phrase_text, global_cache, addon_id)
 			VALUES
-				(0, 'user_field_title.skype', 'Skype', 0, ''),
-				(0, 'user_field_desc.skype', '', 0, ''),
-				(0, 'user_field_title.facebook', 'Facebook', 0, ''),
-				(0, 'user_field_desc.facebook', '', 0, ''),
-				(0, 'user_field_title.twitter', 'Twitter', 0, ''),
-				(0, 'user_field_desc.twitter', '', 0, ''),
-
 				(0, 'trophy_description.1', 'Post a message somewhere on the site to receive this.', 0, ''),
 				(0, 'trophy_title.1', 'First message', 0, ''),
 				(0, 'trophy_description.2', '30 messages posted. You must like it here!', 0, ''),
@@ -3155,7 +3146,7 @@ class MySql extends AbstractMySql
 				(`provider_id`, `provider_class`, `display_order`, `options`)
 			VALUES
 				('facebook', 'XF:Provider\\\\Facebook', 10, ''),
-				('twitter', 'XF:Provider\\\\Twitter', 20, ''),
+				('x', 'XF:Provider\\\\Twitter', 20, ''),
 				('google', 'XF:Provider\\\\Google', 30, ''),
 				('github', 'XF:Provider\\\\GitHub', 40, ''),
 				('linkedin', 'XF:Provider\\\\Linkedin', 50, ''),

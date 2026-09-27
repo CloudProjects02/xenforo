@@ -63,8 +63,13 @@ class ReplicationAdapter extends AbstractAdapter implements ReplicationAdapterIn
 		$type = 'write';
 		$forceAllWrite = true;
 
+		if (preg_match('/^\s*SHOW\s+SLAVE\s+STATUS/i', $query))
+		{
+			$type = 'read';
+			$forceAllWrite = false;
+		}
 		// if is a select query...
-		if (preg_match('/^\s*(\(\s*)?SELECT\s/i', $query))
+		else if (preg_match('/^\s*(\(\s*)?SELECT\s/i', $query))
 		{
 			$queryStart = substr(ltrim($query), 0, 200);
 			$queryEnd = substr($query, -100);

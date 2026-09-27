@@ -16,7 +16,6 @@ class ProfilePostRepository extends Repository
 {
 	public function findProfilePostsOnProfile(User $user, array $limits = [])
 	{
-		/** @var ProfilePostFinder $finder */
 		$finder = $this->finder(ProfilePostFinder::class);
 		$finder
 			->onProfile($user, $limits)
@@ -34,7 +33,6 @@ class ProfilePostRepository extends Repository
 	 */
 	public function findNewestProfilePostsOnProfile(User $user, $newerThan, array $limits = [])
 	{
-		/** @var ProfilePostFinder $finder */
 		$finder = $this->findNewestProfilePosts($newerThan)
 			->onProfile($user, $limits);
 
@@ -48,7 +46,6 @@ class ProfilePostRepository extends Repository
 	 */
 	public function findNewestProfilePosts($newerThan)
 	{
-		/** @var ProfilePostFinder $finder */
 		$finder = $this->finder(ProfilePostFinder::class);
 		$finder
 			->newerThan($newerThan)
@@ -65,7 +62,6 @@ class ProfilePostRepository extends Repository
 	 */
 	public function findProfilePostComments(ProfilePost $profilePost, array $limits = [])
 	{
-		/** @var ProfilePostCommentFinder $commentFinder */
 		$commentFinder = $this->finder(ProfilePostCommentFinder::class);
 		$commentFinder->setDefaultOrder('comment_date');
 		$commentFinder->forProfilePost($profilePost, $limits);
@@ -75,7 +71,6 @@ class ProfilePostRepository extends Repository
 
 	public function findNewestCommentsForProfilePost(ProfilePost $profilePost, $newerThan, array $limits = [])
 	{
-		/** @var ProfilePostCommentFinder $commentFinder */
 		$commentFinder = $this->finder(ProfilePostCommentFinder::class);
 		$commentFinder
 			->setDefaultOrder('comment_date', 'DESC')
@@ -86,14 +81,13 @@ class ProfilePostRepository extends Repository
 	}
 
 	/**
-	 * @param AbstractCollection|ProfilePost[] $profilePosts
+	 * @param AbstractCollection<ProfilePost>|array<int, ProfilePost> $profilePosts
 	 * @param bool $skipUnfurlRecrawl
 	 *
-	 * @return AbstractCollection|ProfilePost[]
+	 * @return AbstractCollection<ProfilePost>
 	 */
 	public function addCommentsToProfilePosts($profilePosts, $skipUnfurlRecrawl = false)
 	{
-		/** @var AttachmentRepository $attachmentRepo */
 		$attachmentRepo = $this->repository(AttachmentRepository::class);
 
 		$commentFinder = $this->finder(ProfilePostCommentFinder::class);
@@ -148,11 +142,9 @@ class ProfilePostRepository extends Repository
 				->order('comment_date')
 				->fetch();
 
-			/** @var UnfurlRepository $unfurlRepo */
 			$unfurlRepo = $this->repository(UnfurlRepository::class);
 			$unfurlRepo->addUnfurlsToContent($comments, $skipUnfurlRecrawl);
 
-			/** @var EmbedResolverRepository $embedRepo */
 			$embedRepo = $this->repository(EmbedResolverRepository::class);
 			$embedRepo->addEmbedsToContent($comments);
 
@@ -228,7 +220,6 @@ class ProfilePostRepository extends Repository
 			'reason' => $reason,
 		], $extra);
 
-		/** @var UserAlertRepository $alertRepo */
 		$alertRepo = $this->repository(UserAlertRepository::class);
 		$alertRepo->alert(
 			$profilePost->User,
@@ -270,7 +261,6 @@ class ProfilePostRepository extends Repository
 			'reason' => $reason,
 		], $extra);
 
-		/** @var UserAlertRepository $alertRepo */
 		$alertRepo = $this->repository(UserAlertRepository::class);
 		$alertRepo->alert(
 			$comment->User,

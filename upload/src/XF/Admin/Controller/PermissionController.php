@@ -57,7 +57,6 @@ class PermissionController extends AbstractController
 
 		$userGroup = $this->assertUserGroupExists($params->user_group_id);
 
-		/** @var UpdatePermissionsService $permissionUpdater */
 		$permissionUpdater = $this->service(UpdatePermissionsService::class);
 		$permissions = $this->filter('permissions', 'array');
 
@@ -131,7 +130,6 @@ class PermissionController extends AbstractController
 
 		$user = $this->assertUserExists($params->user_id);
 
-		/** @var UpdatePermissionsService $permissionUpdater */
 		$permissionUpdater = $this->service(UpdatePermissionsService::class);
 		$permissions = $this->filter('permissions', 'array');
 
@@ -216,7 +214,6 @@ class PermissionController extends AbstractController
 				return $this->error(\XF::phrase('requested_user_not_found'));
 			}
 
-			/** @var PermissionCombinationRepository $combinationRepo */
 			$combinationRepo = $this->repository(PermissionCombinationRepository::class);
 			$combination = $combinationRepo->getPermissionCombinationForUser($user);
 
@@ -238,7 +235,6 @@ class PermissionController extends AbstractController
 		{
 			$permissionData = $this->getPermissionRepo()->getGlobalPermissionListData();
 
-			/** @var UserGroupRepository $userGroupRepo */
 			$userGroupRepo = $this->repository(UserGroupRepository::class);
 			$userGroupTitles = $userGroupRepo->getUserGroupTitlePairs();
 		}

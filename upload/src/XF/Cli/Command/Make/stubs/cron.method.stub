@@ -1,0 +1,4 @@
+public static function {{ method }}(): void
+{
+	// TODO: Implement cron task logic
+}

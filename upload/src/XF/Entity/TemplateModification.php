@@ -5,6 +5,7 @@ namespace XF\Entity;
 use XF\Behavior\DesignerOutputWritable;
 use XF\Behavior\DevOutputWritable;
 use XF\Finder\TemplateFinder;
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XF\Repository\AddOnRepository;
@@ -31,7 +32,7 @@ use XF\Util\Php;
  * RELATIONS
  * @property-read AddOn|null $AddOn
  * @property-read Template|null $Template
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\TemplateModificationLog> $Logs
+ * @property-read AbstractCollection<TemplateModificationLog> $Logs
  */
 class TemplateModification extends Entity
 {
@@ -182,7 +183,6 @@ class TemplateModification extends Entity
 
 	protected function _setupDefaults()
 	{
-		/** @var AddOnRepository $addOnRepo */
 		$addOnRepo = $this->_em->getRepository(AddOnRepository::class);
 		$this->addon_id = $addOnRepo->getDefaultAddOnId();
 	}

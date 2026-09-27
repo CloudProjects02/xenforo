@@ -110,6 +110,7 @@
   <field content_type="profile_post" field_name="inline_mod_handler_class">XF\InlineMod\ProfilePost</field>
   <field content_type="profile_post" field_name="moderator_log_handler_class">XF\ModeratorLog\ProfilePost</field>
   <field content_type="profile_post" field_name="news_feed_handler_class">XF\NewsFeed\ProfilePost</field>
+  <field content_type="profile_post" field_name="phrase_plural">profile_posts</field>
   <field content_type="profile_post" field_name="reaction_handler_class">XF\Reaction\ProfilePost</field>
   <field content_type="profile_post" field_name="report_handler_class">XF\Report\ProfilePost</field>
   <field content_type="profile_post" field_name="search_handler_class">XF\Search\Data\ProfilePost</field>
@@ -123,6 +124,7 @@
   <field content_type="profile_post_comment" field_name="entity">XF:ProfilePostComment</field>
   <field content_type="profile_post_comment" field_name="moderator_log_handler_class">XF\ModeratorLog\ProfilePostComment</field>
   <field content_type="profile_post_comment" field_name="news_feed_handler_class">XF\NewsFeed\ProfilePostComment</field>
+  <field content_type="profile_post_comment" field_name="phrase_plural">profile_post_comments</field>
   <field content_type="profile_post_comment" field_name="reaction_handler_class">XF\Reaction\ProfilePostComment</field>
   <field content_type="profile_post_comment" field_name="report_handler_class">XF\Report\ProfilePostComment</field>
   <field content_type="profile_post_comment" field_name="search_handler_class">XF\Search\Data\ProfilePostComment</field>

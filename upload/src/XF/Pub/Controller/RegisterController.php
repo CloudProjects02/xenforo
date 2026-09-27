@@ -58,7 +58,6 @@ class RegisterController extends AbstractController
 			}
 		}
 
-		/** @var RegisterFormService $regForm */
 		$regForm = $this->service(RegisterFormService::class);
 		$regForm->saveStateToSession($this->session());
 
@@ -95,6 +94,20 @@ class RegisterController extends AbstractController
 
 		if ($this->filter('setup', 'bool'))
 		{
+			if (!$this->isPost())
+			{
+				// TODO: use link-post for buttons on 2.4+
+				$viewParams = [
+					'provider' => $provider,
+					'redirect' => $this->getDynamicRedirectIfNot($this->buildLink('login')),
+				];
+				return $this->view(
+					'XF:Register\ConnectedAccountConfirm',
+					'register_connected_account_confirm',
+					$viewParams
+				);
+			}
+
 			$storageState->clearToken();
 			return $handler->handleAuthorization($this, $provider, $redirect);
 		}
@@ -202,7 +215,6 @@ class RegisterController extends AbstractController
 		$auth = $visitor->Auth;
 		if (!$auth || !$auth->getAuthenticationHandler()->hasPassword())
 		{
-			/** @var PasswordResetService $passwordConfirmation */
 			$passwordConfirmation = $this->service(PasswordResetService::class, $visitor);
 			$passwordConfirmation->triggerConfirmation();
 
@@ -266,7 +278,6 @@ class RegisterController extends AbstractController
 			return $this->error(\XF::phrase('this_account_is_already_associated_with_another_member'));
 		}
 
-		/** @var LoginService $loginService */
 		$loginService = $this->service(LoginService::class, $visitor->username, $this->request->getIp());
 		if ($loginService->isLoginLimited())
 		{
@@ -380,7 +391,6 @@ class RegisterController extends AbstractController
 	 */
 	protected function setupConnectedRegistration(array $input, AbstractProviderData $providerData)
 	{
-		/** @var RegistrationService $registration */
 		$registration = $this->service(RegistrationService::class);
 		$registration->setFromInput($input);
 		$registration->setNoPassword();
@@ -406,7 +416,6 @@ class RegisterController extends AbstractController
 		$this->assertPostOnly();
 		$this->assertRegistrationActive();
 
-		/** @var RegisterFormService $regForm */
 		$regForm = $this->service(RegisterFormService::class, $this->session());
 		if (!$regForm->isValidRegistrationAttempt($this->request(), $error))
 		{
@@ -485,7 +494,6 @@ class RegisterController extends AbstractController
 	 */
 	protected function setupRegistration(array $input)
 	{
-		/** @var RegistrationService $registration */
 		$registration = $this->service(RegistrationService::class);
 		$registration->setFromInput($input);
 

@@ -21,7 +21,6 @@ class RebuildService extends AbstractService
 			return;
 		}
 
-		/** @var StyleRepository $repo */
 		$repo = $this->app->em()->getRepository(StyleRepository::class);
 		$this->styleTree = $repo->getStyleTree(false);
 	}

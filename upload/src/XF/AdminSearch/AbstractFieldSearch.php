@@ -161,7 +161,7 @@ abstract class AbstractFieldSearch extends AbstractHandler
 
 	protected function arrayKeyFirst(array $arr)
 	{
-		foreach($arr AS $key => $unused)
+		foreach ($arr AS $key => $unused)
 		{
 			return $key;
 		}

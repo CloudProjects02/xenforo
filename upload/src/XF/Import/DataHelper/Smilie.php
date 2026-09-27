@@ -124,7 +124,6 @@ class Smilie extends AbstractHelper
 			}
 		}
 
-		/** @var ExportService $smilieService */
 		$smilieService = \XF::app()->service(ExportService::class);
 
 		$this->xml = $smilieService->exportFromArray($this->smilies, $this->smilieCategories);

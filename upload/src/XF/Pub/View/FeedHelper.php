@@ -10,6 +10,19 @@ use function strlen;
 
 class FeedHelper
 {
+	/**
+	 * Builds a stable, opaque urn: identifier for use as a feed entry GUID.
+	 *
+	 * @param string $contentType
+	 * @param int $contentId
+	 *
+	 * @return string
+	 */
+	public static function buildGuid(string $contentType, int $contentId): string
+	{
+		return 'urn:xenforo:' . $contentType . ':' . $contentId;
+	}
+
 	public static function setupFeed(
 		Feed $feed,
 		string $title,
@@ -65,7 +78,7 @@ class FeedHelper
 		}
 
 		$entry
-			->setId((string) $thread->thread_id)
+			->setId(self::buildGuid('thread', $thread->thread_id))
 			->setTitle($thread->title)
 			->setLink($link)
 			->setDateCreated($thread->post_date)
@@ -117,6 +130,7 @@ class FeedHelper
 			);
 			$renderOptions['noProxy'] = true;
 			$renderOptions['lightbox'] = false;
+			$renderOptions['noCookieConsent'] = true;
 
 			$content = trim($bbCodeRenderer->render(
 				$snippet,

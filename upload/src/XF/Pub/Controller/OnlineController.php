@@ -3,7 +3,6 @@
 namespace XF\Pub\Controller;
 
 use XF\Entity\User;
-use XF\Finder\SessionActivityFinder;
 use XF\Repository\SessionActivityRepository;
 use XF\Util\Ip;
 
@@ -19,7 +18,6 @@ class OnlineController extends AbstractController
 		$page = $this->filterPage();
 		$perPage = $this->options()->membersPerPage;
 
-		/** @var SessionActivityRepository $activityRepo */
 		$activityRepo = $this->repository(SessionActivityRepository::class);
 
 		$typeLimit = $this->filter('type', 'str');
@@ -28,7 +26,6 @@ class OnlineController extends AbstractController
 			$typeLimit = '';
 		}
 
-		/** @var SessionActivityFinder $finder */
 		$finder = $activityRepo->findForOnlineList($typeLimit);
 
 		$linkParams = [];

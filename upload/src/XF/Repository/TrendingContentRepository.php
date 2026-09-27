@@ -3,8 +3,8 @@
 namespace XF\Repository;
 
 use XF\Entity\TrendingResult;
+use XF\Finder\TrendingResultFinder;
 use XF\Mvc\Entity\AbstractCollection;
-use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Repository;
 use XF\TrendingContent\AbstractHandler;
 
@@ -32,7 +32,7 @@ class TrendingContentRepository extends Repository
 			return null;
 		}
 
-		$finder = $this->finder(TrendingResult::class)
+		$finder = $this->finder(TrendingResultFinder::class)
 			->where('order', $order)
 			->where('duration', $duration)
 			->where('content_type', $contentType)
@@ -314,9 +314,6 @@ class TrendingContentRepository extends Repository
 		$this->db()->delete('xf_trending_result', 'result_date < ?', $cutOff);
 	}
 
-	/**
-	 * @return AbstractCollection|array<int, Entity>
-	 */
 	public function getResultContent(
 		TrendingResult $trendingResult,
 		string $style,

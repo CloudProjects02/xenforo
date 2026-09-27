@@ -26,7 +26,6 @@ class NodeController extends AbstractController
 		$nodeRepo = $this->getNodeRepo();
 		$nodeTree = $nodeRepo->createNodeTree($nodeRepo->getFullNodeList(null, 'NodeType'));
 
-		/** @var ModeratorRepository $moderatorRepo */
 		$moderatorRepo = $this->repository(ModeratorRepository::class);
 		$moderators = $moderatorRepo->findContentModeratorsForList()
 			->where('content_type', 'node')

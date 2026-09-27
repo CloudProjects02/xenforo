@@ -38,6 +38,11 @@ class MoverService extends AbstractService
 
 	protected $extraSetup = [];
 
+	/**
+	 * @var float
+	 */
+	protected $notifyRunTime = 0.5;
+
 	public function __construct(App $app, Thread $thread)
 	{
 		parent::__construct($app);
@@ -76,6 +81,11 @@ class MoverService extends AbstractService
 	public function setNotifyWatchers($value = true)
 	{
 		$this->notifyWatchers = (bool) $value;
+	}
+
+	public function setNotifyRunTime(float $time): void
+	{
+		$this->notifyRunTime = $time;
 	}
 
 	public function addExtraSetup(callable $extra)
@@ -162,7 +172,6 @@ class MoverService extends AbstractService
 
 			if ($this->redirect && $oldForum)
 			{
-				/** @var ThreadRedirectRepository $redirectRepo */
 				$redirectRepo = $this->repository(ThreadRedirectRepository::class);
 				$redirectRepo->createThreadRedirectionDouble($thread, $oldForum, $this->redirectLength);
 			}
@@ -190,7 +199,6 @@ class MoverService extends AbstractService
 			&& ($wasVisibleForAlert || $isVisibleForAlert)
 		)
 		{
-			/** @var ThreadRepository $threadRepo */
 			$threadRepo = $this->repository(ThreadRepository::class);
 			$threadRepo->sendModeratorActionAlert($thread, 'move', $this->alertReason);
 		}
@@ -201,13 +209,12 @@ class MoverService extends AbstractService
 			&& $thread->discussion_type != 'redirect'
 		)
 		{
-			/** @var NotifierService $notifier */
 			$notifier = $this->service(NotifierService::class, $thread->FirstPost, 'thread');
 			if ($oldForum)
 			{
 				$notifier->skipUsersWatchingForum($oldForum);
 			}
-			$notifier->notifyAndEnqueue(3);
+			$notifier->notifyAndEnqueue($this->notifyRunTime);
 		}
 
 		return $moved;

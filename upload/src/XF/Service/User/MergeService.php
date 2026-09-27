@@ -262,7 +262,6 @@ class MergeService extends AbstractService
 
 	protected function stepReassignContent($lastOffset, $maxRunTime)
 	{
-		/** @var ContentChangeService $contentChanger */
 		$contentChanger = $this->service(ContentChangeService::class, $this->source);
 		$contentChanger->setupForMerge($this->target);
 
@@ -293,7 +292,6 @@ class MergeService extends AbstractService
 
 	protected function postMergeCleanUp()
 	{
-		/** @var TrophyRepository $trophyRepo */
 		$trophyRepo = $this->repository(TrophyRepository::class);
 		$trophyRepo->recalculateUserTrophyPoints($this->target);
 
@@ -318,7 +316,6 @@ class MergeService extends AbstractService
 		// if we moved ignore records over, we need to update those users' ignore caches
 		$this->repository(UserIgnoredRepository::class)->rebuildIgnoredCacheByIgnoredUser($this->target->user_id);
 
-		/** @var UsernameChangeRepository $usernameChangeRepo */
 		$usernameChangeRepo = $this->repository(UsernameChangeRepository::class);
 
 		$usernameChangeRepo->insertUsernameChangeLog(

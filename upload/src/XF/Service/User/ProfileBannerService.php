@@ -308,7 +308,6 @@ class ProfileBannerService extends AbstractService
 	{
 		$user = $this->user;
 
-		/** @var IpRepository $ipRepo */
 		$ipRepo = $this->repository(IpRepository::class);
 		$ipRepo->logIp(\XF::visitor()->user_id, $ip, 'user', $user->user_id, 'profile_banner_' . $action);
 	}

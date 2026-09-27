@@ -32,6 +32,6 @@ class AppleProviderData extends AbstractProviderData
 
 	public function getEmail()
 	{
-		return $this->claims['email'];
+		return $this->claims['email'] ?? null;
 	}
 }

@@ -90,7 +90,6 @@ class ClosureNotifierService extends AbstractService
 		}
 		$link = $report->link;
 
-		/** @var UserAlertRepository $alertRepo */
 		$alertRepo = $this->repository(UserAlertRepository::class);
 		$alertSent = $alertRepo->alertFromUser(
 			$user,

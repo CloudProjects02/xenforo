@@ -8,7 +8,6 @@ use XF\Entity\User;
 use XF\Entity\UserTrophy;
 use XF\Finder\TrophyFinder;
 use XF\Finder\UserTrophyFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 use function intval;
@@ -16,7 +15,7 @@ use function intval;
 class TrophyRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return TrophyFinder
 	 */
 	public function findTrophiesForList()
 	{
@@ -24,7 +23,7 @@ class TrophyRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return UserTrophyFinder
 	 */
 	public function findUsersTrophies(array $userIds)
 	{
@@ -35,7 +34,7 @@ class TrophyRepository extends Repository
 
 	/**
 	 * @param integer $userId
-	 * @return Finder
+	 * @return UserTrophyFinder
 	 */
 	public function findUserTrophies($userId)
 	{
@@ -94,7 +93,6 @@ class TrophyRepository extends Repository
 		{
 			$user->fastUpdate('trophy_points', $user->trophy_points + $trophy->trophy_points);
 
-			/** @var UserAlertRepository $alertRepo */
 			$alertRepo = $this->repository(UserAlertRepository::class);
 			$alertRepo->alertFromUser(
 				$user,

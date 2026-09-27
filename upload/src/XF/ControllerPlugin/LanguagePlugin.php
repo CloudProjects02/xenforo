@@ -37,7 +37,6 @@ class LanguagePlugin extends AbstractPlugin
 
 		if ($languageId == 0)
 		{
-			/** @var LanguageRepository $languageRepo */
 			$languageRepo = $this->repository(LanguageRepository::class);
 			$language = $languageRepo->getMasterLanguage();
 		}
@@ -66,7 +65,6 @@ class LanguagePlugin extends AbstractPlugin
 	{
 		if ($id === 0 || $id === "0")
 		{
-			/** @var LanguageRepository $languageRepo */
 			$languageRepo = $this->repository(LanguageRepository::class);
 			return $languageRepo->getMasterLanguage();
 		}

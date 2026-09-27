@@ -23,7 +23,6 @@ class ReportPlugin extends AbstractPlugin
 			throw $this->exception($this->error(\XF::phrase('please_enter_reason_for_reporting_this_message')));
 		}
 
-		/** @var CreatorService $creator */
 		$creator = $this->service(CreatorService::class, $contentType, $content);
 		$creator->setMessage($message);
 

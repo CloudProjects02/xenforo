@@ -72,7 +72,6 @@ class ThreadPrefix extends AbstractEmulatedData
 			$this->db()->insertBulk('xf_forum_prefix', $insert, false, false, 'IGNORE');
 		}
 
-		/** @var ThreadPrefixRepository $repo */
 		$repo = $this->repository(ThreadPrefixRepository::class);
 
 		\XF::runOnce('rebuildThreadPrefixImport', function () use ($repo)

@@ -37,7 +37,6 @@ class Thread extends AbstractRebuildJob
 		$thread->rebuildCounters();
 		$thread->save();
 
-		/** @var ThreadRepository $threadRepo */
 		$threadRepo = $this->app->repository(ThreadRepository::class);
 
 		if ($this->data['position_rebuild'])

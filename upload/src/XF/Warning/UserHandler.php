@@ -6,6 +6,9 @@ use XF\Entity\User;
 use XF\Entity\Warning;
 use XF\Mvc\Entity\Entity;
 
+/**
+ * @extends AbstractHandler<User>
+ */
 class UserHandler extends AbstractHandler
 {
 	public function getStoredTitle(Entity $entity)
@@ -35,7 +38,6 @@ class UserHandler extends AbstractHandler
 
 	public function canViewContent(Entity $entity, &$error = null)
 	{
-		/** @var User $entity */
 		return $entity->canViewFullProfile();
 	}
 

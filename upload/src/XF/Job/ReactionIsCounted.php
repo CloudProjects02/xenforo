@@ -24,7 +24,6 @@ class ReactionIsCounted extends AbstractJob
 
 		$db = $this->app->db();
 
-		/** @var ReactionRepository $reactionRepo */
 		$reactionRepo = $this->app->repository(ReactionRepository::class);
 
 		$reactionHandler = $reactionRepo->getReactionHandler($this->data['type']);

@@ -102,7 +102,6 @@ class DeleterService extends AbstractService
 
 		if ($result && $wasVisible && $this->alert && $this->post->user_id != $user->user_id)
 		{
-			/** @var PostRepository $postRepo */
 			$postRepo = $this->repository(PostRepository::class);
 			$postRepo->sendModeratorActionAlert($this->post, 'delete', $this->alertReason);
 		}

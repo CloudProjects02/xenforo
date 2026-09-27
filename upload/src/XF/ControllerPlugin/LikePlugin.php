@@ -21,7 +21,6 @@ class LikePlugin extends AbstractPlugin
 			throw new \InvalidArgumentException("Provided entity {$entity->structure()->shortName} must define a content type in its structure");
 		}
 
-		/** @var LikedContentRepository $likeRepo */
 		$likeRepo = $this->repository(LikedContentRepository::class);
 
 		$likeHandler = $likeRepo->getLikeHandler($contentType, true);
@@ -69,7 +68,6 @@ class LikePlugin extends AbstractPlugin
 			throw new \InvalidArgumentException("Provided entity must defined a content type in its structure");
 		}
 
-		/** @var LikedContentRepository $likeRepo */
 		$likeRepo = $this->repository(LikedContentRepository::class);
 
 		$page = $this->filterPage();

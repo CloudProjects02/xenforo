@@ -2,6 +2,8 @@
 
 namespace XF\ConnectedAccount\ProviderData;
 
+use OAuth\Common\Storage\Exception\TokenNotFoundException;
+use XF\ConnectedAccount\Http\HttpResponseException;
 use XF\ConnectedAccount\Storage\StorageState;
 use XF\Util\Php;
 
@@ -107,8 +109,21 @@ abstract class AbstractProviderData implements \ArrayAccess
 			}
 			return $this->requestFromCache($endpoint, $key);
 		}
-		catch(\Exception $e)
+		catch (TokenNotFoundException $e)
 		{
+			return null;
+		}
+		catch (HttpResponseException $e)
+		{
+			return null;
+		}
+		catch (\Exception $e)
+		{
+			\XF::logException(
+				$e,
+				false,
+				'Connected account request error (' . $provider->provider_id . '): '
+			);
 			return null;
 		}
 	}

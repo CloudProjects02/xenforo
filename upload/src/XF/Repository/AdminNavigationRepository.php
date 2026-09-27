@@ -3,14 +3,13 @@
 namespace XF\Repository;
 
 use XF\Finder\AdminNavigationFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 use XF\Tree;
 
 class AdminNavigationRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return AdminNavigationFinder
 	 */
 	public function findNavigationForList()
 	{
@@ -47,6 +46,7 @@ class AdminNavigationRepository extends Repository
 				'admin_permission_id' => $entry->admin_permission_id,
 				'debug_only' => $entry->debug_only,
 				'development_only' => $entry->development_only,
+				'super_admin_only' => $entry->super_admin_only,
 				'hide_no_children' => $entry->hide_no_children,
 			];
 		}

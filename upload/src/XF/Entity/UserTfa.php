@@ -11,7 +11,7 @@ use XF\Repository\TfaRepository;
  * @property int|null $user_tfa_id
  * @property int $user_id
  * @property string $provider_id
- * @property array $provider_data
+ * @property array|null $provider_data
  * @property int $last_used_date
  *
  * RELATIONS

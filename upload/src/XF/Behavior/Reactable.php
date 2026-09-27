@@ -35,7 +35,6 @@ class Reactable extends Behavior
 
 			if ($this->entity->isUpdate() && ($visibilityChange == 'enter' || $visibilityChange == 'leave'))
 			{
-				/** @var ReactionRepository $reactionRepo */
 				$reactionRepo = $this->repository(ReactionRepository::class);
 				$reactionRepo->recalculateReactionIsCounted($this->contentType(), $this->id());
 			}
@@ -44,7 +43,6 @@ class Reactable extends Behavior
 
 	public function postDelete()
 	{
-		/** @var ReactionRepository $reactionRepo */
 		$reactionRepo = $this->repository(ReactionRepository::class);
 		$reactionRepo->fastDeleteReactions($this->contentType(), $this->id());
 	}

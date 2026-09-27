@@ -317,6 +317,9 @@ class User extends AbstractSearcher
 		];
 	}
 
+	/**
+	 * @return array<string, array<mixed>>
+	 */
 	public function getFormDefaults()
 	{
 		return [

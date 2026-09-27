@@ -73,7 +73,6 @@ class BuildRelease extends AbstractCommand
 			return 1;
 		}
 
-		/** @var ReleaseBuilderService $builderService */
 		$builderService = \XF::app()->service(ReleaseBuilderService::class, $addOn);
 
 		$skipHashes = $input->getOption('skip-hashes');

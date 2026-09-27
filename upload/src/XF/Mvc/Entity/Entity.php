@@ -389,11 +389,17 @@ abstract class Entity implements \ArrayAccess
 		}
 	}
 
+	/**
+	 * @return array<string, mixed>
+	 */
 	public function getNewValues()
 	{
 		return $this->_newValues;
 	}
 
+	/**
+	 * @return array<string, mixed>
+	 */
 	public function getPreviousValues()
 	{
 		$values = [];
@@ -1362,6 +1368,8 @@ abstract class Entity implements \ArrayAccess
 	{
 		if (!$this->_newValues && $this->isUpdate())
 		{
+			$this->_writePending = false;
+
 			$saved = false;
 			return true;
 		}
@@ -1611,6 +1619,7 @@ abstract class Entity implements \ArrayAccess
 		$this->_values = array_merge($this->_values, $newDbValues);
 		$this->_newValues = [];
 		$this->_errors = [];
+		$this->_cascadeSave = [];
 
 		// need to wipe out this cache as we've overridden
 		foreach ($newDbValues AS $key => $null)
@@ -1633,6 +1642,8 @@ abstract class Entity implements \ArrayAccess
 		$this->_getterCache = [];
 		$this->_valueCache = [];
 		$this->_options = [];
+		$this->_cascadeSave = [];
+		$this->_whenSaveable = [];
 	}
 
 	final public function delete($throw = true, $newTransaction = true)

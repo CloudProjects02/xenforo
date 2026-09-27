@@ -51,6 +51,11 @@ abstract class AbstractController extends Controller
 		$this->preDispatchController($action, $params);
 	}
 
+	/**
+	 * @param string $action
+	 *
+	 * @return void
+	 */
 	protected function preDispatchController($action, ParameterBag $params)
 	{
 	}
@@ -94,7 +99,6 @@ abstract class AbstractController extends Controller
 				return;
 			}
 
-			/** @var SessionActivityRepository $activityRepo */
 			$activityRepo = $this->repository(SessionActivityRepository::class);
 			$activityRepo->updateSessionActivity(
 				\XF::visitor()->user_id,
@@ -174,7 +178,6 @@ abstract class AbstractController extends Controller
 
 		if (is_array($result))
 		{
-			/** @var BanningRepository $repo */
 			$repo = $this->repository(BanningRepository::class);
 
 			$matched = $repo->findIpMatchesByRange($result[0], $result[1])
@@ -335,7 +338,6 @@ abstract class AbstractController extends Controller
 					}
 					else
 					{
-						/** @var SecurityLockResetService $passwordConfirmation */
 						$passwordConfirmation = $this->service(SecurityLockResetService::class, $visitor);
 
 						if (!$passwordConfirmation->canTriggerConfirmation($error))
@@ -495,7 +497,6 @@ abstract class AbstractController extends Controller
 
 			if (is_array($result))
 			{
-				/** @var BanningRepository $repo */
 				$repo = $this->repository(BanningRepository::class);
 
 				$matched = $repo->findIpMatchesByRange($result[0], $result[1])
@@ -530,7 +531,9 @@ abstract class AbstractController extends Controller
 		// random loading delay
 		if ($options->discourageDelay['max'])
 		{
-			usleep(mt_rand($options->discourageDelay['min'], $options->discourageDelay['max']) * 1000000);
+			$delayMin = min($options->discourageDelay['min'], $options->discourageDelay['max']);
+			$delayMax = max($options->discourageDelay['min'], $options->discourageDelay['max']);
+			usleep(mt_rand($delayMin, $delayMax) * 1000000);
 		}
 
 		// random page redirect
@@ -567,7 +570,6 @@ abstract class AbstractController extends Controller
 			return;
 		}
 
-		/** @var FloodCheckService $floodChecker */
 		$floodChecker = $this->service(FloodCheckService::class);
 		$timeRemaining = $floodChecker->checkFlooding($action, $visitor->user_id, $floodingLimit);
 		if ($timeRemaining)

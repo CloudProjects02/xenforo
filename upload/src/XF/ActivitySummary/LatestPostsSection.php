@@ -5,7 +5,7 @@ namespace XF\ActivitySummary;
 use XF\Entity\Post;
 use XF\Finder\PostFinder;
 use XF\Http\Request;
-use XF\Mvc\Entity\ArrayCollection;
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Finder;
 use XF\Repository\NodeRepository;
 
@@ -75,7 +75,7 @@ class LatestPostsSection extends AbstractSection
 
 	protected function renderInternal(Instance $instance): string
 	{
-		/** @var ArrayCollection|Post[] $posts */
+		/** @var AbstractCollection<Post> $posts */
 		$posts = $this->fetchData();
 
 		$nodeIds = $posts->pluck(

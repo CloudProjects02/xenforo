@@ -29,7 +29,6 @@ class Delete extends AbstractAction
 
 	protected function applyToEntity(Entity $entity, array $options)
 	{
-		/** @var DeleterService $deleter */
 		$deleter = $this->app()->service(DeleterService::class, $entity);
 
 		if ($options['alert'])

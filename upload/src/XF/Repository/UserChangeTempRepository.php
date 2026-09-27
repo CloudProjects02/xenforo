@@ -18,7 +18,6 @@ class UserChangeTempRepository extends Repository
 		$change = $this->em->findOne(UserChangeTemp::class, ['user_id' => $user->user_id, 'change_key' => $changeKey]);
 		if ($change)
 		{
-			/** @var TempChangeService $changeService */
 			$changeService = $this->app()->service(TempChangeService::class);
 			return $changeService->expireChange($change);
 		}
@@ -34,7 +33,6 @@ class UserChangeTempRepository extends Repository
 			->order('expiry_date')
 			->fetch(1000);
 
-		/** @var TempChangeService $changeService */
 		$changeService = $this->app()->service(TempChangeService::class);
 
 		/** @var UserChangeTemp $change */

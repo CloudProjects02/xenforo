@@ -43,7 +43,6 @@ class RegistrationWelcome extends AbstractOption
 				return false;
 			}
 
-			/** @var UserRepository $userRepo */
 			$userRepo = \XF::repository(UserRepository::class);
 			$users = $userRepo->getUsersByNames($participants, $notFound, [], false);
 			if ($notFound)

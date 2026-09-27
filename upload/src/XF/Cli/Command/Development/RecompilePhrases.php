@@ -34,11 +34,9 @@ class RecompilePhrases extends AbstractCommand
 
 		$output->writeln("Rebuilding phrase map...");
 
-		/** @var RebuildService $rebuildService */
 		$rebuildService = $app->service(RebuildService::class);
 		$rebuildService->rebuildFullPhraseMap();
 
-		/** @var GroupService $groupService */
 		$groupService = $app->service(GroupService::class);
 		$groupService->compileAllPhraseGroups();
 
@@ -53,7 +51,6 @@ class RecompilePhrases extends AbstractCommand
 		$progress = new ProgressBar($output, count($phraseIds));
 		$progress->start();
 
-		/** @var CompileService $compileService */
 		$compileService = $app->service(CompileService::class);
 
 		foreach ($phraseIds AS $phraseId)

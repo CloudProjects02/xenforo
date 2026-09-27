@@ -24,7 +24,6 @@ use XF\Finder\ThreadFinder;
 use XF\Finder\UserFinder;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\ParameterBag;
 use XF\Mvc\Reply\AbstractReply;
 use XF\Mvc\Reply\Exception;
@@ -167,7 +166,6 @@ class ThreadController extends AbstractController
 			$threadViewData->addHighlightedPosts($highlightPostIds);
 		}
 
-		/** @var UserAlertRepository $userAlertRepo */
 		$userAlertRepo = $this->repository(UserAlertRepository::class);
 		$userAlertRepo->markUserAlertsReadForContent(
 			'post',
@@ -449,7 +447,6 @@ class ThreadController extends AbstractController
 		// the check for last date here is to make sure that we have a date we can log in a link
 		if ($lastDate && $this->filter('load_extra', 'bool'))
 		{
-			/** @var Finder $postList */
 			$postList = $this->getPostRepo()->findNewestPostsInThread($thread, $lastKnownDate)->skipIgnored();
 			$hasNewPost = ($postList->total() > 0);
 		}
@@ -481,7 +478,6 @@ class ThreadController extends AbstractController
 	{
 		$message = $this->plugin(EditorPlugin::class)->fromInput('message');
 
-		/** @var ReplierService $replier */
 		$replier = $this->service(ReplierService::class, $thread);
 
 		$replier->setMessage($message);
@@ -516,7 +512,6 @@ class ThreadController extends AbstractController
 				$watch = $this->filter('watch_thread', 'bool');
 				if ($watch)
 				{
-					/** @var ThreadWatchRepository $threadWatchRepo */
 					$threadWatchRepo = $this->repository(ThreadWatchRepository::class);
 
 					$state = $this->filter('watch_thread_email', 'bool') ? 'watch_email' : 'watch_no_email';
@@ -721,7 +716,6 @@ class ThreadController extends AbstractController
 	{
 		$postRepo = $this->getPostRepo();
 
-		/** @var Finder $postList */
 		$postList = $postRepo->findNewestPostsInThread($thread, $lastDate)->skipIgnored()->with('full');
 		$posts = $postList->fetch($limit + 1);
 
@@ -788,7 +782,6 @@ class ThreadController extends AbstractController
 		$threadPlugin = $this->plugin(ThreadPlugin::class);
 		$threadPlugin->fetchExtraContentForPostsFullView($posts, $thread);
 
-		/** @var UserAlertRepository $userAlertRepo */
 		$userAlertRepo = $this->repository(UserAlertRepository::class);
 		$userAlertRepo->markUserAlertsReadForContent('post', $posts->keys());
 
@@ -1185,7 +1178,6 @@ class ThreadController extends AbstractController
 				return $this->noPermission($error);
 			}
 
-			/** @var DeleterService $deleter */
 			$deleter = $this->service(DeleterService::class, $thread);
 
 			if ($this->filter('starter_alert', 'bool'))
@@ -1234,7 +1226,6 @@ class ThreadController extends AbstractController
 
 		if ($this->isPost())
 		{
-			/** @var ApproverService $approver */
 			$approver = \XF::service(ApproverService::class, $thread);
 			$approver->approve();
 
@@ -1282,7 +1273,6 @@ class ThreadController extends AbstractController
 			$options['redirect_length'] = 0;
 		}
 
-		/** @var MoverService $mover */
 		$mover = $this->service(MoverService::class, $thread);
 
 		if ($options['starter_alert'])
@@ -1339,7 +1329,6 @@ class ThreadController extends AbstractController
 		}
 		else
 		{
-			/** @var NodeRepository $nodeRepo */
 			$nodeRepo = $this->app()->repository(NodeRepository::class);
 			$nodes = $nodeRepo->getFullNodeList()->filterViewable();
 
@@ -1429,7 +1418,6 @@ class ThreadController extends AbstractController
 
 		if ($newThreadType && $this->isPost() && $this->filter('confirm', 'bool'))
 		{
-			/** @var ChangeTypeService $typeChanger */
 			$typeChanger = $this->service(ChangeTypeService::class, $thread);
 			$typeChanger->setDiscussionTypeAndData($newThreadType->getTypeId(), $this->request());
 
@@ -1478,7 +1466,6 @@ class ThreadController extends AbstractController
 			return $this->noPermission($error);
 		}
 
-		/** @var ChangerService $tagger */
 		$tagger = $this->service(ChangerService::class, 'thread', $thread);
 
 		if ($this->isPost())
@@ -1549,7 +1536,6 @@ class ThreadController extends AbstractController
 				$newState = 'watch_no_email';
 			}
 
-			/** @var ThreadWatchRepository $watchRepo */
 			$watchRepo = $this->repository(ThreadWatchRepository::class);
 			$watchRepo->setWatchState($thread, $visitor, $newState);
 
@@ -1599,7 +1585,6 @@ class ThreadController extends AbstractController
 			);
 		}
 
-		/** @var ReplyBanService $replyBanService */
 		$replyBanService = $this->service(ReplyBanService::class, $thread, $user);
 
 		if ($input['ban_length'] == 'temporary')
@@ -1660,7 +1645,6 @@ class ThreadController extends AbstractController
 		}
 		else
 		{
-			/** @var ThreadReplyBanRepository $replyBanRepo */
 			$replyBanRepo = $this->repository(ThreadReplyBanRepository::class);
 			$replyBanFinder = $replyBanRepo->findReplyBansForThread($thread)->order('ban_date');
 
@@ -1757,7 +1741,6 @@ class ThreadController extends AbstractController
 				$attachmentHash = $thread->draft_reply->attachment_hash;
 			}
 
-			/** @var AttachmentRepository $attachmentRepo */
 			$attachmentRepo = $this->repository(AttachmentRepository::class);
 			return $attachmentRepo->getEditorData('post', $thread, $attachmentHash);
 		}

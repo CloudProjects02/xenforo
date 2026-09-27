@@ -11,7 +11,11 @@ use function count, floatval, in_array, intval, is_array, is_int, strval;
 
 abstract class AbstractSearcher
 {
+	/**
+	 * @var Manager
+	 */
 	protected $em;
+
 	protected $structure;
 
 	protected $rawCriteria = [];

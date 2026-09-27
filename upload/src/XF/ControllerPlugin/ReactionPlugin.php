@@ -5,7 +5,6 @@ namespace XF\ControllerPlugin;
 use XF\Entity\Reaction;
 use XF\Entity\ReactionContent;
 use XF\Entity\ReactionTrait;
-use XF\Mvc\Entity\ArrayCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Reply\Exception;
 use XF\Mvc\Reply\View;
@@ -187,7 +186,6 @@ class ReactionPlugin extends AbstractPlugin
 		$reactionsFinder = $reactionRepo->findContentReactions($contentType, $contentId, $reactionId)
 			->limitByPage($page, $perPage, 1);
 
-		/** @var ArrayCollection|ReactionContent[] $reactions */
 		$reactions = $reactionsFinder->fetch();
 
 		if (!count($reactions))

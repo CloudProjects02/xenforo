@@ -14,7 +14,11 @@ use function boolval, count, strval;
 
 class Cleaner
 {
+	/**
+	 * @var App
+	 */
 	protected $app;
+
 	protected $db;
 
 	/** @var User */
@@ -80,7 +84,6 @@ class Cleaner
 
 		$reason = strval(\XF::phrase('spam_cleaner_ban_reason'));
 
-		/** @var BanningRepository $banningRepo */
 		$banningRepo = $this->app->repository(BanningRepository::class);
 
 		$success = $banningRepo->banUser($user, 0, $reason, $error);
@@ -92,7 +95,6 @@ class Cleaner
 
 		if ($user->avatar_date > 0 || $user->gravatar)
 		{
-			/** @var AvatarService $avatarService */
 			$avatarService = $this->app->service(AvatarService::class, $user);
 			$avatarService->logIp(false);
 			$avatarService->deleteAvatar();
@@ -100,7 +102,6 @@ class Cleaner
 
 		if ($user->Profile && $user->Profile->banner_date > 0)
 		{
-			/** @var ProfileBannerService $bannerService */
 			$bannerService = $this->app->service(ProfileBannerService::class, $user);
 			$bannerService->logIp(false);
 			$bannerService->deleteBanner();
@@ -151,7 +152,6 @@ class Cleaner
 
 		$this->forceTransaction();
 
-		/** @var SpamRepository $spamRepo */
 		$spamRepo = $this->app->repository(SpamRepository::class);
 
 		$spamHandlers = $spamRepo->getSpamHandlers($this->user);

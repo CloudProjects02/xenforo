@@ -2,6 +2,8 @@
 
 namespace XF\Cli\Command\Rebuild;
 
+use XF\Job\Sitemap;
+
 class RebuildSitemap extends AbstractRebuildCommand
 {
 	protected function getRebuildName()
@@ -16,6 +18,6 @@ class RebuildSitemap extends AbstractRebuildCommand
 
 	protected function getRebuildClass()
 	{
-		return 'XF:Sitemap';
+		return Sitemap::class;
 	}
 }

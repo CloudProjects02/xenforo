@@ -110,7 +110,6 @@ class ProfilePost extends AbstractData
 			$users = Arr::stringToArray($profileUser, '/,\s*/');
 			if ($users)
 			{
-				/** @var UserRepository $userRepo */
 				$userRepo = \XF::repository(UserRepository::class);
 				$matchedUsers = $userRepo->getUsersByNames($users, $notFound);
 				if ($notFound)

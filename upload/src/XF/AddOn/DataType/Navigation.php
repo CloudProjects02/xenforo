@@ -114,7 +114,6 @@ class Navigation extends AbstractDataType
 	{
 		\XF::runOnce('rebuild_active_' . $this->getContainerTag(), function ()
 		{
-			/** @var NavigationRepository $repo */
 			$repo = $this->em->getRepository(NavigationRepository::class);
 			$repo->rebuildNavigationCache();
 		});

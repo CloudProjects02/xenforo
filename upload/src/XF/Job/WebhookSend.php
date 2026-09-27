@@ -58,7 +58,7 @@ class WebhookSend extends AbstractJob
 		{
 			$criteriaClass = $this->app->webhookCriteria(
 				$criteriaClass,
-				$webhook->criteria[$this->data['content_type']],
+				$webhook->criteria[$this->data['content_type']] ?? [],
 				$this->data['content_type']
 			);
 

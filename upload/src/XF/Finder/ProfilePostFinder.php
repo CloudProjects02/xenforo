@@ -2,15 +2,16 @@
 
 namespace XF\Finder;
 
+use XF\Entity\ProfilePost;
 use XF\Entity\User;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Finder;
 
 /**
- * @method AbstractCollection<\XF\Entity\ProfilePost> fetch(?int $limit = null, ?int $offset = null)
- * @method AbstractCollection<\XF\Entity\ProfilePost> fetchDeferred(?int $limit = null, ?int $offset = null)
- * @method \XF\Entity\ProfilePost|null fetchOne(?int $offset = null)
- * @extends Finder<\XF\Entity\ProfilePost>
+ * @method AbstractCollection<ProfilePost> fetch(?int $limit = null, ?int $offset = null)
+ * @method AbstractCollection<ProfilePost> fetchDeferred(?int $limit = null, ?int $offset = null)
+ * @method ProfilePost|null fetchOne(?int $offset = null)
+ * @extends Finder<ProfilePost>
  */
 class ProfilePostFinder extends Finder
 {

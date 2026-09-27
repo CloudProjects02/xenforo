@@ -54,7 +54,6 @@ class StatsController extends AbstractController
 
 		$statsRepo = $this->getStatsRepo();
 
-		/** @var GrapherService $grapher */
 		$grapher = $this->service(GrapherService::class, $start, $end, $displayTypes);
 		$data = $grapher->getGroupedData($grouper);
 

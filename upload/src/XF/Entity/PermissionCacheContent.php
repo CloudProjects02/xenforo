@@ -11,17 +11,34 @@ use XF\Mvc\Entity\Structure;
  * @property int $permission_combination_id
  * @property string $content_type
  * @property int $content_id
- * @property array $cache_value
+ * @property array|null $cache_value
  */
 class PermissionCacheContent extends Entity implements Proxyable
 {
+	/**
+	 * @param array{
+	 *     permission_combination_id: int|null,
+	 *     content_type: string|null,
+	 *     content_id: int|null,
+	 *     cache_value: string|null,
+	 * }
+	 */
 	public static function instantiateProxied(array $values)
 	{
+		if (
+			$values['permission_combination_id'] === null
+			|| $values['content_type'] === null
+			|| $values['content_id'] === null
+		)
+		{
+			return;
+		}
+
 		\XF::app()->permissionCache()->setContentPerms(
 			$values['permission_combination_id'],
 			$values['content_type'],
 			$values['content_id'],
-			@json_decode($values['cache_value'], true) ?: []
+			json_decode($values['cache_value'] ?? '[]', true)
 		);
 	}
 

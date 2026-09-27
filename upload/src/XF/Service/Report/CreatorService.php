@@ -13,6 +13,7 @@ use XF\Report\AbstractHandler;
 use XF\Repository\ReportRepository;
 use XF\Repository\ThreadRepository;
 use XF\Repository\ThreadWatchRepository;
+use XF\Repository\WebhookRepository;
 use XF\Service\AbstractService;
 use XF\Service\ValidateAndSavableTrait;
 
@@ -75,7 +76,6 @@ class CreatorService extends AbstractService
 			$report->content_id = $contentId;
 		}
 
-		/** @var ReportRepository $reportRepo */
 		$reportRepo = $this->repository(ReportRepository::class);
 		$handler = $reportRepo->getReportHandler($contentType, true);
 		if (!$handler)
@@ -130,7 +130,6 @@ class CreatorService extends AbstractService
 
 	public function sendReportIntoForum(Forum $forum)
 	{
-		/** @var \XF\Service\Thread\CreatorService $threadCreator */
 		$threadCreator = $this->service(\XF\Service\Thread\CreatorService::class, $forum);
 		$threadCreator->setIsAutomated();
 		if ($forum->default_prefix_id)
@@ -218,6 +217,13 @@ class CreatorService extends AbstractService
 			$this->repository(ReportRepository::class)->rebuildReportCounts();
 		});
 
+		$this->repository(WebhookRepository::class)->queueWebhook(
+			$report->content_type,
+			$report->content_id,
+			'report',
+			$this->content
+		);
+
 		$db->commit();
 
 		return $report;
@@ -231,7 +237,6 @@ class CreatorService extends AbstractService
 			return;
 		}
 
-		/** @var NotifierService $notifier */
 		$notifier = $this->service(NotifierService::class, $this->report, $this->comment);
 		$notifier->notifyCreate();
 

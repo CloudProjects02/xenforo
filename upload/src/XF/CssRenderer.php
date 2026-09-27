@@ -11,6 +11,7 @@ use XF\Less\Visitor\RtlVisitorPre;
 use XF\Repository\IconRepository;
 use XF\Service\StyleProperty\RebuildService;
 use XF\Template\Templater;
+use XF\Util\Color;
 use XF\Util\File;
 
 use function is_array, is_scalar, is_string, strlen, strval;
@@ -184,7 +185,8 @@ class CssRenderer
 
 		if ($this->allowCached && $this->allowFinalCacheUpdate && $this->cache && $this->includeExtraParams)
 		{
-			$this->cache->save($this->getFinalCacheKey($templates), $output, 3600);
+			$finalizedOutput = '@charset "UTF-8";' . "\n\n" . $output;
+			$this->cache->save($this->getFinalCacheKey($templates), $finalizedOutput, 3600);
 		}
 	}
 
@@ -395,6 +397,20 @@ class CssRenderer
 	{
 		$parser = $this->getFreshLessParser();
 
+		$containsVar = (
+			strpos($value, 'var(--') !== false
+			|| (
+				$this->style->getVariation() === Style::VARIATION_VARIABLE && (
+					strpos($value, '@xf-') !== false
+					|| strpos($value, '@{xf-') !== false
+				)
+			)
+		);
+		if (!$containsVar)
+		{
+			$this->disableColorPlugins();
+		}
+
 		$value = '@someVar: ' . $value . '; #test { color: @someVar; }';
 		$value = $this->prepareLessForRendering($value);
 
@@ -406,13 +422,26 @@ class CssRenderer
 		{
 			return null;
 		}
+		finally
+		{
+			if (!$containsVar)
+			{
+				$this->enableColorPlugins();
+			}
+		}
 
 		if (!preg_match('/color:\s*([^;}]*)(;|})/i', $css, $matches))
 		{
 			return null;
 		}
 
-		return preg_replace('/\s+/', '', $matches[1]) ?: null;
+		$color = preg_replace('/\s+/', '', $matches[1]) ?: null;
+		if (!$containsVar)
+		{
+			return '#' . Color::rgbToHex(Color::colorToRgb($color));
+		}
+
+		return $color;
 	}
 
 	protected function renderToCss($template, $output)
@@ -754,6 +783,40 @@ class CssRenderer
 		}
 
 		return $this->getLessParser();
+	}
+
+	protected function enableColorPlugins(): void
+	{
+		$plugins = $this->lessParser::$options['plugins'] ?? [];
+		foreach ($plugins AS $plugin)
+		{
+			if (
+				!($plugin instanceof HslColorPreEvalVisitor)
+				&& !($plugin instanceof HslColorPreVisitor)
+			)
+			{
+				continue;
+			}
+
+			$plugin->setEnabled(true);
+		}
+	}
+
+	protected function disableColorPlugins(): void
+	{
+		$plugins = $this->lessParser::$options['plugins'] ?? [];
+		foreach ($plugins AS $plugin)
+		{
+			if (
+				!($plugin instanceof HslColorPreEvalVisitor)
+				&& !($plugin instanceof HslColorPreVisitor)
+			)
+			{
+				continue;
+			}
+
+			$plugin->setEnabled(false);
+		}
 	}
 
 	protected function getLessPrepend()

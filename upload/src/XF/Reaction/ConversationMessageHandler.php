@@ -6,6 +6,9 @@ use XF\Entity\ReactionContent;
 use XF\Entity\User;
 use XF\Mvc\Entity\Entity;
 
+/**
+ * @extends AbstractHandler<\XF\Entity\ConversationMessage>
+ */
 class ConversationMessageHandler extends AbstractHandler
 {
 	public function reactionsCounted(Entity $entity)

@@ -200,7 +200,7 @@ class Spam extends AbstractSubContainer
 
 	/**
 	 * @param User $user
-	 *
+	 * @param mixed ...$arguments
 	 * @return Cleaner
 	 */
 	public function cleaner(User $user)
@@ -213,7 +213,7 @@ class Spam extends AbstractSubContainer
 
 	/**
 	 * @param SpamCleanerLog $log
-	 *
+	 * @param mixed ...$arguments
 	 * @return Restorer
 	 */
 	public function restorer(SpamCleanerLog $log)

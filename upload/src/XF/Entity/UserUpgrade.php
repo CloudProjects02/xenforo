@@ -3,6 +3,7 @@
 namespace XF\Entity;
 
 use XF\Api\Result\EntityResult;
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XF\Payment\AbstractProvider;
@@ -32,7 +33,7 @@ use XF\Service\User\UserGroupChangeService;
  * @property-read string $purchasable_type_id
  *
  * RELATIONS
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\UserUpgradeActive> $Active
+ * @property-read AbstractCollection<UserUpgradeActive> $Active
  */
 class UserUpgrade extends Entity
 {

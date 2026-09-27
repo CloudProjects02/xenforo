@@ -14,35 +14,26 @@ class SearchRepository extends Repository
 	{
 		$user = \XF::visitor();
 
-		/** @var Search $search */
+		if ($allowCached && $this->allowUserUseCachedResults($user))
+		{
+			$cached = $this->getPreviousSearch($query, $user);
+			if ($cached)
+			{
+				return $cached;
+			}
+		}
+
+		$results = $this->app()->search()->search($query);
+		if (!$results)
+		{
+			return null;
+		}
+
 		$search = $this->em->create(Search::class);
 		$search->setupFromQuery($query, $constraints);
 		$search->user_id = $user->user_id;
-
-		if ($allowCached && $this->allowUserUseCachedResults($user))
-		{
-			$previous = $this->getPreviousSearch($query, $user);
-		}
-		else
-		{
-			$previous = null;
-		}
-
-		if ($previous)
-		{
-			$search = $previous;
-		}
-		else
-		{
-			$results = $this->app()->search()->search($query);
-			if (!$results)
-			{
-				return null;
-			}
-
-			$search->search_results = $results;
-			$search->save();
-		}
+		$search->search_results = $results;
+		$search->save();
 
 		return $search;
 	}
@@ -85,6 +76,16 @@ class SearchRepository extends Repository
 			$cutOff = \XF::$time - 86400;
 		}
 
-		return $this->db()->delete('xf_search', 'search_date < ?', $cutOff);
+		$db = $this->db();
+		$totalDeleted = 0;
+
+		do
+		{
+			$deleted = $db->delete('xf_search', 'search_date < ?', $cutOff, '', '', 1000);
+			$totalDeleted += $deleted;
+		}
+		while ($deleted >= 1000);
+
+		return $totalDeleted;
 	}
 }

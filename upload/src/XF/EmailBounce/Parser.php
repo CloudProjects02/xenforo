@@ -84,6 +84,7 @@ class Parser
 		'mailbox not found',
 		'mailbox currently suspended',
 		'mailbox suspended',
+		'mailbox is disabled',
 		'does not exist',
 		'mailbox not available',
 		'mailbox unavailable',
@@ -97,10 +98,14 @@ class Parser
 		'not a known user',
 		'not our customer',
 		'recipient rejected',
-		'deactivated mailbox',
 		'no such user',
+		'no such local user',
 		'no such person',
 		'no such address',
+		'no such recipient',
+		'invalid recipient',
+		'#recipient(?:\b[^\n]{0,80}?\b|\s*)not\s*known#',
+		'#recipient(?:\b[^\n]{0,80}?\b|\s*)not\s*found#',
 		'no mailbox found',
 		'no longer on server',
 		'not a valid mailbox',
@@ -109,6 +114,7 @@ class Parser
 		'#no\s+mailbox.+currently\s+available#',
 		'account has been disabled',
 		'is not an active address',
+		'not configured to receive',
 		'not listed in domino directory',
 		'not a valid user here',
 		'name is not recognized',
@@ -117,6 +123,10 @@ class Parser
 		'doesn\'t have an account',
 		'#doesn\'t\s+have.+account#',
 		'addresses failed',
+		'and inactive',
+		'account inactive',
+		'account closed',
+		'mailbox inactive',
 	];
 
 	protected $quotaStrings = [
@@ -415,7 +425,7 @@ class Parser
 		}
 
 		if (!empty($statusFields['status'])
-			&& preg_match('/(\d\.\d\.\d)/', $statusFields['status'], $match)
+			&& preg_match('/(\d+\.\d+\.\d+)/', $statusFields['status'], $match)
 		)
 		{
 			$result->remoteStatus = $match[1];
@@ -432,7 +442,7 @@ class Parser
 
 			if (!$result->remoteStatus || $this->isStatusAmbiguous($result->remoteStatus))
 			{
-				if (preg_match('/(\D|^)(\d\.\d\.\d)(\D|$)/', $result->remoteDiagnostics, $match))
+				if (preg_match('/(\D|^)(\d+\.\d+\.\d+)(\D|$)/', $result->remoteDiagnostics, $match))
 				{
 					$result->remoteStatus = $match[2];
 				}
@@ -494,12 +504,12 @@ class Parser
 
 		if ($result->messageType)
 		{
-			if (preg_match('/\d\d\d(?:\s+|\s*,\s*)(\d\.\d\.\d)([^\r\n]*)(\r|\n|$)/', $textContent, $codeMatch))
+			if (preg_match('/\d\d\d(?:\s+|\s*,\s*)(\d+\.\d+\.\d+)([^\r\n]*)(\r|\n|$)/', $textContent, $codeMatch))
 			{
 				$result->remoteStatus = $codeMatch[1];
 				$result->remoteDiagnostics = trim($codeMatch[2]);
 			}
-			else if (preg_match('/#(\d\.\d\.\d)/', $textContent, $codeMatch))
+			else if (preg_match('/#(\d+\.\d+\.\d+)/', $textContent, $codeMatch))
 			{
 				$result->remoteStatus = $codeMatch[1];
 				$result->remoteDiagnostics = '';
@@ -651,7 +661,7 @@ class Parser
 
 	public function getStatusDetailsFromCode($statusCode)
 	{
-		if (!$statusCode || !preg_match('#^\d\.\d\.\d$#', $statusCode))
+		if (!$statusCode || !preg_match('#^\d+\.\d+\.\d+$#', $statusCode))
 		{
 			return null;
 		}
@@ -670,7 +680,7 @@ class Parser
 
 	public function getBounceTypeFromStatus($statusCode)
 	{
-		if (!$statusCode || !preg_match('#^\d\.\d\.\d$#', $statusCode))
+		if (!$statusCode || !preg_match('#^\d+\.\d+\.\d+$#', $statusCode))
 		{
 			return null;
 		}

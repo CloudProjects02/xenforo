@@ -2,6 +2,7 @@
 
 namespace XF\Entity;
 
+use XF\Finder\IpMatchFinder;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XF\Repository\BanningRepository;
@@ -25,7 +26,7 @@ class IpMatch extends Entity
 {
 	protected function _preSave()
 	{
-		$exists = $this->finder(IpMatch::class)
+		$exists = $this->finder(IpMatchFinder::class)
 			->where('ip', $this->ip)
 			->where('match_type', $this->match_type)
 			->fetchOne();

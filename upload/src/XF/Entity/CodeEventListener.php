@@ -46,7 +46,10 @@ class CodeEventListener extends Entity
 
 	protected function _preSave()
 	{
-		if ($this->callback_class || $this->callback_method)
+		if (
+			!$this->getOption('skip_callback_validation')
+			&& ($this->callback_class || $this->callback_method)
+		)
 		{
 			if (!Php::validateCallbackPhrased($this->callback_class, $this->callback_method, $error))
 			{
@@ -95,7 +98,6 @@ class CodeEventListener extends Entity
 
 	protected function _setupDefaults()
 	{
-		/** @var AddOnRepository $addOnRepo */
 		$addOnRepo = $this->_em->getRepository(AddOnRepository::class);
 		$this->addon_id = $addOnRepo->getDefaultAddOnId();
 	}
@@ -142,6 +144,7 @@ class CodeEventListener extends Entity
 		];
 		$structure->options = [
 			'check_duplicate' => true,
+			'skip_callback_validation' => false,
 		];
 
 		return $structure;

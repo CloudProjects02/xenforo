@@ -2,13 +2,16 @@
 
 namespace XF\Warning;
 
-use XF\Entity\ProfilePost;
+use XF\Entity\ProfilePostComment;
 use XF\Entity\Warning;
 use XF\Mvc\Entity\Entity;
 use XF\Service\ProfilePostComment\DeleterService;
 
 use function is_string, strlen;
 
+/**
+ * @extends AbstractHandler<ProfilePostComment>
+ */
 class ProfilePostCommentHandler extends AbstractHandler
 {
 	public function getStoredTitle(Entity $entity)
@@ -33,13 +36,11 @@ class ProfilePostCommentHandler extends AbstractHandler
 
 	public function getContentUser(Entity $entity)
 	{
-		/** @var ProfilePost $entity */
 		return $entity->User;
 	}
 
 	public function canViewContent(Entity $entity, &$error = null)
 	{
-		/** @var ProfilePost $entity */
 		return $entity->canView();
 	}
 
@@ -75,7 +76,6 @@ class ProfilePostCommentHandler extends AbstractHandler
 				$reason = '';
 			}
 
-			/** @var DeleterService $deleter */
 			$deleter = \XF::app()->service(DeleterService::class, $entity);
 			$deleter->delete('soft', $reason);
 		}
@@ -88,7 +88,6 @@ class ProfilePostCommentHandler extends AbstractHandler
 
 	protected function canDeleteContent(Entity $entity)
 	{
-		/** @var ProfilePost $entity */
 		return $entity->canDelete('soft');
 	}
 

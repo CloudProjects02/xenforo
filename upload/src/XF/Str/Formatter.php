@@ -6,7 +6,6 @@ use XF\Language;
 use XF\Template\Templater;
 use XF\Util\Php;
 use XF\Util\Str;
-
 use XF\Validator\Url;
 
 use function chr, count, intval, is_int, is_null, is_string, strlen, strval;
@@ -395,7 +394,14 @@ class Formatter
 
 	public function removeHtmlPlaceholders($string)
 	{
-		return preg_replace("#\x1A\\d+\x1A#", '', $string);
+		do
+		{
+			$original = $string;
+			$string = preg_replace("#\x1A\\d+\x1A#", '', $string);
+		}
+		while ($string !== $original);
+
+		return str_replace("\x1A", '', $string);
 	}
 
 	public function moveEmojiToPlaceholders($string, &$restorerClosure)

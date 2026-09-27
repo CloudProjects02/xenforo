@@ -11,7 +11,11 @@ use function count;
 
 class Restorer
 {
+	/**
+	 * @var App
+	 */
 	protected $app;
+
 	protected $db;
 
 	/** @var SpamCleanerLog */
@@ -36,10 +40,8 @@ class Restorer
 
 	public function restoreContent()
 	{
-		/** @var UserRepository $userRepo */
 		$userRepo = $this->app->repository(UserRepository::class);
 
-		/** @var SpamRepository $spamRepo */
 		$spamRepo = $this->app->repository(SpamRepository::class);
 
 		$log = $this->log;

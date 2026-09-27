@@ -173,7 +173,6 @@ class ThreadsController extends AbstractController
 
 		$isBypassingPermissions = \XF::isApiBypassingPermissions();
 
-		/** @var CreatorService $creator */
 		$creator = $this->service(CreatorService::class, $forum);
 
 		$allowUncreatable = \XF::isApiBypassingPermissions() && $input['allow_uncreatable_type'];

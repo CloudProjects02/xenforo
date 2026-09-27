@@ -2,6 +2,9 @@
 
 namespace XF\Alert;
 
+/**
+ * @extends AbstractHandler<\XF\Entity\Thread>
+ */
 class ThreadHandler extends AbstractHandler
 {
 	public function getEntityWith()

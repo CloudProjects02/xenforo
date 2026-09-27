@@ -24,7 +24,6 @@ class SecurityLockController extends AbstractController
 			return $this->redirect($this->buildLink('index'));
 		}
 
-		/** @var SecurityLockResetService $securityLock */
 		$securityLock = $this->service(SecurityLockResetService::class, $visitor);
 
 		if (!$securityLock->canTriggerConfirmation($error))
@@ -58,7 +57,6 @@ class SecurityLockController extends AbstractController
 			return $this->redirect($this->buildLink('index'));
 		}
 
-		/** @var SecurityLockResetService $securityLock */
 		$securityLock = $this->service(SecurityLockResetService::class, $user);
 
 		$confirmationKey = $this->filter('c', 'str');

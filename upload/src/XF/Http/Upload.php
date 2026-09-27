@@ -385,17 +385,17 @@ class Upload
 		$audioType = null;
 
 		if (
-			strpos($first24, '494433') === 0 || // indicates an ID3v2 container
-			strpos($first24, 'FFFB') === 0 ||
-			strpos($first24, 'FFF3') === 0 ||
-			strpos($first24, 'FFF2') === 0
+			strpos($first24, '494433') === 0 // indicates an ID3v2 container
+			|| strpos($first24, 'FFFB') === 0
+			|| strpos($first24, 'FFF3') === 0
+			|| strpos($first24, 'FFF2') === 0
 		)
 		{
 			$audioType = 'mp3';
 		}
 		else if (
-			strpos($first24, '52494646') === 0 &&
-			strpos($first24, '57415645') === 16
+			strpos($first24, '52494646') === 0
+			&& strpos($first24, '57415645') === 16
 		)
 		{
 			$audioType = 'wav';

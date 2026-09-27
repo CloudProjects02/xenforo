@@ -3,13 +3,12 @@
 namespace XF\Repository;
 
 use XF\Finder\ContentTypeFieldFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 class ContentTypeFieldRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return ContentTypeFieldFinder
 	 */
 	public function findContentTypeFieldsForList()
 	{

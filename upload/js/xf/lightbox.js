@@ -96,6 +96,8 @@
 			const triggers = container.querySelectorAll(this.options.lbTrigger)
 			Array.from(triggers).forEach(trigger =>
 			{
+				this.sanitizeTriggerSrc(trigger)
+
 				XF.trigger(trigger, 'click.xflbtrigger', this._initTrigger.bind(this))
 				XF.trigger(trigger, 'mousedown.xflbtrigger', this._initTrigger.bind(this))
 
@@ -225,12 +227,6 @@
 
 				fbContainer.append(this.sidebar)
 
-				const toggle = fbContainer.querySelector('.f-button[data-fancybox-sidebartoggle]')
-				this.sidebarToggle = toggle
-
-				XF.off(toggle, 'click.lbSidebar')
-				XF.on(toggle, 'click.lbSidebar', this.toggleSidebar.bind(this))
-
 				XF.on(window, 'resize.lbSidebar', this.sidebarCheckSize.bind(this))
 			}
 
@@ -328,6 +324,11 @@
 
 		updateSidebarIcon (enabled)
 		{
+			if (!this.sidebarToggle)
+			{
+				return
+			}
+
 			let icon
 			if (enabled)
 			{
@@ -446,6 +447,16 @@
 
 		onSlideDisplayed ({ instance, slide })
 		{
+			if (!this.sidebarToggle && instance && instance.container)
+			{
+				const toggle = instance.container.querySelector('.f-button[data-fancybox-sidebartoggle]')
+				if (toggle)
+				{
+					this.sidebarToggle = toggle
+					XF.on(toggle, 'click.lbSidebar', this.toggleSidebar.bind(this))
+				}
+			}
+
 			if (slide.type === 'ajax')
 			{
 				const state = {}
@@ -509,11 +520,14 @@
 			this.initThumbs()
 
 			const toolbar = fbContainer.querySelector('.fancybox__toolbar')
-			const nwTool = toolbar.querySelector('[data-fancybox-nw]')
-			if (nwTool)
+			if (toolbar)
 			{
-				nwTool.setAttribute('href', srcHref)
-				nwTool.setAttribute('target', '_blank')
+				const nwTool = toolbar.querySelector('[data-fancybox-nw]')
+				if (nwTool)
+				{
+					nwTool.setAttribute('href', srcHref)
+					nwTool.setAttribute('target', '_blank')
+				}
 			}
 
 			if (this.options.lbHistory && !this.isJumping)
@@ -526,18 +540,12 @@
 			this.isJumping = false
 
 			if (
-				(trigger.dataset.lbSidebar || trigger.dataset.lbSidebarHref)
+				trigger
+				&& (trigger.dataset.lbSidebar || trigger.dataset.lbSidebarHref)
 				&& fbContainer.classList.contains('fancybox-has-sidebar')
 			)
 			{
-				if (trigger)
-				{
-					sidebarHref = trigger.dataset.lbSidebarHref || srcHref
-				}
-				else
-				{
-					sidebarHref = srcHref
-				}
+				sidebarHref = trigger.dataset.lbSidebarHref || srcHref
 
 				XF.ajax(
 					'get',
@@ -619,6 +627,7 @@
 				let lbTriggers = Array.from(lbContainer.querySelectorAll(this.options.lbTrigger))
 				lbTriggers.reverse().forEach(trigger =>
 				{
+					this.sanitizeTriggerSrc(trigger)
 					this.updateCaption(trigger)
 					instance.prependContent(trigger)
 					instance.reindexSlides()
@@ -668,6 +677,7 @@
 
 				triggers.forEach(trigger =>
 				{
+					this.sanitizeTriggerSrc(trigger)
 					this.updateCaption(trigger)
 					instance.addContent(trigger)
 				})
@@ -695,6 +705,7 @@
 			{
 				this.sidebar.remove()
 				this.sidebar = null
+				this.sidebarToggle = null
 				XF.off(window, 'resize.lbSidebar')
 			}
 		},
@@ -800,6 +811,24 @@
 			return target.matches('div') && target.dataset.singleImage
 		},
 
+		sanitizeSrc (src)
+		{
+			if (!src || typeof src !== 'string')
+			{
+				return src
+			}
+
+			return src.replace(/["'<>]/g, char => encodeURIComponent(char))
+		},
+
+		sanitizeTriggerSrc (trigger)
+		{
+			if (trigger.dataset.src)
+			{
+				trigger.dataset.src = this.sanitizeSrc(trigger.dataset.src)
+			}
+		},
+
 		updateCaption (target)
 		{
 			if (target.dataset.caption)
@@ -833,7 +862,9 @@
 				l10n: this.getLanguage(),
 				wheel: false,
 				trapFocus: false,
+                placeFocusBack: false,
 				Toolbar: {
+					enabled: true,
 					items: {
 						newWindow: {
 							tpl: '<button class="f-button" data-fancybox-newwindow><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></button>',
@@ -918,6 +949,11 @@
 							slide,
 						})
 						XF.trigger(container, event)
+					},
+
+					'Carousel.unselectSlide': (instance, carousel, slide) =>
+					{
+						slide?.el?.querySelector('video')?.pause()
 					},
 
 					done (instance, slide)

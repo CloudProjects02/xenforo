@@ -97,7 +97,6 @@ class PostController extends AbstractController
 			'attachment_key' => 'str',
 		]);
 
-		/** @var EditorService $editor */
 		$editor = $this->service(EditorService::class, $post);
 
 		if ($input['message'] !== null)
@@ -162,7 +161,6 @@ class PostController extends AbstractController
 			$type = 'hard';
 		}
 
-		/** @var DeleterService $deleter */
 		$deleter = $this->service(DeleterService::class, $post);
 
 		if ($this->filter('author_alert', 'bool') && $post->canSendModeratorActionAlert())
@@ -222,7 +220,6 @@ class PostController extends AbstractController
 		$thread = $post->Thread;
 		$existingSolution = $thread->Question->Solution ?? null;
 
-		/** @var MarkSolutionService $markSolution */
 		$markSolution = $this->service(MarkSolutionService::class, $thread);
 
 		$apiResult = [

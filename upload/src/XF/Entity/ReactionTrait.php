@@ -8,10 +8,13 @@ use XF\Mvc\Entity\Structure;
 use function intval, is_array;
 
 /**
- * @property \XF\Entity\ReactionContent[] Reactions
+ * @property ReactionContent[] Reactions
  */
 trait ReactionTrait
 {
+	/**
+	 * @param string|\Stringable|null $error
+	 */
 	abstract public function canReact(&$error = null);
 
 	public function isReactedTo()

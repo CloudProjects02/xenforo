@@ -76,16 +76,12 @@ class TemplateModificationController extends AbstractController
 
 	public function actionAdd()
 	{
-		/**
-		 * Fixed adding template modification by reference
-		 * 
-		 * $templateModRepo = $this->getTemplateModificationRepo();
-		 *
-		 * if (!$templateModRepo->canCreateTemplateModification())
-		 * {
-		 *	 return $this->noPermission();
-		 * }
-		 */
+		$templateModRepo = $this->getTemplateModificationRepo();
+
+		if (!$templateModRepo->canCreateTemplateModification())
+		{
+			return $this->noPermission();
+		}
 
 		$modification = $this->em()->create(TemplateModification::class);
 		$modification->type = $this->filter('type', 'str', 'public');

@@ -5,6 +5,9 @@ namespace XF\Sitemap;
 use XF\Entity\Thread;
 use XF\Finder\ThreadFinder;
 
+/**
+ * @extends AbstractHandler<Thread>
+ */
 class ThreadHandler extends AbstractHandler
 {
 	public function getRecords($start)
@@ -26,7 +29,6 @@ class ThreadHandler extends AbstractHandler
 
 	public function getEntry($record)
 	{
-		/** @var Thread $record */
 		return Entry::create($record->getContentUrl(true), [
 			'lastmod' => $record->last_post_date,
 		]);
@@ -34,11 +36,10 @@ class ThreadHandler extends AbstractHandler
 
 	public function isIncluded($record)
 	{
-		/** @var $record \XF\Entity\Thread */
 		if (
-			$record->discussion_type == 'redirect' ||
-			!$record->isVisible() ||
-			!$record->isSearchEngineIndexable()
+			$record->discussion_type == 'redirect'
+			|| !$record->isVisible()
+			|| !$record->isSearchEngineIndexable()
 		)
 		{
 			return false;

@@ -7,6 +7,9 @@ use XF\Mvc\Entity\Repository;
 use XF\PreRegAction\AbstractHandler;
 use XF\Repository\PreRegActionRepository;
 
+/**
+ * @method void assertNotFlooding($action, $floodingLimit = null)
+ */
 class PreRegActionPlugin extends AbstractPlugin
 {
 	public function actionPreRegAction($actionType, Entity $containerContent, array $actionData)
@@ -16,11 +19,15 @@ class PreRegActionPlugin extends AbstractPlugin
 			return $this->noPermission();
 		}
 
+		$this->assertNotFlooding('post');
+
 		$preRegActionRepo = $this->getPreRegActionRepo();
 
 		/** @var AbstractHandler $handler */
 		$handler = $preRegActionRepo->getActionHandler($actionType);
 		$action = $handler->saveAction($containerContent, $actionData);
+
+		$preRegActionRepo->limitPreRegActionsByIp($action->ip_address, 5);
 
 		$session = $this->controller->session();
 

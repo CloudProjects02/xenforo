@@ -46,7 +46,6 @@ class ThreadHandler extends AbstractHandler
 				/** @var Thread $entity */
 				if ($entity->discussion_type != 'redirect' && $entity->discussion_state == 'moderated')
 				{
-					/** @var ApproverService $approver */
 					$approver = \XF::service(ApproverService::class, $entity);
 					$approver->setNotifyRunTime(1); // may be a lot happening
 					$approver->approve();

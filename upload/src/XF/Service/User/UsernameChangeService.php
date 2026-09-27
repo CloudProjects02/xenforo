@@ -217,7 +217,6 @@ class UsernameChangeService extends AbstractService
 
 		if ($this->notify)
 		{
-			/** @var UserAlertRepository $alertRepo */
 			$alertRepo = \XF::app()->repository(UserAlertRepository::class);
 			$alertRepo->alert(
 				$this->user,
@@ -250,7 +249,6 @@ class UsernameChangeService extends AbstractService
 
 		if ($this->notify)
 		{
-			/** @var UserAlertRepository $alertRepo */
 			$alertRepo = \XF::app()->repository(UserAlertRepository::class);
 			$alertRepo->alert(
 				$user,
@@ -283,7 +281,6 @@ class UsernameChangeService extends AbstractService
 			$ip = ($this->logIp === true ? $this->app->request()->getIp() : $this->logIp);
 			$user = $this->user;
 
-			/** @var IpRepository $ipRepo */
 			$ipRepo = $this->repository(IpRepository::class);
 			$ipRepo->logIp($user->user_id, $ip, 'user', $user->user_id, 'username_change_request');
 			// note: can't use writeIpLog as the action is different than expected there
@@ -294,7 +291,6 @@ class UsernameChangeService extends AbstractService
 	{
 		$user = $this->user;
 
-		/** @var IpRepository $ipRepo */
 		$ipRepo = $this->repository(IpRepository::class);
 		$ipRepo->logIp($user->user_id, $ip, 'user', $user->user_id, 'username_change');
 	}

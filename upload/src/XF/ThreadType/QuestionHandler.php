@@ -48,7 +48,6 @@ class QuestionHandler extends AbstractHandler
 
 	public function adjustThreadViewParams(Thread $thread, array $viewParams, Request $request): array
 	{
-		/** @var PostFinder $postFinder */
 		$postFinder = \XF::finder(PostFinder::class);
 		$suggestedSolutions = $postFinder
 			->where([

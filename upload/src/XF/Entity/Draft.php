@@ -12,7 +12,7 @@ use XF\Mvc\Entity\Structure;
  * @property int $user_id
  * @property int $last_update
  * @property string $message
- * @property array $extra_data
+ * @property array|null $extra_data
  */
 class Draft extends Entity
 {

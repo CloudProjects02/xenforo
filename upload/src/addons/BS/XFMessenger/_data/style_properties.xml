@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style_properties>
+  <style_property property_name="xfmActions" group_name="xenforoMessengerSearch" title="Actions" description="Button to the left of the search field" property_type="css" display_order="10" css_components="text,padding,extra">
+    <value>{
+    "color": "var(--surface-color-secondary)",
+    "padding-right": "15px",
+    "padding-left": "10px",
+    "extra": "-webkit-tap-highlight-color: rgba(0,0,0,0);\n-webkit-tap-highlight-color: transparent;"
+}</value>
+  </style_property>
+  <style_property property_name="xfmNoticeDuration" group_name="xenforoMessengerMessages" title="Notification duration" property_type="value" value_type="number" display_order="10">
+    <value_parameters>min=1
+units={{ phrase('seconds') }}</value_parameters>
+    <value>"6"</value>
+  </style_property>
+  <style_property property_name="xfmNoticeStyle" group_name="xenforoMessengerMessages" title="Notice style" property_type="value" value_type="template" display_order="20">
+    <value_parameters>template=style_property_template_xfmNoticeStyle
+type=array</value_parameters>
+    <value>{
+    "type": "primary"
+}</value>
+  </style_property>
+  <style_property property_name="xfmPopup" group_name="xenforoMessengerPopup" title="Popup" property_type="css" display_order="10" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "border-top-left-radius": "15px",
+    "border-top-right-radius": "15px",
+    "extra": "position: fixed;\nbottom: 0;\nright: 6em;\nz-index: 100;\nwidth: 40em;\nbox-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;\noverflow: hidden;"
+}</value>
+  </style_property>
+  <style_property property_name="xfmPopupChatHeader" group_name="xenforoMessengerPopup" title="Chat header" property_type="css" display_order="30" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "font-size": "1rem"
+}</value>
+  </style_property>
+  <style_property property_name="xfmPopupHeader" group_name="xenforoMessengerPopup" title="Popup header" property_type="css" display_order="20" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "font-size": "18px",
+    "color": "contrast(@xf-buttonBg)",
+    "background-color": "@xf-blockTabHeaderBg",
+    "padding-right": "12px",
+    "padding-left": "15px",
+    "extra": "display: flex;\nalign-items: center;\nheight: 50px;\nfont-family: system-ui, -apple-system, BlinkMacSystemFont, \"Roboto\", \"Apple Color Emoji\", \"Helvetica Neue\", sans-serif;\nfont-weight: 500;\ncursor: pointer;"
+}</value>
+  </style_property>
+  <style_property property_name="xfmRoomList" group_name="xenforoMessengerRooms" title="List" property_type="css" display_order="10" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "background-color": "var(--surface-color)",
+    "extra": "max-width: 420px;\nwidth: 420px;"
+}</value>
+  </style_property>
+  <style_property property_name="xfmSearchFault" group_name="xenforoMessengerSearch" title="Fault" description="Displayed when no results are found for the query." property_type="css" display_order="60" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "font-size": "15px",
+    "color": "var(--surface-color-secondary)",
+    "padding": "10px 25px"
+}</value>
+  </style_property>
+  <style_property property_name="xfmSearchFormInput" group_name="xenforoMessengerSearch" title="Input" property_type="css" display_order="20" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "background-color": "transparent",
+    "border-width": "1px",
+    "border-color": "var(--border-color)",
+    "border-radius": "20px",
+    "padding": "10px 15px",
+    "extra": "margin-bottom: 10px;"
+}</value>
+  </style_property>
+  <style_property property_name="xfmSearchInput" group_name="xenforoMessengerSearch" title="Input [Search]" property_type="css" display_order="30" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "padding": "10px 45px",
+    "extra": "margin-bottom: 0;"
+}</value>
+  </style_property>
+  <style_property property_name="xfmSearchInputIcon" group_name="xenforoMessengerSearch" title="Icon: Search" property_type="css" display_order="40" css_components="text,padding,extra">
+    <value>{
+    "color": "var(--surface-color-muted)",
+    "padding-left": "15px"
+}</value>
+  </style_property>
+  <style_property property_name="xfmSearchInputResetIcon" group_name="xenforoMessengerSearch" title="Icon: Reset" property_type="css" display_order="50" css_components="text,padding,extra">
+    <value>{
+    "color": "var(--surface-color-muted)",
+    "padding": "0 15px",
+    "extra": "cursor: pointer;"
+}</value>
+  </style_property>
+</style_properties>

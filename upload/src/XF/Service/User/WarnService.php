@@ -8,6 +8,7 @@ use XF\Entity\Warning;
 use XF\Entity\WarningDefinition;
 use XF\Mvc\Entity\Entity;
 use XF\Repository\WarningRepository;
+use XF\Repository\WebhookRepository;
 use XF\Service\AbstractService;
 use XF\Service\Conversation\CreatorService;
 use XF\Service\StructuredText\PreparerService;
@@ -194,6 +195,13 @@ class WarnService extends AbstractService
 			);
 		}
 
+		$this->repository(WebhookRepository::class)->queueWebhook(
+			$warning->content_type,
+			$warning->content_id,
+			'warn',
+			$this->content
+		);
+
 		return $warning;
 	}
 
@@ -202,7 +210,6 @@ class WarnService extends AbstractService
 	 */
 	protected function setupConversation(Warning $warning)
 	{
-		/** @var CreatorService $creator */
 		$creator = $this->service(CreatorService::class, $this->warningBy);
 		$creator->setRecipientsTrusted($this->user);
 		$creator->setContent($this->conversationTitle, $this->conversationMessage);
@@ -227,7 +234,6 @@ class WarnService extends AbstractService
 
 	protected function getStructuredTextPreparer($format = true)
 	{
-		/** @var PreparerService $preparer */
 		$preparer = $this->service(PreparerService::class, 'warning', $this->warning);
 		$preparer->setConstraint('maxLength', 0);
 		//$preparer->disableFilter('mentions');

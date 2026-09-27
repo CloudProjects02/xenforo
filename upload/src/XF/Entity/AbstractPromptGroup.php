@@ -18,7 +18,7 @@ use XF\Repository\AbstractPrompt;
  *
  * RELATIONS
  * @property-read Phrase|null $MasterTitle
- * @property-read AbstractCollection|AbstractPrompt[] $Prompts
+ * @property-read AbstractCollection<\XF\Entity\AbstractPrompt> $Prompts
  */
 abstract class AbstractPromptGroup extends Entity
 {

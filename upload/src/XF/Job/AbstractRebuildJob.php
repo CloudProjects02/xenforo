@@ -4,14 +4,37 @@ namespace XF\Job;
 
 abstract class AbstractRebuildJob extends AbstractJob
 {
+	/**
+	 * @var array{
+	 *     steps: int,
+	 *     start: int,
+	 *     batch: int,
+	 * }
+	 */
 	protected $rebuildDefaultData = [
 		'steps' => 0,
 		'start' => 0,
 		'batch' => 100,
 	];
 
+	/**
+	 * @param int $start
+	 * @param int $batch
+	 *
+	 * @return list<int>
+	 */
 	abstract protected function getNextIds($start, $batch);
+
+	/**
+	 * @param int $id
+	 *
+	 * @return void
+	 */
 	abstract protected function rebuildById($id);
+
+	/**
+	 * @return string|\Stringable
+	 */
 	abstract protected function getStatusType();
 
 	protected function setupData(array $data)

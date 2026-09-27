@@ -22,7 +22,7 @@ class RevokerService extends AbstractService
 
 	public function revoke(): bool
 	{
-		if ($this->refreshToken->isValid())
+		if (!$this->refreshToken->isValid())
 		{
 			return false;
 		}

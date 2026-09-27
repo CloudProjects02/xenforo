@@ -42,6 +42,31 @@ window.XF = XF
 		document.head.appendChild(el)
 	}
 
+	let isReady = false
+	const readyCallbacks = []
+
+	XF.ready = (fn) =>
+	{
+		if (isReady)
+		{
+			setTimeout(fn, 0)
+		}
+		else
+		{
+			readyCallbacks.push(fn)
+		}
+	}
+
+	document.addEventListener('DOMContentLoaded', () =>
+	{
+		isReady = true
+
+		for (const fn of readyCallbacks)
+		{
+			setTimeout(fn, 0)
+		}
+	})
+
 	XF.Feature = (() =>
 	{
 		const tests = {}
@@ -134,7 +159,7 @@ window.XF = XF
 			let body = getBody(),
 				div,
 				size = 10,
-				supported = false
+				supported
 
 			div = document.createElement('div')
 			div.style.display = 'flex'

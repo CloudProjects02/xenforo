@@ -82,7 +82,6 @@ class FollowService extends AbstractService
 			&& $followUser->Option->doesReceiveAlert('user', 'following')
 		)
 		{
-			/** @var UserAlertRepository $alertRepo */
 			$alertRepo = $this->repository(UserAlertRepository::class);
 			$alertRepo->alert(
 				$followUser,

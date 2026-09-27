@@ -47,7 +47,6 @@ class NewsFeedPublishable extends Behavior
 			return;
 		}
 
-		/** @var NewsFeedRepository $newsFeedRepo */
 		$newsFeedRepo = $this->repository(NewsFeedRepository::class);
 
 		$userIdField = $this->config['userIdField'];
@@ -132,7 +131,6 @@ class NewsFeedPublishable extends Behavior
 
 	public function postDelete()
 	{
-		/** @var NewsFeedRepository $newsFeedRepo */
 		$newsFeedRepo = $this->repository(NewsFeedRepository::class);
 		$newsFeedRepo->unpublish($this->contentType(), $this->id());
 	}

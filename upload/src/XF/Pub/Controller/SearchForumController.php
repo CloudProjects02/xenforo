@@ -76,7 +76,6 @@ class SearchForumController extends AbstractController
 			}
 		}
 
-		/** @var NodeRepository $nodeRepo */
 		$nodeRepo = $this->repository(NodeRepository::class);
 		$nodes = $nodeRepo->getNodeList($searchForum->Node);
 		$nodeTree = count($nodes)
@@ -168,8 +167,8 @@ class SearchForumController extends AbstractController
 		$finder = $this->finder(SearchForumFinder::class);
 
 		if (
-			is_int($nodeIdOrName) ||
-			$nodeIdOrName === strval(intval($nodeIdOrName))
+			is_int($nodeIdOrName)
+			|| $nodeIdOrName === strval(intval($nodeIdOrName))
 		)
 		{
 			$finder->where('node_id', $nodeIdOrName);

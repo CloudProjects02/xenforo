@@ -2,7 +2,6 @@
 
 namespace XF\Pub\Controller;
 
-use XF\Mvc\Entity\ArrayCollection;
 use XF\Repository\NewsFeedRepository;
 
 class WhatsNewController extends AbstractController
@@ -40,7 +39,6 @@ class WhatsNewController extends AbstractController
 		$newsFeedRepo->addContentToNewsFeedItems($items);
 		$items = $items->filterViewable();
 
-		/** @var ArrayCollection $items */
 		$items = $items->slice(0, $maxItems);
 
 		$lastItem = $items->last();
@@ -77,7 +75,6 @@ class WhatsNewController extends AbstractController
 		{
 			$maxItems = $this->options()->newsFeedMaxItems;
 
-			/** @var NewsFeedRepository $newsFeedRepo */
 			$newsFeedRepo = $this->repository(NewsFeedRepository::class);
 
 			$beforeId = $this->filter('before_id', 'uint');

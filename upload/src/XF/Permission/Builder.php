@@ -63,11 +63,9 @@ class Builder
 
 	protected function setupData()
 	{
-		/** @var PermissionRepository $permissionRepo */
 		$permissionRepo = $this->em->getRepository(PermissionRepository::class);
 		$this->permissionsGrouped = $permissionRepo->getPermissionsGrouped();
 
-		/** @var PermissionEntryRepository $entryRepo */
 		$entryRepo = $this->em->getRepository(PermissionEntryRepository::class);
 		$entries = $entryRepo->getGlobalPermissionEntriesGrouped();
 		$this->userEntries = $entries['users'];

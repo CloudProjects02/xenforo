@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style_property_groups>
+  <style_property_group group_name="rtcContainer" title="[Real-Time Chat] Container" display_order="109"/>
+  <style_property_group group_name="rtcMessages" title="[Real-Time Chat] Messages" display_order="111"/>
+  <style_property_group group_name="rtcRooms" title="[Real-Time Chat] Rooms" display_order="110"/>
+</style_property_groups>

@@ -2,14 +2,15 @@
 
 namespace XF\Finder;
 
+use XF\Entity\TemplateHistory;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Finder;
 
 /**
- * @method AbstractCollection<\XF\Entity\TemplateHistory> fetch(?int $limit = null, ?int $offset = null)
- * @method AbstractCollection<\XF\Entity\TemplateHistory> fetchDeferred(?int $limit = null, ?int $offset = null)
- * @method \XF\Entity\TemplateHistory|null fetchOne(?int $offset = null)
- * @extends Finder<\XF\Entity\TemplateHistory>
+ * @method AbstractCollection<TemplateHistory> fetch(?int $limit = null, ?int $offset = null)
+ * @method AbstractCollection<TemplateHistory> fetchDeferred(?int $limit = null, ?int $offset = null)
+ * @method TemplateHistory|null fetchOne(?int $offset = null)
+ * @extends Finder<TemplateHistory>
  */
 class TemplateHistoryFinder extends Finder
 {

@@ -111,7 +111,7 @@ abstract class AbstractSource
 	 */
 	public function reassignContent($oldUserId, $newUserId)
 	{
-		\XF::app()->jobManager()->enqueue(SearchUserChange::class, ['user_id' => $oldUserId]);
+		\XF::app()->jobManager()->enqueue(SearchUserChange::class, ['user_id' => $oldUserId], false, 10);
 	}
 
 	public function isValidKeyword(string $word): bool

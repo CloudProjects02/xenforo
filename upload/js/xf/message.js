@@ -31,7 +31,7 @@
 
 			if (onInsert)
 			{
-				onInsert(html)
+				onInsert(messages.filter(node => node.nodeType === Node.ELEMENT_NODE))
 			}
 		})
 	}
@@ -370,7 +370,7 @@
 
 			XF.trigger(e.target, 's2q:click')
 
-			window.scrollTo({ top: qr.getBoundingClientRect().top - XF.getStickyHeaderOffset() })
+			window.scrollTo({ top: qr.getBoundingClientRect().top + window.scrollY - XF.getStickyHeaderOffset() })
 
 			XF.focusEditor(editor)
 		},
@@ -379,66 +379,6 @@
 		{
 			const editor = XF.findRelativeIf(this.options.editor, this.target)
 			XF.insertIntoEditor(editor, data.quoteHtml, data.quote)
-		},
-	})
-
-	// ################################## SOLUTION EDIT HANDLER ###########################################
-
-	XF.SolutionEditClick = XF.extend(XF.SwitchClick, {
-		applyResponseActions (data)
-		{
-			this.applyActionsTo(this.target, data)
-		},
-
-		applyActionsTo (target, data)
-		{
-			let match, replaceId
-
-			if (data.switchKey)
-			{
-				match = data.switchKey.match(/^replaced:(\d+)$/)
-				if (match)
-				{
-					replaceId = parseInt(match[1], 10)
-					data.switchKey = 'marked' // mark this post as the solution
-				}
-			}
-
-			XF.handleSwitchResponse(target, data, this.options.redirect)
-
-			// TODO: the selectors below this could do with being more flexible
-
-			const message = target.closest('.message')
-
-			if (data.switchKey == 'marked')
-			{
-				message.classList.add('message--solution')
-			}
-			else if (data.switchKey == 'removed')
-			{
-				message.classList.remove('message--solution')
-
-				const rect = message.getBoundingClientRect()
-				const originalTopPos = rect.top
-				const originalScrollTop = document.documentElement.scrollTop
-
-				document.querySelector('#js-solutionHighlightBlock')?.remove()
-
-				const diff = rect.top - originalTopPos
-				if (diff)
-				{
-					document.documentElement.scrollTop = originalScrollTop + diff
-				}
-			}
-
-			if (replaceId)
-			{
-				const replacedControl = document.querySelector(`#js-post-${ replaceId } .js-solutionControl`)
-				if (replacedControl)
-				{
-					this.applyActionsTo(replacedControl, { switchKey: 'removed' })
-				}
-			}
 		},
 	})
 
@@ -1575,7 +1515,6 @@
 	XF.Event.register('click', 'message-loader', 'XF.MessageLoaderClick')
 	XF.Event.register('click', 'quick-edit', 'XF.QuickEditClick')
 	XF.Event.register('click', 'quote', 'XF.QuoteClick')
-	XF.Event.register('click', 'solution-edit', 'XF.SolutionEditClick')
 
 	XF.Element.register('multi-quote', 'XF.MultiQuote')
 	XF.Element.register('select-to-quote', 'XF.SelectToQuote')

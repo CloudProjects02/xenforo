@@ -6,7 +6,6 @@ use XF\Entity\ForumWatch;
 use XF\Entity\Node;
 use XF\Entity\Thread;
 use XF\Finder\ForumWatchFinder;
-use XF\Mvc\Entity\ArrayCollection;
 use XF\Mvc\ParameterBag;
 use XF\Repository\ForumWatchRepository;
 use XF\Repository\NodeRepository;
@@ -27,11 +26,12 @@ class WatchedController extends AbstractController
 		$page = $this->filterPage();
 		$perPage = $this->options()->discussionsPerPage;
 
-		/** @var ThreadRepository $threadRepo */
 		$threadRepo = $this->repository(ThreadRepository::class);
 		$threadFinder = $threadRepo->findThreadsForWatchedList();
 
 		$total = $threadFinder->total();
+		$this->assertValidPage($page, $perPage, $total, 'watched/threads');
+
 		$threads = $threadFinder->limitByPage($page, $perPage)->fetch();
 
 		$viewParams = [
@@ -54,7 +54,6 @@ class WatchedController extends AbstractController
 
 		if ($this->isPost())
 		{
-			/** @var ThreadWatchRepository $threadWatchRepo */
 			$threadWatchRepo = $this->repository(ThreadWatchRepository::class);
 
 			if ($threadWatchRepo->isValidWatchState($state))
@@ -78,7 +77,6 @@ class WatchedController extends AbstractController
 		$this->assertPostOnly();
 		$this->setSectionContext('forums');
 
-		/** @var ThreadWatchRepository $threadWatchRepo */
 		$threadWatchRepo = $this->repository(ThreadWatchRepository::class);
 
 		$state = $this->filter('state', 'str');
@@ -103,11 +101,9 @@ class WatchedController extends AbstractController
 	{
 		$this->setSectionContext('forums');
 
-		/** @var NodeRepository $nodeRepo */
 		$nodeRepo = $this->repository(NodeRepository::class);
 
 		$watchedFinder = $this->finder(ForumWatchFinder::class);
-		/** @var ForumWatch[]|ArrayCollection $watchedForums */
 		$watchedForums = $watchedFinder->where('user_id', \XF::visitor()->user_id)
 			->keyedBy('node_id')
 			->with('Forum', true)
@@ -163,7 +159,6 @@ class WatchedController extends AbstractController
 
 		if ($this->isPost())
 		{
-			/** @var ForumWatchRepository $forumWatchRepo */
 			$forumWatchRepo = $this->repository(ForumWatchRepository::class);
 
 			if ($forumWatchRepo->isValidWatchState($state))

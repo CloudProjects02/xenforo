@@ -1073,7 +1073,7 @@
 
 	XF.Element.register('color-picker', 'XF.ColorPicker')
 
-	XF.on(document, 'DOMContentLoaded', () =>
+	XF.ready(() =>
 	{
 		const colorPickerData = document.querySelector('.js-colorPickerData')?.innerHTML
 		if (!colorPickerData)
@@ -1090,6 +1090,7 @@
 				...palette,
 			}
 			XF.Color.paletteParsed = {}
+			XF.trigger(document, 'color-picker:reparse')
 		}
 	})
 })(window, document)

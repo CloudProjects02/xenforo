@@ -7,14 +7,12 @@ use XF\Entity\TagResultCache;
 use XF\Finder\TagContentFinder;
 use XF\Finder\TagFinder;
 use XF\Finder\TagResultCacheFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 use XF\ResultSet;
 use XF\ResultSetInterface;
 use XF\Tag\AbstractHandler;
 use XF\Tag\RenderWrapper;
 use XF\Util\Arr;
-
 use XF\Util\Str;
 
 use function intval, is_array, is_string, strlen;
@@ -212,6 +210,9 @@ class TagRepository extends Repository implements ResultSetInterface
 		return $urlVersion;
 	}
 
+	/**
+	 * @return array<string, Tag>
+	 */
 	public function getTags(array $tags, &$notFound = [])
 	{
 		$notFound = [];
@@ -357,7 +358,7 @@ class TagRepository extends Repository implements ResultSetInterface
 	 * @param string $contentType
 	 * @param int $contentId
 	 *
-	 * @return Finder
+	 * @return TagContentFinder
 	 */
 	public function findContentTags($contentType, $contentId)
 	{

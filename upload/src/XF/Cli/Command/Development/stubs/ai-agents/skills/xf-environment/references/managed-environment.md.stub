@@ -1,0 +1,54 @@
+# Managed Environment
+
+This reference applies only after confirming that the optional `xf` CLI is available and manages the checkout. Do not apply its hostnames, service names, or recovery commands to an unrelated Docker or Compose environment.
+
+## Identity and Endpoints
+
+Read `XF_INSTANCE` from the checkout's `.env`. Each checkout or managed worktree has its own instance name.
+
+- Forum: `https://<XF_INSTANCE>.xf.local`
+- MySQL host from the host machine: `mysql.<XF_INSTANCE>.orb.local`
+- MySQL user: `xf`
+- MySQL password: `password`
+
+Use the MySQL client's password prompt where practical:
+
+```text
+mysql -h mysql.<XF_INSTANCE>.orb.local -u xf -p
+```
+
+Enter `password` when prompted. Do not commit credentials or replace the instance placeholder without reading the current checkout's `.env`.
+
+## Determine Whether the Environment Is Running
+
+Use evidence in this order:
+
+1. Check whether `https://<XF_INSTANCE>.xf.local` responds. An HTTP error page still proves the proxy/container path is reachable.
+2. Run `xf ps` from the checkout and inspect the `xf`, `mysql`, and `caddy` services.
+3. If a service is unhealthy or absent, inspect `xf logs` and then use `xf reboot` when a restart is justified.
+
+Do not claim that containers are stopped because an agent command cannot reach the Docker socket. Errors such as `permission denied ... docker.sock` mean the current process lacks access to OrbStack/Docker. Request the required execution permission or ask the user to run the status command. They do not describe container state.
+
+Similarly, distinguish these failures:
+
+- `xf: command not found`: the host CLI is unavailable or not on `PATH`.
+- Docker/OrbStack socket permission denied: execution boundary, not downtime.
+- service not running: container state; confirm with `xf ps`.
+- forum responds but a CLI command fails: investigate the command, working directory, or service-specific error.
+
+Use `xf up`, `xf down`, `xf reboot`, `xf ps`, and `xf logs` for normal lifecycle work. Direct `docker` or `docker compose` calls are rarely necessary and may bypass instance handling. Use `xf compose` only for a compose operation the wrapper does not expose.
+
+## Worktrees
+
+`xf worktree create <branch>` creates a Git worktree alongside the source checkout and provisions an isolated XenForo environment with its own containers and database. By default it clones the source environment; `--fresh` installs a clean forum.
+
+```text
+xf worktree create dev/feature --base main
+xf worktree list
+xf worktree path dev/feature
+xf worktree remove dev/feature
+```
+
+Run subsequent `xf` commands from inside the target worktree so the CLI selects its `compose.yaml`, `.env`, and `XF_INSTANCE`. Do not reuse the source checkout's hostname or database host.
+
+Worktree removal also removes its managed environment and is destructive. Confirm the target and uncommitted state before running it.

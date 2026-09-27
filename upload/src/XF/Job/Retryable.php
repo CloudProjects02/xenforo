@@ -29,6 +29,11 @@ trait Retryable
 		return $this->calculateNextAttemptDate($attempts) !== null;
 	}
 
+	public function getNextAttemptDate(int $previousAttempts): ?int
+	{
+		return $this->calculateNextAttemptDate($previousAttempts);
+	}
+
 	protected function calculateNextAttemptDate(int $previousAttempts): ?int
 	{
 		switch ($previousAttempts)

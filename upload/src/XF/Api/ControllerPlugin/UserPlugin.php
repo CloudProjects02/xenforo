@@ -11,6 +11,7 @@ use XF\Mvc\FormAction;
 use XF\Mvc\Reply\Error;
 use XF\Repository\UserRememberRepository;
 use XF\Service\User\AvatarService;
+use XF\Service\User\UserGroupChangeService;
 use XF\Util\Arr;
 
 use function strlen;
@@ -216,6 +217,15 @@ class UserPlugin extends AbstractPlugin
 		$profile = $user->getRelationOrDefault('Profile');
 		$profile->setOption('admin_edit', true);
 
+		if (isset($tableInput['user']['secondary_group_ids']) && $user->user_id)
+		{
+			$tableInput['user']['secondary_group_ids'] = $this->service(UserGroupChangeService::class)
+				->mergeSecondaryGroupIds(
+					$user->user_id,
+					$tableInput['user']['secondary_group_ids']
+				);
+		}
+
 		$userPlugin->saveEditFormFromTableInput($form, $user, $tableInput);
 
 		$dobInput = $this->filter([
@@ -293,7 +303,6 @@ class UserPlugin extends AbstractPlugin
 	{
 		$this->assertRequiredApiFile('avatar');
 
-		/** @var AvatarService $avatarService */
 		$avatarService = $this->service(AvatarService::class, $user);
 
 		$upload = $this->request->getFile('avatar', false, false);
@@ -326,7 +335,6 @@ class UserPlugin extends AbstractPlugin
 	 */
 	public function actionDeleteAvatar(User $user)
 	{
-		/** @var AvatarService $avatarService */
 		$avatarService = $this->service(AvatarService::class, $user);
 		$avatarService->deleteAvatar();
 

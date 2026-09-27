@@ -5,6 +5,9 @@ namespace XF\Bookmark;
 use XF\Entity\Node;
 use XF\Mvc\Entity\Entity;
 
+/**
+ * @extends AbstractHandler<Node>
+ */
 class NodeHandler extends AbstractHandler
 {
 	public function getContentTitle(Entity $content)
@@ -14,7 +17,6 @@ class NodeHandler extends AbstractHandler
 
 	public function getContentRoute(Entity $content)
 	{
-		/** @var Node $content */
 		return $content->getRoute('public');
 	}
 

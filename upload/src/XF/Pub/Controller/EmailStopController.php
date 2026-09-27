@@ -113,7 +113,6 @@ class EmailStopController extends AbstractController
 			);
 		}
 
-		/** @var EmailStopService $emailStopper */
 		$emailStopper = $this->service(EmailStopService::class, $user);
 		return $emailStopper;
 	}

@@ -2,14 +2,15 @@
 
 namespace XF\Finder;
 
+use XF\Entity\UserRemember;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Finder;
 
 /**
- * @method AbstractCollection<\XF\Entity\UserRemember> fetch(?int $limit = null, ?int $offset = null)
- * @method AbstractCollection<\XF\Entity\UserRemember> fetchDeferred(?int $limit = null, ?int $offset = null)
- * @method \XF\Entity\UserRemember|null fetchOne(?int $offset = null)
- * @extends Finder<\XF\Entity\UserRemember>
+ * @method AbstractCollection<UserRemember> fetch(?int $limit = null, ?int $offset = null)
+ * @method AbstractCollection<UserRemember> fetchDeferred(?int $limit = null, ?int $offset = null)
+ * @method UserRemember|null fetchOne(?int $offset = null)
+ * @extends Finder<UserRemember>
  */
 class UserRememberFinder extends Finder
 {

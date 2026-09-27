@@ -15,6 +15,8 @@
   <api_scope api_scope_id="profile_post:delete_hard"/>
   <api_scope api_scope_id="profile_post:read"/>
   <api_scope api_scope_id="profile_post:write"/>
+  <api_scope api_scope_id="search:read"/>
+  <api_scope api_scope_id="search:write"/>
   <api_scope api_scope_id="thread:delete_hard"/>
   <api_scope api_scope_id="thread:read"/>
   <api_scope api_scope_id="thread:write"/>

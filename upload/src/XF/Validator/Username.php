@@ -102,7 +102,6 @@ class Username extends AbstractValidator
 
 		if ($this->getOption('check_unique'))
 		{
-			/** @var UsernameChangeRepository $usernameChangeRepo */
 			$usernameChangeRepo = $this->app->repository(UsernameChangeRepository::class);
 
 			$existingUser = $this->app->em()->findOne(User::class, ['username' => $username]);

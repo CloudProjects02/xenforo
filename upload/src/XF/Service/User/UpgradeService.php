@@ -182,7 +182,6 @@ class UpgradeService extends AbstractService
 			return false;
 		}
 
-		/** @var UserGroupChangeService $userGroupChange */
 		$userGroupChange = $this->service(UserGroupChangeService::class);
 		$userGroupChange->addUserGroupChange(
 			$user->user_id,
@@ -190,7 +189,6 @@ class UpgradeService extends AbstractService
 			$upgrade->extra_group_ids
 		);
 
-		/** @var UserAlertRepository $alertRepo */
 		$alertRepo = $this->repository(UserAlertRepository::class);
 		$alertRepo->fastDeleteAlertsFromUser($user->user_id, 'user', $user->user_id, 'upgrade_end');
 

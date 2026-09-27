@@ -51,7 +51,6 @@ class PostHandler extends AbstractHandler
 				}
 				else if ($entity->message_state == 'moderated')
 				{
-					/** @var ApproverService $approver */
 					$approver = \XF::service(ApproverService::class, $entity);
 					$approver->setNotifyRunTime(1); // may be a lot happening
 					$approver->approve();

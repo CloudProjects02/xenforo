@@ -43,7 +43,6 @@ class MarkSolutionService extends AbstractService
 
 		if ($existingSolutionUserId && $existingSolutionPostId)
 		{
-			/** @var UserAlertRepository $alertRepo */
 			$alertRepo = $this->repository(UserAlertRepository::class);
 			$alertRepo->fastDeleteAlertsToUser(
 				$existingSolutionUserId,
@@ -73,7 +72,6 @@ class MarkSolutionService extends AbstractService
 
 			if ($user && $visitor->user_id && $user->user_id != $visitor->user_id)
 			{
-				/** @var UserAlertRepository $alertRepo */
 				$alertRepo = $this->repository(UserAlertRepository::class);
 
 				$alertRepo->alertFromUser(

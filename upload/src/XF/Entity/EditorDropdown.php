@@ -12,7 +12,7 @@ use XF\Repository\IconRepository;
  * COLUMNS
  * @property string $cmd
  * @property string $icon
- * @property array $buttons
+ * @property array|null $buttons
  * @property int $display_order
  * @property bool $active
  *

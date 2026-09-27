@@ -2,14 +2,15 @@
 
 namespace XF\Finder;
 
+use XF\Entity\UserConfirmation;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Finder;
 
 /**
- * @method AbstractCollection<\XF\Entity\UserConfirmation> fetch(?int $limit = null, ?int $offset = null)
- * @method AbstractCollection<\XF\Entity\UserConfirmation> fetchDeferred(?int $limit = null, ?int $offset = null)
- * @method \XF\Entity\UserConfirmation|null fetchOne(?int $offset = null)
- * @extends Finder<\XF\Entity\UserConfirmation>
+ * @method AbstractCollection<UserConfirmation> fetch(?int $limit = null, ?int $offset = null)
+ * @method AbstractCollection<UserConfirmation> fetchDeferred(?int $limit = null, ?int $offset = null)
+ * @method UserConfirmation|null fetchOne(?int $offset = null)
+ * @extends Finder<UserConfirmation>
  */
 class UserConfirmationFinder extends Finder
 {

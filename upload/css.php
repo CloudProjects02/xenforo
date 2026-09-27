@@ -7,7 +7,7 @@ require $dir . '/src/XF.php';
 
 \XF::start($dir);
 $app = \XF::setupApp(App::class, [
-	'preLoad' => ['masterStyleModifiedDate', 'smilieSprites'],
+	'preLoad' => ['masterStyleModifiedDate', 'reactionSprites', 'smilieSprites'],
 ]);
 
 $request = $app->request();

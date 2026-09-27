@@ -4,6 +4,9 @@ namespace XF\Reaction;
 
 use XF\Mvc\Entity\Entity;
 
+/**
+ * @extends AbstractHandler<\XF\Entity\Post>
+ */
 class PostHandler extends AbstractHandler
 {
 	public function reactionsCounted(Entity $entity)

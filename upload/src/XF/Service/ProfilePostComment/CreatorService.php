@@ -125,7 +125,6 @@ class CreatorService extends AbstractService
 	{
 		if ($this->comment->isVisible())
 		{
-			/** @var NotifierService $notifier */
 			$notifier = $this->service(NotifierService::class, $this->comment);
 			$notifier->setNotifyMentioned($this->preparer->getMentionedUserIds());
 			$notifier->notify();

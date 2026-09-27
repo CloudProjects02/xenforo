@@ -4,13 +4,13 @@ namespace XF\Pub\Controller;
 
 use XF\ControllerPlugin\EditorPlugin;
 use XF\ControllerPlugin\ReportPlugin;
+use XF\ControllerPlugin\SearchPlugin;
 use XF\ControllerPlugin\WarnPlugin;
 use XF\CustomField\Set;
 use XF\Entity\MemberStat;
 use XF\Entity\User;
 use XF\Entity\UserProfile;
 use XF\Finder\UserFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\FormAction;
 use XF\Mvc\ParameterBag;
 use XF\Mvc\Reply\Exception;
@@ -80,7 +80,6 @@ class MemberController extends AbstractController
 
 		$this->assertCanonicalUrl($this->buildLink('members'));
 
-		/** @var MemberStatRepository $memberStatRepo */
 		$memberStatRepo = $this->repository(MemberStatRepository::class);
 
 		/** @var MemberStat[] $memberStats */
@@ -216,7 +215,6 @@ class MemberController extends AbstractController
 
 		$this->assertCanonicalUrl($this->buildLink('members/list'));
 
-		/** @var MemberStatRepository $memberStatRepo */
 		$memberStatRepo = $this->repository(MemberStatRepository::class);
 
 		/** @var MemberStat[] $memberStats */
@@ -265,10 +263,8 @@ class MemberController extends AbstractController
 
 		$this->assertCanonicalUrl($this->buildLink('members', $user, ['page' => $page]));
 
-		/** @var UserAlertRepository $userAlertRepo */
 		$userAlertRepo = $this->repository(UserAlertRepository::class);
 
-		/** @var AttachmentRepository $attachmentRepo */
 		$attachmentRepo = $this->repository(AttachmentRepository::class);
 
 		if ($user->canViewPostsOnProfile())
@@ -286,11 +282,9 @@ class MemberController extends AbstractController
 			$isRobot = $this->isRobot();
 			$profilePosts = $profilePostRepo->addCommentsToProfilePosts($profilePosts, $isRobot);
 
-			/** @var UnfurlRepository $unfurlRepo */
 			$unfurlRepo = $this->repository(UnfurlRepository::class);
 			$unfurlRepo->addUnfurlsToContent($profilePosts, $isRobot);
 
-			/** @var EmbedResolverRepository $embedRepo */
 			$embedRepo = $this->repository(EmbedResolverRepository::class);
 			$embedRepo->addEmbedsToContent($profilePosts);
 
@@ -400,7 +394,6 @@ class MemberController extends AbstractController
 	{
 		$user = $this->assertViewableUser($params->user_id);
 
-		/** @var UserFollowRepository $userFollowRepo */
 		$userFollowRepo = $this->repository(UserFollowRepository::class);
 
 		$following = [];
@@ -422,7 +415,6 @@ class MemberController extends AbstractController
 
 		if ($this->options()->enableTrophies)
 		{
-			/** @var TrophyRepository $trophyRepo */
 			$trophyRepo = $this->repository(TrophyRepository::class);
 			$trophies = $trophyRepo->findUserTrophies($user->user_id)
 				->with('Trophy')
@@ -495,7 +487,6 @@ class MemberController extends AbstractController
 			return $this->noPermission();
 		}
 
-		/** @var UsernameChangeRepository $usernameChangeRepo */
 		$usernameChangeRepo = $this->repository(UsernameChangeRepository::class);
 		$changeFinder = $usernameChangeRepo->findUsernameChangeHistoryForUser($user->user_id);
 
@@ -710,16 +701,26 @@ class MemberController extends AbstractController
 
 	public function actionRecentContent(ParameterBag $params)
 	{
+		$this->assertNotEmbeddedImageRequest();
+
 		$user = $this->assertViewableUser($params->user_id);
 
+		$input = [
+			'search_type' => 'post',
+			'c' => [
+				'users' => $user->username,
+			],
+			'order' => 'date',
+		];
+
+		$searchPlugin = $this->plugin(SearchPlugin::class);
+		$query = $searchPlugin->prepareSearchQuery($input, $urlConstraints);
+		$searchPlugin->assertValidSearchQuery($query);
+
 		$searcher = $this->app->search();
-		$query = $searcher->getQuery();
 
-		$query->byUserId($user->user_id)
-			->orderedBy('date');
-
-		$resultSet = $searcher->getResultSet($searcher->search($query));
-		$resultSet->limitResults(15);
+		$results = $this->app()->search()->search($query, 15);
+		$resultSet = $searcher->getResultSet($results);
 
 		$results = $searcher->wrapResultsForRender($resultSet);
 		$resultCount = $resultSet->countResults();
@@ -781,7 +782,6 @@ class MemberController extends AbstractController
 
 		if ($input['delete_avatar'])
 		{
-			/** @var AvatarService $avatarService */
 			$avatarService = $this->service(AvatarService::class, $user);
 			$form->apply(function () use ($avatarService)
 			{
@@ -791,7 +791,6 @@ class MemberController extends AbstractController
 
 		if ($input['delete_banner'])
 		{
-			/** @var ProfileBannerService $bannerService */
 			$bannerService = $this->service(ProfileBannerService::class, $user);
 			$form->apply(function () use ($bannerService)
 			{
@@ -843,7 +842,6 @@ class MemberController extends AbstractController
 			return $this->noPermission();
 		}
 
-		/** @var IpRepository $ipRepo */
 		$ipRepo = $this->repository(IpRepository::class);
 
 		$ips = $ipRepo->getIpsByUser($user);
@@ -866,7 +864,6 @@ class MemberController extends AbstractController
 			return $this->noPermission();
 		}
 
-		/** @var IpRepository $ipRepo */
 		$ipRepo = $this->repository(IpRepository::class);
 
 		$ip = $this->filter('ip', 'str');
@@ -948,7 +945,6 @@ class MemberController extends AbstractController
 	{
 		$message = $this->plugin(EditorPlugin::class)->fromInput('message');
 
-		/** @var CreatorService $creator */
 		$creator = $this->service(CreatorService::class, $userProfile);
 		$creator->setContent($message);
 
@@ -1010,13 +1006,11 @@ class MemberController extends AbstractController
 
 			if ($context == 'all')
 			{
-				/** @var Finder $profilePostList */
 				$profilePostList = $profilePostRepo->findNewestProfilePosts($lastDate)->with('fullProfile');
 				$profilePosts = $profilePostList->fetch($limit)->filterViewable();
 			}
 			else
 			{
-				/** @var Finder $profilePostList */
 				$profilePostList = $profilePostRepo->findNewestProfilePostsOnProfile($user, $lastDate)->with('fullProfile');
 				$profilePosts = $profilePostList->fetch($limit + 1)->filterViewable();
 
@@ -1034,7 +1028,6 @@ class MemberController extends AbstractController
 			// put the posts into oldest-first order as they will be (essentially prepended) in that order
 			$profilePosts = $profilePosts->reverse(true);
 
-			/** @var AttachmentRepository $attachmentRepo */
 			$attachmentRepo = $this->repository(AttachmentRepository::class);
 
 			$profilePostAttachData = [];
@@ -1110,7 +1103,6 @@ class MemberController extends AbstractController
 				$input['end_date'] = 0;
 			}
 
-			/** @var BanningRepository $banningRepo */
 			$banningRepo = $this->repository(BanningRepository::class);
 			if (!$banningRepo->banUser($user, $input['end_date'], $input['user_reason'], $error))
 			{
@@ -1174,7 +1166,6 @@ class MemberController extends AbstractController
 			return $this->redirect($this->buildLink('members', $user));
 		}
 
-		/** @var TrophyRepository $trophyRepo */
 		$trophyRepo = $this->repository(TrophyRepository::class);
 		$trophies = $trophyRepo->findUserTrophies($user->user_id)
 			->with('Trophy')
@@ -1184,7 +1175,6 @@ class MemberController extends AbstractController
 		{
 			$trophyIds = $trophies->pluckNamed('trophy_id');
 
-			/** @var UserAlertRepository $userAlertRepo */
 			$userAlertRepo = $this->repository(UserAlertRepository::class);
 			$userAlertRepo->markUserAlertsReadForContent('trophy', $trophyIds);
 		}
@@ -1222,7 +1212,6 @@ class MemberController extends AbstractController
 			return $this->noPermission();
 		}
 
-		/** @var WarningRepository $warningRepo */
 		$warningRepo = $this->repository(WarningRepository::class);
 		$warnings = $warningRepo->findUserWarningsForList($user->user_id)->fetch();
 		if (!$warnings->count())
@@ -1243,7 +1232,6 @@ class MemberController extends AbstractController
 
 		if ($q !== '' && Str::strlen($q) >= 2)
 		{
-			/** @var UserFinder $userFinder */
 			$userFinder = $this->finder(UserFinder::class);
 
 			$users = $userFinder

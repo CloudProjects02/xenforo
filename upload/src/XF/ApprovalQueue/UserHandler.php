@@ -8,6 +8,9 @@ use XF\Mvc\Entity\Entity;
 use XF\Repository\ChangeLogRepository;
 use XF\Service\User\RegistrationCompleteService;
 
+/**
+ * @extends AbstractHandler<User>
+ */
 class UserHandler extends AbstractHandler
 {
 	protected function canViewContent(Entity $content, &$error = null)
@@ -73,7 +76,6 @@ class UserHandler extends AbstractHandler
 				->send();
 		}
 
-		/** @var RegistrationCompleteService $regComplete */
 		$regComplete = \XF::app()->service(RegistrationCompleteService::class, $user);
 		$regComplete->triggerCompletionActions();
 	}

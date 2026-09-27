@@ -62,7 +62,6 @@ class Reaction extends AbstractEmulatedData
 			}
 		}
 
-		/** @var ReactionRepository $repo */
 		$repo = $this->repository(ReactionRepository::class);
 
 		\XF::runOnce('rebuildReactionImport', function () use ($repo)

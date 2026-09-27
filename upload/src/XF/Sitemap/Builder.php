@@ -524,7 +524,7 @@ class Builder
 			{
 				$this->app->http()->client()->get($url);
 			}
-			catch(TransferException $e)
+			catch (TransferException $e)
 			{
 				\XF::logException($e, false, "Error submitting sitemap to $url: ");
 			}

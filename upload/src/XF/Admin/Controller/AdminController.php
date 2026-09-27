@@ -124,7 +124,6 @@ class AdminController extends AbstractController
 			$auth = $admin->User->Auth;
 			if (!$auth->getAuthenticationHandler()->hasPassword())
 			{
-				/** @var PasswordResetService $passwordReset */
 				$passwordReset = $this->service(PasswordResetService::class, $admin->User);
 				$passwordReset->setAdminReset(true);
 

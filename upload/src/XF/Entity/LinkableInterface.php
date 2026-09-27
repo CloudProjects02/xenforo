@@ -10,7 +10,7 @@ interface LinkableInterface
 	 * Gets the URL that will take someone to this content.
 	 *
 	 * @param bool  $canonical If true, should be built using the "canonical" prefix
-	 * @param array $extraParams Usually empty, but any additional params for the content
+	 * @param array<string, mixed> $extraParams Usually empty, but any additional params for the content
 	 * @param string|null  $hash Usually empty, but an additional hash that may be appended
 	 *
 	 * @return string

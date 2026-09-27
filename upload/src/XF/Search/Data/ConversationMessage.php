@@ -123,7 +123,6 @@ class ConversationMessage extends AbstractData
 			$recipients = Arr::stringToArray($recipients, '/,\s*/');
 			if ($recipients)
 			{
-				/** @var UserRepository $userRepo */
 				$userRepo = \XF::repository(UserRepository::class);
 				$matchedUsers = $userRepo->getUsersByNames($recipients, $notFound);
 				if ($notFound)
@@ -262,8 +261,8 @@ class ConversationMessage extends AbstractData
 	public function canIncludeInResults(Entity $entity, array $resultIds): bool
 	{
 		if (
-			isset($resultIds['conversation-' . $entity->conversation_id]) &&
-			$entity->isFirstMessage()
+			isset($resultIds['conversation-' . $entity->conversation_id])
+			&& $entity->isFirstMessage()
 		)
 		{
 			return false;

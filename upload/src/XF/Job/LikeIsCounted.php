@@ -24,7 +24,6 @@ class LikeIsCounted extends AbstractJob
 
 		$db = $this->app->db();
 
-		/** @var LikedContentRepository $likeRepo */
 		$likeRepo = $this->app->repository(LikedContentRepository::class);
 
 		$likeHandler = $likeRepo->getLikeHandler($this->data['type']);

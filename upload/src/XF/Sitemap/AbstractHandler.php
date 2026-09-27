@@ -3,18 +3,40 @@
 namespace XF\Sitemap;
 
 use XF\App;
+use XF\Mvc\Entity\AbstractCollection;
 
+/**
+ * @template T of \XF\Mvc\Entity\Entity
+ */
 abstract class AbstractHandler
 {
+	/**
+	 * @var string
+	 */
 	protected $contentType;
+
+	/**
+	 * @var App
+	 */
 	protected $app;
 
+	/**
+	 * @param string $contentType
+	 */
 	public function __construct($contentType, App $app)
 	{
 		$this->contentType = $contentType;
 		$this->app = $app;
 	}
 
+	/**
+	 * @param string $table
+	 * @param string $column
+	 * @param int $start
+	 * @param int $limit
+	 *
+	 * @return list<int>
+	 */
 	protected function getIds($table, $column, $start, $limit = 2000)
 	{
 		$db = $this->app->db();
@@ -32,7 +54,18 @@ abstract class AbstractHandler
 		return $ids;
 	}
 
+	/**
+	 * @param int $start
+	 *
+	 * @return AbstractCollection<T>
+	 */
 	abstract public function getRecords($start);
+
+	/**
+	 * @param T $record
+	 *
+	 * @return Entry
+	 */
 	abstract public function getEntry($record);
 
 	/**
@@ -46,6 +79,11 @@ abstract class AbstractHandler
 		return \XF::visitor()->hasPermission('general', 'view');
 	}
 
+	/**
+	 * @param T $record
+	 *
+	 * @return bool
+	 */
 	public function isIncluded($record)
 	{
 		return true;

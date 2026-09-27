@@ -44,7 +44,6 @@ class ChangeLogHandler extends AbstractHandler
 	{
 		if ($results = parent::search($text, $limit, $previousMatchIds))
 		{
-			/** @var ChangeLogRepository $changeRepo */
 			$changeRepo = $this->app->repository(ChangeLogRepository::class);
 
 			$changeRepo->addDataToLogs($results);

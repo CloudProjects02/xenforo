@@ -11,12 +11,13 @@ class UserPushRepository extends Repository
 {
 	public function validateSubscriptionDetails(array $subscription, &$error = null)
 	{
-		if (empty($subscription['endpoint']))
+		$endpoint = $subscription['endpoint'] ?? null;
+		if ($endpoint === null)
 		{
 			return false;
 		}
 
-		if (!preg_match('#https?://#i', $subscription['endpoint']) || strlen($subscription['endpoint']) > 2048)
+		if (!$this->isValidEndpoint($endpoint))
 		{
 			return false;
 		}
@@ -113,5 +114,37 @@ class UserPushRepository extends Repository
 	public function getEndpointHash($endpoint)
 	{
 		return md5($endpoint);
+	}
+
+	public function isValidEndpoint(string $endpoint): bool
+	{
+		if (!preg_match('#https?://#i', $endpoint) || strlen($endpoint) > 2048)
+		{
+			return false;
+		}
+
+		$invalidEndpoints = $this->getInvalidEndpoints();
+		foreach ($invalidEndpoints AS $invalidEndpoint)
+		{
+			if (strpos($endpoint, $invalidEndpoint) !== 0)
+			{
+				continue;
+			}
+
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * @return list<string>
+	 */
+	public function getInvalidEndpoints(): array
+	{
+		return [
+			'https://android.googleapis.com/gcm/send', // GCM
+			'https://permanently-removed.invalid/fcm/send', // Chrome (XF-234461)
+		];
 	}
 }

@@ -3,13 +3,12 @@
 namespace XF\Repository;
 
 use XF\Finder\RouteFilterFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 class RouteFilterRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return RouteFiltererFinder
 	 */
 	public function findRouteFiltersForList()
 	{
@@ -18,7 +17,6 @@ class RouteFilterRepository extends Repository
 
 	public function getRouteFilterCacheData()
 	{
-		/** @var RouteFilterFinder $finder */
 		$finder = $this->finder(RouteFilterFinder::class);
 
 		$results = $finder->where('enabled', 1)

@@ -3,7 +3,6 @@
 namespace XF\Api\ControllerPlugin;
 
 use XF\Entity\ConversationUser;
-use XF\Finder\ConversationMasterFinder;
 use XF\Finder\ConversationUserFinder;
 use XF\Mvc\Reply\Exception;
 
@@ -21,8 +20,7 @@ class ConversationPlugin extends AbstractPlugin
 	{
 		$visitor = \XF::visitor();
 
-		/** @var ConversationUserFinder $finder */
-		$finder = $this->finder(ConversationMasterFinder::class);
+		$finder = $this->finder(ConversationUserFinder::class);
 		$finder->forUser($visitor, false);
 		$finder->where('conversation_id', $id);
 		$finder->with($with);

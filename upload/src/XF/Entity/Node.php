@@ -3,6 +3,7 @@
 namespace XF\Entity;
 
 use XF\Api\Result\EntityResult;
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XF\Mvc\Router;
@@ -26,7 +27,7 @@ use function intval, is_int, strval;
  * @property int $style_id
  * @property int $effective_style_id
  * @property bool $display_in_list
- * @property array $breadcrumb_data
+ * @property array|null $breadcrumb_data
  * @property string $navigation_id
  * @property string $effective_navigation_id
  *
@@ -38,9 +39,9 @@ use function intval, is_int, strval;
  * RELATIONS
  * @property-read Node|null $Parent
  * @property-read NodeType|null $NodeType
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\PermissionCacheContent> $Permissions
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\ModeratorContent> $Moderators
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\BookmarkItem> $Bookmarks
+ * @property-read AbstractCollection<PermissionCacheContent> $Permissions
+ * @property-read AbstractCollection<ModeratorContent> $Moderators
+ * @property-read AbstractCollection<BookmarkItem> $Bookmarks
  */
 class Node extends Entity implements LinkableInterface, ViewableInterface
 {

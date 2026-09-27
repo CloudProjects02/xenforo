@@ -44,7 +44,6 @@ class BbCode extends AbstractEmulatedData
 			$this->em()->detachEntity($bbCode);
 		}
 
-		/** @var BbCodeRepository $repo */
 		$repo = $this->repository(BbCodeRepository::class);
 
 		\XF::runOnce('rebuildBbCodeCache', function () use ($repo)

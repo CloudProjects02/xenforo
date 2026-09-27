@@ -9,7 +9,6 @@ use XF\Entity\UserUpgradeExpired;
 use XF\Finder\UserUpgradeActiveFinder;
 use XF\Finder\UserUpgradeExpiredFinder;
 use XF\Finder\UserUpgradeFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 use XF\Service\User\DowngradeService;
 use XF\Service\User\UserGroupChangeService;
@@ -17,7 +16,7 @@ use XF\Service\User\UserGroupChangeService;
 class UserUpgradeRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return UserUpgradeFinder
 	 */
 	public function findUserUpgradesForList()
 	{
@@ -26,7 +25,7 @@ class UserUpgradeRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return UserUpgradeActiveFinder
 	 */
 	public function findActiveUserUpgradesForList()
 	{
@@ -41,7 +40,7 @@ class UserUpgradeRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return UserUpgradeExpiredFinder
 	 */
 	public function findExpiredUserUpgradesForList()
 	{
@@ -146,13 +145,11 @@ class UserUpgradeRepository extends Repository
 
 			if ($upgrade)
 			{
-				/** @var DowngradeService $downgradeService */
 				$downgradeService = $this->app()->service(DowngradeService::class, $active->Upgrade, $active->User, $active);
 				$downgradeService->downgrade();
 			}
 			else
 			{
-				/** @var UserGroupChangeService $userGroupChange */
 				$userGroupChange = $this->app()->service(UserGroupChangeService::class);
 				$userGroupChange->removeUserGroupChange(
 					$active->user_id,

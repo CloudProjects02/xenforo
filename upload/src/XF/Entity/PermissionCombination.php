@@ -2,6 +2,7 @@
 
 namespace XF\Entity;
 
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Proxyable;
 use XF\Mvc\Entity\Structure;
@@ -11,19 +12,30 @@ use XF\Mvc\Entity\Structure;
  * @property int|null $permission_combination_id
  * @property int $user_id
  * @property array $user_group_list
- * @property array $cache_value
+ * @property array|null $cache_value
  *
  * RELATIONS
  * @property-read User|null $User
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\PermissionCombinationUserGroup> $UserGroupRelations
+ * @property-read AbstractCollection<PermissionCombinationUserGroup> $UserGroupRelations
  */
 class PermissionCombination extends Entity implements Proxyable
 {
+	/**
+	 * @param array{
+	 *     permission_combination_id: int|null,
+	 *     cache_value: string|null,
+	 * }
+	 */
 	public static function instantiateProxied(array $values)
 	{
+		if ($values['permission_combination_id'] === null)
+		{
+			return;
+		}
+
 		\XF::app()->permissionCache()->setGlobalPerms(
 			$values['permission_combination_id'],
-			@json_decode($values['cache_value'], true) ?: []
+			json_decode($values['cache_value'] ?? '[]', true)
 		);
 	}
 

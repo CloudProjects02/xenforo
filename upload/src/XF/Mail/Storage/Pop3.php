@@ -8,6 +8,16 @@ use function intval;
 
 class Pop3 extends \Laminas\Mail\Storage\Pop3
 {
+	/**
+	 * @param array{
+	 *     host: string,
+	 *     port: int|string|null,
+	 *     encryption: string|null,
+	 *     username: string,
+	 *     password: string,
+	 *     oauth?: bool
+	 * } $handler
+	 */
 	public static function setupFromHandler(array $handler): self
 	{
 		$config = [
@@ -20,7 +30,7 @@ class Pop3 extends \Laminas\Mail\Storage\Pop3
 
 		if (!empty($handler['oauth']))
 		{
-			/** @var array|OAuthPop3 $protocol */
+			/** @var OAuthPop3 $protocol */
 			$protocol = new OAuthPop3($config['host'], $config['port'], $config['ssl']);
 		}
 		else

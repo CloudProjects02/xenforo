@@ -48,7 +48,6 @@ class ThreadPlugin extends AbstractPlugin
 	 */
 	public function fetchExtraContentForPostsFullView($posts, ?Thread $thread = null, array $options = [])
 	{
-		/** @var AttachmentRepository $attachmentRepo */
 		$attachmentRepo = $this->repository(AttachmentRepository::class);
 		$attachmentRepo->addAttachmentsToContent($posts, 'post');
 
@@ -61,11 +60,9 @@ class ThreadPlugin extends AbstractPlugin
 			$skipRecrawl = boolval($this->request->getRobotName());
 		}
 
-		/** @var UnfurlRepository $unfurlRepo */
 		$unfurlRepo = $this->repository(UnfurlRepository::class);
 		$unfurlRepo->addUnfurlsToContent($posts, $skipRecrawl);
 
-		/** @var EmbedResolverRepository $embedRepo */
 		$embedRepo = $this->repository(EmbedResolverRepository::class);
 		$embedRepo->addEmbedsToContent($posts);
 
@@ -115,7 +112,6 @@ class ThreadPlugin extends AbstractPlugin
 	 */
 	public function getAvailablePostListSortOptions(Thread $thread): array
 	{
-		/** @var ThreadRepository $threadRepo */
 		$threadRepo = $this->repository(ThreadRepository::class);
 
 		$options = $threadRepo->getDefaultPostListSortOptions();

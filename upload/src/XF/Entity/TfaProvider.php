@@ -2,6 +2,7 @@
 
 namespace XF\Entity;
 
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XF\Phrase;
@@ -14,7 +15,7 @@ use XF\Tfa\AbstractProvider;
  * @property string $provider_class
  * @property int $priority
  * @property bool $active
- * @property array $options
+ * @property array|null $options
  *
  * GETTERS
  * @property-read Phrase|string $title
@@ -22,7 +23,7 @@ use XF\Tfa\AbstractProvider;
  * @property-read AbstractProvider|null $handler
  *
  * RELATIONS
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\UserTfa> $UserEntries
+ * @property-read AbstractCollection<UserTfa> $UserEntries
  */
 class TfaProvider extends Entity
 {

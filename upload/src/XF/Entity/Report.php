@@ -4,6 +4,7 @@ namespace XF\Entity;
 
 use XF\Api\Result\EntityResult;
 use XF\Draft;
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XF\Phrase;
@@ -16,7 +17,7 @@ use XF\Repository\ReportRepository;
  * @property string $content_type
  * @property int $content_id
  * @property int $content_user_id
- * @property array $content_info
+ * @property array|null $content_info
  * @property int $first_report_date
  * @property string $report_state
  * @property int $assigned_user_id
@@ -39,8 +40,8 @@ use XF\Repository\ReportRepository;
  * @property-read User|null $User
  * @property-read User|null $AssignedUser
  * @property-read User|null $LastModifiedUser
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\ReportComment> $Comments
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\Draft> $DraftComments
+ * @property-read AbstractCollection<ReportComment> $Comments
+ * @property-read AbstractCollection<\XF\Entity\Draft> $DraftComments
  */
 class Report extends Entity implements LinkableInterface, ViewableInterface
 {

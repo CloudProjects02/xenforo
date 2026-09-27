@@ -11,6 +11,11 @@ use function call_user_func, intval, is_array, is_scalar, strlen;
 
 class SessionActivityRepository extends Repository
 {
+	/**
+	 * @var array<int, array>
+	 */
+	protected $onlineCountsCache = [];
+
 	public function getOnlineCounts($onlineCutOff = null)
 	{
 		if ($onlineCutOff === null)
@@ -18,7 +23,12 @@ class SessionActivityRepository extends Repository
 			$onlineCutOff = \XF::$time - $this->options()->onlineStatusTimeout * 60;
 		}
 
-		return $this->db()->fetchRow("
+		if (isset($this->onlineCountsCache[$onlineCutOff]))
+		{
+			return $this->onlineCountsCache[$onlineCutOff];
+		}
+
+		$counts = $this->db()->fetchRow("
 			SELECT
 				SUM(IF(user_id >= 0 AND robot_key = '', 1, 0)) AS total,
 				SUM(IF(user_id > 0, 1, 0)) AS members,
@@ -26,11 +36,14 @@ class SessionActivityRepository extends Repository
 			FROM xf_session_activity
 			WHERE view_date >= ?
 		", $onlineCutOff);
+
+		$this->onlineCountsCache[$onlineCutOff] = $counts;
+
+		return $counts;
 	}
 
 	public function getOnlineUsersList($limit)
 	{
-		/** @var SessionActivityFinder $finder */
 		$finder = $this->finder(SessionActivityFinder::class);
 		$finder->restrictType('member')
 			->applyMemberVisibilityRestriction()
@@ -48,7 +61,6 @@ class SessionActivityRepository extends Repository
 
 	public function getOnlineStaffList()
 	{
-		/** @var SessionActivityFinder $finder */
 		$finder = $this->finder(SessionActivityFinder::class);
 		$finder->restrictType('member')
 			->applyMemberVisibilityRestriction()
@@ -107,7 +119,6 @@ class SessionActivityRepository extends Repository
 
 	public function findForOnlineList($typeLimit)
 	{
-		/** @var SessionActivityFinder $finder */
 		$finder = $this->finder(SessionActivityFinder::class);
 		$finder->activeOnly()
 			->restrictType($typeLimit)

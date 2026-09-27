@@ -21,7 +21,7 @@ use function strlen;
  * @property string $image_url
  * @property string $image_url_2x
  * @property bool $sprite_mode
- * @property array $sprite_params
+ * @property array|null $sprite_params
  *
  * GETTERS
  * @property-read array|bool $smilie_text_options

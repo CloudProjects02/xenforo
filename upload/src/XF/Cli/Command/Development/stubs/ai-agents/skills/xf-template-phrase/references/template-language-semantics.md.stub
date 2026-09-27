@@ -1,0 +1,66 @@
+# XenForo Template Language
+
+The template compiler, tag implementations, and templater whitelist in the installed source are authoritative:
+
+- tags: `src/XF/Template/Compiler.php` and `src/XF/Template/Compiler/Tag/`;
+- runtime functions and filters: `src/XF/Template/Templater.php`;
+- first-party usage: `src/addons/XF/_output/templates/`.
+
+## Core Syntax Categories
+
+### Tags
+
+`<xf:...>` tags compile to framework behavior. Common tags include `<xf:if>`, `<xf:foreach>`, `<xf:form>`, `<xf:textboxrow>`, `<xf:selectrow>`, `<xf:submitrow>`, `<xf:macro>`, `<xf:css>`, `<xf:js>`, and `<xf:fa>`. Do not replace them with visually similar raw HTML without understanding the lost behavior, escaping, validation, or accessibility.
+
+### Expressions
+
+Use `{{ ... }}` in expression/output contexts:
+
+```html
+<a href="{{ link('members', $user) }}">{{ phrase('view_profile') }}</a>
+```
+
+The contents are parsed by XenForo's template compiler. They are not arbitrary PHP. No PHP statements, object creation, includes, closures, or unregistered functions are available.
+
+### Variable interpolation
+
+Use `{$var}` for supported direct interpolation, including property paths and filters:
+
+```html
+<xf:title>{$title}</xf:title>
+<span>{$total|number}</span>
+```
+
+Do not mechanically convert between single- and double-brace forms. Match the context and nearby first-party code.
+
+### Expression-capable attributes
+
+Some tag attributes are already expression contexts:
+
+```html
+<xf:if is="$user.canEdit()">
+```
+
+Other attributes contain output strings. Inspect the tag compiler or existing usage instead of applying one brace rule to every attribute.
+
+### Control flow and whitespace
+
+Use XenForo tags such as `<xf:if>`, `<xf:elseif>`, `<xf:else />`, `<xf:foreach>`, and `<xf:set>`. The language is not indentation-sensitive. Blade directives such as `@if`, raw PHP blocks, and Blade echo forms are invalid.
+
+## Functions and Filters
+
+Functions that resemble PHP functions, such as `count`, `in_array`, `array_keys`, `sprintf`, or `trim`, are explicitly registered XenForo template functions. Their PHP namesakes are not being called directly. Use only functions and filters present in the local templater whitelist.
+
+Filters work in interpolation and expression contexts. Preserve established chains and escaping behavior. Do not use a raw/unescaped form to silence an output problem; determine why the value is not the expected type.
+
+## Macros
+
+Macros are XenForo's reusable template units. Match first-party declaration and call syntax, including `arg-*` names and defaults. Pass prepared values rather than moving controller/service logic into a macro. Search for an existing macro before creating another representation of buttons, filters, pagination, content rows, or form controls.
+
+## Rules
+
+1. Never put raw PHP or Blade syntax in a template.
+2. Never assume an arbitrary PHP function is callable.
+3. Keep automatic escaping unless the value is deliberately pre-escaped through a supported framework path.
+4. Do not invent syntax based on another template engine.
+5. When uncertain, inspect the compiler/tag implementation and a first-party example before editing.

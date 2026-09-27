@@ -11,7 +11,6 @@ class SitemapExclude extends AbstractOption
 {
 	public static function renderCheckbox(Option $option, array $htmlParams)
 	{
-		/** @var SitemapLogRepository $sitemapRepo */
 		$sitemapRepo = \XF::repository(SitemapLogRepository::class);
 		$sitemapHandlers = $sitemapRepo->getSitemapHandlers();
 
@@ -39,7 +38,6 @@ class SitemapExclude extends AbstractOption
 
 		$exclusions = [];
 
-		/** @var SitemapLogRepository $sitemapRepo */
 		$sitemapRepo = \XF::repository(SitemapLogRepository::class);
 		$sitemapHandlers = $sitemapRepo->getSitemapHandlers();
 

@@ -40,7 +40,7 @@ class IconRepository extends Repository
 	/**
 	 * @var string
 	 */
-	public const ICON_DATA_REGEX = '<svg [^>]*viewBox="(?P<viewBox>[^"]+)"[^>]*>.*?(?:<defs>.*<\/defs>)?(?P<icon>(?:<path [^>]*\/>)+)<\/svg>';
+	public const ICON_DATA_REGEX = '<svg [^>]*viewBox="(?P<viewBox>[^"]+)"[^>]*>.*?(?:<defs>.*<\/defs>)?.*?(?P<icon>(?:<path [^>]*\/>|<g>.*?<\/g>)+)<\/svg>';
 
 	/**
 	 * @var string

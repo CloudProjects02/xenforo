@@ -71,7 +71,6 @@ class Email extends AbstractValidator
 
 		if ($this->options['banned'])
 		{
-			/** @var BanningRepository $banRepo */
 			$banRepo = $this->app->repository(BanningRepository::class);
 
 			if ($banRepo->isEmailBanned($value, $this->options['banned']))

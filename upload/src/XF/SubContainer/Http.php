@@ -77,10 +77,19 @@ class Http extends AbstractSubContainer
 		}
 
 		$xfOptions = $this->parent['options'];
+
+		$defaultLanguage = \XF::app()->language();
+		$locale = $defaultLanguage->getLanguageCode();
+		$acceptLanguage = $locale;
+
+		$languageCode = substr($acceptLanguage, 0, 2);
+		$acceptLanguage .= ',' . $languageCode . ';q=0.9';
+
 		$options = array_replace_recursive([
 			'verify' => $verify,
 			'headers' => [
 				'User-Agent' => 'XenForo/2.x (' . $xfOptions->boardUrl . ')',
+				'Accept-Language' => $acceptLanguage,
 			],
 		], $options);
 

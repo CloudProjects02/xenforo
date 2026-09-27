@@ -25,6 +25,6 @@ abstract class AbstractCommand extends Command
 			$output->getFormatter()->setStyle($color, new OutputFormatterStyle($color));
 		}
 
-		return parent::initialize($input, $output);
+		parent::initialize($input, $output);
 	}
 }

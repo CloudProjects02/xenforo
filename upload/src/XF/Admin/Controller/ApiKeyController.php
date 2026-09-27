@@ -101,7 +101,6 @@ class ApiKeyController extends AbstractController
 			$newKey = true;
 		}
 
-		/** @var ManagerService $keyManager */
 		$keyManager = $this->service(ManagerService::class, $apiKey);
 
 		$this->apiKeySaveProcess($keyManager)->run();
@@ -124,7 +123,6 @@ class ApiKeyController extends AbstractController
 
 		if ($this->isPost())
 		{
-			/** @var ManagerService $keyManager */
 			$keyManager = $this->service(ManagerService::class, $apiKey);
 			$keyManager->regenerate();
 

@@ -1,0 +1,1417 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="style_property_template_xfmNoticeStyle" version_id="1000070" version_string="1.0.0"><![CDATA[<xf:radiorow name="{$formBaseKey}[type]" 
+	value="{$property.property_value.type}"
+	rowclass="{$rowClass}"
+	label="{$titleHtml}"
+	hint="{$hintHtml}"
+	explain="{$property.description}"
+>
+	<xf:option value="primary">{{ phrase('primary') }}</xf:option>
+	<xf:option value="accent">{{ phrase('accent') }}</xf:option>
+	<xf:option value="dark">{{ phrase('dark') }}</xf:option>
+	<xf:option value="light">{{ phrase('light') }}</xf:option>
+	<xf:option value="custom" label="{{ phrase('other_using_custom_css_class_name:') }}">
+		<xf:textbox name="{$formBaseKey}[css_class]" value="{$property.property_value.css_class}"
+					dir="ltr" />
+	</xf:option>
+</xf:radiorow>]]></template>
+  <template type="public" title="xf_messenger" version_id="2000100" version_string="2.0.1"><![CDATA[<xf:page option="template">RTC_PAGE_CONTAINER</xf:page>
+
+<xf:title page="{$page}">{{ phrase('conversations') }}</xf:title>
+
+<xf:js src="xf/inline_mod.js" min="1" />
+
+<xf:css src="real_time_chat_window.less" />
+
+<xf:macro name="xf_messenger_chat_macros::chat"
+		  arg-createForm="{$createForm}"
+		  arg-roomTag="{$tag}"
+		  arg-attachmentData="{$attachmentData}"
+		  arg-latestMessageDate="{$latestMessageDate}" />
+
+
+<xf:js src="bs/real_time_chat/popup-module.js" min="1" />
+<xf:js src="bs/real_time_chat/main-modules.js" min="1" />
+<xf:js src="bs/messenger/search.js" min="1" />
+<xf:js src="bs/messenger/crosspage.js" min="1" />]]></template>
+  <template type="public" title="xf_messenger.less" version_id="1000070" version_string="1.0.0"><![CDATA[{{ include('real_time_chat_setup.less') }}
+
+.template-xf_messenger_conversations {
+	.real-time-chat.real-time-chat--xf-messenger {
+		height: 600px;
+		resize: vertical;
+
+		@media (min-width: 925px) {
+			.chat-columns {
+				.left-column {
+					max-width: 350px;
+					width: 350px;
+					align-items: start;
+				}
+				
+				.messages .message-list-wrapper {
+					padding-left: 20px;
+					padding-right: 20px;
+				}
+			}
+		}
+	}
+}
+
+.real-time-chat.real-time-chat--xf-messenger {
+	.chat-columns {
+		.left-column {
+			.xf-xfmRoomList();
+		}
+	}
+
+	&.no-left-column {
+		.header {
+			border-top-left-radius: 0;
+		}
+		
+		.chat-wallpaper {
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+		}
+		
+		.left-column {
+			max-width: 420px;
+			width: 420px;
+			
+			&:after {
+				width: 1px;
+			}
+		}
+	}
+	
+	.header {
+		.header-buttons {
+			.header-button--toggleLeft {
+				display: none;
+			}
+		}
+	}
+
+	.search-box {
+		padding: 0 15px 12px;
+		display: flex;
+		flex-wrap: wrap;
+		z-index: 20;
+		
+		&.has-query {
+			.reset-icon {
+				display: flex;
+			}
+		}
+
+		&.is-active {
+			.actions {
+				display: none;
+			}
+			
+			.return-back {
+				width: auto;
+				padding-right: 15px;
+				padding-left: 5px;
+			}
+			
+			.search-filters {
+				display: block;
+			}
+		}
+
+		.return-back {
+			width: 0;
+			transition: all .2s;
+			overflow: hidden;
+			-webkit-tap-highlight-color: rgba(0,0,0,0);
+			-webkit-tap-highlight-color: transparent;
+		}
+		
+		.big-icon {
+			display: flex;
+			align-items: center;
+			font-size: 22px;
+			cursor: pointer;
+		}
+		
+		.actions {
+			.xf-xfmActions();
+		}
+
+		.search-input {
+			position: relative;
+			flex: 1;
+
+			.input {
+				.xf-xfmSearchFormInput();
+				.xf-xfmSearchInput();
+			}
+		}
+		
+		.search-filters {
+			width: 100%;
+			padding-top: 10px;
+			display: none;
+			
+			.input {
+				.xf-xfmSearchFormInput();
+			}
+			
+			.inputChoices {
+				display: flex;
+				
+				.inputChoices-choice {
+					margin-left: 15px;
+					
+					&:first-child {
+						margin-left: 0;
+					}
+				}
+			}
+		}
+		
+		.input-icon {
+			position: absolute;
+			top: 0;
+			height: 100%;
+			display: flex;
+			align-items: center;
+			font-size: 20px;
+		}
+
+		.search-icon {
+			.xf-xfmSearchInputIcon();
+			left: 0;
+		}
+		
+		.reset-icon {
+			.xf-xfmSearchInputResetIcon();
+			right: 0;
+			display: none;
+		}
+	}
+	
+	.search-fault {
+		.xf-xfmSearchFault();
+	}
+	
+	.create-conv-form {
+		z-index: 0;
+		
+		&.is-active {
+			z-index: 100;
+		}
+		
+		.bubble-tail {
+			display: none;
+		}
+	}
+	
+	.room-list {
+		.left-slide {
+			display: flex;
+			flex-direction: column;
+		}
+	}
+
+	.search-container {
+		display: none;
+		flex-direction: column;
+		opacity: 0;
+		visibility: hidden;
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		background: var(--surface-color);
+		z-index: 200;
+		
+		.tabs.tabs--standalone {
+			background: none;
+			border: none;
+			border-bottom: 1px solid var(--border-color);
+			padding: 0 15px;
+			margin-bottom: 5px;
+			
+			.tabs-tab {
+				padding: 10px;
+				font-weight: 500;
+
+				&:not(.is-active) {
+					color: var(--surface-color-muted);
+				}
+			}
+		}
+
+		&.is-active {
+			display: flex;
+			opacity: 1;
+			visibility: visible;
+		}
+		
+		.search-results {
+			height: 100%;
+			position: relative;
+		}
+		
+		.search-result-items {
+			height: 100%;
+		}
+		
+		.content-loader {
+			padding-top: 10px;
+		}
+	}
+	
+	// search result
+	.room--attachment {
+		text-decoration: none;
+		
+		&:hover {
+			background: inherit !important;
+		}
+
+		.room-avatar {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 48px;
+			height: 48px;
+
+			img, video {
+				width: 48px;
+				height: 48px;
+				border-radius: 4px;
+			}
+		}
+		
+		.file-typeIcon {
+			font-size: 50px;
+		}
+	}
+	
+	.attachment-items-container {
+		padding: 0 5px;
+	}
+	
+	.message {
+		.content-bubble-container {
+			margin-left: 38px;
+		}
+	}
+	
+	// mobile
+	@media (max-width: 925px) {
+		.m-messengerCompact();
+	}
+	
+	&.compact {
+		.m-messengerCompact();
+	}
+	
+	.m-chatResponsive(925px);
+}
+
+.m-messengerCompact() {
+	&.no-left-column {
+		.left-column {
+			&:after {
+				width: 0;
+			}
+		}
+	}
+}]]></template>
+  <template type="public" title="xf_messenger_chat_macros" version_id="1000170" version_string="1.0.1"><![CDATA[<xf:macro name="chat" 
+		  arg-createForm="{{ {} }}"
+		  arg-roomTag="" 
+		  arg-attachmentData="{{ null }}" 
+		  arg-lastRoomDate="0" 
+		  arg-latestMessageDate="0"
+		  arg-compact="{{ false }}"
+		  arg-pushHistory="{{ true }}"
+		  arg-draggable="{{ false }}"
+		  >
+	<xf:css src="xf_messenger.less" />
+	<xf:macro name="real_time_chat_macros::less" />
+
+	<xf:set var="$roomParamsPlaceholder" value="{{ { 'tag': '<tag>' } }}" />
+	<xf:set var="$messageParamsPlaceholder" value="{{ { 'tag': '<tag>', 'message_id': '<message_id>' } }}" />
+	<xf:set var="$defaultTheme" value="{{ rtc_room_theme(-1) }}" />
+
+	<div class="real-time-chat real-time-chat--xf-messenger{{ $roomTag ? ' no-left-column' : '' }}{{ $compact ? ' compact' : '' }}"
+		 data-xf-init="chat"
+		 data-theme="{{ $defaultTheme|json }}"
+		 data-rooms-url="{{ link('conversations/messenger/rooms') }}"
+		 data-room-url="{{ link('conversations/messenger', $roomParamsPlaceholder) }}"
+		 data-mark-seen-url="{{ link('conversations/messenger/mark-seen', $roomParamsPlaceholder) }}"
+		 data-messages-url="{{ link('conversations/messenger/message-list', $roomParamsPlaceholder) }}"
+		 data-post-url="{{ link('conversations/messenger/reply', $roomParamsPlaceholder) }}"
+		 data-typing-url="{{ link('conversations/messenger/typing', $roomParamsPlaceholder) }}"
+		 data-edit-url="{{ link('conversations/messenger/messages/edit',$messageParamsPlaceholder) }}"
+		 data-delete-url="{{ link('conversations/messenger/messages/delete', $messageParamsPlaceholder) }}"
+		 data-report-url="{{ link('conversations/messenger/messages/report', $messageParamsPlaceholder) }}"
+		 data-audio="{{ base_url($xf.options.xfmSoundPath) }}"
+		 data-enabled-audio="{{ $xf.options.xfmEnableSound ? 'true' : 'false' }}"
+		 data-room-tag="{$roomTag}"
+		 data-room-channel-format="Conversation.<tag>"
+		 data-auto-select-room="false"
+		 data-auto-open-create-form="{$createForm.open}"
+		 data-use-chat-channel="false"
+		 data-event-prefix="XFM"
+		 data-go-to-prefix="convMessage"
+		 data-push-history="{{ $pushHistory ? 'true' : 'false' }}"
+		 style="{$defaultTheme.css}"
+		 >
+		<xf:macro name="real_time_chat_macros::svg_defs" />
+
+		<div class="chat-columns">
+			<div class="left-column">
+				<div class="room-list rtc-slide-menu js-roomsList">
+					<div class="left-slide">
+						<xf:macro name="real_time_chat_macros::popup_header" arg-draggable="{$draggable}" />
+						<xf:macro name="search_box" />
+						<xf:macro name="real_time_chat_macros::rooms_placeholder" 
+								  arg-title="{{ phrase('xfm_your_conversations_will_appear_here') }}" />
+
+						<div class="room-items scrollable-container">
+							<xf:macro name="search_container" />
+
+							<xf:macro name="real_time_chat_macros::loader" arg-position="top" />
+
+							<div class="scrollable js-scrollable">
+								<div class="room-items-container js-roomItems"  
+									 data-xf-init="inline-mod" 
+									 data-type="conversation" 
+									 data-href="{{ link('inline-mod') }}"
+									 ></div>
+							</div>
+
+							<xf:macro name="real_time_chat_macros::loader" />
+						</div>
+
+						<xf:if is="$xf.visitor.canStartConversation()">
+							<button href="{{ link('conversations/add') }}" 
+									class="btn-corner js-createRoom" 
+									data-xf-click="rtc-toggle-slide-menu"
+									data-menu="< .js-roomsList"
+									><xf:fa icon="fas fa-pencil" /></button>
+						</xf:if>
+					</div>
+
+					<xf:if is="$xf.visitor.canStartConversation()">
+						<div class="right-slide">
+							<xf:macro name="create_room_form" 
+									  arg-form="{$createForm}" 
+									  arg-attachmentData="{$attachmentData}" />
+						</div>
+					</xf:if>
+				</div>
+			</div>
+			<div class="center-column">
+				<div class="communication-content">
+					<xf:macro name="real_time_chat_macros::wallpaper" arg-theme="{$defaultTheme}" />
+					<xf:macro name="header" arg-draggable="{$draggable}" />
+					<xf:macro name="real_time_chat_macros::connecting" />
+
+					<div class="content-inner">
+						<xf:macro name="real_time_chat_macros::content" />
+						<xf:macro name="editor" arg-classes="message-editor js-chatEditor" arg-attachmentData="{$attachmentData}" />
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<xf:hiddenval name="latest_message_date" value="{$latestMessageDate}" />
+		<xf:hiddenval name="latest_room_date" value="{$lastRoomDate}" />
+
+		<xf:macro name="real_time_chat_macros::mustache_templates" />
+	</div>
+
+	<xf:macro name="real_time_chat_macros::smilie_menu" />
+
+</xf:macro>
+
+<xf:macro name="header_buttons_before">
+	<div class="header-buttons">
+		<div class="header-button header-button--pl-sm header-button--toggleLeft js-resetRoom">
+			<xf:fa icon="fa-arrow-left" />
+		</div>
+	</div>
+</xf:macro>
+
+<xf:macro name="header_buttons_after">
+	<div class="header-buttons">
+		<xf:macro name="real_time_chat_macros::header_popup_buttons" />
+
+		<div class="header-button" data-xf-click="menu" aria-expanded="false" aria-haspopup="true">
+			<xf:fa icon="fa-ellipsis-v" />
+		</div>
+		<div class="menu rtc-flat-menu js-roomMenu" 
+			 data-menu="menu" 
+			 aria-hidden="true"
+			 data-href=""
+			 data-load-target=".js-roomMenuContent"
+			 data-nocache="true"
+			 >
+			<div class="menu-content js-roomMenuContent"></div>
+		</div>
+	</div>
+</xf:macro>
+
+<xf:macro name="header" arg-draggable="{{ false }}">
+	<div class="header js-header">
+		<xf:macro name="header_buttons_before" />
+
+		<div class="avatar-container">
+			<div class="header-avatar js-headerAvatar"></div>
+			<div class="badge badge--popup is-hidden js-badgePopup"></div>
+		</div>
+
+		<div class="header-main" data-xf-init="{{ $draggable ? 'rtc-draggable' : '' }}">
+
+			<a class="room-main js-roomLink" href="">
+				<div class="room-name js-roomName">
+					<span class="tag-prefix"></span>
+					<span class="tag"></span>
+				</div>
+			</a>
+
+			<div class="room-status js-roomStatus">
+				<div class="title">
+					{{ phrase('rtc_connecting') }}
+				</div>
+
+				<xf:macro name="real_time_chat_macros::typer" />
+			</div>
+		</div>
+
+		<xf:macro name="header_buttons_after" arg-draggable="{$draggable}" />
+	</div>
+</xf:macro>
+
+<xf:macro name="search_box">
+	<div class="search-box js-searchBox">
+		<div class="actions big-icon" data-xf-click="menu" aria-expanded="false" aria-haspopup="true">
+			<xf:fa icon="fa-ellipsis-v" />
+		</div>
+		<div class="menu rtc-flat-menu" 
+			 data-menu="menu" 
+			 aria-hidden="true"
+			 >
+			<div class="menu-content">
+				<a class="menu-linkRow" href="{{ $xf.homePageUrl ?: $xf.options.boardUrl }}">
+					<xf:fa icon="fa-house" />
+					{{ phrase('home') }}
+				</a>
+				<xf:if is="contains($xf.request.getRequestUri(), 'messenger') && !$xf.options.xfmReplaceConversationsWithMessenger">
+					<a class="menu-linkRow" href="{{ link('conversations') }}">
+						<xf:fa icon="fa-comments" />
+						{{ phrase('conversations') }}
+					</a>
+				</xf:if>
+			</div>
+		</div>
+		<div class="return-back big-icon js-searchClose">
+			<xf:fa icon="fa-arrow-left" />
+		</div>
+		<div class="search-input">
+			<xf:fa icon="fa-search search-icon input-icon" />
+			<xf:textbox placeholder="{{ phrase('search') }}" 
+						data-xf-init="messenger-rooms-search"
+						data-search-url="{{ link('conversations/messenger/search') }}" />
+			<xf:fa icon="fa-times reset-icon input-icon js-searchReset" />
+		</div>
+		<xf:form class="search-filters js-searchFilters">
+			<xf:textbox name="filter[starter]" ac="single"
+						maxlength="{{ max_length($xf.visitor, 'username') }}"
+						placeholder="{{ phrase('started_by') }}" />
+
+			<xf:textbox name="filter[receiver]" ac="single"
+						maxlength="{{ max_length($xf.visitor, 'username') }}"
+						placeholder="{{ phrase('received_by') }}" />
+
+			<xf:checkbox>
+				<xf:option name="filter[starred]" label="{{ phrase('starred') }}" />
+				<xf:option name="filter[unread]" label="{{ phrase('xfm_unread') }}" />
+			</xf:checkbox>
+		</xf:form>
+	</div>
+</xf:macro>
+
+<xf:macro name="search_container">
+	<div class="search-container js-searchContainer">
+		<div class="tabs tabs--standalone">
+			<div class="hScroller" data-xf-init="h-scroller">
+				<span class="hScroller-scroll">
+					<span class="tabs-tab js-searchTab is-active" 
+						  role="tab" 
+						  tabindex="0" 
+						  aria-controls="{{ unique_id('conversations') }}"
+						  data-type="conversations"
+						  >{{ phrase('conversations') }}</span>
+
+					<span class="tabs-tab js-searchTab" 
+						  role="tab" 
+						  tabindex="1" 
+						  aria-controls="{{ unique_id('attachments') }}"
+						  data-type="attachments"
+						  >{{ phrase('attachments') }}</span>
+				</span>
+			</div>
+		</div>
+		<div class="search-results">
+			<xf:macro name="real_time_chat_macros::loader" arg-position="top" />
+			<div class="search-result-items js-searchResults"></div>
+		</div>
+	</div>
+</xf:macro>
+
+<xf:macro name="create_room_form" arg-form="!" arg-attachmentData="{{ null }}" arg-maxRecipients="-1" arg-draft="">
+	<xf:set var="$formId" value="{{ unique_id() }}" />
+
+	<div class="chat-form js-createRoomForm create-conv-form">
+		<div class="title">
+			<div class="return-back js-toggleSlide">
+				<xf:fa icon="fa-arrow-left" />
+			</div>
+			{{ phrase('start_conversation') }}
+		</div>
+
+		<xf:form action="{{ link('conversations/add') }}"
+				 id="{$formId}"
+				 ajax="true"
+				 data-redirect="off"
+				 data-reset-complete="on"
+				 data-clear-complete="on"
+				 >
+			<div class="form-body-content form-body-content--big">
+				<xf:textbox name="title" 
+							value="{{ $form.title ?: $draft.extra_data.title }}" 
+							class="input--title"
+							maxlength="{{ max_length('XF:ConversationMaster', 'title') }}"
+							placeholder="{{ phrase('title') }}" />
+
+				<xf:tokeninput name="recipients" 
+							   value="{{ $form.to ?: $draft.extra_data.recipients }}" 
+							   href="{{ link('members/find') }}"
+							   placeholder="{{ ($maxRecipients == -1 OR $maxRecipients > 1) ? phrase('recipients') : phrase('recipient') }}"
+							   min-length="1"
+							   max-tokens="{{ ($maxRecipients > -1) ? $maxRecipients : null }}"
+							   explain="{{ ($maxRecipients == -1 OR $maxRecipients > 1) ? phrase('separate_names_with_comma') : null }}" />
+
+				<xf:macro name="editor" 
+						  arg-classes="input-line"
+						  arg-draftUrl="{{ link('conversations/draft') }}"
+						  arg-value="{{ $form.message ?: $draft.message }}"
+						  arg-shown="true"
+						  arg-withSubmit="{{ false }}"
+						  arg-attachmentData="{$attachmentData}" 
+						  arg-forceHash="{$draft.attachment_hash}" />
+
+				<xf:checkbox>
+					<xf:option name="open_invite" checked="{$draft.extra_data.open_invite}">
+						{{ phrase('allow_anyone_in_conversation_to_invite_others') }}
+					</xf:option>
+
+					<xf:option name="conversation_locked" checked="{$draft.extra_data.conversation_locked}">
+						{{ phrase('lock_conversation_no_responses_will_be_allowed') }}
+					</xf:option>
+				</xf:checkbox>
+			</div>
+		</xf:form>
+
+		<button class="btn-corner" type="submit" form="{$formId}">
+			<xf:fa icon="fas fa-arrow-right" />
+		</button>
+	</div>
+</xf:macro>
+
+<xf:macro name="rooms" arg-userConvs="!" arg-filters="{{ {} }}">
+	<xf:foreach loop="$userConvs" value="$userConv">
+		<xf:macro name="room" arg-userConv="{$userConv}" arg-filter="{$filter}" />
+	</xf:foreach>
+</xf:macro>
+
+<xf:macro name="room" arg-userConv="!" arg-classes="js-room" arg-filters="{{ {} }}" arg-allowInlineMod="{{ true }}">
+	<div class="room js-inlineModContainer {$classes}" 
+		 data-room-tag="{$userConv.conversation_id}"
+		 data-room-title="{$userConv.Master.title}"
+		 data-room-menu-href="{{ link('conversations/messenger/menu', { 'tag': $userConv.conversation_id }) }}"
+		 data-history-url="{{ contains($xf.request.filter('_xfRequestUri', 'str'), 'messenger') ? link('conversations/messenger', { 'tag': $userConv.conversation_id }) : link('conversations', $userConv) }}"
+		 data-can-post-message="{{ $userConv.Master.canReply() ? 'true' : 'false' }}"
+		 data-theme="{$userConv.Master.theme|json}"
+		 data-draft-url="{{ link('conversations/draft', $userConv.Master) }}"
+		 data-pinned="0"
+		 data-xf-click=""
+		 data-last-message="{$userConv.last_message_date}"
+		 >
+		<div class="room-avatar">
+			<xf:avatar class="js-roomAvatar" 
+					   user="$userConv.AvatarUser" 
+					   size="s"
+					   notooltip="true"
+					   href="" />
+		</div>
+
+		<div class="room-content">
+			<div class="room-title-with-markers">
+				<div class="room-title">
+					{$userConv.Master.title}
+				</div>
+				<div class="room-extra">
+					<ul class="room-extraInfo">
+						<li>{{ rtc_relative_date($userConv.last_message_date) }}</li>
+
+						<xf:if is="$allowInlineMod">
+							<li>
+								<xf:checkbox standalone="true">
+									<xf:option value="{$userConv.conversation_id}" class="js-inlineModToggle" />
+								</xf:checkbox>
+							</li>
+						</xf:if>
+					</ul>
+				</div>
+			</div>
+			<div class="room-latest-message js-roomLatestMessage">
+				<xf:set var="$lastMessage" value="{{ $userConv.Master.LastMessage }}" />
+
+				<div class="message-text">
+					<xf:if is="$lastMessage.user_id !== $xf.visitor.user_id">
+						<span class="message-sender text-highlight">{{ $lastMessage.username }}:</span>
+					</xf:if>
+					<div class="bbWrapper">
+						{{ snippet($lastMessage.message, 150, { 'bbWrapper': false, 'stripQuote': true }) ?: '[MEDIA]' }}
+					</div>
+				</div>
+				<xf:macro name="real_time_chat_macros::typer" />
+
+				<div class="room-extra">
+					<ul class="room-extraInfo">
+						<xf:if is="!$userConv.Master.conversation_open">
+							<li class="extra-item" data-xf-init="tooltip" title="{{ phrase('locked')|for_attr }}">
+								<xf:fa icon="fas fa-lock" />
+							</li>
+						</xf:if>
+						<xf:if is="$userConv.is_starred">
+							<li class="extra-item extra-item--attention" data-xf-init="tooltip" title="{{ phrase('starred')|for_attr }}">
+								<xf:fa icon="fas fa-star" />
+							</li>
+						</xf:if>
+						<li class="badge badge--unread js-unreadCountBadge{{ $userConv.unread_count <= 0 ? ' is-hidden' : '' }}">{$userConv.unread_count}</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</xf:macro>
+
+<xf:macro name="editor" 
+		  arg-value=""
+		  arg-draftUrl=""
+		  arg-classes=""
+		  arg-withSubmit="{{ true }}" 
+		  arg-shown="{{ false }}"
+		  arg-attachmentData="{{ null }}" 
+		  arg-forceHash=""
+		  >
+	<xf:css src="editor.less" />
+	<xf:set var="$leftButtons">
+		<div data-xf-init="smilie-box" class="ql-button ql-button--smile-button">
+			<xf:fa icon="fa-smile" />
+		</div>
+	</xf:set>
+	<xf:set var="$rightButtons">
+		<xf:if is="$attachmentData is not empty">
+			<div class="ql-button ql-button--attachment">
+				<xf:macro template="helper_attach_upload" name="upload_link_from_data"
+						  arg-attachmentData="{$attachmentData}"
+						  arg-forceHash="{$forceHash}" />
+
+				<xf:fa icon="fa-paperclip" />
+			</div>
+		</xf:if>
+	</xf:set>
+	<xf:set var="$prepend">
+		<xf:macro name="real_time_chat_macros::edit_message" />
+
+		<xf:macro name="helper_attach_upload::uploaded_files_list" arg-attachments="{$attachmentData.attachments}" />
+	</xf:set>
+	<xf:set var="$append">
+		<xf:macro name="rtc_message_macros::bubble_tail_svg" />
+	</xf:set>
+	<xf:set var="$attrs">{{ $draftUrl ? 'data-draft-url="' . $draftUrl . '"' : '' }}</xf:set>
+
+	<div class="{$classes}{{ $shown ? ' is-shown' : '' }}" data-xf-init="{{ $attachmentData is not empty ? 'attachment-manager' : '' }}">
+		{{ quill_editor({
+		'active': true,
+		'submitByEnter': true,
+		'prepend': $prepend,
+		'append': $append,
+		'attrsHtml': $attrs,
+		'leftButtons': $leftButtons,
+		'rightButtons': $rightButtons,
+		'placeholder': phrase('rtc_message_placeholder'),
+		'content': $value
+		}) }}
+
+		<xf:if is="$withSubmit">
+			<div class="btn-send-container">
+				<div class="btn-send js-actionSubmit">
+					<xf:fa icon="fas fa-paper-plane" />
+				</div>
+			</div>
+		</xf:if>
+	</div>
+</xf:macro>]]></template>
+  <template type="public" title="xf_messenger_conversation_menu" version_id="1000070" version_string="1.0.0"><![CDATA[<a class="menu-linkRow" 
+   href="{{ link('conversations/messenger/recipients', { 'tag': $conversation.conversation_id }) }}"
+   data-xf-click="overlay"
+>
+	<xf:fa icon="fa-users" />
+	{{ phrase('participants') }}
+</a>
+
+<xf:if is="$conversation.canEdit()">
+	<a class="menu-linkRow" 
+	   href="{{ link('conversations/edit', $conversation) }}" 
+	   data-xf-click="overlay"
+	   data-menu-closer=""
+	>
+		<xf:fa icon="fa-pencil" />
+		{{ phrase('edit') }}
+	</a>
+</xf:if>
+
+<xf:if is="$conversation.canSetWallpaper() || $conversation.canSetIndividualWallpaper()">
+	<a class="menu-linkRow" 
+	   href="{{ link('conversations/wallpaper', $conversation) }}" 
+	   data-xf-click="overlay"
+	   data-cache="off"
+	   data-menu-closer=""
+	>
+		<xf:fa icon="fa-paint-roller" />
+		{{ phrase('xfm_set_wallpaper') }}
+	</a>
+</xf:if>
+
+<xf:if is="$xf.options.xfmEnableSound">
+	<a data-xf-init="chat-toggle-sound"
+	   data-xf-click=""
+	   data-off-title="{{ phrase('rtc_mute') }}"
+	   data-on-title="{{ phrase('rtc_unmute') }}"
+	   class="menu-linkRow"
+	>
+		<xf:fa icon="fa-volume" />
+		<span class="js-label">{{ phrase('rtc_mute') }}</span>
+	</a>
+</xf:if>
+
+<a class="menu-linkRow" 
+   href="{{ link('conversations/star', $conversation) }}"
+   data-xf-click="switch"
+   data-sk-star="{{ phrase('star') }}"
+   data-sk-unstar="{{ phrase('unstar') }}"
+>
+	<xf:fa icon="fa-star" />
+	<span class="js-label">{{ {$userConv.is_starred} ? phrase('unstar') : phrase('star') }}</span>
+</a>
+
+<a class="menu-linkRow" 
+   href="{{ link('conversations/mark-unread', $conversation) }}"
+   data-xf-click="switch"
+   data-sk-read="{{ phrase('mark_read') }}"
+   data-sk-unread="{{ phrase('mark_unread') }}"
+>
+	<xf:fa icon="fa-comment-check" />
+	<span class="js-label">{{ {$userConv.is_unread} ? phrase('mark_read') : phrase('mark_unread') }}</span>
+</a>
+
+<xf:if is="$conversation.canInvite()">
+	<a class="menu-linkRow" 
+	   href="{{ link('conversations/invite', $conversation) }}"
+	   data-xf-click="overlay"
+	   data-menu-closer=""
+	 >
+		<xf:fa icon="fa-plus" />
+		{{ phrase('invite_more') }}
+	</a>
+</xf:if>
+
+<a class="menu-linkRow menu-linkRow--warning" 
+   href="{{ link('conversations/leave', $conversation) }}"
+   data-xf-click="overlay"
+   data-menu-closer=""
+>
+	<xf:fa icon="fa-sign-out" />
+	{{ phrase('leave') }}
+</a>]]></template>
+  <template type="public" title="xf_messenger_conversation_notices" version_id="1000070" version_string="1.0.0"><![CDATA[<xf:if is="$messages is not empty">
+	<xf:css src="notices.less" />
+	<xf:css src="xf_messenger_conversation_notices.less" />
+	<xf:js src="xf/notice.js" min="1" />
+	<xf:set var="$noticeStyle" value="{{ property('xfmNoticeStyle') }}" />
+
+	<ol class="listPlain">
+		<xf:foreach loop="$messages" value="$message">
+			<li class="notice {{ $noticeStyle.type == 'custom' ? $noticeStyle.css_class : 'notice--' . $noticeStyle.type }} notice--convMessage js-notice{{ $xf.options.xfmEnablePopup ? ' js-chatPopup js-noticeDismiss' : ' js-locationChanger' }}"
+				data-notice-id="{$message.message_id}"
+				data-room-tag="{$message.conversation_id}"
+				data-event-prefix="XFM"
+				data-delay-duration="0"
+				data-display-duration="{{ property('xfmNoticeDuration') * 1000 }}"
+				data-auto-dismiss=""
+				data-href="{{ link('conversations/messages', $message) }}"
+				data-visibility="">
+				<div class="notice-content">
+					<xf:macro name="row" 
+						arg-userConv="{$userConv}" 
+						arg-conversation="{$conversation}" 
+						arg-message="{$message}" />
+				</div>
+			</li>
+		</xf:foreach>
+	</ol>
+</xf:if>
+
+<xf:macro name="row" arg-userConv="!" arg-conversation="!" arg-message="!">
+	<div class="contentRow">
+		<div class="contentRow-figure">
+			<xf:avatar user="$message.User" size="xs" defaultname="{$message.username}" />
+		</div>
+		<div class="contentRow-main contentRow-main--close">
+			{{ snippet($message.message, 150, { 'bbWrapper': true, 'stripQuote': true }) }}
+			
+			<div class="contentRow-minor contentRow-minor--smaller">
+				<xf:date time="$message.message_date" />
+			</div>
+		</div>
+	</div>
+</xf:macro>]]></template>
+  <template type="public" title="xf_messenger_conversation_notices.less" version_id="1000070" version_string="1.0.0"><![CDATA[.notice--convMessage {
+	cursor: pointer;
+	
+	.contentRow-main {
+		font-size: 14px;
+	}
+}]]></template>
+  <template type="public" title="xf_messenger_conversation_recipients" version_id="1000070" version_string="1.0.0"><![CDATA[<xf:title>{{ phrase('conversation_participants') }}</xf:title>
+
+<div class="block">
+	<div class="block-container">
+		<ol class="block-body">
+			<xf:foreach loop="$conversation.Recipients" value="$recipient">
+				<li class="block-row">
+					<xf:macro name="member_list_macros::item"
+							  arg-user="{$recipient.User}" />
+				</li>
+			</xf:foreach>
+		</ol>
+	</div>
+</div>]]></template>
+  <template type="public" title="xf_messenger_conversation_wallpaper_set" version_id="1000070" version_string="1.0.0"><![CDATA[<xf:title>{{ phrase('xfm_set_wallpaper') }}</xf:title>
+
+<xf:breadcrumb href="{{ link('conversations') }}">{{ phrase('conversations') }}</xf:breadcrumb>
+<xf:breadcrumb href="{{ link('conversations', $conversation) }}">{$conversation.title}</xf:breadcrumb>
+
+<xf:css src="rtc_message_type_wallpaper.less" />
+<xf:js src="bs/real_time_chat/wallpaper-form-module.js" min="1" />
+
+<xf:form action="{{ link('conversations/wallpaper', $conversation) }}" 
+	class="block chat-message-form chat-message-form--wallpaper" 
+	ajax="true"
+	data-xf-init="rtc-wallpaper-form"
+	data-redirect="off" 
+	data-reset-complete="on"
+>
+	<div class="block-container">
+		<div class="block-body">
+			<xf:formrow label="{{ phrase('rtc_select_theme') }}" rowtype="input">
+				<div class="h-scroller themes-list-container" data-xf-init="h-scroller">
+					<xf:set var="$themes" value="{{ property('rtcThemes') }}" />
+					<div class="hScroller-scroll">
+						<div class="themes-list">
+							<xf:foreach loop="$themes" key="$index" value="$theme">
+								<xf:set var="$roomTheme" value="{{ rtc_room_theme($index) }}" />
+								<div class="theme-container js-theme {{ $conversation.wallpaper.options.theme_index === $index ? ' selected' : ''  }}"
+									 data-xf-click=""
+									 data-theme-index="{$index}"
+									 data-theme="{{ $roomTheme|json }}">
+									<canvas class="theme-canvas" 
+											data-xf-init="chat-canvas-gradient"
+											data-colors="{{ $roomTheme.config.background_colors|json }}"></canvas>
+									<canvas class="theme-pattern" 
+											data-xf-init="chat-canvas-pattern"
+											data-url="{$roomTheme.config.pattern}"></canvas>
+								</div>
+							</xf:foreach>
+						</div>
+					</div>
+					<xf:hiddenval name="theme_index" class="js-themeIndex">{$conversation.wallpaper.options.theme_index}</xf:hiddenval>
+				</div>
+			</xf:formrow>
+
+			<xf:checkboxrow rowclass="image-manage js-imageManage">
+				<xf:option name="blurred" checked="{$conversation.wallpaper.blurred}">{{ phrase('rtc_blur_background') }}</xf:option>
+			</xf:checkboxrow>
+
+			<xf:formrow>
+				<xf:button class="js-uploadButton" data-reset="{{ phrase('rtc_reset_image') }}">{{ phrase('rtc_choose_image') }}</xf:button>
+			</xf:formrow>
+
+			<div style="display:none">
+				<xf:upload class="js-uploadInput" 
+						   name="wallpaper" 
+						   accept=".gif,.jpeg,.jpg,.jpe,.png" />
+
+				<xf:checkbox>
+					<xf:if is="$conversation.canDeleteWallpaper()">
+						<xf:option name="delete_wallpaper"></xf:option>
+					</xf:if>
+
+					<xf:if is="$conversation.canSetWallpaper()">
+						<xf:option name="for_room"></xf:option>
+					</xf:if>
+
+					<xf:if is="$conversation.canResetWallpaper()">
+						<xf:option name="reset_wallpaper"></xf:option>
+					</xf:if>
+					
+					<xf:if is="$conversation.canResetRoomWallpaper()">
+						<xf:option name="reset_room_wallpaper"></xf:option>
+					</xf:if>
+				</xf:checkbox>
+			</div>
+		</div>
+		<xf:submitrow>
+			<xf:html>
+				<xf:button 
+					class="button--primary"
+					type="submit" 
+					form="{$formId}">{{ phrase('confirm') }}</xf:button>
+				<xf:button 
+					data-xf-click="element-value-setter"
+					data-value="1"
+					data-selector="< form | input[name='for_room']"
+					type="submit" 
+					form="{$formId}">{{ phrase('xfm_set_for_all') }}</xf:button>
+				<xf:if is="$conversation.canDeleteWallpaper()">
+					<xf:button data-xf-click="element-value-setter"
+						data-value="1"
+						data-selector="< form | input[name='delete_wallpaper']"
+						type="submit" 
+						form="{$formId}"
+					>{{ phrase('rtc_delete_wallpaper') }}</xf:button>
+				</xf:if>
+				<xf:if is="$conversation.canResetWallpaper()">
+					<xf:button class="js-resetWallpaper"
+						data-xf-click="element-value-setter"
+						data-value="1"
+						data-selector="< form | input[name='reset_wallpaper']"
+						type="submit" 
+						form="{$formId}"
+					 >{{ phrase('rtc_reset_to_defaults') }}</xf:button>
+				</xf:if>
+				<xf:if is="$conversation.canResetRoomWallpaper()">
+					<xf:button class="js-resetWallpaper"
+						data-xf-click="element-value-setter"
+						data-value="1"
+						data-selector="< form | input[name='reset_room_wallpaper']"
+						type="submit" 
+						form="{$formId}"
+					 >{{ phrase('xfm_reset_conversation_wallpaper') }}</xf:button>
+				</xf:if>
+			</xf:html>
+		</xf:submitrow>
+	</div>
+</xf:form>]]></template>
+  <template type="public" title="xf_messenger_conversations" version_id="1000070" version_string="1.0.0"><![CDATA[<xf:title page="{$page}">{{ phrase('conversations') }}</xf:title>
+
+<xf:js src="xf/inline_mod.js" min="1" />
+
+<xf:css src="real_time_chat.less" />
+
+<xf:pageaction>
+	<xf:button href="{{ link('conversations/messenger') }}" class="button--cta" icon="conversation">{{ phrase('xfm_open_messenger') }}</xf:button>
+</xf:pageaction>
+
+<xf:macro name="xf_messenger_chat_macros::chat"
+		  arg-createForm="{$createForm}"
+		  arg-roomTag="{$tag}"
+		  arg-attachmentData="{$attachmentData}"
+		  arg-latestMessageDate="{$latestMessageDate}" />]]></template>
+  <template type="public" title="xf_messenger_draft_attachments" version_id="1000070" version_string="1.0.0"><![CDATA[<xf:macro name="helper_attach_upload::uploaded_files_list" arg-attachments="{$attachmentData.attachments}" />]]></template>
+  <template type="public" title="xf_messenger_message_macros" version_id="1000070" version_string="1.0.0"><![CDATA[<xf:macro name="list" arg-userConv="!" arg-messages="!" arg-filter="{{ {} }}">
+	<xf:css src="bb_code.less" />
+	<xf:if is="$messages is not empty">
+		<xf:foreach loop="$messages" value="$message">
+			<xf:macro name="item" arg-message="{$message}" arg-filter="{$filter}" />
+		</xf:foreach>
+	</xf:if>
+</xf:macro>
+
+<xf:macro name="item" arg-message="!" arg-filter="{{ {} }}">
+	<xf:set var="$author">
+		<xf:username user="$message.User" rich="true" />
+	</xf:set>
+	
+	<xf:if is="$besideButtons is empty">
+		<xf:set var="$besideButtons">
+			<xf:macro name="message_beside_buttons" arg-message="{$message}" />
+		</xf:set>
+	</xf:if>
+	
+	<xf:set var="$text">
+		<xf:if is="$message.attach_count">
+			<xf:macro name="message_macros::attachments"
+				arg-attachments="{$message.Attachments}"
+				arg-message="{$message}"
+				arg-canView="{{ true }}" />
+		</xf:if>
+		{{ bb_code($message.translation_message, 'conversation_message', $message) }}
+	</xf:set>
+	<xf:set var="$menu">
+		<xf:macro name="message_menu" arg-message="{$message}" />
+	</xf:set>
+	<xf:set var="$footer">
+		<xf:macro name="message_footer" arg-message="{$message}" />
+	</xf:set>
+	<xf:set var="$markers">
+		<xf:macro name="message_markers" arg-message="{$message}" />
+		<xf:if is="$message.translation.error">
+			<span class="iconic translation-error" data-xf-init="tooltip" title="{{ phrase('rtc_translating_error') }}"></span>
+		</xf:if>
+	</xf:set>
+	
+	<xf:set var="$bubble">
+		<xf:macro name="rtc_message_macros::bubble" 
+			arg-author="{$author}" 
+			arg-text="{$text}" 
+			arg-menu="{$menu}"
+			arg-menuId="js-rtcMessageMenu-{$message.message_id}"
+			arg-footer="{$footer}" 
+			arg-markers="{$markers}"
+			arg-besideButtons="{$besideButtons}"
+			arg-lbContainer="{{ { 'id': 'message-'.$message.message_id, 'captionDesc': ($message.User ? $message.User.username : '') . ' · ' . date_time($message.message_date) } }}"/>
+	</xf:set>
+	
+	<div class="message js-message{{ ($message.user_id === $xf.visitor.user_id ? ' is-visitor' : '') . ($filter.around_message_id === $message.message_id ? ' is-highlight' : '') . (($xf.visitor.user_id === $message.user_id && $message.xfm_has_been_read) ? ' has-been-read' : '') . ($message.isUnread() ? ' is-unread' : '') }}" 
+		 id="convMessage-{$message.message_id}"
+		 data-message-id="{$message.message_id}"
+		 data-message-date="{$message.message_date}"
+		 data-user-id="{$message.user_id}"
+		 data-day="{{ rtc_day($message.message_date) }}"
+		 data-day-ts="{{ rtc_day_ts($message.message_date) }}"
+	>
+		<xf:if is="$message.user_id !== $xf.visitor.user_id">
+			<div class="content-icon">
+				<xf:avatar user="$message.User" size="xs" />
+			</div>
+		</xf:if>
+
+		{$bubble|raw}
+	</div>
+</xf:macro>
+
+<xf:macro name="message_beside_buttons" arg-message="!">
+	<xf:if is="$message.user_id !== $xf.visitor.user_id && $message.Conversation.canReply()">
+		<div class="btn" 
+			 data-xf-click="chat-editor-insert" 
+			 data-content="{{ {'type': 'mention', 'value': $message.User.username, 'denotationChar': '@' }|json }}"
+		>
+			<xf:fa icon="fa-at" />
+		</div>
+
+		<div class="btn" 
+			 data-xf-click="chat-message-action" 
+			 data-action="quote"
+			 data-message-id="{$message.message_id}"
+			 data-href="{{ link('conversations/messages/quote', $message) }}"
+		>
+			<xf:fa icon="fa-quote-right" />
+		</div>
+	</xf:if>
+</xf:macro>
+
+<xf:macro name="message_menu" arg-message="!">
+	<xf:if is="$message.canReact()">
+		<div class="menu-reactions">
+			<div class="menu-linkReactions">
+				<xf:foreach loop="$xf.reactionsActive" key="$reactionId" value="$reaction">
+					<div class="message-react{{ $message.getVisitorReactionId() === $reactionId ? ' is-selected' : '' }}"
+						 data-href="{{ link('conversations/messages/react', $message, {'reaction_id': $reactionId}) }}"
+						 data-xf-click="chat-message-action" 
+						 data-action="react"
+						 data-message-id="{$message.message_id}"
+						 data-menu-closer=""
+					 >
+						<xf:reaction id="{$reactionId}" 
+									 tooltip="true" />
+					</div>
+				</xf:foreach>
+			</div>
+		</div>
+	</xf:if>
+	<div class="menu-content">
+		<xf:if is="$message.Conversation.canReply()">
+			<span class="menu-linkRow" 
+				  data-xf-click="chat-message-action" 
+				  data-action="quote"
+				  data-message-id="{$message.message_id}"
+				  data-href="{{ link('conversations/messages/quote', $message) }}"
+				  data-menu-closer=""
+			 >
+				<xf:fa icon="fa-reply" />
+				{{ phrase('reply') }}
+			</span>
+		</xf:if>
+		<span class="menu-linkRow" 
+			  data-xf-init="copy-to-clipboard" 
+			  data-xf-click=""
+			  data-copy-text="{$message.message}"
+			  data-menu-closer=""
+		>
+			<xf:fa icon="fa-copy" />
+			{{ phrase('button.copy') }}
+		</span>
+		<span class="menu-linkRow" 
+			  data-xf-init="copy-to-clipboard" 
+			  data-xf-click=""
+			  data-copy-text="{{ link('canonical:conversations/messages', $message) }}"
+			  data-menu-closer=""
+		>
+			<xf:fa icon="fa-link" />
+			{{ phrase('rtc_copy_link') }}
+		</span>
+		<xf:if is="$message.canTranslate()">
+			<span class="menu-linkRow" 
+				  data-xf-click="switch"
+				  href="{{ link('conversations/messages/translate', $message) }}"
+				  data-sk-translate="{{ phrase('rtc_translate') }}"
+				  data-sk-untranslate="{{ phrase('rtc_restore_original') }}"
+				  data-menu-closer=""
+			>
+				<xf:fa icon="fa-language" />
+				<span class="js-label">
+					{{ phrase_dynamic($message.hasTranslationForUser($xf.visitor.user_id) ? 'rtc_restore_original' : 'rtc_translate') }}
+				</span>
+			</span>
+		</xf:if>
+		<xf:if is="$message.canEdit()">
+			<span class="menu-linkRow" 
+				  data-xf-click="chat-message-action" 
+				  data-action="edit"
+				  data-message-id="{$message.message_id}"
+				  data-menu-closer=""
+				  >
+				<xf:fa icon="fa-pencil" />
+				{{ phrase('edit') }}
+			</span>
+		</xf:if>
+		<xf:if is="$message.canReport()">
+			<span class="menu-linkRow" 
+				  data-xf-click="chat-message-action" 
+				  data-action="report"
+				  data-message-id="{$message.message_id}"
+				  data-menu-closer=""
+				  >
+				<xf:fa icon="fa-bullhorn" />
+				{{ phrase('report') }}
+			</span>
+		</xf:if>
+		<xf:if is="$message.canCleanSpam()">
+			<a href="{{ link('spam-cleaner', $message) }}"
+			   class="menu-linkRow"
+			   data-xf-click="overlay"
+			   data-menu-closer=""
+			   >
+				<xf:fa icon="fa-trash" />
+				{{ phrase('spam') }}
+			</a>
+		</xf:if>
+		<xf:if is="$xf.visitor.canViewIps() && $message.ip_id">
+			<a href="{{ link('conversations/messages/ip', $message) }}"
+			   class="menu-linkRow"
+			   data-xf-click="overlay"
+			   data-menu-closer=""
+			   >
+				<xf:fa icon="fa-info" />
+				{{ phrase('ip') }}
+			</a>
+		</xf:if>
+		<xf:if is="$message.canDelete()">
+			<span class="menu-linkRow menu-linkRow--warning" 
+				  data-xf-click="chat-message-action" 
+				  data-action="delete"
+				  data-message-id="{$message.message_id}"
+				  data-menu-closer=""
+				  >
+				<xf:fa icon="fa-trash" />
+				{{ phrase('delete') }}
+			</span>
+		</xf:if>
+	</div>
+</xf:macro>
+
+<xf:macro name="message_footer" arg-message="!">
+	<xf:if contentcheck="true">
+		<div class="reactionsBar js-rtcMessageReactionsList {{ $message.reactions ? 'is-active' : '' }}" 
+			 id=#js-rtcMessageReactionsList-{$message.message_id}>
+			<xf:contentcheck>
+				<xf:reactions content="{$message}" link="conversations/messages/reactions" />
+			</xf:contentcheck>
+		</div>
+	</xf:if>
+</xf:macro>
+
+<xf:macro name="message_markers" arg-message="!">
+	<xf:if is="$message.xfm_last_edit_date">
+		<span class="edited">{{ phrase('rtc_edited') }}</span>
+	</xf:if>
+	<span class="time iconic">{{ date($message.message_date, 'H:i') }}</span>
+</xf:macro>]]></template>
+  <template type="public" title="xf_messenger_messages" version_id="1000070" version_string="1.0.0"><![CDATA[<xf:if is="$messages is not empty">
+	<xf:macro name="xf_messenger_message_macros::list" 
+			  arg-userConv="{$userConv}"
+			  arg-messages="{$messages}"
+			  arg-filter="{$filter}" />
+</xf:if>]]></template>
+  <template type="public" title="xf_messenger_popup" version_id="1000070" version_string="1.0.0"><![CDATA[<xf:js src="xf/inline_mod.js" min="1" />
+
+<div class="chat-popup chat-popup--messenger is-loading js-draggableContainer">
+	<xf:macro name="xf_messenger_chat_macros::chat"
+		  arg-createForm="{$createForm}"
+		  arg-roomTag="{$tag}"
+		  arg-attachmentData="{$attachmentData}"
+		  arg-latestMessageDate="{$latestMessageDate}"
+		  arg-compact="{{ true }}"
+		  arg-draggable="{{ true }}"
+		  arg-pushHistory="{{ false }}" />
+</div>]]></template>
+  <template type="public" title="xf_messenger_rooms" version_id="1000070" version_string="1.0.0"><![CDATA[<xf:if is="$userConvs is not empty">
+	<xf:macro template="xf_messenger_chat_macros" 
+			  name="rooms" 
+			  arg-userConvs="{$userConvs}"
+			  arg-filters="{$filters}" />
+</xf:if>]]></template>
+  <template type="public" title="xf_messenger_search_attachments" version_id="1000070" version_string="1.0.0"><![CDATA[<xf:if is="$attachments is not empty">	
+	<div class="scrollable-container">
+		<div class="scrollable">
+			<div class="attachment-items-container">
+				<xf:foreach loop="$attachments" value="$attachment">
+					<xf:macro name="attachment_item" arg-attachment="{$attachment}" arg-canView="{{ true }}" />
+				</xf:foreach>
+			</div>
+		</div>
+	</div>
+	<xf:else />
+	<div class="search-fault">{{ phrase('xfm_no_attachments_found') }}</div>
+</xf:if>
+
+<xf:macro name="attachment_item" arg-attachment="!">
+	<a class="room room--attachment"
+	   href="{$attachment.direct_url}"
+	   target="_blank"
+	>
+		<span class="room-avatar">
+			<xf:if is="$attachment.has_thumbnail">
+				<img src="{$attachment.thumbnail_url}" alt="{$attachment.filename}"
+					 width="{$attachment.thumbnail_width}" height="{$attachment.thumbnail_height}" loading="lazy" />
+				<xf:elseif is="$attachment.is_video AND $canView" />
+				<video data-xf-init="video-init">
+					<source src="{$attachment.direct_url}" />
+				</video>
+				<xf:else />
+				<span class="file-typeIcon">
+					<xf:fa icon="{$attachment.icon}" />
+				</span>
+			</xf:if>
+		</span>
+		
+		<span class="room-content">
+			<span class="room-title-with-markers">
+				<span class="room-title" title="{$attachment.filename}">
+					{$attachment.filename}
+				</span>
+				<span class="room-extra">
+					<ul class="room-extraInfo">
+						<li><xf:date time="{$attachment.attach_date}" /></li>
+					</ul>
+				</span>
+			</span>
+			<span class="room-latest-message js-roomLatestMessage">
+				{$attachment.file_size|file_size} · {$attachment.Container.username} ➝ {$attachment.Container.Conversation.title}
+			</span>
+		</span>
+	</a>
+</xf:macro>]]></template>
+  <template type="public" title="xf_messenger_search_conversations" version_id="1000070" version_string="1.0.0"><![CDATA[<xf:if is="$userConvs is not empty">	
+	<div class="scrollable-container">
+		<div class="scrollable">
+			<div class="room-items-container">
+				<xf:foreach loop="$userConvs" value="$userConv">
+					<xf:macro name="result" arg-userConv="{$userConv}" />
+				</xf:foreach>
+			</div>
+		</div>
+	</div>
+	<xf:else />
+	<div class="search-fault">{{ phrase('xfm_no_conversations_found_for_your_request') }}</div>
+</xf:if>
+
+<xf:macro name="result" arg-userConv="!">
+	<div class="room js-roomResult js-searchClose" 
+	   data-room-tag="{$userConv.conversation_id}"
+	   data-room-title="{$userConv.Master.title}"
+	   data-room-menu-href="{{ link('conversations/messenger/menu', { 'tag': $userConv.conversation_id }) }}"
+	   data-history-url="{{ contains($xf.request.filter('_xfRequestUri', 'str'), 'messenger') ? link('conversations/messenger', { 'tag': $userConv.conversation_id }) : link('conversations', $userConv) }}"
+	   data-can-post-message="{{ $userConv.Master.canReply() ? 'true' : 'false' }}"
+	   data-theme="{$userConv.Master.theme|json}"
+	   data-draft-url="{{ link('conversations/draft', $userConv.Master) }}"
+	   data-pinned="0"
+	   data-xf-click=""
+	   data-last-message="{$userConv.last_message_date}"
+	>
+		<div class="room-avatar">
+			<xf:avatar class="js-roomAvatar" 
+				user="$userConv.AvatarUser" 
+				size="s"
+				notooltip="true"
+				href="" />
+		</div>
+		
+		<div class="room-content">
+			<div class="room-title-with-markers">
+				<div class="room-title" title="{$userConv.Master.title}">
+					{$userConv.Master.title}
+				</div>
+			</div>
+			<div class="room-latest-message js-roomLatestMessage">
+				<xf:date time="{$userConv.Master.start_date}" />
+				
+				<xf:if contentcheck="true">
+					<div class="room-extra">
+						<ul class="room-extraInfo">
+							<xf:contentcheck>
+								<xf:if is="!$userConv.Master.conversation_open">
+									<li data-xf-init="tooltip" title="{{ phrase('locked')|for_attr }}">
+										<xf:fa icon="fas fa-lock" />
+									</li>
+								</xf:if>
+								<xf:if is="$userConv.is_starred">
+									<li class="extra-item extra-item--attention" data-xf-init="tooltip" title="{{ phrase('starred')|for_attr }}">
+										<xf:fa icon="fas fa-star" />
+									</li>
+								</xf:if>
+							</xf:contentcheck>
+						</ul>
+					</div>
+				</xf:if>
+			</div>
+		</div>
+	</div>
+</xf:macro>]]></template>
+</templates>

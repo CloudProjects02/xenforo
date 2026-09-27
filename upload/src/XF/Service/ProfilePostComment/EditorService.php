@@ -100,7 +100,6 @@ class EditorService extends AbstractService
 
 		if ($comment->message_state == 'visible' && $this->alert && $comment->user_id != $visitor->user_id)
 		{
-			/** @var ProfilePostRepository $profilePostRepo */
 			$profilePostRepo = $this->repository(ProfilePostRepository::class);
 			$profilePostRepo->sendCommentModeratorActionAlert($comment, 'edit', $this->alertReason);
 		}

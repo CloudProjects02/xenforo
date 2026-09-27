@@ -2,10 +2,10 @@
 
 namespace XF\Util;
 
-use League\Flysystem\FileNotFoundException;
+use League\Flysystem\FilesystemException;
 use XF\Timer;
 
-use function array_slice, count, strlen, strval;
+use function array_slice, count, is_resource, is_string, strlen, strval;
 
 class File
 {
@@ -76,6 +76,229 @@ class File
 		}
 
 		return $dir;
+	}
+
+	public static function normalizeArchivePath(string $path): ?string
+	{
+		if (!is_string($path) || $path === '' || strpos($path, "\0") !== false)
+		{
+			return null;
+		}
+
+		$path = str_replace('\\', '/', $path);
+		if (
+			$path[0] === '/'
+			|| preg_match('#^[A-Za-z]:#', $path)
+			|| strpos($path, '//') !== false
+			|| preg_match('#(^|/)(?:\\.|\\.\\.)(?:/|$)#', $path)
+		)
+		{
+			return null;
+		}
+
+		return $path;
+	}
+
+	public static function getArchivePathWithinPrefix(
+		string $path,
+		string $prefix
+	): ?string
+	{
+		$path = static::normalizeArchivePath($path);
+		if (
+			$path === null
+			|| $prefix === ''
+			|| substr($path, -1) === '/'
+			|| strpos($path, $prefix) !== 0
+		)
+		{
+			return null;
+		}
+
+		$relativePath = substr($path, strlen($prefix));
+		return $relativePath === '' ? null : $relativePath;
+	}
+
+	public static function validateZipEntryNames(\ZipArchive $zip): bool
+	{
+		for ($i = 0; $i < $zip->numFiles; $i++)
+		{
+			$fileName = $zip->getNameIndex($i);
+			if (
+				!is_string($fileName)
+				|| static::normalizeArchivePath($fileName) === null
+			)
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	public static function getArchivePathWithinDirectory(
+		string $targetDir,
+		string $relativePath
+	): ?string
+	{
+		$relativePath = static::normalizeArchivePath($relativePath);
+		$targetDir = realpath($targetDir);
+		if ($relativePath === null || $targetDir === false)
+		{
+			return null;
+		}
+
+		$finalFileName = $targetDir . \XF::$DS . str_replace('/', \XF::$DS, $relativePath);
+		$normalizedTargetDir = rtrim(str_replace('\\', '/', $targetDir), '/');
+		$normalizedFinalFileName = str_replace('\\', '/', $finalFileName);
+		if (strpos($normalizedFinalFileName, $normalizedTargetDir . '/') !== 0)
+		{
+			return null;
+		}
+
+		return $finalFileName;
+	}
+
+	public static function getSafeArchivePathWithinDirectory(
+		string $targetDir,
+		string $relativePath
+	): ?string
+	{
+		$finalFileName = static::getArchivePathWithinDirectory(
+			$targetDir,
+			$relativePath
+		);
+		if (
+			$finalFileName === null
+			|| !static::isPathSafeForExtraction($targetDir, $finalFileName)
+		)
+		{
+			return null;
+		}
+
+		return $finalFileName;
+	}
+
+	public static function isPathSafeForExtraction(
+		string $targetDir,
+		string $finalFileName
+	): bool
+	{
+		$targetDir = realpath($targetDir);
+		if ($targetDir === false)
+		{
+			return false;
+		}
+
+		$normalizedTargetDir = rtrim(str_replace('\\', '/', $targetDir), '/');
+		$normalizedFinalFileName = str_replace('\\', '/', $finalFileName);
+		if (strpos($normalizedFinalFileName, $normalizedTargetDir . '/') !== 0)
+		{
+			return false;
+		}
+
+		$path = $targetDir;
+		$pathParts = explode(
+			'/',
+			substr($normalizedFinalFileName, strlen($normalizedTargetDir) + 1)
+		);
+		array_pop($pathParts);
+		foreach ($pathParts AS $pathPart)
+		{
+			$path .= \XF::$DS . $pathPart;
+			if (is_link($path) || (file_exists($path) && !is_dir($path)))
+			{
+				return false;
+			}
+		}
+
+		$parentDir = dirname($finalFileName);
+		$resolvedParentDir = $parentDir;
+		while (!file_exists($resolvedParentDir))
+		{
+			$nextParentDir = dirname($resolvedParentDir);
+			if ($nextParentDir === $resolvedParentDir)
+			{
+				return false;
+			}
+			$resolvedParentDir = $nextParentDir;
+		}
+		$resolvedParentDir = realpath($resolvedParentDir);
+		$normalizedResolvedParentDir = $resolvedParentDir === false
+			? false
+			: str_replace('\\', '/', $resolvedParentDir);
+		if (
+			$normalizedResolvedParentDir === false
+			|| (
+				$normalizedResolvedParentDir !== $normalizedTargetDir
+				&& strpos($normalizedResolvedParentDir, $normalizedTargetDir . '/') !== 0
+			)
+		)
+		{
+			return false;
+		}
+
+		return !is_link($finalFileName);
+	}
+
+	public static function extractZipToDirectory(
+		\ZipArchive $zip,
+		string $targetDir
+	): bool
+	{
+		if (!static::validateZipEntryNames($zip))
+		{
+			return false;
+		}
+
+		$targetDir = realpath($targetDir);
+		if ($targetDir === false)
+		{
+			return false;
+		}
+
+		for ($i = 0; $i < $zip->numFiles; $i++)
+		{
+			$zipMemberName = $zip->getNameIndex($i);
+			$zipFileName = static::normalizeArchivePath($zipMemberName);
+			if ($zipFileName === null)
+			{
+				return false;
+			}
+
+			$finalFileName = static::getSafeArchivePathWithinDirectory(
+				$targetDir,
+				$zipFileName
+			);
+			if ($finalFileName === null)
+			{
+				return false;
+			}
+			if (substr($zipFileName, -1) === '/')
+			{
+				if (!static::createDirectory($finalFileName, false))
+				{
+					return false;
+				}
+
+				continue;
+			}
+
+			$dataStream = $zip->getStream($zipMemberName);
+			if (!is_resource($dataStream))
+			{
+				return false;
+			}
+
+			$written = @static::writeFile($finalFileName, $dataStream, false);
+			fclose($dataStream);
+			if (!$written)
+			{
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	public static function createNamedTempDir($filename, $autoCleanUp = true)
@@ -164,9 +387,9 @@ class File
 		foreach ($dir AS $file)
 		{
 			if (
-				$file->isDot() ||
-				!$file->isFile() ||
-				$file->getFilename() === 'index.html'
+				$file->isDot()
+				|| !$file->isFile()
+				|| $file->getFilename() === 'index.html'
 			)
 			{
 				continue;
@@ -249,7 +472,7 @@ class File
 		{
 			\XF::app()->fs()->delete($abstractedPath);
 		}
-		catch (FileNotFoundException $e)
+		catch (FilesystemException $e)
 		{
 		}
 	}
@@ -260,7 +483,7 @@ class File
 		{
 			\XF::app()->fs()->deleteDir($abstractedDir);
 		}
-		catch (FileNotFoundException $e)
+		catch (FilesystemException $e)
 		{
 		}
 	}
@@ -775,17 +998,31 @@ class File
 		\XF::fs()->write('internal-data://install-lock.php', $contents);
 	}
 
-	public static function installLockExists()
+	public static function installLockExists(bool $logException = true)
 	{
+		static $installLockExists = null;
+
+		if ($installLockExists !== null)
+		{
+			return $installLockExists;
+		}
+
 		try
 		{
 			// If this path doesn't exist, then this will throw an exception. We need to handle this elsewhere.
-			return \XF::fs()->has('internal-data://install-lock.php');
+			$installLockExists = \XF::fs()->has('internal-data://install-lock.php');
 		}
-		catch (\Exception $e)
+		catch (\Throwable $e)
 		{
-			return false;
+			if ($logException)
+			{
+				\XF::logException($e, false, 'Error checking install lock:');
+			}
+
+			$installLockExists = true;
 		}
+
+		return $installLockExists;
 	}
 
 	/**

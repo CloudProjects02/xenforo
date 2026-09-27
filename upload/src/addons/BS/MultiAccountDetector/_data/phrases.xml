@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="mad_common_evercookies" version_id="1030071" version_string="1.3.0a"><![CDATA[Common evercookies]]></phrase>
+  <phrase title="mad_common_fingerprints" version_id="1030071" version_string="1.3.0a"><![CDATA[Common fingerprints]]></phrase>
+  <phrase title="mad_evercookie" version_id="1040070" version_string="1.4.0"><![CDATA[Evercookie]]></phrase>
+  <phrase title="mad_find_mults" version_id="1030070" version_string="1.3.0"><![CDATA[Find multi-accounts]]></phrase>
+  <phrase title="mad_fingerprintjs" version_id="1040070" version_string="1.4.0"><![CDATA[FingerprintJS]]></phrase>
+  <phrase title="mad_fingerprintjs_pro" version_id="1040070" version_string="1.4.0"><![CDATA[FingerprintJS Pro]]></phrase>
+  <phrase title="mad_multi_account" version_id="1030070" version_string="1.3.0"><![CDATA[Multi-account]]></phrase>
+  <phrase title="mad_multi_account_date" version_id="1030070" version_string="1.3.0"><![CDATA[Discovery date]]></phrase>
+  <phrase title="mad_multi_account_detected_post_content" version_id="1050070" version_string="1.5.0"><![CDATA[[SIZE=6][B]Hey![/B][/SIZE] 👋
+[SIZE=6][B]It seems to me that [USER={user_id}]{username}[/USER] has multiple accounts, look yourself[/B][/SIZE] 👥
+[HR][/HR]
+[SIZE=5][B][COLOR=rgb(243, 121, 52)]Users with same Fingerprints[/COLOR][/B][/SIZE] 🔔
+{fingerprint_users}
+
+[SIZE=5][B][COLOR=rgb(26, 188, 156)]Users with same Fingerprints (Pro)[/COLOR][/B][/SIZE] 🔔🔔
+{fingerprint_pro_users}
+
+[SIZE=5][B][COLOR=rgb(147, 101, 184)]Users with same Evercookies[/COLOR][/B][/SIZE] ⚠️
+{evercookie_users}]]></phrase>
+  <phrase title="mad_multi_account_list_is_empty" version_id="1030070" version_string="1.3.0"><![CDATA[Multi-account list is empty]]></phrase>
+  <phrase title="mad_multi_accounts" version_id="1030070" version_string="1.3.0"><![CDATA[Multi-accounts]]></phrase>
+  <phrase title="mad_new_multi_account_of_user_x_detected" version_id="1040270" version_string="1.4.2"><![CDATA[👥 New multi-account of user {name} detected]]></phrase>
+  <phrase title="mad_processing_reports" version_id="1040070" version_string="1.4.0"><![CDATA[Processing reports]]></phrase>
+  <phrase title="mad_reason_for_closure" version_id="1040070" version_string="1.4.0"><![CDATA[Reason for closure]]></phrase>
+  <phrase title="mad_recently_closed_mults" version_id="1030170" version_string="1.3.1"><![CDATA[Recently closed multi-accounts]]></phrase>
+  <phrase title="mad_users_found_with_the_same_evercookie" version_id="1030070" version_string="1.3.0"><![CDATA[Users discovered with the same evercookie]]></phrase>
+  <phrase title="mad_users_found_with_the_same_fingerprint" version_id="1030070" version_string="1.3.0"><![CDATA[Users discovered with the same fingerprint]]></phrase>
+  <phrase title="mad_x_has_not_multi_accounts" version_id="1030070" version_string="1.3.0"><![CDATA[{name} has not multi-accounts.]]></phrase>
+  <phrase title="option.madCheckCooldown" version_id="1050470" version_string="1.5.4"><![CDATA[Check cooldown]]></phrase>
+  <phrase title="option.madCloseIfBan" version_id="1030070" version_string="1.3.0"><![CDATA[Close multi-account report when user is banned]]></phrase>
+  <phrase title="option.madEnableReports" version_id="1030170" version_string="1.3.1"><![CDATA[Enable multi-account reports]]></phrase>
+  <phrase title="option.madEvercookie" version_id="1030070" version_string="1.3.0"><![CDATA[Evercookie detection]]></phrase>
+  <phrase title="option.madEvercookieDetectedUserGroup" version_id="1060170" version_string="1.6.1"><![CDATA[Evercookie detected user group]]></phrase>
+  <phrase title="option.madFingerprint" version_id="1030070" version_string="1.3.0"><![CDATA[Fingerprint detection]]></phrase>
+  <phrase title="option.madFingerprintDetectedUserGroup" version_id="1060170" version_string="1.6.1"><![CDATA[Fingerprint detected user group]]></phrase>
+  <phrase title="option.madFingerprintProToken" version_id="1030370" version_string="1.3.3"><![CDATA[FingerprintJS Pro token]]></phrase>
+  <phrase title="option.madReportOnNewUser" version_id="1040270" version_string="1.4.2"><![CDATA[Create a separate report if a new multi-account is detected]]></phrase>
+  <phrase title="option.madShowReportsLinkAlways" version_id="1040270" version_string="1.4.2"><![CDATA[Display link to reports regardless of the open reports presence]]></phrase>
+  <phrase title="option.madThreadReportCreator" version_id="1050270" version_string="1.5.2"><![CDATA[Thread report duplicate creator]]></phrase>
+  <phrase title="option.madThreadReportForum" version_id="1040270" version_string="1.4.2"><![CDATA[Create thread report duplicate in specific forum]]></phrase>
+  <phrase title="option_explain.madCheckCooldown" version_id="1050470" version_string="1.5.4"><![CDATA[The add-on periodically checks the data (evercookies and fingerprints) of the user, sending them to the server. This option is responsible for how often these checks will be performed.]]></phrase>
+  <phrase title="option_explain.madCloseIfBan" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.madEnableReports" version_id="1030170" version_string="1.3.1"><![CDATA[]]></phrase>
+  <phrase title="option_explain.madEvercookie" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.madEvercookieDetectedUserGroup" version_id="1060170" version_string="1.6.1"><![CDATA[This group will be automatically assigned to the user if he falls under the definition of a multi-account using the evercookie method.]]></phrase>
+  <phrase title="option_explain.madFingerprint" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.madFingerprintDetectedUserGroup" version_id="1060170" version_string="1.6.1"><![CDATA[This group will be automatically assigned to the user if he falls under the definition of a multi-account using the fingerprint method.]]></phrase>
+  <phrase title="option_explain.madFingerprintProToken" version_id="1040270" version_string="1.4.2"><![CDATA[Purchased FingerprintJS Pro token for more accurate detection.
+More information: <a href="https://fingerprintjs.com/" target="_blank">https://fingerprintjs.com/</a>.<br>
+<b>Not required for regular FingerprintJS detection.</b>]]></phrase>
+  <phrase title="option_explain.madReportOnNewUser" version_id="1040270" version_string="1.4.2"><![CDATA[Let's imagine the situation: User Bobby already has a report on a multi-account, which contains his other account with the nickname George, and he logs into a new account with the nickname Henryk. If this option is enabled, a new report will be created for the Henryk account, which will list the previous two accounts: Bobby and George. If this option is disabled, Henryk's account will be added to the first report on Bobby's account. However, if this report is closed, you will not receive a new notification.]]></phrase>
+  <phrase title="option_explain.madShowReportsLinkAlways" version_id="1040270" version_string="1.4.2"><![CDATA[]]></phrase>
+  <phrase title="option_explain.madThreadReportCreator" version_id="1050270" version_string="1.5.2"><![CDATA[Required for thread report duplicate creation.]]></phrase>
+  <phrase title="option_explain.madThreadReportForum" version_id="1040270" version_string="1.4.2"><![CDATA[Works only if multi-accounts reports are enabled.]]></phrase>
+  <phrase title="option_group.multiAccountDetectorOptions" version_id="1060170" version_string="1.6.1"><![CDATA[[021] Multi-account detector options]]></phrase>
+  <phrase title="option_group_description.multiAccountDetectorOptions" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="permission.general_bypassMultiAccount" version_id="1030170" version_string="1.3.1"><![CDATA[Bypass multi-account detection]]></phrase>
+  <phrase title="permission.general_editMultiAccounts" version_id="1030070" version_string="1.3.0"><![CDATA[Manage multi-accounts]]></phrase>
+</phrases>

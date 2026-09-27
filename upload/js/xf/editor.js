@@ -395,6 +395,19 @@
 
 			ed.events.on('cut copy', function (e)
 			{
+				let inlineColors
+				let defaultColor
+				let undoIndex
+
+				if (e.type === 'cut')
+				{
+					inlineColors = new Map(
+						Array.from(ed.el.querySelectorAll('[style*="color"]'), element => [element, element.style.color]),
+					)
+					defaultColor = getComputedStyle(ed.el).color
+					undoIndex = ed.undo_index
+				}
+
 				const range = ed.selection.ranges(0)
 				if (!range || !range.commonAncestorContainer)
 				{
@@ -436,6 +449,28 @@
 				setTimeout(function ()
 				{
 					ps.forEach(p => p.removeAttribute('data-xf-p'))
+
+					if (inlineColors)
+					{
+						ed.el.querySelectorAll('[style*="color"]').forEach(element =>
+						{
+							if (
+								element.style.color === defaultColor
+								&& element.style.backgroundColor === 'transparent'
+								&& inlineColors.get(element) !== element.style.color
+							)
+							{
+								element.style.removeProperty('color')
+							}
+						})
+
+						if (ed.undo_index === undoIndex + 1)
+						{
+							ed.undo_index--
+							ed.undo_stack.pop()
+							ed.undo.saveStep()
+						}
+					}
 				}, 0)
 			})
 
@@ -525,43 +560,15 @@
 					content = match[1].trim()
 				}
 
+				content = t.preserveRenderedBbCode(content)
+
 				content = XF.adjustHtmlForRte(content)
 
 				const range = document.createRange()
 				const fragment = range.createContextualFragment(content)
 				const nodes = Array.from(fragment.childNodes)
 
-				const removeAttributesFromNodeList = function (nodes)
-				{
-					let node, attrs, i, a
-
-					for (i = 0; i < nodes.length; i++)
-					{
-						node = nodes[i]
-						if (node instanceof Element)
-						{
-							if (node.hasAttributes())
-							{
-								attrs = node.attributes
-
-								for (a = attrs.length - 1; a >= 0; a--)
-								{
-									const attr = attrs[a]
-									if (attr.name.toLowerCase().substr(0, 2) == 'on'
-										|| attr.name.toLowerCase() == 'style'
-									)
-									{
-										node.removeAttribute(attr.name)
-									}
-								}
-							}
-
-							removeAttributesFromNodeList(node.childNodes)
-						}
-					}
-				}
-
-				removeAttributesFromNodeList(nodes)
+				t.filterPastedHtmlAttributes(nodes)
 
 				const div = XF.createElementFromString('<div></div>')
 				div.append(...nodes)
@@ -725,6 +732,92 @@
 			XF.EditorHelpers.blur(this.ed)
 		},
 
+		preserveRenderedBbCode (content)
+		{
+			const range = document.createRange()
+			const fragment = range.createContextualFragment(content)
+			const fragWrapper = XF.createElementFromString('<div></div>')
+			fragWrapper.append(...Array.from(fragment.childNodes))
+
+			fragWrapper.querySelectorAll('.bbCodeBlock--code').forEach(block =>
+			{
+				const pre = block.querySelector('.bbCodeCode')
+				const code = pre ? pre.querySelector('code') : null
+				if (!code)
+				{
+					return
+				}
+
+				const classMatch = code.className ? code.className.match(/language-(\S+)/) : null
+				const language = pre.dataset.lang || (classMatch ? classMatch[1] : '')
+				const wrapper = document.createElement('p')
+				wrapper.setAttribute('data-xf-p', '1')
+				wrapper.append(document.createTextNode(`[CODE${ language ? `=${ language }` : '' }]`))
+				wrapper.append(document.createElement('br'))
+				wrapper.append(...Array.from(code.childNodes))
+				wrapper.append(document.createElement('br'))
+				wrapper.append(document.createTextNode('[/CODE]'))
+				block.replaceWith(wrapper)
+			})
+
+			fragWrapper.querySelectorAll('code.bbCodeInline').forEach(code =>
+			{
+				code.replaceWith(document.createTextNode(`[ICODE]${ code.textContent }[/ICODE]`))
+			})
+
+			fragWrapper.querySelectorAll('.bbCodeInlineSpoiler').forEach(spoiler =>
+			{
+				spoiler.prepend(document.createTextNode('[ISPOILER]'))
+				spoiler.append(document.createTextNode('[/ISPOILER]'))
+			})
+
+			fragWrapper.querySelectorAll('.bbPlain').forEach(plain =>
+			{
+				plain.replaceWith(document.createTextNode(`[PLAIN]${ plain.textContent }[/PLAIN]`))
+			})
+
+			return fragWrapper.innerHTML
+		},
+
+		filterPastedHtmlAttributes (nodes)
+		{
+			for (const node of nodes)
+			{
+				if (!(node instanceof Element))
+				{
+					continue
+				}
+
+				Array.from(node.attributes).forEach(attr =>
+				{
+					const name = attr.name.toLowerCase()
+					if (name.substr(0, 2) === 'on')
+					{
+						node.removeAttribute(attr.name)
+					}
+					else if (name === 'style')
+					{
+						const style = this.filterPastedInlineStyle(node, attr.value)
+						if (style)
+						{
+							node.setAttribute(attr.name, style)
+						}
+						else
+						{
+							node.removeAttribute(attr.name)
+						}
+					}
+				})
+
+				this.filterPastedHtmlAttributes(node.childNodes)
+			}
+		},
+
+		filterPastedInlineStyle (element, style)
+		{
+			return ''
+		},
+
 		normalizePaste (content)
 		{
 			// FF has a tendency of maintaining whitespace from the content which gives odd pasting results
@@ -758,19 +851,19 @@
 				})
 
 				let maxColumns = 0
-				table.querySelectorAll('> tbody > tr').forEach(row =>
+				table.querySelectorAll(':scope > tbody > tr').forEach(row =>
 				{
-					const columnCount = row.querySelectorAll('> td, > th').length
+					const columnCount = row.querySelectorAll(':scope > td, :scope > th').length
 					maxColumns = Math.max(maxColumns, columnCount)
 				})
 
-				table.querySelectorAll('> tbody > tr').forEach(row =>
+				table.querySelectorAll(':scope > tbody > tr').forEach(row =>
 				{
-					const cells = row.querySelectorAll('> td, > th')
+					const cells = row.querySelectorAll(':scope > td, :scope > th')
 					const columnCount = cells.length
 					if (columnCount < maxColumns)
 					{
-						const tag = columnCount && cells[0].tagName === 'TH' ? '<th />' : '<td />'
+						const tag = columnCount && cells[0].tagName === 'TH' ? 'th' : 'td'
 						for (let i = columnCount; i < maxColumns; i++)
 						{
 							const newCell = document.createElement(tag)
@@ -783,8 +876,11 @@
 			const elementsToReplace = fragWrapper.querySelectorAll('code, del, ins, sub, sup')
 			elementsToReplace.forEach(element =>
 			{
-				const newContent = document.createTextNode(element.innerHTML)
-				element.parentNode.replaceChild(newContent, element)
+				while (element.firstChild)
+				{
+					element.parentNode.insertBefore(element.firstChild, element)
+				}
+				element.remove()
 			})
 
 			// We expose H2 - H4 primarily. If we find an H1, consider that to be the biggest heading and
@@ -2471,7 +2567,7 @@
 				const range = document.createRange()
 				const fragment = range.createContextualFragment(selected)
 
-				selectedText = fragment.firstChild.textContent.trim()
+				selectedText = fragment.textContent.trim()
 			}
 
 			// weird FF behavior where inserting code wouldn't replace the current selection without this
@@ -3972,6 +4068,13 @@
 
 						previewBox.innerHTML = ''
 						previewBox.append(...previewHtml.querySelector('.bbWrapper').childNodes)
+
+						// disable submit buttons in preview
+						previewBox.querySelectorAll('button:not([type])').forEach(button =>
+						{
+							button.type = 'button'
+						})
+
 						XF.display(previewBox)
 					}
 
@@ -3987,8 +4090,13 @@
 						ed.events.trigger('form.submit')
 
 						const form = ed.$oel.closest('form')[0]
-						const href = ed.$oel.data('preview-url') ? ed.$oel.data('preview-url') : form.dataset.previewUrl
-						const formData = XF.getDefaultFormData(form)
+						const href = ed.$oel.data('preview-url') ? ed.$oel.data('preview-url') : (form ? form.dataset.previewUrl : null)
+						if (!href)
+						{
+							return
+						}
+
+						const formData = form ? XF.getDefaultFormData(form) : new FormData()
 
 						XF.ajax(
 							'POST',

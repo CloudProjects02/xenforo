@@ -9,6 +9,9 @@ use XF\Service\ProfilePost\DeleterService;
 
 use function is_string, strlen;
 
+/**
+ * @extends AbstractHandler<ProfilePost>
+ */
 class ProfilePostHandler extends AbstractHandler
 {
 	public function getStoredTitle(Entity $entity)
@@ -33,13 +36,11 @@ class ProfilePostHandler extends AbstractHandler
 
 	public function getContentUser(Entity $entity)
 	{
-		/** @var ProfilePost $entity */
 		return $entity->User;
 	}
 
 	public function canViewContent(Entity $entity, &$error = null)
 	{
-		/** @var ProfilePost $entity */
 		return $entity->canView();
 	}
 
@@ -75,7 +76,6 @@ class ProfilePostHandler extends AbstractHandler
 				$reason = '';
 			}
 
-			/** @var DeleterService $deleter */
 			$deleter = \XF::app()->service(DeleterService::class, $entity);
 			$deleter->delete('soft', $reason);
 		}
@@ -88,7 +88,6 @@ class ProfilePostHandler extends AbstractHandler
 
 	protected function canDeleteContent(Entity $entity)
 	{
-		/** @var ProfilePost $entity */
 		return $entity->canDelete('soft');
 	}
 

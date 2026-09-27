@@ -13,7 +13,7 @@ use XF\Phrase;
  * @property string $definition_id
  * @property int $display_order
  * @property bool $show_value
- * @property array $options
+ * @property array|null $options
  * @property bool $active
  *
  * GETTERS

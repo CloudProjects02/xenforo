@@ -85,7 +85,17 @@ class IpRepository extends Repository
 			$cutOff = \XF::$time - 86400 * $this->options()->ipLogCleanUp['delay'];
 		}
 
-		return $this->db()->delete('xf_ip', 'log_date < ?', $cutOff);
+		$db = $this->db();
+		$totalDeleted = 0;
+
+		do
+		{
+			$deleted = $db->delete('xf_ip', 'log_date < ?', $cutOff, '', '', 1000);
+			$totalDeleted += $deleted;
+		}
+		while ($deleted >= 1000);
+
+		return $totalDeleted;
 	}
 
 	public function getLoggedIp($contentType, $contentId, $action, $userId = null)

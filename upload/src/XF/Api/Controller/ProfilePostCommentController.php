@@ -89,7 +89,6 @@ class ProfilePostCommentController extends AbstractController
 			'attachment_key' => 'str',
 		]);
 
-		/** @var EditorService $editor */
 		$editor = $this->service(EditorService::class, $comment);
 
 		if ($input['message'] !== null)
@@ -149,7 +148,6 @@ class ProfilePostCommentController extends AbstractController
 			$type = 'hard';
 		}
 
-		/** @var DeleterService $deleter */
 		$deleter = $this->service(DeleterService::class, $comment);
 
 		if ($this->filter('author_alert', 'bool') && $comment->canSendModeratorActionAlert())

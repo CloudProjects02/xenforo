@@ -30,11 +30,9 @@ abstract class AbstractNode extends AbstractController
 		$nodeRepo = $this->getNodeRepo();
 		$nodeTree = $nodeRepo->createNodeTree($nodeRepo->getFullNodeList());
 
-		/** @var StyleRepository $styleRepo */
 		$styleRepo = $this->repository(StyleRepository::class);
 		$styleTree = $styleRepo->getStyleTree(false);
 
-		/** @var NavigationRepository $navRepo */
 		$navRepo = $this->repository(NavigationRepository::class);
 		$navChoices = $navRepo->getTopLevelEntries();
 

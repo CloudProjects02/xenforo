@@ -7,9 +7,7 @@ use XF\Repository\OptionRepository;
 
 class VerifyEmailDkim extends AbstractJob
 {
-	protected $defaultData = [
-		'attempts' => 0,
-	];
+	use Retryable;
 
 	public function run($maxRunTime): JobResult
 	{
@@ -20,34 +18,23 @@ class VerifyEmailDkim extends AbstractJob
 			return $this->complete();
 		}
 
-		/** @var OptionRepository $optionRepo */
 		$optionRepo = $this->app->repository(OptionRepository::class);
 
-		/** @var EmailDkimRepository $emailDkimRepo */
 		$emailDkimRepo = $this->app->repository(EmailDkimRepository::class);
 		$verified = $emailDkimRepo->verifyDnsRecordForDomain($optionValue['domain']);
 
 		if (!$verified)
 		{
-			// gee, be nice if there was something generic for this
+			$nextAttemptOrComplete = $this->attemptLaterOrComplete();
 
-			$nextAttempt = $this->getNextAttemptDate($this->data['attempts']);
-			if (!$nextAttempt)
+			if ($nextAttemptOrComplete->result === JobResult::RESULT_COMPLETED)
 			{
 				// officially give up, something is wonky
 				$optionValue['failed'] = true;
 				$optionRepo->updateOption('emailDkim', $optionValue);
-
-				return $this->complete();
 			}
 
-			$result = $this->resume();
-			$result->data = [
-				'attempts' => ++$this->data['attempts'],
-			];
-			$result->continueDate = $nextAttempt;
-
-			return $result;
+			return $nextAttemptOrComplete;
 		}
 
 		$optionValue['verified'] = true;
@@ -72,7 +59,7 @@ class VerifyEmailDkim extends AbstractJob
 		return false;
 	}
 
-	protected function getNextAttemptDate(int $previousAttempts)
+	protected function calculateNextAttemptDate(int $previousAttempts): ?int
 	{
 		switch ($previousAttempts)
 		{

@@ -222,7 +222,6 @@ class ToolsController extends AbstractController
 		$this->setSectionContext('rebuildCaches');
 		$this->assertAdminPermission('rebuildCache');
 
-		/** @var PermissionCombinationRepository $permComboRepo */
 		$permComboRepo = $this->repository(PermissionCombinationRepository::class);
 
 		$missing = $permComboRepo->insertGuestCombinationIfMissing();
@@ -231,7 +230,6 @@ class ToolsController extends AbstractController
 			$this->app->jobManager()->enqueueUnique('permissionRebuild', PermissionRebuild::class);
 		}
 
-		/** @var PermissionEntryRepository $permEntryRepo */
 		$permEntryRepo = $this->repository(PermissionEntryRepository::class);
 
 		$permEntryRepo->deleteOrphanedGlobalUserPermissionEntries();
@@ -256,7 +254,6 @@ class ToolsController extends AbstractController
 		{
 			if ($urlValidator->isValid($url, $errorKey))
 			{
-				/** @var TesterService $testerService */
 				$testerService = $this->service(TesterService::class, $url);
 				$results = $testerService->test($error, $body);
 			}
@@ -349,7 +346,6 @@ class ToolsController extends AbstractController
 
 		if ($this->isPost() && $url && $urlValidator->isValid($url))
 		{
-			/** @var ImageProxyService $proxyService */
 			$proxyService = $this->service(ImageProxyService::class);
 			$results = $proxyService->testImageFetch($url);
 		}
@@ -396,7 +392,6 @@ class ToolsController extends AbstractController
 			$page = $this->filterPage();
 			$perPage = 20;
 
-			/** @var FileCheckRepository $fileCheckRepo */
 			$fileCheckRepo = $this->repository(FileCheckRepository::class);
 			$fileCheckFinder = $fileCheckRepo->findFileChecksForList()
 				->limitByPage($page, $perPage);
@@ -433,12 +428,10 @@ class ToolsController extends AbstractController
 		$this->assertAdminPermission('upgradeXenForo');
 		$this->assertUpgradeCheckingPossible();
 
-		/** @var UpgradeCheckRepository $upgradeCheckRepo */
 		$upgradeCheckRepo = $this->repository(UpgradeCheckRepository::class);
 
 		if ($this->isPost())
 		{
-			/** @var CheckerService $checker */
 			$checker = $this->app->service(CheckerService::class);
 			$check = $checker->check();
 			$failed = $check ? false : true;
@@ -461,7 +454,6 @@ class ToolsController extends AbstractController
 		$this->assertUpgradeCheckingPossible();
 		$this->assertCanOneClickUpgrade();
 
-		/** @var UpgradeCheckRepository $upgradeCheckRepo */
 		$upgradeCheckRepo = $this->repository(UpgradeCheckRepository::class);
 		$upgradeCheck = $upgradeCheckRepo->getLatestUpgradeCheck();
 
@@ -485,7 +477,6 @@ class ToolsController extends AbstractController
 			return $this->message($error);
 		}
 
-		/** @var ValidatorService $validator */
 		$validator = $this->service(ValidatorService::class);
 		if (!$validator->canAttempt($error))
 		{
@@ -526,7 +517,6 @@ class ToolsController extends AbstractController
 				}
 			}
 
-			/** @var DownloaderService $downloader */
 			$downloader = $this->service(DownloaderService::class, 'XF');
 
 			$dir = File::getTempDir();
@@ -585,7 +575,6 @@ class ToolsController extends AbstractController
 
 		foreach ($filesToDownload AS $addOnId => $fileToDownload)
 		{
-			/** @var DownloaderService $downloader */
 			$downloader = $this->service(DownloaderService::class, $addOnId);
 			$downloader->setValidateFile(false); // most validation happens in the archive validator
 
@@ -600,7 +589,6 @@ class ToolsController extends AbstractController
 				throw $this->exception($this->error($error));
 			}
 
-			/** @var \XF\Service\AddOnArchive\ValidatorService $validator */
 			$validator = $this->service(\XF\Service\AddOnArchive\ValidatorService::class, $download, $addOnId);
 			if (!$validator->validate($error))
 			{
@@ -610,7 +598,6 @@ class ToolsController extends AbstractController
 			$downloadedFiles[$addOnId] = $download;
 		}
 
-		/** @var InstallBatchCreatorService $creator */
 		$creator = $this->service(InstallBatchCreatorService::class, $this->app->addOnManager());
 		foreach ($downloadedFiles AS $addOnId => $downloadedFile)
 		{
@@ -633,7 +620,6 @@ class ToolsController extends AbstractController
 		$this->assertUpgradeCheckingPossible();
 		$this->assertCanOneClickUpgrade();
 
-		/** @var UpgradeCheckRepository $upgradeCheckRepo */
 		$upgradeCheckRepo = $this->repository(UpgradeCheckRepository::class);
 		$upgradeCheck = $upgradeCheckRepo->getLatestUpgradeCheck();
 
@@ -653,7 +639,6 @@ class ToolsController extends AbstractController
 			return $this->error(\XF::phrase('issues_with_license_must_resolve_before_upgrading'));
 		}
 
-		/** @var AddOnRepository $addOnRepo */
 		$addOnRepo = $this->repository(AddOnRepository::class);
 		if (!$addOnRepo->canInstallFromArchive($error, true))
 		{
@@ -732,7 +717,6 @@ class ToolsController extends AbstractController
 		$this->assertUpgradeCheckingPossible();
 		$this->assertCanOneClickUpgrade();
 
-		/** @var UpgradeCheckRepository $upgradeCheckRepo */
 		$upgradeCheckRepo = $this->repository(UpgradeCheckRepository::class);
 		$upgradeCheck = $upgradeCheckRepo->getLatestUpgradeCheck();
 
@@ -745,7 +729,6 @@ class ToolsController extends AbstractController
 			return $this->error(\XF::phrase('issues_with_license_must_resolve_before_upgrading'));
 		}
 
-		/** @var AddOnRepository $addOnRepo */
 		$addOnRepo = $this->repository(AddOnRepository::class);
 		if (!$addOnRepo->canInstallFromArchive($error, true))
 		{
@@ -817,7 +800,6 @@ class ToolsController extends AbstractController
 	{
 		if ($upgradeCheck->isRefreshRecommended())
 		{
-			/** @var CheckerService $checker */
 			$checker = $this->app->service(CheckerService::class);
 			$newCheck = $checker->check();
 			if ($newCheck)
@@ -831,7 +813,6 @@ class ToolsController extends AbstractController
 
 	protected function assertUpgradeCheckingPossible()
 	{
-		/** @var UpgradeCheckRepository $upgradeCheckRepo */
 		$upgradeCheckRepo = $this->repository(UpgradeCheckRepository::class);
 
 		if (!$upgradeCheckRepo->canCheckForUpgrades($error))
@@ -846,7 +827,6 @@ class ToolsController extends AbstractController
 
 	protected function assertCanOneClickUpgrade()
 	{
-		/** @var UpgradeCheckRepository $upgradeCheckRepo */
 		$upgradeCheckRepo = $this->repository(UpgradeCheckRepository::class);
 
 		if (!$upgradeCheckRepo->canOneClickUpgrade($error))

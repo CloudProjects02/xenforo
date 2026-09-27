@@ -106,7 +106,6 @@ class ReportController extends AbstractController
 
 		$moderators = $this->getReportRepo()->getModeratorsWhoCanHandleReport($report);
 
-		/** @var UserAlertRepository $userAlertRepo */
 		$userAlertRepo = $this->repository(UserAlertRepository::class);
 		$userAlertRepo->markUserAlertsReadForContent('report', $report->report_id);
 
@@ -175,7 +174,6 @@ class ReportController extends AbstractController
 	{
 		$message = $this->plugin(EditorPlugin::class)->fromInput('message');
 
-		/** @var CommenterService $commenter */
 		$commenter = $this->service(CommenterService::class, $report);
 		$commenter->setMessage($message);
 

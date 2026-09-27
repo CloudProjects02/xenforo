@@ -35,8 +35,10 @@ use XF\Service\User\WarningPointsChangeService;
  * @property-read User|null $WarnedBy
  * @property-read WarningDefinition|null $Definition
  */
-class Warning extends Entity implements ViewableInterface
+class Warning extends Entity implements DatableInterface, ViewableInterface
 {
+	use DatableTrait;
+
 	public function canView(&$error = null)
 	{
 		return \XF::visitor()->canViewWarnings();
@@ -215,9 +217,13 @@ class Warning extends Entity implements ViewableInterface
 			return;
 		}
 
-		/** @var WarningPointsChangeService $changeService */
 		$changeService = $this->app()->service(WarningPointsChangeService::class, $user);
 		$changeService->shiftPoints($adjustment, $isDelete);
+	}
+
+	public function getContentDateColumn(): string
+	{
+		return 'warning_date';
 	}
 
 	public static function getStructure(Structure $structure)

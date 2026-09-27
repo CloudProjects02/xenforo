@@ -13,7 +13,7 @@ use XF\Repository\AdvertisingRepository;
  * @property string $title
  * @property string $position_id
  * @property string $ad_html
- * @property array $display_criteria
+ * @property array|null $display_criteria
  * @property int $display_order
  * @property bool $active
  *

@@ -87,7 +87,6 @@ class PollHandler extends AbstractHandler
 		/** @var Poll $pollHelper */
 		$pollHelper = \XF::helper(Poll::class);
 
-		/** @var PollCreatorService $creator */
 		$creator = \XF::service(PollCreatorService::class, $thread);
 
 		$pollHelper->configureCreatorFromInput(
@@ -124,7 +123,6 @@ class PollHandler extends AbstractHandler
 		/** @var Poll $pollHelper */
 		$pollHelper = \XF::helper(Poll::class);
 
-		/** @var PollCreatorService $creator */
 		$creator = \XF::service(PollCreatorService::class, $thread);
 
 		$pollHelper->configureCreatorFromInput(

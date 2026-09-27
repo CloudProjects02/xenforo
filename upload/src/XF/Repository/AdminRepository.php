@@ -3,13 +3,12 @@
 namespace XF\Repository;
 
 use XF\Finder\AdminFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 class AdminRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return AdminFinder
 	 */
 	public function findAdminsForList()
 	{

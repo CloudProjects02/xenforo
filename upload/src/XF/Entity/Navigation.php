@@ -4,6 +4,7 @@ namespace XF\Entity;
 
 use XF\Behavior\DevOutputWritable;
 use XF\Finder\NodeFinder;
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XF\Navigation\AbstractType;
@@ -21,7 +22,7 @@ use function is_array;
  * @property string $parent_navigation_id
  * @property int $display_order
  * @property string $navigation_type_id
- * @property array $type_config
+ * @property array|null $type_config
  * @property string $condition_expression
  * @property string $condition_setup
  * @property string $data_expression
@@ -29,7 +30,7 @@ use function is_array;
  * @property string $global_setup
  * @property bool $enabled
  * @property bool $is_customized
- * @property array $default_value
+ * @property array|null $default_value
  * @property string $addon_id
  *
  * GETTERS
@@ -39,7 +40,7 @@ use function is_array;
  * RELATIONS
  * @property-read AddOn|null $AddOn
  * @property-read Navigation|null $Parent
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\Navigation> $Children
+ * @property-read AbstractCollection<Navigation> $Children
  * @property-read \XF\Entity\Phrase|null $MasterTitle
  */
 class Navigation extends Entity
@@ -348,7 +349,6 @@ class Navigation extends Entity
 
 	protected function _setupDefaults()
 	{
-		/** @var AddOnRepository $addOnRepo */
 		$addOnRepo = $this->_em->getRepository(AddOnRepository::class);
 		$this->addon_id = $addOnRepo->getDefaultAddOnId();
 	}

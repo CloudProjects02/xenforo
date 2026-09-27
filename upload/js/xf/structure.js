@@ -308,7 +308,7 @@
 		activateTarget (selector)
 		{
 			const tabs = this.tabs
-			let selectorValid = false
+			let selectorValid
 			let found = false
 
 			if (selector)
@@ -450,7 +450,7 @@
 			if (this.options.state)
 			{
 				let href = window.location.href.split('#')[0]
-				let state = {}
+				let state
 
 				if (tab.id)
 				{
@@ -527,12 +527,12 @@
 
 		isVisible ()
 		{
-			return this.toggleTarget.classList.contains(this.options.activeClass)
+			return this.toggleTarget[0].classList.contains(this.options.activeClass)
 		},
 
 		isTransitioning ()
 		{
-			return this.toggleTarget.classList.contains('is-transitioning')
+			return this.toggleTarget.some(target => target.classList.contains('is-transitioning'))
 		},
 
 		toggle ()
@@ -566,7 +566,7 @@
 				{
 					XF.setupHtmlInsert(data.html, (html, container, onComplete) =>
 					{
-						const loadSelector = this.toggleTarget.dataset.loadSelector
+						const loadSelector = this.toggleTarget[0].dataset.loadSelector
 						if (loadSelector)
 						{
 							const newHtml = html.querySelector(loadSelector)
@@ -577,7 +577,10 @@
 						}
 
 						this.ajaxLoaded = true
-						this.toggleTarget.append(html)
+						this.toggleTarget.forEach(target =>
+						{
+							target.append(html.cloneNode(true))
+						})
 						XF.activate(html)
 
 						onComplete(true)
@@ -609,7 +612,10 @@
 			}
 			if (this.toggleTarget)
 			{
-				XF.Transition.removeClassTransitioned(this.toggleTarget, activeClass, this.inactiveTransitionComplete, instant)
+				this.toggleTarget.forEach(target =>
+				{
+					XF.Transition.removeClassTransitioned(target, activeClass, this.inactiveTransitionComplete, instant)
+				})
 			}
 			XF.Transition.removeClassTransitioned(this.target, activeClass, this.inactiveTransitionComplete, instant)
 		},
@@ -641,14 +647,17 @@
 			}
 			if (this.toggleTarget)
 			{
-				XF.Transition.addClassTransitioned(this.toggleTarget, activeClass, this.activeTransitionComplete, instant)
+				this.toggleTarget.forEach(target =>
+				{
+					XF.Transition.addClassTransitioned(target, activeClass, this.activeTransitionComplete, instant)
+				})
 			}
 			XF.Transition.addClassTransitioned(this.target, activeClass, this.activeTransitionComplete, instant)
 
 			this.hideSpecified()
 			this.scrollTo()
 
-			XF.autoFocusWithin(this.toggleTarget, '[autofocus], [data-toggle-autofocus]')
+			XF.autoFocusWithin(this.toggleTarget[0], '[autofocus], [data-toggle-autofocus]')
 		},
 
 		activeTransitionComplete (e)
@@ -700,8 +709,8 @@
 		{
 			if (this.options.scrollTo)
 			{
-				const toggleTarget = this.toggleTarget,
-					topOffset = toggleTarget.getBoundingClientRect().top + window.scrollY,
+				const toggleTarget = this.toggleTarget[0]
+				const topOffset = toggleTarget.getBoundingClientRect().top + window.scrollY,
 					height = toggleTarget.offsetHeight,
 					windowHeight = document.documentElement.clientHeight
 
@@ -722,7 +731,7 @@
 
 		getToggleUrl ()
 		{
-			const toggleTarget = this.toggleTarget
+			const toggleTarget = this.toggleTarget[0]
 			const url = toggleTarget.dataset.href
 
 			if (toggleTarget && url)
@@ -769,14 +778,32 @@
 
 	XF.getToggleTarget = (optionTarget, thisTarget) =>
 	{
-		const target = optionTarget ? XF.findRelativeIf(optionTarget, thisTarget) : thisTarget.nextElementSibling
+		const result = optionTarget
+			? XF.findRelativeIf(optionTarget, thisTarget)
+			: thisTarget.nextElementSibling
 
-		if (!target)
+		const targets = XF.toElementArray(result)
+		if (targets.length === 0)
 		{
-			throw new Error('No toggle target for %o', thisTarget)
+			throw new Error('No toggle target found.')
 		}
 
-		return target
+		return targets
+	}
+
+	XF.toElementArray = (value) =>
+	{
+		if (!value)
+		{
+			return []
+		}
+
+		if (value instanceof Element)
+		{
+			return [value]
+		}
+
+		return Array.from(value)
 	}
 
 	XF.CommentToggleClick = XF.extend(XF.ToggleClick, {
@@ -788,7 +815,7 @@
 		{
 			this._show()
 
-			const editorPlaceholder = this.toggleTarget.querySelector('[data-xf-click~="editor-placeholder"]')
+			const editorPlaceholder = this.toggleTarget[0].querySelector('[data-xf-click~="editor-placeholder"]')
 			if (editorPlaceholder)
 			{
 				editorPlaceholder.click()
@@ -845,7 +872,10 @@
 					const activeClass = this.options.activeClass
 
 					this.target.classList.toggle(activeClass, toggleValue)
-					toggleTarget.classList.toggle(activeClass, toggleValue)
+					toggleTarget.forEach(target =>
+					{
+						target.classList.toggle(activeClass, toggleValue)
+					})
 				}
 			}
 
@@ -933,8 +963,8 @@
 
 		hasSeeked ()
 		{
-			const width = this.target.offsetWidth
-			const height = this.target.offsetHeight
+			const width = this.target.videoWidth
+			const height = this.target.videoHeight
 			const canvas = XF.createElement('canvas', {
 				width: width,
 				height: height

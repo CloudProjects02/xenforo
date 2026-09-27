@@ -15,7 +15,7 @@ use XF\Repository\NewsFeedRepository;
  * @property int $content_id
  * @property string $action
  * @property int $event_date
- * @property array $extra_data
+ * @property array|null $extra_data
  *
  * GETTERS
  * @property-read Entity|null $Content

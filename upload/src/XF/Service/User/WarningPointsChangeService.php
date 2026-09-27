@@ -136,7 +136,6 @@ class WarningPointsChangeService extends AbstractService
 				break;
 
 			case 'discourage':
-				/** @var TempChangeService $changeService */
 				$changeService = $this->service(TempChangeService::class);
 				$changeService->applyFieldChange(
 					$this->user,
@@ -155,7 +154,6 @@ class WarningPointsChangeService extends AbstractService
 			case 'groups':
 				$userGroupChangeKey = 'warning_action_' . $action->warning_action_id;
 
-				/** @var TempChangeService $changeService */
 				$changeService = $this->service(TempChangeService::class);
 				$changeService->applyGroupChange(
 					$this->user,
@@ -319,7 +317,6 @@ class WarningPointsChangeService extends AbstractService
 			case 'groups':
 				$tempChangeKey = 'warning_action_' . $trigger['warning_action_id'] . '_' . $trigger['action'];
 
-				/** @var UserChangeTempRepository $changeRepo */
 				$changeRepo = $this->repository(UserChangeTempRepository::class);
 				$changeRepo->expireUserChangeByKey($this->user, $tempChangeKey);
 				break;
@@ -360,7 +357,6 @@ class WarningPointsChangeService extends AbstractService
 			case 'groups':
 				$tempChangeKey = $action->getTempUserChangeKey();
 
-				/** @var UserChangeTempRepository $changeRepo */
 				$changeRepo = $this->repository(UserChangeTempRepository::class);
 				$changeRepo->expireUserChangeByKey($this->user, $tempChangeKey);
 				break;

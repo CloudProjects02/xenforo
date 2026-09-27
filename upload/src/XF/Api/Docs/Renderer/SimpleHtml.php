@@ -215,8 +215,8 @@ class SimpleHtml implements RendererInterface
 		{
 			if (preg_match('#^([a-z0-9_]+)(\[.*$)#i', $type, $match))
 			{
-				$typeSimple = $match[0];
-				$typeExtended = $match[1];
+				$typeSimple = $match[1];
+				$typeExtended = $match[2];
 			}
 			else
 			{

@@ -18,7 +18,6 @@ class MemberStat extends AbstractWidget
 		$params = parent::getDefaultTemplateParams($context);
 		if ($context == 'options')
 		{
-			/** @var MemberStatRepository $memberStatRepo */
 			$memberStatRepo = $this->repository(MemberStatRepository::class);
 			$memberStats = $memberStatRepo->findMemberStatsForList()
 				->where('active', 1)
@@ -48,7 +47,6 @@ class MemberStat extends AbstractWidget
 		$results = $memberStat->getResults();
 		$userIds = array_keys($results);
 
-		/** @var UserFinder $userFinder */
 		$userFinder = $this->finder(UserFinder::class);
 
 		$users = $userFinder

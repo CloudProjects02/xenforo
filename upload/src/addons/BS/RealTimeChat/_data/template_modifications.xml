@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="PAGE_CONTAINER" modification_key="PAGE_CONTAINER_chat_js" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[{$ldJsonHtml|raw}]]></find>
+    <replace><![CDATA[$0
+<xf:js src="bs/quill_editor/vendor/quill.1.3.7-modified.js" min="1" />
+<xf:js src="bs/quill_editor/vendor/quill.imageUploader.1.3.0.min.js" />
+<xf:js src="bs/quill_editor/editor.js" min="1" />
+<xf:js src="bs/quill_editor/matchers.js" min="1" />
+<xf:js src="bs/quill_editor/quotes.js" min="1" />
+<xf:js src="bs/quill_editor/smilie-embed.js" min="1" />
+<xf:js src="bs/quill_editor/vendor/quill.mention.3.2.0.min.js" />
+<xf:js src="bs/quill_editor/mentions.js" min="1" />
+
+<xf:js src="bs/real_time_chat/popup-module.js" min="1" />
+<xf:js src="bs/real_time_chat/main-modules.js" min="1" />
+<xf:js src="bs/messenger/search.js" min="1" />
+<xf:js src="bs/messenger/crosspage.js" min="1" />]]></replace>
+  </modification>
+  <modification type="public" template="PAGE_CONTAINER" modification_key="rtc_PAGE_CONTAINER_chat_popup_button" description="Add popup button" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[js-bottomFixTarget">]]></find>
+    <replace><![CDATA[$0
+<!-- We need rtc_popup.less for another add-ons that uses chat popup -->
+<xf:css src="rtc_popup.less" />
+<xf:if is="callable($xf.visitor, 'canViewChat') && $xf.visitor.canViewChat() && $xf.options.rtcPopup">
+	<div class="button--rtcPopup" 
+		 data-event-prefix="RTC" 
+		 data-xf-init="chat-popup-btn"
+		 data-url="{{ link('chat/popup') }}"
+		 data-active-on-mobile="{{ $xf.options.rtcMobilePopup ? 'true' : 'false' }}"
+		 >
+		<xf:fa icon="fas fa-comments-alt" />
+	</div>
+</xf:if>]]></replace>
+  </modification>
+  <modification type="public" template="RTC_PAGE_CONTAINER" modification_key="rtc_PAGE_CONTAINER_chat_js" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[{$ldJsonHtml|raw}]]></find>
+    <replace><![CDATA[$0
+<xf:js src="bs/quill_editor/vendor/quill.1.3.7-modified.js" min="1" />
+<xf:js src="bs/quill_editor/vendor/quill.imageUploader.1.3.0.min.js" />
+<xf:js src="bs/quill_editor/editor.js" min="1" />
+<xf:js src="bs/quill_editor/matchers.js" min="1" />
+<xf:js src="bs/quill_editor/quotes.js" min="1" />
+<xf:js src="bs/quill_editor/smilie-embed.js" min="1" />
+<xf:js src="bs/quill_editor/vendor/quill.mention.3.2.0.min.js" />
+<xf:js src="bs/quill_editor/mentions.js" min="1" />
+
+<xf:js src="bs/real_time_chat/popup-module.js" min="1" />
+<xf:js src="bs/real_time_chat/main-modules.js" min="1" />
+<xf:js src="bs/messenger/search.js" min="1" />
+<xf:js src="bs/messenger/crosspage.js" min="1" />]]></replace>
+  </modification>
+  <modification type="public" template="account_preferences" modification_key="rtc_account_preferences_language_input" description="Add RTC language input" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:selectrow name="user[timezone]"]]></find>
+    <replace><![CDATA[<xf:if is="$rtcLanguages is not empty">
+	<xf:selectrow name="user[rtc_language_code]" value="{$rtcLanguageCode}"
+		label="{{ phrase('rtc_chat_language') }}"
+		explain="{{ phrase('rtc_chat_language_explain') }}">
+
+		<xf:foreach loop="$rtcLanguages" key="$code" value="$language">
+			<xf:option value="{$code}">{$language.title}</xf:option>
+		</xf:foreach>
+	</xf:selectrow>
+</xf:if>
+
+$0]]></replace>
+  </modification>
+  <modification type="admin" template="bs_ai_bot.chat_gpt_tab_panes" modification_key="bs_rtc_chat_gpt_tab_panes_chat_context" description="Add chat context to triggers section" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[label="{{ phrase('conversation') }}" />]]></find>
+    <replace><![CDATA[$0
+
+<xf:option value="chat"
+		   label="{{ phrase('real_time_chat_header') }}" />]]></replace>
+  </modification>
+  <modification type="admin" template="bs_ai_bot.chat_gpt_tab_panes" modification_key="bs_rtc_chat_gpt_tab_panes_chat_prompts" description="Add chat prompts" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!-- TUNING: AFTER CONVERSATIONS -->]]></find>
+    <replace><![CDATA[$0
+
+<xf:include template="rtc_bs_ai_bot.chat_gpt_tab_panes" />]]></replace>
+  </modification>
+  <modification type="public" template="core_avatar.less" modification_key="rtc_core_avatar_less_add_avatar_less" description="Add rtc_avatar.less" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[/$/]]></find>
+    <replace><![CDATA[$0
+<xf:include template="rtc_avatar.less" />]]></replace>
+  </modification>
+  <modification type="public" template="helper_js_global" modification_key="rtc_phrases_helper_js_global" description="Add phrases" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[// <!--[XF:js_global:xf_phrase_start]-->]]></find>
+    <replace><![CDATA[$0
+rtc_x_writing_message: "{{ phrase('rtc_x_writing_message')|escape('js') }}",
+rtc_x_and_y_writing_message: "{{ phrase('rtc_x_and_y_writing_message')|escape('js') }}",
+rtc_x_y_and_z_more_writing_message: "{{ phrase('rtc_x_y_and_z_more_writing_message')|escape('js') }}",
+rtc_x_members_joined: "{{ phrase('rtc_x_members_joined')|escape('js') }}",]]></replace>
+  </modification>
+</template_modifications>

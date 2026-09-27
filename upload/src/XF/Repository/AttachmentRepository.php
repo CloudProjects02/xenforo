@@ -9,7 +9,6 @@ use XF\Finder\AttachmentDataFinder;
 use XF\Finder\AttachmentFinder;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 use function is_array;
@@ -57,7 +56,7 @@ class AttachmentRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return AttachmentFinder
 	 */
 	public function findAttachmentsForList()
 	{
@@ -70,7 +69,7 @@ class AttachmentRepository extends Repository
 	/**
 	 * @param string $hash
 	 *
-	 * @return Finder
+	 * @return AttachmentFinder
 	 */
 	public function findAttachmentsByTempHash($hash)
 	{
@@ -83,7 +82,7 @@ class AttachmentRepository extends Repository
 	 * @param string $contentType
 	 * @param int $contentId
 	 *
-	 * @return Finder
+	 * @return AttachmentFinder
 	 */
 	public function findAttachmentsByContent($contentType, $contentId)
 	{
@@ -96,7 +95,7 @@ class AttachmentRepository extends Repository
 	/**
 	 * @param int $dataId
 	 *
-	 * @return Finder
+	 * @return AttachmentFinder
 	 */
 	public function findAttachmentsByDataId(int $dataId)
 	{
@@ -146,6 +145,48 @@ class AttachmentRepository extends Repository
 		return new $handlerClass($type);
 	}
 
+	/**
+	 * @param AbstractCollection<Attachment> $attachments
+	 */
+	public function addContainersToAttachments(AbstractCollection $attachments): void
+	{
+		$idsByType = [];
+		foreach ($attachments AS $attachment)
+		{
+			if (!$attachment->content_type || !$attachment->content_id)
+			{
+				continue;
+			}
+
+			$idsByType[$attachment->content_type][] = $attachment->content_id;
+		}
+
+		$containersByType = [];
+		foreach ($idsByType AS $contentType => $ids)
+		{
+			$handler = $this->getAttachmentHandler($contentType);
+			if (!$handler)
+			{
+				continue;
+			}
+
+			$containersByType[$contentType] = $handler->getContainerEntity($ids);
+		}
+
+		foreach ($attachments AS $attachment)
+		{
+			$contentType = $attachment->content_type;
+			$contentId = $attachment->content_id;
+			$container = $containersByType[$contentType][$contentId] ?? null;
+			if (!$container)
+			{
+				continue;
+			}
+
+			$attachment->setContainer($container);
+		}
+	}
+
 	public function getDefaultAttachmentConstraints()
 	{
 		$options = $this->options();
@@ -186,6 +227,25 @@ class AttachmentRepository extends Repository
 	public function getAudioAttachmentExtensions()
 	{
 		return array_keys($this->app()->inlineAudioTypes);
+	}
+
+	/**
+	 * @return array<int, int>
+	 */
+	public function getThumbnailSizes(bool $forceAll = false): array
+	{
+		$options = \XF::options();
+		$thumbSize = $options->attachmentThumbnailDimensions;
+		$sizes = [
+			1 => $thumbSize,
+		];
+
+		if ($forceAll || $options->attachmentThumbnailRetina)
+		{
+			$sizes[2] = $thumbSize * 2;
+		}
+
+		return $sizes;
 	}
 
 	public function logAttachmentView(Attachment $attachment)

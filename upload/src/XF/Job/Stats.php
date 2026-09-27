@@ -40,7 +40,6 @@ class Stats extends AbstractJob
 
 		$end = $this->data['position'] + $this->data['batch'] * 86400;
 
-		/** @var StatsRepository $statsRepo */
 		$statsRepo = $this->app->repository(StatsRepository::class);
 		$statsRepo->build($this->data['position'], $end);
 

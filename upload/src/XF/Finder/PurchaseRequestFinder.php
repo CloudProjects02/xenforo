@@ -2,14 +2,15 @@
 
 namespace XF\Finder;
 
+use XF\Entity\PurchaseRequest;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Finder;
 
 /**
- * @method AbstractCollection<\XF\Entity\PurchaseRequest> fetch(?int $limit = null, ?int $offset = null)
- * @method AbstractCollection<\XF\Entity\PurchaseRequest> fetchDeferred(?int $limit = null, ?int $offset = null)
- * @method \XF\Entity\PurchaseRequest|null fetchOne(?int $offset = null)
- * @extends Finder<\XF\Entity\PurchaseRequest>
+ * @method AbstractCollection<PurchaseRequest> fetch(?int $limit = null, ?int $offset = null)
+ * @method AbstractCollection<PurchaseRequest> fetchDeferred(?int $limit = null, ?int $offset = null)
+ * @method PurchaseRequest|null fetchOne(?int $offset = null)
+ * @extends Finder<PurchaseRequest>
  */
 class PurchaseRequestFinder extends Finder
 {

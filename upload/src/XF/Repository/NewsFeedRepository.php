@@ -17,7 +17,6 @@ class NewsFeedRepository extends Repository
 	 */
 	public function findNewsFeed($applyPrivacyChecks = true)
 	{
-		/** @var NewsFeedFinder $finder */
 		$finder = $this->finder(NewsFeedFinder::class);
 
 		if ($applyPrivacyChecks)

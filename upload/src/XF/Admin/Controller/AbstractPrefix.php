@@ -32,8 +32,8 @@ abstract class AbstractPrefix extends AbstractController
 
 	public function actionIndex()
 	{
-		$viewParams = $this->getRepo()->getPrefixListData() +
-		[
+		$viewParams = $this->getRepo()->getPrefixListData()
+		+ [
 			'linkPrefix' => $this->getLinkPrefix(),
 			'groupLinkPrefix' => $this->getGroupLinkPrefix(),
 		];

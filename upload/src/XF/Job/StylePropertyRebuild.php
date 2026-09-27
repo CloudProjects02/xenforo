@@ -10,7 +10,6 @@ class StylePropertyRebuild extends AbstractJob
 
 	public function run($maxRunTime)
 	{
-		/** @var RebuildService $rebuildService */
 		$rebuildService = $this->app->service(RebuildService::class);
 
 		$rebuildService->rebuildFullPropertyMap();

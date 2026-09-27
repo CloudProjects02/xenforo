@@ -39,8 +39,8 @@ class IfTag extends AbstractTag
 		$currentPart = 0;
 		$parts = [
 			$currentPart => [
-				'condition' => !empty($attributes['is']) ?
-					$compiler->compileForcedExpression($attributes['is'], $conditionContext) : null,
+				'condition' => !empty($attributes['is'])
+					? $compiler->compileForcedExpression($attributes['is'], $conditionContext) : null,
 				'contentcheck' => !empty($attributes['contentcheck']) ? true : null,
 				'children' => [],
 				'tag' => $tag,
@@ -62,8 +62,8 @@ class IfTag extends AbstractTag
 
 				$currentPart++;
 				$parts[$currentPart] = [
-					'condition' => !empty($child->attributes['is']) ?
-						$compiler->compileForcedExpression($child->attributes['is'], $conditionContext) : null,
+					'condition' => !empty($child->attributes['is'])
+						? $compiler->compileForcedExpression($child->attributes['is'], $conditionContext) : null,
 					'contentcheck' => !empty($child->attributes['contentcheck']) ? true : null,
 					'children' => [],
 					'tag' => $child,

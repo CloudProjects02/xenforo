@@ -51,7 +51,6 @@ class Export extends AbstractCommand
 
 		$output->writeln(["", "Exporting data for {$addOn->title} to {$addOn->getDataDirectory()}."]);
 
-		/** @var ExporterService $exporterService */
 		$exporterService = \XF::app()->service(ExporterService::class, $addOn);
 
 		$containers = $exporterService->getContainers();

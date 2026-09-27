@@ -145,6 +145,34 @@ class PreRegActionRepository extends Repository
 		return new $class($type);
 	}
 
+	public function limitPreRegActionsByIp(string $ipAddress, int $maxAllowed): void
+	{
+		if ($maxAllowed <= 0)
+		{
+			return;
+		}
+
+		$cutOffRow = $this->db()->fetchRow('
+			SELECT action_id, last_update
+			FROM xf_pre_reg_action
+			WHERE ip_address = ?
+			ORDER BY last_update DESC, action_id DESC
+			LIMIT ?, 1
+		', [$ipAddress, $maxAllowed]);
+
+		if ($cutOffRow)
+		{
+			$this->db()->query('
+				DELETE FROM xf_pre_reg_action
+				WHERE ip_address = ?
+					AND (
+						last_update < ?
+						OR (last_update = ? AND action_id <= ?)
+					)
+			', [$ipAddress, $cutOffRow['last_update'], $cutOffRow['last_update'], $cutOffRow['action_id']]);
+		}
+	}
+
 	public function pruneActions(?int $cutOff = null)
 	{
 		if ($cutOff === null)

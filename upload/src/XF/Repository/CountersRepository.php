@@ -10,11 +10,9 @@ class CountersRepository extends Repository
 	{
 		$cache = [];
 
-		/** @var ForumRepository $forumRepo */
 		$forumRepo = $this->repository(ForumRepository::class);
 		$cache += $forumRepo->getForumCounterTotals();
 
-		/** @var UserRepository $userRepo */
 		$userRepo = $this->repository(UserRepository::class);
 
 		$cache['users'] = $userRepo->findValidUsers()->total();

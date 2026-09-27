@@ -139,8 +139,8 @@ trait ImageTrait
 		}
 
 		if (
-			$this->image['width'] != $this->imageTargetSize ||
-			$this->image['height'] != $this->imageTargetSize
+			$this->image['width'] != $this->imageTargetSize
+			|| $this->image['height'] != $this->imageTargetSize
 		)
 		{
 			$imageManager = $this->app->imageManager();

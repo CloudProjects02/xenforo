@@ -185,7 +185,6 @@ class Thread extends AbstractSearcher
 
 		if ($key == 'tags')
 		{
-			/** @var TagRepository $tagRepo */
 			$tagRepo = $this->em->getRepository(TagRepository::class);
 
 			$tags = $tagRepo->splitTagList($value);
@@ -271,19 +270,15 @@ class Thread extends AbstractSearcher
 
 	public function getFormData()
 	{
-		/** @var ThreadPrefixRepository $prefixRepo */
 		$prefixRepo = $this->em->getRepository(ThreadPrefixRepository::class);
 		$prefixes = $prefixRepo->getPrefixListData();
 
-		/** @var NodeRepository $nodeRepo */
 		$nodeRepo = $this->em->getRepository(NodeRepository::class);
 		$forums = $nodeRepo->getNodeOptionsData(false, 'Forum');
 
-		/** @var UserGroupRepository $userGroupRepo */
 		$userGroupRepo = $this->em->getRepository(UserGroupRepository::class);
 		$userGroups = $userGroupRepo->findUserGroupsForList()->fetch();
 
-		/** @var ThreadTypeRepository */
 		$threadTypeRepo = $this->em->getRepository(ThreadTypeRepository::class);
 		$threadTypes = $threadTypeRepo->getThreadTypeListData();
 

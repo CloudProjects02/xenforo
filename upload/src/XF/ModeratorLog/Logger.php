@@ -8,14 +8,30 @@ use XF\Mvc\Entity\Entity;
 
 class Logger
 {
+	/**
+	 * @var array<string, class-string<AbstractHandler>>
+	 */
 	protected $types;
+
+	/**
+	 * @var array<string, AbstractHandler>
+	 */
 	protected $handlers = [];
 
+	/**
+	 * @param array<string, class-string<AbstractHandler>> $types
+	 */
 	public function __construct(array $types)
 	{
 		$this->types = $types;
 	}
 
+	/**
+	 * @param string $type
+	 * @param bool $throw
+	 *
+	 * @return array<string, ModeratorLog>
+	 */
 	public function logChanges($type, Entity $content, $throw = true, ?User $actor = null)
 	{
 		$handler = $this->handler($type, $throw);
@@ -70,6 +86,16 @@ class Logger
 		return $logs;
 	}
 
+	/**
+	 * @param string $type
+	 * @param Entity|int $content
+	 * @param string $field
+	 * @param bool $throw
+	 * @param mixed $newValue
+	 * @param mixed $oldValue
+	 *
+	 * @return ModeratorLog|array{}|null
+	 */
 	public function logChange($type, $content, $field, $throw = true, $newValue = null, $oldValue = null, ?User $actor = null)
 	{
 		$handler = $this->handler($type, $throw);
@@ -117,6 +143,15 @@ class Logger
 		return $handler->logChange($content, $field, $newValue, $oldValue, $actor);
 	}
 
+	/**
+	 * @param string $type
+	 * @param Entity|int $content
+	 * @param string $action
+	 * @param array<mixed> $params
+	 * @param bool $throw
+	 *
+	 * @return ModeratorLog|array{}|null
+	 */
 	public function log($type, $content, $action, array $params = [], $throw = true, ?User $actor = null)
 	{
 		$handler = $this->handler($type, $throw);
@@ -150,16 +185,27 @@ class Logger
 		return $handler->log($content, $action, $params, $actor);
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getContentTitle(ModeratorLog $log)
 	{
 		return $this->handler($log->content_type)->getContentTitle($log);
 	}
 
+	/**
+	 * @return string|\Stringable
+	 */
 	public function getAction(ModeratorLog $log)
 	{
 		return $this->handler($log->content_type)->getAction($log);
 	}
 
+	/**
+	 * @param string $type
+	 *
+	 * @return bool
+	 */
 	public function isValidContentType($type)
 	{
 		return isset($this->types[$type]) && class_exists($this->types[$type]);
@@ -167,8 +213,9 @@ class Logger
 
 	/**
 	 * @param string $type
+	 * @param bool $throw
 	 *
-	 * @return AbstractHandler|null
+	 * @return ($throw is true ? AbstractHandler : AbstractHandler|null)
 	 */
 	public function handler($type, $throw = true)
 	{

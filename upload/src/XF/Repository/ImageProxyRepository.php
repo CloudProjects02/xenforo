@@ -5,7 +5,6 @@ namespace XF\Repository;
 use XF\Db\DeadlockException;
 use XF\Entity\ImageProxy;
 use XF\Finder\ImageProxyFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 use function ord;
@@ -13,7 +12,7 @@ use function ord;
 class ImageProxyRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return ImageProxyFinder
 	 */
 	public function findImageProxyLogsForList()
 	{

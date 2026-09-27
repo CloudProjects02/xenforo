@@ -11,6 +11,15 @@ use XF\Repository\AttachmentRepository;
 
 use function intval;
 
+/**
+ * @phpstan-type TContext array{
+ *     post_id?: int|null,
+ *     thread_id?: int|null,
+ *     node_id?: int|null,
+ * }
+ *
+ * @extends AbstractHandler<Post, TContext>
+ */
 class PostHandler extends AbstractHandler
 {
 	public function getContainerWith()
@@ -22,14 +31,17 @@ class PostHandler extends AbstractHandler
 
 	public function canView(Attachment $attachment, Entity $container, &$error = null)
 	{
-		/** @var Post $container */
 		if (!$container->canView())
 		{
 			return false;
 		}
 
-		/** @var Thread $thread */
 		$thread = $container->Thread;
+		if ($thread === null)
+		{
+			return false;
+		}
+
 		return $thread->canViewAttachments($error);
 	}
 
@@ -46,7 +58,6 @@ class PostHandler extends AbstractHandler
 			return;
 		}
 
-		/** @var Post $container */
 		$container->attach_count--;
 		$container->save();
 
@@ -55,7 +66,6 @@ class PostHandler extends AbstractHandler
 
 	public function getConstraints(array $context)
 	{
-		/** @var AttachmentRepository $attachRepo */
 		$attachRepo = \XF::repository(AttachmentRepository::class);
 
 		$constraints = $attachRepo->getDefaultAttachmentConstraints();
@@ -96,6 +106,11 @@ class PostHandler extends AbstractHandler
 		return $extraContext;
 	}
 
+	/**
+	 * @param TContext $context
+	 *
+	 * @return Forum|null
+	 */
 	protected function getForumFromContext(array $context)
 	{
 		$em = \XF::em();
@@ -103,18 +118,22 @@ class PostHandler extends AbstractHandler
 
 		if (!empty($context['post_id']))
 		{
-			/** @var Post $post */
 			$post = $em->find(Post::class, intval($context['post_id']), ['Thread', 'Thread.Forum']);
 			if (!$post || !$post->canView() || !$post->canEdit())
 			{
 				return null;
 			}
 
-			$forum = $post->Thread->Forum;
+			$thread = $post->Thread;
+			if ($thread === null)
+			{
+				return null;
+			}
+
+			$forum = $thread->Forum;
 		}
 		else if (!empty($context['thread_id']))
 		{
-			/** @var Thread $thread */
 			$thread = $em->find(Thread::class, intval($context['thread_id']), ['Forum']);
 			if (!$thread || !$thread->canView())
 			{
@@ -125,7 +144,6 @@ class PostHandler extends AbstractHandler
 		}
 		else if (!empty($context['node_id']))
 		{
-			/** @var Forum $forum */
 			$forum = $em->find(Forum::class, intval($context['node_id']));
 			if (!$forum || !$forum->canView())
 			{

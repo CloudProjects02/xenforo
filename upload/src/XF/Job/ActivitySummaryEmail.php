@@ -6,7 +6,7 @@ use XF\ActivitySummary\Instance;
 use XF\Entity\ActivitySummarySection;
 use XF\Entity\User;
 use XF\Finder\ActivitySummarySectionFinder;
-use XF\Mvc\Entity\ArrayCollection;
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Repository\ActivitySummaryRepository;
 use XF\Timer;
 
@@ -25,7 +25,7 @@ class ActivitySummaryEmail extends AbstractJob
 	];
 
 	/**
-	 * @var ArrayCollection|ActivitySummarySection[]
+	 * @var AbstractCollection<ActivitySummarySection>
 	 */
 	protected $sections;
 
@@ -107,7 +107,17 @@ class ActivitySummaryEmail extends AbstractJob
 
 	protected function generateAndSendEmail(User $user)
 	{
-		$instance = $this->generateEmailData($user);
+		$originalLanguage = \XF::language();
+
+		try
+		{
+			\XF::setLanguage(\XF::app()->userLanguage($user));
+			$instance = $this->generateEmailData($user);
+		}
+		finally
+		{
+			\XF::setLanguage($originalLanguage);
+		}
 
 		if ($instance->canSendActivitySummary())
 		{
@@ -156,7 +166,6 @@ class ActivitySummaryEmail extends AbstractJob
 			}
 		}
 
-		/** @var ActivitySummaryRepository $repo */
 		$repo = $this->app->repository(ActivitySummaryRepository::class);
 
 		$repo->addInstanceSpecificDisplayValues($instance);

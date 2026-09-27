@@ -54,10 +54,11 @@ class QuotePlugin extends AbstractPlugin
 				$message = $this->prepareMessage($content, null, $messageKey);
 			}
 
-			if (!$message)
+			if ($message === null || $message === '')
 			{
 				continue;
 			}
+
 			[$quote, $quoteHtml] = $this->getQuote($content, $message, $context);
 
 			$output[] = ['quote' => $quote, 'quoteHtml' => $quoteHtml];
@@ -129,9 +130,7 @@ class QuotePlugin extends AbstractPlugin
 		$innerContent = $this->app->stringFormatter()->getBbCodeForQuote($message, $context);
 		if (strlen($innerContent))
 		{
-			$quote = $content->getQuoteWrapper(
-				$this->app->stringFormatter()->getBbCodeForQuote($message, $context)
-			);
+			$quote = $content->getQuoteWrapper($innerContent);
 		}
 		else
 		{

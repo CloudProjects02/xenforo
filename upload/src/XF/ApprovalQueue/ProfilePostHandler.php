@@ -6,17 +6,18 @@ use XF\Entity\ProfilePost;
 use XF\Mvc\Entity\Entity;
 use XF\Service\ProfilePost\ApproverService;
 
+/**
+ * @extends AbstractHandler<ProfilePost>
+ */
 class ProfilePostHandler extends AbstractHandler
 {
 	protected function canActionContent(Entity $content, &$error = null)
 	{
-		/** @var $content \XF\Entity\ProfilePost */
 		return $content->canApproveUnapprove($error);
 	}
 
 	public function actionApprove(ProfilePost $profilePost)
 	{
-		/** @var ApproverService $approver */
 		$approver = \XF::service(ApproverService::class, $profilePost);
 		$approver->approve();
 	}

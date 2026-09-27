@@ -478,7 +478,7 @@ class Response
 		{
 			if ($this->compress)
 			{
-				$toPrint = gzencode($this->body, 1);
+				$toPrint = gzencode($this->body, 9);
 			}
 			else
 			{

@@ -13,16 +13,21 @@ class RevokerService extends AbstractService
 	 */
 	protected $authToken;
 
-	public function __construct(App $app, OAuthToken $refreshToken)
+	public function __construct(App $app, OAuthToken $authToken)
 	{
 		parent::__construct($app);
 
-		$this->authToken = $refreshToken;
+		$this->authToken = $authToken;
 	}
 
 	public function revoke(): bool
 	{
-		if ($this->authToken->isValid())
+		return $this->revokeSkippingValidity();
+	}
+
+	public function revokeSkippingValidity(bool $skipValidityCheck = false): bool
+	{
+		if (!$skipValidityCheck && !$this->authToken->isValid())
 		{
 			return false;
 		}
@@ -41,8 +46,10 @@ class RevokerService extends AbstractService
 
 		foreach ($refreshTokens AS $refreshToken)
 		{
-			$refreshTokenRevoker = $this->service(\XF\Service\OAuth\RefreshToken\RevokerService::class, $refreshToken);
-			$refreshTokenRevoker->revoke();
+			if (!$refreshToken->revoked_date)
+			{
+				$refreshToken->revoke();
+			}
 		}
 	}
 }

@@ -26,7 +26,6 @@ class ApprovalQueueProcess extends AbstractJob
 			$asUser = $this->app->repository(UserRepository::class)->getGuestUser();
 		}
 
-		/** @var ApprovalQueueRepository $repo */
 		$repo = $this->app->repository(ApprovalQueueRepository::class);
 
 		foreach ($this->data['queue'] AS $contentType => $actions)
@@ -96,6 +95,6 @@ class ApprovalQueueProcess extends AbstractJob
 
 	public function canTriggerByChoice()
 	{
-		return true;
+		return false;
 	}
 }

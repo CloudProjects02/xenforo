@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="check_fraud_client" version_id="1010170" version_string="1.1.1"><![CDATA[Check FraudClient]]></phrase>
+  <phrase title="fraud_client_check_results_for" version_id="1010170" version_string="1.1.1"><![CDATA[FraudClient check results for]]></phrase>
+  <phrase title="ms_fc_api_error_message" version_id="1010170" version_string="1.1.1"><![CDATA[FraudClient could not be reached. No action was taken. Please try again.]]></phrase>
+  <phrase title="ms_fc_api_key_missing" version_id="1010170" version_string="1.1.1"><![CDATA[The FraudClient API key has not been configured.]]></phrase>
+  <phrase title="ms_fc_confirm_and_report" version_id="1010170" version_string="1.1.1"><![CDATA[Confirm and report]]></phrase>
+  <phrase title="ms_fc_confirm_check_title" version_id="1010170" version_string="1.1.1"><![CDATA[Confirm FraudClient check]]></phrase>
+  <phrase title="ms_fc_confirm_check_explain" version_id="1010170" version_string="1.1.1"><![CDATA[This will securely send {username}'s username, email address, and latest IP address to FraudClient for a fresh check.]]></phrase>
+  <phrase title="ms_fc_please_select" version_id="1010170" version_string="1.1.1"><![CDATA[Please select…]]></phrase>
+  <phrase title="ms_fc_report" version_id="1010170" version_string="1.1.1"><![CDATA[Report]]></phrase>
+  <phrase title="ms_fc_report_details" version_id="1010170" version_string="1.1.1"><![CDATA[Report details]]></phrase>
+  <phrase title="ms_fc_report_details_explain" version_id="1010170" version_string="1.1.1"><![CDATA[Enter between 20 and 5,000 characters. Include enough factual detail for another provider to evaluate the report.]]></phrase>
+  <phrase title="ms_fc_report_details_length" version_id="1010170" version_string="1.1.1"><![CDATA[Report details must be between 20 and 5,000 characters.]]></phrase>
+  <phrase title="ms_fc_report_confirmation_explain" version_id="1010170" version_string="1.1.1"><![CDATA[Review the reason and evidence before reporting {username} to FraudClient. This action shares the member's username, email address, and latest IP address.]]></phrase>
+  <phrase title="ms_fc_report_reason" version_id="1010170" version_string="1.1.1"><![CDATA[Report reason]]></phrase>
+  <phrase title="ms_fc_report_user" version_id="1010170" version_string="1.1.1"><![CDATA[Report User]]></phrase>
+  <phrase title="ms_fc_spam_cleaner_by_forum_staff" version_id="1010170" version_string="1.1.1"><![CDATA[This user was spam cleaned by forum staff for posting spam.]]></phrase>
+  <phrase title="ms_fc_you_may_not_report_this_user_to_fraud_client" version_id="1010170" version_string="1.1.1"><![CDATA[You may not report this User to Fraud Client.]]></phrase>
+  <phrase title="no_fraud_reports_found" version_id="1010170" version_string="1.1.1"><![CDATA[No fraud reports found for this user.]]></phrase>
+  <phrase title="ms_fc_you_may_not_check_this_user_with_fraud_client" version_id="1010170" version_string="1.1.1"><![CDATA[You may not check this user with FraudClient.]]></phrase>
+  <phrase title="option.ms_fc_api_key" version_id="1010170" version_string="1.1.1"><![CDATA[FraudClient API Key]]></phrase>
+  <phrase title="option.ms_fc_check_on_register" version_id="1010170" version_string="1.1.1"><![CDATA[Check new registrations against FraudClient]]></phrase>
+  <phrase title="option.ms_fc_enable" version_id="1010170" version_string="1.1.1"><![CDATA[Enable FraudClient integration]]></phrase>
+  <phrase title="option.ms_fc_registration_min_reports" version_id="1010170" version_string="1.1.1"><![CDATA[Minimum reports for registration moderation]]></phrase>
+  <phrase title="option.ms_fc_registration_min_points" version_id="1010170" version_string="1.1.1"><![CDATA[Minimum points for registration moderation]]></phrase>
+  <phrase title="option.ms_fc_report_spam_fraud_client" version_id="1010170" version_string="1.1.1"><![CDATA[Report spammer to Fraud Client]]></phrase>
+  <phrase title="option_explain.ms_fc_api_key" version_id="1010170" version_string="1.1.1"><![CDATA[Stored in XenForo and transmitted only to fraudclient.com over HTTPS using Bearer authentication.]]></phrase>
+  <phrase title="option_explain.ms_fc_check_on_register" version_id="1010170" version_string="1.1.1"><![CDATA[If enabled, new user registrations will be checked against the FraudClient database. If a report is found for their username, email, or IP address, their account will be placed into the moderation queue for manual approval.]]></phrase>
+  <phrase title="option_explain.ms_fc_enable" version_id="1010170" version_string="1.1.1"><![CDATA[Disabling this option blocks checks, reports, Spam Cleaner reporting, and registration checks.]]></phrase>
+  <phrase title="option_explain.ms_fc_registration_min_reports" version_id="1010170" version_string="1.1.1"><![CDATA[A new registration must meet or exceed this report count before being placed into moderation.]]></phrase>
+  <phrase title="option_explain.ms_fc_registration_min_points" version_id="1010170" version_string="1.1.1"><![CDATA[A new registration must also meet or exceed this FraudClient point total before being placed into moderation.]]></phrase>
+  <phrase title="option_explain.ms_fc_report_spam_fraud_client" version_id="1010170" version_string="1.1.1"><![CDATA[These are the default options that will be checked when running the spam cleaner. The individual who actually runs the spam cleaner will have the opportunity to alter these options.]]></phrase>
+  <phrase title="option_group.ms_fc" version_id="1010170" version_string="1.1.1"><![CDATA[FraudClient - ReportSpam]]></phrase>
+  <phrase title="option_group_description.ms_fc" version_id="1010170" version_string="1.1.1"><![CDATA[]]></phrase>
+  <phrase title="permission.general_checkFraudClient" version_id="1010170" version_string="1.1.1"><![CDATA[Can check user against FraudClient]]></phrase>
+  <phrase title="permission.general_reportFraudClient" version_id="1010170" version_string="1.1.1"><![CDATA[Report Fraud Client]]></phrase>
+  <phrase title="please_select_valid_reason_for_reporting_this_user" version_id="1010170" version_string="1.1.1"><![CDATA[Please select a valid reason for reporting this user.]]></phrase>
+  <phrase title="report_fraud_client" version_id="1010170" version_string="1.1.1"><![CDATA[Report Fraud Client]]></phrase>
+</phrases>

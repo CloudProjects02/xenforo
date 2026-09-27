@@ -6,7 +6,7 @@ use XF\Draft;
 use XF\Finder\ThreadPrefixFinder;
 use XF\ForumType\AbstractHandler;
 use XF\Job\ForumDelete;
-use XF\Mvc\Entity\ArrayCollection;
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Structure;
 use XF\Phrase;
 use XF\Repository\OptionRepository;
@@ -27,18 +27,18 @@ use XF\Repository\ThreadFieldRepository;
  * @property bool $moderate_threads
  * @property bool $moderate_replies
  * @property string $forum_type_id
- * @property array $type_config_
+ * @property array|null $type_config_
  * @property bool $allow_posting
  * @property bool $count_messages
  * @property bool $auto_feature
  * @property bool $find_new
  * @property string $allow_index
- * @property array $index_criteria
+ * @property array|null $index_criteria
  * @property bool $require_prefix
  * @property string $allowed_watch_notifications
- * @property array $field_cache
- * @property array $prefix_cache
- * @property array $prompt_cache
+ * @property array|null $field_cache
+ * @property array|null $prefix_cache
+ * @property array|null $prompt_cache
  * @property int $default_prefix_id
  * @property string $default_sort_order
  * @property string $default_sort_direction
@@ -47,7 +47,7 @@ use XF\Repository\ThreadFieldRepository;
  *
  * GETTERS
  * @property-read Draft $draft_thread
- * @property-read ArrayCollection|ThreadPrefix[] $prefixes
+ * @property-read AbstractCollection<ThreadPrefix> $prefixes
  * @property-read Phrase $thread_prompt
  * @property-read AbstractHandler $TypeHandler
  * @property array $type_config
@@ -57,9 +57,9 @@ use XF\Repository\ThreadFieldRepository;
  * @property-read int $depth
  *
  * RELATIONS
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\ForumRead> $Read
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\ForumWatch> $Watch
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\Draft> $DraftThreads
+ * @property-read AbstractCollection<ForumRead> $Read
+ * @property-read AbstractCollection<ForumWatch> $Watch
+ * @property-read AbstractCollection<\XF\Entity\Draft> $DraftThreads
  * @property-read Post|null $LastPost
  * @property-read User|null $LastPostUser
  * @property-read Thread|null $LastThread
@@ -236,75 +236,75 @@ class Forum extends AbstractNode
 			}
 
 			if (
-				!empty($criteria['is_article'])	&&
-				$thread->discussion_type == 'article'
+				!empty($criteria['is_article'])
+				&& $thread->discussion_type == 'article'
 			)
 			{
 				return true;
 			}
 
 			if (
-				!empty($criteria['is_solved_question']) &&
-				$thread->discussion_type == 'question' &&
-				$thread->type_data['solution_post_id']
+				!empty($criteria['is_solved_question'])
+				&& $thread->discussion_type == 'question'
+				&& $thread->type_data['solution_post_id']
 			)
 			{
 				return true;
 			}
 
 			if (
-				!empty($criteria['first_post_staff']) &&
-				$thread->User &&
-				$thread->User->is_staff
+				!empty($criteria['first_post_staff'])
+				&& $thread->User
+				&& $thread->User->is_staff
 			)
 			{
 				return true;
 			}
 
 			if (
-				!empty($criteria['first_post_groups']) &&
-				$thread->User &&
-				$thread->User->isMemberof([$criteria['first_post_groups']])
+				!empty($criteria['first_post_groups'])
+				&& $thread->User
+				&& $thread->User->isMemberof([$criteria['first_post_groups']])
 			)
 			{
 				return true;
 			}
 
 			if (
-				!empty($criteria['max_days_post']) &&
-				$thread->post_date < \XF::$time - $criteria['max_days_post'] * 86400
+				!empty($criteria['max_days_post'])
+				&& $thread->post_date < \XF::$time - $criteria['max_days_post'] * 86400
 			)
 			{
 				return false;
 			}
 
 			if (
-				!empty($criteria['max_days_last_post']) &&
-				$thread->last_post_date < \XF::$time - $criteria['max_days_last_post'] * 86400
+				!empty($criteria['max_days_last_post'])
+				&& $thread->last_post_date < \XF::$time - $criteria['max_days_last_post'] * 86400
 			)
 			{
 				return false;
 			}
 
 			if (
-				!empty($criteria['min_replies']) &&
-				$thread->reply_count < $criteria['min_replies']
+				!empty($criteria['min_replies'])
+				&& $thread->reply_count < $criteria['min_replies']
 			)
 			{
 				return false;
 			}
 
 			if (
-				isset($criteria['min_reaction_score']) &&
-				$thread->first_post_reaction_score < $criteria['min_reaction_score']
+				isset($criteria['min_reaction_score'])
+				&& $thread->first_post_reaction_score < $criteria['min_reaction_score']
 			)
 			{
 				return false;
 			}
 
 			if (
-				!empty($criteria['min_word_count']) &&
-				$thread->getFirstPostWordCount() < $criteria['min_word_count']
+				!empty($criteria['min_word_count'])
+				&& $thread->getFirstPostWordCount() < $criteria['min_word_count']
 			)
 			{
 				return false;
@@ -393,7 +393,7 @@ class Forum extends AbstractNode
 	}
 
 	/**
-	 * @return ArrayCollection|ThreadPrefix[]
+	 * @return AbstractCollection<ThreadPrefix>
 	 */
 	public function getPrefixes()
 	{

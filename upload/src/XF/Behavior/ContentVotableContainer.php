@@ -44,7 +44,6 @@ class ContentVotableContainer extends Behavior
 
 			if ($this->entity->isUpdate() && ($visibilityChange == 'enter' || $visibilityChange == 'leave'))
 			{
-				/** @var ContentVoteRepository $voteRepo */
 				$voteRepo = $this->repository(ContentVoteRepository::class);
 				$voteRepo->recalculateVoteIsCounted($this->config['childContentType'], $this->getChildIds());
 			}
@@ -53,7 +52,6 @@ class ContentVotableContainer extends Behavior
 
 	public function postDelete()
 	{
-		/** @var ContentVoteRepository $voteRepo */
 		$voteRepo = $this->repository(ContentVoteRepository::class);
 		$voteRepo->fastDeleteVotesForContent($this->config['childContentType'], $this->getChildIds());
 	}

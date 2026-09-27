@@ -73,7 +73,6 @@ class PostsController extends AbstractController
 	 */
 	protected function setupThreadReply(Thread $thread)
 	{
-		/** @var ReplierService $replier */
 		$replier = $this->service(ReplierService::class, $thread);
 
 		$message = $this->filter('message', 'str');
@@ -99,7 +98,6 @@ class PostsController extends AbstractController
 
 		if ($thread->canWatch())
 		{
-			/** @var ThreadWatchRepository $threadWatchRepo */
 			$threadWatchRepo = $this->repository(ThreadWatchRepository::class);
 
 			$watch = $this->filter('watch_thread', '?bool');

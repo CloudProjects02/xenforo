@@ -4,7 +4,6 @@ namespace XF\Repository;
 
 use XF\Entity\TfaAttempt;
 use XF\Finder\TfaAttemptFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 class TfaAttemptRepository extends Repository
@@ -31,7 +30,6 @@ class TfaAttemptRepository extends Repository
 
 	public function clearTfaAttempts($userId)
 	{
-		/** @var Finder $finder */
 		$finder = $this->finder(TfaAttemptFinder::class);
 
 		$attempts = $finder->where('user_id', $userId)

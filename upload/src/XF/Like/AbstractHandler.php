@@ -178,7 +178,6 @@ abstract class AbstractHandler
 			return false;
 		}
 
-		/** @var UserAlertRepository $alertRepo */
 		$alertRepo = \XF::repository(UserAlertRepository::class);
 		return $alertRepo->alertFromUser(
 			$receiver,
@@ -192,14 +191,12 @@ abstract class AbstractHandler
 
 	public function removeLikeAlert(LikedContent $like)
 	{
-		/** @var UserAlertRepository $alertRepo */
 		$alertRepo = \XF::repository(UserAlertRepository::class);
 		$alertRepo->fastDeleteAlertsFromUser($like->reaction_user_id, $this->contentType, $like->content_id, 'like');
 	}
 
 	public function publishLikeNewsFeed(User $sender, $contentId, Entity $content)
 	{
-		/** @var NewsFeedRepository $newsFeedRepo */
 		$newsFeedRepo = \XF::repository(NewsFeedRepository::class);
 		$newsFeedRepo->publish(
 			$this->contentType,
@@ -213,7 +210,6 @@ abstract class AbstractHandler
 
 	public function unpublishLikeNewsFeed(LikedContent $like)
 	{
-		/** @var NewsFeedRepository $newsFeedRepo */
 		$newsFeedRepo = \XF::repository(NewsFeedRepository::class);
 		$newsFeedRepo->unpublish($this->contentType, $like->content_id, $like->reaction_user_id, 'like');
 	}

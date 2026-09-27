@@ -61,7 +61,6 @@ abstract class AbstractPermission extends AbstractPlugin
 	{
 		$record = $this->assertRecordExists($this->entityIdentifier, $params->{$this->primaryKey});
 
-		/** @var PermissionEntryRepository $entryRepo */
 		$entryRepo = $this->repository(PermissionEntryRepository::class);
 		$entries = $entryRepo->getContentPermissionEntriesGrouped($this->contentType, $record->{$this->primaryKey});
 
@@ -77,7 +76,6 @@ abstract class AbstractPermission extends AbstractPlugin
 			$users = [];
 		}
 
-		/** @var UserGroupRepository $userGroupRepo */
 		$userGroupRepo = $this->repository(UserGroupRepository::class);
 		$userGroups = $userGroupRepo->findUserGroupsForList()->fetch();
 
@@ -121,11 +119,9 @@ abstract class AbstractPermission extends AbstractPlugin
 			}
 		}
 
-		/** @var PermissionRepository $permissionRepo */
 		$permissionRepo = $this->repository(PermissionRepository::class);
 		$permissionData = $permissionRepo->getContentPermissionListData($this->contentType);
 
-		/** @var PermissionEntryRepository $entryRepo */
 		$entryRepo = $this->repository(PermissionEntryRepository::class);
 		$entries = $entryRepo->getContentPermissionEntriesGrouped($this->contentType, $record->{$this->primaryKey});
 
@@ -233,7 +229,6 @@ abstract class AbstractPermission extends AbstractPlugin
 			],
 		];
 
-		/** @var UpdatePermissionsService $permissionUpdater */
 		$permissionUpdater = $this->service(UpdatePermissionsService::class);
 		$permissionUpdater->setContent($this->contentType, $record->{$this->primaryKey})->updatePermissions($update);
 	}
@@ -243,7 +238,6 @@ abstract class AbstractPermission extends AbstractPlugin
 		$userGroup = $this->assertRecordExists(UserGroup::class, $this->filter('user_group_id', 'uint'));
 		$permissions = $this->filter('permissions', 'array');
 
-		/** @var UpdatePermissionsService $permissionUpdater */
 		$permissionUpdater = $this->service(UpdatePermissionsService::class);
 		$permissionUpdater->setContent($this->contentType, $record->{$this->primaryKey})->setUserGroup($userGroup);
 		$permissionUpdater->updatePermissions($permissions);
@@ -254,7 +248,6 @@ abstract class AbstractPermission extends AbstractPlugin
 		$user = $this->assertRecordExists(User::class, $this->filter('user_id', 'uint'));
 		$permissions = $this->filter('permissions', 'array');
 
-		/** @var UpdatePermissionsService $permissionUpdater */
 		$permissionUpdater = $this->service(UpdatePermissionsService::class);
 		$permissionUpdater->setContent($this->contentType, $record->{$this->primaryKey})->setUser($user);
 		$permissionUpdater->updatePermissions($permissions);

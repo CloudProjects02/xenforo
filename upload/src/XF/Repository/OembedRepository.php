@@ -6,13 +6,12 @@ use XF\Entity\BbCodeMediaSite;
 use XF\Entity\Oembed;
 use XF\Finder\BbCodeMediaSiteFinder;
 use XF\Finder\OembedFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 class OembedRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return OembedFinder
 	 */
 	public function findOembedLogsForList()
 	{

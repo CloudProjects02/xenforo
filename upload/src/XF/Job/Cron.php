@@ -13,7 +13,6 @@ class Cron extends AbstractJob
 	{
 		$start = microtime(true);
 
-		/** @var CalculateNextRunService $cronService */
 		$cronService = $this->app->service(CalculateNextRunService::class);
 
 		$entries = $this->app->finder(CronEntryFinder::class)
@@ -43,7 +42,7 @@ class Cron extends AbstractJob
 					);
 				}
 			}
-			catch (\Exception $e)
+			catch (\Throwable $e)
 			{
 				// suppress so we don't get stuck -- make sure we rollback though as don't know the state
 				$this->app->logException($e, true);

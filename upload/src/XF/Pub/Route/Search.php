@@ -19,28 +19,41 @@ class Search
 		Router $router
 	)
 	{
-		if ($data instanceof \XF\Entity\Search)
+		if (!($data instanceof \XF\Entity\Search))
 		{
-			$params['q'] = $data->search_query;
-			$params['t'] = $data->search_type;
-			$params['c'] = $data->search_constraints;
-			$params['o'] = $data->search_order;
-			if ($data->search_grouping)
-			{
-				$params['g'] = 1;
-			}
-
-			$params = array_filter($params, function ($param)
-			{
-				return (
-					$param !== null &&
-					$param !== 0 &&
-					$param !== '' &&
-					$param !== []
-				);
-			});
+			return null;
 		}
 
-		return null; // default processing otherwise
+		$type = $data->search_type;
+		if ($type !== '')
+		{
+			$params['t'] = $type;
+		}
+
+		$query = $data->search_query;
+		if ($query !== '')
+		{
+			$params['q'] = $query;
+		}
+
+		$constraints = $data->search_constraints;
+		if ($constraints !== [])
+		{
+			$params['c'] = $constraints;
+		}
+
+		$order = $data->search_order;
+		if ($order !== '')
+		{
+			$params['o'] = $order;
+		}
+
+		$grouping = $data->search_grouping;
+		if ($grouping)
+		{
+			$params['g'] = 1;
+		}
+
+		return null;
 	}
 }

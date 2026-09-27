@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="PAGE_CONTAINER" modification_key="xfm_PAGE_CONTAINER_start_conversation_popup" description="Replace start conversation button to open create form in popup" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[conversations/add') }}"]]></find>
+    <replace><![CDATA[$0 {{ $xf.options.xfmEnablePopup ? 'class="js-chatPopup" data-menu-closer="" data-active-on-mobile="' . ($xf.options.xfmMobilePopup ? 'true' : 'false') . '" data-event-prefix="XFM" data-query="' . { 'c': { 'open': 1 } }|json .  '"' : '' }}]]></replace>
+  </modification>
+  <modification type="public" template="conversation_edit" modification_key="xf_messenger_conversation_edit_redirect_off" description="Off redirect" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[ajax="true"]]></find>
+    <replace><![CDATA[$0 data-redirect="off"]]></replace>
+  </modification>
+  <modification type="public" template="conversation_invite" modification_key="xf_messenger_conversation_invite_redirect_off" description="Off redirect" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[ajax="true"]]></find>
+    <replace><![CDATA[$0 data-redirect="off"]]></replace>
+  </modification>
+  <modification type="public" template="conversation_leave" modification_key="xf_messenger_conversation_leave_redirect_off" description="Off redirect" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[ajax="true"]]></find>
+    <replace><![CDATA[$0 data-redirect="off"]]></replace>
+  </modification>
+  <modification type="public" template="conversations_popup" modification_key="xfm_conversations_popup_messenger_popup" description="Add messenger popup classes" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA['menu-row--highlighted' : '' }}"]]></find>
+    <replace><![CDATA['menu-row--highlighted' : '' }}{{ $xf.options.xfmEnablePopup ? ' js-chatPopup' : '' }}" {{ $xf.options.xfmEnablePopup ? 'data-room-tag="' . $userConv.conversation_id . '" data-menu-closer="" data-event-prefix="XFM" data-active-on-mobile="' . ($xf.options.xfmMobilePopup ? 'true' : 'false') . '"' : '' }}]]></replace>
+  </modification>
+  <modification type="public" template="helper_js_global" modification_key="xfm_helper_js_global_messenger_config" description="Add messenger config" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:js_global:xf_extend_start]-->]]></find>
+    <replace><![CDATA[$0
+messenger: {
+	noticesUrl: "{{ link('conversations/messenger/notices', {'tag': '<tag>'})|raw }}",
+	popupEnabled: {{ $xf.options.xfmEnablePopup ? 'true' : 'false' }},
+	popupOnMobile: {{ $xf.options.xfmMobilePopup ? 'true' : 'false' }},
+	popupUrl: "{{ link('conversations/messenger/popup') }}",
+	enableSound: "{{ $xf.options.xfmEnableSound ? 'true' : 'false' }}",
+	soundPath: "{{ base_url($xf.options.xfmSoundPath) }}",
+},]]></replace>
+  </modification>
+  <modification type="public" template="member_macros" modification_key="xfm_member_macros_start_conversation_popup" description="Replace start conversation button to open create form in popup" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[/(conversations\/add', null, {'to': \$user.username}\) }}"\s)(class="button--link)(")/s]]></find>
+    <replace><![CDATA[$1data-query="{{ { 'c': { 'open': 1, 'to': $user.username } }|json }}" data-active-on-mobile="{{ $xf.options.xfmMobilePopup ? 'true' : 'false' }}" data-event-prefix="XFM" $2{{ $xf.options.xfmEnablePopup ? ' js-chatPopup' : '' }}$3]]></replace>
+  </modification>
+</template_modifications>

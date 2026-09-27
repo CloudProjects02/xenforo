@@ -156,14 +156,12 @@ class UserAction extends AbstractUserCriteriaJob
 	{
 		if ($this->getActionValue('remove_avatar'))
 		{
-			/** @var AvatarService $avatarService */
 			$avatarService = $this->app->service(AvatarService::class, $user);
 			$avatarService->deleteAvatar();
 		}
 
 		if ($this->getActionValue('ban') && !$user->is_admin && !$user->is_moderator)
 		{
-			/** @var BanningRepository $banRepo */
 			$banRepo = $this->app->repository(BanningRepository::class);
 			$banRepo->banUser($user, 0, '');
 		}

@@ -7,8 +7,6 @@ use XF\Entity\PaymentProviderLog;
 use XF\Finder\PaymentProfileFinder;
 use XF\Finder\PaymentProviderFinder;
 use XF\Finder\PaymentProviderLogFinder;
-use XF\Mvc\Entity\AbstractCollection;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 use function strlen;
@@ -16,7 +14,7 @@ use function strlen;
 class PaymentRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return PaymentProviderFinder
 	 */
 	public function findPaymentProvidersForList()
 	{
@@ -25,7 +23,7 @@ class PaymentRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return PaymentProviderFinder
 	 */
 	public function findActivePaymentProviders()
 	{
@@ -34,7 +32,7 @@ class PaymentRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return PaymentProfileFinder
 	 */
 	public function findPaymentProfilesForList()
 	{
@@ -106,7 +104,6 @@ class PaymentRepository extends Repository
 
 	public function getPaymentProviderCacheData()
 	{
-		/** @var PaymentProfile[]|AbstractCollection $paymentProfiles */
 		$paymentProfiles = $this->findPaymentProfilesForList()->fetch();
 
 		$cache = [];
@@ -136,7 +133,7 @@ class PaymentRepository extends Repository
 	/**
 	 * @param $transactionId
 	 *
-	 * @return Finder
+	 * @return PaymentProviderLogFinder
 	 */
 	public function findLogsByTransactionId($transactionId, $logType = ['payment', 'cancel'])
 	{

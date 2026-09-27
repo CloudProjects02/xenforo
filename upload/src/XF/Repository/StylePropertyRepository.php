@@ -8,8 +8,6 @@ use XF\Entity\StylePropertyMap;
 use XF\Finder\StylePropertyFinder;
 use XF\Finder\StylePropertyGroupFinder;
 use XF\Finder\StylePropertyMapFinder;
-use XF\Mvc\Entity\AbstractCollection;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 use XF\Style;
 
@@ -41,7 +39,7 @@ class StylePropertyRepository extends Repository
 	/**
 	 * @param \XF\Entity\Style $style
 	 *
-	 * @return Finder
+	 * @return StylePropertyMapFinder
 	 */
 	public function findPropertyMapInStyle(\XF\Entity\Style $style)
 	{
@@ -78,7 +76,7 @@ class StylePropertyRepository extends Repository
 	/**
 	 * @param \XF\Entity\Style $style
 	 *
-	 * @return Finder
+	 * @return StylePropertyFinder
 	 */
 	public function findPropertiesInStyle(\XF\Entity\Style $style)
 	{
@@ -144,7 +142,6 @@ class StylePropertyRepository extends Repository
 	{
 		$colors = [];
 
-		/** @var AbstractCollection|StylePropertyMap[] */
 		$propertyMaps = $this->findPropertyMapForEditing($style, $group)->fetch();
 		foreach ($propertyMaps AS $propertyMap)
 		{

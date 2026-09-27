@@ -145,7 +145,6 @@ class Route extends AbstractDataType
 	{
 		\XF::runOnce('rebuild_active_' . $this->getContainerTag(), function ()
 		{
-			/** @var RouteRepository $repo */
 			$repo = $this->em->getRepository(RouteRepository::class);
 			$repo->rebuildRouteCache('public');
 			$repo->rebuildRouteCache('admin');

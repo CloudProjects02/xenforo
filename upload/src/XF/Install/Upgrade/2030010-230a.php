@@ -12,7 +12,27 @@ class Version2030010 extends AbstractUpgrade
 		return '2.3.0 Alpha';
 	}
 
-	public function step1()
+	public function step1(): void
+	{
+		// verify upgrades from XF 1 have the correct xf_job schema
+
+		$sm = $this->db()->getSchemaManager();
+
+		$sm->alterTable('xf_job', function (Alter $table) use ($sm)
+		{
+			if (!$sm->columnExists('xf_job', 'attempts'))
+			{
+				$table->addColumn('attempts', 'tinyint', 3)->setDefault(0);
+			}
+			if (!$sm->columnExists('xf_job', 'priority'))
+			{
+				$table->addColumn('priority', 'smallint', 5)->setDefault(100);
+				$table->addKey(['priority', 'trigger_date'], 'priority_execute_date');
+			}
+		});
+	}
+
+	public function step2()
 	{
 		$this->createTable('xf_webhook', function (Create $table)
 		{
@@ -80,7 +100,7 @@ class Version2030010 extends AbstractUpgrade
 		});
 	}
 
-	public function step2()
+	public function step3()
 	{
 		$this->alterTable('xf_thread', function (Alter $table)
 		{
@@ -108,7 +128,7 @@ class Version2030010 extends AbstractUpgrade
 		");
 	}
 
-	public function step3()
+	public function step4()
 	{
 		$this->alterTable('xf_thread', function (Alter $table)
 		{
@@ -116,7 +136,7 @@ class Version2030010 extends AbstractUpgrade
 		});
 	}
 
-	public function step4()
+	public function step5()
 	{
 		$this->alterTable('xf_smilie', function (Alter $table)
 		{
@@ -224,7 +244,7 @@ class Version2030010 extends AbstractUpgrade
 		}
 	}
 
-	public function step5()
+	public function step6()
 	{
 		$this->alterTable('xf_reaction', function (Alter $table)
 		{
@@ -303,7 +323,7 @@ class Version2030010 extends AbstractUpgrade
 		}
 	}
 
-	public function step6()
+	public function step7()
 	{
 		$db = $this->db();
 
@@ -329,7 +349,7 @@ class Version2030010 extends AbstractUpgrade
 		}
 	}
 
-	public function step7()
+	public function step8()
 	{
 		$this->alterTable('xf_thread', function (Alter $table)
 		{
@@ -354,7 +374,7 @@ class Version2030010 extends AbstractUpgrade
 		");
 	}
 
-	public function step8()
+	public function step9()
 	{
 		$this->applyGlobalPermission('forum', 'featureUnfeatureThread', 'forum', 'stickUnstickThread');
 
@@ -379,7 +399,7 @@ class Version2030010 extends AbstractUpgrade
 		]);
 	}
 
-	public function step9()
+	public function step10()
 	{
 		$this->alterTable('xf_job', function (Alter $table)
 		{
@@ -396,7 +416,7 @@ class Version2030010 extends AbstractUpgrade
 		});
 	}
 
-	public function step10($position, array $stepData)
+	public function step11($position, array $stepData)
 	{
 		$db = $this->db();
 		$amount = 1000;
@@ -458,12 +478,12 @@ class Version2030010 extends AbstractUpgrade
 		];
 	}
 
-	public function step11()
+	public function step12()
 	{
 		$this->executeUpgradeQuery('DROP TABLE xf_mail_queue');
 	}
 
-	public function step12(int $position, array $stepData)
+	public function step13(int $position, array $stepData)
 	{
 		return $this->removeCriteriaRules(
 			'xf_notice',
@@ -475,7 +495,7 @@ class Version2030010 extends AbstractUpgrade
 		);
 	}
 
-	public function step13(): void
+	public function step14(): void
 	{
 		$this->alterTable('xf_style', function (Alter $table)
 		{
@@ -501,7 +521,7 @@ class Version2030010 extends AbstractUpgrade
 		});
 	}
 
-	public function step14(): void
+	public function step15(): void
 	{
 		$tables = [
 			'xf_attachment_view',
@@ -528,7 +548,7 @@ class Version2030010 extends AbstractUpgrade
 		}
 	}
 
-	public function step15(): void
+	public function step16(): void
 	{
 		$this->alterTable('xf_attachment_data', function (Alter $table)
 		{
@@ -546,7 +566,7 @@ class Version2030010 extends AbstractUpgrade
 		});
 	}
 
-	public function step16()
+	public function step17()
 	{
 		$this->createTable('xf_oauth_client', function (Create $table)
 		{
@@ -587,7 +607,7 @@ class Version2030010 extends AbstractUpgrade
 		});
 	}
 
-	public function step17()
+	public function step18()
 	{
 		$this->createTable('xf_oauth_refresh_token', function (Create $table)
 		{

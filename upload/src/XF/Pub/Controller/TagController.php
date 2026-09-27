@@ -77,7 +77,6 @@ class TagController extends AbstractController
 					'tag' => implode(' ', $tagIds),
 				];
 
-				/** @var SearchRepository $searchRepo */
 				$searchRepo = $this->repository(SearchRepository::class);
 				$search = $searchRepo->runSearch($query, $constraints);
 

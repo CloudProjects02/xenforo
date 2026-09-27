@@ -119,7 +119,6 @@ class CodeEventListener extends AbstractDataType
 	{
 		\XF::runOnce('rebuild_active_' . $this->getContainerTag(), function ()
 		{
-			/** @var CodeEventListenerRepository $repo */
 			$repo = $this->em->getRepository(CodeEventListenerRepository::class);
 			$repo->rebuildListenerCache();
 		});

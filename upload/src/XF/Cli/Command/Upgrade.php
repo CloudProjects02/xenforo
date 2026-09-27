@@ -285,7 +285,6 @@ class Upgrade extends AbstractCommand implements CustomAppCommandInterface
 					$serverStats['enabled'] = 1;
 				}
 
-				/** @var OptionRepository $optionRepo */
 				$optionRepo = \XF::repository(OptionRepository::class);
 				$optionRepo->updateOptions([
 					'collectServerStats' => $serverStats,

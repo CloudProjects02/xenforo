@@ -20,7 +20,6 @@ class SitemapLog extends Entity
 {
 	public function getAbstractedSitemapFileName($fileNumber)
 	{
-		/** @var SitemapLogRepository $sitemapRepo */
 		$sitemapRepo = $this->repository(SitemapLogRepository::class);
 		return $sitemapRepo->getAbstractedSitemapFileName($this->sitemap_id, $fileNumber, $this->is_compressed);
 	}

@@ -123,6 +123,41 @@ class UserGroupChangeService extends AbstractService
 	}
 
 	/**
+	 * Merges any change-managed secondary groups (moderator/promotion/upgrade/ban
+	 * groups tracked in xf_user_group_change) back into the supplied list, so a
+	 * caller that round-trips the secondary group list cannot silently drop them.
+	 * These groups can only be removed by removing their underlying cause.
+	 *
+	 * @param int $userId
+	 * @param int[] $secondaryGroupIds
+	 *
+	 * @return int[]
+	 */
+	public function mergeSecondaryGroupIds($userId, array $secondaryGroupIds): array
+	{
+		$changes = $this->getUserGroupChangesForUser($userId);
+
+		foreach ($changes AS $groupIds)
+		{
+			if (!$groupIds)
+			{
+				continue;
+			}
+
+			foreach (explode(',', $groupIds) AS $groupId)
+			{
+				$groupId = (int) $groupId;
+				if ($groupId && !in_array($groupId, $secondaryGroupIds, true))
+				{
+					$secondaryGroupIds[] = $groupId;
+				}
+			}
+		}
+
+		return $secondaryGroupIds;
+	}
+
+	/**
 	 * Applies a set of user group changes.
 	 *
 	 * @param integer $userId

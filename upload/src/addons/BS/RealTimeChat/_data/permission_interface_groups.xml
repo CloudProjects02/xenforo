@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<permission_interface_groups>
+  <interface_group interface_group_id="bsRtc" display_order="721" is_moderator="0"/>
+  <interface_group interface_group_id="bsRtcAiBots" display_order="722" is_moderator="0"/>
+  <interface_group interface_group_id="bsRtcModerator" display_order="723" is_moderator="1"/>
+</permission_interface_groups>

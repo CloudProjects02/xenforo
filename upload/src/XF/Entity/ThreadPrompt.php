@@ -2,6 +2,7 @@
 
 namespace XF\Entity;
 
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Structure;
 use XF\Phrase;
 use XF\Repository\ForumPromptRepository;
@@ -19,7 +20,7 @@ use XF\Repository\ForumPromptRepository;
  * RELATIONS
  * @property-read \XF\Entity\Phrase|null $MasterTitle
  * @property-read ThreadPromptGroup|null $PromptGroup
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\ForumPrompt> $ForumPrompts
+ * @property-read AbstractCollection<ForumPrompt> $ForumPrompts
  */
 class ThreadPrompt extends AbstractPrompt
 {

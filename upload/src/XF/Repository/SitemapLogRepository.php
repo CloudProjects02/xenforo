@@ -4,7 +4,6 @@ namespace XF\Repository;
 
 use XF\Entity\SitemapLog;
 use XF\Finder\SitemapLogFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 use XF\Sitemap\AbstractHandler;
 
@@ -13,7 +12,7 @@ use function intval;
 class SitemapLogRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return SitemapLogFinder
 	 */
 	public function findSitemapLogsForList()
 	{

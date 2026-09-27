@@ -185,7 +185,6 @@ class FeederService extends AbstractService
 	{
 		$feed = $this->feed;
 
-		/** @var CreatorService $creator */
 		$creator = $this->service(CreatorService::class, $feed->Forum);
 
 		$creator->setIsAutomated();

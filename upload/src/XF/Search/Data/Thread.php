@@ -114,7 +114,13 @@ class Thread extends AbstractData implements AutoCompletableInterface
 			$entity->title,
 			$entity->getContentUrl(),
 			$entity->FirstPost->message,
-			$entity->User
+			$entity->User,
+			$entity->username
 		);
+	}
+
+	protected function getDefaultApiResultOptions(): array
+	{
+		return ['with_first_post' => true];
 	}
 }

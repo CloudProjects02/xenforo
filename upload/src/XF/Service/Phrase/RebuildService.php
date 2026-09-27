@@ -20,7 +20,6 @@ class RebuildService extends AbstractService
 			return;
 		}
 
-		/** @var LanguageRepository $repo */
 		$repo = $this->app->em()->getRepository(LanguageRepository::class);
 		$this->languageTree = $repo->getlanguageTree(false);
 	}

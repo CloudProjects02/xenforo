@@ -49,6 +49,16 @@ class Create extends AbstractCommand
 
 		$checkPath = \XF::getAddOnDirectory();
 
+		$addOnManager = \XF::app()->addOnManager();
+		foreach ($addOnManager->getAllAddOns() AS $existingAddOnId => $existingAddOn)
+		{
+			if ($existingAddOnId !== $addOnId && strcasecmp($existingAddOnId, $addOnId) === 0)
+			{
+				$output->writeln("<error>Add-on ID '{$addOnId}' conflicts with existing add-on '{$existingAddOnId}' (case mismatch).</error>");
+				return 1;
+			}
+		}
+
 		if (strpos($addOnId, '/') !== false)
 		{
 			$addOnIdParts = explode('/', $addOnId);

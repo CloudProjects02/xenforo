@@ -15,13 +15,12 @@ class Trophy extends AbstractJob
 
 	public function run($maxRunTime)
 	{
-		/** @var TrophyRepository $trophyRepo */
 		$trophyRepo = $this->app->repository(TrophyRepository::class);
 
 		$trophies = $trophyRepo->findTrophiesForList()->fetch();
 		if (!$trophies || !$this->app->options()->enableTrophies)
 		{
-			$this->complete();
+			return $this->complete();
 		}
 
 		$startTime = microtime(true);
@@ -44,7 +43,6 @@ class Trophy extends AbstractJob
 			return $this->complete();
 		}
 
-		/** @var UserFinder $userFinder */
 		$userFinder = $this->app->finder(UserFinder::class);
 		$userFinder->where('user_id', $ids)
 			->with(['Profile', 'Option'])

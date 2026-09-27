@@ -4,12 +4,12 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInite59c41f29e51a7a2cfba219d2fa94908
+class ComposerStaticInit119d98a73e573b9281c84264e8260247
 {
     public static $files = array (
+        '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
         '7e9bd612cc444b3eed788ebbe46263a0' => __DIR__ . '/..' . '/laminas/laminas-zendframework-bridge/src/autoload.php',
-        '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         'e69f7f6ee287b969198c3c9d6777bd38' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/bootstrap.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
@@ -23,23 +23,23 @@ class ComposerStaticInite59c41f29e51a7a2cfba219d2fa94908
     );
 
     public static $prefixLengthsPsr4 = array (
-        'l' => 
+        'l' =>
         array (
             'lbuchs\\WebAuthn\\' => 16,
         ),
-        'e' => 
+        'e' =>
         array (
             'enshrined\\svgSanitize\\' => 22,
         ),
-        'X' => 
+        'X' =>
         array (
             'XF\\' => 3,
         ),
-        'T' => 
+        'T' =>
         array (
             'TrueBV\\' => 7,
         ),
-        'S' => 
+        'S' =>
         array (
             'Symfony\\Polyfill\\Php80\\' => 23,
             'Symfony\\Polyfill\\Php73\\' => 23,
@@ -64,7 +64,7 @@ class ComposerStaticInite59c41f29e51a7a2cfba219d2fa94908
             'Stripe\\' => 7,
             'Sabberworm\\CSS\\' => 15,
         ),
-        'P' => 
+        'P' =>
         array (
             'Psr\\Log\\' => 8,
             'Psr\\Http\\Message\\' => 17,
@@ -75,16 +75,16 @@ class ComposerStaticInite59c41f29e51a7a2cfba219d2fa94908
             'Pelago\\Emogrifier\\' => 18,
             'ParagonIE\\ConstantTime\\' => 23,
         ),
-        'O' => 
+        'O' =>
         array (
             'Otp\\' => 4,
             'OAuth\\' => 6,
         ),
-        'M' => 
+        'M' =>
         array (
             'Minishlink\\WebPush\\' => 19,
         ),
-        'L' => 
+        'L' =>
         array (
             'League\\Flysystem\\EventableFilesystem\\' => 37,
             'League\\Flysystem\\AwsS3v3\\' => 25,
@@ -99,7 +99,7 @@ class ComposerStaticInite59c41f29e51a7a2cfba219d2fa94908
             'Laminas\\Feed\\' => 13,
             'Laminas\\Escaper\\' => 16,
         ),
-        'J' => 
+        'J' =>
         array (
             'JoyPixels\\' => 10,
             'Jose\\Component\\Signature\\Algorithm\\' => 35,
@@ -109,323 +109,323 @@ class ComposerStaticInite59c41f29e51a7a2cfba219d2fa94908
             'Jose\\Component\\Core\\' => 20,
             'JmesPath\\' => 9,
         ),
-        'I' => 
+        'I' =>
         array (
             'Interop\\Container\\' => 18,
         ),
-        'G' => 
+        'G' =>
         array (
             'GuzzleHttp\\Psr7\\' => 16,
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
         ),
-        'F' => 
+        'F' =>
         array (
             'FG\\' => 3,
         ),
-        'E' => 
+        'E' =>
         array (
             'Egulias\\EmailValidator\\' => 23,
         ),
-        'D' => 
+        'D' =>
         array (
             'Doctrine\\Deprecations\\' => 22,
             'Doctrine\\Common\\Lexer\\' => 22,
             'Doctrine\\Common\\Cache\\' => 22,
         ),
-        'B' => 
+        'B' =>
         array (
             'Brick\\Math\\' => 11,
             'Braintree\\' => 10,
             'Base64Url\\' => 10,
             'Base32\\' => 7,
         ),
-        'A' => 
+        'A' =>
         array (
             'Aws\\' => 4,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'lbuchs\\WebAuthn\\' => 
+        'lbuchs\\WebAuthn\\' =>
         array (
             0 => __DIR__ . '/..' . '/lbuchs/webauthn/src',
         ),
-        'enshrined\\svgSanitize\\' => 
+        'enshrined\\svgSanitize\\' =>
         array (
             0 => __DIR__ . '/..' . '/enshrined/svg-sanitize/src',
         ),
-        'XF\\' => 
+        'XF\\' =>
         array (
             0 => __DIR__ . '/../../..' . '/src/XF',
         ),
-        'TrueBV\\' => 
+        'TrueBV\\' =>
         array (
             0 => __DIR__ . '/..' . '/true/punycode/src',
         ),
-        'Symfony\\Polyfill\\Php80\\' => 
+        'Symfony\\Polyfill\\Php80\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php80',
         ),
-        'Symfony\\Polyfill\\Php73\\' => 
+        'Symfony\\Polyfill\\Php73\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php73',
         ),
-        'Symfony\\Polyfill\\Intl\\Normalizer\\' => 
+        'Symfony\\Polyfill\\Intl\\Normalizer\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer',
         ),
-        'Symfony\\Polyfill\\Intl\\Idn\\' => 
+        'Symfony\\Polyfill\\Intl\\Idn\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-intl-idn',
         ),
-        'Symfony\\Polyfill\\Intl\\Grapheme\\' => 
+        'Symfony\\Polyfill\\Intl\\Grapheme\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-intl-grapheme',
         ),
-        'Symfony\\Contracts\\Service\\' => 
+        'Symfony\\Contracts\\Service\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/service-contracts',
         ),
-        'Symfony\\Contracts\\EventDispatcher\\' => 
+        'Symfony\\Contracts\\EventDispatcher\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/event-dispatcher-contracts',
         ),
-        'Symfony\\Contracts\\Cache\\' => 
+        'Symfony\\Contracts\\Cache\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/cache-contracts',
         ),
-        'Symfony\\Component\\VarExporter\\' => 
+        'Symfony\\Component\\VarExporter\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/var-exporter',
         ),
-        'Symfony\\Component\\VarDumper\\' => 
+        'Symfony\\Component\\VarDumper\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/var-dumper',
         ),
-        'Symfony\\Component\\String\\' => 
+        'Symfony\\Component\\String\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/string',
         ),
-        'Symfony\\Component\\Process\\' => 
+        'Symfony\\Component\\Process\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/process',
         ),
-        'Symfony\\Component\\Mime\\' => 
+        'Symfony\\Component\\Mime\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/mime',
         ),
-        'Symfony\\Component\\Mailer\\' => 
+        'Symfony\\Component\\Mailer\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/mailer',
         ),
-        'Symfony\\Component\\Filesystem\\' => 
+        'Symfony\\Component\\Filesystem\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/filesystem',
         ),
-        'Symfony\\Component\\EventDispatcher\\' => 
+        'Symfony\\Component\\EventDispatcher\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/event-dispatcher',
         ),
-        'Symfony\\Component\\DomCrawler\\' => 
+        'Symfony\\Component\\DomCrawler\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/dom-crawler',
         ),
-        'Symfony\\Component\\CssSelector\\' => 
+        'Symfony\\Component\\CssSelector\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/css-selector',
         ),
-        'Symfony\\Component\\Console\\' => 
+        'Symfony\\Component\\Console\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/console',
         ),
-        'Symfony\\Component\\Cache\\' => 
+        'Symfony\\Component\\Cache\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/cache',
         ),
-        'Stripe\\' => 
+        'Stripe\\' =>
         array (
             0 => __DIR__ . '/..' . '/stripe/stripe-php/lib',
         ),
-        'Sabberworm\\CSS\\' => 
+        'Sabberworm\\CSS\\' =>
         array (
             0 => __DIR__ . '/..' . '/sabberworm/php-css-parser/src',
         ),
-        'Psr\\Log\\' => 
+        'Psr\\Log\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
         ),
-        'Psr\\Http\\Message\\' => 
+        'Psr\\Http\\Message\\' =>
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
-        'Psr\\Http\\Client\\' => 
+        'Psr\\Http\\Client\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/http-client/src',
         ),
-        'Psr\\EventDispatcher\\' => 
+        'Psr\\EventDispatcher\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/event-dispatcher/src',
         ),
-        'Psr\\Container\\' => 
+        'Psr\\Container\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
         ),
-        'Psr\\Cache\\' => 
+        'Psr\\Cache\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/cache/src',
         ),
-        'Pelago\\Emogrifier\\' => 
+        'Pelago\\Emogrifier\\' =>
         array (
             0 => __DIR__ . '/..' . '/pelago/emogrifier/src',
         ),
-        'ParagonIE\\ConstantTime\\' => 
+        'ParagonIE\\ConstantTime\\' =>
         array (
             0 => __DIR__ . '/..' . '/paragonie/constant_time_encoding/src',
         ),
-        'Otp\\' => 
+        'Otp\\' =>
         array (
             0 => __DIR__ . '/..' . '/christian-riesen/otp/src',
         ),
-        'OAuth\\' => 
+        'OAuth\\' =>
         array (
             0 => __DIR__ . '/..' . '/lusitanian/oauth/src/OAuth',
         ),
-        'Minishlink\\WebPush\\' => 
+        'Minishlink\\WebPush\\' =>
         array (
             0 => __DIR__ . '/..' . '/minishlink/web-push/src',
         ),
-        'League\\Flysystem\\EventableFilesystem\\' => 
+        'League\\Flysystem\\EventableFilesystem\\' =>
         array (
             0 => __DIR__ . '/..' . '/league/flysystem-eventable-filesystem/src',
         ),
-        'League\\Flysystem\\AwsS3v3\\' => 
+        'League\\Flysystem\\AwsS3v3\\' =>
         array (
             0 => __DIR__ . '/..' . '/league/flysystem-aws-s3-v3/src',
         ),
-        'League\\Flysystem\\' => 
+        'League\\Flysystem\\' =>
         array (
             0 => __DIR__ . '/../../..' . '/src/vendor-patch/League/Flysystem',
             1 => __DIR__ . '/..' . '/league/flysystem/src',
         ),
-        'League\\Event\\' => 
+        'League\\Event\\' =>
         array (
             0 => __DIR__ . '/..' . '/league/event/src',
         ),
-        'Laminas\\ZendFrameworkBridge\\' => 
+        'Laminas\\ZendFrameworkBridge\\' =>
         array (
             0 => __DIR__ . '/..' . '/laminas/laminas-zendframework-bridge/src',
         ),
-        'Laminas\\Validator\\' => 
+        'Laminas\\Validator\\' =>
         array (
             0 => __DIR__ . '/..' . '/laminas/laminas-validator/src',
         ),
-        'Laminas\\Stdlib\\' => 
+        'Laminas\\Stdlib\\' =>
         array (
             0 => __DIR__ . '/..' . '/laminas/laminas-stdlib/src',
         ),
-        'Laminas\\Mime\\' => 
+        'Laminas\\Mime\\' =>
         array (
             0 => __DIR__ . '/..' . '/laminas/laminas-mime/src',
         ),
-        'Laminas\\Mail\\' => 
+        'Laminas\\Mail\\' =>
         array (
             0 => __DIR__ . '/..' . '/laminas/laminas-mail/src',
         ),
-        'Laminas\\Loader\\' => 
+        'Laminas\\Loader\\' =>
         array (
             0 => __DIR__ . '/..' . '/laminas/laminas-loader/src',
         ),
-        'Laminas\\Feed\\' => 
+        'Laminas\\Feed\\' =>
         array (
             0 => __DIR__ . '/..' . '/laminas/laminas-feed/src',
         ),
-        'Laminas\\Escaper\\' => 
+        'Laminas\\Escaper\\' =>
         array (
             0 => __DIR__ . '/..' . '/laminas/laminas-escaper/src',
         ),
-        'JoyPixels\\' => 
+        'JoyPixels\\' =>
         array (
             0 => __DIR__ . '/..' . '/joypixels/emoji-toolkit/lib/php/src',
         ),
-        'Jose\\Component\\Signature\\Algorithm\\' => 
+        'Jose\\Component\\Signature\\Algorithm\\' =>
         array (
             0 => __DIR__ . '/..' . '/web-token/jwt-signature-algorithm-ecdsa',
         ),
-        'Jose\\Component\\Signature\\' => 
+        'Jose\\Component\\Signature\\' =>
         array (
             0 => __DIR__ . '/..' . '/web-token/jwt-signature',
         ),
-        'Jose\\Component\\KeyManagement\\' => 
+        'Jose\\Component\\KeyManagement\\' =>
         array (
             0 => __DIR__ . '/..' . '/web-token/jwt-key-mgmt',
         ),
-        'Jose\\Component\\Core\\Util\\Ecc\\' => 
+        'Jose\\Component\\Core\\Util\\Ecc\\' =>
         array (
             0 => __DIR__ . '/..' . '/web-token/jwt-util-ecc',
         ),
-        'Jose\\Component\\Core\\' => 
+        'Jose\\Component\\Core\\' =>
         array (
             0 => __DIR__ . '/..' . '/web-token/jwt-core',
         ),
-        'JmesPath\\' => 
+        'JmesPath\\' =>
         array (
             0 => __DIR__ . '/..' . '/mtdowling/jmespath.php/src',
         ),
-        'Interop\\Container\\' => 
+        'Interop\\Container\\' =>
         array (
             0 => __DIR__ . '/..' . '/container-interop/container-interop/src/Interop/Container',
         ),
-        'GuzzleHttp\\Psr7\\' => 
+        'GuzzleHttp\\Psr7\\' =>
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
         ),
-        'GuzzleHttp\\Promise\\' => 
+        'GuzzleHttp\\Promise\\' =>
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/promises/src',
         ),
-        'GuzzleHttp\\' => 
+        'GuzzleHttp\\' =>
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
         ),
-        'FG\\' => 
+        'FG\\' =>
         array (
             0 => __DIR__ . '/..' . '/fgrosse/phpasn1/lib',
         ),
-        'Egulias\\EmailValidator\\' => 
+        'Egulias\\EmailValidator\\' =>
         array (
             0 => __DIR__ . '/..' . '/egulias/email-validator/src',
         ),
-        'Doctrine\\Deprecations\\' => 
+        'Doctrine\\Deprecations\\' =>
         array (
-            0 => __DIR__ . '/..' . '/doctrine/deprecations/lib/Doctrine/Deprecations',
+            0 => __DIR__ . '/..' . '/doctrine/deprecations/src',
         ),
-        'Doctrine\\Common\\Lexer\\' => 
+        'Doctrine\\Common\\Lexer\\' =>
         array (
             0 => __DIR__ . '/..' . '/doctrine/lexer/src',
         ),
-        'Doctrine\\Common\\Cache\\' => 
+        'Doctrine\\Common\\Cache\\' =>
         array (
             0 => __DIR__ . '/../../..' . '/src/vendor-patch/Doctrine/Common/Cache',
         ),
-        'Brick\\Math\\' => 
+        'Brick\\Math\\' =>
         array (
             0 => __DIR__ . '/..' . '/brick/math/src',
         ),
-        'Braintree\\' => 
+        'Braintree\\' =>
         array (
             0 => __DIR__ . '/..' . '/braintree/braintree_php/lib/Braintree',
         ),
-        'Base64Url\\' => 
+        'Base64Url\\' =>
         array (
             0 => __DIR__ . '/..' . '/spomky-labs/base64url/src',
         ),
-        'Base32\\' => 
+        'Base32\\' =>
         array (
             0 => __DIR__ . '/..' . '/christian-riesen/base32/src',
         ),
-        'Aws\\' => 
+        'Aws\\' =>
         array (
             0 => __DIR__ . '/..' . '/aws/aws-sdk-php/src',
         ),
@@ -436,23 +436,23 @@ class ComposerStaticInite59c41f29e51a7a2cfba219d2fa94908
     );
 
     public static $prefixesPsr0 = array (
-        'L' => 
+        'L' =>
         array (
-            'Less' => 
+            'Less' =>
             array (
                 0 => __DIR__ . '/..' . '/oyejorge/less.php/lib',
             ),
         ),
-        'B' => 
+        'B' =>
         array (
-            'Braintree' => 
+            'Braintree' =>
             array (
                 0 => __DIR__ . '/..' . '/braintree/braintree_php/lib',
             ),
         ),
-        'A' => 
+        'A' =>
         array (
-            'Authy' => 
+            'Authy' =>
             array (
                 0 => __DIR__ . '/..' . '/authy/php/lib',
             ),
@@ -497,11 +497,11 @@ class ComposerStaticInite59c41f29e51a7a2cfba219d2fa94908
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInite59c41f29e51a7a2cfba219d2fa94908::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInite59c41f29e51a7a2cfba219d2fa94908::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr4 = ComposerStaticInite59c41f29e51a7a2cfba219d2fa94908::$fallbackDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInite59c41f29e51a7a2cfba219d2fa94908::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInite59c41f29e51a7a2cfba219d2fa94908::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit119d98a73e573b9281c84264e8260247::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit119d98a73e573b9281c84264e8260247::$prefixDirsPsr4;
+            $loader->fallbackDirsPsr4 = ComposerStaticInit119d98a73e573b9281c84264e8260247::$fallbackDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit119d98a73e573b9281c84264e8260247::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit119d98a73e573b9281c84264e8260247::$classMap;
 
         }, null, ClassLoader::class);
     }

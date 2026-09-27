@@ -2,17 +2,13 @@
 
 namespace XF\Pub\Controller;
 
+use XF\ControllerPlugin\SearchPlugin;
 use XF\Entity\Search;
 use XF\Entity\User;
-use XF\Http\Request;
 use XF\Mvc\ParameterBag;
 use XF\Mvc\Reply\AbstractReply;
 use XF\Repository\SearchRepository;
-use XF\Repository\UserRepository;
 use XF\Search\Query\KeywordQuery;
-use XF\Util\Arr;
-
-use function is_array;
 
 class SearchController extends AbstractController
 {
@@ -21,6 +17,18 @@ class SearchController extends AbstractController
 	 */
 	protected const MAX_AUTO_COMPLETE_RESULTS = 8;
 
+	protected function preDispatchController($action, ParameterBag $params)
+	{
+		$visitor = \XF::visitor();
+		if (!$visitor->canSearch($error))
+		{
+			throw $this->exception($this->noPermission($error));
+		}
+	}
+
+	/**
+	 * @return AbstractReply
+	 */
 	public function actionIndex(ParameterBag $params)
 	{
 		if ($params->search_id && !$this->filter('searchform', 'bool'))
@@ -30,17 +38,11 @@ class SearchController extends AbstractController
 
 		$this->assertNotEmbeddedImageRequest();
 
-		$visitor = \XF::visitor();
-		if (!$visitor->canSearch($error))
-		{
-			return $this->noPermission($error);
-		}
-
 		$input = $this->convertShortSearchInputNames();
 		$input = $this->mergeInputFromSearchMenu($input);
 
 		$searcher = $this->app->search();
-		$type = $input['search_type'] ?: $this->filter('type', 'str');
+		$type = $input['search_type'] ?? $this->filter('type', 'str');
 
 		$viewParams = [
 			'tabs' => $searcher->getSearchTypeTabs(),
@@ -49,25 +51,22 @@ class SearchController extends AbstractController
 			'input' => $input,
 		];
 
-		$typeHandler = null;
-		if ($type && $searcher->isValidContentType($type))
+		$typeHandler = $type && $searcher->isValidContentType($type)
+			? $searcher->handler($type)
+			: null;
+		if ($typeHandler && $typeHandler->getSearchFormTab())
 		{
-			$typeHandler = $searcher->handler($type);
-			if (!$typeHandler->getSearchFormTab())
-			{
-				$typeHandler = null;
-			}
-		}
+			$viewParams = array_merge(
+				$viewParams,
+				$typeHandler->getSearchFormData()
+			);
+			$templateName = $typeHandler->getTypeFormTemplate();
 
-		if ($typeHandler)
-		{
-			if ($sectionContext = $typeHandler->getSectionContext())
+			$sectionContext = $typeHandler->getSectionContext();
+			if ($sectionContext)
 			{
 				$this->setSectionContext($sectionContext);
 			}
-
-			$viewParams = array_merge($viewParams, $typeHandler->getSearchFormData());
-			$templateName = $typeHandler->getTypeFormTemplate();
 		}
 		else
 		{
@@ -80,39 +79,240 @@ class SearchController extends AbstractController
 		return $this->view('XF:Search\Form', 'search_form', $viewParams);
 	}
 
+	/**
+	 * @return AbstractReply
+	 */
+	public function actionSearch()
+	{
+		if ($this->request->exists('from_search_menu'))
+		{
+			return $this->rerouteController(self::class, 'index');
+		}
+
+		$this->assertNotEmbeddedImageRequest();
+
+		$input = $this->getSearchInput();
+
+		$query = $this->prepareSearchQuery($input, $constraints);
+
+		$searchPlugin = $this->plugin(SearchPlugin::class);
+		$searchPlugin->assertValidSearchQuery($query);
+
+		return $this->runSearch($query, $constraints);
+	}
+
+	/**
+	 * @return AbstractReply
+	 */
+	public function actionOlder(ParameterBag $params)
+	{
+		$this->assertNotEmbeddedImageRequest();
+
+		$search = $this->em()->find(Search::class, $params->search_id);
+		if (!$search || $search->user_id !== \XF::visitor()->user_id)
+		{
+			return $this->notFound();
+		}
+
+		$input = $this->convertSearchToQueryInput($search);
+
+		$before = $this->filter('before', 'uint');
+		if ($before)
+		{
+			$input['c']['older_than'] = $before;
+		}
+
+		$query = $this->prepareSearchQuery($input, $constraints);
+
+		$searchPlugin = $this->plugin(SearchPlugin::class);
+		$searchPlugin->assertValidSearchQuery($query);
+
+		return $this->runSearch($query, $constraints);
+	}
+
+	/**
+	 * @return AbstractReply
+	 */
+	public function actionMember()
+	{
+		$this->assertNotEmbeddedImageRequest();
+
+		$userId = $this->filter('user_id', 'uint');
+		$user = $this->assertRecordExists(
+			User::class,
+			$userId,
+			null,
+			'requested_member_not_found'
+		);
+
+		$input = [
+			'c' => [
+				'users' => $user->username,
+			],
+			'order' => 'date',
+		];
+
+		$content = $this->filter('content', 'str');
+		if ($content)
+		{
+			$input['search_type'] = $content;
+		}
+
+		$type = $this->filter('type', 'str');
+		if ($type)
+		{
+			$input['c']['type'] = $type;
+		}
+
+		$before = $this->filter('before', 'uint');
+		if ($before)
+		{
+			$input['c']['older_than'] = $before;
+		}
+
+		$threadType = $this->filter('thread_type', 'str');
+		if ($threadType)
+		{
+			$input['c']['thread_type'] = $threadType;
+		}
+
+		$grouped = $this->filter('grouped', 'bool');
+		if ($grouped)
+		{
+			$input['grouped'] = 1;
+		}
+
+		$query = $this->prepareSearchQuery($input, $constraints);
+
+		$searchPlugin = $this->plugin(SearchPlugin::class);
+		$searchPlugin->assertValidSearchQuery($query);
+
+		return $this->runSearch($query, $constraints);
+	}
+
+	/**
+	 * @return AbstractReply
+	 */
+	public function actionResults(ParameterBag $params)
+	{
+		$this->assertNotEmbeddedImageRequest();
+
+		$search = $this->em()->find(Search::class, $params->search_id);
+		$visitor = \XF::visitor();
+		if (!$search || $visitor->user_id !== $search->user_id)
+		{
+			$searchData = $this->convertShortSearchInputNames();
+			$query = $this->prepareSearchQuery($searchData, $constraints);
+
+			$searchPlugin = $this->plugin(SearchPlugin::class);
+			$searchPlugin->assertValidSearchQuery($query);
+
+			return $this->runSearch($query, $constraints);
+		}
+
+		$page = $this->filterPage();
+		$perPage = $this->options()->searchResultsPerPage;
+		$maxPage = (int) ceil($search->result_count / $perPage);
+
+		$this->assertValidPage(
+			$page,
+			$perPage,
+			$search->result_count,
+			'search',
+			$search
+		);
+
+		$searcher = $this->app()->search();
+		$resultSet = $searcher->getResultSet($search->search_results);
+		$resultSet->sliceResultsToPage($page, $perPage);
+		if (!$resultSet->countResults())
+		{
+			return $this->message(\XF::phrase('no_results_found'));
+		}
+
+		if (
+			$search->search_order === 'date'
+			&& $search->result_count > $perPage
+			&& $page === $maxPage
+		)
+		{
+			$lastResult = $resultSet->getLastResultData($lastResultType);
+			$lastResultHandler = $searcher->handler($lastResultType);
+			$getOlderResultsDate = $lastResultHandler->getResultDate($lastResult);
+		}
+		else
+		{
+			$getOlderResultsDate = null;
+		}
+
+		$resultOptions = [
+			'search' => $search,
+			'term' => $search->search_query,
+		];
+		$results = $searcher->wrapResultsForRender($resultSet, $resultOptions);
+
+		$modTypes = [];
+		foreach ($results AS $result)
+		{
+			$handler = $result->getHandler();
+			$entity = $result->getResult();
+			if (!$handler->canUseInlineModeration($entity))
+			{
+				continue;
+			}
+
+			$type = $handler->getContentType();
+			if (isset($modTypes[$type]))
+			{
+				continue;
+			}
+
+			$modTypes[$type] = $this->app->getContentTypePhrase($type);
+		}
+
+		$activeModType = $this->filter('mod', 'str');
+		if (!isset($modTypes[$activeModType]))
+		{
+			$activeModType = '';
+		}
+
+		$viewParams = [
+			'search' => $search,
+			'results' => $results,
+
+			'page' => $page,
+			'perPage' => $perPage,
+
+			'getOlderResultsDate' => $getOlderResultsDate,
+
+			'modTypes' => $modTypes,
+			'activeModType' => $activeModType,
+		];
+		return $this->view('XF:Search\Results', 'search_results', $viewParams);
+	}
+
 	public function actionAutoComplete(ParameterBag $params): AbstractReply
 	{
 		$this->assertPostOnly();
 
-		if (!\XF::visitor()->canSearch($error))
-		{
-			return $this->noPermission($error);
-		}
-
 		$suggestEnabled = $this->options()->searchSuggestions['enabled'];
 		if (!$suggestEnabled)
 		{
-			return $this->noPermission();
+			return $this->notFound();
 		}
 
 		$searcher = $this->app->search();
 		if (!$searcher->isAutoCompleteSupported())
 		{
-			return $this->noPermission();
+			return $this->notFound();
 		}
 
 		$input = $this->getSearchInput();
 
 		$query = $this->prepareSearchQuery($input, $constraints);
-		if ($query->getErrors())
-		{
-			return $this->error($query->getErrors());
-		}
 
-		if ($searcher->isQueryEmpty($query, $error))
-		{
-			return $this->error($error);
-		}
+		$searchPlugin = $this->plugin(SearchPlugin::class);
+		$searchPlugin->assertValidSearchQuery($query);
 
 		$results = $searcher->autoComplete(
 			$query,
@@ -132,432 +332,150 @@ class SearchController extends AbstractController
 	}
 
 	/**
-	 * @param $input
+	 * @param array{
+	 *     search_type?: string,
+	 *     keywords?: string,
+	 *     c?: array,
+	 *     order?: string,
+	 *     grouped?: bool,
+	 * } $input
 	 *
-	 * @return array|mixed
+	 * @return array{
+	 *     search_type?: string,
+	 *     keywords?: string,
+	 *     c?: array,
+	 *     order?: string,
+	 *     grouped?: bool,
+	 * }
 	 */
 	protected function mergeInputFromSearchMenu($input)
 	{
-		if ($this->request->exists('from_search_menu'))
+		if (!$this->request->exists('from_search_menu'))
 		{
-			$menuInput = $this->getSearchInput();
-			// TODO: if the menu input says something like 'this thread', get its parent forum maybe?
-
-			return array_replace_recursive($input, $menuInput);
+			return $input;
 		}
 
-		return $input;
+		// TODO: handle context restrictions?
+		$menuInput = $this->getSearchInput();
+
+		return array_replace_recursive($input, $menuInput);
 	}
 
-	public function actionSearch()
-	{
-		$this->assertNotEmbeddedImageRequest();
-
-		if ($this->request->exists('from_search_menu'))
-		{
-			return $this->rerouteController(self::class, 'index');
-		}
-
-		$visitor = \XF::visitor();
-		if (!$visitor->canSearch($error))
-		{
-			return $this->noPermission($error);
-		}
-
-		$input = $this->getSearchInput();
-
-		$query = $this->prepareSearchQuery($input, $constraints);
-
-		if ($query->getErrors())
-		{
-			return $this->error($query->getErrors());
-		}
-
-		$searcher = $this->app->search();
-		if ($searcher->isQueryEmpty($query, $error))
-		{
-			return $this->error($error);
-		}
-
-		return $this->runSearch($query, $constraints);
-	}
-
-	protected function getSearchInput()
-	{
-		$filters = $this->getSearchInputFilters();
-
-		$input = $this->filter($filters);
-
-		$constraintInput = $this->filter('constraints', 'json-array');
-		foreach ($filters AS $k => $type)
-		{
-			if (isset($constraintInput[$k]))
-			{
-				$cleaned = $this->app->inputFilterer()->filter($constraintInput[$k], $type);
-				if (is_array($cleaned))
-				{
-					$input[$k] = array_merge($input[$k], $cleaned);
-				}
-				else
-				{
-					$input[$k] = $cleaned;
-				}
-			}
-		}
-
-		return $input;
-	}
-
-	protected function getSearchInputFilters()
-	{
-		return [
-			'search_type' => 'str',
-			'keywords' => 'str',
-			'c' => 'array',
-			'grouped' => 'bool',
-			'order' => '?str',
-		];
-	}
-
-	public function actionResults(ParameterBag $params)
-	{
-		$this->assertNotEmbeddedImageRequest();
-
-		$visitor = \XF::visitor();
-
-		/** @var Search $search */
-		$search = $this->em()->find(Search::class, $params->search_id);
-		if (!$search || $search->user_id != $visitor->user_id || !$visitor->user_id)
-		{
-			$searchData = $this->convertShortSearchInputNames();
-			$query = $this->prepareSearchQuery($searchData, $constraints);
-			if ($query->getErrors())
-			{
-				return $this->notFound();
-			}
-
-			if ($visitor->user_id)
-			{
-				// always re-run search for logged-in users
-				return $this->runSearch($query, $constraints);
-			}
-			else if (!$search || ($search->search_query && $search->search_query !== $this->filter('q', 'str')))
-			{
-				return $this->notFound();
-			}
-		}
-
-		$page = $this->filterPage();
-		$perPage = $this->options()->searchResultsPerPage;
-
-		$this->assertValidPage($page, $perPage, $search->result_count, 'search', $search);
-
-		$searcher = $this->app()->search();
-		$resultSet = $searcher->getResultSet($search->search_results);
-
-		$resultSet->sliceResultsToPage($page, $perPage);
-
-		if (!$resultSet->countResults())
-		{
-			return $this->message(\XF::phrase('no_results_found'));
-		}
-
-		$maxPage = ceil($search->result_count / $perPage);
-
-		if ($search->search_order == 'date'
-			&& $search->result_count > $perPage
-			&& $page == $maxPage)
-		{
-			$lastResult = $resultSet->getLastResultData($lastResultType);
-			$getOlderResultsDate = $searcher->handler($lastResultType)->getResultDate($lastResult);
-		}
-		else
-		{
-			$getOlderResultsDate = null;
-		}
-
-		$resultOptions = [
-			'search' => $search,
-			'term' => $search->search_query,
-		];
-		$resultsWrapped = $searcher->wrapResultsForRender($resultSet, $resultOptions);
-
-		$modTypes = [];
-		foreach ($resultsWrapped AS $wrapper)
-		{
-			$handler = $wrapper->getHandler();
-			$entity = $wrapper->getResult();
-			if ($handler->canUseInlineModeration($entity))
-			{
-				$type = $handler->getContentType();
-				if (!isset($modTypes[$type]))
-				{
-					$modTypes[$type] = $this->app->getContentTypePhrase($type);
-				}
-			}
-		}
-
-		$mod = $this->filter('mod', 'str');
-		if ($mod && !isset($modTypes[$mod]))
-		{
-			$mod = '';
-		}
-
-		$viewParams = [
-			'search' => $search,
-			'results' => $resultsWrapped,
-
-			'page' => $page,
-			'perPage' => $perPage,
-
-			'modTypes' => $modTypes,
-			'activeModType' => $mod,
-
-			'getOlderResultsDate' => $getOlderResultsDate,
-		];
-		return $this->view('XF:Search\Results', 'search_results', $viewParams);
-	}
-
-	public function actionMember()
-	{
-		$this->assertNotEmbeddedImageRequest();
-
-		$userId = $this->filter('user_id', 'uint');
-		$user = $this->assertRecordExists(User::class, $userId, null, 'requested_member_not_found');
-
-		$constraints = ['users' => $user->username];
-
-		$searcher = $this->app->search();
-		$query = $searcher->getQuery();
-		$query->byUserId($user->user_id)
-			->orderedBy('date');
-
-		$content = $this->filter('content', 'str');
-		$type = $this->filter('type', 'str');
-		if ($content && $searcher->isValidContentType($content))
-		{
-			$typeHandler = $searcher->handler($content);
-			$query->forTypeHandlerBasic($typeHandler);
-			// this applies the type limits that make sense
-
-			$constraints['content'] = $content;
-
-			$grouped = $this->filter('grouped', 'bool');
-			if ($grouped)
-			{
-				$query->withGroupedResults();
-			}
-		}
-		else if ($type && $searcher->isValidContentType($type))
-		{
-			$query->inType($type);
-			$constraints['type'] = $type;
-		}
-
-		$threadType = $this->filter('thread_type', 'str');
-		if ($threadType && $query->getTypes() == ['thread'])
-		{
-			$query->withMetadata('thread_type', $threadType);
-			$constraints['thread_type'] = $threadType;
-		}
-
-		$before = $this->filter('before', 'uint');
-		if ($before)
-		{
-			$query->olderThan($before);
-		}
-
-		return $this->runSearch($query, $constraints, false);
-	}
-
-	public function actionOlder(ParameterBag $params)
-	{
-		$this->assertNotEmbeddedImageRequest();
-
-		/** @var Search $search */
-		$search = $this->em()->find(Search::class, $params->search_id);
-		if (!$search || $search->user_id != \XF::visitor()->user_id)
-		{
-			return $this->notFound();
-		}
-
-		$searchData = $this->convertSearchToQueryInput($search);
-		$searchData['c']['older_than'] = $this->filter('before', 'uint');
-
-		$query = $this->prepareSearchQuery($searchData, $constraints);
-		if ($query->getErrors())
-		{
-			return $this->error($query->getErrors());
-		}
-
-		return $this->runSearch($query, $constraints);
-	}
-
+	/**
+	 * @return array{
+	 *     search_type?: string,
+	 *     keywords?: string,
+	 *     c?: array,
+	 *     order?: string,
+	 *     grouped?: bool,
+	 * }
+	 */
 	protected function convertShortSearchInputNames()
 	{
-		return $this->convertShortSearchNames($this->filter([
-			't' => 'str',
-			'q' => 'str',
-			'c' => 'array',
-			'g' => 'bool',
-			'o' => 'str',
-		]));
+		$searchPlugin = $this->plugin(SearchPlugin::class);
+
+		return $searchPlugin->convertShortSearchInputNames();
 	}
 
+	/**
+	 * @param array{
+	 *     t?: string,
+	 *     q?: string,
+	 *     c?: array,
+	 *     o?: string,
+	 *     g?: bool,
+	 * } $input
+	 *
+	 * @return array{
+	 *     search_type?: string,
+	 *     keywords?: string,
+	 *     c?: array,
+	 *     order?: string,
+	 *     grouped?: 1,
+	 * }
+	 */
 	protected function convertShortSearchNames(array $input)
 	{
-		$output = [];
+		$searchPlugin = $this->plugin(SearchPlugin::class);
 
-		if (isset($input['t']))
-		{
-			$output['search_type'] = $input['t'] ?: null;
-		}
-
-		if (isset($input['q']))
-		{
-			$output['keywords'] = $input['q'];
-		}
-
-		if (isset($input['c']))
-		{
-			$output['c'] = $input['c'];
-		}
-
-		if (isset($input['g']))
-		{
-			$output['grouped'] = $input['g'] ? 1 : 0;
-		}
-
-		if (isset($input['o']))
-		{
-			$output['order'] = $input['o'] ?: null;
-		}
-
-		return $output;
+		return $searchPlugin->convertShortSearchNames($input);
 	}
 
+	/**
+	 * @return array{
+	 *     search_type?: string,
+	 *     keywords?: string,
+	 *     c?: array|null,
+	 *     order?: string,
+	 *     grouped?: 1,
+	 * }
+	 */
 	protected function convertSearchToQueryInput(Search $search)
 	{
-		return [
-			'search_type' => $search->search_type,
-			'keywords' => $search->search_query,
-			'c' => $search->search_constraints,
-			'grouped' => $search->search_grouping ? 1 : 0,
-			'order' => $search->search_order,
-		];
+		$searchPlugin = $this->plugin(SearchPlugin::class);
+
+		return $searchPlugin->convertSearchToQueryInput($search);
 	}
 
+	/**
+	 * @return array{
+	 *     search_type: string,
+	 *     keywords: string,
+	 *     c: array,
+	 *     order: string|null,
+	 *     grouped: bool,
+	 * }
+	 */
+	protected function getSearchInput()
+	{
+		$searchPlugin = $this->plugin(SearchPlugin::class);
+
+		return $searchPlugin->getSearchInput();
+	}
+
+	/**
+	 * @return array{
+	 *     search_type: string,
+	 *     keywords: string,
+	 *     c: string,
+	 *     order: string,
+	 *     grouped: string,
+	 * }
+	 */
+	protected function getSearchInputFilters()
+	{
+		$searchPlugin = $this->plugin(SearchPlugin::class);
+
+		return $searchPlugin->getSearchInputFilters();
+	}
+
+	/**
+	 * @param array{
+	 *     search_type: string,
+	 *     keywords: string,
+	 *     c: array|null,
+	 *     order: string
+	 *     grouped: int<0, 1>,
+	 * } $data
+	 *
+	 * @return KeywordQuery
+	 */
 	protected function prepareSearchQuery(array $data, &$urlConstraints = [])
 	{
-		$searchRequest = new Request($this->app->inputFilterer(), $data, [], []);
-		$input = $searchRequest->filter([
-			'search_type' => 'str',
-			'keywords' => 'str',
-			'c' => 'array',
-			'c.title_only' => 'uint',
-			'c.newer_than' => 'datetime',
-			'c.older_than' => 'datetime',
-			'c.users' => 'str',
-			'c.content' => 'str',
-			'c.type' => 'str',
-			'c.thread_type' => 'str',
-			'grouped' => 'bool',
-			'order' => 'str',
-		]);
+		$searchPlugin = $this->plugin(SearchPlugin::class);
 
-		$urlConstraints = $input['c'];
-
-		$searcher = $this->app()->search();
-		$query = $searcher->getQuery();
-
-		if ($input['search_type'] && $searcher->isValidContentType($input['search_type']))
-		{
-			$typeHandler = $searcher->handler($input['search_type']);
-			$query->forTypeHandler($typeHandler, $searchRequest, $urlConstraints);
-		}
-
-		if ($input['grouped'])
-		{
-			$query->withGroupedResults();
-		}
-
-		$input['keywords'] = $this->app->stringFormatter()->censorText($input['keywords'], '');
-		if ($input['keywords'])
-		{
-			$query->withKeywords($input['keywords'], $input['c.title_only']);
-		}
-
-		if ($input['c.newer_than'])
-		{
-			$query->newerThan($input['c.newer_than']);
-		}
-		else
-		{
-			unset($urlConstraints['newer_than']);
-		}
-		if ($input['c.older_than'])
-		{
-			$query->olderThan($input['c.older_than']);
-		}
-		else
-		{
-			unset($urlConstraints['older_than']);
-		}
-
-		if ($input['c.users'])
-		{
-			$users = Arr::stringToArray($input['c.users'], '/,\s*/');
-			if ($users)
-			{
-				/** @var UserRepository $userRepo */
-				$userRepo = $this->repository(UserRepository::class);
-				$matchedUsers = $userRepo->getUsersByNames($users, $notFound);
-				if ($notFound)
-				{
-					$query->error(
-						'users',
-						\XF::phrase('following_members_not_found_x', ['members' => implode(', ', $notFound)])
-					);
-				}
-				else
-				{
-					$query->byUserIds($matchedUsers->keys());
-					$urlConstraints['users'] = implode(', ', $users);
-				}
-			}
-		}
-
-		if ($input['c.content'])
-		{
-			$query->inType($input['c.content']);
-		}
-		else if ($input['c.type'])
-		{
-			$query->inType($input['c.type']);
-		}
-
-		if ($input['c.thread_type'] && $query->getTypes() == ['thread'])
-		{
-			$query->withMetadata('thread_type', $input['c.thread_type']);
-		}
-
-		if ($input['order'])
-		{
-			$query->orderedBy($input['order']);
-		}
-
-		return $query;
+		return $searchPlugin->prepareSearchQuery($data, $urlConstraints);
 	}
 
-	protected function runSearch(KeywordQuery $query, array $constraints, $allowCached = true)
+	/**
+	 * @return AbstractReply
+	 */
+	protected function runSearch(
+		KeywordQuery $query,
+		array $constraints,
+		$allowCached = true
+	)
 	{
-		$visitor = \XF::visitor();
-		if (!$visitor->canSearch($error))
-		{
-			return $this->noPermission($error);
-		}
-
-		/** @var SearchRepository $searchRepo */
 		$searchRepo = $this->repository(SearchRepository::class);
 		$search = $searchRepo->runSearch($query, $constraints, $allowCached);
 

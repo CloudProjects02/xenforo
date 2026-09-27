@@ -46,7 +46,6 @@ class EditorController extends AbstractController
 		}
 		else if ($dialog == 'media')
 		{
-			/** @var BbCodeMediaSiteRepository $mediaRepo */
 			$mediaRepo = $this->repository(BbCodeMediaSiteRepository::class);
 			$params['sites'] = $mediaRepo->findActiveMediaSites()->fetch();
 			$template = "editor_dialog_media";
@@ -72,7 +71,6 @@ class EditorController extends AbstractController
 	{
 		$this->assertPostOnly();
 
-		/** @var BbCodeMediaSiteRepository $mediaRepo */
 		$mediaRepo = $this->repository(BbCodeMediaSiteRepository::class);
 
 		$url = $this->filter('url', 'str');
@@ -156,8 +154,6 @@ class EditorController extends AbstractController
 
 	public function actionSmiliesEmoji()
 	{
-		/** @var SmilieRepository $smilieRepo */
-		/** @var SmilieCategoryRepository $smilieCategoryRepo */
 		$smilieRepo = $this->repository(SmilieRepository::class);
 		$smilieCategoryRepo = $this->repository(SmilieCategoryRepository::class);
 
@@ -225,7 +221,6 @@ class EditorController extends AbstractController
 
 		if ($q !== '' && Str::strlen($q) >= 2)
 		{
-			/** @var EmojiRepository $emojiRepo */
 			$emojiRepo = $this->repository(EmojiRepository::class);
 			$results = $emojiRepo->getMatchingEmojiByString($q, [
 				'includeEmoji' => $this->options()->showEmojiInSmilieMenu,

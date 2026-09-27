@@ -300,13 +300,13 @@
 
 			if (this.options.invisible)
 			{
-				const reCaptchaTarget = document.createElement('div')
+				const hCaptchaTarget = document.createElement('div')
 				const formRow = this.target.closest('.formRow')
 
 				XF.display(formRow, 'none')
-				formRow.insertAdjacentElement('afterend', reCaptchaTarget)
+				formRow.insertAdjacentElement('afterend', hCaptchaTarget)
 
-				this.reCaptchaTarget = reCaptchaTarget
+				this.hCaptchaTarget = hCaptchaTarget
 
 				XF.on(form, 'ajax-submit:before', this.beforeSubmit.bind(this))
 			}

@@ -8,6 +8,7 @@ use XF\CookieConsent;
 use XF\Entity\HelpPage;
 use XF\Finder\HelpPageFinder;
 use XF\Mvc\Reply\AbstractReply;
+use XF\Pub\App;
 use XF\Repository\EmojiRepository;
 use XF\Repository\LanguageRepository;
 use XF\Repository\StyleRepository;
@@ -15,13 +16,32 @@ use XF\Repository\TagRepository;
 use XF\Repository\UserPushRepository;
 use XF\Service\ContactService;
 use XF\Util\Str;
-
 use XF\Validator\Username;
 
 use function count, strlen;
 
 class MiscController extends AbstractController
 {
+	public function actionHealth()
+	{
+		/** @var App $app */
+		$app = $this->app();
+		$response = $app->response();
+
+		$app::$allowPageCache = false;
+
+		$response->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+		$response->header('Pragma', 'no-cache');
+		$response->header('Expires', 'Thu, 01 Jan 1970 00:00:00 GMT');
+
+		$response->header('Content-Type', 'text/plain');
+		$response->httpCode(200);
+		$response->body('OK');
+
+		$response->send($this->request);
+		exit;
+	}
+
 	public function actionCookies(): AbstractReply
 	{
 		if ($this->app()->cookieConsent()->getMode() !== CookieConsent::MODE_ADVANCED)
@@ -104,7 +124,6 @@ class MiscController extends AbstractController
 	 */
 	protected function setupContactService()
 	{
-		/** @var ContactService $contactService */
 		$contactService = $this->service(ContactService::class);
 
 		$visitor = \XF::visitor();
@@ -310,7 +329,9 @@ class MiscController extends AbstractController
 	public function actionStyleVariation(): AbstractReply
 	{
 		$visitor = \XF::visitor();
-		$style = $this->app->style($visitor->style_id);
+		$styleRepo = \XF::repository(StyleRepository::class);
+		$selectedStyleId = $styleRepo->getSelectedStyleIdForUser($visitor);
+		$style = \XF::app()->style($selectedStyleId);
 		if (!$visitor->canChangeStyleVariation($style, $error))
 		{
 			return $this->noPermission($error);
@@ -604,7 +625,6 @@ class MiscController extends AbstractController
 			'encoding' => 'str',
 		]);
 
-		/** @var UserPushRepository $userPushRepo */
 		$userPushRepo = $this->repository(UserPushRepository::class);
 
 		if (!$userPushRepo->validateSubscriptionDetails($subscription, $validationError))
@@ -640,7 +660,6 @@ class MiscController extends AbstractController
 
 		if ($q !== '' && Str::strlen($q) >= 2)
 		{
-			/** @var EmojiRepository $emojiRepo */
 			$emojiRepo = $this->repository(EmojiRepository::class);
 			$results = $emojiRepo->getMatchingEmojiByString($q, [
 				'includeSmilies' => !$excludeSmilies,
@@ -709,6 +728,29 @@ class MiscController extends AbstractController
 		return $output;
 	}
 
+	public function assertBoardActive($action)
+	{
+		if (strtolower($action) === 'cookies')
+		{
+			// allow setting cookie preferences
+			return;
+		}
+
+		if (strtolower($action) === 'stylevariation')
+		{
+			// allow changing style variation
+			return;
+		}
+
+		if (strtolower($action) === 'health')
+		{
+			// allow health check
+			return;
+		}
+
+		parent::assertBoardActive($action);
+	}
+
 	public function assertNotRejected($action)
 	{
 		if (strtolower($action) == 'contact')
@@ -749,6 +791,7 @@ class MiscController extends AbstractController
 	{
 		switch (strtolower($action))
 		{
+			case 'health':
 			case 'captcha':
 			case 'contact':
 			case 'validateusername':

@@ -4,7 +4,6 @@ namespace XF\Repository;
 
 use XF\Finder\AdvertisingFinder;
 use XF\Finder\AdvertisingPositionFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 use XF\Service\Advertising\WriterService;
 
@@ -13,7 +12,7 @@ use function count;
 class AdvertisingRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return AdvertisingFinder
 	 */
 	public function findAdsForList()
 	{
@@ -21,7 +20,7 @@ class AdvertisingRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return AdvertisingPositionFinder
 	 */
 	public function findAdvertisingPositionsForList($activeOnly = false)
 	{
@@ -60,7 +59,6 @@ class AdvertisingRepository extends Repository
 			->fetch()
 			->groupBy('position_id');
 
-		/** @var WriterService $service */
 		$service = $this->app()->service(WriterService::class, $positions, $ads);
 
 		if ($disallowedTemplates === null && !empty($this->options()->adsDisallowedTemplates))

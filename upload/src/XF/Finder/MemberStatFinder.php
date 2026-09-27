@@ -2,14 +2,15 @@
 
 namespace XF\Finder;
 
+use XF\Entity\MemberStat;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Finder;
 
 /**
- * @method AbstractCollection<\XF\Entity\MemberStat> fetch(?int $limit = null, ?int $offset = null)
- * @method AbstractCollection<\XF\Entity\MemberStat> fetchDeferred(?int $limit = null, ?int $offset = null)
- * @method \XF\Entity\MemberStat|null fetchOne(?int $offset = null)
- * @extends Finder<\XF\Entity\MemberStat>
+ * @method AbstractCollection<MemberStat> fetch(?int $limit = null, ?int $offset = null)
+ * @method AbstractCollection<MemberStat> fetchDeferred(?int $limit = null, ?int $offset = null)
+ * @method MemberStat|null fetchOne(?int $offset = null)
+ * @extends Finder<MemberStat>
  */
 class MemberStatFinder extends Finder
 {

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="option.bsXFWebSocketsCopyright" version_id="1000070" version_string="1.0.0"><![CDATA[Show copyright]]></phrase>
+  <phrase title="option.bsXFWebSocketsPusherAppID" version_id="1000070" version_string="1.0.0"><![CDATA[Pusher app ID]]></phrase>
+  <phrase title="option.bsXFWebSocketsPusherCluster" version_id="1000070" version_string="1.0.0"><![CDATA[Pusher cluster]]></phrase>
+  <phrase title="option.bsXFWebSocketsPusherHost" version_id="1000070" version_string="1.0.0"><![CDATA[Pusher host]]></phrase>
+  <phrase title="option.bsXFWebSocketsPusherKey" version_id="1000070" version_string="1.0.0"><![CDATA[Pusher public key]]></phrase>
+  <phrase title="option.bsXFWebSocketsPusherPort" version_id="1000070" version_string="1.0.0"><![CDATA[Pusher connection port]]></phrase>
+  <phrase title="option.bsXFWebSocketsPusherSecret" version_id="1000070" version_string="1.0.0"><![CDATA[Pusher secret key]]></phrase>
+  <phrase title="option_explain.bsXFWebSocketsCopyright" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.bsXFWebSocketsPusherAppID" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.bsXFWebSocketsPusherCluster" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.bsXFWebSocketsPusherHost" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.bsXFWebSocketsPusherKey" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.bsXFWebSocketsPusherPort" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.bsXFWebSocketsPusherSecret" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_group.bsXFWebSockets" version_id="1000070" version_string="1.0.0"><![CDATA[[021] XenForo WebSockets]]></phrase>
+  <phrase title="option_group_description.bsXFWebSockets" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="permission.websockets_use" version_id="1020370" version_string="1.2.3"><![CDATA[Use WebSockets]]></phrase>
+  <phrase title="permission_interface.bsXFWebsockets" version_id="1020370" version_string="1.2.3"><![CDATA[[021] XenForo WebSockets]]></phrase>
+</phrases>

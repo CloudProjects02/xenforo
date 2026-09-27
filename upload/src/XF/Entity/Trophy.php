@@ -7,13 +7,11 @@ use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XF\Phrase;
 
-use function intval;
-
 /**
  * COLUMNS
  * @property int|null $trophy_id
  * @property int $trophy_points
- * @property array $user_criteria
+ * @property array|null $user_criteria
  *
  * GETTERS
  * @property-read Phrase $title
@@ -92,7 +90,8 @@ class Trophy extends Entity
 
 		$this->db()->delete(
 			'xf_user_alert',
-			"content_type = 'trophy' AND action = 'award' AND extra_data LIKE '%i:" . intval($this->trophy_id) . ";%'"
+			"content_type = 'trophy' AND content_id = ? AND action = 'award'",
+			[$this->trophy_id]
 		);
 	}
 

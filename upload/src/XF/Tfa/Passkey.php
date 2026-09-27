@@ -54,7 +54,14 @@ class Passkey extends AbstractProvider
 		$session = \XF::session();
 		$passkey = \XF::service(ManagerService::class, $session);
 
-		if (!$passkey->validate($request, $error))
+		if (!$passkey->validateWithUser($request, $error, $user))
+		{
+			$passkey->clearStateFromSession($session);
+			return false;
+		}
+
+		$passkeyUser = $passkey->getPasskeyUser();
+		if (!$passkeyUser || $passkeyUser->user_id !== $user->user_id)
 		{
 			$passkey->clearStateFromSession($session);
 			return false;

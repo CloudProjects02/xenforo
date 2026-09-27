@@ -20,6 +20,17 @@ class App extends \XF\App
 		};
 	}
 
+	protected function handleMissingConfig(array $config)
+	{
+		if ($config['legacyExists'])
+		{
+			fwrite(STDERR, "The site is currently being upgraded. Only a limited set of commands are available." . PHP_EOL);
+			return;
+		}
+
+		parent::handleMissingConfig($config);
+	}
+
 	public function setup(array $options = [])
 	{
 		parent::setup();

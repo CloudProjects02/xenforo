@@ -134,7 +134,6 @@ class NotifierService extends AbstractService
 
 			if ($this->_canUserReceivePushNotification($user, $sender))
 			{
-				/** @var PusherService $pusher */
 				$pusher = $this->service(PusherService::class, $user, $message, $actionType, $sender);
 				$pusher->push();
 

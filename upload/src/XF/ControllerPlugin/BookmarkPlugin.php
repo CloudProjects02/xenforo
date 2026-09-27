@@ -81,7 +81,6 @@ class BookmarkPlugin extends AbstractPlugin
 			$bookmark = $content->getBookmark() ?: $content->getNewBookmark();
 		}
 
-		/** @var BookmarkRepository $bookmarkRepo */
 		$bookmarkRepo = $this->repository(BookmarkRepository::class);
 
 		$labelFinder = $bookmarkRepo->findLabelsForUser(\XF::visitor()->user_id);
@@ -113,7 +112,6 @@ class BookmarkPlugin extends AbstractPlugin
 	 */
 	protected function setupBookmarkCreator(Entity $content)
 	{
-		/** @var CreatorService $creator */
 		$creator = $this->service(CreatorService::class, $content);
 
 		$message = $this->filter('message', 'str');
@@ -139,7 +137,6 @@ class BookmarkPlugin extends AbstractPlugin
 	 */
 	protected function setupBookmarkEditor(BookmarkItem $bookmark)
 	{
-		/** @var EditorService $editor */
 		$editor = $this->service(EditorService::class, $bookmark);
 
 		$message = $this->filter('message', 'str');

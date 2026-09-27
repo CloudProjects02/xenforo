@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="permission.general_varyasyonKullanmaz" version_id="1301005" version_string="13.1.0.0"><![CDATA[Tema varyasyonu kullanabilir mi ?]]></phrase>
+  <phrase title="style_porp_desc.xgt_Sv13_kategori_alternatif_renk" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Çift renkli satır düzeni, tablolardaki satırların farklı renklerle görsel olarak ayırt edilmesini sağlayan bir yöntemdir.<br />
+Etkinleştirilirse, forum ve konular için bu sistem uygulanacaktır.]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_actionBar_opaklik" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Mesaj içi aksiyon butonları opaklık oranı]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_adminbar_hizlibaglantilar" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Admin bar hızlı bağlantılar menü etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_alt_forum_izgara" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Alt forumlar ızgara görünümünde]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_alt_ziyaretcipaneli" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Ziyaretçiler için <b>alt</b> hoşgeldin paneli etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_aramamotoru_etkin" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Hızlı arama motoru etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_aramamotoru_max_genislik" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Genişlik]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_aramamotoru_menu" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Arama motoru menü etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_aramamotoru_yukseklik" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Yükseklik]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_blok_head_sinir_etkin" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Blok head alanı sınır çizgileri etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_blok_head_sinir_renk" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Sınır rengi]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_blok_head_sinir_yukseklik" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Sınır yüksekliği]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_breadcrumb" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Renk kontrolleri]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_breadcrumb_hover" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Hover kontrol]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_breadcrumb_yukseklik" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Breadcrumb yükseklik]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_footer_duyuru_baslik" version_id="1300004" version_string="13.1.0.0 Beta 4"><![CDATA[Duyuru başlığı]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_footer_duyuru_etkin" version_id="1300004" version_string="13.1.0.0 Beta 4"><![CDATA[Footer alanı duyurusu etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_footer_duyuru_icerik" version_id="1300004" version_string="13.1.0.0 Beta 4"><![CDATA[Duyuru içeriği]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_footer_duyuru_ikon" version_id="1300004" version_string="13.1.0.0 Beta 4"><![CDATA[Duyuru ikonu]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_footer_duyuru_sayfalar" version_id="1300004" version_string="13.1.0.0 Beta 4"><![CDATA[Duyuruyu tüm sayfalarda göster]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_footer_duyuru_ziyaretci" version_id="1300004" version_string="13.1.0.0 Beta 4"><![CDATA[Duyuruyu ziyaretçilere göster]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_footer_logo_etkin" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Logo etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_footer_meta_aciklama" version_id="1300004" version_string="13.1.0.0 Beta 4"><![CDATA[Meta açıklama metniniz]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_footer_meta_aciklama_etkin" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Logo altı meta açıklama alanı]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_forum_baslik_renk" version_id="1300006" version_string="13.1.0.0 Beta 6"><![CDATA[Forum başlılarını tanımlanmış renkte kullan]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_forum_ikon_renk" version_id="1300006" version_string="13.1.0.0 Beta 6"><![CDATA[İkonları tanımlanmış renkte kullan]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_forum_mini_ikon" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[sdasd]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_forum_padding" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Forum listesi forumlar için dolgu oranı]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_forum_title_kontrol" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Ana sayfa forum başlık alanı]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_forum_url_kapsama_alani" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Forum url kapsama alanı genişlet]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_forum_yeni_mesaj_ikonu" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Yeni mesaj uyarısı etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_ft_hizli_baglantilar_baslik" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Blok header metin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_ft_hizli_baglantilar_blok" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[1. Hızlı bağlantılar blok etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_ft_hizli_baglantilar_icerik" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[1. Hızlı bağlantılar içerik]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_ft_hizli_baglantilar_nasil_kullanilir" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Hızlı bağlantıları için örnek kullanım]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_ft_iletisim_blok_baslik" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[ Blok header metin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_ft_iletisim_blok_etkin" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[2. Hızlı bağlantılar blok etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_ft_iletisim_blok_icerik" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[2. Hızlı bağlantılar içerik]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_ft_istatistik_etkin" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Footer alanı forum istatistikleri etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_header_duyuru_ap" version_id="1300004" version_string="13.1.0.0 Beta 4"><![CDATA[Duyur arka plan renk]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_header_duyuru_etkin" version_id="1300004" version_string="13.1.0.0 Beta 4"><![CDATA[Header duyurusu etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_header_duyuru_icerik" version_id="1300004" version_string="13.1.0.0 Beta 4"><![CDATA[Duyuru içeriği]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_header_duyuru_metin" version_id="1300004" version_string="13.1.0.0 Beta 4"><![CDATA[Duyuru metin renk]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_header_duyuru_sayfalar" version_id="1300004" version_string="13.1.0.0 Beta 4"><![CDATA[Duyuruyu tüm sayfalarda göster]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_header_duyuru_ziyaretci" version_id="1300004" version_string="13.1.0.0 Beta 4"><![CDATA[Duyuruyu ziyaretçilere de göster]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_infoBox_etkin" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Footer info box blok etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_izgara_gorunum_alt_forumlar" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Izgara modunda alt forumları göster]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_izgara_gorunum_etkin" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Izgara görünüm etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_izgara_gorunum_istatistikleri" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Izgara modunda konu/mesaj sayılarını göster]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_izgara_gorunum_kosul" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[ Bu kategoriler ile sınırla]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_izgara_gorunum_resimler" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Izgara modunda resimli forumlar etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_izgara_gorunum_resimler_overlay" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Resimler için overlay renk]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_izgara_gorunum_resimler_yukseklik" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Resimlerin yükseklik oranı (px)]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_izgara_gorunum_resimler_ziyareci" version_id="1300006" version_string="13.1.0.0 Beta 6"><![CDATA[Izgara modunda resimleri ziyaretçiler görebilir]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_izgara_gorunum_varsayilan_resim" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Varsayılan arka plan resmi]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_kategori_alt_header" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Forum head alt header alanı etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_kategori_alternatif_renk" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Çift renkli satır düzeni]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_kategori_collapsible" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Kategori daraltma butonu etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_kategori_mega_ikon" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Mega ikon etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_kategori_mini_ikon" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Mini ikon etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_kategori_padding" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Forum head dolgu oranı]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_kategori_sinir_renk" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Varsayılan renk]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_kategori_sinir_renk_etkin" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Forum head üst sınır çizgisi etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_kategori_sinir_yukseklik" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Çizgi kalınlığı]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_kullanici_alternatif_header" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[<b>KULLANICI</b> Alternatif header]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_kullanici_box_gorunum" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[<strong>KULLANICI</strong> Box görünümü kontrol edebilir]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_kullanici_img_izgara_mod" version_id="1300006" version_string="13.1.0.0 Beta 6"><![CDATA[<strong>KULLANICI</strong> Resimli ızgara modunu kontrol edebilir]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_kullanici_izgara_mod" version_id="1300006" version_string="13.1.0.0 Beta 6"><![CDATA[<strong>KULLANICI</strong> Izgara modunu kontrol edebilir]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_kullanici_radius" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[<strong>KULLANICI</strong> Köşe yuvarlamalarını kontrol edebilir]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_kullanici_sidebar_kapali" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[<strong>KULLANICI</strong> Yan paneli açıp/kapatabilir]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_kullanici_sidebar_sabit" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[<strong>KULLANICI</strong> Yapışkan yan paneli kontrol edebilir]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_kullanici_tamekran" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[<strong>KULLANICI</strong> Tam ekranı kontrol edebilir]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_logo_turu" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Logo türü]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_megaDuyuru_baslik" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Duyuru başlığınız]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_megaDuyuru_collapse" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Duyurular gizlenebilir]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_megaDuyuru_etkin" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Mega duyuru etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_megaDuyuru_header_baslik" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Duyuru header başlığınız]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_megaDuyuru_icerik" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Duyuru içeriğiniz]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_megaDuyuru_renk" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Üst sınır çizgi renk]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_megaDuyuru_tumSayfa" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Duyuruyu tüm sayfalarda göster]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_megaDuyuru_ziyaretci" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Duyuruyu ziyaretçiler görebilir]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_mega_grid_altforum_renk" version_id="1300011" version_string="13.1.0.0 Beta 11"><![CDATA[Belirlenmiş renk]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_mega_grid_altforumlar" version_id="1300011" version_string="13.1.0.0 Beta 11"><![CDATA[Alt forum görünüm türü]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_mega_grid_renk" version_id="1300011" version_string="13.1.0.0 Beta 11"><![CDATA[Belirlenmiş renk]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_mega_grid_sinir_renk" version_id="1300011" version_string="13.1.0.0 Beta 11"><![CDATA[Forum sınır rengini kullan]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_mesaj_avatar_boyutu" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Avatar boyutu]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_mesaj_avatar_radius" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Avatar radius oranı]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_mesaj_kullanici_ikonlar" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[İkonları etkinleştir]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_mesaj_kullanici_sirali" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[İki sıralı kullanıcı bilgileri]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_mesaj_kullanici_sticky" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Yapışkan kullanıcı bilgileri]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_mesaj_kullanici_tasarim" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Kullanıcı bilgiler tasarımı]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_mesaj_pozisyonu" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Mesaj görünüm türü]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_mesaj_siniri_etkin" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Üst sınır çizgisi etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_metin_logo" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Logo metni]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_metin_logo_boyut" version_id="1300006" version_string="13.1.0.0 Beta 6"><![CDATA[Metin logo metin boyutu]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_metin_logo_renk" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Metin rengi]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_metin_logo_slogan" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Slogan]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_metin_logo_slogan_boyut" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Slogan font boyutu]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_metin_logo_yukseklik" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Logo yükseklik]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_metinlogo_faikon" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Mini FA ikon]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_metinlogo_faikon_renk" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[FA ikon renk]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_metinlogo_faikon_size" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[FA ikon boyut]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_metinlogo_miniikon" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Mini IMG ikon]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_miniDuyuru_1_baslik" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[1. Duyuru başlık]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_miniDuyuru_1_emoji" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[1. Duyuru emoji]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_miniDuyuru_1_etkin" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[1. Duyuru etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_miniDuyuru_1_icerik" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[1. Duyuru içerik]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_miniDuyuru_1_ikon" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[1. Duyuru ikonu]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_miniDuyuru_1_link" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[1.  Duyuru bağlantısı]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_miniDuyuru_1_renk" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[1. Duyuru ikon renk]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_miniDuyuru_2_baslik" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[2. Duyuru başlık]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_miniDuyuru_2_emoji" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[2. Duyuru emoji]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_miniDuyuru_2_etkin" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[2. Duyuru etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_miniDuyuru_2_icerik" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[2. Duyuru içerik]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_miniDuyuru_2_ikon" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[2. Duyuru ikonu]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_miniDuyuru_2_link" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[2.  Duyuru bağlantısı]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_miniDuyuru_2_renk" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[2. Duyuru ikon renk]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_miniDuyuru_3_baslik" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[3. Duyuru başlık]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_miniDuyuru_3_emoji" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[3. Duyuru emoji]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_miniDuyuru_3_etkin" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[3. Duyuru etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_miniDuyuru_3_icerik" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[3. Duyuru içerik]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_miniDuyuru_3_ikon" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[3. Duyuru ikonu]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_miniDuyuru_3_link" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[3.  Duyuru bağlantısı]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_miniDuyuru_3_renk" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[3. Duyuru ikon renk]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_miniDuyuru_collapse" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Duyurular gizlene bilir]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_miniDuyuru_konumlar" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Mini duyuru konumlandır]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_miniDuyuru_minimal" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Minimal görünüm]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_miniDuyuru_mobil" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Mobil cihazlarda gizle!]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_miniDuyuru_sayfalar" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Mini duyurular tüm sayfalarda göster]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_miniDuyuru_ziyaretci" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Ziyaretçilere gizle]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_miniDuyurular_etkin" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Mini duyurular sistemi etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_miniDuyurular_header_baslik" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Mini duyuru header başlığı]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_miniDuyurular_renk" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Üst sınır çizgi renk]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_miniikon_turu" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Mini ikon türü]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_mobil_logo_turu" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Mobil logo türü]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_nav_buton_yukseklik" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Header tab buton yükseklik]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_nav_icerik_adi" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Buton için alternatif isim]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_nav_icerikbutonu" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Navbar alanında içerik ekle butonu etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_nav_icerikbutonu_ekstra" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Ekstra bağlantı ekle]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_nav_icerikbutonu_ekstra_ornek" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Bağlantı ekleme örneği]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_nav_icerikbutonu_icerikler" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Eklenebilir içerikler]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_son_kayitlar" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[İstatistik alanı son kayıt olan 5 kişi göster]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_sosyal_butonlar_etkin" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Sosyal medya butonları etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_sosyal_butonlarim" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Sosyal medya bağlantı butonlarınız]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_tab_buton_ikon" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Header tab buton ikonları etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_tema_editor_buton" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Tema editör buton konumları]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_tema_editor_etkin" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Tema editör sistemi etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_tema_editor_ziyaretci" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Ziyaretçilerde tema editörünü kullanabilir]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_tema_renk_grup_1_1" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[1. Renk]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_tema_renk_grup_1_2" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[2. Renk]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_tema_renk_grup_1_etkin" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[1. Renk etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_tema_renk_grup_1_m" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Metin rengi]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_tema_renk_grup_2_1" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[1. Renk]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_tema_renk_grup_2_2" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[2. Renk]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_tema_renk_grup_2_etkin" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[2. Renk etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_tema_renk_grup_2_m" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Metin rengi]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_tema_renk_grup_3_1" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[1. Renk]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_tema_renk_grup_3_2" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[2. Renk]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_tema_renk_grup_3_etkin" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[3. Renk etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_tema_renk_grup_3_m" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Metin rengi]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_tema_renk_grup_4_1" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[1. Renk]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_tema_renk_grup_4_2" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[2. Renk]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_tema_renk_grup_4_etkin" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[4. Renk etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_tema_renk_grup_4_m" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Metin rengi]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_tema_renk_grup_5_1" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[1. Renk]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_tema_renk_grup_5_2" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[2. Renk]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_tema_renk_grup_5_etkin" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[5. Renk etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_tema_renk_grup_5_m" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Metin rengi]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_tema_renk_grup_6_1" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[1. Renk]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_tema_renk_grup_6_2" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[2. Renk]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_tema_renk_grup_6_etkin" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[6. Renk etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_tema_renk_grup_6_m" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Metin rengi]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_tema_renk_kontrolleri_etkin" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Renk kontrol sistem etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_tema_renk_kontrolleri_varsayilan" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Varsayılan renk]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_ust_ziyaretcipaneli" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Ziyaretçiler için <b>üst</b> hoşgeldin paneli etkin]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_uye_varsayilan_banner" version_id="1300006" version_string="13.1.0.0 Beta 6"><![CDATA[Varsayılan üye profil afişi]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_varsayilan_alternatif_header" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[<b>VARSAYILAN</b> Alternatif header ]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_varsayilan_box_gorunum" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[<strong>VARSAYILAN</strong> Box görünümü kullan]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_varsayilan_img_izgara_mod" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[<strong>VARSAYILAN</strong> Izgara modunda resimleri kullana]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_varsayilan_izgara_mod" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[<strong>VARSAYILAN</strong> Izgara modunda kullan]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_varsayilan_radius" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[<strong>VARSAYILAN</strong> Köşe yuvarlamalarını kapat]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_varsayilan_sidebar_kapali" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[<strong>VARSAYILAN</strong> Yan paneli kapalı olarak kullan]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_varsayilan_sidebar_sabit" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[<strong>VARSAYILAN</strong> Yan paneli yapışkan olarak kullan]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_varsayilan_tamekran" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[<strong>VARSAYILAN</strong> Tam ekran olarak kullan]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_varyasyon_butonu" version_id="1300006" version_string="13.1.0.0 Beta 6"><![CDATA[Varyasyon buton konumu]]></phrase>
+  <phrase title="style_prop.xgt_Sv13_varyasyon_butonu_kullanici" version_id="1301005" version_string="13.1.0.0"><![CDATA[<strong>Açıklamayı okunuz!</strong>]]></phrase>
+  <phrase title="style_prop.xgt_sv13_font_ailesi" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Ekstra google font]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_adminbar_hizlibaglantilar" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Etkinleştirildiğinde, admin bar alanına eklenen bir menü ile admin panelde bazı alanlara hızlı erişmeniz için bağlantılar eklenir.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_blok_head_sinir_etkin" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Forum çeşitli alanlarda kullanılan head alanı için alternatif sınır çizgilerini kontrol edebilirsiniz. Forumları bağlayıcı değildir, forumlar için [Graves] Style V13 - Kategori & forum opsiyonları alanına gidiniz. <br>
+Eğer kapatılır ise temanın varsayılan sınır renkleri atanacaktır.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_blok_head_sinir_renk" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Bu renk her alanı kapsamayacaktır, bazı bölgelerin kendileri için özel ayarlana bilir renk yapıları bulunur. Örnek mega duyuru, mini duyurular.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_footer_duyuru_baslik" version_id="1300004" version_string="13.1.0.0 Beta 4"><![CDATA[Duyuru içeriğiniz, HTML kullanabilirsiniz. Alternatif diller için <b><i>xgt_Sv13_footer_duyuru_baslik</i></b> cümlesini kullanabilirsiniz.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_footer_duyuru_icerik" version_id="1300004" version_string="13.1.0.0 Beta 4"><![CDATA[Duyuru içeriğiniz, HTML kullanabilirsiniz. Alternatif diller için <b><i>xgt_Sv13_footer_duyuru_icerik</i></b> cümlesini kullanabilirsiniz.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_footer_duyuru_ikon" version_id="1300004" version_string="13.1.0.0 Beta 4"><![CDATA[Duyuru için fa ikonunuz, örnek kullanım : <i>fal fa-bell-on</i>]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_footer_meta_aciklama" version_id="1301004" version_string="13.1.0.0 Beta 14"><![CDATA[Alternatif diller için <b><i>xgt_Sv13_footer_meta_aciklama </i></b> cümlesini kullanabilirsiniz.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_forum_baslik_renk" version_id="1300006" version_string="13.1.0.0 Beta 6"><![CDATA[Forum başlıklarınızı foruma özel olarak eklenmiş renkte görünmesini sağlar.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_forum_ikon_renk" version_id="1300006" version_string="13.1.0.0 Beta 6"><![CDATA[Forum ikonlarınızı foruma özel olarak eklenmiş renkte görünmesini sağlar. Eğer hala bir renk atamadı iseniz <a href="admin.php?nodes/" target="_blank"> Kategori ve forumlar</a> sekmesinde ilgili kategoride "[Graves] Kategori kontrolleri" alanına gidiniz.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_forum_title_kontrol" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Bu kontroller sadece ana sayfa için geçerlidir. Diğer sayfalarda bu alan gerektiği şekilde işlevsel olacaktır!]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_forum_url_kapsama_alani" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Forum URL kapsamını genişletmek, kullanıcıların içeriğe daha hızlı erişimini sağlar ve erişilebilirliği artırır.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_ft_hizli_baglantilar_baslik" version_id="1301004" version_string="13.1.0.0 Beta 14"><![CDATA[Alternatif diller için <b><i>xgt_Sv13_ft_hizli_baglantilar_baslik</i></b> cümlesini kullanabilirsiniz.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_ft_iletisim_blok_baslik" version_id="1301004" version_string="13.1.0.0 Beta 14"><![CDATA[Alternatif diller için <b><i>xgt_Sv13_ft_iletisim_blok_baslik </i></b> cümlesini kullanabilirsiniz.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_header_duyuru_icerik" version_id="1300004" version_string="13.1.0.0 Beta 4"><![CDATA[Duyuru içeriğiniz, HTML kullanabilirsiniz. Alternatif diller için <b><i>xgt_Sv13_header_duyuru_icerik</i></b> cümlesini kullanabilirsiniz.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_izgara_gorunum_kosul" version_id="1300010" version_string="13.1.0.0 Beta 10"><![CDATA[Izgara görünüm türünü sadece sizin istediğiniz kategoriler ile kısıtlayabilirsiniz. Izgara görünümde olmasını istediğiniz forumların <strong>ID</strong> aşağıdaki örnekte olduğunu gibi belirtiniz.<br>
+<strong>Örnek:</strong> <code>.gridNodeID</code><br>
+<strong>Çoklu örnek :</strong> <code>.gridNode10, .gridNode153</code><br>
+Eger bir değer girilmezse tüm kategoriler ızgara modunda görünecektir.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_izgara_gorunum_resimler" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Forumlara eklenen arka plan resimlerini ızgara modunda kullanmak için etkinleştirilmelidir. Foruma arka plan resmi eklemek için <a href="admin.php?nodes/" target="_blank"> Kategori ve forumlar</a> sekmesinde ilgili foruma gidiniz.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_kategori_collapsible" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Kullanıcıların forum listesindeki kategorileri daraltması için buton ekler.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_kategori_mega_ikon" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Forum head alanında bulunan büyük ikonu etkinleştirebilirsiniz. İkonu düzenlemek için <a href="admin.php?nodes/" target="_blank"> Kategori ve forumlar</a> sekmesinde ilgili kategoride "[Graves] Kategori kontrolleri" alanına gidiniz.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_kategori_mini_ikon" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Forum head alanında bulunan büyük ikonu etkinleştirebilirsiniz. İkonu düzenlemek için <a href="admin.php?nodes/" target="_blank"> Kategori ve forumlar</a> sekmesinde ilgili kategoride "[Graves] Kategori kontrolleri" alanına gidiniz.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_kategori_sinir_renk_etkin" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Forum head altında bulunan sınır çizgisini etkinleştirir. Çizgi rengini forum özel olarak değiştirmek için 
+<a href="admin.php?nodes/" target="_blank"> Kategori ve forumlar</a> sekmesinde ilgili kategoride "[Graves] Kategori kontrolleri" alanına gidiniz.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_kullanici_tamekran" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Bu fonksiyonlar kullanıcıların kullanabileceği fonksiyonları belirler. Eğer kapalı ise <strong>VARSAYILAN</strong> olarak belirtilen seçenek kullanılacaktır.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_logo_turu" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Grafik logonuz yönetmek için "Temel Seçenekler" tabına gidiniz.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_megaDuyuru_baslik" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Alternatif diller için <b><i>xgt_Sv13_megaDuyuru_baslik</i></b> cümlesini kullanabilirsiniz.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_megaDuyuru_collapse" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Kullanıcıların, duyuru ya eklenecek "collapse" butonu ile duyuruları gizleyebilir.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_megaDuyuru_header_baslik" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Alternatif diller için <b><i>xgt_Sv13_megaDuyuru_header_baslik</i></b> cümlesini kullanabilirsiniz.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_megaDuyuru_icerik" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Alternatif diller için <b><i>xgt_Sv13_megaDuyuru_icerik</i></b> cümlesini kullanabilirsiniz.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_mega_grid_altforum_renk" version_id="1300011" version_string="13.1.0.0 Beta 11"><![CDATA[Seçim yapılır ise foruma özel atanmış olan sınır renginde, alt forum bağlantıları görünecektir.
+Bu rengi düzenlemek için <a href="admin.php?nodes/" target="_blank"> Kategori ve forumlar</a> sekmesinde ilgili forum "Bu forum için sınır çizgi rengi" alanına gidiniz.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_mega_grid_renk" version_id="1300011" version_string="13.1.0.0 Beta 11"><![CDATA[Seçim yapılır ise foruma özel atanmış olan sınır renginde <b>forum adı</b> görünecektir.
+Bu rengi düzenlemek için <a href="admin.php?nodes/" target="_blank"> Kategori ve forumlar</a> sekmesinde ilgili forum "Bu forum için sınır çizgi rengi" alanına gidiniz.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_mega_grid_sinir_renk" version_id="1300011" version_string="13.1.0.0 Beta 11"><![CDATA[Seçim yapılır ise foruma özel atanmış olan sınır rengi forumun en üstünde görünecektir
+Bu rengi düzenlemek için <a href="admin.php?nodes/" target="_blank"> Kategori ve forumlar</a> sekmesinde ilgili forum "Bu forum için sınır çizgi rengi" alanına gidiniz.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_mesaj_avatar_radius" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Mesaj içinde bulunan avatarlarınız köşe kıvrım oranını belirleye bilirsiniz. Bu değer % olarak yansımaktadır.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_mesaj_kullanici_sirali" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[<b>Yatay Kullanıcı Bilgileri</b> Alanında ve <b> Kullanıcı bilgiler tasarımı</b> etkinken fazla kullanıcı bilgileriniz bulunuyor ise bunu iki sıralı olarak listelemek için seçebilirsiniz.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_mesaj_kullanici_sticky" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Sadece <b>Dikey tasarım</b> için geçerlidir]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_mesaj_kullanici_tasarim" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Seçim yapılırsa, tema için tasarlanmış olan kullanıcı bilgi ( postbit ) alanı kullanılacaktır.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_mesaj_siniri_etkin" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[İlk mesaj üstünde bulunan sınır çizgisini etkinleştirir. Çizgi rengi "Tema renk varyasyonu" sisteminden alınmaktadır.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_metin_logo_boyut" version_id="1300006" version_string="13.1.0.0 Beta 6"><![CDATA[Metin logonuzun metin büyüklüğünü belirleyebilirsiniz.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_metin_logo_yukseklik" version_id="1300006" version_string="13.1.0.0 Beta 6"><![CDATA[Kullandığınız mini ikon yada img logo boyutunu kontrol edebilirsiniz.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_miniDuyuru_collapse" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Kullanıcıların mini duyurulara eklenecek "collapse" butonu ile duyuruları gizleye bilir.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_miniDuyuru_konumlar" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Kendi konumum kodu;<textarea class="input input--fitHeight"  readonly="readonly"><xf:macro template="xgtSv12_mini_duyurular_macros" name="xgtSv13_miniDuyurular" 
+arg-template="{$template}" arg-location="kendikonumum" arg-position="!" /></textarea>]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_miniDuyuru_minimal" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Duyuru içerik mesajı kapatılır ve sadece duyuru başlığınız görünür.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_miniDuyuru_sayfalar" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Tüm sayfalarda duyuruların görünmesi için etkinleştirebilirsiniz. <b>Forumların üstü konum için işlevsizdir!</b>]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_miniDuyurular_header_baslik" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Alternatif diller için <b><i>xgt_Sv13_miniDuyurular_header_baslik</i></b> cümlesini kullanabilirsiniz.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_miniikon_turu" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Logo solundan konumlandırılan mini logo, ikon kullanmak için çeşitli seçenekler.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_mobil_logo_turu" version_id="1300006" version_string="13.1.0.0 Beta 6"><![CDATA[Mobil sistemlerde kullanmak istediğiniz logo türünü belirtebilirsiniz. Grafik logo yönetmek için "Temel Seçenekler" tabına gidiniz.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_nav_icerik_adi" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Eğer butonu farklı amaçlarla kullanmayı düşünüyorsanız, ona alternatif bir isim verebilirsiniz. Ayrıca, butonun ismini farklı dillerde kullanmak istiyorsanız, "<i>xgtSv13_icerik_ekle</i>" cümlesinden düzenleyerek uyarlayabilirsiniz.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_nav_icerikbutonu_icerikler" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Seçilecek eklentinin forumda yüklü olması gerekmektedir. Aksi takdirde "Template errors" hatası ile karşılaşabilirsiniz.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_son_kayitlar" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Eğer seçim yapılmaz ise son kayıt olan kişinin kullanıcı adı görünecektir.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_sosyal_butonlarim" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Sosyal medya butonlarına ait ikonlar, sistem tarafından otomatik olarak eklenecektir. Tek yapmanız gereken, ilgili sosyal medya sitesinin bağlantısını eklemektir.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_tema_editor_etkin" version_id="1300006" version_string="13.1.0.0 Beta 6"><![CDATA[Tema editörü kapatıldığında <strong>VARSAYILAN</strong> olarak belirlenen ayarlar kullanılacaktır.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_tema_editor_ziyaretci" version_id="1300006" version_string="13.1.0.0 Beta 6"><![CDATA[Ziyaretçilere açmak, gereksiz CSS kodlarının yüklemesine neden olabilir, ziyaretçilere kapalı olarak kullanmazı tavsiye edilir. Ziyaretçilere katıldı durumda <strong>VARSAYILAN</strong> olarak belirlenen ayarlar kullanılacaktır.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_tema_renk_kontrolleri_varsayilan" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Varsayılan olarak kullanılacak olan renk. Foruma ilk kez giriş yapan, daha önce renk değiştirmemiş olan bir ziyaretçinin karşılanacağı rengi belirler.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_uye_varsayilan_banner" version_id="1300006" version_string="13.1.0.0 Beta 6"><![CDATA[Profil afişi olmayan üyelerin profillerine eklenecek olan afişdir. Bu afiş profil sayfası dışında başka alanlarda kullanılmaktadır. <br>
+ Eğer afiş kullanmak istemiyorsanız bu alanı silmeniz yeterlidir.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_varyasyon_butonu" version_id="1300006" version_string="13.1.0.0 Beta 6"><![CDATA[Varyasyon butonu "Tema editörü" dışında nerede görünmesini istersiniz.]]></phrase>
+  <phrase title="style_prop_desc.xgt_Sv13_varyasyon_butonu_kullanici" version_id="1301005" version_string="13.1.0.0"><![CDATA[<strong>Bu fonksiyon, temanızın Gece/Gündüz modunu hangi kullanıcı grupları kullana bilir belirler.</strong><br>
+Bu fonksiyon bu alandan kaldırılmıştır. 
+<br>
+Bunu ayarlamak için kullanıcı grup izinlerinden <i>Genel >> Tema varyasyonu kullanabilir mi ? </i> yetkisine gidiniz.]]></phrase>
+  <phrase title="style_prop_desc.xgt_sv13_font_ailesi" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Ekstra olarak google font ekleyebilirsiniz. Kullanmak istemiyorsanız yukarıdaki kodu silmeniz yeterlidir.<br><strong>"Embed"</strong> kodunu buraya ekleyin ve <strong>"Metin düzenlemeleri"</strong> sekmesinden font ismini belirtiniz.]]></phrase>
+  <phrase title="style_prop_group.xgt_Sv13_global_opsiyonalar" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[asdadd]]></phrase>
+  <phrase title="style_prop_vgroup.1RenkKombinasyonu" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[1. Renk Grup Renkleri]]></phrase>
+  <phrase title="style_prop_vgroup.2RenkKombinasyonu" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[2. Renk Grup Renkleri]]></phrase>
+  <phrase title="style_prop_vgroup.3RenkKombinasyonu" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[3. Renk Grup Renkleri]]></phrase>
+  <phrase title="style_prop_vgroup.4RenkKombinasyonu" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[4. Renk Grup Renkleri]]></phrase>
+  <phrase title="style_prop_vgroup.5RenkKombinasyonu" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[5. Renk Grup Renkleri]]></phrase>
+  <phrase title="style_prop_vgroup.6RenkKombinasyonu" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[6. Renk Grup Renkleri]]></phrase>
+  <phrase title="style_prop_vgroup.ForumHeadIkonlari" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Forum head ikon kontrolleri]]></phrase>
+  <phrase title="style_prop_vgroup.ForumHeadSinirCizgisi" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Forum head sınır çizgi kontrolleri]]></phrase>
+  <phrase title="style_prop_vgroup.ForumIzgaraGorunumKontrol" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Izgara görünüm için kontroller]]></phrase>
+  <phrase title="style_prop_vgroup.ForumMetaAciklama" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Meta açıklama alanı]]></phrase>
+  <phrase title="style_prop_vgroup.HeadSinirKontrolleri" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Head sınır çizgileri]]></phrase>
+  <phrase title="style_prop_vgroup.HizliBaglantilar1" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Hızlı bağlantıları 1. Blok]]></phrase>
+  <phrase title="style_prop_vgroup.HizliBaglantilar2" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Hızlı bağlantılar 2. Blok]]></phrase>
+  <phrase title="style_prop_vgroup.HosgeldinPanelKontrol" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Ziyaretçi hoş geldin blok kontrolleri]]></phrase>
+  <phrase title="style_prop_vgroup.KullaniciSecenekleri" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Kullanıcı kontrol ayarları]]></phrase>
+  <phrase title="style_prop_vgroup.LogoKontrolBirimleri" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Logo kontrol birimleri]]></phrase>
+  <phrase title="style_prop_vgroup.LogoVeSloganKontrolleri" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Logo & slogan düzenlemeleri]]></phrase>
+  <phrase title="style_prop_vgroup.MegaDuyruIcerik" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Mega duyuru içerik]]></phrase>
+  <phrase title="style_prop_vgroup.MiniDuyuruBlok1" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[1. Mini duyuru blok]]></phrase>
+  <phrase title="style_prop_vgroup.MiniDuyuruBlok2" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[2. Mini duyuru blok]]></phrase>
+  <phrase title="style_prop_vgroup.MiniDuyuruBlok3" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[3. Mini duyuru blok]]></phrase>
+  <phrase title="style_prop_vgroup.MiniIkonKontrolleri" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Mini ikon düzenlemeleri]]></phrase>
+  <phrase title="style_prop_vgroup.NasilKullanilir" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Nasıl kullanılır?]]></phrase>
+  <phrase title="style_prop_vgroup.VarsayilanAyalar" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Varsayılan ayarlar]]></phrase>
+  <phrase title="style_prop_vgroup.icerikEklenButonu" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[İçerik ekle buton kontrolleri]]></phrase>
+  <phrase title="style_prop_vgroup.mKontrolBirimleri" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Mini duyuru için genel kontroller]]></phrase>
+  <phrase title="style_propdesc.xgt_Sv13_mesaj_avatar_boyutu" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Mesajlar alanı için avatar boyutu, sadece mesajlar alanında bulunan avatarları kapsamaktadır.]]></phrase>
+  <phrase title="widget_def.xgtSv13_infoBox_wd" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[[Graves] Style V13 - İnfo box]]></phrase>
+  <phrase title="widget_def.xgtSv13_sosyalButonlar_wd" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[[Graves] Style V13 - Sosyal medya butonları]]></phrase>
+  <phrase title="widget_def.xgtSv13_yeniKullanici_wd" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[[Graves] Style V13 - Yeni kullanıcılar]]></phrase>
+  <phrase title="widget_def_desc.xgtSv13_infoBox_wd" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[]]></phrase>
+  <phrase title="widget_def_desc.xgtSv13_sosyalButonlar_wd" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[]]></phrase>
+  <phrase title="widget_def_desc.xgtSv13_yeniKullanici_wd" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[]]></phrase>
+  <phrase title="xgtSv13_acp_hizli_baglantilar" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Yönetici Kısayolları]]></phrase>
+  <phrase title="xgtSv13_acp_hizli_baglantilar_header" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Yönetici için hızlı erişim bağlantıları]]></phrase>
+  <phrase title="xgtSv13_alternatif_header" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Alternatif header]]></phrase>
+  <phrase title="xgtSv13_alternatif_header_aciklama" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Farklı bir görünüm için alternatif header yapısını kolayca seçebilirsiniz.]]></phrase>
+  <phrase title="xgtSv13_box_gorunum" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Box görünüm]]></phrase>
+  <phrase title="xgtSv13_box_gorunum_aciklama" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Temanızın yanlarına box tarzı bir çerçeve ekleyebilir veya mevcut çerçeveyi kaldırabilirsiniz. 1300px üstü çözünürler için geçerlidir.]]></phrase>
+  <phrase title="xgtSv13_bu_forum_icin_izgara_etkin" version_id="1300012" version_string="13.1.0.0 Beta 12"><![CDATA[Bu kategori için MEGA GRİD fonksiyonunu etkinleştir]]></phrase>
+  <phrase title="xgtSv13_bu_forum_icin_izgara_etkin_aciklama" version_id="1300012" version_string="13.1.0.0 Beta 12"><![CDATA[Eğer seçim yapılır ise bu kategori içindeki forumlar mega ızgara görünümünde listelenecektir. Bu görünüm ile foruma özel resim, forum özel renk atayabilir ve forumdan en son aktiflik gösteren 5 konuyu listeleyebilirsiniz.
+
+
+]]></phrase>
+  <phrase title="xgtSv13_bu_forum_icin_sinir_renk" version_id="1300012" version_string="13.1.0.0 Beta 12"><![CDATA[Bu forum için renk belirle]]></phrase>
+  <phrase title="xgtSv13_bu_forum_icin_sinir_renk_aciklama" version_id="1300012" version_string="13.1.0.0 Beta 12"><![CDATA[Bu forum için bir renk belirleyebilirsiniz. Bu renk sınır çizgisi, forum bağlantılar gibi bazı alanlarda kullanılabilir.]]></phrase>
+  <phrase title="xgtSv13_cozum_sunan" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Çözümü sunan]]></phrase>
+  <phrase title="xgtSv13_daha_fazlasi" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Daha fazlası...]]></phrase>
+  <phrase title="xgtSv13_editor_buton_footer" version_id="1300006" version_string="13.1.0.0 Beta 6"><![CDATA[Yapışkan]]></phrase>
+  <phrase title="xgtSv13_editor_buton_her_ikisi" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Her ikisi]]></phrase>
+  <phrase title="xgtSv13_editor_buton_navbar" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Navbar]]></phrase>
+  <phrase title="xgtSv13_gece_gunduz_mod" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Aydınlık/Karanlık modunu seç]]></phrase>
+  <phrase title="xgtSv13_grafik_logo_kullan" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Grafik logo]]></phrase>
+  <phrase title="xgtSv13_hosgeldin_blok_baslik" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Foruma hoş geldin 👋, Ziyaretçi]]></phrase>
+  <phrase title="xgtSv13_hosgeldin_blok_icerik" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Forum içeriğine ve tüm hizmetlerimize erişim sağlamak için lütfen foruma kayıt olun veya giriş yapın. Üyelik tamamen ücretsizdir ve sadece birkaç dakikanızı alır.]]></phrase>
+  <phrase title="xgtSv13_icerik_ekle" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[İçerik ekle]]></phrase>
+  <phrase title="xgtSv13_iletisim_yollari" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[İletişim Yolları]]></phrase>
+  <phrase title="xgtSv13_izgara_modu" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Izgara Görünümü]]></phrase>
+  <phrase title="xgtSv13_izgara_modu_aciklama" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Izgara modu ile içerikleri kolayca inceleyin ve düzenli bir görünüm elde edin.]]></phrase>
+  <phrase title="xgtSv13_kullanici_istatistik" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[İstatistik Verileri]]></phrase>
+  <phrase title="xgtSv13_mega_grid_alt_forum_gorunum_kapali" version_id="1300011" version_string="13.1.0.0 Beta 11"><![CDATA[Kapalı]]></phrase>
+  <phrase title="xgtSv13_mega_grid_alt_forum_gorunum_liste" version_id="1300011" version_string="13.1.0.0 Beta 11"><![CDATA[Liste görünümünde]]></phrase>
+  <phrase title="xgtSv13_mega_grid_alt_forum_gorunum_menu" version_id="1300011" version_string="13.1.0.0 Beta 11"><![CDATA[Menu görünümü]]></phrase>
+  <phrase title="xgtSv13_member_view_kullanici_baslik" version_id="1301005" version_string="13.1.0.0"><![CDATA[Kullanıcı başlık]]></phrase>
+  <phrase title="xgtSv13_mesaj_gorunum_hicbirinde" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Hiçbirinde]]></phrase>
+  <phrase title="xgtSv13_mesaj_gorunum_ilk_mesaj" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Sadece ilk mesaj yatay görünümde]]></phrase>
+  <phrase title="xgtSv13_mesaj_gorunum_sadece_yatay" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Sadece yatay tasarımdan]]></phrase>
+  <phrase title="xgtSv13_mesaj_gorunum_tum_mesaj" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Tum mesajlar yatak görünümde <span style="font-size:11px;">( Soru,Cevap forumlarını kapsamaz )</span>]]></phrase>
+  <phrase title="xgtSv13_mesaj_gorunum_tumunda" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Dikey ve yatay tasarımda]]></phrase>
+  <phrase title="xgtSv13_mesaj_varsayilan_gorunum" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Tüm mesajlar için varsayılan XF görünümünde]]></phrase>
+  <phrase title="xgtSv13_metinlogo_ve_slogan_kullan" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Metin logo &  slogan]]></phrase>
+  <phrase title="xgtSv13_miniduyuru_konum_forum_ustu" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Forumların üstü]]></phrase>
+  <phrase title="xgtSv13_miniduyuru_konum_icerik_ustu" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[İçerik üstü]]></phrase>
+  <phrase title="xgtSv13_miniduyuru_konum_kendi_konumum" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Kendi konumum]]></phrase>
+  <phrase title="xgtSv13_mobil_logo_img" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Grafik logo]]></phrase>
+  <phrase title="xgtSv13_mobil_logo_metin" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Metin logo]]></phrase>
+  <phrase title="xgtSv13_modal_menu_mobil_kullanmaz" version_id="1300006" version_string="13.1.0.0 Beta 6"><![CDATA[Mobil kullanıcılar bu fonksiyonları kullanamaz.]]></phrase>
+  <phrase title="xgtSv13_profil_bilgileri" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Profil Bilgileri]]></phrase>
+  <phrase title="xgtSv13_radius_kapat" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Köşe Yuvarlama Kontrolü]]></phrase>
+  <phrase title="xgtSv13_radius_kapat_aciklama" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Köşe yuvarlama efektini açıp kapatarak görünümü dilediğiniz gibi özelleştirin.]]></phrase>
+  <phrase title="xgtSv13_renginizi_secin_aciklama" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Tarzınızı yansıtan rengi belirleyin ve estetik uyumu sağlayın.]]></phrase>
+  <phrase title="xgtSv13_renginizi_secin_baslik" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Renginizi seçin]]></phrase>
+  <phrase title="xgtSv13_resimli_izgara_modu" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Resimli Izgara Modu]]></phrase>
+  <phrase title="xgtSv13_resimli_izgara_modu_aciklama" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Arka plan görselleriyle içeriğinizi düzenli ve görsel olarak zengin bir şekilde görüntüleyin.]]></phrase>
+  <phrase title="xgtSv13_sadece_baslik" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Sadece başlığı gizle]]></phrase>
+  <phrase title="xgtSv13_sadece_baslik_gizleme" version_id="1301005" version_string="13.1.0.0"><![CDATA[Hiçbiri]]></phrase>
+  <phrase title="xgtSv13_sadece_butonlar" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Sadece butonları gizle]]></phrase>
+  <phrase title="xgtSv13_sadece_butonlar_baslik" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Başlık ve butonları gizle]]></phrase>
+  <phrase title="xgtSv13_sidebar_kapat" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Yan Paneli Kapat]]></phrase>
+  <phrase title="xgtSv13_sidebar_kapat_aciklama" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Yan paneli gizleyerek daha geniş bir çalışma alanı oluşturun.]]></phrase>
+  <phrase title="xgtSv13_sidebar_sabit" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Sabit Yan Panel]]></phrase>
+  <phrase title="xgtSv13_sidebar_sabit_aciklama" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Yan paneli sabitleyerek sürekli erişim sağlayın ve içeriğinizi kolayca yönetin.]]></phrase>
+  <phrase title="xgtSv13_son_uyelerimiz" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Son üyelerimiz]]></phrase>
+  <phrase title="xgtSv13_tam_ekran_modu" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Görünüm Modu Seçimi]]></phrase>
+  <phrase title="xgtSv13_tam_ekran_modu_aciklama" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Tam ekran ve dar ekran modları arasında geçiş yapın.]]></phrase>
+  <phrase title="xgtSv13_temaEditor__modunusec" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Modunu seç!]]></phrase>
+  <phrase title="xgtSv13_temaEditor_geceModu" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Gece modunda]]></phrase>
+  <phrase title="xgtSv13_temaEditor_gunduzModu" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Gündüz modunda]]></phrase>
+  <phrase title="xgtSv13_temaEditor_sistemModu" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Sisteme duyarlı]]></phrase>
+  <phrase title="xgtSv13_temaEditor_tema_durumu" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Tema durumu]]></phrase>
+  <phrase title="xgtSv13_tema_editor_kisitlama_aciklama" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Bu seçenekler şu an kullanımda değil çünkü yöneticiler tarafından devre dışı bırakılmış durumda.]]></phrase>
+  <phrase title="xgtSv13_tema_editor_kisitlama_baslik" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Tema Özellikleri Kontrolü]]></phrase>
+  <phrase title="xgtSv13_tema_editoru_baslik" version_id="1300006" version_string="13.1.0.0 Beta 6"><![CDATA[Tema editörü]]></phrase>
+  <phrase title="xgtSv13_tema_editoru_baslik_aciklama" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Tasarımınızı kolayca kontrol edin. Hangi modu tercih ederseniz edin, sizin için en iyi deneyimi oluşturmanız artık çok kolay.]]></phrase>
+  <phrase title="xgtSv13_tema_editoru_kapat" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Menüyü Kapat]]></phrase>
+  <phrase title="xgtSv13_tema_kisisellestirme" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Kişiselleştirme]]></phrase>
+  <phrase title="xgtSv13_tema_kisisellestirme_aciklama" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[Kişiselleştirme ve Görünüm araçları]]></phrase>
+  <phrase title="xgtSv13_tema_renklerini_yonet" version_id="1300006" version_string="13.1.0.0 Beta 6"><![CDATA[Renkler]]></phrase>
+  <phrase title="xgtSv13_tema_seceneklerini_yonet" version_id="1300006" version_string="13.1.0.0 Beta 6"><![CDATA[Ayarlar]]></phrase>
+  <phrase title="xgtSv13_varyasyon_buton_footer" version_id="1300006" version_string="13.1.0.0 Beta 6"><![CDATA[Sadece footer]]></phrase>
+  <phrase title="xgtSv13_varyasyon_buton_hic_biri" version_id="1300006" version_string="13.1.0.0 Beta 6"><![CDATA[Hiçbirinde]]></phrase>
+  <phrase title="xgtSv13_varyasyon_buton_ikiside" version_id="1300006" version_string="13.1.0.0 Beta 6"><![CDATA[Her ikisinde]]></phrase>
+  <phrase title="xgtSv13_varyasyon_buton_navbar" version_id="1300006" version_string="13.1.0.0 Beta 6"><![CDATA[Sadece navbar]]></phrase>
+  <phrase title="xgtSv13_xfmg_add_media" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Medya ekle]]></phrase>
+  <phrase title="xgtSv13_xfrm_add_resource" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Kaynak ekle]]></phrase>
+  <phrase title="xgtSv13_xgt_ekstarlar" version_id="1300006" version_string="13.1.0.0 Beta 6"><![CDATA[Ekstra bağlantılar]]></phrase>
+  <phrase title="xgtSv13_yetki_afisleri" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Yetki afişleri]]></phrase>
+  <phrase title="xgt_Sv13_duyuruBloklari_Blok_icerik" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Bu alanı düzenlemek için Admin panel >>  Tema özellikleri >> Turkhacks.com Style V13 - Mini duyuru blokları   >> Sekmesine gidiniz]]></phrase>
+  <phrase title="xgt_Sv13_footer_duyuru_baslik" version_id="1300004" version_string="13.1.0.0 Beta 4"><![CDATA[Duyuru başlığınız...]]></phrase>
+  <phrase title="xgt_Sv13_footer_duyuru_icerik" version_id="1300004" version_string="13.1.0.0 Beta 4"><![CDATA[Bu alanı düzenlemek için <a href="admin.php?styles/" target="_blank">Admin panel >></a> Tema özellikleri >> <b>Turkhacks.com Style V13 - Footer duyuru</b> >>  Sekmesine gidiniz.]]></phrase>
+  <phrase title="xgt_Sv13_footer_meta_aciklama" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[<b>Yasal uyarı , bağlantılar ve adres bilgileri içeren blok</b><br>
+Bu alanı düzenlemek için Admin panel >> Tema özellikleri >>Turkhacks.com Style V13 - Footer infoBox >> Sekmesinde >> Forum meta acıklama gidiniz.]]></phrase>
+  <phrase title="xgt_Sv13_ft_hizli_baglantilar_baslik" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Hızlı bağlantılar]]></phrase>
+  <phrase title="xgt_Sv13_ft_iletisim_blok_baslik" version_id="1301004" version_string="13.1.0.0 Beta 14"><![CDATA[İletişim bilgileri]]></phrase>
+  <phrase title="xgt_Sv13_header_duyuru_icerik" version_id="1300004" version_string="13.1.0.0 Beta 4"><![CDATA[Bu alanı düzenlemek için <a href="admin.php?styles/" target="_blank">Admin panel >></a> Tema özellikleri >> <b>Turkhacks.com Style V13 - Header duyuru alanı</b> >>  Sekmesine gidiniz.]]></phrase>
+  <phrase title="xgt_Sv13_hizli_baglanti_ornek" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Hızlı bağlantı kullanım örneği]]></phrase>
+  <phrase title="xgt_Sv13_hizli_baglanti_ornek_aciklama" version_id="1300005" version_string="13.1.0.0 Beta 5"><![CDATA[Ekstra bağlantı eklemek için yukarıdaki alanı kullanabilirsiniz. Her satır için bir bağlantı eklemelisiniz. Bağlantınız aşağıdaki örnek şablondaki gibi olmalıdır!]]></phrase>
+  <phrase title="xgt_Sv13_iletisim_bilgi_ornek" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[<b>İletişim bilgileri kullanım örnek</b>]]></phrase>
+  <phrase title="xgt_Sv13_megaDuyuru_baslik" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[📢 Mega duyuru alanı başlık alanı 😉]]></phrase>
+  <phrase title="xgt_Sv13_megaDuyuru_header_baslik" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Öne çıkan duyuru]]></phrase>
+  <phrase title="xgt_Sv13_megaDuyuru_icerik" version_id="1300006" version_string="13.1.0.0 Beta 6"><![CDATA[Mega duyuru içerik alanımız 📣<br>
+Bu alanı düzenlemek için <a href="admin.php?styles/"> Admin Panel</a> >> Tema özellikleri >> Turkhacks.com Style V13 - Mega duyuru blok >> Sekmesine gidiniz.]]></phrase>
+  <phrase title="xgt_Sv13_miniDuyurular_header_baslik" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[Kısa ve önemli]]></phrase>
+  <phrase title="xgt_Sv13_miniduyuruBaslik_varsayilan" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[~ Duyuru başlığınız]]></phrase>
+  <phrase title="xgt_Sv13_miniikon_turu_fa_ikon" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[FA ikon kullan]]></phrase>
+  <phrase title="xgt_Sv13_miniikon_turu_kullanma" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[Mini ikon kullanma]]></phrase>
+  <phrase title="xgt_Sv13_miniikon_turu_mini_ikon" version_id="1300002" version_string="13.1.0.0 Beta 1"><![CDATA[İMG ikon kullan]]></phrase>
+</phrases>

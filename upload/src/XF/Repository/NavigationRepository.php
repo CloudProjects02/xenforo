@@ -4,7 +4,6 @@ namespace XF\Repository;
 
 use XF\Entity\Navigation;
 use XF\Finder\NavigationFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 use XF\Navigation\AbstractType;
 use XF\Navigation\Compiler;
@@ -14,7 +13,7 @@ use XF\Util\File;
 class NavigationRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return NavigationFinder
 	 */
 	public function findNavigationForList()
 	{

@@ -3,16 +3,17 @@
 namespace XF\Finder;
 
 use XF\Entity\Forum;
+use XF\Entity\Thread;
 use XF\Entity\User;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Finder;
 use XF\Repository\ThreadRepository;
 
 /**
- * @method AbstractCollection<\XF\Entity\Thread> fetch(?int $limit = null, ?int $offset = null)
- * @method AbstractCollection<\XF\Entity\Thread> fetchDeferred(?int $limit = null, ?int $offset = null)
- * @method \XF\Entity\Thread|null fetchOne(?int $offset = null)
- * @extends Finder<\XF\Entity\Thread>
+ * @method AbstractCollection<Thread> fetch(?int $limit = null, ?int $offset = null)
+ * @method AbstractCollection<Thread> fetchDeferred(?int $limit = null, ?int $offset = null)
+ * @method Thread|null fetchOne(?int $offset = null)
+ * @extends Finder<Thread>
  */
 class ThreadFinder extends Finder
 {
@@ -132,7 +133,6 @@ class ThreadFinder extends Finder
 			'Forum.Read|' . $userId . '.forum_read_date'
 		);
 
-		/** @var ThreadRepository $threadRepo */
 		$threadRepo = $this->em->getRepository(ThreadRepository::class);
 
 		$this->where('last_post_date', '>', $threadRepo->getReadMarkingCutOff())

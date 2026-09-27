@@ -9,7 +9,6 @@ class MemberStats
 {
 	public static function rebuildMemberStatsCache()
 	{
-		/** @var MemberStatRepository $memberStatsRepo */
 		$memberStatsRepo = \XF::app()->repository(MemberStatRepository::class);
 		$finder = $memberStatsRepo->findCacheableMemberStats();
 
@@ -17,7 +16,6 @@ class MemberStats
 		{
 			if (\XF::$time > $memberStat->cache_expiry)
 			{
-				/** @var PreparerService $preparer */
 				$preparer = \XF::app()->service(PreparerService::class, $memberStat);
 				$preparer->cache();
 			}

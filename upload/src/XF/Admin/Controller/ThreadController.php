@@ -166,15 +166,12 @@ class ThreadController extends AbstractController
 			->where('prefix_id', '>', 0)
 			->total();
 
-		/** @var ThreadPrefixRepository $prefixRepo */
 		$prefixRepo = $this->repository(ThreadPrefixRepository::class);
 		$prefixes = $prefixRepo->getPrefixListData();
 
-		/** @var NodeRepository $nodeRepo */
 		$nodeRepo = $this->repository(NodeRepository::class);
 		$forums = $nodeRepo->getNodeOptionsData(false, 'Forum');
 
-		/** @var ThreadTypeRepository */
 		$threadTypeRepo = $this->repository(ThreadTypeRepository::class);
 		$threadTypes = $threadTypeRepo->getThreadTypeListData(
 			null,

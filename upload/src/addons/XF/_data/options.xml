@@ -176,6 +176,10 @@ height</sub_options>
 units={{ phrase('units_pixels') }}</edit_format_params>
     <relation group_id="attachments" display_order="120"/>
   </option>
+  <option option_id="attachmentThumbnailRetina" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="attachments" display_order="130"/>
+  </option>
   <option option_id="autoEmbedMedia" edit_format="template" data_type="array" validation_class="XF\Option\AutoEmbedMedia" validation_method="verifyOption" advanced="1">
     <default_value>{"embedType":"1","linkBbCode":"[i][size=2][url={$url}]View: {$url}[\/url][\/size][\/i]"}</default_value>
     <edit_format_params>option_template_autoEmbedMedia</edit_format_params>
@@ -183,6 +187,10 @@ units={{ phrase('units_pixels') }}</edit_format_params>
 linkBbCode</sub_options>
     <relation group_id="mediaEmbedding" display_order="10"/>
     <relation group_id="messageOptions" display_order="720"/>
+  </option>
+  <option option_id="blueskyShare" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="sharing" display_order="25"/>
   </option>
   <option option_id="boardActive" edit_format="onoff" data_type="boolean" advanced="0">
     <default_value>1</default_value>
@@ -455,13 +463,14 @@ oauth</sub_options>
     <relation group_id="emailOptions" display_order="420"/>
   </option>
   <option option_id="emailDkim" edit_format="callback" data_type="array" advanced="1">
-    <default_value>{"enabled":false,"verified":false,"failed":false,"domain":false,"privateKey":false}</default_value>
+    <default_value>{"enabled":false,"verified":false,"failed":false,"domain":false,"privateKey":false,"selector":false}</default_value>
     <edit_format_params>XF\Option\EmailDkim::renderOption</edit_format_params>
     <sub_options>enabled
 verified
 failed
 domain
-privateKey</sub_options>
+privateKey
+selector</sub_options>
     <relation group_id="emailOptions" display_order="215"/>
   </option>
   <option option_id="emailFileCheckWarning" edit_format="onofftextbox" data_type="array" advanced="0">
@@ -569,6 +578,12 @@ path</sub_options>
   <option option_id="enableVerp" edit_format="onoff" data_type="boolean" advanced="1">
     <default_value>0</default_value>
     <relation group_id="emailOptions" display_order="315"/>
+  </option>
+  <option option_id="errorLogLength" edit_format="spinbox" data_type="unsigned_integer" advanced="1">
+    <default_value>30</default_value>
+    <edit_format_params>min=0
+units={{ phrase('units_days') }}</edit_format_params>
+    <relation group_id="logging" display_order="22"/>
   </option>
   <option option_id="extraCaptchaKeys" edit_format="template" data_type="array" advanced="1">
     <default_value>[]</default_value>

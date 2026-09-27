@@ -4,7 +4,6 @@ namespace XF\Job;
 
 use XF\Entity\EditHistory;
 use XF\Finder\EditHistoryFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Repository\EditHistoryRepository;
 
 class UserRevertMessageEdit extends AbstractJob
@@ -32,7 +31,6 @@ class UserRevertMessageEdit extends AbstractJob
 			$this->data['last'] = \XF::$time;
 		}
 
-		/** @var Finder $historyFinder */
 		$historyFinder = $this->app->finder(EditHistoryFinder::class)
 			->where('edit_user_id', $this->data['userId'])
 			->where('edit_date', '>=', $this->data['cutOff'])
@@ -67,7 +65,6 @@ class UserRevertMessageEdit extends AbstractJob
 
 		$continue = false;
 
-		/** @var EditHistoryRepository $historyRepo */
 		$historyRepo = $this->app->repository(EditHistoryRepository::class);
 
 		/** @var EditHistory $edit */

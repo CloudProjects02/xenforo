@@ -38,7 +38,6 @@ class ThreadFieldController extends AbstractField
 
 		if ($reply instanceof View)
 		{
-			/** @var NodeRepository $nodeRepo */
 			$nodeRepo = \XF::repository(NodeRepository::class);
 			$nodeTree = $nodeRepo->createNodeTree($nodeRepo->getFullNodeList());
 
@@ -67,7 +66,6 @@ class ThreadFieldController extends AbstractField
 		/** @var ThreadField $field */
 		$form->complete(function () use ($field, $nodeIds)
 		{
-			/** @var ForumFieldRepository $repo */
 			$repo = $this->repository(ForumFieldRepository::class);
 			$repo->updateFieldAssociations($field, $nodeIds);
 		});

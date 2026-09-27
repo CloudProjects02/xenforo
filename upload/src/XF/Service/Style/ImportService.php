@@ -177,7 +177,6 @@ class ImportService extends AbstractService
 		$this->importProperties($style, $document->properties, $addOnId);
 		$this->importTemplates($style, $document->templates, $addOnId);
 
-		/** @var StyleRepository $styleRepo */
 		$styleRepo = $this->repository(StyleRepository::class);
 		$styleRepo->triggerStyleDataRebuild();
 
@@ -270,7 +269,6 @@ class ImportService extends AbstractService
 	 */
 	protected function getExistingTemplates(Style $style)
 	{
-		/** @var TemplateFinder $templateFinder */
 		$templateFinder = $this->finder(TemplateFinder::class);
 		$templateFinder->where('style_id', $style->style_id)
 			->orderTitle();

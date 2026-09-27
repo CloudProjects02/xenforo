@@ -79,7 +79,6 @@ class SearchForumController extends AbstractController
 			$perPage = $this->options()->discussionsPerPage;
 		}
 
-		/** @var SearchForumRepository $searchForumRepo */
 		$searchForumRepo = $this->repository(SearchForumRepository::class);
 
 		$isRebuildPending = $searchForumRepo->enqueueCacheRebuildIfNeeded($searchForum);

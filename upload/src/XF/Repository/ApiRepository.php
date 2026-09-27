@@ -5,13 +5,12 @@ namespace XF\Repository;
 use XF\Entity\ApiKey;
 use XF\Finder\ApiKeyFinder;
 use XF\Finder\ApiScopeFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 class ApiRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return ApiKeyFinder
 	 */
 	public function findApiKeysForList()
 	{
@@ -71,7 +70,7 @@ class ApiRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return ApiScopeFinder
 	 */
 	public function findApiScopesForList()
 	{

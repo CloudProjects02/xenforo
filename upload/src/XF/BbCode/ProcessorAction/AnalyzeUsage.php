@@ -145,7 +145,6 @@ class AnalyzeUsage implements AnalyzerInterface
 
 		$url = $processor->renderSubTreePlain($tag['children']);
 
-		/** @var UnfurlRepository $unfurlRepo */
 		$unfurlRepo = \XF::repository(UnfurlRepository::class);
 		$unfurl = $unfurlRepo->getUnfurlResultByUrl($url);
 		if ($unfurl)
@@ -158,7 +157,6 @@ class AnalyzeUsage implements AnalyzerInterface
 	{
 		if (preg_match_all('#\[EMBED\s+content="(?<content_type>[a-z0-9_]+)-(?<content_id>\d+)"].*\[/EMBED]#ium', $string, $matches, PREG_SET_ORDER))
 		{
-			/** @var EmbedResolverRepository $embedRepo */
 			$embedRepo = \XF::repository(EmbedResolverRepository::class);
 
 			foreach ($matches AS $match)

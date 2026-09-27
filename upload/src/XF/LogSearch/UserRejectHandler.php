@@ -42,7 +42,7 @@ class UserRejectHandler extends AbstractHandler
 	protected function getLabel(Entity $record)
 	{
 		return [
-			$record->User->username,
+			$record->User->username ?? \XF::phrase('deleted_member'),
 			$record->reject_reason,
 		];
 	}

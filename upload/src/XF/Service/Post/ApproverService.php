@@ -49,12 +49,10 @@ class ApproverService extends AbstractService
 
 	protected function onApprove()
 	{
-		/** @var PreparerService $preparer */
 		$preparer = $this->service(PreparerService::class, $this->post);
 		$preparer->setMessage($this->post->message);
 
 		// TODO: this doesn't solve mentioned user IDs
-		/** @var NotifierService $notifier */
 		$notifier = $this->service(NotifierService::class, $this->post, 'reply');
 		$notifier->setQuotedUserIds($preparer->getQuotedUserIds());
 		$notifier->notifyAndEnqueue($this->notifyRunTime);

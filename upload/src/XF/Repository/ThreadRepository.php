@@ -6,14 +6,12 @@ use XF\Entity\Forum;
 use XF\Entity\Thread;
 use XF\Entity\User;
 use XF\Finder\ThreadFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 class ThreadRepository extends Repository
 {
 	public function findThreadsForForumView(Forum $forum, array $limits = [])
 	{
-		/** @var ThreadFinder $finder */
 		$finder = $this->finder(ThreadFinder::class);
 		$finder
 			->inForum($forum, $limits)
@@ -24,7 +22,6 @@ class ThreadRepository extends Repository
 
 	public function findThreadsForRssFeed(?Forum $forum = null)
 	{
-		/** @var ThreadFinder $finder */
 		$finder = $this->finder(ThreadFinder::class);
 
 		$finder->where('discussion_state', 'visible')
@@ -55,7 +52,6 @@ class ThreadRepository extends Repository
 		$visitor = \XF::visitor();
 		$userId = $visitor->user_id;
 
-		/** @var ThreadFinder $finder */
 		$finder = $this->finder(ThreadFinder::class);
 		$finder
 			->with('fullForum')
@@ -104,7 +100,7 @@ class ThreadRepository extends Repository
 	}
 
 	/**
-	 * @return Finder|ThreadFinder
+	 * @return ThreadFinder
 	 */
 	public function findLatestThreads()
 	{
@@ -154,7 +150,6 @@ class ThreadRepository extends Repository
 	 */
 	public function findThreadsForApi(?Forum $forum = null)
 	{
-		/** @var ThreadFinder $threadFinder */
 		$threadFinder = $this->finder(ThreadFinder::class)
 			->with('api')
 			->where('discussion_type', '!=', 'redirect');
@@ -201,31 +196,57 @@ class ThreadRepository extends Repository
 	public function batchUpdateThreadViews()
 	{
 		$db = $this->db();
-
-		$db->query("
-			UPDATE xf_thread AS t
-			INNER JOIN xf_thread_view AS tv ON (t.thread_id = tv.thread_id)
-			SET t.view_count = t.view_count + tv.total
-		");
-
-		$viewMetrics = $db->fetchAll(
-			'SELECT thread.thread_id AS content_id,
-					thread.post_date AS content_date,
-					thread.node_id AS content_container_id,
-					thread_view.total AS view_count
-				FROM xf_thread_view AS thread_view
-				INNER JOIN xf_thread AS thread
-					ON (thread.thread_id = thread_view.thread_id)'
-		);
-		foreach ($viewMetrics AS &$viewMetric)
-		{
-			$viewMetric['log_date'] = \XF::$time;
-		}
+		$batchSize = 5000;
 
 		$activityLogRepo = $this->repository(ActivityLogRepository::class);
-		$activityLogRepo->bulkLog('thread', $viewMetrics);
 
-		$db->emptyTable('xf_thread_view');
+		while (true)
+		{
+			$viewRecords = $db->fetchAll(
+				'SELECT thread_view.thread_id,
+						thread.post_date AS content_date,
+						thread.node_id AS content_container_id,
+						thread_view.total AS view_count
+					FROM xf_thread_view AS thread_view
+					LEFT JOIN xf_thread AS thread
+						ON (thread.thread_id = thread_view.thread_id)
+					LIMIT ?',
+				$batchSize
+			);
+
+			if (!$viewRecords)
+			{
+				break;
+			}
+
+			$threadIds = array_column($viewRecords, 'thread_id');
+
+			$db->query(
+				'UPDATE xf_thread AS t
+					INNER JOIN xf_thread_view AS tv ON (t.thread_id = tv.thread_id)
+					SET t.view_count = t.view_count + tv.total
+					WHERE t.thread_id IN (' . $db->quote($threadIds) . ')'
+			);
+
+			$viewMetrics = [];
+			foreach ($viewRecords AS $viewRecord)
+			{
+				if ($viewRecord['content_date'] !== null)
+				{
+					$viewMetrics[] = [
+						'content_id' => $viewRecord['thread_id'],
+						'content_date' => $viewRecord['content_date'],
+						'content_container_id' => $viewRecord['content_container_id'],
+						'view_count' => $viewRecord['view_count'],
+						'log_date' => \XF::$time,
+					];
+				}
+			}
+
+			$activityLogRepo->bulkLog('thread', $viewMetrics);
+
+			$db->delete('xf_thread_view', 'thread_id IN (' . $db->quote($threadIds) . ')');
+		}
 	}
 
 	public function markThreadReadByUser(Thread $thread, User $user, $newRead = null)
@@ -301,7 +322,6 @@ class ThreadRepository extends Repository
 
 		if ($thread->Forum && !$this->countUnreadThreadsInForumForUser($thread->Forum, $user))
 		{
-			/** @var ForumRepository $forumRepo */
 			$forumRepo = $this->repository(ForumRepository::class);
 			$forumRepo->markForumReadByUser($thread->Forum, $user->user_id);
 		}
@@ -408,7 +428,6 @@ class ThreadRepository extends Repository
 			'reason' => $reason,
 		], $extra);
 
-		/** @var UserAlertRepository $alertRepo */
 		$alertRepo = $this->repository(UserAlertRepository::class);
 		$alertRepo->alert(
 			$thread->User,

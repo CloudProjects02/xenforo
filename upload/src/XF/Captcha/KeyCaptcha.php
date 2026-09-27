@@ -96,7 +96,7 @@ class KeyCaptcha extends AbstractCaptcha
 
 			return ($contents == '1');
 		}
-		catch(TransferException $e)
+		catch (TransferException $e)
 		{
 			// this is an exception with the underlying request, so let it go through
 			\XF::logException($e, false, 'KeyCAPTCHA connection error: ');

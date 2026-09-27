@@ -15,6 +15,8 @@ use XF\Mvc\Reply\Reroute;
 use XF\Mvc\Reply\View;
 use XF\Options;
 use XF\Phrase;
+use XF\Repository\PasskeyRepository;
+use XF\Service\Passkey\ManagerService;
 use XF\Session\Session;
 
 use function array_key_exists, call_user_func_array, count, func_get_args, intval, strlen, strval;
@@ -336,8 +338,22 @@ abstract class Controller
 			$redirect = $this->getCurrentUrlWithoutAjaxParams();
 		}
 
+		$passkey = null;
+		$existingCredentials = [];
+
+		$passkeyRepo = $this->repository(PasskeyRepository::class);
+		$existingCredentials = $passkeyRepo->getExistingCredentialsForUser($visitor);
+
+		if (!empty($existingCredentials))
+		{
+			$passkey = $this->service(ManagerService::class);
+			$passkey->saveStateToSession($session);
+		}
+
 		$viewParams = [
 			'redirect' => $redirect,
+			'passkey' => $passkey,
+			'existingCredentials' => $existingCredentials,
 		];
 		$view = $this->view('XF:Login\PasswordConfirm', 'login_password_confirm', $viewParams);
 		if ($wrapper)
@@ -456,7 +472,7 @@ abstract class Controller
 	{
 		if (!$error)
 		{
-			$error = \XF::phrase(\XF::phrase('unexpected_error_occurred'));
+			$error = \XF::phrase('unexpected_error_occurred');
 		}
 
 		return new Error($error, $code);

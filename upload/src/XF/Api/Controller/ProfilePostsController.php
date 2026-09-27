@@ -74,7 +74,6 @@ class ProfilePostsController extends AbstractController
 	 */
 	protected function setupNewProfilePost(User $user)
 	{
-		/** @var CreatorService $creator */
 		$creator = $this->service(CreatorService::class, $user->Profile);
 
 		$message = $this->filter('message', 'str');

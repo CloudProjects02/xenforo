@@ -35,10 +35,9 @@ class NewProfilePosts extends AbstractWidget
 
 		$router = $this->app->router('public');
 
-		/** @var ProfilePostFinder $profilePostFinder */
 		$profilePostFinder = $this->finder(ProfilePostFinder::class);
 		$profilePostFinder
-			->with(['ProfileUser', 'ProfileUser.Privacy', 'User'])
+			->with(['ProfileUser', 'ProfileUser.Privacy', 'User', 'User.PermissionCombination'])
 			->where('message_state', 'visible')
 			->order('post_date', 'DESC')
 			->limit(max($limit * 2, 10));
@@ -64,7 +63,6 @@ class NewProfilePosts extends AbstractWidget
 				break;
 		}
 
-		/** @var AttachmentRepository $attachmentRepo */
 		$attachmentRepo = $this->repository(AttachmentRepository::class);
 
 		$attachmentData = null;

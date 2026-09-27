@@ -38,7 +38,13 @@ class CalculateNextRunService extends AbstractService
 		{
 			$runRules['hours'] = [-1];
 		}
+		$hourBeforeHourModify = (int) $nextRun->format('G');
 		$this->modifyRunTimeHours($runRules['hours'], $nextRun);
+
+		if ($runRules['minutes'] === [-1] && (int) $nextRun->format('G') !== $hourBeforeHourModify)
+		{
+			$nextRun->setTime((int) $nextRun->format('G'), 0);
+		}
 
 		if (!empty($runRules['day_type']))
 		{
@@ -173,7 +179,7 @@ class CalculateNextRunService extends AbstractService
 	 */
 	public function updateCronRunTimeAtomic(CronEntry $entry)
 	{
-		$runRules = $entry['run_rules'];
+		$runRules = $entry->getEffectiveRunRules();
 		$nextRun = $this->calculateNextRunTime($runRules);
 
 		$updateResult = $this->db()->update(

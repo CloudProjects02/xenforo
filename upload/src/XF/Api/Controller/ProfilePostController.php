@@ -107,7 +107,6 @@ class ProfilePostController extends AbstractController
 		$commentFinder->limitByPage($page, $perPage);
 		$postResults = $commentFinder->fetch()->toApiResults();
 
-		/** @var AttachmentRepository $attachmentRepo */
 		$attachmentRepo = $this->repository(AttachmentRepository::class);
 		$attachmentRepo->addAttachmentsToContent($postResults, 'profile_post_comment');
 
@@ -124,7 +123,6 @@ class ProfilePostController extends AbstractController
 	 */
 	protected function setupCommentsFinder(ProfilePost $profilePost)
 	{
-		/** @var ProfilePostCommentFinder $finder */
 		$finder = $this->finder(ProfilePostCommentFinder::class);
 		$finder
 			->forProfilePost($profilePost)
@@ -136,7 +134,7 @@ class ProfilePostController extends AbstractController
 	}
 
 	/**
-	 * @param Finder $finder
+	 * @param ProfilePostCommentFinder $finder
 	 *
 	 * @return array [order, direction] as applied
 	 */
@@ -208,7 +206,6 @@ class ProfilePostController extends AbstractController
 			'attachment_key' => 'str',
 		]);
 
-		/** @var EditorService $editor */
 		$editor = $this->service(EditorService::class, $profilePost);
 
 		if ($input['message'] !== null)
@@ -268,7 +265,6 @@ class ProfilePostController extends AbstractController
 			$type = 'hard';
 		}
 
-		/** @var DeleterService $deleter */
 		$deleter = $this->service(DeleterService::class, $profilePost);
 
 		if ($this->filter('author_alert', 'bool') && $profilePost->canSendModeratorActionAlert())

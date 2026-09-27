@@ -70,6 +70,11 @@ class CssWriter
 
 	public function finalizeOutput($output)
 	{
+		if (strpos($output, '@charset "UTF-8";') === 0)
+		{
+			return $output;
+		}
+
 		return '@charset "UTF-8";' . "\n\n" . $output;
 	}
 

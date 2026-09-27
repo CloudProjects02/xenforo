@@ -393,6 +393,7 @@
   <phrase title="admin_permission.viewOnlineStaff" version_id="2030470" version_string="2.3.4"><![CDATA[View online staff]]></phrase>
   <phrase title="admin_permission.viewStatistics" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[View statistics]]></phrase>
   <phrase title="admin_permission.warning" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Manage warnings]]></phrase>
+  <phrase title="admin_permission.webhook" version_id="2031370" version_string="2.3.13"><![CDATA[Manage webhooks]]></phrase>
   <phrase title="admin_permission.widget" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Manage widgets]]></phrase>
   <phrase title="admin_permission_ids_must_be_unique" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Admin permission IDs must be unique. The specified ID is already in use.]]></phrase>
   <phrase title="admin_permissions" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Admin permissions]]></phrase>
@@ -553,6 +554,8 @@
   <phrase title="api_scope.profile_post_delete_hard" version_id="2010010" version_string="2.1.0 Alpha"><![CDATA[Covers hard-deleting profile posts and profile post comments.]]></phrase>
   <phrase title="api_scope.profile_post_read" version_id="2010010" version_string="2.1.0 Alpha"><![CDATA[Covers viewing profile posts and profile post comments.]]></phrase>
   <phrase title="api_scope.profile_post_write" version_id="2010010" version_string="2.1.0 Alpha"><![CDATA[Covers creating, updating and soft-deleting profile posts and profile post comments.]]></phrase>
+  <phrase title="api_scope.search_read" version_id="2030870" version_string="2.3.8"><![CDATA[Covers viewing searches.]]></phrase>
+  <phrase title="api_scope.search_write" version_id="2030870" version_string="2.3.8"><![CDATA[Covers creating searches.]]></phrase>
   <phrase title="api_scope.thread_delete_hard" version_id="2010010" version_string="2.1.0 Alpha"><![CDATA[Covers hard-deleting threads and posts.]]></phrase>
   <phrase title="api_scope.thread_read" version_id="2010010" version_string="2.1.0 Alpha"><![CDATA[Covers reading thread and post information.]]></phrase>
   <phrase title="api_scope.thread_write" version_id="2010010" version_string="2.1.0 Alpha"><![CDATA[Covers creating, updating and soft-deleting threads and posts.]]></phrase>
@@ -639,6 +642,7 @@
   <phrase title="attempts_to_email_x_have_failed_please_update" version_id="1030010" version_string="1.3.0 Alpha"><![CDATA[Attempts to send emails to {email} have failed. Please update your email.]]></phrase>
   <phrase title="authentication" version_id="1000016" version_string="1.0.0 Alpha 6"><![CDATA[Authentication]]></phrase>
   <phrase title="author" version_id="1000051" version_string="1.0.0 Release Candidate 1"><![CDATA[Author]]></phrase>
+  <phrase title="authorised_applications" version_id="2030770" version_string="2.3.7"><![CDATA[Authorised applications]]></phrase>
   <phrase title="authorization_endpoint" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[Authorization endpoint]]></phrase>
   <phrase title="authorize" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[Authorize]]></phrase>
   <phrase title="authorize_access_to_your_account" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[Authorize access to your account]]></phrase>
@@ -836,6 +840,7 @@ Rich formatting within inline code sections [ICODE=rich]is [COLOR=red]also[/COLO
   <phrase title="birthdays_limit_explain" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Controls the number of avatars that can be shown in this widget. A value of 0 disables the limit.]]></phrase>
   <phrase title="block" version_id="1050010" version_string="1.5.0 Alpha"><![CDATA[Block]]></phrase>
   <phrase title="block_this_registration" version_id="1010470" version_string="1.1.4"><![CDATA[Block this registration]]></phrase>
+  <phrase title="bluesky" version_id="2030570" version_string="2.3.5"><![CDATA[Bluesky]]></phrase>
   <phrase title="board_url" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[Board URL]]></phrase>
   <phrase title="board_url_option_not_match_license_url" version_id="2010010" version_string="2.1.0 Alpha"><![CDATA[The <a href="{link}">Board URL option</a> does not match the site URL configured for your license.]]></phrase>
   <phrase title="bookmark" version_id="2010131" version_string="2.1.1 Beta 1"><![CDATA[Bookmark]]></phrase>
@@ -1018,7 +1023,15 @@ If you have edited these files yourself, you may ignore this message, otherwise 
   <phrase title="closed_reports" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Closed reports]]></phrase>
   <phrase title="closed_reports_x_y" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Closed reports: {from} - {to}]]></phrase>
   <phrase title="code" version_id="1000011" version_string="1.0.0 Alpha 1"><![CDATA[Code]]></phrase>
+  <phrase title="code_event_argument_description" version_id="2030871" version_string="2.3.8"><![CDATA[Argument description]]></phrase>
+  <phrase title="code_event_argument_name" version_id="2030871" version_string="2.3.8"><![CDATA[Argument name]]></phrase>
+  <phrase title="code_event_argument_type" version_id="2030871" version_string="2.3.8"><![CDATA[Argument type]]></phrase>
+  <phrase title="code_event_arguments" version_id="2030871" version_string="2.3.8"><![CDATA[Arguments]]></phrase>
+  <phrase title="code_event_arguments_desc" version_id="2030871" version_string="2.3.8"><![CDATA[The arguments passed to the listener callback. Arguments passed by reference should be prefixed with <code>&amp;</code>.]]></phrase>
+  <phrase title="code_event_callback_signature" version_id="2030871" version_string="2.3.8"><![CDATA[Callback signature]]></phrase>
   <phrase title="code_event_execution_order_desc" version_id="1020035" version_string="1.2.0 Beta 5"><![CDATA[Lower execution orders will run first. Note that listeners that specify an event hint will always run after listeners that don't.]]></phrase>
+  <phrase title="code_event_hint_description" version_id="2030871" version_string="2.3.8"><![CDATA[Hint description]]></phrase>
+  <phrase title="code_event_hint_description_desc" version_id="2030871" version_string="2.3.8"><![CDATA[Describes the purpose of the event hint, if one is available.]]></phrase>
   <phrase title="code_event_ids_must_be_unique" version_id="0"><![CDATA[Code event IDs must be unique. The specified ID is already in use.]]></phrase>
   <phrase title="code_event_listener_definitions_must_be_unique" version_id="2000052" version_string="2.0.0 Release Candidate 2"><![CDATA[Code event listener definitions must be unique.]]></phrase>
   <phrase title="code_event_listeners" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Code event listeners]]></phrase>
@@ -1086,7 +1099,7 @@ If you have edited these files yourself, you may ignore this message, otherwise 
   <phrase title="con_acc.google" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Google]]></phrase>
   <phrase title="con_acc.linkedin" version_id="2010670" version_string="2.1.6"><![CDATA[Linkedin]]></phrase>
   <phrase title="con_acc.microsoft" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Microsoft]]></phrase>
-  <phrase title="con_acc.twitter" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Twitter]]></phrase>
+  <phrase title="con_acc.x" version_id="2030570" version_string="2.3.5"><![CDATA[X]]></phrase>
   <phrase title="con_acc.xenforo" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[XenForo]]></phrase>
   <phrase title="con_acc.yahoo" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Yahoo]]></phrase>
   <phrase title="con_acc_desc.apple" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[To setup Sign in with Apple, a paid <a href="https://developer.apple.com/programs/enroll/" target="_blank">Apple Developer membership</a> is required. For more information on the setup process, please see the <a href="https://xenforo.com/goto/apple-help" target="_blank">XenForo manual</a>.]]></phrase>
@@ -1095,7 +1108,7 @@ If you have edited these files yourself, you may ignore this message, otherwise 
   <phrase title="con_acc_desc.google" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[]]></phrase>
   <phrase title="con_acc_desc.linkedin" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[]]></phrase>
   <phrase title="con_acc_desc.microsoft" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[]]></phrase>
-  <phrase title="con_acc_desc.twitter" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[]]></phrase>
+  <phrase title="con_acc_desc.x" version_id="2030570" version_string="2.3.5"><![CDATA[]]></phrase>
   <phrase title="con_acc_desc.xenforo" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[]]></phrase>
   <phrase title="con_acc_desc.yahoo" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[]]></phrase>
   <phrase title="con_acc_facebook_app_id_explain" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[The ID that is associated with your <a href="https://developers.facebook.com/apps" target="_blank">Facebook application</a> for this domain.]]></phrase>
@@ -1108,8 +1121,8 @@ If you have edited these files yourself, you may ignore this message, otherwise 
   <phrase title="con_acc_linkedin_client_secret_explain" version_id="2010670" version_string="2.1.6"><![CDATA[The client secret for the Linkedin application you created for this domain.]]></phrase>
   <phrase title="con_acc_microsoft_client_id_explain" version_id="2010370" version_string="2.1.3"><![CDATA[The Client ID that is associated with your <a href="https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationsListBlade" target="_blank">Microsoft Azure application</a> for this domain.]]></phrase>
   <phrase title="con_acc_microsoft_client_secret_explain" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[The client secret for the Microsoft application you created for this domain.]]></phrase>
-  <phrase title="con_acc_twitter_consumer_key_explain" version_id="2001070" version_string="2.0.10"><![CDATA[To allow users to sign in with their Twitter accounts, you must create a <a href="https://developer.twitter.com/" target="_blank">Twitter application</a> and enter the consumer key and secret.]]></phrase>
-  <phrase title="con_acc_twitter_consumer_secret_explain" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[If you have created a Twitter application to allow Twitter sign in, set the application's consumer secret here.]]></phrase>
+  <phrase title="con_acc_x_consumer_key_explain" version_id="2030570" version_string="2.3.5"><![CDATA[To allow users to sign in with their X accounts, you must create an <a href="https://developer.x.com/" target="_blank">X application</a> and enter the consumer key and secret.]]></phrase>
+  <phrase title="con_acc_x_consumer_secret_explain" version_id="2030570" version_string="2.3.5"><![CDATA[If you have created an X application to allow X sign in, set the application's consumer secret here.]]></phrase>
   <phrase title="con_acc_yahoo_client_id_explain" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[The Client ID that is associated with your <a href="https://developer.yahoo.com/apps" target="_blank">Yahoo application</a> for this domain.]]></phrase>
   <phrase title="con_acc_yahoo_client_secret_explain" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[The client secret for the Yahoo application you created for this domain.]]></phrase>
   <phrase title="confidential" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[Confidential]]></phrase>
@@ -1227,6 +1240,7 @@ If you have edited these files yourself, you may ignore this message, otherwise 
   <phrase title="cookie_consent.group_label__third_party" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[Third-party cookies]]></phrase>
   <phrase title="cookie_consent.group_label_optional" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[Optional cookies]]></phrase>
   <phrase title="cookie_consent.third_party_description_apple_music" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[These cookies are set by <a href="https://www.apple.com/legal/privacy/data/en/apple-music/" target="_blank">Apple Music</a>, and may be used for displaying embedded content.]]></phrase>
+  <phrase title="cookie_consent.third_party_description_bluesky" version_id="2030570" version_string="2.3.5"><![CDATA[These cookies are set by <a href="https://bsky.social/about/support/privacy-policy" target="_blank">Bluesky</a>, and may be used for displaying embedded content.]]></phrase>
   <phrase title="cookie_consent.third_party_description_braintree" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[These cookies are set by <a href="https://www.braintreepayments.com/pl/legal/braintree-privacy-policy" target="_blank">Braintree</a>, and may be used for processing payments.]]></phrase>
   <phrase title="cookie_consent.third_party_description_dailymotion" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[These cookies are set by <a href="https://legal.dailymotion.com/en/privacy-policy/" target="_blank">Dailymotion</a>, and may be used for displaying embedded content.]]></phrase>
   <phrase title="cookie_consent.third_party_description_facebook" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[These cookies are set by <a href="https://www.facebook.com/privacy/policy/" target="_blank">Facebook</a>, and may be used for displaying embedded content.]]></phrase>
@@ -1248,11 +1262,12 @@ If you have edited these files yourself, you may ignore this message, otherwise 
   <phrase title="cookie_consent.third_party_description_tiktok" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[These cookies are set by <a href="https://www.tiktok.com/legal/page/us/privacy-policy/en" target="_blank">TikTok</a>, and may be used for displaying embedded content.]]></phrase>
   <phrase title="cookie_consent.third_party_description_tumblr" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[These cookies are set by <a href="https://www.tumblr.com/privacy" target="_blank">Tumblr</a>, and may be used for displaying embedded content.]]></phrase>
   <phrase title="cookie_consent.third_party_description_twitch" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[These cookies are set by <a href="https://www.twitch.tv/p/en/legal/privacy-notice/" target="_blank">Twitch</a>, and may be used for displaying embedded content.]]></phrase>
-  <phrase title="cookie_consent.third_party_description_twitter" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[These cookies are set by <a href="https://twitter.com/privacy" target="_blank">Twitter</a>, and may be used for displaying embedded content.]]></phrase>
   <phrase title="cookie_consent.third_party_description_two_checkout" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[These cookies are set by <a href="https://www.2checkout.com/legal/privacy/" target="_blank">2Checkout</a>, and may be used for processing payments.]]></phrase>
   <phrase title="cookie_consent.third_party_description_vimeo" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[These cookies are set by <a href="https://vimeo.com/privacy" target="_blank">Vimeo</a>, and may be used for displaying embedded content.]]></phrase>
+  <phrase title="cookie_consent.third_party_description_x" version_id="2030570" version_string="2.3.5"><![CDATA[These cookies are set by <a href="https://x.com/privacy" target="_blank">X</a>, and may be used for displaying embedded content.]]></phrase>
   <phrase title="cookie_consent.third_party_description_youtube" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[These cookies are set by <a href="https://policies.google.com/privacy" target="_blank">YouTube</a>, and may be used for analytics, verifying legitimate traffic, or other embedded content.]]></phrase>
   <phrase title="cookie_consent.third_party_label_apple_music" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[Apple Music]]></phrase>
+  <phrase title="cookie_consent.third_party_label_bluesky" version_id="2030570" version_string="2.3.5"><![CDATA[Bluesky]]></phrase>
   <phrase title="cookie_consent.third_party_label_braintree" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[Braintree]]></phrase>
   <phrase title="cookie_consent.third_party_label_dailymotion" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[Dailymotion]]></phrase>
   <phrase title="cookie_consent.third_party_label_facebook" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[Facebook]]></phrase>
@@ -1274,9 +1289,9 @@ If you have edited these files yourself, you may ignore this message, otherwise 
   <phrase title="cookie_consent.third_party_label_tiktok" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[TikTok]]></phrase>
   <phrase title="cookie_consent.third_party_label_tumblr" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[Tumblr]]></phrase>
   <phrase title="cookie_consent.third_party_label_twitch" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[Twitch]]></phrase>
-  <phrase title="cookie_consent.third_party_label_twitter" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[Twitter]]></phrase>
   <phrase title="cookie_consent.third_party_label_two_checkout" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[2Checkout]]></phrase>
   <phrase title="cookie_consent.third_party_label_vimeo" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[Vimeo]]></phrase>
+  <phrase title="cookie_consent.third_party_label_x" version_id="2030570" version_string="2.3.5"><![CDATA[X]]></phrase>
   <phrase title="cookie_consent.third_party_label_youtube" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[YouTube]]></phrase>
   <phrase title="cookie_consent_configure" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[See further information and configure your preferences]]></phrase>
   <phrase title="cookie_consent_description" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[We use essential <a href="{link}">cookies</a> to make this site work, and optional cookies to enhance your experience.]]></phrase>
@@ -1718,6 +1733,7 @@ If you have edited these files yourself, you may ignore this message, otherwise 
   <phrase title="display_this_group_in_debug_mode_only" version_id="1000016" version_string="1.0.0 Alpha 6"><![CDATA[Display this group in debug mode only]]></phrase>
   <phrase title="display_this_navigation_in_debug_mode_only" version_id="1000016" version_string="1.0.0 Alpha 6"><![CDATA[Display this navigation in debug mode only]]></phrase>
   <phrase title="display_this_navigation_in_development_mode_only" version_id="2010033" version_string="2.1.0 Beta 3"><![CDATA[Display this navigation in development mode only]]></phrase>
+  <phrase title="display_this_navigation_to_super_administrators_only" version_id="2030870" version_string="2.3.8"><![CDATA[Display this navigation to super administrators only]]></phrase>
   <phrase title="display_title" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Display title]]></phrase>
   <phrase title="display_total_count_in_summary" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[Display total count in summary]]></phrase>
   <phrase title="display_user_as_staff" version_id="1020010" version_string="1.2.0 Alpha"><![CDATA[Display user as staff]]></phrase>
@@ -5702,7 +5718,10 @@ If enabled, users will be able to pay with Apple Pay, Android Pay, Google Pay an
   <phrase title="expired" version_id="1010010" version_string="1.1.0 Alpha"><![CDATA[Expired]]></phrase>
   <phrase title="expired_user_upgrades" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Expired user upgrades]]></phrase>
   <phrase title="expires" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Expires]]></phrase>
+  <phrase title="expires_between" version_id="2030870" version_string="2.3.8"><![CDATA[Expires between]]></phrase>
+  <phrase title="expires_from" version_id="2030870" version_string="2.3.8"><![CDATA[Expires from]]></phrase>
   <phrase title="expires_never" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Expires: Never]]></phrase>
+  <phrase title="expires_to" version_id="2030870" version_string="2.3.8"><![CDATA[Expires to]]></phrase>
   <phrase title="expires_x" version_id="1010010" version_string="1.1.0 Alpha"><![CDATA[Expires {date}]]></phrase>
   <phrase title="expiry" version_id="1010010" version_string="1.1.0 Alpha"><![CDATA[Expiry]]></phrase>
   <phrase title="explanation" version_id="1000016" version_string="1.0.0 Alpha 6"><![CDATA[Explanation]]></phrase>
@@ -5979,7 +5998,7 @@ Please download this version from the <a href="https://xenforo.com/customers/" t
   <phrase title="heading_3" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[Heading 3]]></phrase>
   <phrase title="height" version_id="1000016" version_string="1.0.0 Alpha 6"><![CDATA[Height]]></phrase>
   <phrase title="help" version_id="0" global_cache="1"><![CDATA[Help]]></phrase>
-  <phrase title="help_cookies_description" version_id="2001270" version_string="2.0.12"><![CDATA[<p>This page discusses how cookies are used by this site. If you continue to use this site, you are consenting to our use of cookies.</p>
+  <phrase title="help_cookies_description" version_id="2030570" version_string="2.3.5"><![CDATA[<p>This page discusses how cookies are used by this site. If you continue to use this site, you are consenting to our use of cookies.</p>
 
 <h3 class="textHeading">What are cookies?</h3>
 <p>Cookies are small text files stored on your computer by your web browser at the request of a site you're viewing. This allows the site you're viewing to remember things about you, such as your preferences and history or to keep you logged in.</p>
@@ -5992,7 +6011,7 @@ Please download this version from the <a href="https://xenforo.com/customers/" t
 	<li>Registration and maintaining your preferences. This includes ensuring that you can stay logged in and keeping the site in the language or appearance that you requested.</li>
 	<li>Analytics. This allows us to determine how people are using the site and improve it.</li>
 	<li>Advertising cookies (possibly third-party). If this site displays advertising, cookies may be set by the advertisers to determine who has viewed an ad or similar things. These cookies may be set by third parties, in which case this site has no ability to read or write these cookies.</li>
-	<li>Other third-party cookies for things like Facebook or Twitter sharing. These cookies will generally be set by the third-party independently, so this site will have no ability to access them.</li>
+	<li>Other third-party cookies for things like Facebook, Bluesky or X sharing. These cookies will generally be set by the third-party independently, so this site will have no ability to access them.</li>
 </ul>
 
 <h3 class="textHeading">Additional cookies and those set by third parties</h3>
@@ -6564,7 +6583,7 @@ Callback arguments:
   <phrase title="list_arguments_that_this_advertising_position_requires" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[List the arguments that this advertising position requires.]]></phrase>
   <phrase title="list_child_nodes" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[List child nodes]]></phrase>
   <phrase title="list_contains_advanced_options_hidden" version_id="2020970" version_string="2.2.9"><![CDATA[This list contains advanced options which may be hidden.]]></phrase>
-  <phrase title="list_of_uris_that_may_be_used_for_redirecting_users_back_to_your_application" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[A list of URIs that may be used for redirecting users back to your application. This must match when authenticating with OAuth2.]]></phrase>
+  <phrase title="list_of_uris_that_may_be_used_for_redirecting_users_back_to_your_application" version_id="2030570" version_string="2.3.5"><![CDATA[A list of URIs that may be used for redirecting users back to your application. This must match when authenticating with OAuth2. Note that the URI schemes must be <code>https</code> or <code>http</code>.]]></phrase>
   <phrase title="list_sibling_nodes" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[List sibling nodes]]></phrase>
   <phrase title="list_usernames_of_users_who_will_be_invited_to_this_direct_message" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[List the usernames of the users who will be invited to this direct message. The first user will be the direct message starter. The new user will be added to the direct message automatically.]]></phrase>
   <phrase title="listed_below_node" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Listed below node]]></phrase>
@@ -6740,6 +6759,7 @@ The callback should return either <code>true</code> or <code>false</code>, where
   <phrase title="merging_users" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Merging users]]></phrase>
   <phrase title="message" version_id="1000011" version_string="1.0.0 Alpha 1"><![CDATA[Message]]></phrase>
   <phrase title="message_count_between" version_id="1020010" version_string="1.2.0 Alpha"><![CDATA[Message count between]]></phrase>
+  <phrase title="message_counts" version_id="2030870" version_string="2.3.8"><![CDATA[Message counts]]></phrase>
   <phrase title="message_edit_time_limit_expired" version_id="1000012" version_string="1.0.0 Alpha 2"><![CDATA[The time limit to edit this message ({minutes} minutes) has expired.]]></phrase>
   <phrase title="message_template" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Message template]]></phrase>
   <phrase title="message_users" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Message users]]></phrase>
@@ -7214,7 +7234,7 @@ Note: when enabling oEmbed, any HTML entered in the 'Embed template' field is ig
 If a CLI upgrade is recommended, you will be given an opportunity to use that instead of the web upgrader.]]></phrase>
   <phrase title="one_click_upgrades_disabled_upgrade_manually" version_id="2010010" version_string="2.1.0 Alpha"><![CDATA[One-click upgrades have been disabled. Please upgrade manually.]]></phrase>
   <phrase title="one_minute_ago" version_id="0" global_cache="1"><![CDATA[1 minute ago]]></phrase>
-  <phrase title="one_or_more_files_do_not_have_allowed_extension_x" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[One or more files do not have an allowed extension. Allowed extensions include: {allowed}]]></phrase>
+  <phrase title="one_or_more_files_do_not_have_allowed_extension_x" version_id="2031370" version_string="2.3.13"><![CDATA[One or more files do not have an allowed extension. Allowed extensions include: {allowed}. Affected files: {files}]]></phrase>
   <phrase title="one_or_more_files_in_style_archive_contained_within_root" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[One or more files in the style archive are contained within the root directory.]]></phrase>
   <phrase title="one_or_more_files_in_style_archive_disallowed_dot_files" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[One or more files in the style archive are disallowed dot files.]]></phrase>
   <phrase title="one_or_more_files_in_style_archive_within_unsupported_directory_x" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[One or more files in the style archive are contained within an unsupported directory. Disallowed directories include: {disallowed}]]></phrase>
@@ -7276,7 +7296,9 @@ If a CLI upgrade is recommended, you will be given an opportunity to use that in
   <phrase title="option.attachmentMaxFileSize" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Maximum attachment file size]]></phrase>
   <phrase title="option.attachmentMaxPerMessage" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Maximum attachments per message]]></phrase>
   <phrase title="option.attachmentThumbnailDimensions" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Attachment thumbnail dimensions]]></phrase>
+  <phrase title="option.attachmentThumbnailRetina" version_id="2030870" version_string="2.3.8"><![CDATA[Create retina thumbnails]]></phrase>
   <phrase title="option.autoEmbedMedia" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Auto-embed media links]]></phrase>
+  <phrase title="option.blueskyShare" version_id="2030570" version_string="2.3.5"><![CDATA[Enable Bluesky share button]]></phrase>
   <phrase title="option.boardActive" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Board is active]]></phrase>
   <phrase title="option.boardDescription" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Board meta description]]></phrase>
   <phrase title="option.boardInactiveMessage" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Inactive board message]]></phrase>
@@ -7341,6 +7363,7 @@ If a CLI upgrade is recommended, you will be given an opportunity to use that in
   <phrase title="option.enableTagging" version_id="1050010" version_string="1.5.0 Alpha"><![CDATA[Enable content tagging]]></phrase>
   <phrase title="option.enableTrophies" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Enable trophies]]></phrase>
   <phrase title="option.enableVerp" version_id="2010010" version_string="2.1.0 Alpha"><![CDATA[Enable variable email address values for automated email handling]]></phrase>
+  <phrase title="option.errorLogLength" version_id="2031370" version_string="2.3.13"><![CDATA[Error log length]]></phrase>
   <phrase title="option.extraCaptchaKeys" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Extra CAPTCHA keys]]></phrase>
   <phrase title="option.extraFaIcons" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[Additional icons to include in sprites]]></phrase>
   <phrase title="option.facebookLike" version_id="2000270" version_string="2.0.2"><![CDATA[Enable Facebook share button]]></phrase>
@@ -7451,7 +7474,7 @@ If a CLI upgrade is recommended, you will be given an opportunity to use that in
   <phrase title="option.trendingContentHalfLife" version_id="2030031" version_string="2.3.0 Beta 1"><![CDATA[Trending content half life]]></phrase>
   <phrase title="option.trendingContentWeights" version_id="2030031" version_string="2.3.0 Beta 1"><![CDATA[Trending content weights]]></phrase>
   <phrase title="option.tumblrShare" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Enable Tumblr share button]]></phrase>
-  <phrase title="option.tweet" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Enable X (Twitter) share button]]></phrase>
+  <phrase title="option.tweet" version_id="2030570" version_string="2.3.5"><![CDATA[Enable X share button]]></phrase>
   <phrase title="option.unsubscribeEmailAddress" version_id="2030031" version_string="2.3.0 Beta 1"><![CDATA[Unsubscribe email address]]></phrase>
   <phrase title="option.unsubscribeEmailHandling" version_id="2030031" version_string="2.3.0 Beta 1"><![CDATA[Unsubscribe email handling]]></phrase>
   <phrase title="option.upgradeCheckStableOnly" version_id="2010010" version_string="2.1.0 Alpha"><![CDATA[Only check for stable upgrades]]></phrase>
@@ -7500,7 +7523,9 @@ You should also provide the maximum video/audio file size in kilobytes (KB). Vid
   <phrase title="option_explain.attachmentMaxFileSize" version_id="2000032" version_string="2.0.0 Beta 2"><![CDATA[Provide the maximum attachment file size in kilobytes (KB). Attachments over this size will be rejected. The configuration of this server limits this value to <b>{serverMaxFileSize}</b> KB.]]></phrase>
   <phrase title="option_explain.attachmentMaxPerMessage" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Use 0 to allow an unlimited number of attachments per message. To disable message attachments, use the permissions system.]]></phrase>
   <phrase title="option_explain.attachmentThumbnailDimensions" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[Controls the length of the shortest edge of attachment thumbnail images. The longer edge of the image may be longer than the length entered here. A value of at least 150px is recommended. Note that if this value is changed, you should rebuild attachment thumbnails via the "Rebuild caches" system.]]></phrase>
+  <phrase title="option_explain.attachmentThumbnailRetina" version_id="2030870" version_string="2.3.8"><![CDATA[When enabled, creates high-resolution (2×) thumbnail images for high-DPI displays.]]></phrase>
   <phrase title="option_explain.autoEmbedMedia" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Enable this option to have the system attempt to automatically embed media from URLs posted by visitors that point to registered media sites. If you choose to include a link to the content as well, the media embedding may be duplicated when the message is quoted.]]></phrase>
+  <phrase title="option_explain.blueskyShare" version_id="2030570" version_string="2.3.5"><![CDATA[The Bluesky share button lets your users share pages to Bluesky.]]></phrase>
   <phrase title="option_explain.boardActive" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[]]></phrase>
   <phrase title="option_explain.boardDescription" version_id="2011070" version_string="2.1.10"><![CDATA[Enter a description for your board. This will be placed inside the meta description tag for the "Forums default page", so avoid using HTML.]]></phrase>
   <phrase title="option_explain.boardInactiveMessage" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[When the board is inactive / closed, this message will be shown to site visitors. You may use HTML.]]></phrase>
@@ -7589,6 +7614,7 @@ By default, we will always serve the graphics from the preferred CDN, though if 
   <phrase title="option_explain.enableVerp" version_id="2010010" version_string="2.1.0 Alpha"><![CDATA[If enabled, sent emails will include the recipient email address in the bounce/unsubscribe address field. This enables more accurate and more secure automated email handling. If using automated bounce/unsubscribe processing, enabling this option is strongly recommended.<br />
 <br />
 This option requires that the specified account is a catch-all account or supports a "+" as a wildcard separator (such as in Gmail). For example, if this option is enabled with a bounce address of bounce@example.com, the email might be returned to bounce+123abc+user=domain.com@example.com.]]></phrase>
+  <phrase title="option_explain.errorLogLength" version_id="2031070" version_string="2.3.10"><![CDATA[The number of days that server error log records will be kept for. Use 0 to keep the records permanently.]]></phrase>
   <phrase title="option_explain.extraCaptchaKeys" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[This option can't be edited manually. It is edited only via the "captcha" option.]]></phrase>
   <phrase title="option_explain.extraFaIcons" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[Icons are grouped into sprites to improve performance. Icons in use are typically inferred automatically, but you may include additional icons by entering them here. Enter one icon class per line. For example, enter "fa-acorn" to include the Acorn icon in the default variant(s), or enter "fas fa-acorn" to include the Acorn icon in the solid variant.]]></phrase>
   <phrase title="option_explain.facebookLike" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[If this feature is enabled, a Facebook button will be displayed on various pages including the thread view page, allowing Facebook users to share it with their Facebook friends.]]></phrase>
@@ -7630,18 +7656,7 @@ If you wish to optimize existing images, you can do this from within the <a href
   <phrase title="option_explain.jobRunTrigger" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[Long-running and scheduled tasks are deferred to the job system. By default, activity on the forum triggers these jobs to run. This can be changed to trigger independently of forum activity but additional setup is required.<br />
 <br />
 <strong>Note:</strong> If you select "Server based trigger" you are required to configure your server (such as with <code>crontab</code> or <code>cron.d</code>) manually to execute the following command once per minute: <code>php /path/to/xf/cmd.php xf:run-jobs</code>]]></phrase>
-  <phrase title="option_explain.jsLastUpdate" version_id="2000032" version_string="2.0.0 Beta 2"><![CDATA[The Unix time stamp of the last JS update. This can be changed to force a JS recache even if the XF version doesn't change.<!-- <span class="js-updateJsLastUpdate">update</span>-->
-
-<script>
-/*$(function()
-{
-	$('.js-updateJsLastUpdate').click(function()
-	{
-		var d = new Date();
-		$(this).closest('dd').find('input').val(d.getTime() / 1000|0);
-	});
-});*/
-</script>]]></phrase>
+  <phrase title="option_explain.jsLastUpdate" version_id="2030570" version_string="2.3.5"><![CDATA[The Unix time stamp of the last JS update. This can be changed to force a JS recache even if the XF version doesn't change.]]></phrase>
   <phrase title="option_explain.lastPageLinks" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[If a discussion spans multiple pages, the last few pages are displayed on the discussion list. Set the maximum number of pages to show here. Set the number to 0 to disable this feature.]]></phrase>
   <phrase title="option_explain.lightBoxUniversal" version_id="2020470" version_string="2.2.4"><![CDATA[If enabled, the lightbox overlay will show images from all messages on the current page, rather than only the current message. Note that the lightbox will only include images that do not appear in full size in the message body.
 ]]></phrase>
@@ -7689,7 +7704,7 @@ If you wish to optimize existing images, you can do this from within the <a href
   <phrase title="option_explain.romanizeUrls" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[If selected, accented and non-Latin characters in a URL will be converted to Latin equivalents if possible.]]></phrase>
   <phrase title="option_explain.rootBreadcrumb" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Specify the navigation item that will serve as the 'root' of your breadcrumb list.]]></phrase>
   <phrase title="option_explain.saveDrafts" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[If enabled, drafts will be periodically sent to the server and stored to allow users to resume working on their messages later. Disabling this will also disable the automatic checking for new messages when composing a reply.]]></phrase>
-  <phrase title="option_explain.searchMinWordLength" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[This is the minimum length of a word that can be searched by the index. With the default search system, this should correspond with the MySQL full-text minimum word length (normally 3).]]></phrase>
+  <phrase title="option_explain.searchMinWordLength" version_id="2031370" version_string="2.3.13"><![CDATA[This is the minimum length of a word that can be searched by the index. With the default search system, this should correspond with the MySQL full-text minimum word length (normally 3).]]></phrase>
   <phrase title="option_explain.searchResultsPerPage" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[]]></phrase>
   <phrase title="option_explain.searchSuggestions" version_id="2030035" version_string="2.3.0 Beta 5"><![CDATA[If enabled, search suggestions will appear as users type. After enabling this option, you should <a href="admin.php?tools/rebuild/#job-xf-searchrebuild">rebuild the search index</a>.<br />
 <br />
@@ -7934,6 +7949,7 @@ Callback arguments:
   <phrase title="paypal_alternate_accounts_explain" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Enter the email address of any PayPal accounts other than the primary one that may receive payments for user upgrades. This can be useful if the primary account is changed and recurring payments are still coming from the old account, for example. If the old account is not listed as a valid alternative, payments will not be accepted for this account. Enter one account per line.]]></phrase>
   <phrase title="paypal_primary_account" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[PayPal Primary Account Email]]></phrase>
   <phrase title="paypal_primary_account_explain" version_id="2000034" version_string="2.0.0 Beta 4"><![CDATA[This is the primary email address on your PayPal account. If this is incorrect, payments may not be processed successfully. Note this must be a PayPal Premier or Business account and IPNs must be enabled.]]></phrase>
+  <phrase title="paypal_subscription_cancelled_successfully" version_id="2030870" version_string="2.3.8"><![CDATA[PayPal subscription cancelled successfully]]></phrase>
   <phrase title="paypal_webhook_explain" version_id="2030031" version_string="2.3.0 Beta 1"><![CDATA[<strong>Note:</strong> You must set up a webhook endpoint so that PayPal can send messages in order to verify and process payments. You can do this on the same page of your <a href="https://developer.paypal.com/dashboard/" target="_blank">PayPal Developer Dashboard</a>. When asked for your webhook URL, copy and paste the following:
 		<pre><code>{boardUrl}/payment_callback.php?_xfProvider=paypalrest</code></pre>
 		You should also configure your webhook endpoint to listen for the following events:]]></phrase>
@@ -8264,6 +8280,7 @@ You may use <code>&#123;icon::name&#125;</code> to display an icon in the defaul
   <phrase title="please_enter_valid_permission_id" version_id="0"><![CDATA[Please enter a valid permission ID.]]></phrase>
   <phrase title="please_enter_valid_permission_interface_group_id" version_id="0"><![CDATA[Please enter a valid permission interface group ID.]]></phrase>
   <phrase title="please_enter_valid_property_name" version_id="0"><![CDATA[Please enter a valid property name.]]></phrase>
+  <phrase title="please_enter_valid_redirect_uris" version_id="2030570" version_string="2.3.5"><![CDATA[Please enter valid redirect URIs.]]></phrase>
   <phrase title="please_enter_valid_regular_expression" version_id="1020010" version_string="1.2.0 Alpha"><![CDATA[Please enter a valid regular expression.]]></phrase>
   <phrase title="please_enter_valid_route_class" version_id="0"><![CDATA[Please enter a valid route class.]]></phrase>
   <phrase title="please_enter_valid_route_prefix" version_id="0"><![CDATA[Please enter a valid route prefix.]]></phrase>
@@ -8526,6 +8543,7 @@ Disable all emails: {unsub_all}]]></phrase>
   <phrase title="provided_file_is_not_valid_language_xml" version_id="1000011" version_string="1.0.0 Alpha 1"><![CDATA[The provided file is not valid language XML.]]></phrase>
   <phrase title="provided_grant_type_is_not_supported" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[The provided grant type is not supported.]]></phrase>
   <phrase title="provided_limit_ip_does_not_appear_to_be_valid_ip_address" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[Provided limit_ip does not appear to be a valid IP address.]]></phrase>
+  <phrase title="provided_redirect_uri_is_not_valid" version_id="2030970" version_string="2.3.9"><![CDATA[The provided redirect URI is not valid or does not match a registered redirect URI.]]></phrase>
   <phrase title="provided_redirection_uri_does_not_match_redirection_uri_registered" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[The provided redirection URI does not match the redirection URI registered for the client.]]></phrase>
   <phrase title="provider" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Provider]]></phrase>
   <phrase title="provider_class" version_id="2010010" version_string="2.1.0 Alpha"><![CDATA[Provider class]]></phrase>
@@ -8560,6 +8578,7 @@ Disable all emails: {unsub_all}]]></phrase>
   <phrase title="push_enable_notification_title" version_id="2010010" version_string="2.1.0 Alpha"><![CDATA[Push notifications enabled successfully at {boardTitle}]]></phrase>
   <phrase title="push_not_supported_label" version_id="2010010" version_string="2.1.0 Alpha"><![CDATA[Push notifications not supported]]></phrase>
   <phrase title="push_notifications" version_id="2010010" version_string="2.1.0 Alpha"><![CDATA[Push notifications]]></phrase>
+  <phrase title="push_notifications_could_not_be_enabled_vapid_key_generation_failed" version_id="2031370" version_string="2.3.13"><![CDATA[Push notifications could not be enabled because VAPID key generation failed.]]></phrase>
   <phrase title="push_one_account_upgrades_expired_renew_now" version_id="2010010" version_string="2.1.0 Alpha"><![CDATA[One of your account upgrades has expired. Renew now!]]></phrase>
   <phrase title="push_subscription_updated_successfully" version_id="2010010" version_string="2.1.0 Alpha"><![CDATA[Push subscription updated successfully.]]></phrase>
   <phrase title="push_to_left" version_id="2001070" version_string="2.0.10"><![CDATA[Push to left]]></phrase>
@@ -8638,6 +8657,7 @@ Disable all emails: {unsub_all}]]></phrase>
   <phrase title="rebuild_forums" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Rebuild forums]]></phrase>
   <phrase title="rebuild_icon_usage" version_id="2030032" version_string="2.3.0 Beta 2"><![CDATA[Rebuild icon usage]]></phrase>
   <phrase title="rebuild_likes_counted_status" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Rebuild likes counted status]]></phrase>
+  <phrase title="rebuild_message_counts" version_id="2030870" version_string="2.3.8"><![CDATA[Rebuild message counts]]></phrase>
   <phrase title="rebuild_now" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Rebuild now]]></phrase>
   <phrase title="rebuild_poll_information" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Rebuild poll information]]></phrase>
   <phrase title="rebuild_position_and_post_counters" version_id="1000016" version_string="1.0.0 Alpha 6"><![CDATA[Rebuild position and post counters]]></phrase>
@@ -8877,6 +8897,7 @@ Content being reported:
   <phrase title="revoke" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[Revoke]]></phrase>
   <phrase title="revoke_access" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[Revoke access]]></phrase>
   <phrase title="revoke_application" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[Revoke application]]></phrase>
+  <phrase title="revoke_application_for_x" version_id="2030770" version_string="2.3.7"><![CDATA[Revoke application for {username}]]></phrase>
   <phrase title="rich_text_box" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Rich text box]]></phrase>
   <phrase title="rich_text_editor_supports_four_button_configs" version_id="2010010" version_string="2.1.0 Alpha"><![CDATA[The rich-text editor supports a total of four possible button configurations which are applied depending on the device viewport size.]]></phrase>
   <phrase title="right" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Right]]></phrase>
@@ -8991,7 +9012,7 @@ Content being reported:
   <phrase title="send_direct_message_to_x" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[Send a direct message to {name}]]></phrase>
   <phrase title="send_direct_message_to_you" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[Send direct message to you]]></phrase>
   <phrase title="send_direct_messages_to_this_user" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[Send direct messages to this user]]></phrase>
-  <phrase title="send_direct_messages_to_you" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[Start direct messages to you]]></phrase>
+  <phrase title="send_direct_messages_to_you" version_id="2030570" version_string="2.3.5"><![CDATA[Send direct messages to you]]></phrase>
   <phrase title="send_message" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Send message]]></phrase>
   <phrase title="send_notifications_for" version_id="1020010" version_string="1.2.0 Alpha"><![CDATA[Send notifications for]]></phrase>
   <phrase title="send_notifications_via" version_id="1020010" version_string="1.2.0 Alpha"><![CDATA[Send notifications via]]></phrase>
@@ -9217,8 +9238,11 @@ Content being reported:
   <phrase title="start_date" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Start date]]></phrase>
   <phrase title="start_import" version_id="2000036" version_string="2.0.0 Beta 6"><![CDATA[Start import]]></phrase>
   <phrase title="start_sending_summary_email_when_user_inactive_for" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[Start sending summary email when user has been inactive for]]></phrase>
+  <phrase title="started_between" version_id="2030870" version_string="2.3.8"><![CDATA[Started between]]></phrase>
   <phrase title="started_by" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Started by]]></phrase>
   <phrase title="started_by_x" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Started by {name}]]></phrase>
+  <phrase title="started_from" version_id="2030870" version_string="2.3.8"><![CDATA[Started from]]></phrase>
+  <phrase title="started_to" version_id="2030870" version_string="2.3.8"><![CDATA[Started to]]></phrase>
   <phrase title="starting_upgrade" version_id="2010010" version_string="2.1.0 Alpha"><![CDATA[Starting upgrade]]></phrase>
   <phrase title="state" version_id="1000015" version_string="1.0.0 Alpha 5"><![CDATA[State]]></phrase>
   <phrase title="statistics" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Statistics]]></phrase>
@@ -9286,9 +9310,13 @@ Content being reported:
 <br /><b>Note:</b> Before accepting live payments, you must activate your Stripe account from the Stripe Dashboard.]]></phrase>
   <phrase title="stripe_verify_webhook_with_signing_secret" version_id="2000051" version_string="2.0.0 Release Candidate 1"><![CDATA[Verify webhook with signing secret]]></phrase>
   <phrase title="stripe_verify_webhook_with_signing_secret_explain" version_id="2010131" version_string="2.1.1 Beta 1"><![CDATA[To verify incoming webhook signatures and prevent replay attacks you must provide the &quot;Signing secret&quot;. You can obtain this after setting up the webhook endpoint by clicking the endpoint in your dashboard on the <a href="https://dashboard.stripe.com/account/webhooks">Developers > Webhooks</a> page.]]></phrase>
-  <phrase title="stripe_webhook_explain" version_id="2020970" version_string="2.2.9"><![CDATA[<strong>Note:</strong> You must set up a webhook endpoint so that Stripe can send messages in order to verify and process payments. You can do this on the <a href="https://dashboard.stripe.com/account/webhooks">Developers > Webhooks</a> page in your dashboard with the following URL:
-		<pre><code>{boardUrl}/payment_callback.php?_xfProvider=stripe</code></pre>
-		You should also configure your webhook endpoint to listen for the following events:]]></phrase>
+  <phrase title="stripe_webhook_explain" version_id="2030770" version_string="2.3.7"><![CDATA[<strong>Note:</strong> You must set up a webhook endpoint so that Stripe can send messages in order to verify and process payments. You can do this on the <a href="https://dashboard.stripe.com/account/webhooks">Developers > Webhooks</a> page in your dashboard with the following URL:
+
+<pre><code>{boardUrl}/payment_callback.php?_xfProvider=stripe</code></pre>
+
+You should <strong>not</strong> upgrade your Stripe account API version without first verifying XenForo is sending requests to the newer API.<br>
+<br>
+You should also configure your webhook endpoint to listen for the following events:]]></phrase>
   <phrase title="strongly_recommended_backup_database_and_files" version_id="2010010" version_string="2.1.0 Alpha"><![CDATA[It is strongly recommended that you backup your database and files before proceeding. This is not done automatically.]]></phrase>
   <phrase title="style" version_id="1000015" version_string="1.0.0 Alpha 5"><![CDATA[Style]]></phrase>
   <phrase title="style_archives_only_contain_files_extensions_x" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[Style archives may only contain files with the following extensions: {extensions}.]]></phrase>
@@ -10107,7 +10135,8 @@ When the payment has been approved, your account will be upgraded.]]></phrase>
   <phrase title="thank_you_for_your_purchase_questions_contact_us" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Thank you for your purchase. If you have any questions, please <a href="{contacturl}">contact us</a>.]]></phrase>
   <phrase title="thanks_creating_account_using_facebook_account_active" version_id="1000034" version_string="1.0.0 Beta 4"><![CDATA[Thanks for creating an account using Facebook. Your account is now fully active.]]></phrase>
   <phrase title="thanks_for_registering_complete" version_id="1000015" version_string="1.0.0 Alpha 5"><![CDATA[Thanks for registering. Your registration is now complete.]]></phrase>
-  <phrase title="thanks_for_registering_registration_must_be_approved" version_id="1000015" version_string="1.0.0 Alpha 5"><![CDATA[Thanks for registering. Your registration must now be approved by an administrator. You will receive an email when a decision has been taken.]]></phrase>
+  <phrase title="thanks_for_registering_registration_must_be_approved" version_id="2030770" version_string="2.3.7"><![CDATA[Thanks for registering. Your registration must now be approved by an administrator. You will receive an email once a decision has been made.
+]]></phrase>
   <phrase title="thanks_for_registering_to_complete_registration_follow_link" version_id="1000015" version_string="1.0.0 Alpha 5"><![CDATA[Thanks for registering. In order to complete your registration, you must follow the link in the email that has been sent to you.]]></phrase>
   <phrase title="thanks_for_your_purchase" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Thanks for your purchase!]]></phrase>
   <phrase title="the_chosen_password_could_be_stronger" version_id="2010010" version_string="2.1.0 Alpha"><![CDATA[The chosen password could be stronger.]]></phrase>
@@ -10510,6 +10539,7 @@ Without this, recurring subscriptions can only be cancelled from your <a href="h
   <phrase title="unfortunately_none_of_your_content_has_received_any_reactions_yet" version_id="2010010" version_string="2.1.0 Alpha"><![CDATA[Unfortunately, none of your content has received any reactions yet. You'll need to keep posting!]]></phrase>
   <phrase title="unfortunately_report_made_recently_rejected" version_id="1020010" version_string="1.2.0 Alpha"><![CDATA[Unfortunately, your recent report was rejected: {title}]]></phrase>
   <phrase title="unfortunately_report_made_recently_rejected_comment_x" version_id="1020010" version_string="1.2.0 Alpha"><![CDATA[Unfortunately, your recent report has been rejected: {title} - {comment}]]></phrase>
+  <phrase title="unfurls" version_id="2030870" version_string="2.3.8"><![CDATA[Unfurls]]></phrase>
   <phrase title="ungrouped" version_id="1010010" version_string="1.1.0 Alpha" global_cache="1"><![CDATA[Ungrouped]]></phrase>
   <phrase title="ungrouped_permissions" version_id="2000032" version_string="2.0.0 Beta 2"><![CDATA[Ungrouped permissions]]></phrase>
   <phrase title="ungrouped_properties" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Ungrouped properties]]></phrase>
@@ -11257,7 +11287,7 @@ Callback arguments:
   <phrase title="x_tb" version_id="1020010" version_string="1.2.0 Alpha" global_cache="1"><![CDATA[{size} TB]]></phrase>
   <phrase title="x_threads_will_be_deleted_when_these_posts_deleted" version_id="2000052" version_string="2.0.0 Release Candidate 2"><![CDATA[{count} thread(s) will be deleted when these posts are deleted.]]></phrase>
   <phrase title="x_times" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[{total} times]]></phrase>
-  <phrase title="x_twitter" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[X (Twitter)]]></phrase>
+  <phrase title="x_twitter" version_id="2030570" version_string="2.3.5"><![CDATA[X]]></phrase>
   <phrase title="x_user_name_changed_to_x" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[{oldName} <span class="u-muted">username changed to</span> {newName}]]></phrase>
   <phrase title="x_weeks" version_id="2020570" version_string="2.2.5"><![CDATA[{weeks} weeks]]></phrase>
   <phrase title="x_will_be_merged_into_this_user_and_all_of_xs_content_moved" version_id="1020010" version_string="1.2.0 Alpha"><![CDATA[{name} will be merged into this user and all of {name}'s content will now belong to this user.]]></phrase>
@@ -11393,6 +11423,7 @@ Two-step verification increases the security of your account by requiring you to
   <phrase title="you_sure_you_want_to_apply_this_reaction" version_id="2010010" version_string="2.1.0 Alpha"><![CDATA[Are you sure you want to apply this reaction?]]></phrase>
   <phrase title="you_sure_you_want_to_change_types_x_threads" version_id="2020032" version_string="2.2.0 Beta 2"><![CDATA[Are you sure you want to change the thread type of {count} threads?]]></phrase>
   <phrase title="you_sure_you_want_to_clean_up_x_files_for_y" version_id="2030070" version_string="2.3.0"><![CDATA[Are you sure you want to clean up {count} files for {addOnId}?]]></phrase>
+  <phrase title="you_sure_you_want_to_connect_account" version_id="2030770" version_string="2.3.7"><![CDATA[Are you sure you want to continue connecting this account?]]></phrase>
   <phrase title="you_sure_you_want_to_copy_x_posts_to_new_thread" version_id="1030010" version_string="1.3.0 Alpha"><![CDATA[Are you sure you want to copy {count} post(s) to a new thread?]]></phrase>
   <phrase title="you_sure_you_want_to_delete_x_posts" version_id="1000015" version_string="1.0.0 Alpha 5"><![CDATA[Are you sure you want to delete {count} post(s)?]]></phrase>
   <phrase title="you_sure_you_want_to_delete_x_profile_posts" version_id="1000015" version_string="1.0.0 Alpha 5"><![CDATA[Are you sure you want to delete {count} profile post(s)?]]></phrase>
@@ -11437,7 +11468,7 @@ Two-step verification increases the security of your account by requiring you to
   <phrase title="your_account_has_been_rejected" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Your account has been rejected.]]></phrase>
   <phrase title="your_account_has_been_rejected_for_following_reason_x" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Your account has been rejected for the following reason: {reason}.]]></phrase>
   <phrase title="your_account_has_temporarily_been_locked_due_to_failed_login_attempts" version_id="0"><![CDATA[Your account has temporarily been locked due to failed login attempts.]]></phrase>
-  <phrase title="your_account_is_currently_awaiting_approval_by_administrator" version_id="2010010" version_string="2.1.0 Alpha"><![CDATA[Your account is currently awaiting approval by an administrator. You will receive an email when a decision has been taken.]]></phrase>
+  <phrase title="your_account_is_currently_awaiting_approval_by_administrator" version_id="2030770" version_string="2.3.7"><![CDATA[Your account is currently awaiting approval by an administrator. You will receive an email once a decision has been made.]]></phrase>
   <phrase title="your_account_is_currently_awaiting_confirmation_confirmation_sent_to_x" version_id="1000015" version_string="1.0.0 Alpha 5"><![CDATA[Your account is currently awaiting confirmation. Confirmation was sent to {email}.]]></phrase>
   <phrase title="your_account_is_currently_security_locked" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[Your account is currently security locked.]]></phrase>
   <phrase title="your_account_is_currently_security_locked_and_awaiting_password_reset" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[Your account is currently security locked and awaiting a password reset. A request was sent to {email}<br />
@@ -11466,7 +11497,7 @@ Two-step verification increases the security of your account by requiring you to
   <phrase title="your_email_could_not_be_confirmed_use_resend" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Your email address could not be confirmed. Please use the resend confirmation option and follow the instructions.]]></phrase>
   <phrase title="your_email_has_been_confirmed_and_your_account_is_now_fully_active_again" version_id="1000015" version_string="1.0.0 Alpha 5"><![CDATA[Your email has been confirmed and your account is now fully active again.]]></phrase>
   <phrase title="your_email_has_been_confirmed_and_your_registration_is_now_complete" version_id="1000015" version_string="1.0.0 Alpha 5"><![CDATA[Your email has been confirmed and your registration is now complete.]]></phrase>
-  <phrase title="your_email_has_been_confirmed_registration_must_be_approved" version_id="1000015" version_string="1.0.0 Alpha 5"><![CDATA[Your email has been confirmed. Your registration must now be approved by an administrator. You will receive an email when a decision has been taken.]]></phrase>
+  <phrase title="your_email_has_been_confirmed_registration_must_be_approved" version_id="2030770" version_string="2.3.7"><![CDATA[Your email has been confirmed. Your registration must now be approved by an administrator. You will receive an email once a decision has been made.]]></phrase>
   <phrase title="your_email_may_not_be_changed_at_this_time" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Your email address may not be changed at this time.]]></phrase>
   <phrase title="your_email_notification_selections_have_been_updated" version_id="1020010" version_string="1.2.0 Alpha"><![CDATA[Your email notification selections have been updated.]]></phrase>
   <phrase title="your_email_was_sent_to_x_users" version_id="1000016" version_string="1.0.0 Alpha 6"><![CDATA[Your email was sent to {sent} users.]]></phrase>

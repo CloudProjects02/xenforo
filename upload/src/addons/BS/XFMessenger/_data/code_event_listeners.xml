@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<code_event_listeners>
+  <listener event_id="broadcast_channels" execute_order="10" callback_class="BS\XFMessenger\Listener" callback_method="broadcastChannels" active="1" description="Add conversation channel"/>
+  <listener event_id="entity_post_save" execute_order="10" callback_class="BS\XFMessenger\Listener" callback_method="entityPostSaveConversationRecipient" active="1" hint="XF\Entity\ConversationRecipient" description="Rebuild unread count"/>
+  <listener event_id="templater_macro_pre_render" execute_order="10" callback_class="BS\XFMessenger\Template\Templater" callback_method="createRoomFormPreRender" active="1" hint="public:xf_messenger_chat_macros:create_room_form" description="Add arguments to create_room_form macro"/>
+  <listener event_id="templater_macro_pre_render" execute_order="11" callback_class="BS\XFMessenger\Template\Templater" callback_method="helperJsGlobalPreRender" active="1" hint="public:helper_js_global:head" description="Extend cdn config to load modules"/>
+</code_event_listeners>

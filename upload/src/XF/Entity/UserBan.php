@@ -84,7 +84,6 @@ class UserBan extends Entity
 
 		if ($isChanged)
 		{
-			/** @var UserGroupChangeService $userGroupChangeService */
 			$userGroupChangeService = $this->app()->service(UserGroupChangeService::class);
 
 			if ($isBanned)

@@ -191,7 +191,20 @@ class EntityResult implements EntityResultInterface
 			}
 		}
 
-		ksort($result, SORT_STRING | SORT_FLAG_CASE);
+		// sort results with lower-case keys first
+		uksort($result, function (string $left, string $right): int
+		{
+			$leftGroup  = ctype_lower($left[0]) ? 0 : 1;
+			$rightGroup = ctype_lower($right[0]) ? 0 : 1;
+
+			if ($leftGroup !== $rightGroup)
+			{
+				return $leftGroup <=> $rightGroup;
+			}
+
+			$caseInsensitiveOrder = strcasecmp($left, $right);
+			return $caseInsensitiveOrder !== 0 ? $caseInsensitiveOrder : ($left <=> $right);
+		});
 
 		if ($this->getResultType() === self::TYPE_WEBHOOK)
 		{

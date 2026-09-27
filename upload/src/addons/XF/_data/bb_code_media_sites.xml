@@ -14,6 +14,10 @@ music.apple.com/{$id}]]></match_urls>
 	</div>
 </div>]]></embed_html>
   </site>
+  <site media_site_id="bluesky" site_title="Bluesky" site_url="https://bsky.app" match_is_regex="1" cookie_third_parties="bluesky" supported="1" active="1" oembed_enabled="1" oembed_api_endpoint="https://embed.bsky.app/oembed" oembed_url_scheme="https://bsky.app/profile/{$id}" oembed_retain_scripts="0">
+    <match_urls><![CDATA[#^https://bsky\.app/profile/(?P<id>.*/post/.*)$#siU]]></match_urls>
+    <embed_html><![CDATA[<!-- oEmbed - template unused -->]]></embed_html>
+  </site>
   <site media_site_id="dailymotion" site_title="Dailymotion" site_url="https://www.dailymotion.com" match_is_regex="0" match_callback_class="XF\BbCode\Helper\DailyMotion" match_callback_method="matchCallback" embed_html_callback_class="XF\BbCode\Helper\DailyMotion" embed_html_callback_method="htmlCallback" cookie_third_parties="dailymotion" supported="1" active="1" oembed_enabled="0" oembed_retain_scripts="0">
     <match_urls><![CDATA[dailymotion.com/video/{$id:alphanum}
 dai.ly/{$id:alphanum}]]></match_urls>
@@ -151,7 +155,7 @@ open.spotify.com/user/*/playlist/{$id:alphanum}]]></match_urls>
 		<iframe src="https://open.spotify.com/embed?uri=spotify:{$id}&theme={{ property('styleType') == 'light' ? 'white' : 'black' }}"
 				loading="lazy"
 				width="500" height="232"
-				frameborder="0" allowtransparency="false"></iframe>
+				frameborder="0"></iframe>
 	</div>
 </div>]]></embed_html>
   </site>
@@ -179,7 +183,7 @@ clips.twitch.tv/{$id:alphanum}]]></match_urls>
 	</div>
 </div>]]></embed_html>
   </site>
-  <site media_site_id="twitter" site_title="X" site_url="https://x.com" match_is_regex="0" cookie_third_parties="twitter" supported="1" active="1" oembed_enabled="1" oembed_api_endpoint="https://publish.twitter.com/oembed" oembed_url_scheme="https://twitter.com/x/status/{$id}" oembed_retain_scripts="0">
+  <site media_site_id="twitter" site_title="X" site_url="https://x.com" match_is_regex="0" cookie_third_parties="x" supported="1" active="1" oembed_enabled="1" oembed_api_endpoint="https://publish.twitter.com/oembed" oembed_url_scheme="https://twitter.com/x/status/{$id}" oembed_retain_scripts="0">
     <match_urls><![CDATA[twitter.com/*/status/{$id}
 twitter.com/statuses/{$id}
 x.com/*/status/{$id}

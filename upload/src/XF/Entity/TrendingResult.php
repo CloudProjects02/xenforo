@@ -17,7 +17,7 @@ use XF\TrendingContent\AbstractHandler;
  * @property string $content_type
  * @property int $content_container_id
  * @property int $result_date
- * @property array $content_data
+ * @property array|null $content_data
  */
 class TrendingResult extends Entity
 {
@@ -47,7 +47,7 @@ class TrendingResult extends Entity
 	}
 
 	/**
-	 * @return AbstractCollection|array<int, Entity>
+	 * @return AbstractCollection
 	 */
 	public function getContent(string $style, int $limit = 0): AbstractCollection
 	{

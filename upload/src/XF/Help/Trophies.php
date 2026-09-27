@@ -15,7 +15,6 @@ class Trophies
 			throw $controller->exception($controller->redirect($controller->buildLink('help')));
 		}
 
-		/** @var TrophyRepository $trophyRepo */
 		$trophyRepo = $controller->repository(TrophyRepository::class);
 		$trophies = $trophyRepo->findTrophiesForList();
 		$response->setParam('trophies', $trophies->fetch());

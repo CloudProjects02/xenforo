@@ -2,8 +2,12 @@
 
 namespace XF\ContentVote;
 
+use XF\Entity\Thread;
 use XF\Mvc\Entity\Entity;
 
+/**
+ * @extends AbstractHandler<Thread>
+ */
 class ThreadHandler extends AbstractHandler
 {
 	public function isCountedForContentUser(Entity $entity)

@@ -27,7 +27,6 @@ class Move extends AbstractMoveCopy
 	{
 		$thread = $this->getTargetThreadFromOptions($options);
 
-		/** @var MoverService $mover */
 		$mover = $this->app()->service(MoverService::class, $thread);
 		$mover->setExistingTarget($options['thread_type'] == 'existing' ? true : false);
 
@@ -51,7 +50,6 @@ class Move extends AbstractMoveCopy
 
 	public function renderForm(AbstractCollection $entities, Controller $controller)
 	{
-		/** @var NodeRepository $nodeRepo */
 		$nodeRepo = $this->app()->repository(NodeRepository::class);
 		$nodes = $nodeRepo->getFullNodeList()->filterViewable();
 

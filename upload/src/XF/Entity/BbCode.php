@@ -212,8 +212,8 @@ class BbCode extends Entity
 		}
 
 		if (
-			$this->editor_icon_type == 'fa' &&
-			$this->isChanged(['editor_icon_type', 'editor_icon_value', 'active'])
+			$this->editor_icon_type == 'fa'
+			&& $this->isChanged(['editor_icon_type', 'editor_icon_value', 'active'])
 		)
 		{
 			$iconRepo = $this->repository(IconRepository::class);
@@ -225,13 +225,17 @@ class BbCode extends Entity
 
 	protected function _postDelete()
 	{
+		$writeDevOutput = $this->getBehavior(DevOutputWritable::class)->getOption('write_dev_output');
+
 		foreach ($this->_structure->relations AS $name => $relation)
 		{
 			if ($relation['entity'] == 'XF:Phrase')
 			{
-				if ($this->$name)
+				$masterPhrase = $this->getExistingRelation($name);
+				if ($masterPhrase)
 				{
-					$this->$name->delete();
+					$masterPhrase->getBehavior(DevOutputWritable::class)->setOption('write_dev_output', $writeDevOutput);
+					$masterPhrase->delete();
 				}
 			}
 		}
@@ -252,7 +256,6 @@ class BbCode extends Entity
 
 	protected function _setupDefaults()
 	{
-		/** @var AddOnRepository $addOnRepo */
 		$addOnRepo = $this->_em->getRepository(AddOnRepository::class);
 		$this->addon_id = $addOnRepo->getDefaultAddOnId();
 	}

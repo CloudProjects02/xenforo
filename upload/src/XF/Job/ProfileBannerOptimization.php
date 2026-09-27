@@ -31,6 +31,7 @@ class ProfileBannerOptimization extends AbstractImageOptimizationJob
 		$bannerService = $this->app->service(ProfileBannerService::class, $user);
 		$bannerService->silentRunning(true);
 		$bannerService->logIp(false);
+		$bannerService->logChange(false);
 		$bannerService->optimizeExistingBanner();
 	}
 

@@ -34,7 +34,6 @@ class ThreadPrefixController extends AbstractPrefix
 
 	protected function getNodeParams(ThreadPrefix $prefix)
 	{
-		/** @var NodeRepository $nodeRepo */
 		$nodeRepo = \XF::repository(NodeRepository::class);
 		$nodeTree = $nodeRepo->createNodeTree($nodeRepo->getFullNodeList());
 

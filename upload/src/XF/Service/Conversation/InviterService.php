@@ -136,7 +136,6 @@ class InviterService extends AbstractService
 
 	public function sendNotifications()
 	{
-		/** @var NotifierService $notifier */
 		$notifier = $this->service(NotifierService::class, $this->conversation);
 		$notifier->notifyInvite($this->notifyUsers, $this->from);
 	}

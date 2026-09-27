@@ -74,7 +74,9 @@ class View
 		if ($this->isException($e))
 		{
 			/** @var \Throwable $e */
-			$error = '<b>' . get_class($e) . '</b>: ' . htmlspecialchars($e->getMessage()) . ' in <b>'
+			$rootDir = \XF::getRootDirectory();
+			$message = str_replace($rootDir, '', $e->getMessage());
+			$error = '<b>' . get_class($e) . '</b>: ' . htmlspecialchars($message) . ' in <b>'
 				. File::stripRootPathPrefix($e->getFile()) . '</b> at line <b>' . $e->getLine() . '</b>';
 
 			foreach ($e->getTrace() AS $traceEntry)

@@ -534,7 +534,7 @@ class Query
 
 	/**
 	 * @param string $key
-	 * @param string $message
+	 * @param string|\Stringable $message
 	 *
 	 * @return $this
 	 */
@@ -555,7 +555,7 @@ class Query
 
 	/**
 	 * @param string $key
-	 * @param string $message
+	 * @param string|\Stringable $message
 	 *
 	 * @return $this
 	 */

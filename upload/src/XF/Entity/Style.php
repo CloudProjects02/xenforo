@@ -2,8 +2,10 @@
 
 namespace XF\Entity;
 
+use League\Flysystem\FilesystemException;
 use XF\Behavior\DesignerOutputWritable;
 use XF\Finder\StyleFinder;
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XF\Repository\StyleRepository;
@@ -18,9 +20,9 @@ use function in_array, intval, is_string, strval;
  * @property array $parent_list
  * @property string $title
  * @property string $description
- * @property array $properties
- * @property array $assets
- * @property array $effective_assets
+ * @property array|null $properties
+ * @property array|null $assets
+ * @property array|null $effective_assets
  * @property int $last_modified_date
  * @property bool $enable_variations
  * @property bool $user_selectable
@@ -28,9 +30,9 @@ use function in_array, intval, is_string, strval;
  *
  * RELATIONS
  * @property-read Style|null $Parent
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\Template> $Templates
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\StyleProperty> $Properties
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\StylePropertyGroup> $PropertyGroups
+ * @property-read AbstractCollection<Template> $Templates
+ * @property-read AbstractCollection<StyleProperty> $Properties
+ * @property-read AbstractCollection<StylePropertyGroup> $PropertyGroups
  */
 class Style extends Entity
 {
@@ -369,7 +371,7 @@ class Style extends Entity
 			{
 				$fs->deleteDir($stylePath);
 			}
-			catch (\Exception $e)
+			catch (FilesystemException $e)
 			{
 			}
 		}

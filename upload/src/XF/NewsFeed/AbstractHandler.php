@@ -3,21 +3,37 @@
 namespace XF\NewsFeed;
 
 use XF\Entity\NewsFeed;
-use XF\Mvc\Entity\ArrayCollection;
+use XF\Entity\User;
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Repository\AttachmentRepository;
 
 use function is_array;
 
+/**
+ * @template T of Entity
+ */
 class AbstractHandler
 {
+	/**
+	 * @var string
+	 */
 	protected $contentType;
 
+	/**
+	 * @param string $contentType
+	 */
 	public function __construct($contentType)
 	{
 		$this->contentType = $contentType;
 	}
 
+	/**
+	 * @param T $entity
+	 * @param string|\Stringable|null $error
+	 *
+	 * @return bool
+	 */
 	public function canViewContent(Entity $entity, &$error = null)
 	{
 		if (method_exists($entity, 'canView'))
@@ -28,6 +44,12 @@ class AbstractHandler
 		throw new \LogicException("Could not determine content viewability; please override");
 	}
 
+	/**
+	 * @param T $content
+	 * @param string|\Stringable|null $error
+	 *
+	 * @return bool
+	 */
 	public function canViewEntry(NewsFeed $newsFeed, Entity $content, &$error = null)
 	{
 		if ($newsFeed->action == 'reaction')
@@ -48,6 +70,12 @@ class AbstractHandler
 		return true;
 	}
 
+	/**
+	 * @param T $entity
+	 * @param string|\Stringable|null $error
+	 *
+	 * @return bool
+	 */
 	public function contentIsVisible(Entity $entity, &$error = null)
 	{
 		if (method_exists($entity, 'isVisible'))
@@ -63,16 +91,38 @@ class AbstractHandler
 		return true;
 	}
 
+	/**
+	 * @param T $entity
+	 * @param string $action
+	 *
+	 * @return bool
+	 */
 	public function isPublishable(Entity $entity, $action)
 	{
 		return true;
 	}
 
+	/**
+	 * @param string $action
+	 *
+	 * @return string
+	 */
 	public function getTemplateName($action)
 	{
 		return 'public:news_feed_item_' . $this->contentType . '_' . $action;
 	}
 
+	/**
+	 * @param string $action
+	 * @param T|null $content
+	 *
+	 * @return array{
+	 *     newsFeed: NewsFeed,
+	 *     user: User|null,
+	 *     extra: array<mixed>,
+	 *     content: T|null,
+	 * }
+	 */
 	public function getTemplateData($action, NewsFeed $newsFeed, ?Entity $content = null)
 	{
 		if (!$content)
@@ -88,6 +138,11 @@ class AbstractHandler
 		];
 	}
 
+	/**
+	 * @param T|null $content
+	 *
+	 * @return string
+	 */
 	public function render(NewsFeed $newsFeed, ?Entity $content = null)
 	{
 		if (!$content)
@@ -106,15 +161,18 @@ class AbstractHandler
 		return \XF::app()->templater()->renderTemplate($template, $data);
 	}
 
+	/**
+	 * @return list<string>
+	 */
 	public function getEntityWith()
 	{
 		return [];
 	}
 
 	/**
-	 * @param array|int $ids
+	 * @param int|list<int> $ids
 	 *
-	 * @return ArrayCollection|Entity|false
+	 * @return T|AbstractCollection<T>
 	 */
 	public function getContent($ids)
 	{
@@ -130,19 +188,33 @@ class AbstractHandler
 		return $isArray ? $content : $content->first();
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getContentType()
 	{
 		return $this->contentType;
 	}
 
+	/**
+	 * @param AbstractCollection<T> $content
+	 *
+	 * @return AbstractCollection<T>
+	 */
 	protected function addAttachmentsToContent($content)
 	{
 		return $content;
 	}
 
+	/**
+	 * @param AbstractCollection<T> $content
+	 * @param string $countKey
+	 * @param string $relationKey
+	 *
+	 * @return AbstractCollection<T>
+	 */
 	protected function addAttachments($content, $countKey = 'attach_count', $relationKey = 'Attachments')
 	{
-		/** @var AttachmentRepository $attachmentRepo */
 		$attachmentRepo = \XF::repository(AttachmentRepository::class);
 		return $attachmentRepo->addAttachmentsToContent($content, $this->contentType, $countKey, $relationKey);
 	}

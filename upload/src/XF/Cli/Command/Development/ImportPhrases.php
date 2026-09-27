@@ -39,11 +39,9 @@ class ImportPhrases extends AbstractImportCommand
 
 	protected function afterExecuteType(array $contentType, InputInterface $input, OutputInterface $output)
 	{
-		/** @var RebuildService $rebuilder */
 		$rebuilder = \XF::app()->service(RebuildService::class);
 		$rebuilder->rebuildFullPhraseMap();
 
-		/** @var GroupService $groupService */
 		$groupService = \XF::app()->service(GroupService::class);
 		$groupService->compileAllPhraseGroups();
 

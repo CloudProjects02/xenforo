@@ -133,7 +133,6 @@ class EmojiRepository extends Repository
 
 	public function getSmilies($displayInEditorOnly = false)
 	{
-		/** @var SmilieRepository $smilieRepo */
 		$smilieRepo = $this->repository(SmilieRepository::class);
 		return $smilieRepo->findSmiliesForList($displayInEditorOnly)->fetch();
 	}

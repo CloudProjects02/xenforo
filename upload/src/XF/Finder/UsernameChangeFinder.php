@@ -2,14 +2,15 @@
 
 namespace XF\Finder;
 
+use XF\Entity\UsernameChange;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Finder;
 
 /**
- * @method AbstractCollection<\XF\Entity\UsernameChange> fetch(?int $limit = null, ?int $offset = null)
- * @method AbstractCollection<\XF\Entity\UsernameChange> fetchDeferred(?int $limit = null, ?int $offset = null)
- * @method \XF\Entity\UsernameChange|null fetchOne(?int $offset = null)
- * @extends Finder<\XF\Entity\UsernameChange>
+ * @method AbstractCollection<UsernameChange> fetch(?int $limit = null, ?int $offset = null)
+ * @method AbstractCollection<UsernameChange> fetchDeferred(?int $limit = null, ?int $offset = null)
+ * @method UsernameChange|null fetchOne(?int $offset = null)
+ * @extends Finder<UsernameChange>
  */
 class UsernameChangeFinder extends Finder
 {

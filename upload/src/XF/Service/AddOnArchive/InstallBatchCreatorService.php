@@ -73,7 +73,6 @@ class InstallBatchCreatorService extends AbstractService
 
 	protected function setupAddOnZip($tempFile, &$error)
 	{
-		/** @var ValidatorService $validator */
 		$validator = $this->service(ValidatorService::class, $tempFile);
 		if (!$validator->validate($error))
 		{

@@ -113,6 +113,11 @@ class Post extends AbstractData
 		];
 	}
 
+	protected function getDefaultApiResultOptions(): array
+	{
+		return ['with_thread' => true];
+	}
+
 	public function getSearchableContentTypes()
 	{
 		return ['post', 'thread'];
@@ -148,7 +153,6 @@ class Post extends AbstractData
 	 */
 	protected function getSearchableNodeTree()
 	{
-		/** @var NodeRepository $nodeRepo */
 		$nodeRepo = \XF::repository(NodeRepository::class);
 		$nodeTree = $nodeRepo->createNodeTree($nodeRepo->getNodeList());
 
@@ -163,7 +167,6 @@ class Post extends AbstractData
 
 	protected function getPrefixListData()
 	{
-		/** @var ThreadPrefixRepository $prefixRepo */
 		$prefixRepo = \XF::repository(ThreadPrefixRepository::class);
 		return $prefixRepo->getVisiblePrefixListData();
 	}
@@ -215,7 +218,6 @@ class Post extends AbstractData
 			{
 				if ($request->filter('c.child_nodes', 'bool'))
 				{
-					/** @var NodeRepository $nodeRepo */
 					$nodeRepo = \XF::repository(NodeRepository::class);
 					$nodeTree = $nodeRepo->createNodeTree($nodeRepo->getFullNodeListWithTypeData()->filterViewable());
 

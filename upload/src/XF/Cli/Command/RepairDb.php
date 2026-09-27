@@ -84,7 +84,7 @@ class RepairDb extends AbstractCommand
 		{
 			$output->writeln('No tables missing.');
 		}
-		else if  (!$input->getOption('fix'))
+		else if (!$input->getOption('fix'))
 		{
 			$output->writeln('Use <green>--fix</green> option to restore these ' . $missing . ' tables.');
 		}

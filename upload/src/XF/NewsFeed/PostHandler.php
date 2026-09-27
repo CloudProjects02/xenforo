@@ -5,11 +5,13 @@ namespace XF\NewsFeed;
 use XF\Entity\Post;
 use XF\Mvc\Entity\Entity;
 
+/**
+ * @extends AbstractHandler<Post>
+ */
 class PostHandler extends AbstractHandler
 {
 	public function isPublishable(Entity $entity, $action)
 	{
-		/** @var Post $entity */
 		if ($action == 'insert')
 		{
 			// first post inserts are handled by the thread

@@ -77,7 +77,6 @@ class FeaturedContentPlugin extends AbstractPlugin
 
 	protected function setupFeatureCreation(Entity $content): CreatorService
 	{
-		/** @var CreatorService $creator */
 		$creator = $this->service(CreatorService::class, $content);
 
 		$title = $this->filter('title', 'str');
@@ -204,7 +203,6 @@ class FeaturedContentPlugin extends AbstractPlugin
 
 		if ($this->isPost())
 		{
-			/** @var DeleterService $deleter */
 			$deleter = $this->service(DeleterService::class, $feature);
 			$deleter->delete();
 
@@ -237,7 +235,6 @@ class FeaturedContentPlugin extends AbstractPlugin
 		$handler = $this->getFeatureRepo()->getFeatureHandler(
 			$content->getEntityContentType()
 		);
-		/** @var UserRepository $userRepo */
 		$userRepo = $this->repository(UserRepository::class);
 
 		return \XF::asVisitor(

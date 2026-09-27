@@ -96,7 +96,6 @@ class WidgetPosition extends AbstractDataType
 	{
 		\XF::runOnce('rebuild_active_' . $this->getContainerTag(), function ()
 		{
-			/** @var WidgetRepository $repo */
 			$repo = $this->em->getRepository(WidgetRepository::class);
 			$repo->rebuildWidgetPositionCache();
 		});

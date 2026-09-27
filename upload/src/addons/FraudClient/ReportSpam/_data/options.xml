@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<options>
+  <option option_id="ms_fc_api_key" edit_format="textbox" data_type="string" advanced="0">
+    <default_value></default_value>
+    <edit_format_params>type=password autocomplete=new-password</edit_format_params>
+    <relation group_id="ms_fc" display_order="2"/>
+  </option>
+  <option option_id="ms_fc_check_on_register" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="ms_fc" display_order="3"/>
+  </option>
+  <option option_id="ms_fc_enable" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value></default_value>
+    <relation group_id="ms_fc" display_order="1"/>
+  </option>
+  <option option_id="ms_fc_report_spam_fraud_client" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value></default_value>
+    <relation group_id="ms_fc" display_order="1"/>
+  </option>
+  <option option_id="ms_fc_registration_min_reports" edit_format="spinbox" data_type="integer" advanced="0">
+    <default_value>1</default_value>
+    <edit_format_params>min=1 max=10 step=1</edit_format_params>
+    <relation group_id="ms_fc" display_order="4"/>
+  </option>
+  <option option_id="ms_fc_registration_min_points" edit_format="spinbox" data_type="integer" advanced="0">
+    <default_value>0</default_value>
+    <edit_format_params>min=0 max=100 step=1</edit_format_params>
+    <relation group_id="ms_fc" display_order="5"/>
+  </option>
+</options>

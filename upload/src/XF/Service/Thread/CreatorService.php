@@ -61,6 +61,11 @@ class CreatorService extends AbstractService
 
 	protected $isPreRegAction = false;
 
+	/**
+	 * @var float
+	 */
+	protected $notifyRunTime = 0.25;
+
 	public function __construct(App $app, Forum $forum)
 	{
 		parent::__construct($app);
@@ -142,6 +147,11 @@ class CreatorService extends AbstractService
 	public function setIsPreRegAction(bool $isPreRegAction)
 	{
 		$this->isPreRegAction = $isPreRegAction;
+	}
+
+	public function setNotifyRunTime(float $time): void
+	{
+		$this->notifyRunTime = $time;
 	}
 
 	public function setTypeDataSaver(?SaverInterface $saver = null)
@@ -556,11 +566,10 @@ class CreatorService extends AbstractService
 	{
 		if ($this->thread->isVisible())
 		{
-			/** @var NotifierService $notifier */
 			$notifier = $this->service(NotifierService::class, $this->post, 'thread');
 			$notifier->setMentionedUserIds($this->postPreparer->getMentionedUserIds());
 			$notifier->setQuotedUserIds($this->postPreparer->getQuotedUserIds());
-			$notifier->notifyAndEnqueue(3);
+			$notifier->notifyAndEnqueue($this->notifyRunTime);
 		}
 	}
 }

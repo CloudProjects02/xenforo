@@ -2,9 +2,12 @@
 
 namespace XF\EmbedResolver;
 
-use XF\Mvc\Entity\ArrayCollection;
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 
+/**
+ * @template T of Entity
+ */
 abstract class AbstractHandler
 {
 	protected $contentType;
@@ -95,7 +98,8 @@ abstract class AbstractHandler
 
 	/**
 	 * @param $id
-	 * @return null|ArrayCollection|Entity
+	 *
+	 * @return AbstractCollection|Entity|null
 	 */
 	public function getContent($id)
 	{

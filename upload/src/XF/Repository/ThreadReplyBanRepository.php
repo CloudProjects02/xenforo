@@ -4,13 +4,12 @@ namespace XF\Repository;
 
 use XF\Entity\Thread;
 use XF\Finder\ThreadReplyBanFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 class ThreadReplyBanRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return ThreadReplyBanFinder
 	 */
 	public function findReplyBansForList()
 	{
@@ -21,7 +20,7 @@ class ThreadReplyBanRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return ThreadReplyBanFinder
 	 */
 	public function findReplyBansForThread(Thread $thread)
 	{

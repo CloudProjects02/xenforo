@@ -69,7 +69,7 @@ abstract class AbstractCollection implements \Countable, \IteratorAggregate, \Ar
 		return new EntityResults($results);
 	}
 
-	public function toWebhookResults(array $options = [], $maintainKeys = false): EntityResults
+	public function toWebhookResults($verbosity = Entity::VERBOSITY_NORMAL, array $options = [], $maintainKeys = false): EntityResults
 	{
 		$this->populate();
 
@@ -77,7 +77,7 @@ abstract class AbstractCollection implements \Countable, \IteratorAggregate, \Ar
 
 		foreach ($this->entities AS $k => $entity)
 		{
-			$result = $entity->toWebhookResult($options);
+			$result = $entity->toWebhookResult($verbosity, $options);
 			if ($maintainKeys)
 			{
 				$results[$k] = $result;
@@ -383,6 +383,7 @@ abstract class AbstractCollection implements \Countable, \IteratorAggregate, \Ar
 	}
 
 	/**
+	 * @param mixed ...$arguments
 	 * @return AbstractCollection<T>
 	 */
 	public function unshift()

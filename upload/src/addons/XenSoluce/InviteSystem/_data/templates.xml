@@ -1528,7 +1528,8 @@ a.button--link {
 
 body[data-template="login"] .p-body-pageContent,
 body[data-template="register_form"] .p-body-pageContent {
-	width: min(100%, 680px);
+	width: 100%;
+	max-width: 680px;
 	margin-inline: auto;
 }
 

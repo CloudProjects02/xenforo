@@ -39,6 +39,8 @@ class AvatarService extends AbstractService
 
 	protected $allowedTypes = [IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_WEBP];
 
+	protected $isFromExisting = false;
+
 	protected $sizeMap;
 
 	protected $throwErrors = true;
@@ -95,6 +97,7 @@ class AvatarService extends AbstractService
 		}
 
 		$this->fileName = $fileName;
+		$this->isFromExisting = false;
 		return true;
 	}
 
@@ -120,7 +123,12 @@ class AvatarService extends AbstractService
 		}
 
 		$tempFile = File::copyAbstractedPathToTempFile($path);
-		return $this->setImage($tempFile);
+		$result = $this->setImage($tempFile);
+		if ($result)
+		{
+			$this->isFromExisting = true;
+		}
+		return $result;
 	}
 
 	public function optimizeExistingAvatar(): void
@@ -271,7 +279,10 @@ class AvatarService extends AbstractService
 		}
 		else
 		{
-			$outputFiles['o'] = $this->fileName;
+			if (!$this->isFromExisting)
+			{
+				$outputFiles['o'] = $this->fileName;
+			}
 			$width = $this->width;
 			$height = $this->height;
 		}
@@ -551,7 +562,6 @@ class AvatarService extends AbstractService
 	{
 		$user = $this->user;
 
-		/** @var IpRepository $ipRepo */
 		$ipRepo = $this->repository(IpRepository::class);
 		$ipRepo->logIp(\XF::visitor()->user_id, $ip, 'user', $user->user_id, 'avatar_' . $action);
 	}

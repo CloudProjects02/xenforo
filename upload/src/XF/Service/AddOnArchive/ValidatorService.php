@@ -4,9 +4,8 @@ namespace XF\Service\AddOnArchive;
 
 use XF\App;
 use XF\Service\AbstractService;
-use XF\Util\File;
 
-use function count;
+use function count, is_array, is_string;
 
 class ValidatorService extends AbstractService
 {
@@ -81,17 +80,23 @@ class ValidatorService extends AbstractService
 			return false;
 		}
 
-		if (!$zip->extractTo(File::createTempDir(), $jsonFile))
+		$raw = $zip->getFromName($jsonFile);
+		if (!is_string($raw))
 		{
 			$error = \XF::phrase('files_could_not_be_extracted_from_add_on_archive');
 			return false;
 		}
+		$json = @json_decode($raw, true);
+		if (!is_array($json))
+		{
+			$error = json_last_error() ? json_last_error_msg() : 'The add-on JSON file contains unexpected contents.';
+			return false;
+		}
 
-		$json = json_decode($zip->getFromName($jsonFile), true);
 		$addOnManager = $this->app->addOnManager();
 
-		$title = $json['title'];
-		$newVersionId = $json['version_id'];
+		$title = $json['title'] ?? $this->addOnId;
+		$newVersionId = $json['version_id'] ?? 0;
 		$installedAddOns = $addOnManager->getInstalledAddOns();
 
 		if (isset($installedAddOns[$this->addOnId]))

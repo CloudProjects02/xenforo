@@ -13,10 +13,10 @@ use XF\Repository\UnfurlRepository;
 use XF\Str\Formatter;
 use XF\Template\Templater;
 use XF\Util\Arr;
-
 use XF\Util\Str;
+use XF\Util\Url;
 
-use function call_user_func, count, in_array, intval, is_array, is_string, strlen, strval;
+use function call_user_func, count, in_array, intval, is_array, is_int, is_string, strlen, strval;
 
 class Html extends AbstractRenderer
 {
@@ -157,7 +157,7 @@ class Html extends AbstractRenderer
 		]);
 
 		$this->addTag('plain', [
-			'replace' => ['', ''],
+			'callback' => 'renderTagPlain',
 		]);
 
 		$this->addTag('media', [
@@ -315,16 +315,24 @@ class Html extends AbstractRenderer
 
 		if ($rule && !empty($rule['stopSmilies']))
 		{
-			if ($options['stopSmilies'] !== true)
+			if (is_int($options['stopSmilies']))
 			{
 				$options['stopSmilies']++;
+			}
+			else
+			{
+				$options['stopSmilies'] = true;
 			}
 		}
 		if (!empty($renderRule['stopBreakConversion']))
 		{
-			if ($options['stopBreakConversion'] !== true)
+			if (is_int($options['stopBreakConversion']))
 			{
 				$options['stopBreakConversion']++;
+			}
+			else
+			{
+				$options['stopBreakConversion'] = true;
 			}
 		}
 		if (!empty($rule['plain']))
@@ -1142,7 +1150,7 @@ class Html extends AbstractRenderer
 			'/\r?\n/',
 			$site['cookie_third_parties'] ?? ''
 		));
-		if ($cookieThirdParties)
+		if ($cookieThirdParties && empty($options['noCookieConsent']))
 		{
 			$cookieConsent = \XF::app()->cookieConsent();
 			$unconsentedThirdParties = $cookieConsent->getUnconsentedThirdParties(
@@ -1469,6 +1477,12 @@ class Html extends AbstractRenderer
 		return $this->getRenderedInlineSpoiler($content);
 	}
 
+	public function renderTagPlain(array $children, $option, array $tag, array $options)
+	{
+		$content = $this->renderSubTree($children, $options);
+		return $this->wrapHtml('<span class="bbPlain">', $content, '</span>');
+	}
+
 	protected function getRenderedInlineSpoiler($content)
 	{
 		$this->templater->includeCss('public:bb_code.less');
@@ -1623,7 +1637,6 @@ class Html extends AbstractRenderer
 		}
 		else
 		{
-			/** @var UnfurlRepository $unfurlRepo */
 			$unfurlRepo = \XF::app()->repository(UnfurlRepository::class);
 			$result = $unfurlRepo->getUnfurlResultByUrl($url);
 		}
@@ -1631,54 +1644,9 @@ class Html extends AbstractRenderer
 		return $result;
 	}
 
-	/**
-	 * Returns a version of the passed in URL that is valid for use in a message or false
-	 * if the URL is definitively unusable. Note that this is distinct from the URL being valid
-	 * from an RFC perspective, as users may submit URLs that don't always have all components
-	 * URL encoded as needed. We generally defer to the browsers to handle this for us rather
-	 * than rejecting the URL.
-	 *
-	 * @param string $url
-	 *
-	 * @return false|string
-	 */
 	protected function getValidUrl($url)
 	{
-		$url = trim($url);
-
-		if (preg_match('/proxy\.php\?\w+=(http[^&]+)&/i', $url, $match))
-		{
-			// proxy link of some sort, adjust to the original one
-			$proxiedUrl = urldecode($match[1]);
-			if (preg_match('/./su', $proxiedUrl))
-			{
-				$url = $proxiedUrl;
-			}
-		}
-
-		if (preg_match('/^(\?|\/|#|:)/', $url))
-		{
-			return false;
-		}
-
-		if (strpos($url, "\n") !== false)
-		{
-			return false;
-		}
-
-		if (preg_match('#^(data|https?://data|javascript|about):#i', $url))
-		{
-			return false;
-		}
-
-		if (preg_match($this->allowedUrlProtocolRegex, $url))
-		{
-			return $url;
-		}
-		else
-		{
-			return 'http://' . $url;
-		}
+		return Url::getValidUrl($url, $this->allowedUrlProtocolRegex);
 	}
 
 	public function renderTagUser(array $children, $option, array $tag, array $options)
@@ -1750,8 +1718,18 @@ class Html extends AbstractRenderer
 
 	protected function renderFinalTableHtml($tableHtml, $tagOption, $extraContent)
 	{
-		$width = $tagOption['width'] ?? '100%';
+		$width = $this->filterTableWidth($tagOption['width'] ?? null) ?? '100%';
 		return "<div class=\"bbTable\">\n<table style='width: $width'>$tableHtml</table>\n$extraContent</div>";
+	}
+
+	protected function filterTableWidth($width): ?string
+	{
+		if (is_string($width) && preg_match('/^[\d\.]+(px|pt|em|rem|%)$/i', $width))
+		{
+			return $width;
+		}
+
+		return null;
 	}
 
 	protected function renderTableRow(array $tag, array $options, &$columnCount, array &$lostAndFound)
@@ -1783,11 +1761,11 @@ class Html extends AbstractRenderer
 
 	protected function renderTableCell(array $tag, array $options)
 	{
-		$width = $tag['option']['width'] ?? null;
+		$width = $this->filterTableWidth($tag['option']['width'] ?? null);
 
 		$output = $this->renderSubTree($tag['children'], $options);
 
-		if ($width)
+		if ($width !== null)
 		{
 			return "<$tag[tag] style='width: $width'>$output</$tag[tag]>";
 		}

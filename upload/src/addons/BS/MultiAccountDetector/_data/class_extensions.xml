@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<class_extensions>
+  <extension from_class="XF\ControllerPlugin\LoginPlugin" to_class="BS\MultiAccountDetector\XF\ControllerPlugin\LoginPlugin" execute_order="10" active="1"/>
+  <extension from_class="XF\Entity\User" to_class="BS\MultiAccountDetector\XF\Entity\User" execute_order="10" active="1"/>
+  <extension from_class="XF\Pub\Controller\MemberController" to_class="BS\MultiAccountDetector\XF\Pub\Controller\MemberController" execute_order="10" active="1"/>
+  <extension from_class="XF\Repository\BanningRepository" to_class="BS\MultiAccountDetector\XF\Repository\BanningRepository" execute_order="10" active="1"/>
+</class_extensions>

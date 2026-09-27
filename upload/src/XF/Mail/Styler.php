@@ -14,6 +14,9 @@ class Styler
 	 */
 	protected $renderer;
 
+	/**
+	 * @var array<int, string>
+	 */
 	protected $cssCache = [];
 
 	public function __construct(CssRenderer $renderer)
@@ -21,6 +24,12 @@ class Styler
 		$this->renderer = $renderer;
 	}
 
+	/**
+	 * @param string $html
+	 * @param bool $includeDefaultCss
+	 *
+	 * @return string
+	 */
 	public function styleHtml($html, $includeDefaultCss = true, ?Language $language = null)
 	{
 		if ($html)
@@ -37,6 +46,9 @@ class Styler
 		return trim($html);
 	}
 
+	/**
+	 * @return string
+	 */
 	protected function getEmailCss(?Language $language = null)
 	{
 		$templater = $this->renderer->getTemplater();
@@ -65,11 +77,19 @@ class Styler
 		return $this->cssCache[$languageId];
 	}
 
+	/**
+	 * @return string
+	 */
 	protected function renderCoreCss()
 	{
 		return $this->renderer->render('email:core.less', false);
 	}
 
+	/**
+	 * @param string $html
+	 *
+	 * @return string
+	 */
 	public function generateTextBody($html)
 	{
 		if (preg_match('#<body[^>]*>(.*)</body>#siU', $html, $match))

@@ -7,14 +7,13 @@ use XF\Entity\User;
 use XF\Finder\LanguageFinder;
 use XF\Finder\PhraseFinder;
 use XF\Mvc\Entity\AbstractCollection;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 use XF\Tree;
 
 class LanguageRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return LanguageFinder
 	 */
 	public function findLanguages()
 	{

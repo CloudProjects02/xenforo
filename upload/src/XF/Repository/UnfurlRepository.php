@@ -27,15 +27,18 @@ class UnfurlRepository extends Repository
 
 		$this->db()->beginTransaction();
 
+		$unfurlKey = \XF::generateRandomString(32);
+
 		$affected = $this->db()->insert('xf_unfurl_result', [
 			'url' => $url,
 			'url_hash' => md5($url),
+			'unfurl_key' => $unfurlKey,
 			'pending' => 1,
 		], false, '
 			result_id = LAST_INSERT_ID(result_id),
 			pending = VALUES(pending)
 		');
-		if ($affected == 1)
+		if ($affected === 1)
 		{
 			$id = $this->db()->lastInsertId();
 			$result = $this->em->find(UnfurlResult::class, $id);

@@ -112,7 +112,6 @@ class Move extends AbstractAction
 			throw new \InvalidArgumentException("No target specified");
 		}
 
-		/** @var MoverService $mover */
 		$mover = $this->app()->service(MoverService::class, $entity);
 
 		if ($options['alert'])
@@ -157,7 +156,6 @@ class Move extends AbstractAction
 
 	public function renderForm(AbstractCollection $entities, Controller $controller)
 	{
-		/** @var NodeRepository $nodeRepo */
 		$nodeRepo = $this->app()->repository(NodeRepository::class);
 		$nodes = $nodeRepo->getFullNodeList()->filterViewable();
 

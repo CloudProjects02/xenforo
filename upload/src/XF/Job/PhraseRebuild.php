@@ -25,11 +25,9 @@ class PhraseRebuild extends AbstractJob
 
 		if (!$this->data['mapped'])
 		{
-			/** @var RebuildService $rebuildService */
 			$rebuildService = $this->app->service(RebuildService::class);
 			$rebuildService->rebuildFullPhraseMap();
 
-			/** @var GroupService $groupService */
 			$groupService = $this->app->service(GroupService::class);
 			$groupService->compileAllPhraseGroups();
 
@@ -68,7 +66,6 @@ class PhraseRebuild extends AbstractJob
 			return $this->complete();
 		}
 
-		/** @var CompileService $compileService */
 		$compileService = $app->service(CompileService::class);
 
 		$done = 0;

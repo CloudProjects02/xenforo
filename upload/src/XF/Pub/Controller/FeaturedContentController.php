@@ -4,7 +4,6 @@ namespace XF\Pub\Controller;
 
 use XF\Entity\FeaturedContent;
 use XF\Mvc\Entity\AbstractCollection;
-use XF\Mvc\Entity\ArrayCollection;
 use XF\Mvc\Entity\Finder;
 use XF\Mvc\ParameterBag;
 use XF\Mvc\Reply\AbstractReply;
@@ -42,7 +41,6 @@ class FeaturedContentController extends AbstractController
 			$this->buildLink('featured', null, ['page' => $page])
 		);
 
-		/** @var ArrayCollection $features */
 		$features = $finder->limitByPage($page, $perPage)->fetch();
 		$featureRepo->addContentToFeaturesForStyle($features, 'article');
 		$features = $this->filterFeatures($features);
@@ -157,9 +155,9 @@ class FeaturedContentController extends AbstractController
 	}
 
 	/**
-	 * @param AbstractCollection<\XF\Entity\FeaturedContent> $features
+	 * @param AbstractCollection<FeaturedContent> $features
 	 *
-	 * @return AbstractCollection<\XF\Entity\FeaturedContent>
+	 * @return AbstractCollection<FeaturedContent>
 	 */
 	protected function filterFeatures(AbstractCollection $features): AbstractCollection
 	{

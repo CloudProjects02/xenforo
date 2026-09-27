@@ -36,7 +36,6 @@ class UserGroup extends AbstractEmulatedData
 			$permissionHelper->insertUserGroupPermissions($newId, $this->permissions);
 		}
 
-		/** @var UserGroupRepository $repo */
 		$repo = $this->repository(UserGroupRepository::class);
 
 		\XF::runOnce('rebuildUserGroupImport', function () use ($repo)

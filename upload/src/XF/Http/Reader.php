@@ -33,7 +33,7 @@ class Reader
 	protected $untrustedAllowedSchemes = ['http', 'https'];
 	protected $untrustedAllowedPorts = [80, 443];
 
-	protected $lastLocation;
+	protected $lastLocation = null;
 
 	public function __construct(ClientInterface $clientTrusted, ClientInterface $clientUntrusted)
 	{
@@ -96,6 +96,7 @@ class Reader
 	 */
 	public function requestUntrusted($method, $url, array $limits = [], $saveTo = null, array $options = [], &$error = null)
 	{
+		$this->lastLocation = null;
 		$options['allow_redirects'] = false;
 
 		$requests = 0;
@@ -113,8 +114,8 @@ class Reader
 			}
 
 			if (
-				defined('CURLOPT_CONNECT_TO') &&
-				$this->clientUntrusted->getConfig('proxy') === null
+				defined('CURLOPT_CONNECT_TO')
+				&& $this->clientUntrusted->getConfig('proxy') === null
 			)
 			{
 				$response = null;

@@ -9,11 +9,16 @@ use XF\Entity\User;
 use XF\Finder\PasskeyFinder;
 use XF\Http\Request;
 use XF\Service\AbstractService;
+use XF\Service\LoginLimitTrait;
 use XF\Session\Session;
 use XF\Util\Ip;
 
+use function strlen;
+
 class ManagerService extends AbstractService
 {
+	use LoginLimitTrait;
+
 	protected $challenge;
 	protected $challengeTime;
 
@@ -26,6 +31,8 @@ class ManagerService extends AbstractService
 	 * @var array
 	 */
 	protected $payload;
+
+	protected $recordAttempts = true;
 
 	public function __construct(App $app, ?Session $session = null)
 	{
@@ -54,6 +61,52 @@ class ManagerService extends AbstractService
 		}
 
 		return $this->passkey->User;
+	}
+
+	public function setRecordAttempts($value)
+	{
+		$this->recordAttempts = (bool) $value;
+	}
+
+	public function getRecordAttempts()
+	{
+		return $this->recordAttempts;
+	}
+
+	public function isLoginLimited($ip, &$limitType = null): bool
+	{
+		if (!$ip)
+		{
+			return false;
+		}
+
+		$login = null;
+		if ($this->passkey)
+		{
+			$user = $this->passkey->User;
+			if ($user)
+			{
+				$login = $user->username;
+			}
+		}
+
+		if ($this->hasTooManyLoginAttempts($ip, $login))
+		{
+			$limitType = $this->app->options()->loginLimit;
+			return true;
+		}
+
+		return false;
+	}
+
+	public function hasTooManyLoginAttempts($ip, $login = null)
+	{
+		return $this->checkTooManyLoginAttempts($ip, $login);
+	}
+
+	public function getAttemptLimits()
+	{
+		return $this->getLoginAttemptLimits();
 	}
 
 	public function generateState(): void
@@ -91,6 +144,11 @@ class ManagerService extends AbstractService
 
 	public function validate(Request $request, &$error = null): bool
 	{
+		return $this->validateWithUser($request, $error);
+	}
+
+	public function validateWithUser(Request $request, &$error = null, ?User $user = null): bool
+	{
 		if (!$this->verifyRequest($request, $error))
 		{
 			return false;
@@ -106,38 +164,98 @@ class ManagerService extends AbstractService
 			return false;
 		}
 
+		$clientData = @json_decode($clientDataJSON);
+		if (!$clientData || !isset($clientData->origin))
+		{
+			$error = \XF::phrase('something_went_wrong_please_try_again');
+			return false;
+		}
+
+		if (!$this->validateOrigin($clientData->origin))
+		{
+			$error = \XF::phrase('something_went_wrong_please_try_again');
+			return false;
+		}
+
 		$credentialId = $payload['id'];
 		$signature = $payload['signature'];
 
-		$webAuthn = $this->getWebAuthnClass();
-
-		$this->passkey = \XF::app()->finder(PasskeyFinder::class)
-			->where('credential_id', $credentialId)
-			->fetchOne();
-
-		if (!$this->passkey)
+		try
 		{
+			$webAuthn = $this->getWebAuthnClass();
+
+			$finder = \XF::app()->finder(PasskeyFinder::class)
+				->with('User', true)
+				->where('credential_id', $credentialId);
+
+			if ($user !== null)
+			{
+				$finder->where('user_id', $user->user_id);
+			}
+
+			$this->passkey = $finder->fetchOne();
+
+			if (!$this->passkey)
+			{
+				// Record failed attempt even when passkey not found (IP-based rate limiting)
+				$this->recordFailedAttempt($request->getIp());
+				$error = \XF::phrase('given_passkey_or_security_key_could_not_be_verified');
+				return false;
+			}
+
+			$isValid = $webAuthn->processGet(
+				$clientDataJSON,
+				$authenticatorData,
+				base64_decode($signature),
+				$this->passkey->credential_public_key,
+				$this->challenge
+			);
+
+			if (!$isValid)
+			{
+				$this->recordFailedAttempt($request->getIp());
+				$error = \XF::phrase('given_passkey_or_security_key_could_not_be_verified');
+				return false;
+			}
+
+			$newSignatureCounter = 0;
+			if (strlen($authenticatorData) >= 37)
+			{
+				$counterBytes = substr($authenticatorData, 33, 4);
+				$unpacked = unpack('N', $counterBytes);
+				$newSignatureCounter = $unpacked[1] ?? 0;
+			}
+
+			$validationResult = $this->validateSignatureCounter(
+				$this->passkey->signature_counter,
+				$newSignatureCounter,
+				$this->passkey
+			);
+
+			if (!$validationResult)
+			{
+				$this->recordFailedAttempt($request->getIp());
+				$error = \XF::phrase('given_passkey_or_security_key_could_not_be_verified');
+				return false;
+			}
+
+			$this->updatePasskeyLastUse($this->passkey, $request, $newSignatureCounter);
+
+			return true;
+		}
+		catch (\Exception $e)
+		{
+			$this->logPasskeyError('Passkey validation failed', $e);
+
+			// If we found a passkey, record this as a failed attempt
+			if ($this->passkey)
+			{
+				$this->recordFailedAttempt($request->getIp());
+			}
+
 			$error = \XF::phrase('given_passkey_or_security_key_could_not_be_verified');
 			return false;
 		}
-
-		$isValid = $webAuthn->processGet(
-			$clientDataJSON,
-			$authenticatorData,
-			base64_decode($signature),
-			$this->passkey->credential_public_key,
-			$this->challenge
-		);
-
-		if (!$isValid)
-		{
-			$error = \XF::phrase('given_passkey_or_security_key_could_not_be_verified');
-			return false;
-		}
-
-		$this->updatePasskeyLastUse($this->passkey, $request);
-
-		return true;
 	}
 
 	public function create(Request $request, &$error = null)
@@ -155,6 +273,19 @@ class ManagerService extends AbstractService
 		$clientDataJSON = base64_decode($payload['clientDataJSON']);
 		$attestationObject = base64_decode($payload['attestationObject']);
 		if (!$clientDataJSON || !$attestationObject)
+		{
+			$error = \XF::phrase('something_went_wrong_please_try_again');
+			return false;
+		}
+
+		$clientData = @json_decode($clientDataJSON);
+		if (!$clientData || !isset($clientData->origin))
+		{
+			$error = \XF::phrase('something_went_wrong_please_try_again');
+			return false;
+		}
+
+		if (!$this->validateOrigin($clientData->origin))
 		{
 			$error = \XF::phrase('something_went_wrong_please_try_again');
 			return false;
@@ -196,18 +327,54 @@ class ManagerService extends AbstractService
 				'create_ip_address' => Ip::stringToBinary($request->getIp()),
 				'name' => $aaguidName ?? $name ?? $fallbackName,
 				'aaguid' => $aaguid,
+				'signature_counter' => 0,
 			]);
 			$passkey->save();
 		}
 		catch (\Exception $e)
 		{
-			\XF::logError('Passkey registration failed: ' . $e->getMessage());
+			$this->logPasskeyError('Passkey registration failed', $e);
 
 			$error = \XF::phrase('unexpected_error_occurred');
 			return false;
 		}
 
 		return true;
+	}
+
+	public function recordFailedAttempt($ip, $login = null)
+	{
+		if ($login === null && $this->passkey)
+		{
+			$user = $this->passkey->User;
+			if ($user)
+			{
+				$login = $user->username;
+			}
+		}
+
+		if ($login === null)
+		{
+			$login = 'passkey:unknown';
+		}
+
+		$this->recordLoginAttempt($login, $ip);
+	}
+
+	public function clearFailedAttempts($ip)
+	{
+		if (!$this->passkey || !$ip)
+		{
+			return;
+		}
+
+		$user = $this->passkey->User;
+		if (!$user)
+		{
+			return;
+		}
+
+		$this->clearLoginAttempts($user->username, $ip);
 	}
 
 	protected function verifyRequest(Request $request, &$error = null): bool
@@ -234,13 +401,128 @@ class ManagerService extends AbstractService
 		return true;
 	}
 
-	protected function updatePasskeyLastUse(Passkey $passkey, Request $request): bool
+	protected function validateSignatureCounter(int $storedCounter, int $newCounter, Passkey $passkey): bool
+	{
+		if ($storedCounter === 0 && $newCounter === 0)
+		{
+			return true;
+		}
+
+		if ($storedCounter === 0 && $newCounter > 0)
+		{
+			return true;
+		}
+
+		if ($storedCounter > 0 && $newCounter === 0)
+		{
+			\XF::logError(sprintf(
+				'Passkey signature counter reset detected for user %d (passkey %d). Counter went from %d to 0. This may indicate authenticator replacement or reset.',
+				$passkey->user_id,
+				$passkey->passkey_id,
+				$storedCounter
+			));
+
+			return false;
+		}
+
+		if ($newCounter <= $storedCounter)
+		{
+			\XF::logError(sprintf(
+				'Passkey signature counter validation failed for user %d (passkey %d). Expected counter > %d, got %d. This may indicate a cloned authenticator.',
+				$passkey->user_id,
+				$passkey->passkey_id,
+				$storedCounter,
+				$newCounter
+			));
+
+			return false;
+		}
+
+		return true;
+	}
+
+	protected function updatePasskeyLastUse(Passkey $passkey, Request $request, int $signatureCounter = 0): bool
 	{
 		$passkey->last_use_date = \XF::$time;
 		$passkey->last_use_ip_address = Ip::stringToBinary($request->getIp());
+		$passkey->signature_counter = $signatureCounter;
 		$passkey->save();
 
 		return true;
+	}
+
+	protected function logPasskeyError(string $message, \Exception $e): void
+	{
+		$options = \XF::options();
+		$currentHost = $this->app->request()->getHost();
+		$configuredRpId = parse_url($options->boardUrl, PHP_URL_HOST);
+
+		if (str_contains($e->getMessage(), 'invalid rpId hash'))
+		{
+			\XF::logError(sprintf(
+				"%s: %s - Current host '%s' does not match Board URL '%s' (rpId: %s). Update Board URL option to match.",
+				$message,
+				$e->getMessage(),
+				$currentHost,
+				$options->boardUrl,
+				$configuredRpId ?: 'invalid'
+			));
+		}
+		else
+		{
+			\XF::logError(sprintf(
+				"%s: %s - Host: %s, Board URL: %s, rpId: %s, Secure: %s",
+				$message,
+				$e->getMessage(),
+				$currentHost,
+				$options->boardUrl,
+				$configuredRpId ?: 'invalid',
+				$this->app->request()->isSecure() ? 'yes' : 'no'
+			));
+		}
+	}
+
+	protected function getAllowedOrigins(): array
+	{
+		$options = $this->app->options();
+		$boardUrl = $options->boardUrl;
+
+		$parsedUrl = parse_url($boardUrl);
+		if (!$parsedUrl || !isset($parsedUrl['scheme']) || !isset($parsedUrl['host']))
+		{
+			return [$boardUrl];
+		}
+
+		$origin = $parsedUrl['scheme'] . '://' . $parsedUrl['host'];
+		if (isset($parsedUrl['port']))
+		{
+			$origin .= ':' . $parsedUrl['port'];
+		}
+
+		return [$origin];
+	}
+
+	protected function validateOrigin(string $origin): bool
+	{
+		$allowedOrigins = $this->getAllowedOrigins();
+		$origin = rtrim($origin, '/');
+
+		foreach ($allowedOrigins AS $allowedOrigin)
+		{
+			$allowedOrigin = rtrim($allowedOrigin, '/');
+			if ($origin === $allowedOrigin)
+			{
+				return true;
+			}
+		}
+
+		\XF::logError(sprintf(
+			'Passkey origin validation failed. Origin "%s" not in allowed list: %s',
+			$origin,
+			implode(', ', $allowedOrigins)
+		));
+
+		return false;
 	}
 
 	protected function getWebAuthnClass(): WebAuthn

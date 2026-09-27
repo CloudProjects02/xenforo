@@ -4,13 +4,12 @@ namespace XF\Repository;
 
 use XF\Entity\LinkProxy;
 use XF\Finder\LinkProxyFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 class LinkProxyRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return LinkProxyFinder
 	 */
 	public function findLinkProxyLogsForList()
 	{

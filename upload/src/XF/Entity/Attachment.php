@@ -27,8 +27,11 @@ use XF\Repository\AttachmentRepository;
  * @property-read string $extension
  * @property-read int $file_size
  * @property-read bool $has_thumbnail
+ * @property-read bool $has_retina_thumbnail
  * @property-read string $thumbnail_url
- * @property-read mixed $thumbnail_url_full
+ * @property-read string $retina_thumbnail_url
+ * @property-read string $thumbnail_url_full
+ * @property-read string $retina_thumbnail_url_full
  * @property-read bool $is_video
  * @property-read bool $is_audio
  * @property-read mixed $icon
@@ -52,7 +55,6 @@ class Attachment extends Entity implements ViewableInterface
 			return false;
 		}
 
-		/** @var AttachmentRepository $attachmentRepo */
 		$attachmentRepo = $this->repository(AttachmentRepository::class);
 		$handler = $attachmentRepo->getAttachmentHandler($this->content_type);
 		if (!$handler)
@@ -111,6 +113,11 @@ class Attachment extends Entity implements ViewableInterface
 		return $this->Data ? $this->Data->hasThumbnail() : false;
 	}
 
+	public function hasRetinaThumbnail(): bool
+	{
+		return $this->Data ? $this->Data->hasRetinaThumbnail() : false;
+	}
+
 	/**
 	 * @return int|null
 	 */
@@ -148,12 +155,49 @@ class Attachment extends Entity implements ViewableInterface
 	 */
 	public function getThumbnailUrl()
 	{
-		return $this->Data ? $this->Data->getThumbnailUrl() : '';
+		$data = $this->Data;
+		if (!$data)
+		{
+			return '';
+		}
+
+		return $data->getThumbnailUrl() ?? '';
 	}
 
+	public function getRetinaThumbnailUrl(): string
+	{
+		$data = $this->Data;
+		if (!$data)
+		{
+			return '';
+		}
+
+		return $data->getRetinaThumbnailUrl() ?? '';
+	}
+
+	/**
+	 * @return string
+	 */
 	public function getThumbnailUrlFull()
 	{
-		return $this->Data ? $this->Data->getThumbnailUrl(true) : '';
+		$data = $this->Data;
+		if (!$data)
+		{
+			return '';
+		}
+
+		return $data->getThumbnailUrl(true) ?? '';
+	}
+
+	public function getRetinaThumbnailUrlFull(): string
+	{
+		$data = $this->Data;
+		if (!$data)
+		{
+			return '';
+		}
+
+		return $data->getRetinaThumbnailUrl(true) ?? '';
 	}
 
 	/**
@@ -308,7 +352,6 @@ class Attachment extends Entity implements ViewableInterface
 	{
 		if ($this->content_id)
 		{
-			/** @var AttachmentRepository $attachmentRepo */
 			$attachmentRepo = $this->repository(AttachmentRepository::class);
 			$handler = $attachmentRepo->getAttachmentHandler($this->content_type);
 			if ($handler)
@@ -330,7 +373,6 @@ class Attachment extends Entity implements ViewableInterface
 
 		if ($this->content_id)
 		{
-			/** @var AttachmentRepository $attachmentRepo */
 			$attachmentRepo = $this->repository(AttachmentRepository::class);
 			$handler = $attachmentRepo->getAttachmentHandler($this->content_type);
 			if ($handler)
@@ -351,6 +393,7 @@ class Attachment extends Entity implements ViewableInterface
 	 * @api-out int $height
 	 * @api-out int $width
 	 * @api-out str $thumbnail_url
+	 * @api-out str $retina_thumbnail_url
 	 * @api-out str $direct_url
 	 * @api-out bool $is_video
 	 * @api-out bool $is_audio
@@ -371,6 +414,11 @@ class Attachment extends Entity implements ViewableInterface
 		if ($this->has_thumbnail)
 		{
 			$result->thumbnail_url = $this->Data->getThumbnailUrl(true);
+		}
+
+		if ($this->has_retina_thumbnail)
+		{
+			$result->retina_thumbnail_url = $this->Data->getRetinaThumbnailUrl(true);
 		}
 
 		$result->direct_url = $this->getDirectUrl(true);
@@ -399,8 +447,11 @@ class Attachment extends Entity implements ViewableInterface
 			'extension' => ['getter' => 'getExtension', 'cache' => false],
 			'file_size' => ['getter' => 'getFileSize', 'cache' => false],
 			'has_thumbnail' => ['getter' => 'hasThumbnail', 'cache' => false],
+			'has_retina_thumbnail' => ['getter' => 'hasRetinaThumbnail', 'cache' => false],
 			'thumbnail_url' => ['getter' => 'getThumbnailUrl', 'cache' => false],
+			'retina_thumbnail_url' => ['getter' => 'getRetinaThumbnailUrl', 'cache' => false],
 			'thumbnail_url_full' => ['getter' => 'getThumbnailUrlFull', 'cache' => false],
+			'retina_thumbnail_url_full' => ['getter' => 'getRetinaThumbnailUrlFull', 'cache' => false],
 			'is_video' => ['getter' => 'isVideo', 'cache' => false],
 			'is_audio' => ['getter' => 'isAudio', 'cache' => false],
 			'icon' => ['getter' => 'getIcon', 'cache' => false],

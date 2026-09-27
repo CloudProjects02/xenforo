@@ -26,7 +26,6 @@ class UpgradeCheck extends AbstractJob
 
 	protected function performUpgradeCheck()
 	{
-		/** @var UpgradeCheckRepository $checkRepo */
 		$checkRepo = $this->app->repository(UpgradeCheckRepository::class);
 
 		if (!$checkRepo->canCheckForUpgrades())
@@ -34,7 +33,6 @@ class UpgradeCheck extends AbstractJob
 			return;
 		}
 
-		/** @var CheckerService $checker */
 		$checker = $this->app->service(CheckerService::class);
 		$checker->check();
 	}

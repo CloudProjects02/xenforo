@@ -1,0 +1,20 @@
+---
+name: xf-scaffold-make
+description: Discover and use the installed xf-make commands to create XenForo code and development-output artifacts, including composed related artifacts.
+---
+
+# XenForo Scaffolding
+
+Load `xf-shared-policy` and `xf-environment`.
+
+## Discover, Then Generate
+
+1. Confirm the core or add-on owner and exact name before creating anything.
+2. Run `xf list xf-make` (or `php cmd.php list xf-make`) because the available commands vary by XenForo version.
+3. Run the selected command's `--help`; supply its required arguments and `--addon` explicitly.
+4. Generate only the artifacts the feature needs.
+5. Inspect every generated file and database-backed output before adding business logic.
+
+Make commands create database records and development output in one operation. Do not follow them with `xf-dev:import` or `xf-dev:export`.
+
+Read [command-policy.md](references/command-policy.md) for current command coverage and composition. Read [scaffold-flow.md](references/scaffold-flow.md) when a command can generate several related files or a custom add-on introduces an artifact without a command.

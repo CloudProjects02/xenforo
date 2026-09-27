@@ -13,6 +13,7 @@ use XF\Import\Data\ReactionContent;
 use XF\Import\DataHelper\BookmarkLabel;
 use XF\Import\DataHelper\Tag;
 use XF\Import\StepState;
+use XF\Mvc\Entity\Entity;
 use XF\Timer;
 
 use function intval, is_array;
@@ -956,7 +957,7 @@ trait XenForoSourceTrait
 	}
 
 	/**
-	 * @param (callable(\XF\Mvc\Entity\Entity, \XF\Entity\FeaturedContent): void)|null $contentCallback
+	 * @param (callable(Entity, \XF\Entity\FeaturedContent): void)|null $contentCallback
 	 */
 	public function getFeatureStepStateForContentType(
 		string $contentType,

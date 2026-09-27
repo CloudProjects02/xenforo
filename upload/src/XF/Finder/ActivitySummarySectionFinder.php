@@ -2,14 +2,15 @@
 
 namespace XF\Finder;
 
+use XF\Entity\ActivitySummarySection;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Finder;
 
 /**
- * @method AbstractCollection<\XF\Entity\ActivitySummarySection> fetch(?int $limit = null, ?int $offset = null)
- * @method AbstractCollection<\XF\Entity\ActivitySummarySection> fetchDeferred(?int $limit = null, ?int $offset = null)
- * @method \XF\Entity\ActivitySummarySection|null fetchOne(?int $offset = null)
- * @extends Finder<\XF\Entity\ActivitySummarySection>
+ * @method AbstractCollection<ActivitySummarySection> fetch(?int $limit = null, ?int $offset = null)
+ * @method AbstractCollection<ActivitySummarySection> fetchDeferred(?int $limit = null, ?int $offset = null)
+ * @method ActivitySummarySection|null fetchOne(?int $offset = null)
+ * @extends Finder<ActivitySummarySection>
  */
 class ActivitySummarySectionFinder extends Finder
 {

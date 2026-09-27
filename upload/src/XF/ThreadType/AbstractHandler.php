@@ -237,7 +237,7 @@ abstract class AbstractHandler
 	 * This can be overridden to customize the object's configuration, though this should be avoided if possible.
 	 *
 	 * @param Thread $thread
-	 * @param AbstractCollection|Post[] $posts List of all posts fetched for display (main + extra)
+	 * @param AbstractCollection<Post> $posts List of all posts fetched for display (main + extra)
 	 * @param int[] $extraFetchedIds List of post IDs that were fetched, outside of the main page flow
 	 *
 	 * @return ThreadViewData
@@ -321,7 +321,9 @@ abstract class AbstractHandler
 				$firstDisplayedPost,
 				$extraData
 			);
-			$mainEntity['articleBody'] = $this->getLdSnippet($thread->FirstPost->message, 0)
+
+			$contentField = $this->getMicrodataContentField($thread);
+			$mainEntity[$contentField] = $this->getLdSnippet($thread->FirstPost->message, 0)
 				?: $thread->title;
 
 			if ($this->isThreadVotingSupported($thread))
@@ -414,6 +416,11 @@ abstract class AbstractHandler
 	public function getMicrodataType(Thread $thread): string
 	{
 		return 'DiscussionForumPosting';
+	}
+
+	public function getMicrodataContentField(Thread $thread): string
+	{
+		return 'text';
 	}
 
 	public function getReplyMicrodataType(Thread $thread): string

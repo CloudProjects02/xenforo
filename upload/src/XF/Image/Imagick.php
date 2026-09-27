@@ -331,12 +331,6 @@ class Imagick extends AbstractDriver
 					{
 						$this->imagick = $optimized;
 					}
-
-					$deconstructed = @$this->imagick->deconstructImages();
-					if ($deconstructed instanceof \Imagick)
-					{
-						$this->imagick = $deconstructed;
-					}
 				}
 				$success = $this->imagick->setImageFormat('gif');
 				break;
@@ -348,7 +342,8 @@ class Imagick extends AbstractDriver
 				break;
 
 			case IMAGETYPE_WEBP:
-				$success = $this->imagick->setImageFormat('webp');
+				$success = $this->imagick->setImageFormat('webp')
+					&& $this->imagick->setImageCompressionQuality($quality);
 				break;
 
 			case IMAGETYPE_PNG:
@@ -400,7 +395,8 @@ class Imagick extends AbstractDriver
 				break;
 
 			case IMAGETYPE_WEBP:
-				$success = $this->imagick->setImageFormat('webp');
+				$success = $this->imagick->setImageFormat('webp')
+					&& $this->imagick->setImageCompressionQuality($quality);
 				break;
 
 			case IMAGETYPE_PNG:

@@ -15,6 +15,7 @@ use XF\Repository\PasskeyRepository;
  * @property int $user_id
  * @property string $name
  * @property string|null $aaguid
+ * @property int $signature_counter
  * @property int $create_date
  * @property string $create_ip_address
  * @property int $last_use_date
@@ -102,6 +103,7 @@ class Passkey extends Entity
 			'user_id' => ['type' => self::UINT, 'required' => true],
 			'name' => ['type' => self::STR, 'required' => true],
 			'aaguid' => ['type' => self::STR, 'nullable' => true, 'default' => null],
+			'signature_counter' => ['type' => self::UINT, 'default' => 0],
 			'create_date' => ['type' => self::UINT, 'default' => \XF::$time],
 			'create_ip_address' => ['type' => self::BINARY, 'maxLength' => 16, 'default' => ''],
 			'last_use_date' => ['type' => self::UINT, 'default' => 0],

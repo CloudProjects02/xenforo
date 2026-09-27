@@ -48,7 +48,6 @@ class App extends \XF\App
 
 	protected function getVisitorFromSession(Session $session, array $extraWith = [])
 	{
-		/** @var UserRepository $userRepo */
 		$userRepo = $this->repository(UserRepository::class);
 		return $userRepo->getGuestUser();
 	}

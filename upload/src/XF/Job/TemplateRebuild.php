@@ -25,7 +25,6 @@ class TemplateRebuild extends AbstractJob
 
 		if (!$this->data['mapped'])
 		{
-			/** @var RebuildService $rebuildService */
 			$rebuildService = $this->app->service(RebuildService::class);
 			$rebuildService->rebuildFullTemplateMap();
 
@@ -59,14 +58,12 @@ class TemplateRebuild extends AbstractJob
 		), $this->data['templateId']);
 		if (!$templateIds)
 		{
-			/** @var StyleRepository $repo */
 			$repo = $this->app->repository(StyleRepository::class);
 			$repo->updateAllStylesLastModifiedDateLater();
 
 			return $this->complete();
 		}
 
-		/** @var CompileService $compileService */
 		$compileService = $app->service(CompileService::class);
 
 		$done = 0;

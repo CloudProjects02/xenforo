@@ -94,10 +94,10 @@ class Html extends AbstractRenderer
 		$enableCssSplitting = \XF::config('enableCssSplitting');
 		$httpVersion = \XF::app()->request()->getHttpVersion();
 		if (
-			$enableCssSplitting === true ||
-			(
-				$enableCssSplitting === null &&
-				version_compare($httpVersion, '2', '>=')
+			$enableCssSplitting === true
+			|| (
+				$enableCssSplitting === null
+				&& version_compare($httpVersion, '2', '>=')
 			)
 		)
 		{
@@ -136,8 +136,8 @@ class Html extends AbstractRenderer
 
 		$request = \XF::app()->request();
 		$isRocketLoaderDisabled = (
-			is_callable([$request, 'isRocketLoaderDisabled']) &&
-			$request->isRocketLoaderDisabled()
+			is_callable([$request, 'isRocketLoaderDisabled'])
+			&& $request->isRocketLoaderDisabled()
 		);
 
 		$includedJs = $templater->getIncludedJs();
@@ -169,7 +169,8 @@ class Html extends AbstractRenderer
 					$jsReplace .= '<script'
 						. ($isRocketLoaderDisabled ? ' data-cfasync="false"' : '')
 						. ">\n"
-						. "window.addEventListener('DOMContentLoaded', () =>\n{\n"
+						. "XF.ready(() =>\n"
+						. "{\n"
 						. "{$inline['js']}\n"
 						. "})\n"
 						. "</script>\n";

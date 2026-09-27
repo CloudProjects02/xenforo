@@ -27,7 +27,6 @@ class CollectStats extends AbstractJob
 
 	protected function performStatsCollection()
 	{
-		/** @var CollectStatsRepository $collectStatsRepo */
 		$collectStatsRepo = $this->app->repository(CollectStatsRepository::class);
 
 		if (!$collectStatsRepo->isEnabled())
@@ -82,7 +81,6 @@ class CollectStats extends AbstractJob
 		$serverStatsConfig = $this->app->options()->collectServerStats;
 		$serverStatsConfig['last_sent'] = time();
 
-		/** @var OptionRepository $optionRepo */
 		$optionRepo = $this->app->repository(OptionRepository::class);
 
 		// skip verifying the option here as only last_sent will have changed

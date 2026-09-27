@@ -71,6 +71,7 @@
 				target,
 				config,
 				registerFn: this.registerCredentials.bind(this),
+				errorFn: this.resetFormState.bind(this),
 			})
 		},
 
@@ -100,7 +101,18 @@
 				target,
 				config,
 				registerFn: this.registerCredentials.bind(this),
+				errorFn: this.resetFormState.bind(this),
 			})
+		},
+
+		resetFormState ()
+		{
+			let submitButton = this.form.querySelector('.formSubmitRow button')
+			if (submitButton !== null)
+			{
+				submitButton.classList.remove('is-disabled')
+				submitButton.disabled = false
+			}
 		},
 
 		registerCredentials (payload)
@@ -172,8 +184,15 @@
 					target,
 					config,
 					registerFn: this.registerCredentials.bind(this),
+					errorFn: this.resetState.bind(this),
 				})
 			})
+		},
+
+		resetState ()
+		{
+			this.processing = false
+			this.target.classList.remove('is-disabled')
 		},
 
 		registerCredentials (payload)
@@ -210,7 +229,7 @@
 
 	XF.WebAuthnProcess = (() =>
 	{
-		const create = ({ challenge, target, config, registerFn, }) =>
+		const create = ({ challenge, target, config, registerFn, errorFn, }) =>
 		{
 			config.userId = config.userId.toString()
 
@@ -291,10 +310,17 @@
 						}, 500)
 					}
 				})
-				.catch(console.error)
+				.catch((e) =>
+				{
+					console.error(e)
+					if (errorFn)
+					{
+						errorFn(e)
+					}
+				})
 		}
 
-		const get = ({ challenge, target, config, registerFn }) =>
+		const get = ({ challenge, target, config, registerFn, errorFn }) =>
 		{
 			let options = {
 				publicKey: {
@@ -336,7 +362,14 @@
 						}, 500)
 					}
 				})
-				.catch(console.error)
+				.catch((e) =>
+				{
+					console.error(e)
+					if (errorFn)
+					{
+						errorFn(e)
+					}
+				})
 		}
 
 		return {

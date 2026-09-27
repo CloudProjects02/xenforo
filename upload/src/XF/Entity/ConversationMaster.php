@@ -5,6 +5,7 @@ namespace XF\Entity;
 use XF\Api\Result\EntityResult;
 use XF\Behavior\IndexableContainer;
 use XF\Draft;
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\FinderCollection;
 use XF\Mvc\Entity\Structure;
@@ -29,7 +30,7 @@ use XF\Repository\ReactionRepository;
  * @property int $last_message_id
  * @property int $last_message_user_id
  * @property string $last_message_username
- * @property array $recipients
+ * @property array|null $recipients
  *
  * GETTERS
  * @property-read array $message_ids
@@ -39,13 +40,13 @@ use XF\Repository\ReactionRepository;
  * @property-read list<int> $active_recipient_user_ids
  *
  * RELATIONS
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\ConversationRecipient> $Recipients
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\ConversationUser> $Users
+ * @property-read AbstractCollection<ConversationRecipient> $Recipients
+ * @property-read AbstractCollection<ConversationUser> $Users
  * @property-read ConversationMessage|null $FirstMessage
  * @property-read ConversationMessage|null $LastMessage
  * @property-read User|null $LastMessageUser
  * @property-read User|null $Starter
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\Draft> $DraftReplies
+ * @property-read AbstractCollection<\XF\Entity\Draft> $DraftReplies
  */
 class ConversationMaster extends Entity implements LinkableInterface, ViewableInterface
 {
@@ -387,11 +388,9 @@ class ConversationMaster extends Entity implements LinkableInterface, ViewableIn
 		{
 			$db->delete('xf_conversation_message', 'conversation_id = ?', $this->conversation_id);
 
-			/** @var AttachmentRepository $attachRepo */
 			$attachRepo = $this->repository(AttachmentRepository::class);
 			$attachRepo->fastDeleteContentAttachments('conversation_message', $messageIds);
 
-			/** @var ReactionRepository $reactionRepo */
 			$reactionRepo = $this->repository(ReactionRepository::class);
 			$reactionRepo->fastDeleteReactions('conversation_message', $messageIds);
 		}

@@ -89,6 +89,14 @@ class AddOn implements \ArrayAccess
 		$ds = \XF::$DS;
 
 		$this->addOnDir = \XF::getAddOnDirectory() . $ds . $this->prepareAddOnIdForPath();
+
+		// Resolve symlinks to ensure consistent path handling
+		$realAddOnDir = realpath($this->addOnDir);
+		if ($realAddOnDir !== false)
+		{
+			$this->addOnDir = $realAddOnDir;
+		}
+
 		$this->buildDir = $this->addOnDir . $ds . '_build';
 		$this->dataDir = $this->addOnDir . $ds . '_data';
 		$this->filesDir = $this->addOnDir . $ds . '_files';
@@ -435,8 +443,8 @@ class AddOn implements \ArrayAccess
 	public function isJsonHashChanged()
 	{
 		return (
-			$this->isAvailable() &&
-			$this->getJsonHash() !== $this->installedAddOn->json_hash
+			$this->isAvailable()
+			&& $this->getJsonHash() !== $this->installedAddOn->json_hash
 		);
 	}
 

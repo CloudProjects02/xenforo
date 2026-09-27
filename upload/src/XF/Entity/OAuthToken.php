@@ -2,6 +2,7 @@
 
 namespace XF\Entity;
 
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 
@@ -15,11 +16,11 @@ use XF\Mvc\Entity\Structure;
  * @property int $last_use_date
  * @property int $expiry_date
  * @property int $revoked_date
- * @property array $scopes
+ * @property array|null $scopes
  *
  * RELATIONS
  * @property-read OAuthClient|null $OAuthClient
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\OAuthRefreshToken> $OAuthRefreshTokens
+ * @property-read AbstractCollection<OAuthRefreshToken> $OAuthRefreshTokens
  * @property-read User|null $User
  */
 class OAuthToken extends Entity

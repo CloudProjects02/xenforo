@@ -11,6 +11,7 @@ use XF\Repository\SessionActivityRepository;
 use XF\Repository\TfaRepository;
 use XF\Repository\UserRememberRepository;
 use XF\Repository\UserTfaTrustedRepository;
+use XF\Service\Passkey\ManagerService;
 use XF\Service\User\LoginService;
 use XF\Service\User\TfaService;
 
@@ -22,7 +23,6 @@ class LoginPlugin extends AbstractPlugin
 	{
 		$trustKey = $this->getCurrentTrustKey();
 
-		/** @var TfaRepository $tfaRepo */
 		$tfaRepo = $this->repository(TfaRepository::class);
 		return $tfaRepo->isUserTfaConfirmationRequired($user, $trustKey);
 	}
@@ -110,7 +110,6 @@ class LoginPlugin extends AbstractPlugin
 			return LoginTfaResultPlugin::newSkipped($redirect);
 		}
 
-		/** @var TfaService $tfaService */
 		$tfaService = $this->service(TfaService::class, $user);
 
 		if (!$tfaService->isTfaAvailable())
@@ -173,7 +172,6 @@ class LoginPlugin extends AbstractPlugin
 
 	public function setDeviceTrusted($userId)
 	{
-		/** @var UserTfaTrustedRepository $tfaTrustRepo */
 		$tfaTrustRepo = $this->repository(UserTfaTrustedRepository::class);
 		$key = $tfaTrustRepo->createTrustedKey($userId);
 
@@ -190,7 +188,6 @@ class LoginPlugin extends AbstractPlugin
 
 			if (!empty($this->options()->preRegAction['enabled']))
 			{
-				/** @var PreRegActionRepository $preRegActionRepo */
 				$preRegActionRepo = $this->repository(PreRegActionRepository::class);
 
 				$preRegActionKey = $this->session->preRegActionKey;
@@ -247,7 +244,18 @@ class LoginPlugin extends AbstractPlugin
 
 		$this->assertPostOnly();
 
-		/** @var LoginService $loginService */
+		$webAuthnPayload = $this->filter('webauthn_payload', 'json-array');
+		if ($webAuthnPayload)
+		{
+			if (!$this->validatePasskeyConfirm($visitor, $error))
+			{
+				return $this->error($error);
+			}
+
+			$this->session()->passwordConfirm = \XF::$time;
+			return $this->redirect($redirect, '');
+		}
+
 		$loginService = $this->service(LoginService::class, $visitor->username, $this->request->getIp());
 		if ($loginService->isLoginLimited())
 		{
@@ -262,6 +270,44 @@ class LoginPlugin extends AbstractPlugin
 
 		$this->session()->passwordConfirm = \XF::$time;
 		return $this->redirect($redirect, '');
+	}
+
+	protected function validatePasskeyConfirm(User $visitor, &$error = null): bool
+	{
+		$ip = $this->request->getIp();
+		$passkey = $this->service(ManagerService::class, $this->session());
+
+		if ($passkey->hasTooManyLoginAttempts($ip))
+		{
+			$passkey->clearStateFromSession($this->session());
+			$error = \XF::phrase('your_account_has_temporarily_been_locked_due_to_failed_login_attempts');
+			return false;
+		}
+
+		if (!$passkey->validate($this->request, $error))
+		{
+			$passkey->clearStateFromSession($this->session());
+			return false;
+		}
+
+		if ($passkey->isLoginLimited($ip, $limitType))
+		{
+			$passkey->clearStateFromSession($this->session());
+			$error = \XF::phrase('your_account_has_temporarily_been_locked_due_to_failed_login_attempts');
+			return false;
+		}
+
+		if ($passkey->getPasskeyUser()->user_id !== $visitor->user_id)
+		{
+			$passkey->clearStateFromSession($this->session());
+			$error = \XF::phrase('something_went_wrong_please_try_again');
+			return false;
+		}
+
+		$passkey->clearFailedAttempts($ip);
+		$passkey->clearStateFromSession($this->session());
+
+		return true;
 	}
 
 	public function actionKeepAlive()
@@ -292,7 +338,6 @@ class LoginPlugin extends AbstractPlugin
 			return;
 		}
 
-		/** @var UserRememberRepository $rememberRepo */
 		$rememberRepo = $this->repository(UserRememberRepository::class);
 		$key = $rememberRepo->createRememberRecord($visitor->user_id);
 		$value = $rememberRepo->getCookieValue($visitor->user_id, $key);
@@ -306,7 +351,11 @@ class LoginPlugin extends AbstractPlugin
 		$this->deleteVisitorRememberRecord(false);
 		$this->session->logoutUser();
 		$this->clearCookies();
-		$this->clearSiteData();
+
+		if (\XF::app()->config('enableClearSiteData'))
+		{
+			$this->clearSiteData();
+		}
 	}
 
 	public function lastActivityUpdate()
@@ -355,7 +404,6 @@ class LoginPlugin extends AbstractPlugin
 			return null;
 		}
 
-		/** @var UserRememberRepository $rememberRepo */
 		$rememberRepo = $this->repository(UserRememberRepository::class);
 		if ($rememberRepo->validateByCookieValue($rememberCookie, $remember))
 		{
@@ -374,6 +422,7 @@ class LoginPlugin extends AbstractPlugin
 			'notice_dismiss',
 			'push_notice_dismiss',
 			'session',
+			'style_variation',
 			'tfa_trust',
 		];
 	}
@@ -396,9 +445,8 @@ class LoginPlugin extends AbstractPlugin
 
 	public function clearSiteData()
 	{
-		// TODO: This causes performance issues on the client side in Chrome. See XF-167665.
-		// $response = $this->app->response();
-		// $response->header('Clear-Site-Data', '"cache"');
+		$response = $this->app->response();
+		$response->header('Clear-Site-Data', '"cache"');
 	}
 
 	public function handleVisitorPasswordChange()
@@ -409,7 +457,6 @@ class LoginPlugin extends AbstractPlugin
 			return;
 		}
 
-		/** @var UserRememberRepository $rememberRepo */
 		$rememberRepo = $this->repository(UserRememberRepository::class);
 
 		$userRemember = $this->validateVisitorRememberKey();

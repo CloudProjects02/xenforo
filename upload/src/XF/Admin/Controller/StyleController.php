@@ -8,10 +8,8 @@ use XF\Entity\AddOn;
 use XF\Entity\Style;
 use XF\Entity\StyleProperty;
 use XF\Entity\StylePropertyGroup;
-use XF\Entity\StylePropertyMap;
 use XF\Entity\Template;
 use XF\Finder\StyleFinder;
-use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\ParameterBag;
 use XF\Mvc\Reply\Redirect;
 use XF\Repository\AddOnRepository;
@@ -192,7 +190,7 @@ class StyleController extends AbstractController
 		]);
 		if (strlen($filter['text']))
 		{
-			$templateFinder->Template->searchTitle($filter['text'], $filter['prefix']);
+			$templateFinder->Template->searchTitle($filter['text']);
 		}
 
 		$templates = $templateFinder->fetch();
@@ -391,7 +389,6 @@ class StyleController extends AbstractController
 			$style,
 			$group->group_name
 		);
-		/** @var AbstractCollection|StylePropertyMap[] $propertyMaps */
 		$propertyMaps = $propertyMapFinder->fetch();
 
 		foreach ($propertyMaps AS $propertyMap)
@@ -433,7 +430,6 @@ class StyleController extends AbstractController
 				return $this->error(\XF::phrase('please_upload_valid_style_xml_file'));
 			}
 
-			/** @var ImportService $styleImporter */
 			$styleImporter = $this->service(ImportService::class);
 
 			$xmlFile = null;
@@ -445,7 +441,6 @@ class StyleController extends AbstractController
 
 					$archiveFile = $upload->getTempFile();
 
-					/** @var ArchiveImportService $styleArchiveImporter */
 					$styleArchiveImporter = $this->service(ArchiveImportService::class, $archiveFile);
 
 					if (!$styleArchiveImporter->validateArchive($errors))
@@ -533,7 +528,6 @@ class StyleController extends AbstractController
 		{
 			$this->setResponseType('xml');
 
-			/** @var ExportService $styleExporter */
 			$styleExporter = $this->service(ExportService::class, $style);
 
 			$addOnId = $this->filter('addon_id', 'str');
@@ -570,7 +564,6 @@ class StyleController extends AbstractController
 
 		if ($this->isPost())
 		{
-			/** @var ArchiveExportService $styleArchiveExporter */
 			$styleArchiveExporter = $this->service(ArchiveExportService::class, $style);
 
 			$addOnId = $this->filter('addon_id', 'str');

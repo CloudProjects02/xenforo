@@ -4,7 +4,6 @@ namespace XF\Repository;
 
 use XF\Entity\User;
 use XF\Finder\UserGroupFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 class UserGroupRepository extends Repository
@@ -12,7 +11,7 @@ class UserGroupRepository extends Repository
 	protected $displayStyleMapCache = [];
 
 	/**
-	 * @return Finder
+	 * @return UserGroupFinder
 	 */
 	public function findUserGroupsForList()
 	{
@@ -204,7 +203,6 @@ class UserGroupRepository extends Repository
 		$cache = $this->getDisplayStyleCacheData();
 		\XF::registry()->set('displayStyles', $cache);
 
-		/** @var StyleRepository $styleRepo */
 		$styleRepo = $this->repository(StyleRepository::class);
 		$styleRepo->updateAllStylesLastModifiedDateLater();
 

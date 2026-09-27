@@ -7,7 +7,6 @@ use XF\Entity\ConnectedAccountProvider;
 use XF\Entity\User;
 use XF\Entity\UserConnectedAccount;
 use XF\Finder\ConnectedAccountProviderFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 use function strval;
@@ -15,7 +14,7 @@ use function strval;
 class ConnectedAccountRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return ConnectedAccountProviderFinder
 	 */
 	public function findProvidersForList()
 	{

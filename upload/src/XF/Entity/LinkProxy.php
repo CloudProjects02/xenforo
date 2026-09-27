@@ -2,6 +2,7 @@
 
 namespace XF\Entity;
 
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XF\Repository\LinkProxyRepository;
@@ -16,7 +17,7 @@ use XF\Repository\LinkProxyRepository;
  * @property int $hits
  *
  * RELATIONS
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\LinkProxyReferrer> $Referrers
+ * @property-read AbstractCollection<LinkProxyReferrer> $Referrers
  */
 class LinkProxy extends Entity
 {

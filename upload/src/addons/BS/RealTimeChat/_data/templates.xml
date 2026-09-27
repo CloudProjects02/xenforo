@@ -1,0 +1,4842 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="option_template_realTimeChatMinWallpaperSize" version_id="2000070" version_string="2.0.0"><![CDATA[<xf:formrow rowtype="input"
+	label="{$option.title}"
+	hint="{$hintHtml}"
+	explain="{$explainHtml}"
+	html="{$listedHtml}">
+
+	<div class="inputGroup inputGroup--numbers">
+		<xf:numberbox name="{$inputName}[width]" min="0" required="{{ false }}" value="{$option.option_value.width}" placeholder="{{ phrase('width') }}" />
+		<span class="inputGroup-text">x</span>
+		<xf:numberbox name="{$inputName}[height]" min="0" required="{{ false }}" value="{$option.option_value.height}" placeholder="{{ phrase('height') }}" />
+		<span class="inputGroup-text">{{ phrase('units_pixels') }}</span>
+	</div>
+</xf:formrow>]]></template>
+  <template type="admin" title="real_time_chat" version_id="1000070" version_string="1.0.0"><![CDATA[<xf:title>{{ phrase('admin_navigation.bsRtc') }}</xf:title>
+
+<xf:macro template="section_nav_macros" name="section_nav" arg-section="bsRtc" />]]></template>
+  <template type="admin" title="rtc_bs_ai_bot.chat_gpt_tab_panes" version_id="1040070" version_string="1.4.0"><![CDATA[<h3 class="block-formSectionHeader">
+	<span class="collapseTrigger collapseTrigger--block" data-xf-click="toggle" data-target="< :up:next">
+		{{ phrase('real_time_chat_header') }}
+	</span>
+</h3>
+<div class="block-body block-body--collapsible">
+	<xf:textarearow label="{{ phrase('bs_aib_prompt') }}" 
+					explain="{{ phrase('rtc_aib_chat_prompt_explain') }}"
+					name="general[rtc_prompt]" 
+					value="{$bot.general.rtc_prompt}"
+					placeholder="{{ phrase('bs_aib_prompt_placeholder') }}"
+					rows="5" />
+
+	<xf:numberboxrow name="general[rtc_context_limit]" 
+					 label="{{ phrase('bs_aib_context_limit') }}"
+					 explain="{{ phrase('rtc_aib_chat_context_limit_explain') }}"
+					 min="0" 
+					 value="{$bot.general.rtc_context_limit}" />
+
+	<xf:checkboxrow explain="{{ phrase('bs_aib_smart_ignore_explain') }}">
+		<xf:option name="general[rtc_smart_ignore]"
+				   label="{{ phrase('bs_aib_smart_ignore') }}"
+				   checked="{$bot.general.rtc_smart_ignore}" />
+	</xf:checkboxrow>
+
+	<xf:checkboxrow explain="{{ phrase('bs_aib_stream_mode_explain') }}">
+		<xf:option name="general[rtc_streaming_mode]"
+				   label="{{ phrase('rtc_aib_streaming_mode') }}"
+				   checked="{$bot.getSafest('general', 'rtc_streaming_mode')}" />
+	</xf:checkboxrow>
+	
+	<xf:checkboxrow explain="{{ phrase('rtc_respond_in_pm_only_explain') }}">
+		<xf:option name="general[rtc_respond_in_pm_only]"
+				   label="{{ phrase('rtc_respond_in_pm_only') }}"
+				   checked="{$bot.getSafest('general', 'rtc_respond_in_pm_only')}" />
+	</xf:checkboxrow>
+
+	<hr class="formRowSep" />
+</div>]]></template>
+  <template type="admin" title="rtc_room_edit" version_id="2000070" version_string="2.0.0"><![CDATA[<xf:if is="$room.isInsert()">
+	<xf:title>{{ phrase('rtc_create_room') }}</xf:title>
+<xf:else />
+	<xf:title>{{ phrase('rtc_edit_room:') }} {$room.tag}</xf:title>
+</xf:if>
+
+<xf:pageaction if="$room.isUpdate()">
+	<xf:if is="$room.isMemberType()">
+		<xf:button href="{{ link('chat/rooms/get-new-link', $room) }}" overlay="true">
+			{{ phrase('rtc_new_link') }}
+		</xf:button>
+	</xf:if>
+	<xf:if is="$room.canDelete()">
+		<xf:button href="{{ link('chat/rooms/delete', $room) }}" icon="delete" overlay="true" />
+	</xf:if>
+</xf:pageaction>
+
+<xf:form action="{{ link('chat/rooms/save', $room) }}" class="block" ajax="true">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:textboxrow name="tag" 
+				label="{{ phrase('rtc_tag') }}" 
+				explain="{{ phrase('rtc_tag_edit_explain') }}" 
+				value="{$room.tag}" />
+	
+			<xf:textarearow rows="5" 
+				name="description" 
+				label="{{ phrase('description') }}"
+				maxlength="{{ max_length('BS\RealTimeChat:Room', 'description') }}"
+				value="{$room.description}" />
+			
+			<xf:if is="$room.avatar_date">
+				<xf:checkboxrow>
+					<xf:option name="delete_avatar" label="{{ phrase('delete_current_avatar') }}" />
+				</xf:checkboxrow>
+			</xf:if>
+			
+			<xf:uploadrow name="avatar" accept=".gif,.jpeg,.jpg,.jpe,.png"
+				label="{{ phrase('upload_avatar') }}" />
+			
+			<xf:if is="$room.canEditType()">
+				<xf:selectrow name="type" 
+					label="{{ phrase('rtc_type') }}"
+					explain="{{ phrase('rtc_room_type_explain') }}"
+					value="{$room.type}"
+				>
+					<xf:option value="public">public</xf:option>
+					<xf:option value="member">member</xf:option>
+				</xf:selectrow>
+			</xf:if>
+			
+			<xf:hiddenval name="pinned" value="0" />
+			<xf:checkboxrow>
+				<xf:option name="pinned" checked="{$room.pinned}">{{ phrase('rtc_is_pinned') }}</xf:option>
+			</xf:checkboxrow>
+			
+			<xf:numberboxrow name="pin_order"
+				label="{{ phrase('rtc_pin_order') }}"
+				value="{$room.pin_order}"
+			/>
+		</div>
+		
+		<xf:submitrow sticky="true" icon="save" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="rtc_room_list" version_id="2000070" version_string="2.0.0"><![CDATA[<xf:title>{{ phrase('rtc_rooms') }}</xf:title>
+
+<xf:pageaction>
+	<xf:button href="{{ link('chat/rooms/add') }}" icon="add">{{ phrase('rtc_create_room') }}</xf:button>
+</xf:pageaction>
+
+<xf:if is="$rooms is not empty">
+	<div class="block">
+		<div class="block-container">
+			<div class="block-body">
+				<xf:datalist>
+					<xf:foreach loop="$rooms" value="$room">
+						<xf:datarow>
+							<xf:cell class="dataList-cell--min"
+								href="{{ link('chat/rooms/edit', $room) }}">
+								{{ rtc_room_avatar($room, 'xs') }}
+							</xf:cell>
+							<xf:cell href="{{ link('chat/rooms', $room) }}">
+								{$room.tag}
+								<xf:if is="$room.pinned">
+									<xf:fa icon="fa-thumbtack" />
+								</xf:if>
+							</xf:cell>
+							<xf:cell href="{{ link('chat/rooms', $room) }}">{$room.type}</xf:cell>
+							<xf:delete href="{{ link('chat/rooms/delete', $room) }}" 
+								tooltip="{{ phrase('delete') }}" />
+						</xf:datarow>
+					</xf:foreach>
+				</xf:datalist>
+			</div>
+			<div class="block-footer">
+				<span class="block-footer-counter">{{ display_totals($rooms, $total) }}</span>
+			</div>
+		</div>
+
+		<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+			link="chat/rooms"
+			wrapperclass="block-outer block-outer--after" />
+	</div>
+<xf:else />
+	<div class="blockMessage">{{ phrase('rtc_there_are_no_rooms') }}</div>
+</xf:if>]]></template>
+  <template type="admin" title="rtc_room_new_link" version_id="2000070" version_string="2.0.0"><![CDATA[<xf:title>{{ phrase('rtc_new_link_for_invite_to_the_room_x', { 'tag': $room.tag }) }}</xf:title>
+
+<div class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:inforow rowtype="confirm">
+				<a href="{$link.url}" target="_blank">
+					<strong>{$link.url}</strong>
+				</a>
+			</xf:inforow>
+		</div>
+		<xf:submitrow rowtype="simple" icon="confirm" class="js-overlayClose" />
+	</div>
+</div>]]></template>
+  <template type="admin" title="style_property_template_rtcThemes" version_id="2000070" version_string="2.0.0"><![CDATA[<div class="themes-wrapper cssPropertyWrapper" data-toggle-wrapper="1">
+	<h3 class="block-header block-header--separated">
+		<span class="collapseTrigger collapseTrigger--block {{ $isActive ? 'is-active' : '' }}"
+			  data-xf-click="toggle"
+			  data-target="< :up :next"
+			  data-xf-init="toggle-storage"
+			  data-storage-key="sp-{$property.property_name}">
+
+			<xf:macro name="style_property_macros::customization_hint"
+					arg-state="{$customizationState}"
+					arg-submitName="{$submitName}"
+					arg-property="{$property}" />
+
+			<span class="u-anchorTarget" id="sp-{$property.property_name}"></span><span>{$property.title}</span>
+			<xf:if is="$property.description"><span class="block-desc">{$property.description}</span></xf:if>
+		</span>
+	</h3>
+	<div class="block-body block-body--collapsible {{ $isActive ? 'is-active' : '' }}">
+		<xf:set var="$themes" value="{{ array_values($property.property_value) }}" />
+
+		<div class="block-row">
+			<xf:if contentcheck="true">
+				<div class="cssPropertyDescription">
+					<xf:contentcheck>
+						<xf:if is="$customizationState == 'custom'">
+							<span class="cssPropertyRevert" data-xf-init="tooltip" title="{{ phrase('revert_customizations')|for_attr }}">
+								<xf:macro name="style_property_macros::revert_code"
+										  arg-submitName="{$submitName}"
+										  arg-property="{$property}"
+										  arg-label="{{ phrase('revert_customized_value') }}"
+										  arg-container="< .block-row" />
+							</span>
+						</xf:if>
+						<xf:if is="$definitionEditable">
+							<span class="u-pullRight">
+								<xf:button href="{{ link('style-properties/edit', $property) }}"
+										   class="button--link button--small" icon="edit" />
+							</span>
+						</xf:if>
+						<xf:if is="$xf.development"><div class="u-muted">{$property.property_name} {$property.display_order|parens}</div></xf:if>
+					</xf:contentcheck>
+				</div>
+			</xf:if>
+			
+			<ul class="listPlain inputGroup-container" style="display: flex; gap: 10px 20px; flex-wrap: wrap; row-gap: 30px;">
+				<xf:foreach loop="$themes" key="$counter" value="$theme" if="rtc_array_filter($theme) is not empty">
+					<li class="inputGroup" style="gap: 5px; flex-wrap: wrap; margin-top: 0;">
+						<xf:macro name="theme_settings" arg-theme="{$theme}" arg-formBaseKey="{$formBaseKey}[{$counter}]" />
+					</li>
+				</xf:foreach>
+
+				<xf:set var="$nextCounter" value="{{ count($themes) + 1 }}" />
+
+				<li class="inputGroup" style="gap: 5px; flex-wrap: wrap; margin-top: 0;" data-xf-init="field-adder" data-increment-format="{$formBaseKey}[{counter}]">
+					<xf:macro name="theme_settings" arg-formBaseKey="{$formBaseKey}[{$nextCounter}]" />
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<xf:macro name="theme_settings" arg-theme="{{ [] }}" arg-formBaseKey="!">
+	<xf:set var="$indexes" value="{{ ['primary_color', 'surface_color', 'top_left', 'top_right', 'bottom_left', 'bottom_right', 'bubble', 'bubble_details', 'visitor_bubble', 'visitor_bubble_details', 'highlighted_message'] }}" />
+	<xf:set var="$defaultValues" value="{{ { 'pattern': 'styles/default/bs/real_time_chat/pattern.svg' } }}" />
+	<div class="theme-settings">
+		<xf:foreach loop="$indexes" value="$index">
+			<div style="margin-bottom: 4px;">{{ phrase_dynamic('rtc_theme_setting.' .  $index . ':') }}</div>
+			<div class="inputGroup inputGroup--joined" data-xf-init="color-picker" style="margin-bottom: 5px;">
+				<xf:textbox name="{$formBaseKey}[{$index}]" 
+							value="{{ $theme.{$index} ?: $defaultValues.{$index} }}" />
+				<div class="inputGroup-text" style="width: 30px;padding: 0;">
+					<span class="colorPickerBox js-colorPickerTrigger" style="height: 100%; border: none; display: flex; align-items: center; justify-content: center;"></span>
+				</div>
+			</div>
+		</xf:foreach>
+		
+		<div style="margin-bottom: 4px;">{{ phrase('rtc_theme_setting.pattern:') }}</div>
+		<xf:textbox name="{$formBaseKey}[pattern]" 
+					value="{{ $theme.pattern ?: $defaultValues.pattern }}" />
+	</div>
+</xf:macro>]]></template>
+  <template type="admin" title="widget_def_options_real_time_chat" version_id="2000070" version_string="2.0.0"><![CDATA[<hr class="formRowSep" />
+
+<xf:textboxrow name="options[defaultTag]" 
+	value="{$options.defaultTag}"
+	label="{{ phrase('rtc_widget_default_room_tag') }}"
+	explain="{{ phrase('rtc_widget_default_room_tag_explain') }}" />
+
+<xf:checkboxrow>
+	<xf:option name="options[compact]" value="1" selected="{$options.compact}"
+		label="{{ phrase('rtc_widget_compact') }}"
+		hint="{{ phrase('rtc_widget_compact_hint') }}" />
+</xf:checkboxrow>]]></template>
+  <template type="public" title="RTC_PAGE_CONTAINER" version_id="2000270" version_string="2.0.2"><![CDATA[<!DOCTYPE html>
+<html id="XF" lang="{$xf.language.language_code}" dir="{$xf.language.text_direction}"
+	data-app="public"
+	data-template="{$template}"
+	data-container-key="{$containerKey}"
+	data-content-key="{$contentKey}"
+	data-logged-in="{{ $xf.visitor.user_id ? 'true' : 'false' }}"
+	data-cookie-prefix="{$xf.cookie.prefix}"
+	data-csrf="{{ csrf_token()|escape('js') }}"
+	class="rtc-window has-no-js {{ $template ? 'template-' . $template : '' }}"
+	{{ $xf.runJobs ? ' data-run-jobs=""' : '' }}>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+	<xf:set var="$siteName" value="{$xf.options.boardTitle}" />
+	<xf:set var="$h1"><xf:h1 fallback="{$siteName}" /></xf:set>
+	<xf:set var="$description"><xf:description /></xf:set>
+
+	<title><xf:title formatter="%s | %s" fallback="{$xf.options.boardTitle}" page="{$pageNumber}" /></title>
+
+	<link rel="manifest" href="{{ base_url('webmanifest.php') }}">
+	<xf:if is="property('metaThemeColor')">
+		<meta name="theme-color" content="{{ parse_less_color(property('metaThemeColor')) }}" />
+	</xf:if>
+
+	<meta name="apple-mobile-web-app-title" content="{{ $xf.options.boardShortTitle ?: $xf.options.boardTitle }}">
+	<xf:if is="property('publicIconUrl')">
+		<link rel="apple-touch-icon" href="{{ base_url(property('publicIconUrl', true)) }}">
+	<xf:elseif is="property('publicMetadataLogoUrl')" />
+		<link rel="apple-touch-icon" href="{{ base_url(property('publicMetadataLogoUrl')) }}" />
+	</xf:if>
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no,viewport-fit=cover">
+
+	<xf:foreach loop="$head" value="$headTag">
+		{$headTag}
+	</xf:foreach>
+
+	<xf:if is="!$head.meta_site_name && $siteName is not empty">
+		<xf:macro template="metadata_macros" name="site_name" arg-siteName="{$siteName}" arg-output="{{ true }}" />
+	</xf:if>
+	<xf:if is="!$head.meta_type">
+		<xf:macro template="metadata_macros" name="type" arg-type="website" arg-output="{{ true }}" />
+	</xf:if>
+	<xf:if is="!$head.meta_title">
+		<xf:macro template="metadata_macros" name="title" arg-title="{{ page_title() ?: $siteName }}" arg-output="{{ true }}" />
+	</xf:if>
+	<xf:if is="!$head.meta_description && $description is not empty && $pageDescriptionMeta">
+		<xf:macro template="metadata_macros" name="description" arg-description="{$description}" arg-output="{{ true }}" />
+	</xf:if>
+	<xf:if is="!$head.meta_share_url">
+		<xf:macro template="metadata_macros" name="share_url" arg-shareUrl="{$xf.fullUri}" arg-output="{{ true }}" />
+	</xf:if>
+	<xf:if is="!$head.meta_image_url && property('publicMetadataLogoUrl')">
+		<xf:macro template="metadata_macros" name="image_url"
+			arg-imageUrl="{{ base_url(property('publicMetadataLogoUrl'), true) }}"
+			arg-output="{{ true }}" />
+	</xf:if>
+
+	<xf:macro template="helper_js_global" name="head" arg-app="public" />
+
+	<xf:if is="property('publicFaviconUrl')">
+		<link rel="icon" type="image/png" href="{{ base_url(property('publicFaviconUrl'), true) }}" sizes="32x32" />
+	</xf:if>
+	<xf:include template="google_analytics" />
+</head>
+<body data-template="{$template}">
+
+<div class="p-pageWrapper" id="top">
+	
+<div class="p-body">
+	<div class="p-body-inner">
+		<!--XF:EXTRA_OUTPUT-->
+
+		<xf:macro template="browser_warning_macros" name="javascript" />
+		<xf:macro template="browser_warning_macros" name="browser" />
+
+		<div class="p-body-main">
+			<div class="p-body-content">
+				<div class="p-body-pageContent">{$content|raw}</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+</div> <!-- closing p-pageWrapper -->
+	
+<div class="u-bottomFixer js-bottomFixTarget"></div>
+
+<xf:macro template="helper_js_global" name="body" arg-app="public" arg-jsState="{$jsState}" />
+
+<xf:if is="count($xf.reactionsActive) > 1 AND $xf.visitor.user_id">
+	<script type="text/template" id="xfReactTooltipTemplate">
+		<div class="tooltip-content-inner">
+			<div class="reactTooltip">
+				<xf:foreach loop="$xf.reactionsActive" key="$reactionId" value="$reaction">
+					<xf:reaction id="{$reactionId}" tooltip="true" />
+				</xf:foreach>
+			</div>
+		</div>
+	</script>
+</xf:if>
+
+{$ldJsonHtml|raw}
+
+</body>
+</html>]]></template>
+  <template type="public" title="alert_chat_message_mention" version_id="2000070" version_string="2.0.0"><![CDATA[{{ phrase('rtc_x_mentioned_you_in_chat_message', {
+	'name': username_link($user, false, {'defaultname': $alert.username}),
+	'link': link('chat/messages/to', $content)
+}) }}]]></template>
+  <template type="public" title="alert_chat_message_private_message" version_id="2000070" version_string="2.0.0"><![CDATA[{{ phrase('rtc_x_sent_you_private_message_in_chat', {
+	'name': username_link($user, false, {'defaultname': $alert.username}),
+	'link': link('chat/messages/to', $content)
+}) }}]]></template>
+  <template type="public" title="alert_chat_message_quote" version_id="2000070" version_string="2.0.0"><![CDATA[{{ phrase('rtc_x_quoted_your_chat_message', {
+	'name': username_link($user, false, {'defaultname': $alert.username}),
+	'link': link('chat/messages/to', $content)
+}) }}]]></template>
+  <template type="public" title="alert_chat_message_reaction" version_id="2000070" version_string="2.0.0"><![CDATA[{{ phrase('rtc_x_reacted_to_your_chat_message_with_reaction', {
+	'name': username_link($user, false, {'defaultname': $alert.username}),
+	'reaction': alert_reaction($extra.reaction_id)|preescaped,
+	'messageHref': 'href="' . link('chat/messages/to', $content) . '" class="fauxBlockLink-blockLink"'
+}) }}]]></template>
+  <template type="public" title="real_team_chat_room_link.less" version_id="2000070" version_string="2.0.0"><![CDATA[{{ include('real_time_chat_setup.less') }}
+
+.invite-background {
+	height: 100%;
+
+	.invite-center {
+		display: flex;
+		height: 100%;
+		width: 100%;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.room-card {
+		background: @xf-contentBg;
+		box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+		border-radius: 8px;
+		min-width: 300px;
+		max-width: 450px;
+		font-size: 15px;
+		
+		.section {
+			padding: 10px;
+			display: flex;
+			
+			&.section--header {
+				align-items: center;
+				padding-bottom: 0;
+			}
+			
+			&.section--description {
+				padding: 10px 15px;
+			}
+			
+			&.section--join {
+				justify-content: end;
+				padding-top: 0;
+				
+				.button {
+					.m-chatButton();
+					background: var(--primary-color);
+					color: #fff;
+				}
+			}
+		}
+		
+		.room-avatar {
+			margin-right: 10px;
+		}
+		
+		.room-name {
+			font-size: 18px;
+		}
+	}
+	
+	@media (max-width: 450px) {
+		.room-card {
+			width: 100%;
+			border-radius: 0;
+		}
+	}
+}]]></template>
+  <template type="public" title="real_team_chat_room_link_join" version_id="2000070" version_string="2.0.0"><![CDATA[<xf:page option="template">RTC_PAGE_CONTAINER</xf:page>
+
+<xf:title>{{ phrase('real_time_chat_header') }}</xf:title>
+
+<xf:css src="real_time_chat.less" />
+<xf:css src="real_time_chat_window.less" />
+<xf:css src="real_team_chat_room_link.less" />
+
+<div class="real-time-chat" style="{$link.Room.theme.css}">
+	<div class="invite-background">		
+		<xf:macro name="real_time_chat_macros::wallpaper" arg-theme="{$link.Room.theme}" />
+		<div class="invite-center">
+			<xf:form action="{{ link('chat/l', $link) }}" ajax="true" class="room-card">
+				<div class="section section--header">
+					<div class="room-avatar">
+						{{ rtc_room_avatar($link.Room, 's') }}
+					</div>
+					<div class="room-name">
+						<span class="tag-prefix">{$link.Room.tag_prefix}/</span>
+						<span class="tag">{$link.Room.tag_name}</span>
+					</div>
+				</div>
+				<div class="section section--description">
+					{$link.Room.description}
+				</div>
+				<div class="section section--join">
+					<xf:button type="submit">{{ phrase('rtc_join') }}</xf:button>
+				</div>
+			</xf:form>
+		</div>
+	</div>
+</div>]]></template>
+  <template type="public" title="real_time_chat" version_id="2000070" version_string="2.0.0"><![CDATA[<xf:page option="template">RTC_PAGE_CONTAINER</xf:page>
+
+<xf:title>{{ phrase('real_time_chat_header') }}</xf:title>
+
+<xf:css src="real_time_chat_window.less" />
+
+<xf:macro name="real_time_chat_macros::chat"
+		  arg-roomTag="{$tag}"
+		  arg-attachmentData="{$attachmentData}"
+		  arg-latestMessageDate="{$latestMessageDate}"
+		  arg-pushHistory="{{ true }}" />]]></template>
+  <template type="public" title="real_time_chat.less" version_id="2000070" version_string="2.0.0"><![CDATA[{{ include('real_time_chat_setup.less') }}
+
+.real-time-chat {
+	.xf-rtcContainer();
+	font-family: var(--chat-font-family);
+	--chat-border-radius: @xf-rtcContainer--border-radius;
+	border-radius: var(--chat-border-radius);
+
+	a,
+	a.bbCodeBlock-sourceJump,
+	a:hover,
+	a.bbCodeBlock-sourceJump:hover {
+		color: var(--link-color);
+		text-decoration: none;
+	}
+	
+	.text-primary {
+		color: var(--primary-color) !important;
+	}
+	
+	.text-details {
+		color: var(--details-color) !important;
+	}
+
+	.chat-columns {
+		display: flex;
+		height: 100%;
+		max-height: 100%;
+		min-height: 100%;
+		overflow: hidden;
+		position: relative;
+		width: 100%;
+
+		.left-column {
+			.xf-rtcRoomList();
+
+			&:after {
+				background-color: var(--border-color);
+				content: " ";
+				display: block;
+				height: 100%;
+				position: absolute;
+				top: 0;
+				right: -1px;
+				width: 1px;
+				z-index: 3;
+			}
+		}
+
+		.center-column {
+			height: 100%;
+			width: 100%;
+			position: relative;
+			z-index: 5;
+			flex: 2;
+			overflow: hidden;
+		}
+	}
+	
+	&.no-left-column {
+		.header {
+			border-left: none;
+			border-top-left-radius: var(--chat-border-radius);
+		}
+		
+		.chat-wallpaper {
+			border-top-left-radius: var(--chat-border-radius);
+			border-bottom-left-radius: var(--chat-border-radius);
+		}
+		
+		.left-column {
+			width: 0;
+			max-width: 0;
+			
+			&:after {
+				width: 0;
+			}
+			
+			.content-loader.is-active {
+				display: none;
+			}
+		}
+		
+		.messages .message-list-wrapper {
+			padding-left: 20px;
+			padding-right: 20px;
+		}
+	}
+	
+	&.connected {
+		.pinned-notices {
+			display: block;
+		}
+	}
+	
+	.left-column-header {
+		display: none;
+		padding: 0 .5rem .5rem;
+		width: 100%;
+		
+		.back-to-home-btn {
+			.m-chatButton();
+			border: 1px solid var(--border-color);
+			color: var(--primary-color);
+			background: var(--surface-color);
+			box-shadow: none;
+			transition: all .25s;
+			
+			.button-text {
+				display: flex;	
+				align-items: center;
+				transition: all .25s;
+			}
+
+			.button-text--inner {
+				transition: all .25s;
+				padding-left: 5px;
+			}
+
+			&:hover,
+			&:active,
+			&:focus {
+				background: var(--primary-color-light-filled);
+			}
+		}
+	}
+
+	.communication-content {
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+		width: 100%;
+		z-index: -2;
+		position: relative;
+
+		.content-inner {
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+			width: 100%;
+			position: relative;
+		}
+	}
+
+	.chat-wallpaper {
+		.m-fillAbsolute();
+		z-index: -1;
+		border-top-right-radius: var(--chat-border-radius);
+		border-bottom-right-radius: var(--chat-border-radius);
+		overflow: hidden;
+		transition: border-radius .2s;
+		
+		.default-wallpaper {
+			.m-fillAbsolute();
+			z-index: 1;
+
+			.chat-canvas-gradient {
+				position: absolute;
+				height: 100%;
+				width: 100%;
+				-webkit-mask-position: center;
+				mask-position: center;
+				-webkit-mask-size: cover;
+				mask-size: cover;
+			}
+			
+			.chat-canvas-pattern {
+				position: absolute;
+				height: 100%;
+				width: 100%;
+				mix-blend-mode: soft-light;
+				opacity: .5;
+			}
+		}
+
+		.custom-wallpaper {
+			.m-fillAbsolute();
+			z-index: 2;
+			background-image: var(--wallpaper-image);
+			background-size: var(--wallpaper-size);
+			background-repeat: var(--wallpaper-repeat);
+			background-position: center;
+			filter: var(--wallpaper-filter);
+			-webkit-filter: var(--wallpaper-filter);
+			transform: scale(1.05);
+		}
+	}
+
+	.chat-form {
+		width: 100%;
+		height: 100%;
+		z-index: 150;
+		overflow: hidden;
+		display: flex;
+		justify-content: start;
+		flex-direction: column;
+		background: var(--surface-color);
+		padding: 0 25px;
+
+		.title {
+			.xf-rtcChatFormTitle();
+		}
+
+		.return-back {
+			.xf-rtcChatFormReturnBack();
+		}
+		
+		.form-body {
+			display: flex;
+			flex-direction: column;
+			flex: 1 1 auto;
+			
+			> div {
+				margin: 0 auto;
+			}
+		}
+		
+		.form-body-content {
+			padding: 0 0 10px;
+			width: 100%;
+			
+			&.form-body-content--big {
+				max-width: 720px;
+			}
+			
+			.input {
+				.m-chatInput();
+				margin-bottom: 10px;
+
+				&:last-child {
+					margin-bottom: 0;
+				}
+				
+				&.select2-selection {
+					padding: 7px 11px;
+				}
+			}
+			
+			.input-line,
+			.select2 {
+				margin-bottom: 10px;
+			}
+
+			.input,
+			.quill-editor-container {
+				background: transparent;
+				border-color: var(--border-color);
+				border-radius: var(--chat-input-border-radius);
+			}
+		}
+		
+		.form-submit {
+			width: 100%;
+			display: flex;
+			flex-wrap: wrap;
+			
+			.button {
+				.m-chatButton();
+			}
+		}
+	}
+
+	.chat-header-input {
+		display: flex;
+		background: none !important;
+		box-shadow: none !important;
+		padding: 0 !important;
+		border: none !important;
+
+		.avatar-box {
+			margin-right: 7px;
+			position: relative;
+			border: 1px solid var(--border-color);
+			border-radius: 50%;
+
+			.upload-input {
+				cursor: pointer;
+				opacity: 0;
+				position: absolute;
+				left: 0;
+				top: 0;
+				bottom: 0;
+				right: 0;
+				width: 100%;
+				height: 100%;
+			}
+		}
+
+		.rtc-room-avatar {
+			color: inherit;
+			background: transparent;
+			border-radius: var(--chat-input-border-radius);
+		}
+	}
+	
+	.tag-input {
+		display: flex;
+		align-items: center;
+
+		.tag-prefix {
+			margin-right: .5px;
+			white-space: nowrap;
+		}
+
+		.input {
+			background: none !important;
+			box-shadow: none !important;
+			padding: 0 !important;
+			margin: 0 !important;
+			border: none !important;
+			font-weight: 500;
+		}
+	}
+	
+	.room-list,
+	.room-items,
+	.scrollable {
+		width: 100%;
+	}
+	
+	.room-items {
+		z-index: 10;
+	}
+
+	.room-items-container {
+		padding: 0 5px;
+	}
+	
+	.rooms-placeholder {
+		opacity: 0;
+		visibility: hidden;
+		display: none;
+		transition: opacity .25s ease-in-out;
+		margin: 0 auto;
+		padding: 0 16px;
+		position: relative;
+		text-align: center;
+		top: 40%;
+		transform: translateY(-50%);
+		z-index: 30;
+
+		&.visible {
+			opacity: 1;
+			visibility: visible;
+			display: block;
+		}
+		
+		.placeholder-icon {
+			margin-bottom: 17px;
+		}
+		
+		.placeholder-title {
+			font-size: 20px;
+			font-weight: 500
+		}
+	}
+	
+	.btn-corner {
+		.xf-rtcCornerButton();
+	}
+	
+	.room {
+		.xf-rtcRoom();
+
+		&.selected {
+			.xf-rtcRoomSelected();
+
+			.room-title,
+			.room-latest-message,
+			.room-latest-message.type--system,
+			.room-extraInfo,
+			.room-latest-message .text-highlight,
+			.room-latest-message .typer {
+				color: var(--primary-color-contrast);
+			}
+			
+			.room-latest-message .typer .dots .dot {
+				background: var(--primary-color-contrast);
+			}
+
+			.room-extraInfo {
+				.extra-item--attention {
+					color: var(--primary-color-contrast);
+				}
+			}
+
+			.badge--unread {
+				background: var(--surface-color);
+				color: var(--primary-color);
+			}
+		}
+		
+		&:not(.selected):hover {
+			.xf-rtcRoomHovered();
+		}
+		
+		.rtc-room-avatar {
+			.xf-rtcRoomAvatar();
+		}
+		
+		.room-title-with-markers {
+			display: flex;
+			white-space: nowrap;
+		}
+
+		.room-title {
+			.xf-rtcRoomTitle();
+			.m-overflowEllipsis();
+		}
+
+		.room-content {
+			flex: 1;
+			padding-left: 10px;
+			overflow: hidden;
+		}
+
+		.room-latest-message {
+			.xf-rtcRoomLatestMessage();
+			
+			&.type--system,
+			.text-highlight,
+			.typer {
+				color: var(--primary-color);
+			}
+			
+			.typer .dots .dot {
+				background: var(--primary-color);
+			}
+			
+			.message-sender {
+				padding-right: 2px;
+				white-space: nowrap;
+			}
+			
+			.message-text {
+				display: flex;
+				overflow: hidden;
+			}
+
+			.bbWrapper {
+				.m-overflowEllipsis();
+			}
+		}
+		
+		&.is-typing {
+			.room-latest-message {
+				.message-text {
+					display: none;
+				}
+
+				.typer {
+					display: block;
+				}
+			}
+		}
+
+		.room-extra {
+			margin-left: auto;
+			padding-left: 5px;
+			display: flex;
+			align-items: center;
+			font-weight: normal;
+		}
+
+		.room-extraInfo {
+			.xf-rtcRoomExtraInfo();
+			
+			li {
+				margin-left: 5px;
+				
+				&:first-child {
+					margin-left: 0;
+				}
+			}
+			
+			.extra-item {
+				.xf-rtcRoomExtraItem();	
+
+				&--attention {
+					.xf-rtcRoomExtraItemAttention();
+				}
+			}
+		}
+		
+		.read-mark {
+			display: none;
+		}
+		
+		.badge--unread {
+			margin-top: -2px;
+		}
+	}
+	
+	.typer {
+		width: 100%;
+		display: none;
+		overflow: hidden;
+		
+		.typer--activity {
+			display: flex;
+			align-items: center;
+		}
+
+		.typers {
+			margin-left: 5px;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.dots {
+			display: flex;
+			opacity: 1;
+			line-height: inherit;
+			-o-transition: opacity 350ms linear;
+			transition: opacity 350ms linear;
+
+			.dot {
+				&:nth-child(2) {
+					-o-animation-delay: 0.36666667s;
+					animation-delay: 0.36666667s;
+				}
+
+				&:nth-child(3) {
+					-o-animation-delay: 0.73333333s;
+					animation-delay: 0.73333333s;
+				}
+
+				display: inline-block;
+				vertical-align: top;
+				width: 4px;
+				height: 4px;
+				border-radius: 50%;
+				opacity: 0.2;
+
+				margin-right: 3px;
+				background: @xf-rtcRoomStatus--color;
+				vertical-align: middle;
+				-o-animation: 1.1s linear 0s infinite typer;
+				animation: 1.1s linear 0s infinite typer;
+			}
+		}
+	}
+
+	.tag {
+		font-weight: 500;
+	}
+	
+	.badge {
+		--size: 22px;
+		--padding: 7px;
+		background: var(--primary-color);
+		border-radius: ~"calc(var(--size)/2)";
+		color: #fff;
+		font-size: 14px;
+		font-weight: 500;
+		height: var(--size);
+		line-height: var(--size);
+		min-width: var(--size);
+		padding: 0 var(--padding);
+		text-align: center;
+		position: relative;
+
+		transition: transform .25s;
+		transform: scale(1);
+
+		&.is-hidden {
+			transition: none;
+			transform: scale(0);
+			position: absolute;
+		}
+	}
+
+	.room-name {
+		display: flex;
+		align-items: baseline;
+	}
+
+	.room-status {
+		.title,
+		.typer {
+			.xf-rtcRoomStatus();
+		}
+
+		&.is-typing {
+			.title {
+				display: none;
+			}
+
+			.typer {
+				display: block;
+			}
+		}
+	}
+
+	.header {
+		.xf-rtcHeader();
+		border-top-right-radius: var(--chat-border-radius);
+		transition: border-radius .2s;
+		
+		&.is-shown {
+			display: flex;
+		}
+		
+		&.header--popup {
+			display: none;
+		}
+		
+		.header-main {
+			flex: 1;
+			padding-left: 18px;
+			line-height: 20px;
+			.m-overflowEllipsis();
+			
+			.room-main {
+				display: inline-flex;
+				color: inherit;
+
+				.m-overflowEllipsis();
+				max-width: 100%;
+				
+				.tag {
+					.m-overflowEllipsis();
+				}
+			}
+			
+			.room-name {
+				.m-overflowEllipsis();
+			}
+		}
+
+		.header-buttons {
+			height: 100%;
+			display: flex;
+
+			.header-button {
+				.xf-rtcHeaderButton();
+				
+				&--pl-sm {
+					padding-left: 5px;
+				}
+
+				&.header-button--toggleLeft {
+					display: none;
+				}
+				
+				&.header-button--popup {
+					display: none;
+				}
+
+				&:hover {
+					.xf-rtcHeaderButtonHover();
+				}
+
+				&:last-child {
+					margin-right: 0;
+				}
+			}
+		}
+		
+		.header-avatar {
+			.rtc-room-avatar,
+			.avatar {
+				width: 42px;
+				height: 42px;
+				font-size: 23px;
+			}
+		}
+	}
+
+	.connecting-container {
+		padding: 15px 0;
+		display: flex;
+		justify-content: center;
+		position: absolute;
+		top: 0;
+		width: 100%;
+		
+		.connecting-notice {
+			.xf-rtcConnectingNotice();
+		}
+	}
+
+	.pinned-notices {
+		.xf-rtcPinnedNotices();
+		display: none;
+		
+		&.is-hidden {
+			display: none;
+		}
+
+		.pinned-notice {  
+			display: flex;
+			.xf-rtcPinnedNotice();
+			
+			.content {
+				flex: 1 1 auto;
+			}
+			
+			.notice-closer {
+				color: @xf-rtcHeaderButton--color;
+				cursor: pointer;
+			}
+		}
+	}
+	
+	.room-list {
+		height: 100%;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		position: relative;
+		
+		.default-rooms {
+			margin-bottom: 10px;
+		}
+		
+		.content-loader--top {
+			padding-top: 0;
+		}
+	}
+
+	.scrollable-container {
+		flex: 1 1 auto;
+		position: relative;
+		height: 100%;
+	}
+	
+	.scrollable {
+		display: block;
+		height: auto;
+		-ms-overflow-style: none;
+		overflow-x: hidden;
+		overflow-y: auto;
+		overflow-y: overlay;
+		scrollbar-color: transparent transparent;
+		scrollbar-width: thin;
+		// fix brave
+		// https://community.brave.com/t/scrollbar-width-not-working/464113
+		&::-webkit-scrollbar { display: none; }
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		top: 0;
+		width: 100%;
+		
+		&.is-scrolling {
+			.messages-group.has-sticky-dates {
+				.messages-group-title {
+					opacity: .99999;
+				}
+			}
+		}
+	}
+
+	.messages {
+		z-index: 1;
+
+		.message-list-wrapper {
+			display: flex;
+			flex-direction: column;
+			justify-content: end;
+			margin: 0 auto;
+			width: 100%;
+			min-height: 100%;
+			padding-left: 10px;
+			padding-right: 10px;
+			transition: padding .25s;
+
+			.xf-rtcMessagesWrapper();
+
+			&:after {
+				content: " ";
+				height: 2px;
+			}
+		}
+
+		.messages-group {
+			margin-bottom: 6px;
+			position: relative;
+			
+			&.has-sticky-dates {
+				.messages-group-title {
+					opacity: .00001;
+				}
+			}
+			
+			.sticky_sentinel {
+				left: 0;
+				pointer-events: none;
+				position: absolute;
+				right: 0;
+				visibility: hidden;
+				
+				&--top {
+					height: .25rem;
+					top: 0;
+				}
+			}
+			
+			.messages-group-title {
+				position: sticky;
+				top: 4px;
+				z-index: 20;
+				margin: 0 auto;
+				transition: opacity .3s ease;
+				pointer-events: none;
+			}
+			
+			.messages-group-content {
+				display: flex;
+				flex-direction: column;
+			}
+			
+			&.messages-group--day:last-child {
+				margin-bottom: 0;
+				
+				.messages-group:last-child {
+					margin-bottom: 0;
+				}
+			}
+
+			.message:last-child {
+				margin-bottom: 0;	
+			}
+
+			.content-icon.group-content-icon {
+				display: flex;
+			}
+			
+			.message {
+				&:not(:first-child) {
+					.content-author {
+						display: none;
+					}
+				}
+				
+				&:not(:last-child) {
+					.bubble-tail {
+						display: none;
+					}
+				}
+
+				&:not(.is-visitor) {
+					&:not(:first-child) {
+						.content-bubble-container .content-bubble {
+							border-top-left-radius: @xf-rtcMessageBubble--border-radius / 2;
+						}
+					}
+
+					&:not(:last-child) {
+						.content-bubble-container .content-bubble {
+							border-bottom-left-radius: @xf-rtcMessageBubble--border-radius / 2;
+						}
+					}
+				}
+
+				&.is-visitor {
+					&:not(:first-child) {
+						.content-bubble-container .content-bubble {
+							border-top-right-radius: @xf-rtcMessageBubble--border-radius / 2;
+						}
+					}
+
+					&:not(:last-child) {
+						.content-bubble-container .content-bubble {
+							border-bottom-right-radius: @xf-rtcMessageBubble--border-radius / 2;
+						}
+					}
+				}
+			}
+			
+			.content-icon {
+				bottom: 0;
+				display: none;
+				flex-direction: column-reverse;
+				left: 0;
+				pointer-events: none;
+				position: absolute;
+				right: 0;
+				top: 0;
+				z-index: 20;
+
+				.avatar {
+					cursor: pointer;
+					pointer-events: all;
+					position: sticky;
+					top: 0;
+					border-radius: 100%;
+					bottom: .25rem;
+				}
+
+				.avatar.avatar--s {
+					font-size: 27px;
+					width: 40px;
+					height: 40px;
+				}
+			}
+		}
+
+		.message {
+			color: var(--message-text-color);
+			display: flex;
+			border: none;
+			position: relative;
+			
+			.xf-rtcMessage();
+
+			&:after {
+				background: var(--highlighted-message-bg);
+				position: absolute;
+				left: -50%;
+				right: -50%;
+				top: -4px;
+				bottom: -4px;
+				content: ' ';
+				z-index: -1;
+				opacity: 0;
+				transition: opacity .25s;
+			}
+
+			&.message--system {
+				justify-content: center;
+				margin-bottom: 6px;
+				
+				.message-text {
+					.xf-rtcSystemMessage();
+					
+					a {
+						color: inherit;
+					}
+				}
+			}
+
+			&.is-highlight {
+				&:after {
+					opacity: 1;
+				}
+			}
+			
+			&.is-removing {
+				transform: translateX(-100%);
+			}
+
+			&.is-visitor {
+				--details-color: var(--visitor-details-color);
+				--bubble-background: var(--visitor-bubble-background);
+				--message-text-color: var(--visitor-message-text-color);
+				--input-bg-color: var(--visitor-form-input-bg-color);
+				--primary-color-light-filled: var(--visitor-primary-color-light-filled);
+
+				&.is-removing {
+					transform: translateX(100%);
+				}
+				
+				flex-direction: row-reverse;
+				
+				.content-icon {
+					display: none;
+				}
+				
+				.content-author {
+					display: none;
+				}
+				
+				.content-bubble-container {
+					margin-left: 0;
+
+					.content-bubble {
+						border-bottom-right-radius: 0;
+					}
+				}
+				
+				.beside-buttons {
+					left: var(--beside-buttons-margin);
+					right: unset;
+				}
+
+				.message-markers {
+					margin-left: -4px;
+					padding-right: 0;
+					
+					.markers-inner {
+						bottom: 4px;
+						padding-right: 0;
+					}
+					
+					.time:after {
+						.m-faContent(@fa-var-check);
+					}
+				}
+				
+				.bubble-tail {
+					right: -8.4px;
+					transform: translateY(1px) scaleX(-1);
+				}
+			}
+			
+			&:not(.is-visitor) {
+				.content-bubble {
+					border-bottom-left-radius: 0;
+				}
+				
+				.message-markers {
+					margin-left: -4px;
+					
+					.markers-inner {
+						margin-bottom: 4px;
+					}
+				}
+			}
+
+			&.is-sending {
+				.message-markers {
+					.time:after {
+						.m-faContent(@fa-var-clock);
+					}
+				}
+				
+				blockquote {
+					&[data-quote] {
+						&:before {
+							content: attr(data-quote) " {{ phrase('qle_said') }}{$xf.language.label_separator}";
+							color: var(--primary-color);
+							font-weight: 500;
+						}
+					}
+				}
+			}
+			
+			&.is-pm {
+				.xf-rtcPrivateMessageBubble();
+			}
+			
+			&.is-form {
+				--bubble-background: var(--highlighted-message-bg);
+				--input-bg-color: var(--highlighted-message-bg);
+				--form-input-bg-color: var(--highlighted-message-bg);
+				--details-color: rgba(255, 255, 255, .75);
+				--primary-color: #fff;
+				color: #fff;
+				
+				a {
+					color: #fff;
+				}
+				
+				.content-bubble-container {
+					width: 350px;
+					
+					.content-bubble {
+						border-bottom-left-radius: @xf-rtcMessageBubble--border-radius;
+						border-bottom-right-radius: @xf-rtcMessageBubble--border-radius;
+					}
+				}
+
+				.bubble-tail {
+					display: none;
+				}
+				
+				.input {
+					background: var(--highlighted-message-bg);
+					color: #fff;
+					border: none;
+
+					&::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+						color: rgba(255, 255, 255, .65);
+						opacity: 1; /* Firefox */
+					}
+
+					&:-ms-input-placeholder { /* Internet Explorer 10-11 */
+						color: rgba(255, 255, 255, .65);
+					}
+
+					&::-ms-input-placeholder { /* Microsoft Edge */
+						color: rgba(255, 255, 255, .65);
+					}
+				}
+			}
+
+			&.has-been-read {
+				.message-markers {
+					.time {
+						&:after {
+							.m-faContent(@fa-var-eye);
+						}
+					}
+				}
+			}
+			
+			&.has-actions {
+				.content-bubble-container {
+					.content-bubble {
+						border-bottom-left-radius: 6px;
+						border-bottom-right-radius: 6px;
+					}
+				}
+			}
+			
+			&:hover {
+				.beside-buttons {
+					opacity: 1;
+				}
+			}
+			
+			.content-author {
+				font-size: 14px;
+				font-weight: 500;
+			}
+
+			.content-bubble-container {
+				max-width: 69%;
+				position: relative;
+				margin-left: 45px;
+			}
+
+			.content-bubble {
+				position: relative;
+				display: flex;
+				flex-direction: column-reverse;
+				.xf-rtcMessageBubble();
+				
+				&.has-footer {
+					.message-markers {
+						display: block;
+					}
+				}
+			}
+
+			.beside-buttons {
+				--beside-buttons-count: {{ $xf.options.realTimeChatEnabledBbCodes.quote ? 2 : 1 }};				
+				--beside-buttons-width: ~"calc(var(--beside-button-size) * var(--beside-buttons-count))";
+				--beside-buttons-margin-abs: ~"calc(var(--beside-buttons-width) + 7px)";
+				--beside-buttons-margin: ~"calc(var(--beside-buttons-margin-abs) * -1)";
+				
+				position: absolute;
+				right: var(--beside-buttons-margin);
+				bottom: 0;
+				display: flex;
+				gap: 4px;
+				transition: opacity .2s ease-in-out,transform .2s ease-in-out;
+				opacity: 0;
+
+				.btn {
+					align-items: center;
+					background: var(--highlighted-message-bg);
+					border-radius: 50%;
+					color: #fff;
+					cursor: pointer;
+					display: flex;
+					font-size: var(--beside-button-font-size);
+					height: var(--beside-button-size);
+					justify-content: center;
+					transform: translateX(0);
+					width: var(--beside-button-size);
+					-webkit-tap-highlight-color: rgba(0,0,0,0);
+					-webkit-tap-highlight-color: transparent;
+				}
+			}
+
+			.bubble-actions {
+				display: flex;
+				flex-direction: column;
+				margin-top: 4px;
+				
+				.button-group {
+					display: flex;
+					gap: 4px;
+					margin-bottom: 4px;
+					
+					&:last-child {
+						margin-bottom: 0;
+					}
+					
+					.button {
+						margin-bottom: 0;
+						flex: 1;
+					}
+				}
+				
+				.button {
+					display: block;
+					color: #fff;
+					width: auto;
+					border: none;
+					background: var(--highlighted-message-bg);
+					padding: 10px;
+					font-weight: 500;
+					font-size: var(--message-font-size);
+					border-radius: 12px;
+					font-family: var(--chat-font-family);
+					margin-bottom: 4px;
+					position: relative;
+					
+					&:last-child {
+						margin-bottom: 0;
+					}
+					
+					&:hover:after {
+						opacity: 0.08;
+					}
+					
+					&:after {
+						background-color: #fff;
+						border-radius: inherit;
+						bottom: 0;
+						content: " ";
+						display: block;
+						left: 0;
+						opacity: 0;
+						position: absolute;
+						right: 0;
+						top: 0;
+						z-index: -1;
+					}
+				}
+			}
+			
+			.message-markers {
+				direction: ltr;
+				display: inline-flex;
+				float: right;
+				font-size: 12px;
+				line-height: 1;
+				pointer-events: none;
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				user-select: none;
+				vertical-align: middle;
+				visibility: hidden;
+				z-index: 1;
+				padding: 0;
+				padding-right: 3px;
+
+				> span {
+					margin-right: 6px;
+				}
+
+				.markers-inner {
+					align-items: center;
+					bottom: 0;
+					color: var(--details-color);
+					display: flex;
+					line-height: 1;
+					padding: 0;
+					pointer-events: all;
+					position: absolute;
+					right: 0;
+					visibility: visible;
+					white-space: nowrap;
+					padding-right: 3px;
+					
+					> span {
+						margin-right: 6px;
+					}
+				}
+				
+				.iconic {
+					display: flex;
+					
+					& + .iconic {
+						margin-left: -6px;
+					}
+					
+					&:after {
+						.m-faBase();
+						padding-left: 2px;
+					}
+				}
+
+				.italic {  
+					font-style: italic;
+				}
+				
+				.bold {
+					font-weight: 600;
+				}
+				
+				.translation-error:after {
+					.m-faContent(@fa-var-exclamation-circle);
+				}
+			}
+			
+			.message-footer {
+				display: flex;
+				flex-wrap: wrap;
+				-webkit-user-select: none;
+				-moz-user-select: none;
+				user-select: none;
+
+				.reactionsBar {
+					position: relative;
+					.xf-rtcMessageReactionsBar();
+					margin-top: 3px;
+					margin-right: 6px;
+
+					&:hover {
+						&:after {
+							background-color: @xf-rtcMessageReactionsBar--background-color;
+							border-radius: inherit;
+							bottom: 0;
+							content: " ";
+							left: 0;
+							opacity: .3;
+							position: absolute;
+							right: 0;
+							top: 0;
+							z-index: 0;
+						}
+					}
+					
+					.reactionSummary {
+						height: auto;
+						line-height: 1;
+						padding-left: 1px;
+						
+						li {
+							padding: 0;
+							background: none;
+							height: 21px;
+							width: 21px;
+						}
+						
+						.reaction {
+							transform: scale(0.9);
+							top: 1px;
+						}
+					}
+					
+					.reactionsBar-link {
+						font-weight: 500;
+						text-decoration: none;
+						margin-left: 2px;
+						z-index: 2;
+						position: relative;
+						color: var(--primary-color);
+						
+						&:hover {
+							color: var(--primary-color);
+						}
+					}
+				}
+			}
+
+			.bbWrapper {
+				display: inline;
+				
+				p {
+					margin: 0;
+					
+					&:first-child {
+						display: inline;
+					}
+				}
+				
+				blockquote {
+					margin: 0;
+					margin-top: 4px;
+				}
+				
+				.mention {
+					padding: 0;
+					margin: 0;
+					color: var(--primary-color);
+					
+					> span {
+						margin: 0;
+					}
+				}
+
+				a.username {
+					color: var(--primary-color);	
+				}
+				
+				.bbMediaWrapper, .bbMediaJustifier, .bbOembed {
+					width: unset;
+				}
+				
+				.bbMediaWrapper {
+					padding-left: 10px;
+					border-left: 2px solid var(--primary-color);
+					position: relative;
+					
+					.imgur-embed-iframe-pub {
+						margin-left: -10px !important;
+						padding-left: 10px !important;
+					}
+				}
+
+				.imgur-embed-iframe-pub {
+					border-radius: 0;
+					margin-top: 3px !important;
+					box-shadow: none;
+					margin-bottom: 0 !important;
+					border: none;
+				}
+
+				.bbImage {
+					max-height: 300px;
+				}
+				
+				.fauxBlockLink-blockLink {
+					&:before {
+						display: none;
+					}
+				}
+			}
+		}
+	}
+
+	.bbCodeBlock {
+		margin: 0;
+		margin-top: 4px;
+		overflow: hidden;
+		background: none;
+		border-radius: 0;
+		border: none;
+		border-left: 2px solid var(--primary-color);
+		padding-left: 8px;
+		padding-top: 0;
+		padding-bottom: 0;
+		
+		.bbCodeBlock-title {
+			padding: 0;
+			color: var(--primary-color);
+			font-weight: 500;
+			background: none;
+			font-size: ~"calc(var(--message-font-size) - 1px)";
+			line-height: 1;
+		}
+		
+		.bbCodeBlock-content {
+			padding: 0;
+			padding-top: 2px;
+			font-size: ~"calc(var(--message-font-size) - 1px)";
+			background: none;
+		}
+
+		.bbCodeCode {
+			padding-bottom: 0;
+			font-size: ~"calc(var(--message-font-size) - 1px)";
+		}
+		
+		.bbCodeBlock-expandLink {
+			top: 80px;
+			background: linear-gradient(to bottom, rgba(245,245,245,0) 0%, var(--bubble-background) 60%);
+			
+			a {
+				color: var(--details-color);
+			}
+		}
+	}
+	
+	.message-attachments {
+		overflow: hidden;
+		margin: -4px -10px 0;
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+		
+		.attachmentList {
+			display: block;
+		}
+		
+		.block-textHeader {
+			display: none;
+		}
+		
+		.attachUploadList {
+			.file {
+				.file-insert {
+					display: none;
+				}
+				
+				.file-delete {
+					display: none;
+				}
+			}
+		}
+		
+		.file {
+			display: flex;
+			align-items: center;
+			background: none;
+			padding: .25rem 10px;
+			
+			&:first-child {
+				padding-top: .5rem;
+			}
+			
+			&:last-child {
+				padding-bottom: .5rem;
+			}
+			
+			&:after {
+				padding-bottom: 0;
+			}
+			
+			.file-content {
+				overflow: hidden;
+			}
+			
+			.file-preview,
+			.file-content,
+			.file-info {
+				position: unset;
+				top: unset;
+				left: unset;
+			}
+			
+			.file-preview {
+				--file-preview-size: 54px;
+				
+				height: var(--file-preview-size);
+				width: var(--file-preview-size);
+				max-height: var(--file-preview-size);
+				max-width: var(--file-preview-size);
+				min-width: var(--file-preview-size);
+				min-height: var(--file-preview-size);
+				border-radius: 4px;
+				overflow: hidden;
+				flex-basis: 100%;
+				
+				&:after {
+					position: absolute;
+					width: 100%;
+					height: 100%;
+					top: 0;
+					left: 0;
+					right: 0;
+					bottom: 0;
+				}
+				
+				img,video {
+					position: relative;
+					left: unset;
+					top: unset;
+					height: 100%;
+					width: 100%;
+				}
+			}
+
+			.file-info {
+				background: no-repeat;
+				color: unset;
+				text-shadow: none;
+				line-height: 1.4;
+				height: 100%;
+				font-size: unset;
+				display: inline-block;
+			}
+			
+			.file-name {
+				font-weight: 500;
+			}
+			
+			.file-meta {
+				color: var(--details-color);
+			}
+
+			.file-typeIcon {
+				font-size: 50px;
+			}
+		}
+	}
+
+	.content-loader {
+		width: 100%;
+		text-align: center;
+		display: none;
+		position: absolute;
+		z-index: 10;
+		
+		&--top {
+			top: 0;
+			padding-top: 15px;
+		}
+		
+		&--bottom {
+			bottom: 0;
+		}
+		
+		&.is-active {
+			display: block;
+		}
+
+		.spinner {
+			opacity: 1;
+			width: 48px;
+			height: 48px;
+			border: 5px solid var(--highlighted-message-bg);
+			border-bottom-color: transparent;
+			border-radius: 50%;
+			display: inline-block;
+			box-sizing: border-box;
+			animation: rotation 1s linear infinite;
+		}
+	}
+
+	.ctrls {
+		display: flex;
+
+		.column {
+			flex: 0 0 auto;
+			vertical-align: middle;
+		}
+	}
+
+	.action-buttons {
+		display: flex;
+	}
+	
+	.message-editor {
+		display: flex;
+		justify-content: center;
+		max-width: 720px;
+		margin: 0 auto 15px;
+		width: 100%;
+		padding-top: 4px;
+		padding-left: 10px;
+		padding-right: 10px;
+		
+		&:not(.is-shown) {
+			opacity: 0;
+			visibility: hidden;
+			height: 5px;
+		}
+
+		.bubble-tail {
+			right: -8.4px;
+			transform: translateY(1px) scaleX(-1);
+		}
+		
+		.attachmentUploads {
+			padding-bottom: 10px;
+			border-bottom: 1px solid var(--border-color);
+			margin-bottom: 0;
+		}
+
+		.quill-editor-container {
+			--editor-background: var(--surface-color);
+			--bubble-background: var(--editor-background);
+			box-shadow: 0 1px 8px 1px rgba(0,0,0,.12);
+			border: none;
+			width: ~"calc(100% - 54px)";
+			max-width: ~"calc(100% - 54px)";
+			transition: border-radius .8s;
+			border-radius: 1rem;
+			border-bottom-right-radius: 0;
+
+			.ql-editor {
+				border: none;
+				max-height: 88px;
+				
+				blockquote[data-quote] {
+					&:before {
+						color: var(--primary-color);
+						background: none;
+						padding: 0;
+						font-weight: 500;
+					}
+					
+					.bbCodeBlock-remove {
+						padding: 0;
+					}
+				}
+			}
+			
+			.ql-button {
+				color: var(--surface-color-secondary);
+				height: 100%;
+				padding-top: 0;
+				padding-bottom: 0;
+				display: flex;
+				align-items: center;
+			}
+			
+			.ql-button.ql-button--avatar {
+				.avatar {
+					width: 21px;
+					height: 21px;
+				}
+			}
+			
+			.ql-picker-options {
+				margin-top: -100px;
+			}
+		}
+
+		.btn-send-container {
+			padding-left: 5px;
+			display: flex;
+			align-items: end;
+			
+			.btn-send {
+				.xf-rtcSendButton();
+				
+				&.is-disabled {
+					opacity: .7;
+				}
+				
+				&:hover {
+					background: var(--primary-color-darken);
+				}
+			}
+		}
+		
+		.attachUploadList {
+			padding: 10px 16px 0;
+		}
+
+		.file {
+			background: none;
+			width: 80px;
+			height: 80px;
+			border-radius: 6px;
+			overflow: hidden;
+			
+			a {
+				color: #fff;
+			}
+		}
+		
+		.file-insert {
+			display: none;
+		}
+		
+		.mention {
+			padding: 0;
+			margin: 0;
+			background: none;
+			
+			> span {
+				margin: 0;
+				color: var(--primary-color);
+			}
+		}
+	}
+	
+	.chat-command {
+		&.is-pinned {
+			.action.action--commandPin {
+				color: var(--primary-color);
+			}
+		}
+	}
+	
+	.message-action-container-wrapper {
+		display: none;
+	}
+	
+	.message-action-container {
+		display: flex;
+		padding: 10px;
+		border-bottom: 1px solid var(--border-color);
+
+		.icon {
+			display: flex;
+			align-items: center;
+			font-size: 17px;
+			color: var(--primary-color);
+			width: 22px;
+			justify-content: center;
+		}
+
+		.content {
+			padding-left: 7px;
+			font-size: 14px;
+			line-height: 1.3;
+			overflow: hidden;
+
+			.title {
+				font-weight: 550;
+				color: var(--primary-color);
+			}
+			
+			.message-text {
+				color: var(--surface-color-muted);
+				opacity: .8;
+				.m-overflowEllipsis();
+				white-space: nowrap;
+			}
+		}
+
+		.actions {
+			display: flex;
+			align-items: center;
+			margin-left: auto;
+
+			.action {
+				height: 100%;
+				display: flex;
+				align-items: center;
+				cursor: pointer;
+				font-size: 21px;
+				padding-right: 10px;
+				padding-left: 10px;
+				color: var(--surface-color-muted);
+			}
+		}
+	}
+
+	.bubble-tail {
+		fill: var(--bubble-background);
+		display: block;
+		height: 20px;
+		position: absolute;
+		transform: translateY(1px);
+		width: 11px;
+		z-index: 10;
+		margin-left: -8.4px;
+		bottom: 0;
+	}
+
+	.ql-button {
+		&.ql-button--attachment {
+			position: relative;
+
+			.button--link {
+				text-indent: -9999px;
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				height: 100%;
+				width: auto;
+				opacity: 0;
+				z-index: 20;
+			}
+		}
+	}
+	
+	.chat-message-form {	
+		min-width: 250px;
+		padding-bottom: 5px;
+		
+		.chat-input {
+			.m-chatInput();
+			background: var(--form-input-bg-color);
+		}
+		
+		.form-header {
+			margin: 0;
+			font-size: 16px;
+			font-weight: 500;
+			margin-bottom: 5px;
+		}
+		
+		.form-body {
+			> .input {
+				.m-chatInput();
+				background: var(--form-input-bg-color);
+				padding: 10px 12px;
+				margin-top: 5px;
+				border-radius: 6px;
+				
+				.avatar-box {
+					border: none;
+				}
+
+				.rtc-room-avatar {
+					background: var(--form-input-bg-color);
+					border-radius: 50%;
+				}
+			}
+			
+			.button {
+				.m-chatButton();
+			}
+			
+			> .inputChoices {
+				margin-top: 5px;
+			}
+			
+			.inputGroup {
+				.input[type="number"], .input.input--number {
+					max-width: 100px;
+				}
+				
+				&.inputGroup--joined .inputGroup-text {
+					color: var(--primary-color);
+					background: var(--input-bg-color);
+					border: none;
+					width: 25px;
+				}
+			}
+			
+			.form-line {
+				&.form-line--margined {
+					margin-bottom: 10px;
+					
+					&:last-child {
+						margin-bottom: 0;
+					}
+				}
+			}
+
+			.space-line {
+				margin-top: 5px;
+				
+				&.space-line--md {
+					margin-top: 10px;
+				}
+				
+				&:first-child {
+					margin-top: 0;
+				}
+			}
+			
+			.hScroller-scroll {
+				scrollbar-color: transparent transparent;
+				scrollbar-width: thin;
+				
+				// fix brave
+				// https://community.brave.com/t/scrollbar-width-not-working/464113
+				&::-webkit-scrollbar { visibility: hidden; }
+			}
+		}
+
+		.form-submit {
+			display: flex;
+			padding-top: 10px;
+			flex-direction: column;
+			
+			.button {
+				.m-chatButton();
+			}
+		}
+		
+		.formRow {
+			> dt {
+				background: none;
+				border-right: none;
+				padding-top: 4px;
+				padding-right: 0;
+				padding-left: 0;
+			}
+			
+			> dd {
+				padding-top: 4px;
+				padding-bottom: 4px;
+			}
+			
+			&.formRow--input {
+				> dt {
+					padding-top : 10px;
+				}
+			}
+
+			@media (max-width: @xf-formResponsive) {
+				> dt {
+					padding: 0;
+					padding-bottom: 5px;
+				}
+
+				> dd {
+					padding: 0;
+					padding-bottom: 7.5px;
+				}
+			}
+		}
+	}
+
+	.page-nav-submit {
+		&.fix-double-brs {
+			margin-top: -15px;
+			padding-top: 0;
+		}
+	
+		padding-top: 4px;
+	
+		.pageNav-page {
+			padding: 0;
+			border: none;
+			box-shadow: none;
+			background: none;
+			padding-right: 5px;
+			
+			&:hover {
+				> a:before {
+					opacity: 1;
+				}
+			}
+			
+			> a {
+				.m-chatButton();
+				background: var(--highlighted-message-bg);
+				z-index: 1;
+				position: relative;
+				
+				&:before {
+					content: ' ';
+					.m-fillAbsolute();
+					background: var(--highlighted-message-bg);
+					z-index: -1;
+					border-radius: inherit;
+					opacity: 0;
+				}
+			}
+
+			&.pageNav-page--current {
+				> a:before {
+					opacity: 1;
+				}
+			}
+		}
+		
+		.pageNav-jump {
+			.m-chatButton();
+			position: relative;
+			background: var(--highlighted-message-bg);
+
+			&:before {
+				content: ' ';
+				.m-fillAbsolute();
+				background: var(--highlighted-message-bg);
+				z-index: -1;
+				border-radius: inherit;
+				opacity: 0;
+				transition: opacity .2s;
+			}
+			
+			&:hover {
+				&:before {
+					opacity: 1;
+				}
+			}
+		}
+	}
+
+	.button,
+	.button--primary {
+		color: var(--primary-color-contrast);
+		background: var(--primary-color);
+		
+		&:hover,
+		&:focus {
+			background: var(--primary-color-darken);
+		}
+	}
+	
+	.inputChoices-choice {
+		i {
+			&:after,
+			&:before {
+				color: var(--primary-color);
+			}
+		}
+	}
+
+	.hScroller-action {
+		&:after {
+			color: var(--highlighted-message-bg);
+		}
+	}
+
+	.tabs--standalone .tabs-tab.is-active {
+		color: var(--primary-color);
+		border-color: var(--primary-color);
+	}
+	
+	.m-chatResponsive(925px);
+}
+
+.has-touchevents {
+	.real-time-chat {
+		.messages .message {
+			.content-bubble-container {
+				max-width: ~"calc(100% - 5.5625rem)";
+			}
+
+			.beside-buttons {
+				display: none;
+			}
+		}
+	}
+}
+
+.rtc-slide-menu {
+	position: relative;
+	overflow: hidden;
+	
+	&.is-open {
+		.left-slide {
+			left: -100%;
+		}
+
+		.right-slide {
+			right: 0;
+		}
+	}
+	
+	.left-slide {
+		.m-fillAbsolute();
+		transition: left .15s;
+		left: 0;
+		right: unset;
+		z-index: 1;
+	}
+	
+	.right-slide {
+		width: 100%;
+		.m-fillAbsolute();
+		transition: right .15s;
+		right: -100%;
+		left: unset;
+		z-index: 2;
+	}
+}
+
+.rtc-flat-menu {
+	margin-top: 0;
+	border-radius: 20px;
+	box-shadow: none !important;
+	min-width: unset;
+	background: none;
+	text-align: right;
+	z-index: 905 !important;
+	
+	.menu-arrow {
+		display: none;
+	}
+	
+	.menu-content {
+		position: relative;
+		z-index: 20;
+		
+		float: right;
+		min-width: 105px;
+		border-top: none;
+		border-radius: 10px;
+		margin-top: 1px;
+		.m-dropShadow(0, 5px, 10px, 0, .35);
+	}
+
+	.menu-linkRow {  
+		padding: 7px 8px;
+		font-size: 14px;
+		border-left: none;
+		border-radius: 10px;
+		margin: 3px;
+		white-space: nowrap;
+		
+		.enter-icon {
+			float: right;
+			color: @xf-textColorMuted;
+			padding-left: 15px;
+			
+			i {
+				width: auto;
+			}
+		}
+		
+		&.menu-linkRow--warning {
+			color: @xf-errorColor;
+			
+			&:hover {	
+				background: @xf-errorBg;
+			}
+		}
+	}
+	
+	.menu-reactions {
+		position: relative;
+	}
+
+	.menu-linkReactions {
+		position: relative;
+		z-index: 10;
+		
+		display: inline-flex;
+		padding: 3px 5px;
+		background: @xf-contentBg;
+		border-radius: 25px;
+		.m-dropShadow(0, 5px, 10px, 0, .35);
+
+		.message-react {
+			border-radius: 25px;
+
+			&.is-selected {
+				background: darken(@xf-contentHighlightBg, 15%);
+			}
+		}
+
+		.reaction {
+			flex: 1;
+			-webkit-transform: scale(.8);
+			-ms-transform: scale(.8);
+			transform: scale(.8);
+			transition: transform .2s;
+			
+			&:hover {
+				-webkit-transform: scale(1);
+				-ms-transform: scale(1);
+				transform: scale(1);
+			}
+		}
+	}
+}
+
+.rtc-lightbox {
+	z-index: 910 !important;
+}
+
+@keyframes typer {
+	0% {
+		opacity: 0.5;
+	}
+	25% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.5;
+	}
+}
+
+@keyframes rotation {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}]]></template>
+  <template type="public" title="real_time_chat_macros" version_id="2000270" version_string="2.0.2"><![CDATA[<xf:macro name="chat" 
+		  arg-roomTag="" 
+		  arg-autoSelectRoom="{{ true }}"
+		  arg-attachmentData="{{ null }}" 
+		  arg-lastRoomDate="0" 
+		  arg-latestMessageDate="0"
+		  arg-compact="{{ false }}"
+		  arg-pushHistory="{{ false }}"
+		  arg-draggable="{{ false }}"
+		  >
+	<xf:macro name="less" />
+	<xf:macro name="js" />
+
+	<xf:set var="$roomParamsPlaceholder" value="{{ { 'tag': '<tag>' } }}" />
+	<xf:set var="$messageParamsPlaceholder" value="{{ { 'tag': '<tag>', 'message_id': '<message_id>' } }}" />
+	<xf:set var="$defaultTheme" value="{{ rtc_room_theme(-1) }}" />
+
+	<div class="real-time-chat{{ ($roomTag || $autoSelectRoom) ? ' no-left-column' : '' }}{{ $compact ? ' compact' : '' }}"
+		 data-xf-init="chat"
+		 data-theme="{{ $defaultTheme|json }}"
+		 data-rooms-url="{{ link('chat/rooms') }}"
+		 data-room-url="{{ link('chat', $roomParamsPlaceholder) }}"
+		 data-messages-url="{{ link('chat/message-list', $roomParamsPlaceholder) }}"
+		 data-mark-seen-url="{{ link('chat/mark-seen', $roomParamsPlaceholder) }}"
+		 data-post-url="{{ link('chat/post', $roomParamsPlaceholder) }}"
+		 data-typing-url="{{ link('chat/typing', $roomParamsPlaceholder) }}"
+		 data-edit-url="{{ link('chat/messages/edit',$messageParamsPlaceholder) }}"
+		 data-delete-url="{{ link('chat/messages/delete', $messageParamsPlaceholder) }}"
+		 data-report-url="{{ link('chat/messages/report', $messageParamsPlaceholder) }}"
+		 data-audio="{{ base_url($xf.options.realTimeChatAudio) }}"
+		 data-enabled-audio="{{ $xf.options.realTimeChatEnableSound ? 'true' : 'false' }}"
+		 data-room-tag="{$roomTag}"
+		 data-auto-select-room="{{ $autoSelectRoom ? 'true' : 'false' }}"
+		 data-save-room-in-cookie="true"
+		 data-push-history="{{ $pushHistory ? 'true' : 'false' }}"
+		 data-event-prefix="RTC"
+		 data-send-timeout="{{ $xf.visitor.hasPermission('general', 'bypassFloodCheck') ? 0 : $xf.options.realTimeChatSendTimeout }}"
+		 style="{$defaultTheme.css}"
+		 >
+		<xf:macro name="svg_defs" />
+
+		<div class="chat-columns">
+			<div class="left-column">
+				<div class="left-column-header">
+					<xf:button class="back-to-home-btn button--link" href="{{ $xf.homePageUrl ?: $xf.options.boardUrl }}">
+						<xf:fa icon="fa-house" />
+						<span class="button-text--inner">{{ phrase('home') }}</span>
+					</xf:button>
+				</div>
+				<div class="room-list rtc-slide-menu js-roomsList">
+					<div class="left-slide">
+						<xf:macro name="popup_header" arg-draggable="{$draggable}" />
+						<xf:macro name="rooms_placeholder" />
+
+						<div class="room-items scrollable-container">
+							<xf:macro name="loader" arg-position="top" />
+
+							<div class="scrollable js-scrollable">
+								<div class="room-items-container js-roomItems"></div>
+							</div>
+
+							<xf:macro name="loader" />
+						</div>
+
+						<xf:if is="$xf.visitor.canCreateChatRoom()">
+							<button class="btn-corner js-createRoom" 
+									data-xf-click="rtc-toggle-slide-menu"
+									data-menu="< .js-roomsList"
+									><xf:fa icon="fas fa-plus" /></button>
+						</xf:if>
+					</div>
+
+					<xf:if is="$xf.visitor.canCreateChatRoom()">
+						<div class="right-slide">
+							<xf:macro name="create_room_form" />
+						</div>
+					</xf:if>
+				</div>
+			</div>
+			<div class="center-column">
+				<div class="communication-content">
+					<xf:macro name="wallpaper" arg-theme="{$defaultTheme}" />
+					<xf:macro name="header" arg-draggable="{$draggable}" />
+					<xf:macro name="connecting" />
+
+					<div class="content-inner">
+						<xf:macro name="pinned_notices" />
+						<xf:macro name="content" />
+						<xf:macro name="editor" arg-attachmentData="{$attachmentData}" />
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<xf:hiddenval name="latest_message_date" value="{$latestMessageDate}" />
+		<xf:hiddenval name="latest_room_date" value="{$lastRoomDate}" />
+
+		<xf:macro name="mustache_templates" />
+	</div>
+
+	<xf:macro name="smilie_menu" />
+</xf:macro>
+
+<xf:macro name="less">
+	<xf:css src="real_time_chat.less" />
+</xf:macro>
+
+<xf:macro name="js">
+
+</xf:macro>
+
+<xf:macro name="wallpaper" arg-theme="!">
+	<xf:js src="bs/real_time_chat/chat-canvas-gradient.js" />
+	<xf:js src="bs/real_time_chat/chat-canvas-pattern.js" />
+	<div class="chat-wallpaper js-wallpaper">
+		<div class="default-wallpaper">
+			<canvas class="chat-canvas-gradient" 
+					data-xf-init="chat-canvas-gradient" 
+					data-colors="{{ $theme.config.background_colors|json }}"></canvas>
+			<canvas class="chat-canvas-pattern"
+					data-xf-init="chat-canvas-pattern"
+					data-url="{$theme.config.pattern}"></canvas>
+		</div>
+		<div class="custom-wallpaper"></div>
+	</div>
+</xf:macro>
+
+<xf:macro name="header_buttons_before">
+	<div class="header-buttons">
+		<div class="header-button header-button--pl-sm header-button--bars js-toggleLeftColumn">
+			<xf:fa icon="fa-bars" />
+		</div>
+		<div class="header-button header-button--pl-sm header-button--toggleLeft js-resetRoom">
+			<xf:fa icon="fa-arrow-left" />
+		</div>
+	</div>
+</xf:macro>
+
+<xf:macro name="header" arg-draggable="{{ false }}">
+	<div class="header js-header">
+		<xf:macro name="header_buttons_before" />
+
+		<div class="avatar-container">
+			<div class="header-avatar js-headerAvatar"></div>
+			<div class="badge badge--popup is-hidden js-badgePopup"></div>
+		</div>
+
+		<div class="header-main" data-xf-init="{{ $draggable ? 'rtc-draggable' : '' }}">
+
+			<a class="room-main js-roomLink" href="">
+				<div class="room-name js-roomName">
+					<span class="tag-prefix"></span>
+					<span class="tag"></span>
+				</div>
+			</a>
+
+			<div class="room-status js-roomStatus">
+				<div class="title">
+					{{ phrase('rtc_connecting') }}
+				</div>
+
+				<xf:macro name="typer" />
+			</div>
+		</div>
+
+		<xf:macro name="header_buttons_after" />
+	</div>
+</xf:macro>
+
+<xf:macro name="header_buttons_after">
+	<div class="header-buttons">
+		<xf:macro name="header_popup_buttons" />
+
+		<div class="header-button header-button--roomMenu" 
+			 data-xf-click="menu" 
+			 aria-expanded="false"
+			 aria-haspopup="true"
+			 >
+			<xf:fa icon="fa-ellipsis-v" />
+		</div>
+		<div class="menu rtc-flat-menu js-roomMenu" 
+			 data-menu="menu" 
+			 aria-hidden="true"
+			 data-href=""
+			 data-load-target=".js-roomMenuContent"
+			 data-nocache="true"
+			 >
+			<div class="menu-content js-roomMenuContent"></div>
+		</div>
+	</div>
+</xf:macro>
+
+<xf:macro name="popup_header" arg-draggable="{{ false }}">
+	<div class="header header--popup">
+		<div class="header-main" data-xf-init="{{ $draggable ? 'rtc-draggable' : '' }}">
+			{{ phrase('rtc_chat') }}
+			<div class="badge badge--popup is-hidden js-badgePopup"></div>
+		</div>
+		<div class="header-buttons">
+			<xf:macro name="header_popup_buttons" />
+		</div>
+	</div>
+</xf:macro>
+
+<xf:macro name="header_popup_buttons">
+	<div class="header-button header-button--popup js-collapsePopup">
+		<xf:fa icon="fa-angle-down" class="collapse-icon" />
+	</div>
+
+	<div class="header-button header-button--popup js-closePopup">
+		<xf:fa icon="fa-times" />
+	</div>
+</xf:macro>
+
+<xf:macro name="connecting">
+	<div class="connecting-container js-connecting">
+		<div class="connecting-notice">
+			{{ phrase('rtc_connecting') }}
+		</div>
+	</div>
+</xf:macro>
+
+<xf:macro name="content">
+	<div class="messages scrollable-container" data-xf-init="lightbox">
+		<xf:macro name="loader" arg-position="top" />
+
+		<div class="scrollable js-scrollable">
+			<div class="message-list-wrapper"></div>
+		</div>
+
+		<xf:macro name="loader" />
+	</div>
+</xf:macro>
+
+<xf:macro name="pinned_notices">
+	<div class="pinned-notices js-chatPinnedNotices{{ $xf.options.realTimeChatNotice ? '' : ' is-hidden' }}">
+		<xf:if is="$xf.options.realTimeChatNotice is not empty">
+			<div class="pinned-notice js-chatPinnedNotice" data-notice-id="ad">
+				<div class="content">
+					{$xf.options.realTimeChatNotice|raw}
+				</div>
+				<div class="notice-closer js-pinnedNoticeCloser">
+					<xf:fa icon="fa-times" />
+				</div>
+			</div>
+		</xf:if>
+	</div>
+</xf:macro>
+
+<xf:macro name="typer">
+	<div class="typer js-typer">
+		<div class="typer--activity">
+			<div class="dots">
+				<div class="dot"></div>
+				<div class="dot"></div>
+				<div class="dot"></div>
+			</div>
+			<span class="typers"></span>
+		</div>
+	</div>
+</xf:macro>
+
+<xf:macro name="loader" arg-position="bottom">
+	<div class="content-loader content-loader--{$position} js-loader js-loader-{$position}">
+		<span class="spinner"></span>
+	</div>
+</xf:macro>
+
+<xf:macro name="chat_command">
+	<div class="message-action-container-wrapper js-containerWrapper">
+		<div class="chat-command message-action-container js-chatCommand">
+			<div class="icon">
+				<xf:fa icon="fa-terminal" />
+			</div>
+			<div class="content">
+				<div class="title">{{ phrase('rtc_run_command') }}</div>
+				<div class="message-text command-text"></div>
+			</div>
+			<div class="actions">
+				<div class="action action--commandPin js-commandPin">
+					<xf:fa icon="fa-thumbtack" />
+				</div>
+				<div class="action js-commandRemover">
+					<xf:fa icon="fa-times" />
+				</div>
+			</div>
+		</div>
+	</div>
+</xf:macro>
+
+<xf:macro name="edit_message">
+	<div class="message-action-container-wrapper js-containerWrapper">
+		<div class="message-action-container js-editMessage">
+			<div class="icon">
+				<xf:fa icon="fa-pencil" />
+			</div>
+			<div class="content">
+				<div class="title">{{ phrase('rtc_edit_message') }}</div>
+				<div class="message-text js-messageText"></div>
+			</div>
+			<div class="actions">
+				<div class="action js-cancelEditMessage">
+					<xf:fa icon="fa-times" />
+				</div>
+			</div>
+		</div>
+	</div>
+</xf:macro>
+
+<xf:macro name="editor" arg-attachmentData="{{ null }}" arg-forceHash="">
+	<xf:css src="editor.less" />
+	<xf:set var="$leftButtons">
+		<div class="ql-button ql-button--avatar">
+			<xf:avatar user="$xf.visitor" size="xxs" />
+		</div>
+		<div data-xf-init="smilie-box" class="ql-button ql-button--smile-button">
+			<xf:fa icon="fa-smile" />
+		</div>
+	</xf:set>
+	<xf:set var="$rightButtons">
+		<xf:if is="$attachmentData is not empty">
+			<div class="ql-button ql-button--attachment">
+				<xf:macro template="helper_attach_upload" name="upload_link_from_data"
+						  arg-attachmentData="{$attachmentData}"
+						  arg-forceHash="{$forceHash}" />
+
+				<xf:fa icon="fa-paperclip" />
+			</div>
+		</xf:if>
+	</xf:set>
+	<xf:set var="$prepend">
+		<xf:macro name="chat_command" />
+
+		<xf:macro name="edit_message" />
+
+		<xf:macro name="helper_attach_upload::uploaded_files_list" arg-attachments="{$attachmentData.attachments}" />
+	</xf:set>
+
+	<xf:set var="$append">
+		<xf:macro name="rtc_message_macros::bubble_tail_svg" />
+	</xf:set>
+
+	<div class="message-editor js-chatEditor" data-xf-init="{{ $attachmentData is not empty ? 'attachment-manager' : '' }}">
+		{{ quill_editor({
+		'allowedBbCodes': $xf.options.realTimeChatEnabledBbCodes + {'user': true, 'img': ($attachmentData is not empty ? true : false) },
+		'active': $xf.visitor.hasChatPermission('canWrite'),
+		'submitByEnter': true,
+		'prepend': $prepend,
+		'append': $append,
+		'leftButtons': $leftButtons,
+		'rightButtons': $rightButtons,
+		'placeholder': phrase('rtc_message_placeholder')
+		}) }}
+
+		<div class="btn-send-container">
+			<div class="btn-send js-actionSubmit">
+				<xf:fa icon="fas fa-paper-plane" />
+			</div>
+		</div>
+	</div>
+</xf:macro>
+
+<xf:macro name="rooms_placeholder" arg-title="">
+	<div class="rooms-placeholder js-roomsPlaceholder">
+		<img class="placeholder-icon" src="{{ base_url('styles/default/bs/real_time_chat/empty-chats.svg') }}" />
+		<div class="placeholder-title">{{ $title ? $title : phrase('rtc_rooms_will_appear_here') }}</div>
+	</div>
+</xf:macro>
+
+<xf:macro name="rooms" arg-rooms="" arg-filter="{{ {} }}">
+	<xf:foreach loop="$rooms" value="$room">
+		<xf:macro name="room" arg-room="{$room}" arg-filter="{$filter}" />
+	</xf:foreach>
+</xf:macro>
+
+<xf:macro name="room" arg-room="!" arg-classes="js-room" arg-filter="{{ {} }}">
+	<xf:set var="$lastMessage" value="{{ $room.LastMessage }}" />
+	<xf:set var="$member" value="{{ $room.getMember($xf.visitor) }}" />
+
+	<div class="room {$classes}" 
+		 data-room-tag="{$room.tag}"
+		 data-room-menu-href="{{ link('chat/rooms/menu', $room) }}"
+		 data-history-url="{{ link('chat', $room) }}"
+		 data-can-post-message="{$room.canPostMessage()}"
+		 data-pinned="{{ $room.isPinned() ? '1' : '0' }}"
+		 data-pin-order="{$room.member_pin_order}"
+		 data-last-message="{$room.last_message_date}"
+		 data-theme="{$room.theme|json}"
+		 data-xf-click=""
+		 >
+		<div class="room-avatar">
+			{{ rtc_room_avatar($room, 's', {}, 'js-roomAvatar') }}
+		</div>
+
+		<div class="room-content">
+			<div class="room-title-with-markers">
+				<div class="room-title">
+					{$room.tag}
+				</div>
+				<div class="room-extra">
+					<ul class="room-extraInfo">
+						<li>{{ rtc_relative_date($lastMessage.message_date) }}</li>
+					</ul>
+				</div>
+			</div>
+			<div class="room-latest-message js-roomLatestMessage type--{{ $lastMessage.type }}">
+				<div class="message-text">
+					<xf:if is="$lastMessage.user_id && $lastMessage.user_id !== $xf.visitor.user_id">
+						<span class="message-sender text-highlight">{{ $lastMessage.User.username }}:</span>
+					</xf:if>
+					<div class="bbWrapper">
+						{{ snippet($lastMessage.message, 150, { 'bbWrapper': false, 'stripQuote': true }) ?: '[MEDIA]' }}
+					</div>
+				</div>
+				<xf:macro name="typer" />
+
+				<div class="room-extra">
+					<ul class="room-extraInfo">
+						<xf:if is="!$room.allowed_replies">
+							<li class="extra-item" data-xf-init="tooltip" title="{{ phrase('rtc_channel')|for_attr }}">
+								<xf:fa icon="fas fa-bullhorn" />
+							</li>
+						</xf:if>
+						<xf:if is="$room.isPinned()">
+							<li class="extra-item">
+								<xf:fa icon="fas fa-thumbtack" />
+							</li>
+						</xf:if>
+						<li class="badge badge--unread js-unreadCountBadge{{ $member.unread_count <= 0 ? ' is-hidden' : '' }}">{$member.unread_count}</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</xf:macro>
+
+<xf:macro name="create_room_form">
+	<xf:set var="$formId" value="{{ unique_id() }}" />
+
+	<div class="chat-form js-createRoomForm" data-xf-init="rtc-create-room">
+		<div class="title">
+			<div class="return-back big-icon js-toggleSlide">
+				<xf:fa icon="fa-arrow-left" />
+			</div>
+			{{ phrase('rtc_create_new_room') }}
+		</div>
+
+		<xf:form action="{{ link('chat/create-room') }}"
+				 class="form-body"
+				 id="{$formId}"
+				 ajax="true"
+				 data-redirect="off"
+				 data-reset-complete="on"
+				 >
+			<div class="form-body-content form-body-content--big">
+				<div class="input chat-header-input">
+					<div class="avatar-box" data-xf-init="rtc-avatar-box">
+						{{ rtc_room_avatar({
+						'tag': 'r/Avatar',
+						'avatar_type': 'fa',
+						'fa': 'fa-image'
+						}, 's') }}
+						<input type="file" 
+							   class="upload-input" 
+							   name="avatar" 
+							   accept=".gif,.jpeg,.jpg,.jpe,.png">
+					</div>
+
+					<div class="input tag-input">
+						<div class="tag-prefix">{$xf.visitor.username}/</div>
+						<xf:textbox name="tag" placeholder="{{ phrase('rtc_tag_example') }}" />
+					</div>
+				</div>
+				<xf:textarea rows="5" 
+							 name="description" 
+							 placeholder="{{ phrase('description') }}"
+							 maxlength="{{ max_length('BS\RealTimeChat:Room', 'description') }}" />
+				<xf:checkbox>
+					<xf:option name="allow_messages_from_others" checked="true">{{ phrase('rtc_allow_messages_from_other_users') }}</xf:option>
+				</xf:checkbox>
+			</div>
+		</xf:form>
+	</div>
+
+	<button class="btn-corner" type="submit" form="{$formId}">
+		<xf:fa icon="fas fa-arrow-right" />
+	</button>
+</xf:macro>
+
+<xf:macro name="smilie_menu">
+	<script class="js-xfSmilieMenu" type="text/template"><xf:trim>
+		<div class="menu menu--emoji" data-menu="menu" aria-hidden="true"
+			data-href="{{ link('editor/smilies-emoji') }}"
+			data-load-target=".js-xfSmilieMenuBody">
+			<div class="menu-content">
+				<div class="js-xfSmilieMenuBody">
+					<div class="menu-row">{{ phrase('loading...') }}</div>
+		</div>
+		</div>
+		</div>
+		</xf:trim></script>
+</xf:macro>
+
+<xf:macro name="mustache_templates">
+	<xf:macro name="notification_template" />
+	<xf:macro name="message_template" />
+</xf:macro>
+
+<xf:macro name="notification_template">
+	<script class="js-notificationTemplate" type="text/template"><xf:trim>
+		<xf:macro name="rtc_message_macros::notification_template" />
+		</xf:trim></script>
+</xf:macro>
+
+<xf:macro name="message_template">
+	<script class="js-messageTemplate" type="text/template"><xf:trim>
+		<xf:macro name="rtc_message_macros::bubble_template" />
+		</xf:trim></script>
+</xf:macro>
+
+<xf:macro name="svg_defs">
+	<svg style="position:absolute;top:-10000px;left:-10000px">
+		<defs id="svg-defs">
+			<xf:macro name="rtc_message_macros::bubble_tail" />
+		</defs>
+	</svg>
+</xf:macro>]]></template>
+  <template type="public" title="real_time_chat_messages" version_id="2000070" version_string="2.0.0"><![CDATA[<xf:if is="$messages is not empty">
+	<xf:macro name="rtc_message_macros::list" 
+			  arg-room="{$room}"
+			  arg-messages="{$messages}"
+			  arg-filter="{$filter}" />
+</xf:if>]]></template>
+  <template type="public" title="real_time_chat_rooms" version_id="2000070" version_string="2.0.0"><![CDATA[<xf:if is="$rooms is not empty">
+	<xf:macro template="real_time_chat_macros" 
+			  name="rooms" 
+			  arg-rooms="{$rooms}"
+			  arg-filter="{$filter}" />
+</xf:if>]]></template>
+  <template type="public" title="real_time_chat_setup.less" version_id="2000070" version_string="2.0.0"><![CDATA[.m-chatButton () {
+	flex: 1;
+	max-width: unset;
+	font-size: 15px;
+	text-transform: uppercase;
+	letter-spacing: .8px;
+	padding: 12px 15px;
+	border-radius: var(--chat-button-border-radius);
+	border: none;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-tap-highlight-color: transparent;
+	font-family: var(--chat-font-family);
+}
+
+.m-chatInput () {
+	padding: 13px 16px;
+	// iphone focus fix
+	// https://stackoverflow.com/questions/2989263/disable-auto-zoom-in-input-text-tag-safari-on-iphone
+	font-size: 16px;
+	box-shadow: none;
+	border: 1px solid var(--border-color);
+	border-radius: var(--chat-input-border-radius);
+	background: transparent;
+}
+
+.m-chatResponsive (@compact-breakpoint) {
+	@media (max-width: @compact-breakpoint) {
+		.m-chatCompact();
+	}
+	
+	&.compact {
+		.m-chatCompact();
+	}
+	
+	// iphone focus fix
+	// https://stackoverflow.com/questions/2989263/disable-auto-zoom-in-input-text-tag-safari-on-iphone
+	@media screen and (-webkit-min-device-pixel-ratio: 0) { 
+		select,
+		textarea,
+		input,
+		.ql-editor {
+			font-size: 16px;
+		}
+	}
+}
+
+.m-chatCompact() {
+	--beside-button-size: 30px;
+	--beside-button-font-size: 16px;
+	
+	&.no-left-column {
+		.chat-columns {
+			.left-column {
+				left: -100%;
+			}
+
+			.center-column {
+				right: 0;
+			}
+		}
+		
+		.header {
+			border-top-left-radius: var(--chat-border-radius);
+			border-left: none;
+			padding-left: 10px;
+			padding-right: 10px;
+
+			.header-buttons {
+				.header-button--toggleLeft {
+					display: flex;
+				}
+				.header-button--bars {
+					display: none;
+				}
+			}
+		}
+	}
+		
+	.chat-wallpaper {
+		.default-wallpaper {
+			.pattern {
+				background-size: 100%;
+			}
+		}
+	}
+	
+	.chat-columns {
+		position: relative;
+		
+		.left-column {
+			max-width: 100% !important;
+			width: 100% !important;
+			border-top-right-radius: var(--chat-border-radius);
+			border-bottom-right-radius: var(--chat-border-radius);
+			.m-fillAbsolute();
+			transition: left .15s;
+			left: 0;
+			right: unset;
+			z-index: 1;
+		}
+
+		.center-column {
+			width: 100%;
+			.m-fillAbsolute();
+			transition: right .15s;
+			right: -100%;
+			left: unset;
+			z-index: 2;
+		}
+	}
+	
+	.room {
+		transition: none;
+	}
+	
+	.communication-content .messages {
+		.message-list-wrapper {
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+		
+		.content-icon.group-content-icon {
+			.avatar {
+				.m-avatarSize(@avatar-xs);
+			}
+		}
+		
+		.message {
+			.content-bubble-container {
+				margin-left: 38px;
+			}
+		}
+	}
+	
+	.chat-message-form,
+	.chat-message-form.chat-message-form--wallpaper {
+		min-width: unset;
+	}
+
+	.message-editor {
+		margin-bottom: 10px;
+		
+		.ql-button.ql-button--avatar {
+			display: none;
+		}
+	}
+}
+
+.m-fillAbsolute() {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+}]]></template>
+  <template type="public" title="real_time_chat_window.less" version_id="2000070" version_string="2.0.0"><![CDATA[.rtc-window {
+	body {
+		overflow: hidden !important;
+		height: 100%;
+	}
+
+	html {
+		height: 100%;
+	}
+
+	@supports (padding:max(0px)) {
+		html {
+			padding: 0 min(16px,env(safe-area-inset-right)) 0 min(16px,env(safe-area-inset-left));
+		}
+	}
+
+	.p-body-main {
+		display: block;
+		height: 100%;
+	}
+
+	.p-body-content {
+		display: block;
+		height: 100%;
+		width: 100%;
+	}
+
+	.p-body-pageContent {
+		height: 100%;
+		width: 100%;
+	}
+
+	.p-body-inner {
+		max-width: unset;
+		padding: 0;
+		margin: 0;
+		width: 100%;
+	}
+
+	.real-time-chat {
+		box-shadow: none;
+		margin: 0;
+		height: ~"calc(var(--vh, 1vh) * 100)";
+		width: 100%;
+		position: fixed;
+
+		--chat-border-radius: 0;
+
+		.left-column {
+			@media (min-width: 925px) {
+				max-width: 420px;
+				width: 420px;
+			}
+		}
+		
+		.left-column-header {
+			display: flex;
+		}
+
+		&.no-left-column {
+			.header {
+				border-top-left-radius: 0;
+			}
+			
+			@media (min-width: 925px) {
+				.left-column {
+					max-width: 78px;
+					width: 78px;
+
+					&:after {
+						width: 1px;
+					}
+
+					.btn-corner {
+						display: none;
+					}
+				}
+
+				.back-to-home-btn {
+					padding-top: 15px;
+					padding-bottom: 15px;
+
+					.button-text {
+						font-size: 24px;
+					}
+
+					.button-text--inner {
+						font-size: 0;
+						opacity: 0;
+						width: 0;
+						padding: 0;
+					}
+				}
+			}
+		}
+
+		&:not(.no-left-column) {
+			.message-list-wrapper {
+				padding-left: 20px;
+				padding-right: 20px;
+			}
+		}
+	}
+}]]></template>
+  <template type="public" title="report_content_chat_message" version_id="1000051" version_string="1.0.0 Release Candidate 1"><![CDATA[<div class="block-row block-row--separated">
+	{{ bb_code($report.content_info.message, 'chat:message', $content ?: $report.User) }}
+</div>]]></template>
+  <template type="public" title="rtc_avatar.less" version_id="2000070" version_string="2.0.0"><![CDATA[.rtc-room-avatar {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	border-radius: 50%;
+	overflow: hidden;
+	transition: .2s;
+
+	color: var(--color);
+	background: var(--background);
+
+	&.size--xxs {
+		.m-roomAvatarSize(@avatar-xxs);
+	}
+
+	&.size--xs {
+		.m-roomAvatarSize(@avatar-xs);
+	}
+
+	&.size--s {
+		.m-roomAvatarSize(@avatar-s);
+	}
+
+	&.size--m {
+		.m-roomAvatarSize(@avatar-m);
+	}
+
+	&.size--l {
+		.m-roomAvatarSize(@avatar-l);
+	}
+
+	&.size--o {
+		.m-roomAvatarSize(@avatar-o);
+	}
+}
+
+.m-roomAvatarSize(@avatarSize) {
+	width: @avatarSize;
+	height: @avatarSize;
+	font-size: round((@avatarSize) * (@xf-avatarDynamicTextPercent / 150));
+}]]></template>
+  <template type="public" title="rtc_delete_confirm" version_id="2000070" version_string="2.0.0"><![CDATA[<xf:title>{{ phrase('confirm_action') }}</xf:title>
+
+<xf:form action="{$confirmUrl}" ajax="true" class="block" data-redirect="off">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:inforow rowtype="confirm">
+				{{ phrase('please_confirm_that_you_want_to_delete_following:') }}
+				<xf:if is="$contentUrl">
+					<strong><a href="{$contentUrl}">{$contentTitle}</a></strong>
+				<xf:else />
+					<strong>{$contentTitle}</strong>
+				</xf:if>
+				<xf:if is="$deletionImportantPhrase">
+					<div class="blockMessage blockMessage--important blockMessage--iconic">
+						{{ phrase_dynamic($deletionImportantPhrase) }}
+					</div>
+				</xf:if>
+			</xf:inforow>
+		</div>
+		<xf:submitrow rowtype="simple" icon="delete" />
+	</div>
+</xf:form>]]></template>
+  <template type="public" title="rtc_message_macros" version_id="2000070" version_string="2.0.0"><![CDATA[<xf:macro name="list" arg-room="!" arg-messages="!" arg-filter="{{ {} }}">
+	<xf:css src="bb_code.less" />
+	<xf:if is="$messages is not empty">
+		<xf:foreach loop="$messages" value="$message">
+			<xf:macro name="item" arg-message="{$message}" arg-filter="{$filter}" />
+		</xf:foreach>
+	</xf:if>
+</xf:macro>
+
+<xf:macro name="item" arg-message="!" arg-filter="{{ {} }}">
+	{{ $message.render($filter)|raw }}
+</xf:macro>
+
+<xf:macro name="type_system" arg-message="!" arg-filter="{{ {} }}" >
+	<div class="message js-message message--system{{ (($xf.visitor.user_id === $message.user_id && $message.has_been_read) ? ' has-been-read' : '' ) . ($message.isUnread() ? ' is-unread' : '') }}" 
+		 data-message-id="{$message.message_id}"
+		 data-message-date="{$message.message_date}"
+		 data-user-id="{$message.user_id}"
+		 data-day="{{ rtc_day($message.message_date) }}"
+		 data-day-ts="{{ rtc_day_ts($message.message_date) }}"
+	>
+		<div class="message-text js-messageContext">
+			{{ bb_code($message.message|censor, 'chat:system_message', $message) }}
+		</div>
+		<div class="menu rtc-flat-menu js-messageMenu" 
+			 data-xf-init="rtc-unique-menu" 
+			 id="js-rtcMessageMenu-{$message.message_id}" 
+			 data-menu="menu" 
+			 aria-hidden="true"
+		><xf:trim>
+			<xf:if contentcheck="true">
+				<div class="menu-content">
+					<xf:contentcheck>
+						<xf:if is="$message.canDelete()">
+							<span class="menu-linkRow menu-linkRow--warning" 
+								  data-xf-click="chat-message-action" 
+								  data-action="delete"
+								  data-message-id="{$message.message_id}"
+								  data-menu-closer=""
+							>
+								<xf:fa icon="fa-trash" />
+								{{ phrase('delete') }}
+							</span>
+						</xf:if>
+					</xf:contentcheck>
+				</div>
+			</xf:if>
+		</xf:trim></div>
+	</div>
+</xf:macro>
+
+<xf:macro name="type_bubble" 
+	arg-message="!" 
+	arg-author="" 
+	arg-text="" 
+	arg-actions=""
+	arg-besideButtons="" 
+	arg-filter="{{ {} }}"
+	arg-form="{{ false }}"
+>
+	<xf:if is="$author is empty">
+		<xf:set var="$author">
+			<xf:username user="$message.User" rich="true" />
+		</xf:set>
+	</xf:if>
+
+	<xf:if is="$besideButtons is empty">
+		<xf:set var="$besideButtons">
+			<xf:macro name="message_beside_buttons" arg-message="{$message}" />
+		</xf:set>
+	</xf:if>
+
+	<xf:if is="$text is empty">
+		<xf:set var="$text">
+			<xf:if is="$message.attach_count">
+				<xf:macro name="message_macros::attachments"
+						  arg-attachments="{$message.Attachments}"
+						  arg-message="{$message}"
+						  arg-canView="{{ true }}" />
+			</xf:if>
+			{{ bb_code($message.translation_message|censor, 'chat:message', $message) }}
+		</xf:set>
+	</xf:if>
+	
+	<xf:set var="$menu">
+		<xf:macro name="message_menu" arg-message="{$message}" />
+	</xf:set>
+	<xf:set var="$footer">
+		<xf:macro name="message_footer" arg-message="{$message}" />
+	</xf:set>
+	<xf:set var="$markers">
+		<xf:macro name="message_markers" arg-message="{$message}" />
+		<xf:if is="$message.translation.error">
+			<span class="iconic translation-error" data-xf-init="tooltip" title="{{ phrase('rtc_translating_error') }}"></span>
+		</xf:if>
+	</xf:set>
+	
+	<xf:set var="$bubble">
+		<xf:macro name="bubble" 
+			arg-author="{$author}" 
+			arg-text="{$text}" 
+			arg-menu="{$menu}"
+			arg-menuId="js-rtcMessageMenu-{$message.message_id}"
+			arg-footer="{$footer}" 
+			arg-markers="{$markers}" 
+			arg-actions="{$actions}"
+			arg-besideButtons="{$besideButtons}"
+			arg-lbContainer="{{ { 'id': 'message-'.$message.message_id, 'captionDesc': ($message.User ? $message.User.username : '') . ' · ' . date_time($message.message_date) } }}"/>
+	</xf:set>
+	
+	<xf:macro name="rtc_message_macros::container" 
+		arg-classes="{{ ($form ? ' is-form' : '') . ($actions is not empty ? ' has-actions' : '') . (($xf.visitor.user_id === $message.user_id && $message.has_been_read) ? ' has-been-read' : '' ) . ($message.isUnread() ? ' is-unread' : '') }}"
+		arg-message="{$message}" 
+		arg-content="{$bubble}" 
+		arg-filter="{$filter}"
+		arg-withIcon="{{ $message.user_id !== $xf.visitor.user_id }}" />
+</xf:macro>
+
+<xf:macro name="message_beside_buttons" arg-message="!">
+	<xf:set var="$mentionCommand">{{ $message.isPm() ? '/pm' : '/to' }}</xf:set>
+	<xf:set var="$privateCommand">{{ $message.isPm() ? '/to' : '/pm' }}</xf:set>
+
+	<xf:if is="$message.user_id !== $xf.visitor.user_id && $message.Room.canPostMessage()">
+		<div class="btn" 
+			 data-xf-click="chat-command-setter" 
+			 data-command="{$mentionCommand} {$message.User.username}, "
+			 data-second-command="{$privateCommand} {$message.User.username}, "
+		>
+			<xf:fa icon="fa-at" />
+		</div>
+
+		<xf:if is="$xf.options.realTimeChatEnabledBbCodes.quote">
+			<div class="btn" 
+				 data-xf-click="chat-message-action" 
+				 data-action="quote"
+				 data-message-id="{$message.message_id}"
+				 data-href="{{ link('chat/messages/quote', $message) }}"
+			>
+				<xf:fa icon="fa-quote-right" />
+			</div>
+		</xf:if>
+	</xf:if>
+</xf:macro>
+
+<xf:macro name="message_menu" arg-message="!">
+	<xf:if is="$message.canReact()">
+		<div class="menu-reactions">
+			<div class="menu-linkReactions">
+				<xf:foreach loop="$xf.reactionsActive" key="$reactionId" value="$reaction">
+					<div class="message-react{{ $message.hasVisitorReaction($reactionId) ? ' is-selected' : '' }}"
+						 data-href="{{ link('chat/messages/react', $message, {'reaction_id': $reactionId}) }}"
+						 data-xf-click="chat-message-action" 
+						 data-action="react"
+						 data-message-id="{$message.message_id}"
+						 data-menu-closer=""
+					>
+						<xf:reaction id="{$reactionId}" 
+							tooltip="true" />
+					</div>
+				</xf:foreach>
+			</div>
+		</div>
+	</xf:if>
+	<div class="menu-content">
+		<xf:if is="$xf.visitor.user_id !== $message.user_id && $message.Room.canPostMessage()">
+			<span class="menu-linkRow" 
+				  data-xf-click="chat-command-setter" 
+				  data-command="/to {$message.User.username},"
+				  data-menu-closer=""
+				  >
+				<xf:fa icon="fa-at" />
+				{{ phrase('rtc_mention') }}
+			</span>
+		</xf:if>
+		<xf:if is="$xf.options.realTimeChatEnabledBbCodes.quote && $message.Room.canPostMessage()">
+			<span class="menu-linkRow" 
+				  data-xf-click="chat-message-action" 
+				  data-action="quote"
+				  data-message-id="{$message.message_id}"
+				  data-href="{{ link('chat/messages/quote', $message) }}"
+				  data-menu-closer=""
+			>
+				<xf:fa icon="fa-quote-right" />
+				{{ phrase('quote') }}
+			</span>
+		</xf:if>
+		<xf:if is="$xf.visitor.user_id !== $message.user_id && $message.Room.canPostMessage()">
+			<span class="menu-linkRow" 
+				  data-xf-click="chat-command-setter" 
+				  data-command="/pm {$message.User.username}," 
+				  data-menu-closer=""
+				  >
+				<xf:fa icon="fa-envelope" />
+				{{ phrase('rtc_send_private_message') }}
+			</span>
+		</xf:if>
+		<xf:if is="$message.canCopy()">
+			<span class="menu-linkRow" 
+				  data-xf-init="copy-to-clipboard" 
+				  data-xf-click=""
+				  data-copy-text="{$message.message}"
+				  data-menu-closer=""
+			>
+				<xf:fa icon="fa-copy" />
+				{{ phrase('button.copy') }}
+			</span>
+		</xf:if>
+		<span class="menu-linkRow" 
+			  data-xf-init="copy-to-clipboard" 
+			  data-xf-click=""
+			  data-copy-text="{{ link('canonical:chat/messages/to', $message) }}"
+			  data-menu-closer=""
+		>
+			<xf:fa icon="fa-link" />
+			{{ phrase('rtc_copy_link') }}
+		</span>
+		<xf:if is="$message.canTranslate()">
+			<span class="menu-linkRow" 
+				  data-xf-click="switch"
+				  href="{{ link('chat/messages/translate', $message) }}"
+				  data-sk-translate="{{ phrase('rtc_translate') }}"
+				  data-sk-untranslate="{{ phrase('rtc_restore_original') }}"
+				  data-menu-closer=""
+			>
+				<xf:fa icon="fa-language" />
+				<span class="js-label">
+					{{ phrase_dynamic($message.hasTranslationForUser($xf.visitor.user_id) ? 'rtc_restore_original' : 'rtc_translate') }}
+				</span>
+			</span>
+		</xf:if>
+		<xf:if is="$message.canEdit()">
+			<span class="menu-linkRow" 
+				  data-xf-click="chat-message-action" 
+				  data-action="edit"
+				  data-message-id="{$message.message_id}"
+				  data-menu-closer=""
+				  >
+				<xf:fa icon="fa-pencil" />
+				{{ phrase('edit') }}
+			</span>
+		</xf:if>
+		<xf:if is="$message.canReport()">
+			<span class="menu-linkRow" 
+				  data-xf-click="chat-message-action" 
+				  data-action="report"
+				  data-message-id="{$message.message_id}"
+				  data-menu-closer=""
+				  >
+				<xf:fa icon="fa-bullhorn" />
+				{{ phrase('report') }}
+			</span>
+		</xf:if>
+		<xf:if is="$message.canDelete()">
+			<span class="menu-linkRow menu-linkRow--warning" 
+				  data-xf-click="chat-message-action" 
+				  data-action="delete"
+				  data-message-id="{$message.message_id}"
+				  data-menu-closer=""
+				  >
+				<xf:fa icon="fa-trash" />
+				{{ phrase('delete') }}
+			</span>
+		</xf:if>
+	</div>
+</xf:macro>
+
+<xf:macro name="message_footer" arg-message="!">
+	<xf:if contentcheck="true">
+		<div class="reactionsBar js-rtcMessageReactionsList {{ $message.reactions ? 'is-active' : '' }}" 
+			 id=#js-rtcMessageReactionsList-{$message.message_id}>
+			<xf:contentcheck>
+				<xf:reactions content="{$message}" link="chat/messages/reactions" />
+			</xf:contentcheck>
+		</div>
+	</xf:if>
+</xf:macro>
+
+<xf:macro name="message_markers" arg-message="!">
+	<xf:if is="$message.isPm()">
+		<span class="pm italic bold" 
+			data-xf-init="tooltip" 
+			title="{{ phrase('rtc_private_message') }}"
+		>{{ phrase('rtc_pm') }}</span>
+	</xf:if>
+	<xf:if is="$message.last_edit_date">
+		<span class="edited italic">{{ phrase('rtc_edited') }}</span>
+	</xf:if>
+	<span class="time iconic">{{ date($message.message_date, 'H:i') }}</span>
+</xf:macro>
+
+<xf:macro name="container" 
+	arg-message="!" 
+	arg-content="" 
+	arg-withIcon="{{ true }}" 
+	arg-filter="{{ {} }}"
+	arg-classes=""
+>
+	<div class="message js-message {$classes}{{ $message.isTo() ? ' is-to' : '' }}{{ $message.isPm() ? ' is-pm' : '' }}{{ $message.user_id === $xf.visitor.user_id ? ' is-visitor' : ''}}{{ $filter.around_message_id === $message.message_id ? ' is-highlight' : '' }}" 
+		 id="rtcMessage-{$message.message_id}"
+		 data-message-id="{$message.message_id}"
+		 data-message-date="{$message.message_date}"
+		 data-user-id="{$message.user_id}"
+		 data-day="{{ rtc_day($message.message_date) }}"
+		 data-day-ts="{{ rtc_day_ts($message.message_date) }}"
+	>
+		<xf:if is="$withIcon">
+			<div class="content-icon">
+				<xf:avatar user="$message.User" size="s" />
+			</div>
+		</xf:if>
+
+		{$content|raw}
+	</div>
+</xf:macro>
+
+<xf:macro name="bubble" 
+	arg-author="" 
+	arg-text="" 
+	arg-menu="" 
+	arg-menuId=""
+	arg-footer=""
+	arg-markers=""
+    arg-actions=""
+	arg-besideButtons=""
+	arg-containerAttrs=""
+	arg-contentAttrs=""
+	arg-lbContainer="{{ {} }}"
+>
+	<div class="content-bubble-container{{ $actions is not empty ? ' has-actions' : '' }}" {$containerAttrs|raw}>
+		<div class="content-bubble js-messageContext lbContainer js-lbContainer" {$contentAttrs|raw}>
+			<div class="js-messageContent">
+				<div class="content{{ $lbContainer ? ' lbContainer js-lbContainer' : '' }}"
+					 data-lb-id="{$lbContainer.id}"
+					 data-lb-caption-desc="{$lbContainer.captionDesc}"
+				>
+					<div class="message-text">
+						{$text|raw}
+
+						<xf:if contentcheck="true">
+							<div class="message-footer">
+								<xf:contentcheck>{$footer}</xf:contentcheck>
+
+								<div class="message-markers">
+									{$markers|raw}
+
+									<div class="markers-inner">
+										{$markers|raw}
+									</div>
+								</div>
+							</div>
+							<xf:else />
+							<div class="message-markers">
+								{$markers|raw}
+
+								<div class="markers-inner">
+									{$markers|raw}
+								</div>
+							</div>
+						</xf:if>
+					</div> 
+				</div>
+
+				<div class="menu rtc-flat-menu js-messageMenu" 
+					 data-xf-init="rtc-unique-menu" 
+					 id="{$menuId}" 
+					 data-menu="menu" 
+					 aria-hidden="true"
+				>
+					{$menu|raw}
+				</div>
+			</div>
+			
+			<div class="content-author">
+				{$author|raw}
+			</div>
+		</div>
+		<xf:if contentcheck="true">
+			<div class="bubble-actions">
+				<xf:contentcheck>
+					{$actions|raw}
+				</xf:contentcheck>
+			</div>
+		</xf:if>
+		<xf:if contentcheck="true">
+			<div class="beside-buttons">
+				<xf:contentcheck>
+					{$besideButtons|raw}
+				</xf:contentcheck>
+			</div>
+		</xf:if>
+		<xf:macro name="bubble_tail_svg" />
+	</div>
+</xf:macro>
+
+<xf:macro name="bubble_template">
+	<div class="message js-message is-visitor"
+		 data-message-id="{{ mustache('id') }}" 
+		 data-user-id="{$xf.visitor.user_id}" 
+		 data-day="{{ rtc_day($xf.time) }}"
+		 data-day-ts="{{ rtc_day_ts($xf.time) }}"
+	>
+		<div class="content-bubble-container">
+			<div class="content-bubble js-messageContext">
+				<div class="js-messageContent">
+					<div class="content">
+						<div class="message-text">
+							{{ mustache('{text}') }}
+							
+							<div class="message-markers">
+								<span class="time iconic">{{ mustache('time') }}</span>
+
+								<div class="markers-inner">
+									<span class="time iconic">{{ mustache('time') }}</span>
+								</div>
+							</div>
+						</div> 
+					</div>
+				</div>
+			</div>
+			<xf:macro name="bubble_tail_svg" />
+		</div>
+	</div>
+</xf:macro>
+
+<xf:macro name="notification_template">
+	<div class="message message--system message--notification">
+		<div class="message-text js-messageContext">
+			<div class="bbWrapper">{{ mustache('{text}') }}</div>
+		</div>
+	</div>
+</xf:macro>
+
+<xf:macro name="bubble_tail">
+	<symbol id="bubble-tail" viewBox="0 0 11 20"><g transform="translate(9 -14)" fill="inherit" fill-rule="evenodd"><path d="M-6 16h6v17c-.193-2.84-.876-5.767-2.05-8.782-.904-2.325-2.446-4.485-4.625-6.48A1 1 0 01-6 16z" transform="matrix(1 0 0 -1 0 49)" id="corner-fill" fill="inherit"></path></g></symbol>
+</xf:macro>
+
+<xf:macro name="bubble_tail_svg">
+	<svg viewBox="0 0 11 20" width="11" height="20" class="bubble-tail"><use href="#bubble-tail"></use></svg>
+</xf:macro>]]></template>
+  <template type="public" title="rtc_message_type_ban_macros" version_id="2000070" version_string="2.0.0"><![CDATA[<xf:macro name="ban_form" arg-message="!" arg-filter="{{ {} }}">
+	<xf:set var="$author">
+		<xf:username user="$message.User" rich="true" />
+	</xf:set>
+	
+	<xf:set var="$formId" value="{{ unique_id() }}" />
+	
+	<xf:set var="$form">
+		<xf:form action="{{ $message.extra_data.lift ? link('chat/messages/lift-ban', $message) : link('chat/messages/ban', $message) }}" 
+			class="chat-message-form" 
+			id="{$formId}"
+			ajax="true"
+			data-redirect="off"
+		>
+			<div class="form-header">
+				{{ phrase_dynamic($message.extra_data.lift ? 'lift_ban' : 'ban_user') }}
+			</div>
+			<div class="form-body">
+				<xf:textbox placeholder="{{ phrase('name') }}"
+					name="username" 
+					ac="single" 
+					data-autosubmit="false"
+					data-url="{{ link('members') }}" 
+					autocomplete="off"
+					maxlength="{{ max_length($xf.visitor, 'username') }}"
+					value="{$username}" />
+				
+				<xf:if is="!$message.extra_data.lift">
+					<xf:textarea name="reason"
+						rows="1"
+						maxlength="{{ max_length('BS\RealTimeChat:Ban', 'reason') }}"
+						placeholder="{{ phrase('reason_for_banning') }}" />
+					
+					<xf:radio name="ban_length" 
+						value="{{ !$user.ChatBan.unban_date ? 'permanent' : 'temporary' }}"
+					>
+	
+						<xf:option label="{{ phrase('permanent') }}" value="permanent" />
+						<xf:option label="{{ phrase('rtc_for_a_while') }}" value="while" data-hide="true">
+							<xf:dependent>
+								<div class="inputGroup">
+									<xf:numberbox name="length_value" min="1" />
+									<span class="inputGroup-splitter"></span>
+									<xf:select name="length_unit" class="input--autoSize">
+										<xf:option value="hours">{{ phrase('hours') }}</xf:option>
+										<xf:option value="days">{{ phrase('days') }}</xf:option>
+										<xf:option value="months">{{ phrase('months') }}</xf:option>
+									</xf:select>
+								</div>
+							</xf:dependent>
+						</xf:option>
+						<xf:option label="{{ phrase('until') }}" value="temporary" data-hide="true">
+							<xf:dependent>
+								<xf:dateinput name="unban_date" value="{{ $user.ChatBan.unban_date ? date($user.ChatBan.unban_date, 'Y-m-d') : '' }}" data-min-date="{{ date($xf.time, 'Y-m-d') }}" />
+							</xf:dependent>
+						</xf:option>
+					</xf:radio>
+				</xf:if>
+			</div>
+		</xf:form>
+	</xf:set>
+	
+	<xf:set var="$actions">
+		<xf:button type="submit" form="{$formId}">{{ $message.extra_data.lift ? phrase('lift_ban') : phrase('ban') }}</xf:button>
+	</xf:set>
+	
+	<xf:macro name="rtc_message_macros::type_bubble" 
+		arg-message="{$message}" 
+		arg-text="{$form}" 
+		arg-filter="{$filter}"
+		arg-actions="{$actions}"
+		arg-form="{{ true }}" />
+</xf:macro>
+
+<xf:macro name="ban_list" 
+	arg-bans="!"
+	arg-page="!" 
+	arg-perPage="!"
+	arg-total="!" 
+	arg-message="!" 
+	arg-filter="{{ {} }}"
+>
+	<xf:js src="bs/real_time_chat/page-nav-submit-module.js" min="1" />
+	
+	<xf:set var="$author">
+		<xf:username user="$message.User" rich="true" />
+	</xf:set>
+	
+	<xf:set var="$form">
+		<div class="chat-message-form">
+			<div class="form-header">
+				{{ phrase('rtc_banned_users') }}
+			</div>
+			<div class="form-body">
+				<xf:if is="$bans is not empty">
+					<xf:foreach loop="$bans" value="$ban">
+						<div class="space-line space-line--md">
+							<xf:avatar user="{$ban.User}" size="xxs" />
+							<xf:username user="{$ban.User}" /><br>
+							<span class="text-details">{{ phrase('rtc_unban_date') }}:</span> {$ban.formatted_unban_date}
+							<br>
+							<xf:if is="$ban.hasReason()">
+								<span class="text-details">{{ phrase('reason_for_ban') }}:</span> {$ban.reason}
+							</xf:if>
+						</div>
+					</xf:foreach>
+					<xf:else />
+					{{ phrase('rtc_no_one_banned_in_this_room') }}
+				</xf:if>
+			</div>
+		</div>
+	</xf:set>
+	
+	<xf:set var="$actions"><xf:trim>
+		<xf:if contentcheck="true">
+			<div class="page-nav-submit" data-xf-init="page-nav-submit">
+				<xf:contentcheck>
+					<xf:pagenav link="chat/messages/switch-ban-list-page" 
+								data="{$message}"
+								page="{$page}" 
+								perpage="{$perPage}" 
+								total="{$total}" />
+				</xf:contentcheck>						
+			</div>
+		</xf:if>
+	</xf:trim></xf:set>
+	
+	<xf:macro name="rtc_message_macros::type_bubble" 
+		arg-message="{$message}" 
+		arg-text="{$form}" 
+		arg-filter="{$filter}"
+		arg-actions="{$actions}"
+		arg-form="{{ true }}" />
+</xf:macro>]]></template>
+  <template type="public" title="rtc_message_type_command_list_macros" version_id="2000070" version_string="2.0.0"><![CDATA[<xf:macro name="type_command_list" 
+	arg-commands="!"
+	arg-message="!" 
+	arg-filter="{{ {} }}"
+>
+	<xf:set var="$author">
+		<xf:username user="$message.User" rich="true"  />
+	</xf:set>
+	
+	<xf:set var="$list">
+		<div class="chat-message-form">
+			<div class="form-body">
+				<xf:foreach loop="$commands" value="$command">
+					<div class="form-line form-line--margined">
+						<div><b>/{$command.getName()}</b></div>
+						<div style="margin-left: 15px">{$command.getDescription()|raw}</div>
+					</div>
+				</xf:foreach>
+			</div>
+		</div>
+	</xf:set>
+	
+	<xf:macro name="rtc_message_macros::type_bubble" arg-message="{$message}" arg-text="{$list}" arg-filter="{$filter}" />
+</xf:macro>]]></template>
+  <template type="public" title="rtc_message_type_edit_room_macros" version_id="2000070" version_string="2.0.0"><![CDATA[<xf:macro name="type_edit_room" arg-message="!" arg-filter="{{ {} }}">
+	<xf:set var="$author">
+		<xf:username user="$message.User" rich="true" />
+	</xf:set>
+	
+	<xf:set var="$formId" value="{{ unique_id() }}" />
+
+	<xf:set var="$form">
+		<xf:js src="bs/real_time_chat/room-form-module.js" min="1" />
+		<xf:form action="{{ link('chat/messages/update-room', $message) }}"
+			id="{$formId}"
+			class="chat-message-form"
+			ajax="true"
+			data-redirect="off"
+			data-reset-complete="on"
+		>
+			<div class="form-header">
+				{{ phrase('rtc_edit_room') }}
+			</div>
+			<div class="form-body">
+				<div class="input chat-header-input">
+					<div class="avatar-box avatar-box--bordered" data-xf-init="rtc-avatar-box">
+						{{ rtc_room_avatar($message.Room, 's') }}
+						<input type="file" 
+							   class="upload-input" 
+							   name="avatar" 
+							   accept=".gif,.jpeg,.jpg,.jpe,.png">
+					</div>
+
+					<div class="input tag-input chat-input">
+						<div class="tag-prefix">{$message.Room.tag_prefix}/</div>
+						<xf:textbox name="tag" 
+									readonly="true"
+									placeholder="{{ phrase('rtc_tag_example') }}" 
+									value="{$message.Room.tag_name}" />
+					</div>
+				</div>
+				<xf:textarea rows="5" 
+							 name="description" 
+							 placeholder="{{ phrase('description') }}"
+							 maxlength="{{ max_length('BS\RealTimeChat:Room', 'description') }}"
+							 value="{$message.Room.description}" />
+
+				<xf:checkbox>
+					<xf:option name="allow_messages_from_others" checked="{$message.Room.allowed_replies}">{{ phrase('rtc_allow_messages_from_other_users') }}</xf:option>
+				</xf:checkbox>
+				
+				<xf:checkbox style="display:none">
+					<xf:option name="delete_avatar"></xf:option>
+				</xf:checkbox>
+			</div>
+		</xf:form>
+	</xf:set>
+	
+	<xf:set var="$actions">
+		<xf:if is="$message.Room.avatar_date">
+			<xf:button data-xf-click="element-value-setter"
+				data-value="1"
+				data-selector="< .js-message | input[name='delete_avatar']"
+				type="submit" 
+				form="{$formId}"
+			>{{ phrase('delete_current_avatar') }}</xf:button>
+		</xf:if>
+		<xf:button form="{$formId}" type="submit">{{ phrase('confirm') }}</xf:button>
+	</xf:set>
+	
+	<xf:macro name="rtc_message_macros::type_bubble" 
+		arg-message="{$message}" 
+		arg-text="{$form}" 
+		arg-filter="{$filter}"
+		arg-actions="{$actions}"
+		arg-form="{{ true }}" />
+</xf:macro>]]></template>
+  <template type="public" title="rtc_message_type_wallpaper.less" version_id="2000070" version_string="2.0.0"><![CDATA[.chat-message-form.chat-message-form--wallpaper {
+	dd {
+		position: relative;
+		--primary-color: @xf-buttonBg;
+	}
+	
+	.themes-list-container {
+		margin: 0 -8px;
+		padding-right: 4px;
+		padding-top: 4px;
+	}
+	
+	.themes-list {
+		display: flex;
+		padding: 4px;
+	}
+	
+	.theme-container {
+		position: relative;
+		width: 72px;
+		min-width: 72px;
+		height: 94px;
+		margin: 0 4px;
+		cursor: pointer;
+
+		&:before {
+			transition: transform .25s, opacity .25s;
+			border: 2px solid var(--primary-color);
+			border-radius: 14px;
+			bottom: -4px;
+			content: " ";
+			left: -4px;
+			position: absolute;
+			right: -4px;
+			top: -4px;
+			opacity: 0;
+			transform: scale(.86);
+		}
+
+		&.selected {
+			&:before {
+				opacity: 1;
+				transform: scale(1);
+			}
+		}
+	}
+
+	.theme-canvas,
+	.theme-pattern {
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		width: 100%;
+		height: 100%;
+		border-radius: 10px;
+	}
+	
+	.theme-pattern {
+		mix-blend-mode: soft-light;
+		opacity: .5;
+	}
+	
+	.upload-form {
+		display: flex;
+		flex-direction: column;
+	}
+}]]></template>
+  <template type="public" title="rtc_message_type_wallpaper_macros" version_id="2000070" version_string="2.0.0"><![CDATA[<xf:macro name="set_wallpaper_form" arg-message="!" arg-filter="{{ {} }}">
+	<xf:css src="rtc_message_type_wallpaper.less" />
+	<xf:js src="bs/real_time_chat/wallpaper-form-module.js" min="1" />
+	
+	<xf:set var="$author">
+		<xf:username user="$message.User" rich="true" />
+	</xf:set>
+	
+	<xf:set var="$formId" value="{{ unique_id() }}" />
+	
+	<xf:set var="$form">
+		<xf:form action="{{ link('chat/messages/wallpaper', $message) }}" 
+			id="{$formId}"
+			class="chat-message-form chat-message-form--wallpaper" 
+			data-xf-init="rtc-wallpaper-form"
+			ajax="true"
+			data-redirect="off"
+		>
+			<div class="form-header">
+				{{ phrase('rtc_select_theme') }}
+			</div>
+			<div class="form-body">
+				<xf:set var="$room" value="{{ $message.Room }}" />
+				<div class="space-line h-scroller themes-list-container" data-xf-init="h-scroller">
+					<xf:set var="$themes" value="{{ property('rtcThemes') }}" />
+					<div class="hScroller-scroll">
+						<div class="themes-list">
+							<xf:foreach loop="$themes" key="$index" value="$theme">
+								<xf:set var="$roomTheme" value="{{ rtc_room_theme($index) }}" />
+								<div class="theme-container js-theme {{ $room.wallpaper.options.theme_index === $index ? ' selected' : ''  }}"
+									 data-xf-click=""
+									 data-theme-index="{$index}"
+									 data-theme="{{ $roomTheme|json }}">
+									<canvas class="theme-canvas" 
+											data-xf-init="chat-canvas-gradient"
+											data-colors="{{ $roomTheme.config.background_colors|json }}"></canvas>
+									<canvas class="theme-pattern" 
+											data-xf-init="chat-canvas-pattern"
+											data-url="{$roomTheme.config.pattern}"></canvas>
+								</div>
+							</xf:foreach>
+						</div>
+					</div>
+					<xf:hiddenval name="theme_index" class="js-themeIndex">{$room.wallpaper.options.theme_index}</xf:hiddenval>
+				</div>
+				
+				<xf:checkbox listclass="image-manage js-imageManage" style="{{ $room.wallpaper.type === 'member' ? '' : 'display:none;' }}">
+					<xf:option name="blurred" checked="{$room.wallpaper.blurred}">{{ phrase('rtc_blur_background') }}</xf:option>
+				</xf:checkbox>
+				
+				<div style="display:none">
+					<xf:upload class="js-uploadInput" 
+							   name="wallpaper" 
+							   accept=".gif,.jpeg,.jpg,.jpe,.png" />
+					
+					<xf:checkbox>
+						<xf:if is="$room.canDeleteWallpaper()">
+							<xf:option name="delete_wallpaper"></xf:option>
+						</xf:if>
+
+						<xf:if is="$room.canSetWallpaper()">
+							<xf:option name="for_room"></xf:option>
+						</xf:if>
+						
+						<xf:if is="$room.canResetWallpaper()">
+							<xf:option name="reset_wallpaper"></xf:option>
+							<xf:option name="reset_room_wallpaper"></xf:option>
+						</xf:if>
+					</xf:checkbox>
+				</div>
+			</div>
+		</xf:form>
+	</xf:set>
+	
+	<xf:set var="$actions">
+		<xf:button class="js-uploadButton" data-reset="{{ phrase('rtc_reset_image') }}">{{ phrase('rtc_choose_image') }}</xf:button>
+		<div class="button-group">
+			<xf:button type="submit" form="{$formId}">{{ phrase('update') }}</xf:button>
+			<xf:if is="$room.canSetWallpaper()">
+				<xf:button data-xf-click="element-value-setter"
+					data-value="1"
+					data-selector="< .js-message | input[name='for_room']"
+					type="submit" 
+					form="{$formId}"
+				>{{ phrase('rtc_set_for_room') }}</xf:button>
+			</xf:if>
+		</div>
+		<xf:if contentcheck="true">
+			<div class="button-group">
+				<xf:contentcheck>
+					<xf:if is="$room.canDeleteWallpaper()">
+						<xf:button data-xf-click="element-value-setter"
+							data-value="1"
+							data-selector="< .js-message | input[name='delete_wallpaper']"
+							type="submit" 
+							form="{$formId}"
+						>{{ phrase('rtc_delete_wallpaper') }}</xf:button>
+					</xf:if>
+					<xf:if is="$room.canResetWallpaper()">
+						<xf:button class="js-resetWallpaper"
+								   data-xf-click="element-value-setter"
+								   data-value="1"
+								   data-selector="< .js-message | input[name='reset_wallpaper']"
+								   type="submit" 
+								   form="{$formId}"
+						>{{ phrase('rtc_reset_to_defaults') }}</xf:button>
+					</xf:if>
+				</xf:contentcheck>
+			</div>
+		</xf:if>
+		<xf:if is="$room.canResetRoomWallpaper()">
+			<xf:button class="js-resetWallpaper"
+				data-xf-click="element-value-setter"
+				data-value="1"
+				data-selector="< .js-message | input[name='reset_room_wallpaper']"
+				type="submit" 
+				form="{$formId}"
+			>{{ phrase('rtc_reset_room_wallpaper') }}</xf:button>
+		</xf:if>
+	</xf:set>
+	
+	<xf:macro name="rtc_message_macros::type_bubble" 
+		arg-message="{$message}" 
+		arg-text="{$form}" 
+		arg-filter="{$filter}"
+		arg-actions="{$actions}"
+		arg-form="{{ true }}" />
+</xf:macro>]]></template>
+  <template type="public" title="rtc_popup" version_id="2000070" version_string="2.0.0"><![CDATA[<div class="chat-popup is-loading js-draggableContainer">
+	<xf:macro name="real_time_chat_macros::chat"
+		  arg-roomTag="{$tag}"
+		  arg-attachmentData="{$attachmentData}"
+		  arg-latestMessageDate="{$latestMessageDate}"
+		  arg-autoSelectRoom="{{ false }}"
+		  arg-compact="{{ true }}"
+		  arg-draggable="{{ true }}" />
+</div>]]></template>
+  <template type="public" title="rtc_popup.less" version_id="2000070" version_string="2.0.0"><![CDATA[{{ include('real_time_chat_setup.less') }}
+
+.chat-popup-container {
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+.chat-popup {
+	position: fixed;
+	bottom: 5px;
+	right: 16px;
+	width: 600px;
+	min-width: 450px;
+	box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+	overflow: hidden;
+	border-radius: 16px;
+	height: 70vh;
+	resize: both;
+	display: flex;
+	flex-direction: column;
+	animation: chat-popup-scale .25s forwards;
+	transition: height .25s;
+	z-index: 900;
+	
+	&.is-closing {
+		animation: chat-popup-scale-close .25s forwards;
+	}
+
+	&.is-collapsed {
+		height: 56px !important;
+		resize: none;
+		
+		.real-time-chat.compact {
+			.header-buttons {
+				.header-button {
+					&.header-button--toggleLeft,
+					&.header-button--roomMenu {
+						width: 0;
+						padding: 0;
+						transform: scale(0);
+						overflow: hidden;
+					}
+				}
+
+				.collapse-icon {
+					transform: rotate(0deg);
+				}
+			}
+			
+			.communication-content {
+				.content-inner {
+					height: 0;
+					overflow: hidden;
+				}
+			}
+		}
+	}	
+	
+	&.is-loading {
+		display: none;
+	}
+	
+	.real-time-chat.compact {
+		height: 100%;
+		--chat-border-radius: 0;
+		box-shadow: none;
+		transition: height .25s;
+		
+		.connecting-container {
+			padding: 7px 0;
+		}
+
+		.header {
+			font-size: 18px;
+
+			.collapse-icon {
+				transform: rotate(180deg);
+			}
+			
+			.header-main {
+				cursor: move;
+			}
+			
+			.avatar-container {
+				position: relative;
+
+				.badge--popup {
+					position: absolute;
+					right: -7px;
+					top: 0;
+					--size: 18px;
+					font-size: 11px;
+				}
+			}
+
+			&.header--popup {
+				display: flex;
+				margin-top: -10px;
+				z-index: 100;
+				position: relative;
+				box-shadow: none;
+				border-bottom: 1px solid var(--border-color);
+				margin-bottom: 12px;
+
+				.header-main {
+					padding-left: 0;
+					height: 100%;
+					display: flex;
+					align-items: center;
+				}
+
+				.badge--popup {
+					margin-left: 5px;
+					--size: 18px;
+					font-size: 12px;
+					margin-top: 0;
+				}
+			}
+
+			.header-buttons {
+				.collapse-icon {
+					transition: transform .25s;
+				}
+				
+				.header-button {
+					&.header-button--toggleLeft,
+					&.header-button--roomMenu {
+						transition: all .25s;
+					}
+						
+					// show popup buttons
+					&.header-button--popup {
+						display: flex;
+					}
+				}
+			}
+		}
+
+		.communication-content {
+			.content-inner {
+				transition: height .25s;
+			}
+		}
+	}
+	
+	@media (max-width: 750px) {
+		width: 100% !important;
+		top: unset !important;
+		bottom: 0 !important;
+		right: 0 !important;
+		left: 0;
+		border-radius: 0;
+		min-width: unset;
+		
+		&:not(.is-collapsed) {
+			height: 100% !important;
+			
+			.collapse-icon {
+				transform: rotate(0deg) !important;
+			}
+		}
+		
+		&.is-collapsed {
+			.collapse-icon {
+				transform: rotate(180deg) !important;
+			}
+		}
+		
+		.real-time-chat.compact {
+			height: ~"calc(var(--vh, 1vh) * 100)";
+		}
+	}
+}
+
+.button--rtcPopup {
+	.m-chatButton();
+	width: 60px;
+	height: 60px;
+	right: 8px;
+	bottom: 16px;
+	border-radius: 50%;
+	background: @xf-buttonPrimaryBg;
+	position: fixed;
+	color: contrast(@xf-buttonPrimaryBg);
+	font-size: 27px;
+	cursor: pointer;
+	box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 12px 0px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: all .15s;
+	transform: scale(1);
+	
+	&.is-popup-open {
+		transform: scale(0);
+	}
+}
+
+@keyframes chat-popup-scale {
+	0% {
+		transform: scale(0);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
+@keyframes chat-popup-scale-close {
+	0% {
+		transform: scale(1);
+	}
+	100% {
+		transform: scale(0);
+	}
+}]]></template>
+  <template type="public" title="rtc_room_menu" version_id="2000070" version_string="2.0.0"><![CDATA[<xf:if is="$room.canEdit()">
+	<a class="menu-linkRow" 
+	   data-xf-click="chat-message-post"
+	   data-text="/edit"
+	   data-menu-closer=""
+	>
+		<xf:fa icon="fa-pencil" />
+		{{ phrase('edit') }}
+	</a>
+</xf:if>
+
+<xf:if is="$room.canSetWallpaper() || $room.canSetIndividualWallpaper()">
+	<a class="menu-linkRow" 
+	   data-xf-click="chat-message-post"
+	   data-text="/wallpaper"
+	   data-menu-closer=""
+	>
+		<xf:fa icon="fa-paint-roller" />
+		{{ phrase('rtc_set_wallpaper') }}
+	</a>
+</xf:if>
+
+<xf:if is="$xf.options.realTimeChatEnableSound">
+	<a data-xf-init="chat-toggle-sound"
+	   data-xf-click=""
+	   data-off-title="{{ phrase('rtc_mute') }}"
+	   data-on-title="{{ phrase('rtc_unmute') }}"
+	   class="menu-linkRow"
+	>
+		<xf:fa icon="fa-volume" />
+		<span class="js-label">{{ phrase('rtc_mute') }}</span>
+	</a>
+</xf:if>
+
+<xf:if is="$room.canGetNewLink()">
+	<a class="menu-linkRow" 
+	   data-xf-click="chat-message-post"
+	   data-text="/link"
+	   data-menu-closer=""
+	>
+		<xf:fa icon="fa-link" />
+		{{ phrase('rtc_new_link') }}
+	</a>
+</xf:if>
+
+
+<xf:if contentcheck="true">
+	<a class="menu-linkRow" 
+	   data-xf-click="menu"
+	>
+		<xf:fa icon="fa-users-slash" />
+		{{ phrase('rtc_manage_bans') }}
+		<span class="enter-icon"><xf:fa icon="fa-chevron-right" /></span>
+	</a>
+	<div class="menu rtc-flat-menu" 
+		data-xf-init="rtc-unique-menu" 
+		id="js-rtcRoomBanMenu-{$room.room_id}" 
+		data-menu="menu" 
+		aria-hidden="true"
+	>
+		<div class="menu-content">
+			<xf:contentcheck>
+				<xf:if is="$room.canViewBannedList()">
+					<a class="menu-linkRow" 
+					   data-xf-click="chat-message-post"
+					   data-text="/ban --list"
+					   data-menu-closer=""
+					>
+						<xf:fa icon="fa-list" />
+						{{ phrase('rtc_view_list') }}
+					</a>
+				</xf:if>
+				<xf:if is="$room.canBan()">
+					<a class="menu-linkRow" 
+					   data-xf-click="chat-message-post"
+					   data-text="/ban"
+					   data-menu-closer=""
+					>
+						<xf:fa icon="fa-user-slash" />
+						{{ phrase('rtc_ban_user') }}
+					</a>
+				</xf:if>
+				
+				<xf:if is="$room.canLiftBan()">
+					<a class="menu-linkRow" 
+					   data-xf-click="chat-message-post"
+					   data-text="/ban --lift"
+					   data-menu-closer=""
+					>
+						<xf:fa icon="fa-ban" />
+						{{ phrase('lift_ban') }}
+					</a>
+				</xf:if>
+			</xf:contentcheck>
+		</div>
+	</div>
+</xf:if>
+
+<xf:if is="$room.canLeave()">
+	<a class="menu-linkRow menu-linkRow--warning" 
+	   data-xf-click="chat-message-post"
+	   data-text="/leave"
+	   data-menu-closer=""
+	>
+		<xf:fa icon="fa-sign-out" />
+		{{ phrase('leave') }}
+	</a>
+</xf:if>
+
+<xf:if is="$room.canClear()">
+	<a class="menu-linkRow menu-linkRow--warning" 
+	   data-xf-click="chat-message-post"
+	   data-text="/clear"
+	   data-menu-closer=""
+	>
+		<xf:fa icon="fa-broom" />
+		{{ phrase('clear') }}
+	</a>
+</xf:if>
+
+<xf:if is="$room.canDelete()">
+	<a class="menu-linkRow menu-linkRow--warning" 
+	   data-xf-click="overlay"
+	   href="{{ link('chat/rooms/delete', $room) }}"
+	>
+		<xf:fa icon="fa-trash" />
+		{{ phrase('delete') }}
+	</a>
+</xf:if>]]></template>
+  <template type="public" title="search_result_chat_message" version_id="2000070" version_string="2.0.0"><![CDATA[<li class="block-row block-row--separated" data-author="{{ $message.User.username ?: phrase('unknown') }}">
+	<div class="contentRow">
+		<span class="contentRow-figure">
+			<xf:avatar user="{$message.User}" size="s" defaultname="{{ $message.User.username ?: phrase('unknown') }}" />
+		</span>
+		<div class="contentRow-main">
+			<h3 class="contentRow-title">
+				<a href="{{ link('chat/messages/to', $message) }}">
+					{{ phrase('chat_message') }}
+				</a>
+			</h3>
+
+			<div class="contentRow-snippet">{{ bb_code($message.message|censor, 'chat:message', $message) }}</div>
+
+			<div class="contentRow-minor contentRow-minor--hideLinks">
+				<ul class="listInline listInline--bullet">
+					<li><xf:username user="{$message.User}" /></li>
+					<li><xf:date time="{$message.message_date}" /></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</li>]]></template>
+  <template type="public" title="widget_real_time_chat" version_id="2000070" version_string="2.0.0"><![CDATA[<div class="widget-rtc block">
+	<xf:macro name="real_time_chat_macros::chat"
+			  arg-attachmentData="{$attachmentData}"
+			  arg-latestMessageDate="{$latestMessageDate}" />
+</div>]]></template>
+</templates>

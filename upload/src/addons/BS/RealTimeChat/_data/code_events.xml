@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<code_events>
+  <event event_id="quill_options"><![CDATA[<p>Fired when setup quill editor options.</p>
+
+<p>Callback signature:</p>
+<blockquote><code><em>array</em> &amp;$options, <em>string</em> $context</code></blockquote>
+
+<p>Arguments:</p>
+<ol>
+	<li><code><em>array</em> &amp;$options</code> - The editor options.</li>
+	<li><code><em>string</em> $context</code> - Context in which editor is handled.</li>
+</ol>]]></event>
+  <event event_id="rtc_commands"><![CDATA[<p>Allows to chat commands</p>
+
+<p>Callback signature:</p>
+<blockquote><code><em>array</em> &amp;$commands</code></blockquote>
+
+<p>Arguments:</p>
+<ol>
+	<li><code><em>array</em> &amp;$commands</code> - commands array in format [['command_name' => 'handler_class'], ...]</li>
+</ol>]]></event>
+  <event event_id="rtc_message_types"><![CDATA[<p>Allows to chat message types</p>
+
+<p>Callback signature:</p>
+<blockquote><code><em>array</em> &amp;$types</code></blockquote>
+
+<p>Arguments:</p>
+<ol>
+	<li><code><em>array</em> &amp;$types</code> - types array in format [['type_name' => 'handler_class'], ...]</li>
+</ol>]]></event>
+</code_events>

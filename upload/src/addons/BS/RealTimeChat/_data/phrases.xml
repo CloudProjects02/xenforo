@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="admin_navigation.bsRtc" version_id="1000470" version_string="1.0.4"><![CDATA[Chat]]></phrase>
+  <phrase title="admin_navigation.bsRtcRooms" version_id="2000070" version_string="2.0.0"><![CDATA[Rooms]]></phrase>
+  <phrase title="alert_opt_out.chat_message_mention" version_id="2000070" version_string="2.0.0"><![CDATA[Mentions you in a chat message]]></phrase>
+  <phrase title="alert_opt_out.chat_message_private_message" version_id="2000070" version_string="2.0.0"><![CDATA[Sends you private message in chat]]></phrase>
+  <phrase title="alert_opt_out.chat_message_quote" version_id="2000070" version_string="2.0.0"><![CDATA[Quotes you in a chat message]]></phrase>
+  <phrase title="alert_opt_out.chat_message_reaction" version_id="2000070" version_string="2.0.0"><![CDATA[Reacts to your chat message]]></phrase>
+  <phrase title="chat_message" version_id="1000470" version_string="1.0.4"><![CDATA[Chat message]]></phrase>
+  <phrase title="chat_messages" version_id="1000470" version_string="1.0.4"><![CDATA[Chat messages]]></phrase>
+  <phrase title="cron_entry.rtcRemoveExpiredBans" version_id="2000070" version_string="2.0.0"><![CDATA[RTC: Remove expired bans]]></phrase>
+  <phrase title="mod_log.chat_message_attachment_deleted" version_id="2000070" version_string="2.0.0"><![CDATA[Chat message attachment deleted]]></phrase>
+  <phrase title="mod_log.chat_message_delete" version_id="2000070" version_string="2.0.0"><![CDATA[Chat message deleted]]></phrase>
+  <phrase title="mod_log.chat_message_edit" version_id="2000070" version_string="2.0.0"><![CDATA[Chat message edited]]></phrase>
+  <phrase title="mod_log.rtc_room_delete" version_id="2000070" version_string="2.0.0"><![CDATA[Chat room deleted]]></phrase>
+  <phrase title="mod_log.rtc_room_edit" version_id="2000070" version_string="2.0.0"><![CDATA[Chat room edited]]></phrase>
+  <phrase title="mod_log.rtc_room_wallpaper_changed" version_id="2000070" version_string="2.0.0"><![CDATA[Changed wallpaper in chat room]]></phrase>
+  <phrase title="option.realTimeChatAudio" version_id="2000070" version_string="2.0.0"><![CDATA[Sound notification path]]></phrase>
+  <phrase title="option.realTimeChatCountReactions" version_id="2000070" version_string="2.0.0"><![CDATA[Count reactions to messages]]></phrase>
+  <phrase title="option.realTimeChatEnableSound" version_id="2000070" version_string="2.0.0"><![CDATA[Enable sound notifications]]></phrase>
+  <phrase title="option.realTimeChatEnabledBbCodes" version_id="2000070" version_string="2.0.0"><![CDATA[Active BB codes in messages]]></phrase>
+  <phrase title="option.realTimeChatMessageLimit" version_id="2000070" version_string="2.0.0"><![CDATA[Messages per page]]></phrase>
+  <phrase title="option.realTimeChatMessageMaxLength" version_id="2000070" version_string="2.0.0"><![CDATA[Message length limit]]></phrase>
+  <phrase title="option.realTimeChatMinWallpaperSize" version_id="2000070" version_string="2.0.0"><![CDATA[Minimum wallpaper size]]></phrase>
+  <phrase title="option.realTimeChatNotice" version_id="2000070" version_string="2.0.0"><![CDATA[Pinned notice]]></phrase>
+  <phrase title="option.realTimeChatSendTimeout" version_id="2000070" version_string="2.0.0"><![CDATA[Timeout between messages]]></phrase>
+  <phrase title="option.rtcDisable" version_id="2000070" version_string="2.0.0"><![CDATA[Disable chat]]></phrase>
+  <phrase title="option.rtcEnableAlerts" version_id="2000070" version_string="2.0.0"><![CDATA[Enable alerts]]></phrase>
+  <phrase title="option.rtcMobilePopup" version_id="2000070" version_string="2.0.0"><![CDATA[Enable chat popup on mobile]]></phrase>
+  <phrase title="option.rtcPopup" version_id="2000070" version_string="2.0.0"><![CDATA[Enable chat popup]]></phrase>
+  <phrase title="option.rtcRoomMaxMembers" version_id="2000070" version_string="2.0.0"><![CDATA[Maximum members in private room]]></phrase>
+  <phrase title="option.rtcTranslationGptModel" version_id="2000070" version_string="2.0.0"><![CDATA[Translation GPT Model]]></phrase>
+  <phrase title="option_explain.realTimeChatAudio" version_id="1000053" version_string="1.0.0 Release Candidate 3"><![CDATA[]]></phrase>
+  <phrase title="option_explain.realTimeChatCountReactions" version_id="2000070" version_string="2.0.0"><![CDATA[If enabled, reactions to messages in the chat will also be counted in the user's statistics.]]></phrase>
+  <phrase title="option_explain.realTimeChatEnableSound" version_id="1000033" version_string="1.0.0 Beta 3"><![CDATA[]]></phrase>
+  <phrase title="option_explain.realTimeChatEnabledBbCodes" version_id="1000033" version_string="1.0.0 Beta 3"><![CDATA[]]></phrase>
+  <phrase title="option_explain.realTimeChatMessageLimit" version_id="1000053" version_string="1.0.0 Release Candidate 3"><![CDATA[]]></phrase>
+  <phrase title="option_explain.realTimeChatMessageMaxLength" version_id="1000053" version_string="1.0.0 Release Candidate 3"><![CDATA[]]></phrase>
+  <phrase title="option_explain.realTimeChatMinWallpaperSize" version_id="2000070" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.realTimeChatNotice" version_id="1000033" version_string="1.0.0 Beta 3"><![CDATA[]]></phrase>
+  <phrase title="option_explain.realTimeChatSendTimeout" version_id="1000033" version_string="1.0.0 Beta 3"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rtcDisable" version_id="2000070" version_string="2.0.0"><![CDATA[If the option is enabled, all chat functionality will be disabled.]]></phrase>
+  <phrase title="option_explain.rtcEnableAlerts" version_id="2000070" version_string="2.0.0"><![CDATA[If you disable this option, users will not receive alerts about events from the chat (such as likes, quotes, mentions, and so on).]]></phrase>
+  <phrase title="option_explain.rtcMobilePopup" version_id="2000070" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rtcPopup" version_id="2000070" version_string="2.0.0"><![CDATA[If enabled, each page will display a floating chat button that can be clicked to open a chat popup.]]></phrase>
+  <phrase title="option_explain.rtcRoomMaxMembers" version_id="2000070" version_string="2.0.0"><![CDATA[For private rooms, change notifications are broadcast to each member individually, so you can limit the number of members in a room if you run into performance issues.<br>
+Set 0 to disable limit.]]></phrase>
+  <phrase title="option_explain.rtcTranslationGptModel" version_id="2000070" version_string="2.0.0"><![CDATA[The selected model will be used to translate messages.<br>
+More details about the difference in models can be found at <a href="https://platform.openai.com/docs/models/overview">this link</a>.]]></phrase>
+  <phrase title="option_group.BSRealTimeChatOptions" version_id="2000070" version_string="2.0.0"><![CDATA[[021] Real-Time Chat]]></phrase>
+  <phrase title="option_group_description.BSRealTimeChatOptions" version_id="1000030" version_string="1.0.0 Beta"><![CDATA[]]></phrase>
+  <phrase title="permission.bsChat_aibGptMaxRepliesPerDay" version_id="1030070" version_string="1.3.0"><![CDATA[(ChatGPT) Max replies per day]]></phrase>
+  <phrase title="permission.bsChat_canBan" version_id="2000070" version_string="2.0.0"><![CDATA[Ban users in own rooms]]></phrase>
+  <phrase title="permission.bsChat_canBanAny" version_id="2000070" version_string="2.0.0"><![CDATA[Ban users in any rooms]]></phrase>
+  <phrase title="permission.bsChat_canDelete" version_id="1000571" version_string="1.0.5a"><![CDATA[Delete own messages]]></phrase>
+  <phrase title="permission.bsChat_canDeleteAny" version_id="1000571" version_string="1.0.5a"><![CDATA[Delete any messages]]></phrase>
+  <phrase title="permission.bsChat_canEdit" version_id="1000571" version_string="1.0.5a"><![CDATA[Edit own messages]]></phrase>
+  <phrase title="permission.bsChat_canEditAny" version_id="1000571" version_string="1.0.5a"><![CDATA[Edit all messages]]></phrase>
+  <phrase title="permission.bsChat_canReact" version_id="2000070" version_string="2.0.0"><![CDATA[React to messages]]></phrase>
+  <phrase title="permission.bsChat_canView" version_id="1000571" version_string="1.0.5a"><![CDATA[View chat]]></phrase>
+  <phrase title="permission.bsChat_canWrite" version_id="2000070" version_string="2.0.0"><![CDATA[Post messages]]></phrase>
+  <phrase title="permission.bsChat_clearAnyRoom" version_id="2000070" version_string="2.0.0"><![CDATA[Use /clear command in any room]]></phrase>
+  <phrase title="permission.bsChat_clearOwnRooms" version_id="2000070" version_string="2.0.0"><![CDATA[Use /clear command in own room]]></phrase>
+  <phrase title="permission.bsChat_createRoom" version_id="2000070" version_string="2.0.0"><![CDATA[Create room]]></phrase>
+  <phrase title="permission.bsChat_deleteAnyRoom" version_id="2000070" version_string="2.0.0"><![CDATA[Delete any room]]></phrase>
+  <phrase title="permission.bsChat_deleteOwnRooms" version_id="2000070" version_string="2.0.0"><![CDATA[Delete own rooms]]></phrase>
+  <phrase title="permission.bsChat_editAnyRoom" version_id="2000070" version_string="2.0.0"><![CDATA[Edit any room]]></phrase>
+  <phrase title="permission.bsChat_editOwnRooms" version_id="2000070" version_string="2.0.0"><![CDATA[Edit own rooms]]></phrase>
+  <phrase title="permission.bsChat_setIndividualWallpaper" version_id="2000070" version_string="2.0.0"><![CDATA[Set individual wallpaper for rooms]]></phrase>
+  <phrase title="permission.bsChat_setWallpaperInOwnRooms" version_id="2000070" version_string="2.0.0"><![CDATA[Set wallpaper for own rooms]]></phrase>
+  <phrase title="permission.bsChat_translateMessages" version_id="2000070" version_string="2.0.0"><![CDATA[Translate messages]]></phrase>
+  <phrase title="permission.bsChat_uploadAttachment" version_id="2000070" version_string="2.0.0"><![CDATA[Upload attachments]]></phrase>
+  <phrase title="permission.bsChat_useAiBots" version_id="1020170" version_string="1.2.1"><![CDATA[Use AI bots]]></phrase>
+  <phrase title="permission.bsChat_viewBannedList" version_id="2000070" version_string="2.0.0"><![CDATA[View banned list]]></phrase>
+  <phrase title="permission_interface.bsRtc" version_id="2000070" version_string="2.0.0"><![CDATA[Real-Time Chat]]></phrase>
+  <phrase title="permission_interface.bsRtcAiBots" version_id="2000070" version_string="2.0.0"><![CDATA[Real-Time Chat – AI Bots]]></phrase>
+  <phrase title="permission_interface.bsRtcModerator" version_id="2000070" version_string="2.0.0"><![CDATA[Real-Time Chat – Moderator Permissions]]></phrase>
+  <phrase title="real_time_chat_edit_ban" version_id="1000470" version_string="1.0.4"><![CDATA[Edit chat ban]]></phrase>
+  <phrase title="real_time_chat_header" version_id="1000470" version_string="1.0.4"><![CDATA[Chat]]></phrase>
+  <phrase title="real_time_chat_message_placeholder" version_id="1000470" version_string="1.0.4"><![CDATA[Please enter a message]]></phrase>
+  <phrase title="real_time_chat_messages_is_empty" version_id="1000470" version_string="1.0.4" global_cache="1"><![CDATA[No messages found]]></phrase>
+  <phrase title="real_time_chat_reason" version_id="1000470" version_string="1.0.4"><![CDATA[Reason: {reason}]]></phrase>
+  <phrase title="real_time_chat_requested_message_not_found" version_id="1000470" version_string="1.0.4"><![CDATA[The specified message was not found.]]></phrase>
+  <phrase title="rtc_action_available_via_xhr_only" version_id="1000570" version_string="1.0.5"><![CDATA[This query can only be performed using XMLHttpRequest]]></phrase>
+  <phrase title="rtc_actions" version_id="1000572" version_string="1.0.5b"><![CDATA[Actions]]></phrase>
+  <phrase title="rtc_active" version_id="1000570" version_string="1.0.5"><![CDATA[Active]]></phrase>
+  <phrase title="rtc_aib_chat_context_limit_explain" version_id="1030070" version_string="1.3.0"><![CDATA[The number of messages that will be loaded from the chat into the bot.<br>
+Set to 0 to have the bot only reply to the message that triggered.]]></phrase>
+  <phrase title="rtc_aib_chat_prompt" version_id="1030070" version_string="1.3.0"><![CDATA[Prompt for chat]]></phrase>
+  <phrase title="rtc_aib_chat_prompt_explain" version_id="1030070" version_string="1.3.0"><![CDATA[Available variables:<br>
+<em>{author}</em> – Username of the user who contacted the bot<br>
+<em>{date}</em> – Current date in "2021-12-31" format<br>
+<em>{time}</em> – Current time in "10:15" format<br>
+<br>
+This prompt will describe the behavior of the bot when compiling a response for chat message.<br>
+This prompt does not guarantee that the bot will follow the instructions exactly. ChatGPT is in the process of learning and a prompts only regulate the response it will generate, not fully control it.<br>
+For a better understanding of how prompts should be composed, you can take a look at the "<a href="https://github.com/f/awesome-chatgpt-prompts" target="_blank">Awesome prompts</a>" repository.]]></phrase>
+  <phrase title="rtc_aib_invalid_chat_context_limit" version_id="1030070" version_string="1.3.0"><![CDATA[Invalid context limit for chat. Please set value between {min} and {max}]]></phrase>
+  <phrase title="rtc_aib_streaming_mode" version_id="1040070" version_string="1.4.0"><![CDATA[Streaming mode]]></phrase>
+  <phrase title="rtc_allow_messages_from_other_users" version_id="2000070" version_string="2.0.0"><![CDATA[Allow messages from other users]]></phrase>
+  <phrase title="rtc_ban_user" version_id="2000070" version_string="2.0.0"><![CDATA[Ban user]]></phrase>
+  <phrase title="rtc_banned_users" version_id="2000070" version_string="2.0.0"><![CDATA[Banned users]]></phrase>
+  <phrase title="rtc_blur_background" version_id="2000070" version_string="2.0.0"><![CDATA[Blur background]]></phrase>
+  <phrase title="rtc_channel" version_id="2000070" version_string="2.0.0"><![CDATA[Channel]]></phrase>
+  <phrase title="rtc_chat" version_id="2000070" version_string="2.0.0"><![CDATA[Chat]]></phrase>
+  <phrase title="rtc_chat_language" version_id="2000070" version_string="2.0.0"><![CDATA[Chat language]]></phrase>
+  <phrase title="rtc_chat_language_explain" version_id="2000070" version_string="2.0.0"><![CDATA[Chat messages will be translated into this language when you use the translate button.]]></phrase>
+  <phrase title="rtc_chat_message_in_the_room_x" version_id="2000070" version_string="2.0.0"><![CDATA[Chat message in the room "{room}"]]></phrase>
+  <phrase title="rtc_chatting" version_id="2000070" version_string="2.0.0"><![CDATA[Chatting]]></phrase>
+  <phrase title="rtc_choose_image" version_id="2000070" version_string="2.0.0"><![CDATA[Choose image]]></phrase>
+  <phrase title="rtc_command.clear" version_id="1000070" version_string="1.0.0"><![CDATA[Clear]]></phrase>
+  <phrase title="rtc_command.pm" version_id="1000170" version_string="1.0.1"><![CDATA[Private message]]></phrase>
+  <phrase title="rtc_command.to" version_id="1000170" version_string="1.0.1"><![CDATA[To message]]></phrase>
+  <phrase title="rtc_command_desc.ban" version_id="2000070" version_string="2.0.0"><![CDATA[Opens the form for managing bans in the room.
+<br><br>
+
+Options:<br>
+<code class="bbCodeInline">--list</code> – Displays a list of banned users.<br>
+<code class="bbCodeInline">--lift</code> – Displays a form for lift a ban from a user.
+<br><br>
+
+Usage example: <code class="bbCodeInline">/ban --list</code>]]></phrase>
+  <phrase title="rtc_command_desc.clear" version_id="2000070" version_string="2.0.0"><![CDATA[Delete messages in the room.
+<br><br>
+
+Options:<br>
+<code class="bbCodeInline">--user</code> – username to delete messages only from specific user.
+<br><br>
+
+Usage example: <code class="bbCodeInline">/clear --user="Spammer"</code> ]]></phrase>
+  <phrase title="rtc_command_desc.destroy" version_id="2000070" version_string="2.0.0"><![CDATA[Completely deletes the room.]]></phrase>
+  <phrase title="rtc_command_desc.edit" version_id="2000070" version_string="2.0.0"><![CDATA[Opens the room editing form.]]></phrase>
+  <phrase title="rtc_command_desc.help" version_id="2000070" version_string="2.0.0"><![CDATA[Displays a list of available commands.]]></phrase>
+  <phrase title="rtc_command_desc.leave" version_id="2000070" version_string="2.0.0"><![CDATA[Leave the room.]]></phrase>
+  <phrase title="rtc_command_desc.link" version_id="2000070" version_string="2.0.0"><![CDATA[Generates a new invite link for the room.
+<br><br>
+
+Options:<br>
+<code class="bbCodeInline">--refresh</code> – deletes all previous links.
+<br><br>
+
+Usage example:  <code class="bbCodeInline">/link --refresh</code> ]]></phrase>
+  <phrase title="rtc_command_desc.messages" version_id="2000070" version_string="2.0.0"><![CDATA[Enables / disables messages in the room.
+<br><br>
+
+Options:<br>
+<code class="bbCodeInline">--on</code> – enables messages.<br>
+<code class="bbCodeInline">--off</code> – disables messages.
+<br><br>
+
+Usage example: <code class="bbCodeInline">/messages --off</code> ]]></phrase>
+  <phrase title="rtc_command_desc.pm" version_id="2000070" version_string="2.0.0"><![CDATA[Sends a message in private messages to the user.
+<br><br>
+Usage example: <code class="bbCodeInline">/pm Bro, hi</code>]]></phrase>
+  <phrase title="rtc_command_desc.to" version_id="2000070" version_string="2.0.0"><![CDATA[Addresses a message to the user.
+<br><br>
+Usage example: <code class="bbCodeInline">/to Bro, hi</code> ]]></phrase>
+  <phrase title="rtc_commands" version_id="1000570" version_string="1.0.5"><![CDATA[Chat commands]]></phrase>
+  <phrase title="rtc_connecting" version_id="2000070" version_string="2.0.0"><![CDATA[Connecting...]]></phrase>
+  <phrase title="rtc_copy_link" version_id="2000070" version_string="2.0.0"><![CDATA[Copy link]]></phrase>
+  <phrase title="rtc_create_new_room" version_id="2000070" version_string="2.0.0"><![CDATA[Create new room]]></phrase>
+  <phrase title="rtc_create_room" version_id="2000070" version_string="2.0.0"><![CDATA[Create room]]></phrase>
+  <phrase title="rtc_delete_wallpaper" version_id="2000070" version_string="2.0.0"><![CDATA[Delete wallpaper]]></phrase>
+  <phrase title="rtc_direct_connection" version_id="1000572" version_string="1.0.5b"><![CDATA[(WebSocket) Direct connection]]></phrase>
+  <phrase title="rtc_edit_command" version_id="1000570" version_string="1.0.5"><![CDATA[Edit command]]></phrase>
+  <phrase title="rtc_edit_message" version_id="2000070" version_string="2.0.0"><![CDATA[Edit message]]></phrase>
+  <phrase title="rtc_edit_room" version_id="2000070" version_string="2.0.0"><![CDATA[Edit room]]></phrase>
+  <phrase title="rtc_edited" version_id="2000070" version_string="2.0.0"><![CDATA[edited]]></phrase>
+  <phrase title="rtc_for_a_while" version_id="1000570" version_string="1.0.5"><![CDATA[For a while]]></phrase>
+  <phrase title="rtc_history_has_been_cleared" version_id="2000070" version_string="2.0.0"><![CDATA[History has been cleared]]></phrase>
+  <phrase title="rtc_is_pinned" version_id="2000070" version_string="2.0.0"><![CDATA[Pinned]]></phrase>
+  <phrase title="rtc_join" version_id="2000070" version_string="2.0.0"><![CDATA[Join]]></phrase>
+  <phrase title="rtc_long_polling" version_id="1000572" version_string="1.0.5b"><![CDATA[(Ajax) Long polling]]></phrase>
+  <phrase title="rtc_manage_bans" version_id="2000070" version_string="2.0.0"><![CDATA[Manage bans]]></phrase>
+  <phrase title="rtc_maximum_request_duration" version_id="1000572" version_string="1.0.5b"><![CDATA[Maximum request duration]]></phrase>
+  <phrase title="rtc_mention" version_id="2000070" version_string="2.0.0"><![CDATA[Mention]]></phrase>
+  <phrase title="rtc_message_in_room_x" version_id="2000070" version_string="2.0.0"><![CDATA[Message in room '{title}']]></phrase>
+  <phrase title="rtc_message_placeholder" version_id="2000070" version_string="2.0.0"><![CDATA[Message]]></phrase>
+  <phrase title="rtc_messages_in_the_room_were_turned_off" version_id="2000070" version_string="2.0.0"><![CDATA[The messages in the room were turned off.]]></phrase>
+  <phrase title="rtc_messages_in_the_room_were_turned_on" version_id="2000070" version_string="2.0.0"><![CDATA[The messages in the room were turned on.]]></phrase>
+  <phrase title="rtc_mute" version_id="2000070" version_string="2.0.0"><![CDATA[Mute]]></phrase>
+  <phrase title="rtc_new_link" version_id="2000070" version_string="2.0.0"><![CDATA[New link]]></phrase>
+  <phrase title="rtc_new_link_for_invite_to_the_room_x" version_id="2000070" version_string="2.0.0"><![CDATA[New link for invite to the room {tag}]]></phrase>
+  <phrase title="rtc_no_one_banned_in_this_room" version_id="2000070" version_string="2.0.0"><![CDATA[No one is banned in this room.]]></phrase>
+  <phrase title="rtc_pin_order" version_id="2000070" version_string="2.0.0"><![CDATA[Pin order]]></phrase>
+  <phrase title="rtc_please_enter_valid_tag" version_id="2000070" version_string="2.0.0"><![CDATA[Please enter valid tag.]]></phrase>
+  <phrase title="rtc_please_upload_a_wallpaper" version_id="2000070" version_string="2.0.0"><![CDATA[Please upload a wallpaper]]></phrase>
+  <phrase title="rtc_please_upload_image_that_is_at_least_x_and_y" version_id="2000070" version_string="2.0.0"><![CDATA[Please upload an image that is at least {width}x{height}.]]></phrase>
+  <phrase title="rtc_pm" version_id="2000070" version_string="2.0.0"><![CDATA[pm]]></phrase>
+  <phrase title="rtc_private_message" version_id="2000070" version_string="2.0.0"><![CDATA[Private message]]></phrase>
+  <phrase title="rtc_proxied_address" version_id="1000572" version_string="1.0.5b"><![CDATA[(WebSocket) Proxied address]]></phrase>
+  <phrase title="rtc_requested_chat_room_not_found" version_id="2000070" version_string="2.0.0"><![CDATA[Requested chat room not found.]]></phrase>
+  <phrase title="rtc_reset_image" version_id="2000070" version_string="2.0.0"><![CDATA[Reset image]]></phrase>
+  <phrase title="rtc_reset_room_wallpaper" version_id="2000070" version_string="2.0.0"><![CDATA[Reset room wallpaper]]></phrase>
+  <phrase title="rtc_reset_to_defaults" version_id="2000070" version_string="2.0.0"><![CDATA[Reset to defaults]]></phrase>
+  <phrase title="rtc_respond_in_pm_only" version_id="1040070" version_string="1.4.0"><![CDATA[Respond in PM only]]></phrase>
+  <phrase title="rtc_respond_in_pm_only_explain" version_id="1040070" version_string="1.4.0"><![CDATA[If this option is enabled, bot messages will be visible only to the author of the trigger message.]]></phrase>
+  <phrase title="rtc_restore_original" version_id="2000070" version_string="2.0.0"><![CDATA[Restore original]]></phrase>
+  <phrase title="rtc_room" version_id="2000070" version_string="2.0.0"><![CDATA[Room]]></phrase>
+  <phrase title="rtc_room_has_been_edited_by_user_x" version_id="2000070" version_string="2.0.0"><![CDATA[The room has been edited by {user}.]]></phrase>
+  <phrase title="rtc_room_invite_link_x" version_id="2000070" version_string="2.0.0"><![CDATA[Room invite link: {link}]]></phrase>
+  <phrase title="rtc_room_type_explain" version_id="2000070" version_string="2.0.0"><![CDATA[<em>public</em> – will be visible to all users.<br>
+<em>member</em> – access will be by link only.]]></phrase>
+  <phrase title="rtc_room_x" version_id="2000070" version_string="2.0.0"><![CDATA[Room '{title}']]></phrase>
+  <phrase title="rtc_rooms" version_id="2000070" version_string="2.0.0"><![CDATA[Rooms]]></phrase>
+  <phrase title="rtc_rooms_will_appear_here" version_id="2000070" version_string="2.0.0"><![CDATA[Rooms will appear here]]></phrase>
+  <phrase title="rtc_run_command" version_id="2000070" version_string="2.0.0"><![CDATA[Run command]]></phrase>
+  <phrase title="rtc_select_theme" version_id="2000070" version_string="2.0.0"><![CDATA[Select theme]]></phrase>
+  <phrase title="rtc_send_private_message" version_id="2000070" version_string="2.0.0"><![CDATA[Send private message]]></phrase>
+  <phrase title="rtc_send_shortcut" version_id="2000070" version_string="2.0.0"><![CDATA[You can also send messages using the shortcut ⌘CMD (Ctrl) + Enter]]></phrase>
+  <phrase title="rtc_set" version_id="2000070" version_string="2.0.0"><![CDATA[Set]]></phrase>
+  <phrase title="rtc_set_for_room" version_id="2000070" version_string="2.0.0"><![CDATA[Set for room]]></phrase>
+  <phrase title="rtc_set_wallpaper" version_id="2000070" version_string="2.0.0"><![CDATA[Set wallpaper]]></phrase>
+  <phrase title="rtc_ssl_cert_path" version_id="1000570" version_string="1.0.5"><![CDATA[Certificate file path]]></phrase>
+  <phrase title="rtc_ssl_key_path" version_id="1000570" version_string="1.0.5"><![CDATA[Path to certificate key file]]></phrase>
+  <phrase title="rtc_tag" version_id="2000070" version_string="2.0.0"><![CDATA[Tag]]></phrase>
+  <phrase title="rtc_tag_cannot_be_empty" version_id="2000070" version_string="2.0.0"><![CDATA[Tag cannot be empty.]]></phrase>
+  <phrase title="rtc_tag_edit_explain" version_id="2000070" version_string="2.0.0"><![CDATA[Users currently chatting in the room will be disconnected after changing the tag.]]></phrase>
+  <phrase title="rtc_tag_example" version_id="2000070" version_string="2.0.0"><![CDATA[Love]]></phrase>
+  <phrase title="rtc_tag_must_be_unique" version_id="2000070" version_string="2.0.0"><![CDATA[Tag must be unique.]]></phrase>
+  <phrase title="rtc_theme_setting.bottom_left" version_id="2000070" version_string="2.0.0"><![CDATA[Background bottom left corner]]></phrase>
+  <phrase title="rtc_theme_setting.bottom_right" version_id="2000070" version_string="2.0.0"><![CDATA[Background bottom right corner]]></phrase>
+  <phrase title="rtc_theme_setting.bubble" version_id="2000070" version_string="2.0.0"><![CDATA[Bubble]]></phrase>
+  <phrase title="rtc_theme_setting.bubble_details" version_id="2000070" version_string="2.0.0"><![CDATA[Bubble details]]></phrase>
+  <phrase title="rtc_theme_setting.header" version_id="2000070" version_string="2.0.0"><![CDATA[Header]]></phrase>
+  <phrase title="rtc_theme_setting.highlighted_message" version_id="2000070" version_string="2.0.0"><![CDATA[Highlighted message background]]></phrase>
+  <phrase title="rtc_theme_setting.pattern" version_id="2000070" version_string="2.0.0"><![CDATA[Pattern]]></phrase>
+  <phrase title="rtc_theme_setting.primary_color" version_id="2000070" version_string="2.0.0"><![CDATA[Primary color]]></phrase>
+  <phrase title="rtc_theme_setting.send_button" version_id="2000070" version_string="2.0.0"><![CDATA[Send button background]]></phrase>
+  <phrase title="rtc_theme_setting.surface_color" version_id="2000070" version_string="2.0.0"><![CDATA[Surface color]]></phrase>
+  <phrase title="rtc_theme_setting.top_left" version_id="2000070" version_string="2.0.0"><![CDATA[Background top left corner]]></phrase>
+  <phrase title="rtc_theme_setting.top_right" version_id="2000070" version_string="2.0.0"><![CDATA[Background top right corner]]></phrase>
+  <phrase title="rtc_theme_setting.visitor_bubble" version_id="2000070" version_string="2.0.0"><![CDATA[Visitor bubble]]></phrase>
+  <phrase title="rtc_theme_setting.visitor_bubble_details" version_id="2000070" version_string="2.0.0"><![CDATA[Visitor bubble details]]></phrase>
+  <phrase title="rtc_there_are_no_rooms" version_id="2000070" version_string="2.0.0"><![CDATA[There are no rooms in the chat.]]></phrase>
+  <phrase title="rtc_this_page_is_only_available_when_development_mode_is_enabled" version_id="1010170" version_string="1.1.1"><![CDATA[This page is only available when the chat development mode is enabled.]]></phrase>
+  <phrase title="rtc_translate" version_id="2000070" version_string="2.0.0"><![CDATA[Translate]]></phrase>
+  <phrase title="rtc_translating_error" version_id="2000070" version_string="2.0.0"><![CDATA[An error occurred while translating this message. Try again.]]></phrase>
+  <phrase title="rtc_type" version_id="2000070" version_string="2.0.0"><![CDATA[Type]]></phrase>
+  <phrase title="rtc_type_of_this_room_cannot_be_changed" version_id="2000070" version_string="2.0.0"><![CDATA[The type of this room cannot be changed.]]></phrase>
+  <phrase title="rtc_unban_date" version_id="2000070" version_string="2.0.0"><![CDATA[Unban date]]></phrase>
+  <phrase title="rtc_unmute" version_id="2000070" version_string="2.0.0"><![CDATA[Unmute]]></phrase>
+  <phrase title="rtc_user_mentions" version_id="2000070" version_string="2.0.0"><![CDATA[User mentions]]></phrase>
+  <phrase title="rtc_user_x_has_been_banned" version_id="2000070" version_string="2.0.0"><![CDATA[User {user} has been banned.]]></phrase>
+  <phrase title="rtc_user_x_has_been_unbanned" version_id="2000070" version_string="2.0.0"><![CDATA[User {user} has been unbanned.]]></phrase>
+  <phrase title="rtc_view_list" version_id="2000070" version_string="2.0.0"><![CDATA[View list]]></phrase>
+  <phrase title="rtc_welcome_message" version_id="2000070" version_string="2.0.0"><![CDATA[Welcome to Real Time Chat 2.0!]]></phrase>
+  <phrase title="rtc_widget_compact" version_id="2000070" version_string="2.0.0"><![CDATA[Compact]]></phrase>
+  <phrase title="rtc_widget_compact_hint" version_id="2000070" version_string="2.0.0"><![CDATA[The chat will be adapted to the small size.]]></phrase>
+  <phrase title="rtc_widget_default_room_tag" version_id="2000070" version_string="2.0.0"><![CDATA[Default room tag]]></phrase>
+  <phrase title="rtc_widget_default_room_tag_explain" version_id="2000070" version_string="2.0.0"><![CDATA[When loading the chat, room with this tag will open automatically]]></phrase>
+  <phrase title="rtc_x_and_y_writing_message" version_id="2000070" version_string="2.0.0"><![CDATA[{username1} and {username2} are typing...]]></phrase>
+  <phrase title="rtc_x_members_joined" version_id="2000070" version_string="2.0.0"><![CDATA[{count} online]]></phrase>
+  <phrase title="rtc_x_mentioned_you_in_chat_message" version_id="2000070" version_string="2.0.0"><![CDATA[{name} mentioned you in <a href="{link}" class="fauxBlockLink-blockLink">chat message</a>.]]></phrase>
+  <phrase title="rtc_x_quoted_your_chat_message" version_id="2000070" version_string="2.0.0"><![CDATA[{name} <a href="{link}" class="fauxBlockLink-blockLink">quoted</a> your chat message.]]></phrase>
+  <phrase title="rtc_x_reacted_to_your_chat_message_with_reaction" version_id="2000070" version_string="2.0.0"><![CDATA[{name} reacted to <a {messageHref}>your chat message</a> with {reaction}.]]></phrase>
+  <phrase title="rtc_x_sent_you_private_message_in_chat" version_id="2000070" version_string="2.0.0"><![CDATA[{name} sent you <a href="{link}" class="fauxBlockLink-blockLink">private message</a> in chat.]]></phrase>
+  <phrase title="rtc_x_writing_message" version_id="2000070" version_string="2.0.0"><![CDATA[{username} are typing...]]></phrase>
+  <phrase title="rtc_x_y_and_z_more_writing_message" version_id="2000070" version_string="2.0.0"><![CDATA[{username1}, {username2} and {count} user(s) are typing...]]></phrase>
+  <phrase title="rtc_you_do_not_have_access_to_this_gpt_model" version_id="2000070" version_string="2.0.0"><![CDATA[You do not have access to this GPT model.]]></phrase>
+  <phrase title="rtc_you_have_been_banned_from_this_room" version_id="2000070" version_string="2.0.0"><![CDATA[You have been banned from this room. Unban date: {unban_date}.]]></phrase>
+  <phrase title="rtc_you_have_been_banned_from_this_room_with_reason" version_id="2000070" version_string="2.0.0"><![CDATA[You have been banned from this room with reason "{reason}". Unban date: {unban_date}.]]></phrase>
+  <phrase title="rtc_you_have_not_access_to_this_chat_room" version_id="2000070" version_string="2.0.0"><![CDATA[You have not access to this chat room.]]></phrase>
+  <phrase title="rtc_you_have_updated_wallpaper_for_this_room" version_id="2000070" version_string="2.0.0"><![CDATA[You have updated the wallpaper for this room]]></phrase>
+  <phrase title="style_prop.rtcChatFormReturnBack" version_id="2000070" version_string="2.0.0"><![CDATA[Action form: Return back]]></phrase>
+  <phrase title="style_prop.rtcChatFormTitle" version_id="2000070" version_string="2.0.0"><![CDATA[Action form: Title]]></phrase>
+  <phrase title="style_prop.rtcConnectingNotice" version_id="2000070" version_string="2.0.0"><![CDATA[Connecting notice]]></phrase>
+  <phrase title="style_prop.rtcContainer" version_id="2000070" version_string="2.0.0"><![CDATA[Container]]></phrase>
+  <phrase title="style_prop.rtcCornerButton" version_id="2000070" version_string="2.0.0"><![CDATA[Corner button]]></phrase>
+  <phrase title="style_prop.rtcDefaultRoomAvatar" version_id="2000070" version_string="2.0.0"><![CDATA[Default room avatar]]></phrase>
+  <phrase title="style_prop.rtcDefaultRoomIcon" version_id="2000070" version_string="2.0.0"><![CDATA[Default room icon]]></phrase>
+  <phrase title="style_prop.rtcDefaultThemeIndex" version_id="2000070" version_string="2.0.0"><![CDATA[Default theme index]]></phrase>
+  <phrase title="style_prop.rtcHeader" version_id="1000572" version_string="1.0.5b"><![CDATA[Header]]></phrase>
+  <phrase title="style_prop.rtcHeaderButton" version_id="2000070" version_string="2.0.0"><![CDATA[Header: Button]]></phrase>
+  <phrase title="style_prop.rtcHeaderButtonHover" version_id="2000070" version_string="2.0.0"><![CDATA[Header: Button [Hovered]]]></phrase>
+  <phrase title="style_prop.rtcMessage" version_id="2000070" version_string="2.0.0"><![CDATA[Message]]></phrase>
+  <phrase title="style_prop.rtcMessageBubble" version_id="2000070" version_string="2.0.0"><![CDATA[Bubble]]></phrase>
+  <phrase title="style_prop.rtcMessageReactionsBar" version_id="2000070" version_string="2.0.0"><![CDATA[Message: Reactions bar]]></phrase>
+  <phrase title="style_prop.rtcMessagesWrapper" version_id="2000070" version_string="2.0.0"><![CDATA[Wrapper]]></phrase>
+  <phrase title="style_prop.rtcPinnedNotice" version_id="2000070" version_string="2.0.0"><![CDATA[Pinned notice]]></phrase>
+  <phrase title="style_prop.rtcPinnedNotices" version_id="2000070" version_string="2.0.0"><![CDATA[Pinned notices]]></phrase>
+  <phrase title="style_prop.rtcPrivateMessageBubble" version_id="2000070" version_string="2.0.0"><![CDATA[Bubble [Private]]]></phrase>
+  <phrase title="style_prop.rtcRoom" version_id="2000070" version_string="2.0.0"><![CDATA[Item]]></phrase>
+  <phrase title="style_prop.rtcRoomAvatar" version_id="2000070" version_string="2.0.0"><![CDATA[Avatar]]></phrase>
+  <phrase title="style_prop.rtcRoomExtraInfo" version_id="2000070" version_string="2.0.0"><![CDATA[Additional Information]]></phrase>
+  <phrase title="style_prop.rtcRoomExtraItem" version_id="2000070" version_string="2.0.0"><![CDATA[Additional Information: Item]]></phrase>
+  <phrase title="style_prop.rtcRoomExtraItemAttention" version_id="2000070" version_string="2.0.0"><![CDATA[Additional Information: Item [Attention]]]></phrase>
+  <phrase title="style_prop.rtcRoomHovered" version_id="2000070" version_string="2.0.0"><![CDATA[Item [Hovered]]]></phrase>
+  <phrase title="style_prop.rtcRoomLatestMessage" version_id="2000070" version_string="2.0.0"><![CDATA[Latest message]]></phrase>
+  <phrase title="style_prop.rtcRoomList" version_id="2000070" version_string="2.0.0"><![CDATA[List]]></phrase>
+  <phrase title="style_prop.rtcRoomSelected" version_id="2000070" version_string="2.0.0"><![CDATA[Item [Selected]]]></phrase>
+  <phrase title="style_prop.rtcRoomStatus" version_id="2000070" version_string="2.0.0"><![CDATA[Header: Online status]]></phrase>
+  <phrase title="style_prop.rtcRoomTitle" version_id="2000070" version_string="2.0.0"><![CDATA[Title]]></phrase>
+  <phrase title="style_prop.rtcSendButton" version_id="2000070" version_string="2.0.0"><![CDATA[Editor: Send button]]></phrase>
+  <phrase title="style_prop.rtcSystemMessage" version_id="2000070" version_string="2.0.0"><![CDATA[Message [System]]]></phrase>
+  <phrase title="style_prop.rtcThemes" version_id="2000070" version_string="2.0.0"><![CDATA[Themes]]></phrase>
+  <phrase title="style_prop.rtcVisitorMessageBubble" version_id="2000070" version_string="2.0.0"><![CDATA[Bubble [Visitor]]]></phrase>
+  <phrase title="style_prop_desc.rtcChatFormReturnBack" version_id="2000070" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.rtcChatFormTitle" version_id="2000070" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.rtcConnectingNotice" version_id="2000070" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.rtcContainer" version_id="2000070" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.rtcCornerButton" version_id="2000070" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.rtcDefaultRoomAvatar" version_id="2000070" version_string="2.0.0"><![CDATA[Image URL]]></phrase>
+  <phrase title="style_prop_desc.rtcDefaultRoomIcon" version_id="2000070" version_string="2.0.0"><![CDATA[Font awesome class]]></phrase>
+  <phrase title="style_prop_desc.rtcDefaultThemeIndex" version_id="2000070" version_string="2.0.0"><![CDATA[Specify the index of the theme to be used by default. Theme Index is the order of the theme in the themes setting minus one. For example, for the first theme, the index would be 0.]]></phrase>
+  <phrase title="style_prop_desc.rtcHeader" version_id="1000572" version_string="1.0.5b"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.rtcHeaderButton" version_id="1000572" version_string="1.0.5b"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.rtcHeaderButtonHover" version_id="1000572" version_string="1.0.5b"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.rtcMessage" version_id="2000070" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.rtcMessageBubble" version_id="2000070" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.rtcMessageReactionsBar" version_id="2000070" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.rtcMessagesWrapper" version_id="2000070" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.rtcPinnedNotice" version_id="2000070" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.rtcPinnedNotices" version_id="2000070" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.rtcPrivateMessageBubble" version_id="2000070" version_string="2.0.0"><![CDATA[Message sent to private messages]]></phrase>
+  <phrase title="style_prop_desc.rtcRoom" version_id="2000070" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.rtcRoomAvatar" version_id="2000070" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.rtcRoomExtraInfo" version_id="2000070" version_string="2.0.0"><![CDATA[Dates, icons and other small markers]]></phrase>
+  <phrase title="style_prop_desc.rtcRoomExtraItem" version_id="2000070" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.rtcRoomExtraItemAttention" version_id="2000070" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.rtcRoomHovered" version_id="2000070" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.rtcRoomLatestMessage" version_id="2000070" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.rtcRoomList" version_id="2000070" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.rtcRoomSelected" version_id="2000070" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.rtcRoomStatus" version_id="2000070" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.rtcRoomTitle" version_id="2000070" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.rtcSendButton" version_id="2000070" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.rtcSystemMessage" version_id="2000070" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.rtcThemes" version_id="2000070" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.rtcVisitorMessageBubble" version_id="2000070" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_group.rtcContainer" version_id="2000070" version_string="2.0.0"><![CDATA[[Real-Time Chat] Container]]></phrase>
+  <phrase title="style_prop_group.rtcMessages" version_id="2000070" version_string="2.0.0"><![CDATA[[Real-Time Chat] Messages]]></phrase>
+  <phrase title="style_prop_group.rtcRooms" version_id="2000070" version_string="2.0.0"><![CDATA[[Real-Time Chat] Rooms]]></phrase>
+  <phrase title="style_prop_group_desc.rtcContainer" version_id="2000070" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_group_desc.rtcMessages" version_id="2000070" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_group_desc.rtcRooms" version_id="2000070" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="widget_def.RealTimeChat" version_id="1000030" version_string="1.0.0 Beta"><![CDATA[Real Time Chat]]></phrase>
+  <phrase title="widget_def.real_time_chat" version_id="2000070" version_string="2.0.0"><![CDATA[Real-Time Chat]]></phrase>
+  <phrase title="widget_def_desc.real_time_chat" version_id="1000030" version_string="1.0.0 Beta"><![CDATA[]]></phrase>
+  <phrase title="xfm_set_for_all" version_id="2000070" version_string="2.0.0"><![CDATA[Set for all]]></phrase>
+</phrases>

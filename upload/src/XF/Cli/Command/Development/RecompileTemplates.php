@@ -33,14 +33,12 @@ class RecompileTemplates extends AbstractCommand
 
 		$output->writeln("Rebuilding style properties...");
 
-		/** @var RebuildService $rebuildService */
 		$spRebuildService = $app->service(RebuildService::class);
 		$spRebuildService->rebuildFullPropertyMap();
 		$spRebuildService->rebuildPropertyStyleCache();
 
 		$output->writeln("Rebuilding template map...");
 
-		/** @var \XF\Service\Template\RebuildService $rebuildService */
 		$rebuildService = $app->service(\XF\Service\Template\RebuildService::class);
 		$rebuildService->rebuildFullTemplateMap();
 
@@ -60,7 +58,6 @@ class RecompileTemplates extends AbstractCommand
 			$progress->start();
 		}
 
-		/** @var CompileService $compileService */
 		$compileService = $app->service(CompileService::class);
 
 		foreach ($templateIds AS $templateId)

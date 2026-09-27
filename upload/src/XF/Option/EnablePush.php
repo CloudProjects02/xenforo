@@ -76,12 +76,21 @@ class EnablePush extends AbstractOption
 			&& !$options->pushKeysVAPID['privateKey']
 		)
 		{
-			/** @var OptionRepository $optionRepo */
+			try
+			{
+				$vapidKeys = VAPID::createVapidKeys();
+			}
+			catch (\Throwable $e)
+			{
+				$option->error(\XF::phrase('push_notifications_could_not_be_enabled_vapid_key_generation_failed'), $option->option_id);
+				return false;
+			}
+
 			$optionRepo = \XF::repository(OptionRepository::class);
 
 			$optionRepo->updateOptionSkipVerify(
 				'pushKeysVAPID',
-				VAPID::createVapidKeys()
+				$vapidKeys
 			);
 		}
 

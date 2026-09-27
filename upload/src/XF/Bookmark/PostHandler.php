@@ -3,16 +3,13 @@
 namespace XF\Bookmark;
 
 use XF\Entity\Post;
-use XF\Entity\User;
 use XF\Mvc\Entity\Entity;
 
+/**
+ * @extends AbstractHandler<Post>
+ */
 class PostHandler extends AbstractHandler
 {
-	/**
-	 * @param Entity|Post $content
-	 *
-	 * @return null|User
-	 */
 	public function getContentUser(Entity $content)
 	{
 		if ($content->isFirstPost())
@@ -25,11 +22,6 @@ class PostHandler extends AbstractHandler
 		}
 	}
 
-	/**
-	 * @param Entity|Post $content
-	 *
-	 * @return string
-	 */
 	public function getContentLink(Entity $content)
 	{
 		if ($content->isFirstPost())

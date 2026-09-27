@@ -131,7 +131,7 @@ class HCaptcha extends AbstractCaptcha
 
 			return false;
 		}
-		catch(TransferException $e)
+		catch (TransferException $e)
 		{
 			// this is an exception with the underlying request, so let it go through
 			\XF::logException($e, false, 'hCaptcha connection error: ');

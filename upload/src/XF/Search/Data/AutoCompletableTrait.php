@@ -23,7 +23,8 @@ trait AutoCompletableTrait
 		string $text,
 		string $url,
 		?string $desc = null,
-		?User $user = null
+		?User $user = null,
+		?string $defaultUsername = null
 	): ?array
 	{
 		if ($desc)
@@ -37,16 +38,16 @@ trait AutoCompletableTrait
 		}
 
 		$iconHtml = null;
-		if ($user)
-		{
-			$templater = \XF::app()->templater();
-			$iconHtml = $templater->func('avatar', [
-				$user,
-				'xxs',
-				false,
-				['href' => ''],
-			]);
-		}
+		$templater = \XF::app()->templater();
+		$iconHtml = $templater->func('avatar', [
+			$user,
+			'xxs',
+			false,
+			[
+				'defaultname' => $defaultUsername,
+				'href' => '',
+			],
+		]);
 
 		return [
 			'text' => $text,

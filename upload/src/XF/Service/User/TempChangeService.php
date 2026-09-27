@@ -69,7 +69,6 @@ class TempChangeService extends AbstractService
 					$groupChangeKey = 'user_change_' . substr(md5(uniqid(microtime(), true)), 0, 16);
 				}
 
-				/** @var UserGroupChangeService $changeService */
 				$changeService = $this->service(UserGroupChangeService::class);
 				$changeService->addUserGroupChange($user->user_id, $groupChangeKey, $addGroups);
 
@@ -148,7 +147,6 @@ class TempChangeService extends AbstractService
 			case 'groups':
 				$groupChangeKey = $change->action_modifier;
 
-				/** @var UserGroupChangeService $changeService */
 				$changeService = $this->service(UserGroupChangeService::class);
 				$changeService->removeUserGroupChange($user->user_id, $groupChangeKey);
 				break;

@@ -125,7 +125,6 @@ class Totp extends AbstractProvider
 					return $controller->error(\XF::phrase('two_step_verification_value_could_not_be_confirmed'));
 				}
 
-				/** @var TfaRepository $tfaRepo */
 				$tfaRepo = \XF::repository(TfaRepository::class);
 				$tfaRepo->updateUserTfaData($user, $provider, $newProviderData);
 

@@ -71,7 +71,6 @@ class ProfilePostCommentsController extends AbstractController
 	 */
 	protected function setupNewProfilePostComment(ProfilePost $profilePost)
 	{
-		/** @var CreatorService $creator */
 		$creator = $this->service(CreatorService::class, $profilePost);
 
 		$message = $this->filter('message', 'str');

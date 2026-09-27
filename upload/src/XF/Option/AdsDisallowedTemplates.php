@@ -14,7 +14,6 @@ class AdsDisallowedTemplates extends AbstractOption
 			return true;
 		}
 
-		/** @var AdvertisingRepository $repo */
 		$repo = \XF::repository(AdvertisingRepository::class);
 		$repo->writeAdsTemplate($value ?: false);
 

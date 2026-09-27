@@ -6,14 +6,12 @@ use XF\Entity\ConversationMaster;
 use XF\Entity\ConversationMessage;
 use XF\Entity\ConversationUser;
 use XF\Finder\ConversationMessageFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 class ConversationMessageRepository extends Repository
 {
 	public function findMessagesForConversationView(ConversationMaster $conversation)
 	{
-		/** @var ConversationMessageFinder $finder */
 		$finder = $this->finder(ConversationMessageFinder::class);
 		$finder
 			->inConversation($conversation)
@@ -25,7 +23,6 @@ class ConversationMessageRepository extends Repository
 
 	public function findNewestMessagesInConversation($conversation, $lastDate)
 	{
-		/** @var ConversationMessageFinder $finder */
 		$finder = $this->finder(ConversationMessageFinder::class);
 		$finder
 			->inConversation($conversation)
@@ -38,7 +35,6 @@ class ConversationMessageRepository extends Repository
 
 	public function findNextMessageInConversation(ConversationMaster $conversation, $newerThan)
 	{
-		/** @var ConversationMessageFinder $finder */
 		$finder = $this->finder(ConversationMessageFinder::class);
 		$finder
 			->inConversation($conversation)
@@ -65,11 +61,10 @@ class ConversationMessageRepository extends Repository
 	/**
 	 * @param ConversationMaster $conversation
 	 *
-	 * @return Finder
+	 * @return ConversationMessageFinder
 	 */
 	public function findLatestMessage(ConversationMaster $conversation)
 	{
-		/** @var ConversationMessageFinder $finder */
 		$finder = $this->finder(ConversationMessageFinder::class);
 		$finder
 			->inConversation($conversation)
@@ -84,11 +79,10 @@ class ConversationMessageRepository extends Repository
 	 *
 	 * @param ConversationMessage $message
 	 *
-	 * @return Finder
+	 * @return ConversationMessageFinder
 	 */
 	public function findEarlierMessages(ConversationMaster $conversation, ConversationMessage $message)
 	{
-		/** @var ConversationMessageFinder $finder */
 		$finder = $this->finder(ConversationMessageFinder::class);
 		$finder->inConversation($conversation)
 			->earlierThan($message);

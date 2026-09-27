@@ -209,7 +209,8 @@ class Dispatcher
 		{
 			// rerouted too many times
 			$reply = new Error(
-				'An error occurred while the page was being generated. Please try again later.'
+				'An error occurred while the page was being generated. Please try again later.',
+				500
 			);
 			$reply->setResponseType($responseType);
 			$reply->setSectionContext($sectionContext);
@@ -244,7 +245,8 @@ class Dispatcher
 		else
 		{
 			$reply = new Error(
-				'An error occurred while the page was being generated. Please try again later.'
+				'An error occurred while the page was being generated. Please try again later.',
+				500
 			);
 		}
 

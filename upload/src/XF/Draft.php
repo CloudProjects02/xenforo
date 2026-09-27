@@ -9,6 +9,10 @@ use XF\Repository\DraftRepository;
 
 use function array_key_exists, array_slice, is_array;
 
+/**
+ * @property string $message
+ * @property array<string, mixed> $extra_data
+ */
 class Draft implements \ArrayAccess
 {
 	/**

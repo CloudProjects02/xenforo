@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="style_property_template_icerikEkleButon_icerikler" version_id="1300006" version_string="13.1.0.0 Beta 6"><![CDATA[<xf:checkboxrow rowclass="{$rowClass}"
+	label="{$titleHtml}"
+	hint="{$hintHtml}"
+	explain="{$property.description}">
+	<xf:option name="{$formBaseKey}[yeni_konu]" selected="{$property.property_value.yeni_konu}">
+		{{ phrase('new_thread') }}
+	</xf:option>
+	<xf:option name="{$formBaseKey}[yeni_kaynak]" selected="{$property.property_value.yeni_kaynak}">
+		{{ phrase('xgtSv13_xfrm_add_resource') }}
+	</xf:option>
+	<xf:option name="{$formBaseKey}[yeni_media]" selected="{$property.property_value.yeni_media}">
+		{{ phrase('xgtSv13_xfmg_add_media') }}
+	</xf:option>
+	<xf:option name="{$formBaseKey}[ekstralar]" selected="{$property.property_value.ekstralar}">
+		{{ phrase('xgtSv13_xgt_ekstarlar') }}
+	</xf:option>
+</xf:checkboxrow>]]></template>
+  <template type="admin" title="style_property_template_xgt_Sv13_ft_hizli_baglantilar_nasil_kullanilir" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[<xf:formrow label="{$titleHtml}" hint="{$hintHtml}" explain="{$property.description}">	
+	<dfn class="formRow-explain">	<b>{{ phrase('xgt_Sv13_hizli_baglanti_ornek') }}	</b>
+		<textarea class="input input--fitHeight" rows="1" readonly="readonly" data-xf-init="textarea-handler">
+			<ul class="__baglantilar">
+				<li><a href="#">1. LİNK</a></li>
+				<li><a href="#">2. LİNK</a></li>
+				<li><a href="#">3. LİNK</a></li>
+				<li><a href="#">4. LİNK</a></li>
+			</ul>	</textarea></dfn>
+	<dfn class="formRow-explain"><b>{{ phrase('xgt_Sv13_iletisim_bilgi_ornek') }}</b>	
+		<textarea class="input input--fitHeight" rows="1" readonly="readonly" data-xf-init="textarea-handler">
+			<ul class="__iletisim">
+				<li class="_mail">info@Turkhacks.com</li>
+				<li class="_whatsapp">-</li>
+				<li class="_marker">Türkiye</li>
+				<li class="_signature">Graves / Turkhacks.com</li>
+			</ul>	</textarea></dfn>
+</xf:formrow>]]></template>
+  <template type="admin" title="style_property_template_xgt_Sv13_nav_icerikbutonu_ekstra_ornek" version_id="1300003" version_string="13.1.0.0 Beta 2"><![CDATA[<xf:formrow label="{$titleHtml}" hint="{$hintHtml}" explain="{$property.description}">	
+	<dfn class="formRow-explain">{{ phrase('xgt_Sv13_hizli_baglanti_ornek_aciklama') }}
+		<textarea class="input input--fitHeight" rows="1" readonly="readonly" data-xf-init="textarea-handler">
+<a href="#1" class="menu-linkRow">LİNK 1</a>
+<a href="#2" class="menu-linkRow">LİNK 2</a></textarea></dfn>
+</xf:formrow>]]></template>
+  <template type="admin" title="widget_def_options_xgtSv13_infoBox_wd" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[]]></template>
+  <template type="admin" title="widget_def_options_xgtSv13_sosyalButonlar_wd" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[]]></template>
+  <template type="admin" title="widget_def_options_xgtSv13_yeniKullanici_wd" version_id="1300001" version_string="13.1.0.0 Alpha"><![CDATA[]]></template>
+  <template type="admin" title="xgtSv13_admin_node_kontrolleri" version_id="1300010" version_string="13.1.0.0 Beta 10"><![CDATA[<xf:macro id="xgtSv13KategoriGrid" arg-node="!" arg-category="" arg-forum="">
+	<xf:checkboxrow>
+		<xf:option name="node[xgt_grid_etkin]" selected="$node.xgt_grid_etkin"
+				   label="{{ phrase('xgtSv13_bu_forum_icin_izgara_etkin') }}"
+				   hint="{{ phrase('xgtSv13_bu_forum_icin_izgara_etkin_aciklama') }}" />
+	</xf:checkboxrow>
+</xf:macro>
+
+<xf:macro id="xgtSv13ForumRenk" arg-node="!" arg-category="" arg-forum="">
+	<xf:macro id="public:color_picker_macros::color_picker"
+			  arg-name="node[xgt_forum_renk]"
+			  arg-value="{$node.xgt_forum_renk}"
+			  arg-label="{{ phrase('xgtSv13_bu_forum_icin_sinir_renk') }}"
+			  arg-explain="{{ phrase('xgtSv13_bu_forum_icin_sinir_renk_aciklama') }}"
+			  arg-mapName=""
+			  arg-row="{{ true }}"/>
+</xf:macro>]]></template>
+</templates>

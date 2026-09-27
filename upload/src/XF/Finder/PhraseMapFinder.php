@@ -2,16 +2,17 @@
 
 namespace XF\Finder;
 
+use XF\Entity\PhraseMap;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Finder;
 
 use function in_array, is_array;
 
 /**
- * @method AbstractCollection<\XF\Entity\PhraseMap> fetch(?int $limit = null, ?int $offset = null)
- * @method AbstractCollection<\XF\Entity\PhraseMap> fetchDeferred(?int $limit = null, ?int $offset = null)
- * @method \XF\Entity\PhraseMap|null fetchOne(?int $offset = null)
- * @extends Finder<\XF\Entity\PhraseMap>
+ * @method AbstractCollection<PhraseMap> fetch(?int $limit = null, ?int $offset = null)
+ * @method AbstractCollection<PhraseMap> fetchDeferred(?int $limit = null, ?int $offset = null)
+ * @method PhraseMap|null fetchOne(?int $offset = null)
+ * @extends Finder<PhraseMap>
  */
 class PhraseMapFinder extends Finder
 {

@@ -105,7 +105,7 @@ class Manager
 	 *
 	 * @param class-string<T> $shortName
 	 *
-	 * @return T|null
+	 * @return T
 	 */
 	public function create($shortName)
 	{
@@ -236,24 +236,17 @@ class Manager
 	 */
 	public function getFinder($shortName, $includeDefaultWith = true)
 	{
-		try
+		if (strpos($shortName, ':') === false && strpos($shortName, '\\Entity\\') !== false)
+		{
+			$shortName = \XF::classToString($shortName, '%s\Entity\%s');
+		}
+		else
 		{
 			$shortName = \XF::classToString($shortName, '%s\Finder\%s');
 
 			if (substr($shortName, -6) === 'Finder')
 			{
 				$shortName = substr($shortName, 0, -6);
-			}
-		}
-		catch (\InvalidArgumentException $fe)
-		{
-			try
-			{
-				$shortName = \XF::classToString($shortName, '%s\Entity\%s');
-			}
-			catch (\InvalidArgumentException $ee)
-			{
-				throw $fe;
 			}
 		}
 
@@ -286,6 +279,11 @@ class Manager
 	public function getRepository($identifier)
 	{
 		$identifier = \XF::classToString($identifier, '%s\Repository\%s');
+		if (substr($identifier, -10) === 'Repository')
+		{
+			$identifier = substr($identifier, 0, -10);
+		}
+
 		if (isset($this->repositories[$identifier]))
 		{
 			return $this->repositories[$identifier];
@@ -586,7 +584,7 @@ class Manager
 	 * @param array $row
 	 * @param array $map
 	 *
-	 * @return Entity
+	 * @return Entity|null
 	 */
 	public function hydrateFromGrouped(array $row, array $map)
 	{
@@ -753,9 +751,9 @@ class Manager
 	 * @param class-string<T> $shortName
 	 * @param array $values Values for the columns in the entity, in source encoded form
 	 * @param array $relations
-	 * @param int $options Bit field of the INSTANTIATE_* options
+	 * @param int-mask-of<self::INSTANTIATE_*> $options Bit field of the INSTANTIATE_* options
 	 *
-	 * @return T|null
+	 * @return ($options is int-mask<self::INSTANTIATE_PROXIED> ? T|null : T)
 	 *
 	 * @throws \LogicException
 	 */

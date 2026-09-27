@@ -19,7 +19,7 @@ use XF\Repository\ApiRepository;
  * @property int $creation_user_id
  * @property int $creation_date
  * @property int $last_use_date
- * @property array $scopes
+ * @property array|null $scopes
  *
  * GETTERS
  * @property-read mixed $key_type

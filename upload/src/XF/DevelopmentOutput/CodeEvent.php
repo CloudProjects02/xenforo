@@ -23,6 +23,8 @@ class CodeEvent extends AbstractHandler
 
 		$keys = [
 			'description',
+			'arguments',
+			'hint_description',
 		];
 		$json = $this->pullEntityKeys($event, $keys);
 

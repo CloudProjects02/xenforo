@@ -1,0 +1,35 @@
+---
+name: xf-template-phrase
+description: Build or review XenForo templates, template modifications, phrases, LESS, forms, components, and first-party-quality public or admin UI.
+---
+
+# XenForo Templates and UI
+
+Load `xf-shared-policy` and `xf-environment`.
+
+XenForo templates use a custom compiled language. They are not Blade, Twig, PHP, or JSX. Similar-looking syntax does not make constructs from those languages valid.
+
+XenForo ships Font Awesome 5 Pro. Use only icon names and weights present in that version; verify uncertain icons against first-party usage or `styles/fa/`.
+
+## Start with the Existing Design System
+
+1. Find comparable first-party pages in `src/addons/XF/_output/templates/public` or `admin`. Use first-party `src/addons/XF*` examples when the feature belongs to another official product.
+2. Reuse the established structural component, form row, macro, CSS class, responsive utility, and JavaScript behavior before adding markup or LESS.
+3. Use `xf-make:template` and `xf-make:phrase` for new artifacts.
+4. Keep authorization, queries, and domain decisions out of templates. Prepare view data in PHP.
+5. Verify the rendered result at narrow and wide widths, including empty, error, disabled, and long-content states that the change affects.
+
+Read [template-language-semantics.md](references/template-language-semantics.md) before writing expressions or macros. Read [ui-patterns.md](references/ui-patterns.md) before creating or restyling a form, list, menu, overlay, or content block.
+
+## Filesystem and Database
+
+After manually editing existing `_output/templates` or `_output/phrases` files, run the type-specific importer scoped to the owner:
+
+```text
+xf xf-dev:import-templates --addon=Vendor/AddOn
+xf xf-dev:import-phrases --addon=Vendor/AddOn
+```
+
+Do not run an export, edit `_metadata.json`, or touch `_data` XML. A new make command already synchronized both representations and needs no import.
+
+Read [template-phrase-checklist.md](references/template-phrase-checklist.md) before finalizing.

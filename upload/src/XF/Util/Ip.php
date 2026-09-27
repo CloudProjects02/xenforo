@@ -7,11 +7,19 @@ use function chr, count, is_array, is_string, ord, strlen;
 class Ip
 {
 	/**
-	 * @return string|false
+	 * @return ($throw is true ? string : string|false)
 	 */
 	public static function stringToBinary(string $ip, bool $throw = true)
 	{
-		$output = @inet_pton($ip);
+		if (strpos($ip, "\0") !== false)
+		{
+			$output = false;
+		}
+		else
+		{
+			$output = @inet_pton($ip);
+		}
+
 		if ($output === false && $throw)
 		{
 			throw new \InvalidArgumentException('Invalid string IP: ' . $ip);
@@ -21,7 +29,7 @@ class Ip
 	}
 
 	/**
-	 * @return string|false
+	 * @return ($throw is true ? string : string|false)
 	 */
 	public static function binaryToString(
 		string $ip,
@@ -42,7 +50,7 @@ class Ip
 				{
 					return str_pad($block, 4, '0', STR_PAD_LEFT);
 				},
-				explode(':', $output)
+				str_split(bin2hex(inet_pton($output)), 4)
 			));
 		}
 
@@ -405,9 +413,9 @@ class Ip
 	): bool
 	{
 		return (
-			strlen($testIp) === strlen($lowerBound) &&
-			strcmp($testIp, $lowerBound) >= 0 &&
-			strcmp($testIp, $upperBound) <= 0
+			strlen($testIp) === strlen($lowerBound)
+			&& strcmp($testIp, $lowerBound) >= 0
+			&& strcmp($testIp, $upperBound) <= 0
 		);
 	}
 

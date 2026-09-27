@@ -41,6 +41,11 @@ class ReplierService extends AbstractService
 
 	protected $isPreRegAction = false;
 
+	/**
+	 * @var float
+	 */
+	protected $notifyRunTime = 0.25;
+
 	public function __construct(App $app, Thread $thread)
 	{
 		parent::__construct($app);
@@ -103,6 +108,11 @@ class ReplierService extends AbstractService
 	public function setIsPreRegAction(bool $isPreRegAction)
 	{
 		$this->isPreRegAction = $isPreRegAction;
+	}
+
+	public function setNotifyRunTime(float $time): void
+	{
+		$this->notifyRunTime = $time;
 	}
 
 	protected function setPostDefaults()
@@ -213,8 +223,8 @@ class ReplierService extends AbstractService
 		// and end up with a pending post_date that is less than that of the most recently inserted post which
 		// would trigger an error when setting the post position. Attempt to detect this case and adjust
 		// the post date to avoid an error if possible.
-		$time = time();
-		if ($threadLatest['last_post_date'] > $post->post_date && $threadLatest['last_post_date'] <= $time)
+		$time = max($threadLatest['last_post_date'], time());
+		if ($threadLatest['last_post_date'] > $post->post_date)
 		{
 			$post->set('post_date', $time, ['forceSet' => true]);
 		}
@@ -255,11 +265,10 @@ class ReplierService extends AbstractService
 	{
 		if ($this->post->isVisible())
 		{
-			/** @var NotifierService $notifier */
 			$notifier = $this->service(NotifierService::class, $this->post, 'reply');
 			$notifier->setMentionedUserIds($this->postPreparer->getMentionedUserIds());
 			$notifier->setQuotedUserIds($this->postPreparer->getQuotedUserIds());
-			$notifier->notifyAndEnqueue(3);
+			$notifier->notifyAndEnqueue($this->notifyRunTime);
 		}
 	}
 }

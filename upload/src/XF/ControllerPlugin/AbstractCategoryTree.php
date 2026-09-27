@@ -28,7 +28,6 @@ abstract class AbstractCategoryTree extends AbstractPlugin
 
 		if ($options['permissionContentType'])
 		{
-			/** @var PermissionEntryRepository $entryRepo */
 			$entryRepo = $this->repository(PermissionEntryRepository::class);
 			$customPermissions = $entryRepo->getContentWithCustomPermissions($options['permissionContentType']);
 		}

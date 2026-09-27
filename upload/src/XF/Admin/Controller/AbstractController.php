@@ -65,7 +65,6 @@ abstract class AbstractController extends Controller
 		$visitor = \XF::visitor();
 		$request = $this->request;
 
-		/** @var AdminLogRepository $adminLogRepo */
 		$adminLogRepo = $this->repository(AdminLogRepository::class);
 		$adminLogRepo->logAdminRequest(
 			$visitor->user_id,

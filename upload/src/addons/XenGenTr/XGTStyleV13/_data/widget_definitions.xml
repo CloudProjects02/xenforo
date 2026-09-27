@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget_definitions>
+  <widget_definition definition_id="xgtSv13_infoBox_wd" definition_class="XenGenTr\XGTStyleV13\Widget\InfoBox"/>
+  <widget_definition definition_id="xgtSv13_sosyalButonlar_wd" definition_class="XenGenTr\XGTStyleV13\Widget\SosyalMedya"/>
+  <widget_definition definition_id="xgtSv13_yeniKullanici_wd" definition_class="XenGenTr\XGTStyleV13\Widget\YeniKullanici"/>
+</widget_definitions>

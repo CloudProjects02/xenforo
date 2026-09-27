@@ -12,7 +12,7 @@ use XF\Repository\AdvertisingRepository;
 /**
  * COLUMNS
  * @property string $position_id
- * @property array $arguments
+ * @property array|null $arguments
  * @property string $addon_id
  * @property bool $active
  *
@@ -157,7 +157,6 @@ class AdvertisingPosition extends Entity
 
 	protected function _setupDefaults()
 	{
-		/** @var AddOnRepository $addOnRepo */
 		$addOnRepo = $this->_em->getRepository(AddOnRepository::class);
 		$this->addon_id = $addOnRepo->getDefaultAddOnId();
 	}

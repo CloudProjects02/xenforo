@@ -3,7 +3,6 @@
 namespace XF\Repository;
 
 use XF\Finder\EmailBounceLogFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 use function intval;
@@ -11,7 +10,7 @@ use function intval;
 class EmailBounceRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return EmailBounceLogFinder
 	 */
 	public function findEmailBounceLogsForList()
 	{

@@ -595,7 +595,6 @@ class Upgrader
 
 	public function enqueueStatsCollection()
 	{
-		/** @var CollectStatsRepository $collectStatsRepo */
 		$collectStatsRepo = $this->app->repository(CollectStatsRepository::class);
 
 		if ($collectStatsRepo->isEnabled())

@@ -6,11 +6,13 @@ use XF\Entity\Thread;
 use XF\Mvc\Entity\Entity;
 use XF\Service\Thread\ApproverService;
 
+/**
+ * @extends AbstractHandler<Thread>
+ */
 class ThreadHandler extends AbstractHandler
 {
 	protected function canActionContent(Entity $content, &$error = null)
 	{
-		/** @var $content \XF\Entity\Thread */
 		return $content->canApproveUnapprove($error);
 	}
 
@@ -23,7 +25,6 @@ class ThreadHandler extends AbstractHandler
 
 	public function actionApprove(Thread $thread)
 	{
-		/** @var ApproverService $approver */
 		$approver = \XF::service(ApproverService::class, $thread);
 		$approver->setNotifyRunTime(1); // may be a lot happening
 		$approver->approve();

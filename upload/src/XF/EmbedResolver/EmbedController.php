@@ -35,7 +35,6 @@ class EmbedController
 			return $this->renderError('Required parameters not provided.', 400);
 		}
 
-		/** @var EmbedResolverRepository $embedResolver */
 		$embedResolver = $app->repository(EmbedResolverRepository::class);
 		$embedHandler = $embedResolver->getEmbedHandler($contentType);
 

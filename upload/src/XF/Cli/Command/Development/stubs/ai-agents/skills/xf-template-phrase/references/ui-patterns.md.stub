@@ -1,0 +1,50 @@
+# First-Party UI Patterns
+
+## Choose the Existing Component
+
+Search first-party templates before writing a new structure. Common families include:
+
+- page framing: `block`, `block-container`, `block-header`, `block-body`, `block-row`, `block-footer`;
+- forms: `<xf:form>`, `<xf:textboxrow>`, `<xf:selectrow>`, `<xf:checkboxrow>`, `<xf:radiorow>`, `<xf:formrow>`, `<xf:inforow>`, `<xf:submitrow>`;
+- collections: data lists, content rows, list rows, tabs, and pagination macros;
+- transient UI: menus, overlays, tooltips, notices, and filter macros;
+- semantics: `<xf:username>`, `<xf:date>`, `<xf:avatar>`, `<xf:pagenav>`, `<xf:button>`, and `<xf:fa>`.
+
+Row components connect labels, hints, explanations, errors, and controls. Prefer them to hand-built label/input markup. Use `<xf:formrow>` when composing a control not covered by a specific row component.
+
+XenForo ships Font Awesome 5 Pro. Use `<xf:fa icon="..." />` and only icon names and weights available in Font Awesome 5 Pro; names introduced or renamed in later Font Awesome versions will not render. Confirm uncertain names against first-party usage and the local `styles/fa/` assets. Do not insert raw Font Awesome `<i>` elements. In LESS, use XenForo's Font Awesome mixins and variables.
+
+## Reuse Styles
+
+Before adding LESS, search public/admin templates and core LESS for:
+
+- the component class you are extending;
+- `u-*` utilities such as responsive visibility, alignment, muted text, screen-reader-only content, and JS/no-JS visibility;
+- style properties (`@xf-*`) and mixins (`.m-*`, `.xf-*`);
+- a component modifier that already represents the state.
+
+Do not recreate spacing, color, typography, responsive breakpoints, or hiding behavior with inline styles. If feature-specific styling remains necessary:
+
+1. create or reuse an add-on-owned `.less` template;
+2. include it with `<xf:css src="..." />`;
+3. scope selectors to the feature/component;
+4. use style properties, mixins, and existing breakpoints;
+5. avoid `!important` unless extending an existing utility or override pattern that requires it.
+
+## Browser Behavior
+
+Use existing `data-xf-*` handlers and first-party markup contracts before writing custom JavaScript. If new JavaScript is necessary, keep markup, event lifecycle, AJAX responses, and progressive fallback consistent with nearby `js/xf` or first-party add-on handlers.
+
+Do not copy a handler name or `data-*` attribute without checking its expected DOM structure in the JavaScript source.
+
+## UI Review
+
+Check the actual rendered page, not only the template source:
+
+- default, empty, loading, validation-error, disabled, and permission-limited states relevant to the feature;
+- narrow and wide layouts;
+- long phrases, usernames, titles, and unbroken content;
+- label association, button meaning, focus order, keyboard access, and screen-reader text for icon-only controls;
+- hover/focus/selected states and both style variations when the affected colors or icons differ.
+
+Aim for visual continuity with XenForo. A new UI should look like a native part of the surrounding page rather than a standalone component library.

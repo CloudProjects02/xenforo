@@ -80,7 +80,6 @@ class AddOnData extends AbstractJob
 					$addOn->postDataImport();
 				}
 
-				/** @var StyleRepository $repo */
 				$repo = $this->app->repository(StyleRepository::class);
 				$repo->updateAllStylesLastModifiedDateLater();
 

@@ -312,7 +312,6 @@ class LanguageController extends AbstractController
 				return $this->error(\XF::phrase('please_upload_valid_language_xml_file'));
 			}
 
-			/** @var ImportService $languageImporter */
 			$languageImporter = $this->service(ImportService::class);
 
 			try
@@ -379,7 +378,6 @@ class LanguageController extends AbstractController
 		{
 			$this->setResponseType('xml');
 
-			/** @var ExportService $languageExporter */
 			$languageExporter = $this->service(ExportService::class, $language);
 
 			$addOnId = $this->filter('addon_id', 'str');

@@ -16,7 +16,6 @@ class AccountConfirmationController extends AbstractController
 		/** @var User $user */
 		$user = $this->assertRecordExists(User::class, $params->user_id);
 
-		/** @var EmailConfirmationService $emailConfirmation */
 		$emailConfirmation = $this->service(EmailConfirmationService::class, $user);
 
 		if (!$emailConfirmation->canTriggerConfirmation())

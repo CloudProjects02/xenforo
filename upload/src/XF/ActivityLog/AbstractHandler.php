@@ -128,8 +128,8 @@ abstract class AbstractHandler
 	public function updateContainerId(Entity $content, bool $force = false): void
 	{
 		if (
-			!$content->isChanged($this->getContentContainerIdColumn($content)) &&
-			!$force
+			!$content->isChanged($this->getContentContainerIdColumn($content))
+			&& !$force
 		)
 		{
 			return;

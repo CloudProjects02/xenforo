@@ -638,7 +638,8 @@
 				{
 					return
 				}
-				let before = e.pageY < (this.pointEl.offsetTop + this.pointEl.offsetHeight / 2)
+				const pointElRect = this.pointEl.getBoundingClientRect()
+				const before = e.clientY < (pointElRect.top + pointElRect.height / 2)
 				parent = this.placeEl.parentNode
 				if (isEmpty)
 				{

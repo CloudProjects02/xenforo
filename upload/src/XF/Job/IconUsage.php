@@ -25,8 +25,8 @@ class IconUsage extends AbstractJob
 		$iconRepo = $this->app->repository(IconRepository::class);
 
 		if (
-			$this->data['current_step'] === 0 &&
-			$this->data['last_offset'] === null
+			$this->data['current_step'] === 0
+			&& $this->data['last_offset'] === null
 		)
 		{
 			$iconRepo->purgeUsageRecords($this->data['content_type']);

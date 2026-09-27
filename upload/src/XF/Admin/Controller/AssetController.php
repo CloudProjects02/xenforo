@@ -15,8 +15,8 @@ class AssetController extends AbstractController
 		$type = $this->filter('type', 'str');
 
 		$assetPermissionMap = $this->getAssetPermissionMap();
-		$permissionId = array_key_exists($type, $assetPermissionMap) ?
-			$assetPermissionMap[$type] : 'style';
+		$permissionId = array_key_exists($type, $assetPermissionMap)
+			? $assetPermissionMap[$type] : 'style';
 
 		if (!\XF::visitor()->hasAdminPermission($permissionId))
 		{
@@ -36,7 +36,6 @@ class AssetController extends AbstractController
 			return $this->error(\XF::phrase('asset_type_names_may_only_contain_alphanumeric_dash_underscore'));
 		}
 
-		/** @var UploadService $assetService */
 		$assetService = $this->service(UploadService::class, $type);
 		if (!$assetService->setImageFromUpload($asset))
 		{

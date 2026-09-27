@@ -19,36 +19,36 @@ class XenForoProviderData extends AbstractProviderData
 	public function getProviderKey()
 	{
 		$data = $this->requestFromEndpoint();
-		return $data['me']['user_id'];
+		return $data['me']['user_id'] ?? null;
 	}
 
 	public function getUsername()
 	{
 		$data = $this->requestFromEndpoint();
-		return $data['me']['username'];
+		return $data['me']['username'] ?? null;
 	}
 
 	public function getEmail()
 	{
 		$data = $this->requestFromEndpoint();
-		return $data['me']['email'] ?? '';
+		return $data['me']['email'] ?? null;
 	}
 
 	public function getProfileLink()
 	{
 		$data = $this->requestFromEndpoint();
-		return $data['me']['view_url'];
+		return $data['me']['view_url'] ?? null;
 	}
 
 	public function getLocation()
 	{
 		$data = $this->requestFromEndpoint();
-		return $data['me']['location'];
+		return $data['me']['location'] ?? null;
 	}
 
 	public function getAvatarUrl()
 	{
 		$data = $this->requestFromEndpoint();
-		return $data['me']['avatar_urls']['o'];
+		return $data['me']['avatar_urls']['o'] ?? null;
 	}
 }

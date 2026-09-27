@@ -4,6 +4,7 @@ namespace XF\Entity;
 
 use XF\Api\Result\EntityResult;
 use XF\BbCode\RenderableContentInterface;
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 
@@ -21,8 +22,8 @@ use function intval;
  * @property int $ip_id
  * @property array|null $embed_metadata
  * @property int $reaction_score
- * @property array $reactions_
- * @property array $reaction_users_
+ * @property array|null $reactions_
+ * @property array|null $reaction_users_
  *
  * GETTERS
  * @property-read mixed $Unfurls
@@ -33,11 +34,13 @@ use function intval;
  * RELATIONS
  * @property-read ConversationMaster|null $Conversation
  * @property-read User|null $User
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\Attachment> $Attachments
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\ReactionContent> $Reactions
+ * @property-read AbstractCollection<Attachment> $Attachments
+ * @property-read AbstractCollection<ReactionContent> $Reactions
  */
-class ConversationMessage extends Entity implements LinkableInterface, QuotableInterface, RenderableContentInterface, ViewableInterface
+class ConversationMessage extends Entity implements ContainableInterface, DatableInterface, LinkableInterface, QuotableInterface, RenderableContentInterface, ViewableInterface
 {
+	use ContainableTrait;
+	use DatableTrait;
 	use EmbedRendererTrait;
 	use ReactionTrait;
 
@@ -135,8 +138,8 @@ class ConversationMessage extends Entity implements LinkableInterface, QuotableI
 		}
 
 		return (
-			!$conversation->first_message_id &&
-			$this->message_date === $conversation->start_date
+			!$conversation->first_message_id
+			&& $this->message_date === $conversation->start_date
 		);
 	}
 
@@ -294,6 +297,21 @@ class ConversationMessage extends Entity implements LinkableInterface, QuotableI
 		$result->can_react = $this->canReact();
 
 		$result->view_url = $this->getContentUrl(true);
+	}
+
+	public function getContentContainerIdColumn(): string
+	{
+		return 'conversation_id';
+	}
+
+	public function getContentContainerType(): string
+	{
+		return 'conversation';
+	}
+
+	public function getContentDateColumn(): string
+	{
+		return 'message_date';
 	}
 
 	public function getContentUrl(bool $canonical = false, array $extraParams = [], $hash = null)

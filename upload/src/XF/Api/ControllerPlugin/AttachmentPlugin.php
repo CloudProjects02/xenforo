@@ -16,7 +16,6 @@ class AttachmentPlugin extends AbstractPlugin
 		$tempHash
 	)
 	{
-		/** @var AttachmentRepository $attachmentRepo */
 		$attachmentRepo = $this->repository(AttachmentRepository::class);
 
 		/** @var Manipulator $manipulator */

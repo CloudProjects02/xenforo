@@ -434,7 +434,6 @@ class Helper
 	{
 		$this->app->db()->beginTransaction();
 
-		/** @var UserRepository $userRepo */
 		$userRepo = $this->app->repository(UserRepository::class);
 		$user = $userRepo->setupBaseUser();
 		$user->setOption('admin_edit', true);
@@ -475,7 +474,6 @@ class Helper
 			$permissionValues[$permission->permission_group_id][$permission->permission_id] = 'allow';
 		}
 
-		/** @var UpdatePermissionsService $permissionUpdater */
 		$permissionUpdater = $this->app->service(UpdatePermissionsService::class);
 		$permissionUpdater->setUser($user)->setGlobal();
 		$permissionUpdater->updatePermissions($permissionValues);
@@ -525,7 +523,6 @@ class Helper
 
 	public function updateVersion()
 	{
-		/** @var OptionRepository $optionRepo */
 		$optionRepo = $this->app->repository(OptionRepository::class);
 		$optionRepo->updateOption('currentVersionId', \XF::$versionId);
 

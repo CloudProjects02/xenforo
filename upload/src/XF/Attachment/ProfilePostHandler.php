@@ -10,6 +10,14 @@ use XF\Repository\AttachmentRepository;
 
 use function intval;
 
+/**
+ * @phpstan-type TContext array{
+ *     profile_post_id?: int|null,
+ *     profile_user_id?: int|null,
+ * }
+ *
+ * @extends AbstractHandler<ProfilePost, TContext>
+ */
 class ProfilePostHandler extends AbstractHandler
 {
 	public function getContainerWith()
@@ -19,7 +27,6 @@ class ProfilePostHandler extends AbstractHandler
 
 	public function canView(Attachment $attachment, Entity $container, &$error = null)
 	{
-		/** @var ProfilePost $container */
 		if (!$container->canView())
 		{
 			return false;
@@ -41,7 +48,6 @@ class ProfilePostHandler extends AbstractHandler
 			return;
 		}
 
-		/** @var ProfilePost $container */
 		$container->attach_count--;
 		$container->save();
 
@@ -51,7 +57,6 @@ class ProfilePostHandler extends AbstractHandler
 
 	public function getConstraints(array $context)
 	{
-		/** @var AttachmentRepository $attachRepo */
 		$attachRepo = \XF::repository(AttachmentRepository::class);
 
 		$constraints = $attachRepo->getDefaultAttachmentConstraints();
@@ -88,13 +93,17 @@ class ProfilePostHandler extends AbstractHandler
 		return $extraContext;
 	}
 
+	/**
+	 * @param TContext $context
+	 *
+	 * @return User|null
+	 */
 	protected function getUserFromContext(array $context)
 	{
 		$em = \XF::em();
 
 		if (!empty($context['profile_post_id']))
 		{
-			/** @var ProfilePost $profilePost */
 			$profilePost = $em->find(ProfilePost::class, intval($context['profile_post_id']), ['ProfileUser']);
 			if (!$profilePost || !$profilePost->canView() || !$profilePost->canEdit())
 			{
@@ -105,7 +114,6 @@ class ProfilePostHandler extends AbstractHandler
 		}
 		else if (!empty($context['profile_user_id']))
 		{
-			/** @var User $user */
 			$user = $em->find(User::class, intval($context['profile_user_id']));
 			if (!$user)
 			{

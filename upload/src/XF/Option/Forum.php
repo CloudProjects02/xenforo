@@ -33,7 +33,6 @@ class Forum extends AbstractOption
 
 	protected static function getSelectData(Option $option, array $htmlParams)
 	{
-		/** @var NodeRepository $nodeRepo */
 		$nodeRepo = \XF::repository(NodeRepository::class);
 
 		$choices = $nodeRepo->getNodeOptionsData(true, 'Forum', 'option');

@@ -48,7 +48,7 @@ class SearchForumRepository extends Repository
 	}
 
 	/**
-	 * @return AbstractCollection|\XF\Entity\Thread[]
+	 * @return AbstractCollection<\XF\Entity\Thread>
 	 */
 	public function rebuildThreadsForSearchForum(
 		SearchForum $searchForum
@@ -136,7 +136,7 @@ class SearchForumRepository extends Repository
 	 * @param int[] $threadIds
 	 * @param string[] $extraWith
 	 *
-	 * @return AbstractCollection|\XF\Entity\Thread[]
+	 * @return AbstractCollection<\XF\Entity\Thread>
 	 */
 	public function getThreadsByIdsOrdered(array $threadIds, array $extraWith = [])
 	{

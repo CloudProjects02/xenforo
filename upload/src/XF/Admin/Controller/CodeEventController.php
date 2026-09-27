@@ -14,6 +14,8 @@ use XF\Repository\AddOnRepository;
 use XF\Repository\CodeEventListenerRepository;
 use XF\Repository\CodeEventRepository;
 
+use function count;
+
 class CodeEventController extends AbstractController
 {
 	/**
@@ -38,6 +40,7 @@ class CodeEventController extends AbstractController
 	{
 		$viewParams = [
 			'event' => $event,
+			'nextCounter' => count($event->arguments),
 		];
 		return $this->view('XF:CodeEvent\Edit', 'code_event_edit', $viewParams);
 	}
@@ -61,8 +64,31 @@ class CodeEventController extends AbstractController
 		$input = $this->filter([
 			'event_id' => 'str',
 			'description' => 'str',
+			'hint_description' => 'str',
 			'addon_id' => 'str',
 		]);
+
+		$argumentsInput = $this->filter('arguments', 'array');
+		$arguments = [];
+		foreach ($argumentsInput AS $arg)
+		{
+			$name = trim($arg['name'] ?? '');
+			$type = trim($arg['type'] ?? '');
+			$description = trim($arg['description'] ?? '');
+
+			if ($name === '')
+			{
+				continue;
+			}
+
+			$arguments[] = [
+				'name' => $name,
+				'type' => $type,
+				'description' => $description,
+			];
+		}
+		$input['arguments'] = $arguments;
+
 		$form->basicEntitySave($event, $input);
 
 		return $form;
@@ -108,13 +134,28 @@ class CodeEventController extends AbstractController
 		return $plugin->actionLoadDescription(CodeEvent::class);
 	}
 
+	public function actionGetEventDetails()
+	{
+		$this->assertPostOnly();
+
+		$eventId = $this->filter('id', 'str');
+		$event = $this->assertEventExists($eventId);
+
+		$html = $this->app->templater()->renderMacro('admin:code_event_macros', 'event_details', [
+			'event' => $event,
+		]);
+
+		$view = $this->view('XF:CodeEvent\EventDetails');
+		$view->setJsonParam('description', $html);
+		return $view;
+	}
+
 	public function actionListener()
 	{
 		$listeners = $this->getListenerRepo()
 			->findListenersForList()
 			->fetch();
 
-		/** @var AddOnRepository $addOnRepo */
 		$addOnRepo = $this->repository(AddOnRepository::class);
 		$addOns = $addOnRepo->findAddOnsForList()->fetch();
 

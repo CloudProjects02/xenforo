@@ -7,7 +7,7 @@ use XF\Entity\Style;
 use XF\Service\AbstractService;
 use XF\Util\File;
 
-use function strlen, strval;
+use function is_resource, strval;
 
 class ArchiveImportService extends AbstractService
 {
@@ -65,6 +65,7 @@ class ArchiveImportService extends AbstractService
 
 			if (!$this->validateContents($errors))
 			{
+				$this->_zip = null;
 				return false;
 			}
 		}
@@ -79,10 +80,14 @@ class ArchiveImportService extends AbstractService
 		{
 			return false;
 		}
+		if (!File::validateZipEntryNames($zip))
+		{
+			$errors[] = \XF::phrase('file_is_not_valid_style_archive');
+			return false;
+		}
 
 		$this->extractFilesToTempDir();
 
-		/** @var ArchiveValidatorService $validator */
 		$validator = $this->service(ArchiveValidatorService::class, $this->tempDir, 'import');
 		return $validator->validate($errors);
 	}
@@ -200,8 +205,6 @@ class ArchiveImportService extends AbstractService
 	public function extractFilesToTempDir()
 	{
 		$zip = $this->zip();
-		$DS = \XF::$DS;
-
 		if ($this->extracted)
 		{
 			return;
@@ -216,9 +219,18 @@ class ArchiveImportService extends AbstractService
 				continue;
 			}
 
-			$finalFileName = $this->tempDir . $DS . $fsFileName;
+			$finalFileName = File::getSafeArchivePathWithinDirectory($this->tempDir, $fsFileName);
+			if ($finalFileName === null)
+			{
+				throw new \LogicException("Unsafe archive extraction path: {$fsFileName}");
+			}
 
 			$dataStream = $zip->getStream($zipFileName);
+			if (!is_resource($dataStream))
+			{
+				throw new \LogicException("Failed to extract archive file: {$fsFileName}");
+			}
+
 			@File::writeFile($finalFileName, $dataStream, false);
 		}
 
@@ -227,26 +239,6 @@ class ArchiveImportService extends AbstractService
 
 	protected function getFsFileNameFromZipName($fileName)
 	{
-		if (substr($fileName, -1) === '/')
-		{
-			// this is a directory we can just skip this
-			return null;
-		}
-
-		$uploadDir = ArchiveExportService::UPLOAD_DIR . '/';
-
-		if (!preg_match("#^" . preg_quote($uploadDir, '#') . ".#", $fileName))
-		{
-			// file outside of "upload" so we can just skip this
-			return null;
-		}
-
-		if (strpos($fileName, '/../') !== false)
-		{
-			// file contains relative path, skip this to prevent escaping the upload dir
-			return null;
-		}
-
-		return substr($fileName, strlen($uploadDir)); // remove upload dir prefix
+		return File::getArchivePathWithinPrefix($fileName, ArchiveExportService::UPLOAD_DIR . '/');
 	}
 }

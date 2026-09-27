@@ -2,6 +2,7 @@
 
 namespace XF\Entity;
 
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XF\Phrase;
@@ -15,7 +16,7 @@ use XF\Phrase;
  * @property-read Phrase $title
  *
  * RELATIONS
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\Smilie> $Smilies
+ * @property-read AbstractCollection<Smilie> $Smilies
  * @property-read \XF\Entity\Phrase|null $MasterTitle
  */
 class SmilieCategory extends Entity

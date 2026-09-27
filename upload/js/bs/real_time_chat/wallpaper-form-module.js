@@ -1,0 +1,68 @@
+! function(t, e, a) {
+    "use strict";
+    XF.RtcWallpaperForm = XF.Element.newHandler({
+        options: {},
+        wallpaper: {
+            url: "",
+            blurred: !1
+        },
+        wasSubmitted: !1,
+        init() {
+            if (this.chat = this.$target.rtc(!0), !this.chat) throw new Error("Could not find chat");
+            const t = this.$target.closest(".js-message"),
+                e = t.length ? t : this.$target;
+            this.$themeIndex = e.find(".js-themeIndex"), this.$uploadInputs = e.find(".js-uploadInputs"), this.$uploadInput = e.find(".js-uploadInput"), this.$uploadButton = e.find(".js-uploadButton"), this.$uploadButton.data("original-label", this.$uploadButton.text()), this.$imageManage = e.find(".js-imageManage"), this.$blurred = e.find('input[name="blurred"]'), this.$uploadInput.on("change", XF.proxy(this, "onUploadInputChanged")), this.$blurred.on("change", XF.proxy(this, "onBlurredChanged")), e.on("click", ".js-theme", XF.proxy(this, "onThemeClick")), e.on("click", ".js-resetWallpaper", XF.proxy(this, "onResetWallpaperClick")), this.$uploadButton.on("click", XF.proxy(this, "onUploadButtonClick")), this.$target.on("submit", XF.proxy(this, "onSubmit")), this.assertBlocksVisibility(), this.$target.closest(".js-message")?.saveScrollPositionOnResize(), e.onRemoved((() => {
+                this.wasSubmitted ? this.wasSubmitted = !1 : (this.resetWallpaperImage(), this.chat.resetTheme())
+            }))
+        },
+        onResetWallpaperClick(t) {
+            this.chat.updateTheme(this.chat.options.theme), this.resetWallpaperImage()
+        },
+        onSubmit() {
+            this.wasSubmitted = !0, this.wallpaper.url = ""
+        },
+        onUploadInputChanged(t) {
+            if (!t.target.files.length) return void(this.wallpaper.url = "");
+            const e = t.target.files[0];
+            this.wallpaper.url = URL.createObjectURL(e), this.updateWallpaperImage(), this.assertBlocksVisibility(), this.updateUploadButtonLabel()
+        },
+        onBlurredChanged(t) {
+            this.wallpaper.blurred = t.target.checked, this.updateWallpaperImage()
+        },
+        updateUploadButtonLabel() {
+            this.wallpaper.url ? this.$uploadButton.text(this.$uploadButton.data("reset")) : this.$uploadButton.text(this.$uploadButton.data("original-label"))
+        },
+        updateWallpaperImage() {
+            this.chat.$target.css(this.getWallpaperProps())
+        },
+        getWallpaperProps() {
+            const t = {
+                "--wallpaper-image": `url(${this.wallpaper.url})`,
+                "--wallpaper-filter": "none",
+                "--wallpaper-size": "cover",
+                "--wallpaper-repeat": "no-repeat",
+                "--wallpaper-color": "transparent",
+                "--wallpaper-mask": "none"
+            };
+            return this.wallpaper.blurred && (t["--wallpaper-filter"] = "blur(5px)"), t
+        },
+        onThemeClick(e) {
+            e.preventDefault();
+            const a = t(e.currentTarget),
+                s = parseInt(a.data("themeIndex"), 10);
+            this.$themeIndex.val(s), this.$target.find(".js-theme.selected").removeClass("selected"), a.addClass("selected"), -1 === s ? this.chat.resetTheme() : this.chat.updateTheme(a.data("theme")), this.updateWallpaperImage(), this.assertBlocksVisibility()
+        },
+        onUploadButtonClick(t) {
+            t.preventDefault(), this.wallpaper.url ? this.resetWallpaperImage() : (this.$uploadInput.trigger("click"), this.$uploadButton.blur())
+        },
+        resetWallpaperImage() {
+            this.wallpaper.url = "", this.$uploadInput.val(""), this.updateWallpaperImage(), this.assertBlocksVisibility(), this.updateUploadButtonLabel()
+        },
+        assertBlocksVisibility() {
+            const e = parseInt(this.$themeIndex.val(), 10);
+            this.$uploadInputs.each(((a, s) => {
+                const l = t(s); - 1 === e && "none" === l.css("display") && l.xfFadeDown(XF.config.speed.fast), -1 !== e && "none" !== l.css("display") && l.xfFadeUp(XF.config.speed.fast)
+            })), this.wallpaper.url && "none" === this.$imageManage.css("display") && this.$imageManage.xfFadeDown(XF.config.speed.fast), this.wallpaper.url || "none" === this.$imageManage.css("display") || this.$imageManage.xfFadeUp(XF.config.speed.fast)
+        }
+    }), XF.Element.register("rtc-wallpaper-form", "XF.RtcWallpaperForm"), XF.Element.initialize($('*[data-xf-init*="rtc-wallpaper-form"]'))
+}(jQuery, window, document);

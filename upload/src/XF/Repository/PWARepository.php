@@ -25,8 +25,8 @@ class PWARepository extends Repository
 
 		$style = $this->app()->style(0);
 		if (
-			!$style->getProperty('publicIconUrl') ||
-			!$style->getProperty('publicIconUrlLarge')
+			!$style->getProperty('publicIconUrl')
+			|| !$style->getProperty('publicIconUrlLarge')
 		)
 		{
 			return false;

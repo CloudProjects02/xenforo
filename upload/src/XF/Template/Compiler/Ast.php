@@ -12,7 +12,7 @@ use function is_array, strlen;
 class Ast
 {
 	/**
-	 * @var Syntax\AbstractSyntax[]
+	 * @var AbstractSyntax[]
 	 */
 	public $children = [];
 

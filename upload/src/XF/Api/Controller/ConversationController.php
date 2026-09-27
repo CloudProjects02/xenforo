@@ -97,7 +97,6 @@ class ConversationController extends AbstractController
 		$finder = $this->setupMessageFinder($conversation);
 		$messages = $finder->limitByPage($page, $perPage)->fetch();
 
-		/** @var AttachmentRepository $attachmentRepo */
 		$attachmentRepo = $this->repository(AttachmentRepository::class);
 		$attachmentRepo->addAttachmentsToContent($messages, 'conversation_message');
 
@@ -116,7 +115,6 @@ class ConversationController extends AbstractController
 	 */
 	protected function setupMessageFinder(ConversationMaster $conversation)
 	{
-		/** @var ConversationMessageFinder $finder */
 		$finder = $this->finder(ConversationMessageFinder::class);
 		$finder
 			->inConversation($conversation)
@@ -133,7 +131,6 @@ class ConversationController extends AbstractController
 	 */
 	protected function setupConversationEdit(ConversationMaster $conversation)
 	{
-		/** @var EditorService $editor */
 		$editor = $this->service(EditorService::class, $conversation);
 
 		$input = $this->filter([
@@ -270,7 +267,6 @@ class ConversationController extends AbstractController
 
 		$this->assertRequiredApiInput('recipient_ids');
 
-		/** @var InviterService $inviter */
 		$inviter = $this->service(InviterService::class, $conversation, \XF::visitor());
 
 		$recipientIds = $this->filter('recipient_ids', 'array-uint');

@@ -27,7 +27,8 @@ class ClassExtension extends AbstractDataType
 	{
 		$entries = $this->finder()
 			->where('addon_id', $addOnId)
-			->order(['from_class', 'to_class'])->fetch();
+			->order(['from_class', 'to_class', 'execute_order'])
+			->fetch();
 
 		foreach ($entries AS $entry)
 		{
@@ -133,7 +134,6 @@ class ClassExtension extends AbstractDataType
 	{
 		\XF::runOnce('rebuild_active_' . $this->getContainerTag(), function ()
 		{
-			/** @var ClassExtensionRepository $repo */
 			$repo = $this->em->getRepository(ClassExtensionRepository::class);
 			$repo->rebuildExtensionCache();
 		});

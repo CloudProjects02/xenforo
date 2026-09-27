@@ -44,7 +44,6 @@ class UsersController extends AbstractController
 		$page = $this->filterPage();
 		$perPage = $this->options()->membersPerPage;
 
-		/** @var UserFinder $finder */
 		$finder = $this->finder(UserFinder::class);
 		$finder->isValidUser()
 			->with('api')
@@ -80,7 +79,6 @@ class UsersController extends AbstractController
 
 		if ($username !== '' && Str::strlen($username) >= 2)
 		{
-			/** @var UserFinder $userFinder */
 			$userFinder = $this->finder(UserFinder::class);
 
 			$recommendations = $userFinder

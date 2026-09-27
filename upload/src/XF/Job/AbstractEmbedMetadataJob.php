@@ -142,7 +142,6 @@ abstract class AbstractEmbedMetadataJob extends AbstractJob
 	 */
 	protected function getMessagePreparer(array $types)
 	{
-		/** @var PreparerService $preparer */
 		$preparer = $this->app->service(PreparerService::class, $this->getPreparerContext());
 		$preparer->disableAllFilters();
 

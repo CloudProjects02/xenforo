@@ -1,0 +1,3421 @@
+!function() {
+  "use strict";
+  var t, e, s, i, o, a, n, r, l, h, d, c;
+  t = window.jQuery,
+      e = window,
+      s = document,
+      t.fn.outerHeightSum ??= function() {
+        let e = 0;
+        return this.each(function() {
+          e += t(this).outerHeight()
+        }),
+            e
+      }
+      ,
+      t.fn.rtc ??= function(e) {
+        let s = this.closest(".real-time-chat");
+        if (!s.length) {
+          let i = this.closest("[data-rtc-id]");
+          i.length && (s = t(`#${i.data("rtc-id")}`))
+        }
+        if (!s.length && this.closest(".overlay").length) {
+          let o = XF.LocalStorage.get("rtc.overlayLatestId");
+          o && (s = t(`#${o}`))
+        }
+        return e && (s = XF.Element.getHandler(s, "chat")),
+            s
+      }
+      ,
+      t.fn.isInScrollableViewport ??= function(t) {
+        let e = this.get(0).getBoundingClientRect()
+            , s = t.get(0).getBoundingClientRect();
+        return e.top >= s.top && e.bottom <= s.bottom && e.left >= s.left && e.right <= s.right
+      }
+      ,
+      t.fn.saveScrollPositionOnResize = function(t) {
+        if (!this.length)
+          return;
+        if (this[0].scrollSaver)
+          return this[0].scrollSaver;
+        t = t || this.closest(".js-scrollable");
+        let e = this.outerHeight()
+            , s = new ResizeObserver(()=>{
+              let s = this.outerHeight()
+                  , i = s - e;
+              i < 0 || (i = Math.round(i),
+                  t.scrollTop(t.scrollTop() + i)),
+                  e = s
+            }
+        );
+        return s.observe(this[0]),
+            this[0].scrollSaver = s,
+            this[0].scrollSaver
+      }
+      ,
+      t.fn.onRemoved = function(t) {
+        let e = this.attr("id") || this.xfUniqueId();
+        if (!t)
+          return this[0].onRemovedObserver || null;
+        let i = new MutationObserver(o=>{
+              o.forEach(o=>{
+                    if (!o.removedNodes.length)
+                      return;
+                    let a = o.removedNodes[0];
+                    s.body.contains(a) || (a.id === e || a.contains(this.get(0))) && (t(a),
+                        i.disconnect(),
+                        this[0].onRemovedObserver = null)
+                  }
+              )
+            }
+        );
+        return i.observe(s.body, {
+          subtree: !0,
+          childList: !0
+        }),
+            this[0].onRemovedObserver = i,
+            this[0].onRemovedObserver
+      }
+      ,
+      t.fn.sortByDataAttr = function(e, s, i) {
+        let o = t(this)
+            , a = o.find(e);
+        return a.sort((e,o)=>{
+              let a = t(e).data(s)
+                  , n = t(o).data(s);
+              return a === n ? 0 : a > n ? "desc" === i ? -1 : 1 : "desc" === i ? 1 : -1
+            }
+        ),
+            a.detach(),
+            o.append(a),
+            o
+      }
+      ,
+      t.fn.toggleContainerWrapper = function(t) {
+        return void 0 === t && (t = !this.hasClass("is-active")),
+        t === this.hasClass("is-active") || (t ? this.closest(".js-containerWrapper").xfFadeDown(XF.config.speed.fast, ()=>{
+              this.addClass("is-active")
+            }
+        ) : this.closest(".js-containerWrapper").xfFadeUp(XF.config.speed.fast, ()=>{
+              this.removeClass("is-active")
+            }
+        )),
+            this
+      }
+      ,
+      t.fn.closeXfTooltips ??= function() {
+        this.find('[data-xf-init*="tooltip"]').trigger("tooltip:hide")
+      }
+      ,
+      t.fn.clear ??= function() {
+        let t = this.get(0);
+        return t && t.querySelectorAll("input, textarea, select").forEach(t=>{
+              let e = t.type.toLowerCase();
+              "checkbox" === e || "radio" === e ? t.checked = !1 : "select-multiple" === e || "select-one" === e ? t.selectedIndex = -1 : t.value = ""
+            }
+        ),
+            this
+      }
+      ,
+      t.throttle ??= function(t, e) {
+        let s = null
+            , i = 0;
+        return function(...o) {
+          let a = Date.now()
+              , n = e - (a - i);
+          n <= 0 || n > e ? (s && (clearTimeout(s),
+              s = null),
+              i = a,
+              t.apply(this, o)) : s || (s = setTimeout(()=>{
+                i = Date.now(),
+                    s = null,
+                    t.apply(this, o)
+              }
+              , n))
+        }
+      }
+      ,
+      t.throttleByKey ??= function(t, e) {
+        let s = new Map;
+        return function(...i) {
+          let o = JSON.stringify(i);
+          s.has(o) || (s.set(o, !0),
+              t.apply(this, i),
+              setTimeout(()=>{
+                    s.delete(o)
+                  }
+                  , e))
+        }
+      }
+      ,
+      t.debounceByKey ??= function(t, e) {
+        let s = {};
+        return function(i) {
+          s[i] && clearTimeout(s[i]),
+              s[i] = setTimeout(()=>{
+                    t.apply(this, arguments),
+                        s[i] = null
+                  }
+                  , e)
+        }
+      }
+      ,
+      t.deepEquals ??= function(e, s) {
+        let i = Object.keys(e)
+            , o = Object.keys(s);
+        if (i.length !== o.length)
+          return !1;
+        for (let a of i)
+          if ("object" == typeof e[a] && "object" == typeof s[a]) {
+            if (!t.deepEquals(e[a], s[a]))
+              return !1
+          } else if (e[a] !== s[a])
+            return !1;
+        return !0
+      }
+      ,
+      t.fn.draggable = function(i) {
+        let o = t.extend({
+          container: this
+        }, i)
+            , a = t(o.container)
+            , n = !1
+            , r = {
+          x: 0,
+          y: 0
+        };
+        function l(t) {
+          n && c(t.pageX, t.pageY)
+        }
+        function h(t) {
+          if (n) {
+            let e = t.originalEvent.touches[0];
+            c(e.pageX, e.pageY)
+          }
+        }
+        function d(e, i) {
+          n = !0;
+          let o = a.position();
+          r.x = e - o.left,
+              r.y = i - o.top,
+              t(s).on("mousemove.draggable", l),
+              t(s).on("mouseup.draggable", m),
+              t(s).on("touchmove.draggable", h),
+              t(s).on("touchend.draggable", m)
+        }
+        function c(s, i) {
+          let o = s - r.x
+              , n = i - r.y
+              , l = t(e).width() - a.outerWidth()
+              , h = t(e).height() - a.outerHeight();
+          o = Math.max(0, Math.min(o, l)),
+              n = Math.max(0, Math.min(n, h));
+          let d = {
+            left: o,
+            top: n,
+            right: "unset",
+            bottom: "unset"
+          };
+          a.css(d),
+              a.trigger("drag", [d])
+        }
+        function m() {
+          n = !1,
+              t(s).off(".draggable")
+        }
+        return this.on("mousedown.draggable", function(t) {
+          3 !== t.which && 3 !== t.which && d(t.pageX, t.pageY)
+        }),
+            this.on("touchstart.draggable", function(t) {
+              t.preventDefault();
+              let e = t.originalEvent.touches[0];
+              d(e.pageX, e.pageY)
+            }),
+            t(e).on("blur", m),
+            this
+      }
+      ,
+      t.fn.findClosestElement = function(e, s) {
+        let i = t()
+            , o = 1 / 0;
+        return this.each(function() {
+          let a = Math.abs(s - parseInt(t(this).data(e)));
+          a < o && (o = a,
+              i = this)
+        }),
+            i && !i.jquery ? t(i) : i
+      }
+      ,
+      XF.Click.register("element-value-setter", "XF.ElementValueSetter"),
+      t(s).trigger("jquery:rtc-plugins-loaded"),
+      Object.freeze({
+        __proto__: null
+      });
+  let m = ()=>{}
+  ;
+  function g() {
+    let t = {
+      isFulfilled: !1,
+      isRejected: !1,
+      notify() {},
+      notifyAll(...e) {
+        t.lastNotify = e,
+            t.listeners.forEach(t=>t(...e))
+      },
+      listeners: [],
+      addNotifyListener(e) {
+        t.lastNotify && e(...t.lastNotify),
+            t.listeners.push(e)
+      }
+    }
+        , e = new Promise((s,i)=>{
+          t.resolve = t=>{
+            e.isFulfilled || e.isRejected || (e.isFulfilled = !0,
+                s(t))
+          }
+              ,
+              t.reject = (...t)=>{
+                e.isRejected || e.isFulfilled || (e.isRejected = !0,
+                    i(...t))
+              }
+        }
+    );
+    return e.catch(m).finally(()=>{
+          e.notify = e.notifyAll = e.lastNotify = null,
+              e.listeners.length = 0,
+          e.cancel && (e.cancel = m)
+        }
+    ),
+        Object.assign(e, t),
+        e
+  }
+  Object.freeze({
+    __proto__: null,
+    deferredPromise: g
+  });
+  let u, p;
+  function f(t) {
+    u ? u.push(t) : (u = [t],
+        requestAnimationFrame(()=>{
+              let t = u;
+              u = void 0,
+                  t.forEach(t=>t())
+            }
+        ))
+  }
+  function v() {
+    return p || ((p = new Promise(t=>f(()=>t()))).then(()=>{
+          p = void 0
+        }
+    ),
+        p)
+  }
+  Object.freeze({
+    __proto__: null,
+    fastRaf: f,
+    fastRafPromise: v
+  });
+  let b = new Map;
+  function C(t) {
+    $(t);
+    let e = {
+      isCancelled: !1,
+      deferred: g()
+    };
+    return b.set(t, e),
+        e.deferred.then(()=>{
+              y(t) === e && b.delete(t)
+            }
+        ),
+        e
+  }
+  function y(t) {
+    return b.get(t)
+  }
+  function $(t) {
+    let e = y(t);
+    e && (e.isCancelled = !0,
+        e.deferred.resolve())
+  }
+  function T(t, e, s) {
+    return s || (s = C(e)),
+        f(()=>{
+              s.isCancelled || (t() ? T(t, e, s) : s.deferred.resolve())
+            }
+        ),
+        s.deferred
+  }
+  Object.freeze({
+    __proto__: null,
+    animateSingle: T,
+    cancelAnimationByKey: $,
+    createAnimationInstance: C,
+    getAnimationInstance: y
+  });
+  class S {
+    constructor(t) {
+      this._constructor(t)
+    }
+    _constructor(t) {
+      this.reuseResults = t,
+          this.listeners = {},
+          this.listenerResults = {}
+    }
+    addEventListener(t, e, s) {
+      (this.listeners[t] ??= []).push({
+        callback: e,
+        options: s
+      }),
+      this.listenerResults.hasOwnProperty(t) && (e(...this.listenerResults[t]),
+          s?.once) && this.listeners[t].pop()
+    }
+    addMultipleEventsListeners(t) {
+      for (let e in t)
+        this.addEventListener(e, t[e])
+    }
+    removeEventListener(t, e, s) {
+      this.listeners[t] && function(t, e) {
+        let s = t.findIndex(e);
+        -1 !== s && t.splice(s, 1)[0]
+      }(this.listeners[t], t=>t.callback === e)
+    }
+    invokeListenerCallback(t, e, ...s) {
+      let i, o;
+      try {
+        i = e.callback(...s)
+      } catch (a) {
+        o = a
+      }
+      if (e.options?.once && this.removeEventListener(t, e.callback),
+          o)
+        throw o;
+      return i
+    }
+    _dispatchEvent(t, e, ...s) {
+      this.reuseResults && (this.listenerResults[t] = s);
+      let i = e && []
+          , o = this.listeners[t];
+      return o && o.slice().forEach(e=>{
+            if (-1 === o.findIndex(t=>t.callback === e.callback))
+              return;
+            let a = this.invokeListenerCallback(t, e, ...s);
+            i && i.push(a)
+          }
+      ),
+          i
+    }
+    dispatchResultableEvent(t, ...e) {
+      return this._dispatchEvent(t, !0, ...e)
+    }
+    dispatchEvent(t, ...e) {
+      this._dispatchEvent(t, !1, ...e)
+    }
+    cleanup() {
+      this.listeners = {},
+          this.listenerResults = {}
+    }
+  }
+  let L = new S
+      , E = "start"
+      , k = !1
+      , x = g()
+      , M = 0;
+  function w(t) {
+    return new Promise(e=>{
+          setTimeout(e, t)
+        }
+    )
+  }
+  function I(t, e) {
+    k || (x = g(),
+        L.dispatchEvent(E),
+        k = !0),
+        ++M;
+    let s = [void 0 !== e ? w(e) : void 0, t.finally(()=>{}
+    )].filter(Boolean);
+    performance.now();
+    let i = x;
+    return Promise.race(s).then(()=>{
+          x !== i || x.isFulfilled || --M <= 0 && !x.isFulfilled && (k = !1,
+              M = 0,
+              L.dispatchEvent("end"),
+              x.resolve())
+        }
+    ),
+        x
+  }
+  function A(t, e, s) {
+    k && t();
+    let i = s ? s.add(L) : L.addEventListener.bind(L)
+        , o = s ? s.removeManual.bind(s, L) : L.removeEventListener.bind(L);
+    return i(E, t),
+        i("end", e),
+        ()=>{
+          o("end", e),
+              o(E, t)
+        }
+  }
+  x.resolve(),
+      window.dispatchHeavyAnimationEvent = I,
+      window.EventListenerBase = S,
+      Object.freeze({
+        __proto__: null,
+        EventListenerBase: S,
+        dispatchHeavyAnimationEvent: I,
+        pause: w,
+        useHeavyAnimationCheck: A
+      });
+  let _ = {
+    Up: 1,
+    Down: 2,
+    Static: 3
+  };
+  function j(t) {
+    if (t.margin ??= 0,
+        t.maxDistance ??= 1500,
+        t.axis ??= "y",
+    0 === t.forceDuration && (t.forceDirection = _.Static),
+    t.forceDirection === _.Static)
+      return t.forceDuration = 0,
+          R(t);
+    let e = v().then(()=>R(t));
+    return "y" === t.axis ? I(e) : e
+  }
+  function R(t) {
+    var e;
+    let {element: s, container: i, getNormalSize: o, getElementPosition: a, transitionFunction: n, axis: r, margin: l, position: h, forceDirection: d, maxDistance: c, forceDuration: m} = t;
+    if (!(e = s)?.isConnected)
+      return $(i),
+          Promise.resolve();
+    let g = "y" === r ? "top" : "left", u = "y" === r ? "bottom" : "right", p = "y" === r ? "scrollTop" : "scrollLeft", f = s.getBoundingClientRect(), v = i.getBoundingClientRect ? i.getBoundingClientRect() : document.body.getBoundingClientRect(), b = f[g] - v[g], C = a ? a({
+      elementRect: f,
+      containerRect: v,
+      elementPosition: b
+    }) : b, y = s["y" === r ? "scrollHeight" : "offsetWidth"], S = o ? o({
+      rect: v
+    }) : v["y" === r ? "height" : "width"], L = i[p], E = i["y" === r ? "scrollHeight" : "scrollWidth"], k;
+    switch (h) {
+      case "start":
+        k = C - l;
+        break;
+      case "end":
+        k = f[u] - v[u] + l;
+        break;
+      case "nearest":
+      case "center":
+        if (y < S)
+          k = C + y / 2 - S / 2;
+        else {
+          if (t.fallbackToElementStartWhenCentering && t.fallbackToElementStartWhenCentering !== s)
+            return t.element = t.fallbackToElementStartWhenCentering,
+                t.position = "start",
+                R(t);
+          k = C - l
+        }
+    }
+    if (1 > Math.abs(k - (l || 0)))
+      return $(i),
+          Promise.resolve();
+    if ("y" === r && void 0 === d && (k > c ? (L = i.scrollTop += k - c,
+        k = c) : k < -c && (L = i.scrollTop += k + c,
+        k = -c)),
+    k < 0) {
+      let x = -L;
+      k = Math.max(k, x)
+    } else if (k > 0) {
+      let M = E - (L + S);
+      k = Math.min(k, M)
+    }
+    let w = i[p] + k
+        , I = Math.abs(k)
+        , A = m ?? 250 + I / 1500 * 350
+        , _ = Date.now()
+        , j = n ?? (I < 500 ? U : H)
+        , D = ()=>A ? Math.min((Date.now() - _) / A, 1) : 1
+        , P = ()=>{
+          let t = D()
+              , e = j(t)
+              , s = k * (1 - e);
+          return i[p] = Math.round(w - s),
+          t < 1
+        }
+    ;
+    if (!A || !k)
+      return $(i),
+          P(),
+          Promise.resolve();
+    if (t.startCallback) {
+      let B = E - Math.round(w + i["y" === r ? "offsetHeight" : "offsetWidth"]);
+      t.startCallback({
+        scrollSize: E,
+        scrollPosition: L,
+        distanceToEnd: B,
+        path: k,
+        duration: A,
+        containerRect: v,
+        elementRect: f,
+        getProgress: D
+      })
+    }
+    return T(P, i)
+  }
+  function H(t) {
+    return 1 - (1 - t) ** 5
+  }
+  function U(t) {
+    return 1 - (1 - t) ** 3.5
+  }
+  window.FocusDirection = _,
+      Object.freeze({
+        __proto__: null,
+        FocusDirection: _,
+        fastSmoothScroll: j
+      }),
+      window.ListenerSetter = class {
+        constructor() {
+          this.listeners = new Set
+        }
+        add(t) {
+          return (e,s,i)=>{
+            let o = {
+              element: t,
+              event: e,
+              callback: s,
+              options: i
+            };
+            return this.addManual(o),
+                o
+          }
+        }
+        addManual(t) {
+          t.element.addEventListener(t.event, t.callback, t.options),
+          t.options?.once && (t.onceCallback = ()=>{
+            this.remove(t),
+                t.onceFired = !0
+          }
+              ,
+              t.element.addEventListener(t.event, t.onceCallback, t.options)),
+              this.listeners.add(t)
+        }
+        remove(t) {
+          t.onceFired || (t.element.removeEventListener(t.event, t.callback, t.options),
+          t.onceCallback && t.element.removeEventListener(t.event, t.onceCallback, t.options)),
+              this.listeners.delete(t)
+        }
+        removeManual(t, e, s, i) {
+          let o;
+          for (let a of this.listeners)
+            if (a.element === t && a.event === e && a.callback === s && a.options === i) {
+              o = a;
+              break
+            }
+          o && this.remove(o)
+        }
+        removeAll() {
+          this.listeners.forEach(t=>{
+                this.remove(t)
+              }
+          )
+        }
+      }
+      ,
+      Object.freeze({
+        __proto__: null
+      }),
+      function(t, e, s) {
+        let i = "ontouchstart"in e || e.DocumentTouch && s instanceof DocumentTouch ? "touchstart" : "mousemove";
+        e.idleController = new class {
+          constructor() {
+            this._isIdle = !0,
+                this.focusPromise = Promise.resolve(),
+                this.focusResolve = ()=>{}
+                ,
+                e.addEventListener("blur", ()=>{
+                      this.isIdle = !0,
+                          e.addEventListener("focus", ()=>{
+                                this.isIdle = !1
+                              }
+                              , {
+                                once: !0
+                              })
+                    }
+                ),
+                e.addEventListener(i, ()=>{
+                      this.isIdle = !1
+                    }
+                    , {
+                      once: !0,
+                      passive: !0
+                    }),
+                this.eventListeners = {
+                  change: []
+                }
+          }
+          getFocusPromise() {
+            return this.focusPromise
+          }
+          get isIdle() {
+            return this._isIdle
+          }
+          set isIdle(t) {
+            this._isIdle !== t && (this._isIdle = t,
+                this.dispatchEvent("change", t))
+          }
+          addEventListener(t, e) {
+            t in this.eventListeners || (this.eventListeners[t] = []),
+                this.eventListeners[t].push(e)
+          }
+          removeEventListener(t, e) {
+            if (t in this.eventListeners) {
+              let s = this.eventListeners[t].indexOf(e);
+              -1 !== s && this.eventListeners[t].splice(s, 1)
+            }
+          }
+          dispatchEvent(t, ...e) {
+            t in this.eventListeners && this.eventListeners[t].forEach(t=>{
+                  t(...e)
+                }
+            )
+          }
+        }
+      }(jQuery, window, document),
+      Object.freeze({
+        __proto__: null
+      });
+  class D {
+    constructor(t=document.createElement("div")) {
+      this.container = t,
+          this.onScrollMeasure = 0,
+          this.lastScrollPosition = 0,
+          this.lastScrollDirection = 0,
+          this.isHeavyAnimationInProgress = !1,
+          this.needCheckAfterAnimation = !1,
+          this.scrollProperty = "scrollTop",
+          this.addedScrollListener = !1
+    }
+    addScrollListener() {
+      this.addedScrollListener || (this.addedScrollListener = !0,
+          this.container.addEventListener("scroll", this.onScroll, {
+            passive: !0,
+            capture: !0
+          }))
+    }
+    removeScrollListener() {
+      this.addedScrollListener && (this.addedScrollListener = !1,
+          this.container.removeEventListener("scroll", this.onScroll, {
+            capture: !0
+          }))
+    }
+    setListeners() {
+      this.removeHeavyAnimationListener || (window.addEventListener("resize", this.onScroll, {
+        passive: !0
+      }),
+          this.addScrollListener(),
+          this.removeHeavyAnimationListener = A(()=>{
+                this.isHeavyAnimationInProgress = !0,
+                this.onScrollMeasure && (this.cancelMeasure(),
+                    this.needCheckAfterAnimation = !0)
+              }
+              , ()=>{
+                this.isHeavyAnimationInProgress = !1,
+                this.needCheckAfterAnimation && (this.onScroll(),
+                    this.needCheckAfterAnimation = !1)
+              }
+          ))
+    }
+    removeListeners() {
+      this.removeHeavyAnimationListener && (window.removeEventListener("resize", this.onScroll),
+          this.removeScrollListener(),
+          this.removeHeavyAnimationListener(),
+          this.removeHeavyAnimationListener = void 0)
+    }
+    destroy() {
+      this.removeListeners(),
+          this.onAdditionalScroll = void 0,
+          this.onScrolledTop = void 0,
+          this.onScrolledBottom = void 0
+    }
+    append(...t) {
+      this.container.append(...t)
+    }
+    scrollIntoViewNew(t) {
+      return j({
+        ...t,
+        container: this.container
+      })
+    }
+    onScroll = ()=>{
+      if (this.isHeavyAnimationInProgress)
+        return this.cancelMeasure(),
+            void (this.needCheckAfterAnimation = !0);
+      (this.onScrolledTop || this.onScrolledBottom || this.splitUp || this.onAdditionalScroll) && (this.onScrollMeasure || (this.onScrollMeasure = window.setTimeout(()=>{
+            this.onScrollMeasure = 0;
+            let t = this.container[this.scrollProperty];
+            this.lastScrollDirection = this.lastScrollPosition === t ? 0 : this.lastScrollPosition < t ? 1 : -1,
+                this.lastScrollPosition = t,
+            this.onAdditionalScroll && this.onAdditionalScroll(),
+            this.checkForTriggers && this.checkForTriggers()
+          }
+          , 24)))
+    }
+    ;
+    cancelMeasure() {
+      this.onScrollMeasure && (clearTimeout(this.onScrollMeasure),
+          this.onScrollMeasure = 0)
+    }
+  }
+  window.Scrollable = class extends D {
+    constructor(t, e=300, s) {
+      super(t),
+          this.onScrollOffset = e,
+          this.loadedAll = {
+            top: !0,
+            bottom: !1
+          },
+          this.container.classList.add("scrollable-y"),
+          this.setListeners(),
+          this.scrollProperty = "scrollTop"
+    }
+    attachBorderListeners(t=this.container) {
+      let e = this.onAdditionalScroll;
+      this.onAdditionalScroll = ()=>{
+        e?.(),
+            t.classList.toggle("scrolled-top", !this.scrollTop),
+            t.classList.toggle("scrolled-bottom", this.isScrolledDown)
+      }
+          ,
+          t.classList.add("scrolled-top", "scrolled-bottom", "scrollable-y-bordered")
+    }
+    setVirtualContainer(t) {
+      this.splitUp = t
+    }
+    checkForTriggers = ()=>{
+      if (!this.onScrolledTop && !this.onScrolledBottom)
+        return;
+      if (this.isHeavyAnimationInProgress)
+        return void this.onScroll();
+      let t = this.container.scrollHeight;
+      if (!t)
+        return;
+      let e = t - this.container.clientHeight
+          , s = this.lastScrollPosition;
+      this.onScrolledTop && s <= this.onScrollOffset && this.lastScrollDirection <= 0 && this.onScrolledTop(),
+      this.onScrolledBottom && e - s <= this.onScrollOffset && this.lastScrollDirection >= 0 && this.onScrolledBottom()
+    }
+    ;
+    prepend(...t) {
+      (this.splitUp || this.padding || this.container).prepend(...t)
+    }
+    append(...t) {
+      (this.splitUp || this.padding || this.container).append(...t)
+    }
+    getDistanceToEnd() {
+      return this.scrollHeight - Math.round(this.scrollTop + this.container.offsetHeight)
+    }
+    get isScrolledDown() {
+      return 1 >= this.getDistanceToEnd()
+    }
+    set scrollTop(t) {
+      this.container.scrollTop = t
+    }
+    get scrollTop() {
+      return this.container.scrollTop
+    }
+    setScrollTopSilently(t) {
+      this.lastScrollPosition = t,
+          this.ignoreNextScrollEvent(),
+          this.scrollTop = t
+    }
+    ignoreNextScrollEvent() {
+      this.removeHeavyAnimationListener && (this.removeScrollListener(),
+          this.container.addEventListener("scroll", t=>{
+                (function(t) {
+                      if (t ||= window.event) {
+                        t = t.originalEvent || t;
+                        try {
+                          t.stopPropagation && t.stopPropagation(),
+                          t.preventDefault && t.preventDefault(),
+                              t.returnValue = !1,
+                              t.cancelBubble = !0
+                        } catch (e) {}
+                      }
+                    }
+                )(t),
+                    this.addScrollListener()
+              }
+              , {
+                capture: !0,
+                passive: !1,
+                once: !0
+              }))
+    }
+    get scrollHeight() {
+      return this.container.scrollHeight
+    }
+  }
+      ,
+      Object.freeze({
+        __proto__: null
+      }),
+      jQuery,
+      o = window,
+      a = document,
+      o.EmbedLoadedObserver = class {
+        loaded = {
+          images: void 0,
+          imgurs: void 0,
+          unfurls: void 0
+        };
+        constructor(t, e) {
+          this.container = t,
+              this.loadedCallback = e,
+              this.connect()
+        }
+        checkLoadedCallback() {
+          this.isLoaded(["images", "imgurs", "unfurls"]) && this.loadedCallback?.()
+        }
+        isLoaded(t) {
+          return Array.isArray(t) ? t.every(this.isLoaded.bind(this)) : [void 0, !0].includes(this.loaded[t])
+        }
+        connect() {
+          this.#a(),
+              this.#b(),
+              this.#c()
+        }
+        disconnect() {
+          this.#d(),
+              this.#e(),
+              this.#f(),
+              this.loaded = {
+                images: void 0,
+                imgurs: void 0,
+                unfurls: void 0
+              },
+              this.loadedCallback = void 0
+        }
+        #a() {
+          if (this.images = this.container.querySelectorAll("img"),
+              this.imagesCount = this.images.length,
+              !this.imagesCount)
+            return;
+          this.loaded.images = !1;
+          let t = 0;
+          this.onImageLoaded = ()=>{
+            ++t >= this.imagesCount && (this.loaded.images = !0,
+                this.checkLoadedCallback())
+          }
+              ,
+              this.container.querySelectorAll("img").forEach(t=>{
+                    t.addEventListener("load", this.onImageLoaded)
+                  }
+              )
+        }
+        #b() {
+          if (this.imgurs = this.container.querySelectorAll("blockquote.imgur-embed-pub"),
+              this.imgursCount = this.imgurs.length,
+              !this.imgursCount)
+            return;
+          this.loaded.imgurs = !1;
+          let e = 0;
+          this.imgurs.forEach(t=>{
+                let s = t=>{
+                      let s = new ResizeObserver(()=>{
+                            e >= this.imgursCount && (this.loaded.imgurs = !0,
+                                this.checkLoadedCallback()),
+                                s.disconnect()
+                          }
+                      );
+                      s.observe(t),
+                      ++e >= this.imgursCount && (this.loaded.imgurs = !0,
+                          this.checkLoadedCallback())
+                    }
+                    , i = ()=>{
+                      let e = a.getElementById("imgur-embed-iframe-pub-" + t.dataset.id.replace("/", "-"));
+                      e && e.addEventListener("load", ()=>{
+                            s(e)
+                          }
+                      )
+                    }
+                    , o = ()=>{
+                      setTimeout(i, 0),
+                          t.removeEventListener("DOMNodeRemoved", o)
+                    }
+                ;
+                t.addEventListener("DOMNodeRemoved", o)
+              }
+          )
+        }
+        #c() {
+          if (this.unfurls = this.container.querySelectorAll(".js-unfurl"),
+              this.unfurlsCount = this.unfurls.length,
+              !this.unfurlsCount)
+            return;
+          this.loaded.unfurls = !1,
+              this.unfurlObserver?.disconnect();
+          let s = 0;
+          this.unfurlObserver = new MutationObserver(()=>{
+                ++s >= this.unfurlsCount && (this.loaded.unfurls = !0,
+                    this.checkLoadedCallback())
+              }
+          ),
+              this.unfurls.forEach(t=>{
+                    if ("false" === t.dataset.pending && ++s >= this.unfurlsCount)
+                      return this.loaded.unfurls = !0,
+                          void this.checkLoadedCallback();
+                    this.unfurlObserver.observe(t, {
+                      childList: !0,
+                      subtree: !0
+                    })
+                  }
+              )
+        }
+        #d() {
+          this.imagesCount && this.images.forEach(t=>{
+                t.removeEventListener("load", this.onImageLoaded)
+              }
+          )
+        }
+        #e() {}
+        #f() {
+          this.unfurlsCount && this.unfurlObserver.disconnect()
+        }
+      }
+      ,
+      Object.freeze({
+        __proto__: null
+      }),
+      window.StickyIntersector = class {
+        constructor(t, e) {
+          this.container = t,
+              this.handler = e,
+              this.headersObserver = null,
+              this.elementsObserver = null,
+              this.observeHeaders(),
+              this.observeElements()
+        }
+        observeHeaders() {
+          this.headersObserver = new IntersectionObserver(t=>{
+                for (let e of t) {
+                  let s = e.boundingClientRect
+                      , i = e.target.parentElement
+                      , o = e.rootBounds;
+                  s.bottom < o.top && this.handler(!0, i),
+                  s.bottom >= o.top && s.bottom < o.bottom && this.handler(!1, i)
+                }
+              }
+              ,{
+                threshold: 0,
+                root: this.container
+              })
+        }
+        observeElements() {
+          this.elementsObserver = new IntersectionObserver(t=>{
+                let e = t.filter(t=>t.boundingClientRect.top < t.rootBounds.top).sort((t,e)=>t.boundingClientRect.top - e.boundingClientRect.top)[0];
+                if (!e)
+                  return;
+                let s = e.isIntersecting ? e.target : e.target.nextElementSibling;
+                !s && e.target && (s = e.target),
+                    this.handler(!0, s)
+              }
+              ,{
+                root: this.container
+              })
+        }
+        addSentinel(t, e) {
+          let s = document.createElement("div");
+          return s.classList.add("sticky_sentinel", e),
+              t.appendChild(s)
+        }
+        observeStickyHeaderChanges(t) {
+          let e = this.addSentinel(t, "sticky_sentinel--top");
+          this.headersObserver.observe(e),
+              this.elementsObserver.observe(t)
+        }
+        disconnect() {
+          this.headersObserver.disconnect(),
+              this.elementsObserver.disconnect()
+        }
+        unobserve(t, e) {
+          this.elementsObserver.unobserve(t),
+              this.headersObserver.unobserve(e)
+        }
+      }
+      ,
+      Object.freeze({
+        __proto__: null
+      }),
+      function(t, e, s) {
+        let i = (t,e)=>Math.floor(Math.random() * (e - t + 1)) + t;
+        e.ChatMessages = class {
+          constructor(e, s, i) {
+            this.chat = e,
+                this.container = s,
+                this.$container = t(s),
+                this.$topLoader = i.$topLoader,
+                this.$bottomLoader = i.$bottomLoader,
+                this.grouper = new class e {
+                  constructor(t) {
+                    this.messages = t,
+                        this.container = t.container,
+                        this.$container = t.$container
+                  }
+                  group() {
+                    let e = this.messages.find();
+                    if (!e.length)
+                      return;
+                    let s = t("<div></div>");
+                    e = e.clone(),
+                        s.append(e);
+                    let i = [];
+                    e.each((e,s)=>{
+                          let o = t(s);
+                          this.#g(o, "day") || i.push({
+                            day: o.data("day"),
+                            dayTs: o.data("dayTs"),
+                            data: this.#h(o)
+                          })
+                        }
+                    ),
+                    this.introducedDateGroups && this.updateUserGroupPositions(i),
+                        this.#i(i),
+                        this.introducedDateGroups = i,
+                        this.clearEmptyDateGroups()
+                  }
+                  #i(s) {
+                    s.forEach(t=>{
+                          let {day: e, dayTs: s} = t
+                              , i = t.data
+                              , o = this.#j(e, s);
+                          for (let a = 0; a < i.length; a++) {
+                            let {messageIds: n, position: r} = i[a];
+                            this.#k(o, n, r)
+                          }
+                        }
+                    ),
+                        this.container.classList.add("was-grouped")
+                  }
+                  clearEmptyDateGroups() {
+                    this.$container.find(".messages-group--day").each((e,s)=>{
+                          let i = t(s);
+                          i.find(".js-message").length || i.remove()
+                        }
+                    )
+                  }
+                  #j(i, o) {
+                    let a = this.$container.find(`.messages-group--day[data-day-ts="${o}"]`);
+                    if (!a.length) {
+                      a = this.#l({
+                        title: i
+                      }).addClass("messages-group--day").attr("data-day", i).attr("data-day-ts", o).data("day", i).data("dayTs", o);
+                      let n = this.$container.find(".messages-group--day").filter((e,s)=>t(s).data("dayTs") > o).first();
+                      n.length ? a.insertBefore(n.first()) : a.appendTo(this.$container),
+                          this.messages.stickyIntersector?.observeStickyHeaderChanges(a[0])
+                    }
+                    return a
+                  }
+                  #h(r) {
+                    let l = []
+                        , h = this.#m(r, "day");
+                    h.push(r[0]),
+                        h.each((e,s)=>{
+                              if (this.#g(t(s), ["day", "user-id"]))
+                                return;
+                              let i = [];
+                              this.#m(t(s), ["day", "user-id"]).each((e,s)=>{
+                                    i.push(t(s).data("message-id"))
+                                  }
+                              ),
+                                  i.push(t(s).data("message-id")),
+                                  l.push({
+                                    messageIds: i
+                                  })
+                            }
+                        );
+                    for (let d = 0; d < l.length; d++)
+                      l[d].position = l.length - 1 - d;
+                    return l
+                  }
+                  #k(c, m, g) {
+                    let u = this.messages.find({
+                      messageIds: m
+                    }).filter((e,s)=>!t(s).closest(".messages-group").length)
+                        , p = u.first().data("userId");
+                    if (!u.length)
+                      return null;
+                    let f = this.findUserGroups(c.data("dayTs"), g, p);
+                    if (0 === g && f.length && !f.is(":last-child") && (f = t()),
+                        !f.length) {
+                      f = this.#l({
+                        $icon: u.last().find(".content-icon"),
+                        $messages: u
+                      }).addClass("messages-group--user").attr("data-user-id", p).attr("data-position", g).data("userId", p).data("position", g);
+                      let v = this.findUserGroups(c.data("dayTs")).filter((e,s)=>t(s).data("position") < g).findClosestElement("position", g);
+                      return v.length ? f.insertBefore(v) : f.appendTo(c),
+                          f
+                    }
+                    let b = f.find(".messages-group-messages");
+                    return u.reverse().each((e,s)=>{
+                          let i = t(s);
+                          i.data("message-date") < b.find(".js-message").first().data("message-date") ? i.prependTo(b) : i.appendTo(b)
+                        }
+                    ),
+                        f
+                  }
+                  updateUserGroupPositions(t) {
+                    t.forEach(t=>{
+                          let e = this.introducedDateGroups.find(e=>e.dayTs === t.dayTs);
+                          if (!e)
+                            return;
+                          let s = e.data;
+                          [...t.data].forEach(t=>{
+                                let i = s.find(e=>t.messageIds.some(t=>e.messageIds.includes(t)));
+                                i && this.findUserGroups(e.dayTs, i.position).attr("data-position", t.position).data("position", t.position)
+                              }
+                          )
+                        }
+                    )
+                  }
+                  findDateGroup(t) {
+                    return this.$container.find(`.messages-group--day[data-day-ts="${t}"]`)
+                  }
+                  findUserGroups(t, e=null, s=null) {
+                    let i = ".messages-group--user";
+                    return null !== e && (i += `[data-position="${e}"]`),
+                    null !== s && (i += `[data-user-id="${s}"]`),
+                        this.findDateGroup(t).find(i)
+                  }
+                  #l(C) {
+                    C = Object.assign({
+                      ids: [],
+                      title: null,
+                      $icon: null,
+                      $messages: null
+                    }, C);
+                    let {$icon: y, title: $} = C
+                        , T = t('<div class="messages-group"></div>');
+                    if (y?.length && T.append(y.clone().addClass("group-content-icon")),
+                        $) {
+                      let S = this.messages.create("notification", $).addClass("messages-group-title");
+                      T.append(S)
+                    }
+                    if (XF.activate(T),
+                        C.$messages?.length) {
+                      let L = t('<div class="messages-group-messages"></div>');
+                      L.append(C.$messages),
+                          T.append(L)
+                    }
+                    return T
+                  }
+                  #m(E, k) {
+                    let x = E.prev(".js-message");
+                    return x.length ? (Array.isArray(k) || (k = [k]),
+                        k.every(t=>x.data(t) === E.data(t)) ? x.add(this.#m(x, k)) : t()) : t()
+                  }
+                  #g(M, w) {
+                    let I = M.next(".js-message");
+                    return !!I.length && (Array.isArray(w) || (w = [w]),
+                        w.every(t=>I.data(t) === M.data(t)))
+                  }
+                }
+                (this),
+                this.templates = i.templates || {},
+                this.historyUrl = i.historyUrl,
+                this.markSeenUrl = i.markSeenUrl,
+                this.scrollableContainer = i.scrollableContainer,
+                this.listenerSetter = new ListenerSetter,
+                this.#n(),
+                this.#o(),
+                this.#p(),
+                this.#q(),
+                this.#r()
+          }
+          refresh() {
+            this.loadHistory({
+              ...this.getFilterFromQuery(),
+              withListInfo: !0
+            }, {
+              fullReplace: !0,
+              withLoadingAnimation: !0,
+              forceScrollBottom: !0,
+              onLoaded: ({hasBefore: t, hasAfter: e})=>{
+                this.setLoaded("top", !t),
+                    this.setLoaded("bottom", !e),
+                    this.removeFilterFromQuery()
+              }
+              ,
+              afterInsert: ()=>{
+                this.chat.visible && this.markUnreadSeen()
+              }
+            })
+          }
+          update(t) {
+            this.loadHistory({
+              from_date: this.chat.getLatestMessageDate()
+            }, {
+              forceScrollBottom: !1,
+              afterInsert: e=>{
+                t?.(e),
+                this.chat.visible && setTimeout(()=>{
+                      this.markUnreadSeen()
+                    }
+                    , i(100, 1500)),
+                    this.crop()
+              }
+            })
+          }
+          empty() {
+            this.$container.empty()
+          }
+          loadHistoryTop(t) {
+            let e = this.find().first();
+            if (!e.length)
+              return;
+            let s = {
+              end_message_id: e.data("message-id"),
+              withListInfo: !0
+            };
+            this.loadHistory(s, Object.assign({
+              prepend: !0,
+              withScrollBottom: !1,
+              forceScrollBottom: !1,
+              withLoadingAnimation: !0,
+              onLoaded: ({hasBefore: t})=>{
+                this.setLoaded("top", !t)
+              }
+              ,
+              afterInsert: ()=>{
+                this.scrollTo(e, "start", !0, !0)
+              }
+            }, t))
+          }
+          loadHistoryBottom(t) {
+            let e = this.find().last();
+            if (!e.length)
+              return;
+            let s = {
+              start_message_id: e.data("message-id"),
+              withListInfo: !0
+            };
+            this.loadHistory(s, Object.assign({
+              withScrollBottom: !1,
+              forceScrollBottom: !1,
+              withLoadingAnimation: !0,
+              onLoaded: ({hasAfter: t})=>{
+                this.setLoaded("bottom", !t)
+              }
+            }, t))
+          }
+          loadHistory(e, s) {
+            if (e ??= {},
+                s = t.extend({
+                  prepend: !1,
+                  fullReplace: !1,
+                  withLoadingAnimation: !1,
+                  withScrollBottom: !0,
+                  forceScrollBottom: !0,
+                  insertCallback: null,
+                  onLoaded: null,
+                  afterInsert: null,
+                  ignoreLoading: !1,
+                  updateLatestMessageDate: !0,
+                  regroup: !0
+                }, s),
+            this.loading && !s.ignoreLoading)
+              return new Promise((t,e)=>{
+                    t()
+                  }
+              );
+            if (!this.chat.roomTag)
+              return new Promise((t,e)=>{
+                    t()
+                  }
+              );
+            s.forceScrollBottom && (s.withScrollBottom = !0);
+            let i = "top" == (s.prepend ? "top" : "bottom") ? this.$topLoader : this.$bottomLoader;
+            s.withLoadingAnimation && this.chat.enableLoadingAnimation(i),
+                this.loading = !0;
+            let o = this.chat.fillDefaultsInUrl(this.historyUrl)
+                , a = ()=>{
+                  s.withLoadingAnimation && this.chat.disableLoadingAnimation(i),
+                      this.loading = !1
+                }
+            ;
+            return XF.ajax("GET", o, {
+                  filter: e
+                }, e=>{
+                  s.onLoaded && s.onLoaded(e);
+                  let {html: i, latestMessageDate: o} = e;
+                  if (!s.prepend && s.updateLatestMessageDate && o && this.chat.setLatestMessageDate(o),
+                      !i)
+                    return a(),
+                        void s.afterInsert?.({
+                          $html: t(),
+                          response: e
+                        });
+                  let n = s.insertCallback ?? (({$html: t, processingOptions: e})=>{
+                        let s = this.$container;
+                        e.fullReplace && s.empty();
+                        let i = this.scrollableContainer.classList.contains("scrolled-down");
+                        t && (this.addReactionMediumClassToReactionSprites(t),
+                            s[e.prepend ? "prepend" : "append"](t)),
+                        e.withScrollBottom && !this.focusHighlight() && (i || e.forceScrollBottom) && this.scrollToBottomAfterEmbedLoaded(e.forceScrollBottom ? _.Static : _.Down),
+                        e.regroup && this.group()
+                      }
+                  );
+                  n = n.bind(this);
+                  let r = t=>{
+                        n({
+                          $html: t,
+                          processingOptions: s,
+                          response: e
+                        }),
+                            a(),
+                            s.afterInsert?.({
+                              $html: t,
+                              response: e
+                            }),
+                            this.setHighlightRemoveTimeout()
+                      }
+                  ;
+                  i.content.length ? XF.setupHtmlInsert(i, t=>{
+                        r(t),
+                            this.chat.addRtcIdToXfPopups()
+                      }
+                  ) : r(t())
+                }
+                , {
+                  global: !1
+                })
+          }
+          reload(t, e) {
+            let s = this.find({
+              messageId: t
+            });
+            if (!s.length)
+              return;
+            let i = s.outerHeight();
+            this.loadHistory({
+              message_id: t
+            }, {
+              ignoreLoading: !0,
+              forceScrollBottom: !1,
+              updateLatestMessageDate: !1,
+              regroup: !1,
+              insertCallback: ({$html: t})=>{
+                let e = this.scrollable.scrollTop;
+                this.addReactionMediumClassToReactionSprites(t),
+                    s.closeXfTooltips(),
+                    s.replaceWith(t),
+                    s = t,
+                    XF.activate(s);
+                let o = s.outerHeight();
+                this.scrollable.ignoreNextScrollEvent(),
+                    this.scrollable.scrollTop = e + Math.round(o - i)
+              }
+              ,
+              afterInsert() {
+                e?.(s)
+              }
+            })
+          }
+          setLoaded(t, e) {
+            this.scrollable.loadedAll[t] !== e && (this.scrollable.loadedAll[t] = e,
+                this.scrollable.onScroll())
+          }
+          updateVisitorMessagesReadStatus() {
+            this.find({
+              visitor: !0,
+              beforeDate: this.chat.lastReadDate
+            }).toggleClass("has-been-read", !0)
+          }
+          markUnreadSeen() {
+            let e = this.find({
+              unread: !0,
+              visitor: !1
+            });
+            e.length && this.markSeen(e.map((e,s)=>t(s).data("message-id")).get(), ()=>{
+                  e.removeClass("is-unread")
+                }
+            )
+          }
+          __seenMessageIds = new Set;
+          seenPromise = void 0;
+          markSeen(t, s) {
+            this.markSeenUrl && this.chat.roomTag && t.length && (t.forEach(t=>this.__seenMessageIds.add(t)),
+            this.seenPromise || (this.seenPromise = e.idleController.getFocusPromise().then(()=>{
+                  this.__seenMessageIds.size && XF.ajax("POST", this.chat.fillDefaultsInUrl(this.markSeenUrl), {
+                        ids: [...this.__seenMessageIds]
+                      }, ()=>{
+                        this.chat.triggerEvent("messages-seen", {
+                          ids: [...this.__seenMessageIds]
+                        }),
+                            this.chat.rooms.modifyUnreadCount(this.chat.roomTag, -this.__seenMessageIds.size),
+                            s?.(),
+                            this.__seenMessageIds.clear(),
+                            this.seenPromise = void 0
+                      }
+                      , {
+                        global: !1,
+                        skipDefaultSuccess: !0,
+                        skipDefaultSuccessError: !0
+                      })
+                }
+            )))
+          }
+          addReactionMediumClassToReactionSprites(t) {
+            t.find(".reactionSummary .reaction").addClass("reaction--medium")
+          }
+          setHighlightRemoveTimeout() {
+            let t = this.find({
+              highlighted: !0
+            });
+            setTimeout(()=>{
+                  t.removeClass("is-highlight")
+                }
+                , 1500)
+          }
+          focusHighlight() {
+            let t = this.find({
+              highlighted: !0
+            }).first();
+            return !!t.length && (this.scrollToAfterEmbedLoaded(t, "center", _.Static),
+                !0)
+          }
+          group() {
+            let t = this.container.scrollTop;
+            this.grouper.group(),
+                this.container.scrollTop = t
+          }
+          goTo(t) {
+            let e = this.find({
+                  messageId: t
+                })
+                , s = ()=>{
+                  e.length && this.scrollTo(e, "center").then(()=>{
+                        this.setHighlightRemoveTimeout()
+                      }
+                  )
+                }
+            ;
+            e.length ? (e.addClass("is-highlight"),
+                s()) : this.loadHistory({
+              around_message_id: t,
+              withListInfo: !0
+            }, {
+              fullReplace: !0,
+              withLoadingAnimation: !0,
+              withScrollBottom: !1,
+              forceScrollBottom: !1,
+              onLoaded: ({hasBefore: t, hasAfter: e})=>{
+                this.setLoaded("top", !t),
+                    this.setLoaded("bottom", !e),
+                    this.chat.$latestMessageDate.val(0)
+              }
+              ,
+              afterInsert: ()=>{
+                e = this.find({
+                  messageId: t
+                }),
+                    s()
+              }
+            })
+          }
+          scrollTo(t, e, s, i) {
+            if (!t?.length || !t[0].parentElement)
+              return;
+            let o;
+            if (t && "end" !== e) {
+              let a = t.closest(".messages-group--day");
+              a.length && (o = a[0])
+            }
+            let n = this.scrollable.scrollIntoViewNew({
+              element: t[0],
+              position: e,
+              margin: 4,
+              forceDirection: s,
+              forceDuration: i,
+              axis: "y",
+              fallbackToElementStartWhenCentering: o,
+              startCallback: t=>{
+                this.onScroll(!0, t)
+              }
+            });
+            return s === _.Static && (this.scrollable.lastScrollPosition = this.scrollable.scrollTop),
+                n
+          }
+          scrollToAfterEmbedLoaded(t, e, s, i) {
+            this.embedLoadedObserver?.disconnect(),
+                this.scrollTo(t, e, s, i),
+                this.embedLoadedObserver = new EmbedLoadedObserver(this.container,()=>{
+                      this.scrollTo(t, e, s, i)
+                    }
+                )
+          }
+          scrollToBottom(t, e) {
+            this.scrollTo(this.find().last(), "end", t, e)
+          }
+          scrollToBottomAfterEmbedLoaded(t, e) {
+            this.scrollToAfterEmbedLoaded(this.find().last(), "end", t, e)
+          }
+          add(t) {
+            this.$container.append(t),
+                this.group()
+          }
+          find(e) {
+            let s = ".js-message";
+            null !== (e = Object.assign({
+              beforeDate: null,
+              messageId: null,
+              messageIds: [],
+              exceptMessageIds: [],
+              userId: null,
+              highlighted: null,
+              unread: null,
+              visitor: null
+            }, e)).highlighted && (s += e.highlighted ? ".is-highlight" : ":not(.is-highlight)"),
+            null !== e.unread && (s += e.unread ? ".is-unread" : ":not(.is-unread)"),
+            e.messageId && (s += '[data-message-id="' + e.messageId + '"]'),
+            e.messageIds.length && (s += '[data-message-id="' + e.messageIds.join('"], .js-message[data-message-id="') + '"]'),
+            e.exceptMessageIds.length && (s += ':not([data-message-id="' + e.exceptMessageIds.join('"]):not([data-message-id="') + '"])'),
+            null !== e.visitor && (s += e.visitor ? ".is-visitor" : ":not(.is-visitor)"),
+            null !== e.userId && (s += '[data-user-id="' + e.userId + '"]');
+            let i = this.$container.find(s);
+            return e.beforeDate && (i = i.filter((s,i)=>t(i).data("message-date") <= e.beforeDate)),
+                i
+          }
+          crop(e, s) {
+            if (e ??= 200,
+            !s && !this.scrollableContainer.classList.contains("scrolled-down"))
+              return;
+            let i = this.find();
+            if (i.length <= e)
+              return;
+            let o = i.slice(0, i.length - e).map((e,s)=>t(s).data("message-id")).get();
+            this.remove({
+              messageIds: o
+            }),
+                this.setLoaded("top", !1)
+          }
+          remove(t) {
+            let e = this.find(t);
+            e?.length && (e.addClass("is-removing"),
+                setTimeout(()=>{
+                      e.remove(),
+                      e.filter(":last-child").length && this.scrollTo(e.filter(":last-child"), "end"),
+                          this.group()
+                    }
+                    , 250))
+          }
+          create(e, s) {
+            if (this.templates[e])
+              return t(t.parseHTML(Mustache.render(this.templates[e], {
+                text: s
+              })))
+          }
+          insertSending(e, s) {
+            e = `<div class="bbWrapper">${e}</div>`,
+            s?.html()?.trim()?.length && (s.addClass("attachmentList"),
+                e = `<section class="message-attachments">${s[0].outerHTML}</section>${e}`);
+            let i = new Date
+                , o = {
+              id: "sending" + i.getTime(),
+              text: e,
+              time: i.toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit"
+              })
+            }
+                , a = t(t.parseHTML(Mustache.render(this.templates.bubble, o)));
+            return a.addClass("is-sending"),
+                XF.activate(a),
+                this.add(a),
+                a
+          }
+          filterKnownKeys = ["from_date", "message_id", "around_message_id", "start_message_id", "end_message_id", "page"];
+          getFilterFromQuery() {
+            return this.chat.getFilterFromQuery(this.filterKnownKeys)
+          }
+          removeFilterFromQuery() {
+            this.chat.removeFilterFromQuery(this.filterKnownKeys)
+          }
+          #o() {
+            this.scrollable = new Scrollable(this.scrollableContainer),
+                this.scrollable.onAdditionalScroll = this.onScroll.bind(this),
+                this.scrollable.onScrolledTop = ()=>!this.scrollable.loadedAll.top && this.loadHistoryTop(),
+                this.scrollable.onScrolledBottom = ()=>!this.scrollable.loadedAll.bottom && this.loadHistoryBottom()
+          }
+          onScroll(t, s, i) {
+            if (s && s.distanceToEnd < 300 && this.scrollableContainer.classList.contains("scrolled-down"))
+              return;
+            let o = i ? 0 : s?.distanceToEnd ?? this.scrollable.getDistanceToEnd();
+            (0 !== this.scrollable.lastScrollDirection && o > 0 || s || i) && (this.isScrollingTimeout ? clearTimeout(this.isScrollingTimeout) : this.scrollableContainer.classList.contains("is-scrolling") || this.scrollableContainer.classList.add("is-scrolling"),
+                this.isScrollingTimeout = e.setTimeout(()=>{
+                      this.scrollableContainer.classList.remove("is-scrolling"),
+                          this.isScrollingTimeout = 0
+                    }
+                    , 1350 + (s?.duration ?? 0))),
+                o < 300 && (i || this.scrollable.loadedAll.bottom) ? this.scrollableContainer.classList.add("scrolled-down") : this.scrollableContainer.classList.contains("scrolled-down") && this.scrollableContainer.classList.remove("scrolled-down")
+          }
+          #n() {
+            this.stickyIntersector = new StickyIntersector(this.scrollableContainer,(t,e)=>{
+                  this.isHeavyAnimationInProgress,
+                      e.classList.toggle("has-sticky-dates", t),
+                  t && (this.previousStickyGroup && this.previousStickyGroup !== e && this.previousStickyGroup.classList.remove("has-sticky-dates"),
+                      this.previousStickyGroup = e)
+                }
+            ),
+                A(()=>{
+                      this.isHeavyAnimationInProgress = !0
+                    }
+                    , ()=>{
+                      this.isHeavyAnimationInProgress = !1
+                    }
+                    , this.listenerSetter)
+          }
+          #p() {
+            let s = XF.proxy(this, "openContextMenu");
+            this.$container.on("contextmenu", ".js-message .js-messageContext", e=>{
+                  !e.isDefaultPrevented() && (t(e.target).is("a,input,select,textarea,button") || s(e))
+                }
+            ),
+            this.chat.isMobileDevice() && this.$container.on("click", ".js-message .js-messageContext", e=>{
+                  if (e.isDefaultPrevented())
+                    return;
+                  let i = t(e.target)
+                      , o = i.is("a,input,select,textarea,button")
+                      , a = i.closest("label").length
+                      , n = void 0 !== i.attr("data-xf-click");
+                  o || a || n || s(e)
+                }
+            )
+          }
+          openContextMenu(e) {
+            let s = t(e.target);
+            if (s.is("a") || s.closest("a").length)
+              return;
+            let i = !1;
+            if (t(".js-messageMenu").each((e,s)=>{
+                  let o = t(s);
+                  o.is(":visible") && (i = !0,
+                      o.trigger("menu:close"))
+                }
+            ),
+                i)
+              return;
+            e.preventDefault(),
+                e.stopPropagation();
+            let o = t(e.currentTarget).closest(".js-message").data("message-id");
+            if (!t("#js-rtcMessageMenu-" + o).html().trim().length)
+              return;
+            let a = t('<a href="javascript:void(0)" data-xf-click="menu" data-menu="#js-rtcMessageMenu-' + o + '" />').css({
+              position: "absolute",
+              top: e.pageY + "px",
+              left: e.pageX + "px"
+            });
+            a.on("menu:closed", ()=>{
+                  a.remove()
+                }
+            ),
+                a.appendTo("body"),
+                XF.activate(a);
+            let n = XF.Click.getElementHandler(a, "menu");
+            n && n.toggle(XF.isEventTouchTriggered(e))
+          }
+          #q() {
+            this.$container.on("click", `*[data-xf-click="attribution"][data-content-selector*="#${this.chat.options.goToPrefix}"]`, e=>{
+                  e.preventDefault(),
+                      e.stopPropagation();
+                  let s = parseInt(t(e.currentTarget).attr("data-content-selector").replace(`#${this.chat.options.goToPrefix}-`, ""), 10);
+                  this.goTo(s)
+                }
+            )
+          }
+          #r() {
+            this.$container.on("lightbox:init", ".js-lbContainer", (t,e,s)=>{
+                  s.$refs.container.addClass("rtc-lightbox")
+                }
+            )
+          }
+        }
+      }(jQuery, window),
+      Object.freeze({
+        __proto__: null
+      });
+  let P = ()=>window.innerWidth < 925;
+  !function(t, e, s) {
+    class i {
+      constructor(t, e, s) {
+        this.chat = t,
+            this.$button = e,
+            this.$form = s,
+        e.length && s.length && this.#s()
+      }
+      toggleForm(t) {
+        this.slideMenu.toggle(t)
+      }
+      isFormActive() {
+        return !!this.slideMenu?.isOpen()
+      }
+      #s() {
+        this.slideMenu = XF.Click.getElementHandler(this.$button, "rtc-toggle-slide-menu"),
+            this.$button.on("slide-menu:toggle", (t,e)=>{
+                  this.$form.toggleClass("is-active", e),
+                  e && this.chat.toggleLeftColumn(!0)
+                }
+            )
+      }
+    }
+    e.ChatRooms = class {
+      constructor(e, s, i) {
+        this.chat = e,
+            this.container = s,
+            this.$container = t(s),
+            this.$menu = i.$menu,
+            this.$items = i.$items,
+            this.$placeholder = i.$placeholder,
+            this.$topLoader = i.$topLoader,
+            this.$bottomLoader = i.$bottomLoader,
+            this.historyUrl = i.historyUrl,
+            this.scrollableContainer = i.scrollableContainer,
+            this.opts = i,
+            this.#o(),
+            this.reload = t.throttleByKey(XF.proxy(this, "reload"), 400),
+            this.#t(),
+            this.#u()
+      }
+      #t() {
+        this.$items.on("click", ".js-room", e=>{
+              this.loading || this.chat.messages.loading || t(e.target).is("a,input,select,textarea,button") || t(e.target).closest("label").length || this.open(t(e.currentTarget))
+            }
+        ),
+            this.chat.$target.on("click", ".js-resetRoom", XF.proxy(this, "reset"))
+      }
+      #u() {
+        let s = this.opts.$createButton
+            , o = this.opts.$createForm;
+        this.creator = new i(this.chat,s,o),
+            o.on("ajax-submit:before", ()=>{
+                  this.selectNextNew = !0
+                }
+            ),
+            o.on("ajax-submit:complete", (t,e)=>{
+                  e.errors && (this.selectNextNew = !1)
+                }
+            )
+      }
+      refresh(e, s) {
+        return s = t.extend({}, s, this.getFilterFromQuery()),
+            this.loadHistory({
+              ...s,
+              withListInfo: !0
+            }, {
+              fullReplace: !0,
+              withLoadingAnimation: !0,
+              prepend: !0,
+              onLoaded: ({hasBefore: t, hasAfter: e, html: s})=>{
+                this.setLoaded("top", !t),
+                    this.setLoaded("bottom", !e),
+                    this.removeFilterFromQuery()
+              }
+              ,
+              afterInsert: ({response: t})=>{
+                t.latestRoomDate && this.chat.$latestRoomDate.val(t.latestRoomDate),
+                e && e(t),
+                    this.chat.triggerEvent("rooms-refreshed"),
+                    setTimeout(()=>{
+                          this.scrollable.loadedAll.top || this.loadHistoryTop(),
+                          this.scrollable.loadedAll.bottom || this.loadHistoryBottom()
+                        }
+                        , 100)
+              }
+            })
+      }
+      reload(t) {
+        this.loadHistory({
+          tag: t
+        }, {
+          ignoreLoading: !0,
+          insertCallback: ({$html: e})=>{
+            let s = this.find({
+              tag: t
+            })
+                , i = s.hasClass("selected");
+            if (s.closeXfTooltips(),
+                s.replaceWith(e),
+                XF.activate(s),
+                i) {
+              let o = this.find({
+                tag: t
+              });
+              o.data("theme") && this.chat.updateTheme(o.data("theme")),
+                  this.chat.updateRoomHeader(o),
+                  this.chat.setCanPostMessage(!!o.data("canPostMessage")),
+                  o.addClass("selected")
+            }
+            this.chat.triggerEvent("room-reloaded", {
+              tag: t
+            }),
+                this.sort()
+          }
+        })
+      }
+      open(t) {
+        if (["string", "number"].includes(typeof t) && (t = this.find(t)),
+            !t.length)
+          return !1;
+        this.creator.isFormActive() && this.creator.toggleForm(!1);
+        let s = t.data("roomTag").toString();
+        if (s === this.chat.roomTag)
+          return !0;
+        this.chat.triggerEvent("room-open", {
+          roomTag: s
+        }),
+        t.data("historyUrl") && this.chat.options.pushHistory && e.history.pushState(null, null, t.data("historyUrl")),
+        t.data("roomMenuHref") && this.$menu.data("href", t.data("roomMenuHref")),
+        t.data("theme") && this.chat.updateTheme(t.data("theme")),
+            t.data("draftUrl") ? (this.chat.quillEditor.options.draftUrl = t.data("draftUrl"),
+                this.chat.quillEditor.loadDraft()) : this.chat.restoreAttachmentHash(),
+            this.find().removeClass("selected"),
+            t.addClass("selected");
+        let i = !!t.data("canPostMessage");
+        return this.chat.setCanPostMessage(i),
+            this.chat.setRoomTag(s),
+            this.chat.updateRoomHeader(t),
+        (P() || this.chat.isCompact()) && this.chat.toggleLeftColumn(!1),
+        this.chat.options.saveRoomInCookie && this.saveLast(s),
+            this.chat.messages.setLoaded("top", !1),
+            this.chat.messages.setLoaded("bottom", !1),
+            !0
+      }
+      reset() {
+        this.chat.$target.hasClass("no-left-column") && this.chat.toggleLeftColumn(),
+            this.chat.$header.removeClass("is-shown"),
+            this.chat.$roomStatus.removeClass("is-typing"),
+            this.chat.$typer.removeClass("is-active"),
+            this.chat.messages.empty(),
+            this.chat.$chatEditor.removeClass("is-shown"),
+            this.find({
+              selected: !0
+            }).removeClass("selected"),
+            this.chat.setRoomTag(null),
+        this.chat.options.saveRoomInCookie && this.forgetLast()
+      }
+      saveLast(t) {
+        XF.Cookie.set(this.chat.options.eventPrefix.toLowerCase() + "_last_chat_room", t)
+      }
+      forgetLast() {
+        XF.Cookie.remove(this.chat.options.eventPrefix.toLowerCase() + "_last_chat_room")
+      }
+      restoreLast() {
+        let t = XF.Cookie.get(this.chat.options.eventPrefix.toLowerCase() + "_last_chat_room");
+        if (t) {
+          let e = this.find({
+            tag: t
+          });
+          if (e.length)
+            return this.open(e) && this.chat.triggerEvent("room-restored", {
+              tag: t,
+              $room: e
+            }),
+                !0
+        }
+        return !1
+      }
+      loadHistoryTop() {
+        if (this.loading)
+          return;
+        let e = Math.max.apply(null, this.find({
+          pinned: !1
+        }).map((e,s)=>t(s).data("last-message")));
+        if (e <= 0)
+          return;
+        let s = this.find().first()
+            , i = this.find({
+          pinned: !0
+        }).first()
+            , o = {
+          after_date: e,
+          withListInfo: !0
+        };
+        i.length && (o.latest_pinned_date = i.data("last-message")),
+            this.scrollable.ignoreNextScrollEvent(),
+            this.loadHistory(o, {
+              prepend: !0,
+              withLoadingAnimation: !0,
+              onLoaded: ({hasBefore: t})=>{
+                this.setLoaded("top", !t)
+              }
+              ,
+              afterInsert: ({$html: t})=>{
+                s.length && this.scrollTo(s, "start", FocusDirection.Static, !0)
+              }
+            })
+      }
+      loadHistoryBottom() {
+        if (this.loading)
+          return;
+        let t = {
+          from_date: this.chat.$latestRoomDate.val(),
+          withListInfo: !0
+        };
+        this.loadHistory(t, {
+          prepend: !1,
+          withScrollBottom: !1,
+          withLoadingAnimation: !0,
+          onLoaded: ({hasAfter: t})=>{
+            this.setLoaded("bottom", !t)
+          }
+          ,
+          afterInsert() {}
+        })
+      }
+      loadHistory(e, s) {
+        if (e ??= {},
+        (s = t.extend({
+          prepend: !1,
+          fullReplace: !1,
+          withLoadingAnimation: !1,
+          withScrollBottom: !1,
+          forceScrollBottom: !1,
+          insertCallback: null,
+          prepareHtml: null,
+          onLoaded: null,
+          afterInsert: null,
+          ignoreLoading: !1,
+          sortRooms: !0
+        }, s)).forceScrollBottom && (s.withScrollBottom = !0),
+        this.loading && !s.ignoreLoading)
+          return;
+        let i = s.prepend ? this.$topLoader : this.$bottomLoader;
+        s.withLoadingAnimation && this.chat.enableLoadingAnimation(i),
+            this.loading = !0;
+        let o = ()=>{
+              s.withLoadingAnimation && this.chat.disableLoadingAnimation(i),
+                  this.loading = !1
+            }
+        ;
+        return XF.ajax("GET", this.historyUrl, {
+              filter: e
+            }, e=>{
+              s.onLoaded && s.onLoaded(e);
+              let {html: i, latestRoomDate: a} = e;
+              if (!s.prepend && a && this.chat.$latestRoomDate.val(a),
+              !i || !i.content)
+                return this.updatePlaceholder(),
+                    o(),
+                    void s.afterInsert?.({
+                      $html: t(),
+                      response: e
+                    });
+              let n = s.insertCallback ?? (({$html: e, processingOptions: s})=>{
+                    let i = e;
+                    s.fullReplace && this.empty();
+                    let o = this.find(".js-room").map((e,s)=>t(s).data("roomTag")).get();
+                    if (i = i.filter((e,s)=>!o.includes(t(s).data("roomTag"))),
+                        s.prepend) {
+                      let a = this.find({
+                        pinned: !1
+                      }).first();
+                      a.length ? a.before(i) : this.add(i, !0)
+                    } else
+                      this.add(i);
+                    s.sortRooms && this.sort(),
+                        this.updatePlaceholder(),
+                    s.withScrollBottom && this.scrollToBottom({
+                      force: s.forceScrollBottom
+                    })
+                  }
+              );
+              n = n.bind(this),
+                  XF.setupHtmlInsert(i, t=>{
+                        s.prepareHtml?.(t),
+                            n({
+                              $html: t,
+                              processingOptions: s,
+                              response: e
+                            }),
+                            o(),
+                            s.afterInsert?.({
+                              $html: t,
+                              response: e
+                            }),
+                            this.chat.addRtcIdToXfPopups()
+                      }
+                  ),
+                  this.ensureSelected(this.chat.roomTag)
+            }
+            , {
+              global: !1
+            })
+      }
+      ensureSelected(t) {
+        t && this.find(t)?.toggleClass("selected", !0)
+      }
+      setLoaded(t, e) {
+        this.scrollable.loadedAll[t] !== e && (this.scrollable.loadedAll[t] = e,
+            this.scrollable.onScroll())
+      }
+      updatePlaceholder() {
+        this.$placeholder.toggleClass("visible", !this.find().length)
+      }
+      updateLastMessage(t, e) {
+        let s = this.find(t);
+        s.length && (s.attr("data-last-message", e),
+            s.data("last-message", e),
+            this.sort())
+      }
+      modifyUnreadCount(t, e) {
+        let s = this.find(t);
+        if (!s.length)
+          return;
+        let i = s.find(".js-unreadCountBadge")
+            , o = parseInt(i.text(), 10) + e;
+        o > 0 ? (i.text(o),
+            i.removeClass("is-hidden")) : (i.text("0"),
+            i.addClass("is-hidden"))
+      }
+      sort() {
+        this.$items.sortByDataAttr('.js-room[data-pinned="1"]', "pin-order", "asc"),
+            this.$items.sortByDataAttr('.js-room:not([data-pinned="1"])', "last-message", "desc")
+      }
+      empty() {
+        this.$items.empty()
+      }
+      add(t, e) {
+        e ? this.$items.prepend(t) : this.$items.append(t)
+      }
+      find(t) {
+        ["string", "number"].includes(typeof t) && (t = {
+          tag: t
+        });
+        let e = ".js-room";
+        return (t = Object.assign({
+          tags: [],
+          tag: null,
+          pinned: null,
+          selected: !1
+        }, t)).tag && (e += `[data-room-tag="${t.tag}"]`),
+        t.tags.length && (e += '[data-room-tag="' + t.tags.join('"], .js-room[data-room-tag="') + '"]'),
+        null !== t.pinned && (e += `[data-pinned="${t.pinned ? "1" : "0"}"]`),
+        t.selected && (e += ".selected"),
+            this.$items.find(e)
+      }
+      remove(t) {
+        this.find(t).remove()
+      }
+      scrollTo(t, e, s, i) {
+        if (!t[0].parentElement)
+          return;
+        let o = this.scrollable.scrollIntoViewNew({
+          element: t[0],
+          position: e,
+          margin: 4,
+          forceDirection: s,
+          forceDuration: i,
+          axis: "y",
+          fallbackToElementStartWhenCentering: void 0,
+          startCallback(t) {}
+        });
+        return s === FocusDirection.Static && (this.scrollable.lastScrollPosition = this.scrollable.scrollTop),
+            o
+      }
+      scrollToBottom(t, e) {
+        this.scrollTo(this.find().last(), "end", t, e)
+      }
+      #o() {
+        this.scrollable = new Scrollable(this.scrollableContainer),
+            this.scrollable.onScrolledTop = ()=>!this.scrollable.loadedAll.top && this.loadHistoryTop(),
+            this.scrollable.onScrolledBottom = ()=>!this.scrollable.loadedAll.bottom && this.loadHistoryBottom()
+      }
+      filterKnownKeys = ["after_date", "from_date", "around_room_tag"];
+      getFilterFromQuery() {
+        return this.chat.getFilterFromQuery(this.filterKnownKeys)
+      }
+      removeFilterFromQuery() {
+        this.chat.removeFilterFromQuery(this.filterKnownKeys)
+      }
+      get unreadCount() {
+        return this.chat.roomTag ? parseInt(this.find(this.chat.roomTag).find(".js-unreadCountBadge").text(), 10) || 0 : this.$items.find(".js-unreadCountBadge").toArray().reduce((e,s)=>e + (parseInt(t(s).text(), 10) > 0 ? 1 : 0), 0)
+      }
+    }
+  }(jQuery, window),
+      Object.freeze({
+        __proto__: null
+      });
+  let B = XF.Cookie.get("csrf")
+      , F = !1;
+  !function(t, e, s) {
+    let i = ()=>{
+          let t = .01 * e.innerHeight;
+          s.documentElement.style.setProperty("--vh", `${t}px`)
+        }
+    ;
+    e.addEventListener("resize", i),
+        i(),
+        String.prototype.replaceTagsToValues = function(t) {
+          let e = this;
+          for (let s in t)
+            e = e.replace(RegExp(`<${s}>`, "g"), t[s]);
+          return e
+        }
+        ,
+        XF.Chat = XF.Element.newHandler({
+          options: {
+            theme: {},
+            roomsUrl: "",
+            roomUrl: "",
+            markSeenUrl: "",
+            messagesUrl: "",
+            postUrl: "",
+            typingUrl: "",
+            editUrl: "",
+            deleteUrl: "",
+            reportUrl: "",
+            audio: "",
+            enabledAudio: !1,
+            roomTag: "r/Public",
+            roomChannelFormat: "ChatRoom.<tag>",
+            chatChannel: "Chat",
+            useChatChannel: !0,
+            command: "",
+            commandText: "",
+            autoSelectRoom: !0,
+            autoOpenCreateForm: !1,
+            eventPrefix: "RTC",
+            pushHistory: !0,
+            saveRoomInCookie: !1,
+            goToPrefix: "rtcMessage",
+            sendTimeout: 0
+          },
+          roomChannel: null,
+          visitorChannel: null,
+          chatChannel: null,
+          roomTag: "",
+          lastReadDate: 0,
+          command: "",
+          pinCommand: !1,
+          typingUsers: {},
+          clearanceTypingUsersTimeouts: {},
+          joinedMembersCount: 0,
+          loadingRooms: !1,
+          soundEnabled: !0,
+          visible: !0,
+          ignoreNextRoomsScrollEvent: !1,
+          ignoreNewMessages: !1,
+          isReceivedNewMessagesWhileIgnored: !1,
+          ignoreNextSendTyping: !1,
+          theme: null,
+          init() {
+            this.id = this.$target.xfUniqueId(),
+                this.startLocation = Object.assign({}, e.location),
+                this.theme = this.options.theme,
+                this.bindChatUnmounted(),
+                this.addRtcIdToXfPopups(),
+                this.sendTypingStatus = t.throttle(XF.proxy(this, "sendTypingStatus"), 2500),
+                this.$header = this.$target.find(".js-header"),
+                this.$headerAvatar = this.$header.find(".js-headerAvatar");
+            let i = this.$target.find(".js-roomsList");
+            this.rooms = new ChatRooms(this,i[0],{
+              historyUrl: this.options.roomsUrl,
+              $menu: this.$header.find(".js-roomMenu"),
+              $createButton: this.$target.find(".js-createRoom"),
+              $createForm: this.$target.find(".js-createRoomForm"),
+              $items: i.find(".js-roomItems"),
+              $topLoader: i.find(".js-loader-top"),
+              $bottomLoader: i.find(".js-loader-bottom"),
+              $placeholder: i.find(".js-roomsPlaceholder"),
+              scrollableContainer: i.find(".js-scrollable")[0]
+            }),
+                this.$roomsList = this.$target.find(".js-roomsList"),
+                this.$roomItems = this.$roomsList.find(".js-roomItems"),
+                this.$roomLink = this.$target.find(".js-roomLink"),
+                this.$roomName = this.$target.find(".js-roomName"),
+                this.$latestRoomDate = this.$target.find('input[name="latest_room_date"]'),
+                this.$connecting = this.$target.find(".js-connecting"),
+                this.$wallpaper = this.$target.find(".js-wallpaper"),
+                this.$wallpaperGradientCanvas = this.$wallpaper.find(".chat-canvas-gradient"),
+                this.$wallpaperCanvasPattern = this.$wallpaper.find(".chat-canvas-pattern"),
+                this.wallpaperGradientRenderer = XF.Element.getHandler(this.$wallpaperGradientCanvas, "chat-canvas-gradient"),
+                this.wallpaperPatternRenderer = XF.Element.getHandler(this.$wallpaperCanvasPattern, "chat-canvas-pattern"),
+                this.$target.on("click", ".js-toggleLeftColumn", t=>{
+                      this.toggleLeftColumn()
+                    }
+                ),
+                this.$chatEditor = this.$target.find(".js-chatEditor"),
+                this.$quillEditorTarget = this.$chatEditor.find(".js-quillEditor").on("xf-quill-editor:submit", XF.proxy(this, "postMessage")).on("xf-quill-editor:resize", (t,e,s)=>{
+                      let i = e - s;
+                      i < 0 || (this.messages.scrollable.ignoreNextScrollEvent(),
+                          this.messages.scrollable.scrollTop = this.messages.scrollable.scrollTop + i)
+                    }
+                ).on("xf-quill-editor:draft-loaded", (t,e)=>{
+                      e.extra_data.attachment_hash ? this.loadAttachmentsFromDraft(e) : (this.clearAttachments(),
+                          this.restoreAttachmentHash())
+                    }
+                ).on("xf-quill-editor:upload-image", (t,e)=>{
+                      this.uploadAttachment(e)
+                    }
+                ),
+                this.quillEditor = XF.Element.getHandler(this.$quillEditorTarget, "quill-editor"),
+                this.attachmentManager = XF.Element.getHandler(this.$chatEditor, "attachment-manager"),
+                this.$editMessage = this.$target.find(".js-editMessage"),
+                this.$editMessage.on("click", ".js-cancelEditMessage", XF.proxy(this, "editMessageOff")),
+                this.$editMessage.on("mousedown", "js-cancelEditMessage", t=>t=>t.preventDefault() && t.stopPropagation()),
+                this.$messagesBlock = this.$target.find(".messages"),
+                this.messages = new ChatMessages(this,this.$messagesBlock.find(".message-list-wrapper")[0],{
+                  templates: {
+                    bubble: this.$target.find(".js-messageTemplate").html(),
+                    notification: this.$target.find(".js-notificationTemplate").html()
+                  },
+                  historyUrl: this.options.messagesUrl,
+                  markSeenUrl: this.options.markSeenUrl,
+                  $topLoader: this.$messagesBlock.find(".js-loader-top"),
+                  $bottomLoader: this.$messagesBlock.find(".js-loader-bottom"),
+                  scrollableContainer: this.$messagesBlock.find(".js-scrollable")[0]
+                }),
+                this.$typer = this.$target.find(".js-typer"),
+                this.$smilieBox = this.$chatEditor.find('.ql-button[data-xf-init="smilie-box"]'),
+                this.$latestMessageDate = this.$target.find('input[name="latest_message_date"]'),
+                this.$command = this.$target.find(".js-chatCommand"),
+                this.$roomStatus = this.$target.find(".js-roomStatus"),
+            this.options.audio && (this.$audio = t("<audio />").attr("src", this.options.audio).appendTo(s.body)),
+                this.$command.find(".js-commandRemover").click(()=>{
+                      this.setPinCommand(!1),
+                          this.setCommand("")
+                    }
+                ).on("mousedown", t=>t.preventDefault() && t.stopPropagation()),
+                this.$command.find(".js-commandPin").click(()=>this.setPinCommand(!this.pinCommand)).on("mousedown", t=>t.preventDefault() && t.stopPropagation()),
+                this.setCommand({
+                  command: this.options.command,
+                  text: this.options.commandText
+                }),
+                this.bindKeyboardEvents(),
+                this.bindActionSubmit(),
+                this.triggerEvent("init"),
+                new Promise((t,e)=>{
+                      if (B || F)
+                        return void t({
+                          keepAlive: !1
+                        });
+                      let s = XF.CrossTab.trigger.bind(XF.CrossTab)
+                          , i = XF.config.url.keepAlive
+                          , o = "keepAlive" + XF.stringHashCode(i);
+                      XF.CrossTab.trigger = (e,i,a)=>{
+                        let n = s(e, i, a);
+                        return e === o && setTimeout(()=>{
+                              t({
+                                keepAlive: !0
+                              })
+                            }
+                            , 100),
+                            F = !0,
+                            n
+                      }
+                    }
+                ).then(()=>{
+                      this.rooms.refresh(()=>{
+                            this.subscribeToGlobalChannels();
+                            let t = ()=>{
+                                  if (this.options.roomTag && this.rooms.open(this.options.roomTag) || this.options.saveRoomInCookie && !this.rooms.creator.isFormActive() && this.rooms.restoreLast())
+                                    return !0;
+                                  if (this.options.autoSelectRoom) {
+                                    let t = this.rooms.find().first();
+                                    if (t.length && this.rooms.open(t))
+                                      return !0
+                                  }
+                                  return !1
+                                }
+                            ;
+                            t() || (()=>{
+                                  this.options.saveRoomInCookie && this.rooms.forgetLast(),
+                                  this.options.roomTag && (this.options.roomTag = "",
+                                      this.rooms.refresh(()=>{
+                                            t() || this.triggerEvent("default-room-reset")
+                                          }
+                                      ))
+                                }
+                            )(),
+                            this.options.autoOpenCreateForm && this.rooms.creator.toggleForm(!0)
+                          }
+                          , {
+                            around_room_tag: this.options.roomTag
+                          }).then(()=>{
+                            this.$connecting.hide(),
+                                this.$target.addClass("connected")
+                          }
+                      )
+                    }
+                ),
+                this.messages.setHighlightRemoveTimeout(),
+                this.bindPinnedNoticeCloser(),
+                this.$target.on("chat:set-command", XF.proxy(this, "setCommand")).on("chat:action-edit", XF.proxy(this, "actionEdit")).on("chat:action-react", XF.proxy(this, "actionReact")).on("chat:action-quote", XF.proxy(this, "actionQuote")).on("chat:action-report", XF.proxy(this, "actionReport")).on("chat:action-delete", XF.proxy(this, "actionDelete")).on("chat:toggle-sound", (t,e)=>{
+                      this.toggleSound(void 0 === e ? !this.soundEnabled : e)
+                    }
+                ).on("chat:unmounted", XF.proxy(this, "onUnmounted")).on("chat:post-message", XF.proxy(this, "postMessage")).on("chat:editor-insert", (t,e)=>{
+                      this.quillEditor.insertAtCurrentPosition(e)
+                    }
+                ),
+                this.triggerEvent("initialized")
+          },
+          isCompact() {
+            return this.$target.hasClass("compact")
+          },
+          bindActionSubmit() {
+            this.$chatEditor.on("click", ".js-actionSubmit", t=>{
+                  this.quillEditor.actionSubmitClicked(t)
+                }
+            ),
+                this.$chatEditor.on("mousedown", ".js-actionSubmit", t=>{
+                      t.preventDefault(),
+                          t.stopPropagation()
+                    }
+                )
+          },
+          bindChatUnmounted() {
+            new MutationObserver(t=>{
+                  for (let e of t)
+                    for (let s of e.removedNodes)
+                      if (s === this.$target[0]) {
+                        this.onUnmounted();
+                        break
+                      }
+                }
+            ).observe(this.$target[0].parentNode, {
+              childList: !0
+            })
+          },
+          onUnmounted() {
+            this.roomTag && this.rooms.reset()
+          },
+          updateTheme(e) {
+            if (this.theme && t.deepEquals(this.theme, e))
+              return;
+            e.css && (this.$target[0].style = e.css);
+            let s = this.$target[0].className;
+            this.$target[0].className = s.replace(/theme-\w+/, `theme-${e.key}`),
+            this.$target.hasClass(`theme-${e.key}`) || this.$target.addClass(`theme-${e.key}`),
+                this.wallpaperGradientRenderer.updateColors(e.config.background_colors),
+                this.wallpaperPatternRenderer.updatePattern(e.config.pattern),
+                this.theme = e
+          },
+          resetTheme() {
+            let t = this.getDefaultTheme();
+            t.key !== this.theme?.key && this.updateTheme(t)
+          },
+          getDefaultTheme() {
+            let t = this.$roomsList.find(".js-room.selected");
+            return t.length && t.data("theme") ? t.data("theme") : this.options.theme
+          },
+          setCanPostMessage(t) {
+            this.quillEditor.toggle(t, {
+              force: !0,
+              hard: !0
+            }),
+                this.$chatEditor.toggleClass("is-shown", t)
+          },
+          ignorePostMessage: !1,
+          setIgnorePostMessage(t) {
+            this.ignorePostMessage = t,
+                this.$chatEditor.find(".js-actionSubmit").toggleClass("is-disabled", t)
+          },
+          toggleLeftColumn(t) {
+            void 0 !== t && !this.$target.hasClass("no-left-column") === t || (this.$target.toggleClass("no-left-column", void 0 !== t ? !t : t),
+                setTimeout(()=>{
+                      this.messages.scrollableContainer.classList.contains("scrolled-down") && this.messages.scrollToBottom()
+                    }
+                    , 300))
+          },
+          bindPinnedNoticeCloser() {
+            this.$target.on("click", ".js-pinnedNoticeCloser", e=>{
+                  let s = t(e.currentTarget).closest(".js-chatPinnedNotice");
+                  s.xfFadeUp(XF.config.speed.fast, ()=>{
+                        s.remove();
+                        let t = s.closest(".js-chatPinnedNotices");
+                        t.find(".js-chatPinnedNotice").length || t.addClass("is-hidden")
+                      }
+                  )
+                }
+            )
+          },
+          roomHasBeenRead(t, e) {
+            e.id !== XF.config.userId && this.roomTag === t.tag.toString() && (this.lastReadDate = e.read_date,
+                this.messages.updateVisitorMessagesReadStatus())
+          },
+          editMode: !1,
+          editMessageId: !1,
+          postingQueue: new Set,
+          postMessage(e, s) {
+            if (this.ignorePostMessage)
+              return;
+            let i = t(t.parseHTML(`<div>${s}</div>`))
+                , o = this.editMode;
+            if (this.command) {
+              let a = i.find("p:first-child")
+                  , n = a[0].innerHTML ?? a[0].textContent;
+              a.html(this.command + n),
+                  s = i.html()
+            } else if (!s.trim().length || "<p><br></p>" === s)
+              return;
+            this.ignoreNextSendTyping = !0;
+            let r = {};
+            this.$chatEditor.find('input[type="hidden"]').each((t,e)=>{
+                  r[e.name] = e.value
+                }
+            ),
+                r.message_id = !!o && this.editMessageId,
+                r.message = s;
+            let l = this.attachmentManager?.$filesContainer?.clone()
+                , h = o ? null : this.messages.insertSending(s, l)
+                , d = o ? this.editMessageId : h.data("messageId");
+            o || (this.messages.scrollToBottomAfterEmbedLoaded(),
+                this.postingQueue.add(d)),
+                (()=>{
+                      this.pinCommand || this.setCommand(""),
+                          this.quillEditor.quill.setText(""),
+                          this.attachmentManager?.resetAttachments(),
+                      this.editMode && this.editMessageOff()
+                    }
+                )(),
+                this.setIgnoreNewMessagesFromPostingQueue(),
+            this.options.sendTimeout && (this.setIgnorePostMessage(!0),
+                setTimeout(()=>{
+                      this.setIgnorePostMessage(!1)
+                    }
+                    , 1e3 * this.options.sendTimeout));
+            let c = ()=>{
+                  !this.isReceivedNewMessagesWhileIgnored || o || this.postingQueue.size || (this.isReceivedNewMessagesWhileIgnored = !1,
+                      this.messages.update(()=>this.messages.scrollToBottomAfterEmbedLoaded()))
+                }
+            ;
+            XF.ajax("POST", this.fillDefaultsInUrl(this.options.postUrl), r, ({insertedMessage: t})=>{
+                  this.postingQueue.delete(d),
+                      this.setIgnoreNewMessagesFromPostingQueue(),
+                      t && t?.id && h ? (h.attr("data-message-id", t.id).data("message-id", t.id),
+                          h.attr("data-message-date", t.date).data("message-date", t.date),
+                          this.rooms.updateLastMessage(t.room_tag, t.date),
+                          this.setLatestMessageDate(t.date),
+                          this.messages.reload(t.id, ()=>{
+                                c(),
+                                    this.messages.scrollToBottomAfterEmbedLoaded()
+                              }
+                          )) : (h?.remove(),
+                          c()),
+                  o || this.messages.scrollToBottomAfterEmbedLoaded()
+                }
+                , {
+                  global: !1,
+                  skipDefaultSuccess: !0,
+                  skipDefaultSuccessError: !0
+                }).catch(()=>{
+                  this.postingQueue.delete(d),
+                      this.setIgnoreNewMessagesFromPostingQueue()
+                }
+            )
+          },
+          setIgnoreNewMessagesFromPostingQueue() {
+            this.ignoreNewMessages = this.postingQueue.size > 0
+          },
+          updateJoinedMembersCount() {
+            this.joinedMembersCount = this.roomChannel.subscription.members.count;
+            let t = XF.phrase("rtc_x_members_joined", {
+              "{count}": this.joinedMembersCount
+            });
+            this.updateRoomStatus(t)
+          },
+          updateRoomStatus(t) {
+            this.$roomStatus.find(".title").text(t)
+          },
+          actionEdit: function(t, e) {
+            XF.ajax("GET", this.fillDefaultsInUrl(this.options.editUrl).replaceTagsToValues({
+              message_id: e
+            }), {}, ({message: t, attachmentData: e})=>this.switchToEditMessage(t, e), {
+              global: !1,
+              skipDefaultSuccess: !0
+            })
+          },
+          actionDelete: function(t, e) {
+            XF.ajax("POST", this.fillDefaultsInUrl(this.options.deleteUrl).replaceTagsToValues({
+                  message_id: e
+                }), {}, ()=>{}
+                , {
+                  global: !1,
+                  skipDefaultSuccess: !0
+                })
+          },
+          actionReact(e, s, i) {
+            let o = t(i.currentTarget).data("href");
+            o && (i.preventDefault(),
+                XF.ajax("POST", o, {}, ()=>{}
+                    , {
+                      global: !1
+                    }))
+          },
+          actionQuote: function(e, s, i) {
+            let o = t(i.currentTarget).data("href");
+            XF.ajax("GET", o, {}, ({quoteHtml: e})=>{
+                  let s = t(e)
+                      , i = s.find(".bbCodeBlock-expandContent").length > 0 ? s.find(".bbCodeBlock-expandContent") : s.find(".bbCodeBlock-content");
+                  i.length || (i = s),
+                      this.quillEditor.insertAtCurrentPosition([{
+                        type: "blockquote",
+                        dataset: s.data(),
+                        content: i.html()
+                      }, "\n"])
+                }
+                , {
+                  global: !1
+                })
+          },
+          actionReport: function(t, e) {
+            XF.loadOverlay(this.fillDefaultsInUrl(this.options.reportUrl).replaceTagsToValues({
+              message_id: e
+            }))
+          },
+          onUserTyping({user: t, room: e, delay: s}) {
+            if (this.triggerEvent("user-typing", {
+              user: t,
+              room: e,
+              delay: s
+            }),
+            t.id === XF.config.userId)
+              return;
+            let i = this.clearanceTypingUsersTimeouts[e.tag] || {};
+            i[t.id] && clearTimeout(i[t.id]),
+                this.addTypingUser(t, e, s)
+          },
+          addTypingUser(t, e, s) {
+            this.typingUsers[e.tag] || (this.typingUsers[e.tag] = {}),
+            this.clearanceTypingUsersTimeouts[e.tag] || (this.clearanceTypingUsersTimeouts[e.tag] = {}),
+                this.typingUsers[e.tag][t.id] = t.name,
+                this.clearanceTypingUsersTimeouts[e.tag][t.id] = setTimeout(()=>{
+                      this.deleteTypingUser(t.id, e.tag)
+                    }
+                    , 1e3 * s),
+                this.updateUserTypingList()
+          },
+          hasTypingUser(t, e) {
+            return this.typingUsers[e] && this.typingUsers[e][t]
+          },
+          deleteTypingUser(t, e) {
+            this.typingUsers[e] || (this.typingUsers[e] = {}),
+                delete this.typingUsers[e][t],
+                this.updateUserTypingList()
+          },
+          updateUserTypingList() {
+            let e = (t,e,i)=>{
+                  this.$roomStatus.toggleClass("is-typing", e > 0),
+                      s(this.$typer, e, i)
+                }
+                , s = (t,e,s)=>{
+                  t.toggleClass("is-active", e > 0),
+                      t.find(".typers").text(s)
+                }
+            ;
+            this.rooms.find().each((i,o)=>{
+                  var a, n, r, l;
+                  let h = t(o)
+                      , d = h.find(".js-typer")
+                      , c = h.data("room-tag")
+                      , m = this.typingUsers[c] || {}
+                      , {count: g, status: u} = (t=>{
+                        let e = Object.keys(t)
+                            , s = ""
+                            , i = Object.keys(t).length
+                            , o = Object.values(t);
+                        return 1 === i && (s = XF.phrase("rtc_x_writing_message", {
+                          "{username}": t[e[0]]
+                        })),
+                        2 === i && (s = XF.phrase("rtc_x_and_y_writing_message", {
+                          "{username1}": o[0],
+                          "{username2}": o[1]
+                        })),
+                        i > 2 && (s = XF.phrase("rtc_x_y_and_z_more_writing_message", {
+                          "{username1}": o[0],
+                          "{username2}": o[1],
+                          "{count}": i - 2
+                        })),
+                            {
+                              count: i,
+                              status: s
+                            }
+                      }
+                  )(m);
+                  c == this.roomTag && e(0, g, u),
+                      a = h,
+                      n = d,
+                      r = g,
+                      l = u,
+                      a.toggleClass("is-typing", r > 0),
+                      s(n, r, l)
+                }
+            )
+          },
+          enableLoadingAnimation(t) {
+            t.addClass("is-active")
+          },
+          disableLoadingAnimation(t) {
+            t.removeClass("is-active")
+          },
+          originalInputs: {},
+          switchToEditMessage(e, s) {
+            var i;
+            this.editMode || (this.originalInputs = {
+              quillHtml: this.quillEditor.getHtml(),
+              attachmentsHtml: this.attachmentManager?.$filesContainer?.html().trim(),
+              attachmentsManageUrl: this.attachmentManager?.manageUrl,
+              attachmentHash: this.$chatEditor.find('input[name="attachment_hash"]').val()
+            }),
+                this.$editMessage.find(".js-messageText").text(((i = t(e.html)).find(".js-expandLink").remove(),
+                    i).text()),
+                this.$editMessage.toggleContainerWrapper(!0),
+                this.quillEditor.saveDrafts = !1,
+                this.quillEditor.setHtml(e.html.replace(/\n/g, "")),
+                this.quillEditor.focus(),
+            this.attachmentManager && s && (this.attachmentManager.resetAttachments(),
+                this.updateAttachmentManageUrl(s.manageUrl),
+                s.attachments.forEach(t=>{
+                      this.attachmentManager.insertUploadedRow(t)
+                    }
+                ),
+                this.$chatEditor.find('input[name="attachment_hash"]').val(s.hash)),
+                this.editMessageId = e.id,
+                this.editMode = !0
+          },
+          editMessageOff() {
+            this.$editMessage.toggleContainerWrapper(!1),
+                this.quillEditor.saveDrafts = !0,
+                this.quillEditor.setHtml(this.originalInputs.quillHtml).focus(),
+            this.attachmentManager && (this.attachmentManager.$filesContainer?.html(this.originalInputs.attachmentsHtml),
+                this.assertAttachmentContainerActive(),
+                XF.activate(this.attachmentManager.$filesContainer),
+                this.updateAttachmentManageUrl(this.originalInputs.attachmentsManageUrl)),
+                this.$chatEditor.find('input[name="attachment_hash"]').val(this.originalInputs.attachmentHash),
+                this.originalInputs = {},
+                this.editMessageId = 0,
+                this.editMode = !1
+          },
+          assertAttachmentContainerActive() {
+            let t = this.attachmentManager.getFileRows().length;
+            this.attachmentManager.$container.toggleClass("is-active", t > 0)
+          },
+          loadAttachmentsFromDraft(t) {
+            if (!this.attachmentManager)
+              return;
+            let e = this.$roomItems.find(".js-room.selected");
+            if (!e.length)
+              return;
+            let s = e.data("draftUrl");
+            s && XF.ajax("GET", s, {
+                  attachments: !0
+                }, ({html: e})=>{
+                  (e || e.content) && XF.setupHtmlInsert(e, e=>{
+                        let s = this.attachmentManager.options.filesContainer
+                            , i = e.find(s);
+                        i.length && (this.clearAttachments(),
+                            this.attachmentManager.$filesContainer.append(i.children()),
+                            this.updateAttachmentHash(t.extra_data.attachment_hash),
+                            this.assertAttachmentContainerActive())
+                      }
+                  )
+                }
+                , {
+                  global: !1
+                })
+          },
+          uploadAttachment(t) {
+            this.attachmentManager && this.attachmentManager.flow.addFile(t)
+          },
+          clearAttachments() {
+            this.attachmentManager && this.attachmentManager.resetAttachments()
+          },
+          updateAttachmentHash(t) {
+            let e = this.attachmentManager.manageUrl.replace(/hash=[^&]+/, `hash=${t}`);
+            this.updateAttachmentManageUrl(e),
+                this.$chatEditor.find('input[name="attachment_hash"]').val(t)
+          },
+          restoreAttachmentHash() {
+            if (!this.attachmentManager)
+              return;
+            let t = this.$chatEditor.find(".js-attachButton > a").attr("href").match(/hash=([^&]+)/)[1];
+            this.updateAttachmentHash(t)
+          },
+          updateAttachmentManageUrl(t) {
+            this.attachmentManager.manageUrl = t,
+                this.attachmentManager.flow.opts.target = t
+          },
+          getVisitorEvents() {
+            let e = {}
+                , s = this.options.eventPrefix;
+            return e[`${s}.NewRoom`] = ({room: t})=>{
+              this.triggerEvent("new-room", {
+                room: t
+              }),
+                  this.rooms.loadHistory({
+                    tag: t.tag
+                  }, {
+                    prepend: !0,
+                    afterInsert: ({$html: t})=>{
+                      this.rooms.selectNextNew && (this.rooms.selectNextNew = !1,
+                          t.trigger("click"))
+                    }
+                  })
+            }
+                ,
+                e[`${s}.NewMessage`] = t.throttle(XF.proxy(this, "onNewMessage"), 300),
+                e[`${s}.WasBanned`] = ({room_tag: t})=>{
+                  this.triggerEvent("was-banned", {
+                    room_tag: t
+                  }),
+                      this.rooms.remove({
+                        tags: [t]
+                      })
+                }
+                ,
+                e
+          },
+          getMessageEvents() {
+            let e = {}
+                , s = this.options.eventPrefix;
+            return e[`${s}.RoomUpdated`] = ({room: t})=>{
+              this.triggerEvent("room-updated", {
+                room: t
+              }),
+                  this.rooms.reload(t.tag)
+            }
+                ,
+                e[`${s}.RoomHasBeenRead`] = ({room: t, user: e})=>{
+                  this.triggerEvent("room-has-been-read", {
+                    room: t,
+                    user: e
+                  }),
+                      this.roomHasBeenRead(t, e)
+                }
+                ,
+                e[`${s}.RoomsDeleted`] = ({criteria: t})=>{
+                  this.triggerEvent("rooms-deleted", {
+                    criteria: t
+                  }),
+                      this.rooms.remove(t),
+                      this.rooms.updatePlaceholder()
+                }
+                ,
+                e[`${s}.NewMessage`] = t.throttle(XF.proxy(this, "onNewMessage"), 300),
+                e[`${s}.MessageContentUpdated`] = t.throttle(({message: t})=>{
+                      this.triggerEvent("message-content-updated", {
+                        message: t
+                      }),
+                          this.messages.reload(t.id)
+                    }
+                    , 300),
+                e[`${s}.MessagesDeleted`] = ({criteria: t})=>{
+                  this.triggerEvent("messages-deleted", {
+                    criteria: t
+                  }),
+                      this.messages.remove(t)
+                }
+                ,
+                e[`${s}.UserTyping`] = XF.proxy(this, "onUserTyping"),
+                e
+          },
+          onNewMessage({message: t, page_uid: e}) {
+            this.triggerEvent("new-message", {
+              message: t,
+              page_uid: e
+            }),
+                this.rooms.reload(t.room_tag);
+            let i = t.room_tag === this.roomTag;
+            if (i && this.hasTypingUser(t.user_id, t.room_tag) && this.deleteTypingUser(t.user_id, t.room_tag),
+                this.ignoreNewMessages)
+              return void (this.isReceivedNewMessagesWhileIgnored = !0);
+            if (XF.config.echo.pageUid === e && t.user_id === XF.config.userId && "system" !== t.type)
+              return;
+            let o = !1
+                , a = ()=>{
+                  o || t.user_id !== XF.config.userId && (o = !0,
+                  this.isSoundEnabledInRoom(t.room_tag) && this.playAudioNotification())
+                }
+            ;
+            i ? (()=>{
+                  let e = parseInt(this.$latestMessageDate.val(), 10);
+                  t.date > e && this.messages.update(({$html: t})=>{
+                        let e = t.filter(".js-message.is-unread:not(.is-visitor)");
+                        !s.hasFocus() && e.length && a()
+                      }
+                  )
+                }
+            )() : a()
+          },
+          subscribeToGlobalChannels() {
+            e.getWebsocketsPromise?.().then(({echo: t, manager: e})=>{
+                  this.visitorChannel = e.channels.visitor,
+                  this.options.useChatChannel && (this.chatChannel = t.join(this.options.chatChannel)),
+                      this.listenerGlobalChannelEvents()
+                }
+            )
+          },
+          listenerGlobalChannelEvents() {
+            let t = {
+              ...this.getMessageEvents(),
+              ...this.getVisitorEvents()
+            };
+            Object.entries(t).forEach(([t,e])=>{
+                  this.visitorChannel?.listen(t, e),
+                      this.chatChannel?.listen(t, e)
+                }
+            )
+          },
+          subscribeToRoomChannel() {
+            e.getWebsocketsPromise?.().then(({echo: t})=>{
+                  let e = this.getRoomChannelName();
+                  this.roomChannel = t.join(e),
+                      this.listenRoomChannelEvents(),
+                  this.roomChannel?.subscription?.subscribed && this.updateJoinedMembersCount()
+                }
+            )
+          },
+          listenRoomChannelEvents() {
+            Object.entries(this.getMessageEvents()).forEach(([t,e])=>{
+                  this.roomChannel.listen(t, e)
+                }
+            );
+            let t = XF.proxy(this, "updateJoinedMembersCount");
+            this.roomChannel.here(t).joining(t).leaving(t)
+          },
+          setPinCommand(t) {
+            this.pinCommand = t,
+                this.$command.toggleClass("is-pinned", this.pinCommand)
+          },
+          setCommand: function(t, e) {
+            let {command: s, text: i, focus: o} = e = e || {};
+            "string" == typeof t && (s = t),
+                o ??= !1,
+                s = s || "",
+                i = i || s,
+                this.$command.toggleContainerWrapper(!!s),
+                this.$command.find(".command-text").text(i),
+                this.command = s,
+            o && this.quillEditor.focus()
+          },
+          bindKeyboardEvents: function(t) {
+            let e = this.quillEditor.quill;
+            return e.keyboard.addBinding({
+              key: 27,
+              handler: ()=>{
+                this.editMode && this.editMessageOff()
+              }
+            }),
+                e.keyboard.bindings[9].unshift({
+                  key: 9,
+                  handler: ()=>{
+                    this.$smilieBox.trigger("click")
+                  }
+                }),
+                this.$quillEditorTarget.on("keydown", t=>{
+                      [27].includes(t.keyCode) || this.editMode || this.sendTypingStatus()
+                    }
+                ),
+                !0
+          },
+          sendTypingStatus() {
+            this.roomTag && (this.ignoreNextSendTyping ? this.ignoreNextSendTyping = !1 : XF.ajax("POST", this.fillDefaultsInUrl(this.options.typingUrl), {}, ()=>{}
+                , {
+                  global: !1,
+                  skipDefaultSuccess: !0
+                }))
+          },
+          isSoundEnabledInRoom(t) {
+            let e = this.getSoundCookieName()
+                , s = XF.Cookie.getJson(e) || {};
+            return void 0 !== s[t] ? s[t] : this.options.enabledAudio
+          },
+          toggleSoundFromCookie() {
+            this.soundEnabled = this.isSoundEnabledInRoom(this.roomTag || "global")
+          },
+          toggleSound(t) {
+            this.soundEnabled = t,
+                this.updateSoundCookie(t)
+          },
+          updateSoundCookie(t) {
+            let e = this.getSoundCookieName()
+                , s = XF.Cookie.getJson(e) || {};
+            s[this.roomTag || "global"] = t,
+                XF.Cookie.setJson(e, s)
+          },
+          getSoundCookieName() {
+            return this.options.eventPrefix.toLowerCase() + "_chat_sound"
+          },
+          playAudioNotification: function() {
+            this.$audio && this.soundEnabled && this.options.enabledAudio && this.$audio[0].play()
+          },
+          fillDefaultsInUrl(t) {
+            return t.replaceTagsToValues({
+              tag: this.roomTag.replace("/", "-")
+            })
+          },
+          getLatestMessageDate() {
+            return parseInt(this.$latestMessageDate.val(), 10)
+          },
+          setLatestMessageDate(t) {
+            this.getLatestMessageDate() >= t || this.$latestMessageDate.val(t)
+          },
+          addRtcIdToXfPopups(e) {
+            (e ??= this.$target).find(".menu:not([data-rtc-id])").each((e,s)=>{
+                  let i = t(s);
+                  i.data("rtc-id", this.id),
+                      i.attr("data-rtc-id", this.id),
+                      i.on("menu:complete", ()=>{
+                            i.find('[data-xf-click*="overlay"]').each((e,s)=>{
+                                  t(s).on("click", ()=>{
+                                        XF.LocalStorage.set("rtc.overlayLatestId", this.id)
+                                      }
+                                  )
+                                }
+                            ),
+                                this.addRtcIdToXfPopups(i)
+                          }
+                      )
+                }
+            )
+          },
+          getRoomChannelName() {
+            return this.options.roomChannelFormat.replaceTagsToValues({
+              tag: this.roomTag.replace("/", "-")
+            })
+          },
+          getRoomUrl() {
+            return this.options.roomUrl.replaceTagsToValues({
+              tag: this.roomTag.replace("/", "-")
+            })
+          },
+          updateRoomHeader(t) {
+            let e = t.data("room-tag").toString()
+                , s = t.data("room-title")
+                , i = t.find(".js-roomAvatar");
+            this.$headerAvatar.html(i.clone()),
+                XF.activate(this.$headerAvatar);
+            let o = e.split("/");
+            s ? this.$roomName.find(".tag").text(s) : (this.$roomName.find(".tag-prefix").text(o[0] + "/"),
+                this.$roomName.find(".tag").text(o[1])),
+                this.$roomLink.attr("href", this.getRoomUrl()),
+                this.updateUserTypingList(),
+            this.$header.hasClass("is-shown") || this.$header.addClass("is-shown")
+          },
+          setRoomTag(t) {
+            t = t?.toString() || "",
+                this.roomTag = t,
+                this.lastReadDate = 0,
+            this.roomChannel && XF.Echo.leave(this.roomChannel.name),
+            t && (this.subscribeToRoomChannel(),
+                this.messages.refresh()),
+                this.toggleSoundFromCookie()
+          },
+          isMobileDevice: ()=>void 0 !== e.orientation || -1 !== navigator.userAgent.indexOf("IEMobile"),
+          getFilterFromQuery(t) {
+            let e = this.startLocation.search
+                , s = {};
+            return e && e.replace("?", "").split("&").forEach(e=>{
+                  let[i,o] = e.split("=")
+                      , a = decodeURIComponent(i.replace("filter[", "").replace("]", ""));
+                  (void 0 === t || t.includes(a)) && (s[a] = decodeURIComponent(o))
+                }
+            ),
+                s
+          },
+          removeFilterFromQuery(t) {
+            let s = this.startLocation.search;
+            if (!s)
+              return;
+            let i = RegExp(`filter\\[(${t.join("|")})\\]`, "g")
+                , o = s.replace("?", "").split("&").filter(t=>{
+                  let[e,s] = t.split("=");
+                  return !i.test(e)
+                }
+            )
+                , a = o.length ? `?${o.join("&")}` : "?";
+            e.history.replaceState(null, null, a),
+                this.startLocation = Object.assign({}, e.location)
+          },
+          triggerEvent(t, e) {
+            this.$target.trigger("chat:" + t, e)
+          }
+        }),
+        XF.ChatCommandSetter = XF.Click.newHandler({
+          eventNameSpace: "XFChatCommandSetter",
+          options: {
+            command: "",
+            secondCommand: ""
+          },
+          init() {
+            this.$chat = this.$target.rtc(),
+                this.chat = XF.Element.getHandler(this.$chat, "chat")
+          },
+          click: function(t) {
+            t.preventDefault(),
+                t.stopPropagation(),
+                this.$chat.trigger("chat:set-command", [{
+                  command: this.getCommand(),
+                  focus: !0
+                }])
+          },
+          getCommand() {
+            return this.options.secondCommand && this.chat.command === this.options.command ? this.options.secondCommand : this.options.command
+          }
+        }),
+        XF.ChatMessageAction = XF.Click.newHandler({
+          eventNameSpace: "XFChatMessageAction",
+          options: {
+            action: "",
+            messageId: ""
+          },
+          init() {
+            this.$chat = this.$target.rtc()
+          },
+          click(t) {
+            t.preventDefault(),
+                this.$chat.trigger("chat:action-" + this.options.action, [this.options.messageId, t])
+          }
+        }),
+        XF.ChatMessagePost = XF.Click.newHandler({
+          eventNameSpace: "XFChatMessagePost",
+          options: {
+            text: ""
+          },
+          init() {
+            this.$chat = this.$target.rtc()
+          },
+          click(t) {
+            t.preventDefault(),
+                this.$chat.trigger("chat:post-message", [this.options.text])
+          }
+        }),
+        XF.ChatEditorInsert = XF.Click.newHandler({
+          eventNameSpace: "XFChatEditorInsert",
+          options: {
+            content: null
+          },
+          init() {
+            this.$chat = this.$target.rtc()
+          },
+          click(t) {
+            t.preventDefault(),
+                this.$chat.trigger("chat:editor-insert", [this.options.content])
+          }
+        }),
+        XF.ChatToggleSound = XF.Element.newHandler({
+          options: {
+            onTitle: "",
+            offTitle: ""
+          },
+          init: function() {
+            this.$label = this.$target.find(".js-label"),
+                this.$target.click(XF.proxy(this, "toggleSound")),
+                this.$chat = this.$target.rtc(),
+                this.chat = XF.Element.getHandler(this.$chat, "chat"),
+                this.updateText()
+          },
+          toggleSound: function(t) {
+            t.preventDefault(),
+                this.$chat.trigger("chat:toggle-sound"),
+                this.updateText()
+          },
+          updateText() {
+            let t = this.chat.soundEnabled ? this.options.offTitle : this.options.onTitle;
+            this.$label.text(t)
+          }
+        }),
+        XF.ChatUniqueMenu = XF.Element.newHandler({
+          options: {
+            uid: ""
+          },
+          uid: "",
+          $chat: null,
+          init() {
+            if (this.uid = this.options.uid || this.$target.attr("id"),
+            this.uid || console.warn("Unique menu id not found"),
+                this.isTargetInDocument())
+              return void (this.$chat = this.$target.rtc());
+            let e = t(`#${this.uid}`);
+            e.length && (e.closeXfTooltips(),
+                e.html(this.$target.html()),
+                this.$target.remove(),
+                XF.activate(e))
+          },
+          isTargetInDocument() {
+            return !!this.$target.closest(s.documentElement).length
+          }
+        }),
+        XF.ChatToggleSlideMenuClick = XF.Click.newHandler({
+          eventNameSpace: "XFChatToggleSlideMenuClick",
+          options: {
+            menu: ""
+          },
+          init() {
+            this.$menu = this.options.menu ? XF.findRelativeIf(this.options.menu, this.$target) : this.$target.nextAll("[data-slide-menu]").first(),
+                this.$menu.length ? this.$menu.on("click", ".js-toggleSlide", ()=>{
+                      this.toggle()
+                    }
+                ) : console.error("No menu found for %o", this.$target[0])
+          },
+          click() {
+            this.toggle()
+          },
+          toggle(t) {
+            let e = this.$menu.hasClass("is-open");
+            t ??= !e,
+            (t = !!t) !== e && (this.$menu.toggleClass("is-open", t),
+                this.$target.trigger("slide-menu:toggle", [t]))
+          },
+          isOpen() {
+            return this.$menu.hasClass("is-open")
+          }
+        }),
+        XF.Element.register("chat", "XF.Chat"),
+        XF.Element.register("chat-toggle-sound", "XF.ChatToggleSound"),
+        XF.Click.register("chat-command-setter", "XF.ChatCommandSetter"),
+        XF.Click.register("chat-message-action", "XF.ChatMessageAction"),
+        XF.Click.register("chat-message-post", "XF.ChatMessagePost"),
+        XF.Click.register("chat-editor-insert", "XF.ChatEditorInsert"),
+        XF.Click.register("rtc-unique-menu", "XF.ChatUniqueMenu"),
+        XF.Click.register("rtc-toggle-slide-menu", "XF.ChatToggleSlideMenuClick"),
+        XF.Element.initialize(t('*[data-xf-init*="chat"]')),
+        t(s).on("rtc:lk", ()=>console.log("wtf"))
+  }(window.jQuery, window, document),
+      Object.freeze({
+        __proto__: null
+      }),
+      n = window.jQuery,
+      r = window,
+      l = document,
+      XF.SmilieBox = XF.Element.newHandler({
+        options: {},
+        loaded: !1,
+        init() {
+          this.quillEditor = XF.Element.getHandler(this.$target.closest(".js-quillEditorContainer").find(".js-quillEditor"), "quill-editor"),
+              this.quill = this.quillEditor.quill,
+              this.$menu = n(n.parseHTML(Mustache.render(n(".js-xfSmilieMenu").first().html()))),
+              this.menuId = this.$menu.xfUniqueId(),
+              this.$target.data("menu", "#" + this.menuId).attr("data-xf-click", "menu"),
+              this.$menu.appendTo(n(l.body)),
+              XF.activate(this.$target.parent()),
+              this.menu = XF.Click.getElementHandler(this.$target, "menu");
+          let t = 0
+              , e = !1;
+          this.$target.on("click", t=>{
+                t.preventDefault(),
+                    t.stopPropagation(),
+                    this.menu.click(t)
+              }
+          ),
+              this.$target.on("mousedown", t=>{
+                    t.preventDefault(),
+                        t.stopPropagation()
+                  }
+              ),
+              this.$target.on("menu:opened", ()=>{
+                    e = this.quill.hasFocus()
+                  }
+              ),
+              this.$menu.on("menu:complete", ()=>{
+                    if (this.$menuScroll = this.$menu.find(".menu-scroller"),
+                        !this.loaded) {
+                      if (this.loaded = !0,
+                          r.IntersectionObserver) {
+                        let s = new IntersectionObserver(XF.proxy(this, "onEmojiIntersection"),{
+                          root: this.$menuScroll[0],
+                          rootMargin: "0px 0px 100px 0px"
+                        });
+                        this.$menuScroll.find("span.smilie--lazyLoad").each(function() {
+                          s.observe(this)
+                        })
+                      } else
+                        this.$menuScroll.onPassive("scroll", XF.proxy(this, "loadVisibleImages"));
+                      this.$menuScroll.find(".js-emoji").on("click", XF.proxy(this, "insertEmoji")),
+                          this.$menu.find(".js-emojiSearch").on("input", XF.proxy(this, "performSearch")),
+                          n(l).on("recent-emoji:logged", XF.proxy(this, "updateRecentEmoji")),
+                          this.$menu.on("menu:closed", ()=>{
+                                t = this.$menuScroll.scrollTop()
+                              }
+                          )
+                    }
+                    this.$menuScroll.scrollTop(t),
+                    r.IntersectionObserver || this.loadVisibleImages(this.$menuScroll),
+                    e && setTimeout(()=>{
+                          this.quill.focus()
+                        }
+                        , 11)
+                  }
+              )
+        },
+        insertEmoji: function(t) {
+          let e = n(t.currentTarget)
+              , s = e.data("shortname")
+              , i = e.children();
+          if (!i.length && e.text().length)
+            this.quillEditor.insertAtCurrentPosition(e.text().trim());
+          else {
+            if (i.hasClass("smilie--lazyLoad"))
+              return;
+            this.quillEditor.insertAtCurrentPosition([{
+              type: "smilie",
+              attributes: Array.from(i.get(0).attributes)
+            }, " "])
+          }
+          setTimeout(()=>{
+                XF.logRecentEmojiUsage(s)
+              }
+              , 0)
+        },
+        loadVisibleImages: function(t) {
+          var e = t
+              , s = this;
+          if (t instanceof Event && (e = n(t.currentTarget)),
+              e.is(":visible")) {
+            var i = e[0].getBoundingClientRect()
+                , o = i.bottom + 100;
+            e.children().each(function() {
+              var t = n(this)
+                  , e = this.getBoundingClientRect();
+              if (!(e.bottom < i.top))
+                return !(e.top > o) && void t.find("span.smilie--lazyLoad").each(function() {
+                  var t = n(this);
+                  this.getBoundingClientRect().top <= o && s.lazyLoadEmoji(t)
+                })
+            })
+          }
+        },
+        lazyLoadEmoji: function(t) {
+          var e = n("<img />").attr({
+            class: t.attr("class").replace(/(\s|^)smilie--lazyLoad(\s|$)/, " "),
+            alt: t.attr("data-alt"),
+            title: t.attr("title"),
+            src: t.attr("data-src"),
+            "data-shortname": t.attr("data-shortname")
+          })
+              , s = function() {
+            var s = function() {
+              t.replaceWith(e)
+            };
+            r.requestAnimationFrame ? r.requestAnimationFrame(s) : s()
+          };
+          e.prop("complete") ? s() : e.on("load", s)
+        },
+        updateRecentEmoji: function() {
+          var t = XF.getRecentEmojiUsage()
+              , e = this.$menuScroll.find(".js-recentHeader")
+              , s = this.$menuScroll.find(".js-recentBlock")
+              , i = s.find(".js-recentList")
+              , o = this.$menuScroll.find(".js-emojiList")
+              , a = this;
+          if (t) {
+            var r = i.clone()
+                , l = [];
+            for (var h in r.empty(),
+                t) {
+              var d, c = t[h];
+              o.each(function() {
+                if ((d = n(this).find('.js-emoji[data-shortname="' + c + '"]').closest("li").clone()).length)
+                  return d.find(".js-emoji").on("click", XF.proxy(a, "insertEmoji")),
+                      l.push(d),
+                      !1
+              })
+            }
+            for (h in l)
+              l[h].appendTo(r);
+            i.replaceWith(r),
+            s.hasClass("is-hidden") && (s.hide(),
+                s.removeClass("is-hidden"),
+                e.removeClass("is-hidden"),
+                s.xfFadeDown(XF.config.speed.fast)),
+                this.loadVisibleImages(r)
+          }
+        },
+        onEmojiIntersection: function(t, e) {
+          for (var s, i, o = 0; o < t.length; o++)
+            (s = t[o]).isIntersecting && (i = n(s.target),
+                this.lazyLoadEmoji(i),
+                e.unobserve(s.target))
+        },
+        timer: null,
+        performSearch: function(t) {
+          var e = n(t.currentTarget)
+              , s = this.$menu.find(".js-emojiFullList")
+              , i = this.$menu.find(".js-emojiSearchResults")
+              , o = this;
+          clearTimeout(this.timer),
+              this.timer = setTimeout(function() {
+                var t = e.val();
+                if (!t || t.length < 2)
+                  return i.hide(),
+                      s.show(),
+                      void o.loadVisibleImages(s);
+                var a = XF.canonicalizeUrl("index.php?editor/smilies-emoji/search");
+                XF.ajax("GET", a, {
+                  q: t
+                }, function(t) {
+                  t.html && XF.setupHtmlInsert(t.html, function(t) {
+                    t.find(".js-emoji").on("click", XF.proxy(o, "insertEmoji")),
+                        s.hide(),
+                        i.replaceWith(t)
+                  })
+                })
+              }, 300)
+        }
+      }),
+      XF.Element.register("smilie-box", "XF.SmilieBox"),
+      Object.freeze({
+        __proto__: null
+      }),
+      h = window.jQuery,
+      window,
+      c = document,
+      XF.RtcAvatarBox = XF.Element.newHandler({
+        options: {},
+        fileReader: null,
+        roomAvatarHtml: "",
+        init() {
+          this.$avatar = this.$target.find(".rtc-room-avatar"),
+              this.roomAvatarHtml = this.$avatar.html(),
+              this.fileReader = new FileReader,
+              this.fileReader.addEventListener("load", ()=>{
+                    this._updateAvatar(this.fileReader.result)
+                  }
+              ),
+              this.$uploadInput = this.$target.find('input[type="file"]'),
+              this.$uploadInput.on("change", XF.proxy(this, "fileChanged"))
+        },
+        fileChanged() {
+          let t = this.$uploadInput[0].files[0];
+          t ? this.fileReader.readAsDataURL(t) : this.restoreAvatar()
+        },
+        restoreAvatar() {
+          this.$avatar.html(this.roomAvatarHtml)
+        },
+        _updateAvatar(t) {
+          this.$avatar.html(`<img src="${t}" alt="Room Avatar" />`)
+        }
+      }),
+      XF.ElementValueSetter = XF.Click.newHandler({
+        eventNameSpace: "XFElementValueSetter",
+        options: {
+          value: null,
+          selector: null
+        },
+        init() {
+          this.$input = XF.findRelativeIf(this.options.selector, this.$target)
+        },
+        click() {
+          if (this.$input.is(":checkbox")) {
+            let t = "boolean" == typeof this.options.value ? this.options.value : !this.$input.prop("checked");
+            this.$input.prop("checked", t)
+          } else
+            this.$input.val(this.options.value)
+        }
+      }),
+      h(c).on("ajax-submit:complete", '[data-xf-init*="ajax-submit"][data-clear-complete]', (t,e)=>{
+            "ok" === e.status && h(t.target).clear()
+          }
+      ),
+      XF.Element.register("rtc-avatar-box", "XF.RtcAvatarBox"),
+      XF.Click.register("element-value-setter", "XF.ElementValueSetter"),
+      Object.freeze({
+        __proto__: null
+      })
+}();

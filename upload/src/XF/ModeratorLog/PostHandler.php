@@ -7,6 +7,9 @@ use XF\Entity\Post;
 use XF\Entity\User;
 use XF\Mvc\Entity\Entity;
 
+/**
+ * @extends AbstractHandler<Post>
+ */
 class PostHandler extends AbstractHandler
 {
 	public function isLoggable(Entity $content, $action, User $actor)
@@ -57,10 +60,9 @@ class PostHandler extends AbstractHandler
 
 	protected function setupLogEntityContent(ModeratorLog $log, Entity $content)
 	{
-		/** @var Post $content */
 		$log->content_user_id = $content->user_id;
 		$log->content_username = $content->username;
-		$log->content_title = $content->Thread->title ?: '';
+		$log->content_title = $content->Thread ? $content->Thread->title : '';
 		$log->content_url = \XF::app()->router('public')->buildLink('nopath:posts', $content);
 		$log->discussion_content_type = 'thread';
 		$log->discussion_content_id = $content->thread_id;

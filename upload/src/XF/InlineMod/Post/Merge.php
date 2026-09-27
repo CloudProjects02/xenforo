@@ -61,7 +61,6 @@ class Merge extends AbstractAction
 		$target = $source[$options['target_post_id']];
 		unset($source[$options['target_post_id']]);
 
-		/** @var MergerService $merger */
 		$merger = $this->app()->service(MergerService::class, $target);
 
 		$merger->setMessage($options['message']);

@@ -197,6 +197,7 @@ class BbCode extends AbstractSubContainer
 
 	/**
 	 * @param string $type
+	 * @param mixed ...$arguments
 	 *
 	 * @return AnalyzerInterface|FiltererInterface
 	 */

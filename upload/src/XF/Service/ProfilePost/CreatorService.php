@@ -125,7 +125,6 @@ class CreatorService extends AbstractService
 	{
 		if ($this->profilePost->isVisible())
 		{
-			/** @var NotifierService $notifier */
 			$notifier = $this->service(NotifierService::class, $this->profilePost);
 			$notifier->setNotifyMentioned($this->preparer->getMentionedUserIds());
 			$notifier->notify();

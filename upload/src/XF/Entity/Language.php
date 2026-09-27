@@ -4,6 +4,7 @@ namespace XF\Entity;
 
 use XF\Finder\LanguageFinder;
 use XF\Job\Atomic;
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XF\Repository\LanguageRepository;
@@ -26,7 +27,7 @@ use function in_array;
  * @property string $currency_format
  * @property string $decimal_point
  * @property string $thousands_separator
- * @property array $phrase_cache
+ * @property array|null $phrase_cache
  * @property string $language_code
  * @property string $text_direction
  * @property int $week_start
@@ -39,7 +40,7 @@ use function in_array;
  *
  * RELATIONS
  * @property-read Language|null $Parent
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\Phrase> $Phrases
+ * @property-read AbstractCollection<Phrase> $Phrases
  */
 class Language extends Entity
 {

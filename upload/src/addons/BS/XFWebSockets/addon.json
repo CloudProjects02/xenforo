@@ -1,0 +1,27 @@
+{
+    "legacy_addon_id": "",
+    "title": "XenForo WebSockets",
+    "description": "Adds websocket technology to the forum.",
+    "version_id": 2010470,
+    "version_string": "2.1.4",
+    "dev": "Genesis\u2122",
+    "dev_url": "https://gnz.is",
+    "faq_url": "",
+    "support_url": "",
+    "extra_urls": {
+        "Discover more amazing add-ons": "https://gnz.is",
+        "Order custom services": "https://gnz.is/go/customdev"
+    },
+    "require": {
+        "XF": [
+            2030000,
+            "XenForo 2.3.0+"
+        ],
+        "php": [
+            "8.1.0",
+            "PHP 8.1.0+"
+        ]
+    },
+    "icon": "icon.png",
+    "composer_autoload": "vendor/composer"
+}

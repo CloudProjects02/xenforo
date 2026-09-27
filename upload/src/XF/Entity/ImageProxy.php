@@ -2,6 +2,7 @@
 
 namespace XF\Entity;
 
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XF\Repository\ImageProxyRepository;
@@ -32,7 +33,7 @@ use XF\Util\Str;
  * @property-read int|null $height
  *
  * RELATIONS
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\ImageProxyReferrer> $Referrers
+ * @property-read AbstractCollection<ImageProxyReferrer> $Referrers
  */
 class ImageProxy extends Entity
 {

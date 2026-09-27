@@ -2,7 +2,7 @@
 
 namespace XF\Service\Style;
 
-use League\Flysystem\FileNotFoundException;
+use League\Flysystem\FilesystemException;
 use XF\App;
 use XF\Entity\AddOn;
 use XF\Entity\Style;
@@ -106,7 +106,7 @@ class ArchiveExportService extends AbstractService
 				{
 					$metadata = $fs->getMetadata($path);
 				}
-				catch (FileNotFoundException $e)
+				catch (FilesystemException $e)
 				{
 					throw new PrintableException(\XF::phrase('file_or_directory_not_found_at_path_x', ['path' => $path]));
 				}
@@ -185,7 +185,6 @@ class ArchiveExportService extends AbstractService
 			return true;
 		}
 
-		/** @var ArchiveValidatorService $validator */
 		$validator = $this->service(ArchiveValidatorService::class, $uploadRoot, 'export');
 		return $validator->validate($errors);
 	}

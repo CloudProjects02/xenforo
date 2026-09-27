@@ -3,6 +3,7 @@
 namespace XF\Entity;
 
 use XF\CustomField\Set;
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XF\Repository\UserFieldRepository;
@@ -22,15 +23,15 @@ use function in_array, intval;
  * @property string $location
  * @property string $location_
  * @property array $following
- * @property array $ignored
+ * @property array|null $ignored
  * @property int $avatar_crop_x
  * @property int $avatar_crop_y
  * @property int $banner_date
  * @property int|null $banner_position_y
  * @property bool $banner_optimized
  * @property string $about
- * @property array $custom_fields_
- * @property array $connected_accounts
+ * @property array|null $custom_fields_
+ * @property array|null $connected_accounts
  * @property int $password_date
  *
  * GETTERS
@@ -40,7 +41,7 @@ use function in_array, intval;
  *
  * RELATIONS
  * @property-read User|null $User
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\UserFieldValue> $CustomFields
+ * @property-read AbstractCollection<UserFieldValue> $CustomFields
  */
 class UserProfile extends Entity
 {

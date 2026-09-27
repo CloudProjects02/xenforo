@@ -83,7 +83,8 @@ class Route extends AbstractHandler
 		$routePrefix = $new ? $route->getValue('route_prefix') : $route->getExistingValue('route_prefix');
 		$subName = $new ? $route->getValue('sub_name') : $route->getExistingValue('sub_name');
 
-		$subNameFile = preg_replace('#[^a-z0-9_-]#i', '-', $subName);
+		$subNameFile = preg_replace('#/$#', '_', $subName);
+		$subNameFile = preg_replace('#[^a-z0-9_-]#i', '-', $subNameFile);
 		$subNameFile = preg_replace('#-{2,}#', '-', $subNameFile);
 
 		return "{$routeType}_{$routePrefix}_{$subNameFile}.json";

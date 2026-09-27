@@ -104,6 +104,18 @@ class AddOn extends Entity
 		return $this->app()->addOnManager()->getById($this->addon_id);
 	}
 
+	public function getAddOnDirectory(): string
+	{
+		$addOnClass = $this->getAddOnClass();
+
+		if (!$addOnClass)
+		{
+			return '';
+		}
+
+		return $addOnClass->getAddOnDirectory();
+	}
+
 	// ********************************* LIFE CYCLE ***************************
 
 	protected function _preSave()

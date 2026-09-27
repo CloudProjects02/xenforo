@@ -1,0 +1,47 @@
+# Make Command Coverage
+
+## Artifact-to-Command Map
+
+This table describes the built-in command family at the time these skills were generated. The local `xf list xf-make` output and command help are authoritative.
+
+| Artifact | Built-in command |
+|---|---|---|
+| Activity summary definition | `xf-make:activity-summary-definition` |
+| Admin navigation | `xf-make:admin-navigation` |
+| Admin permission | `xf-make:admin-permission` |
+| Advertising position | `xf-make:advertising-position` |
+| API scope | `xf-make:api-scope` |
+| BB code | `xf-make:bb-code` |
+| BB code media site | `xf-make:bb-code-media-site` |
+| Class extension and registration | `xf-make:extension` |
+| CLI command | `xf-make:cli-command` (`xf-make:command` alias) |
+| Code event | `xf-make:code-event` |
+| Code event listener | `xf-make:listener` |
+| Content-type field | `xf-make:content-type-field` |
+| Controller | `xf-make:controller` |
+| Cron entry | `xf-make:cron` |
+| Entity, optionally finder/repository | `xf-make:entity` |
+| Finder | `xf-make:finder` |
+| Help page, phrases, and template | `xf-make:help-page` |
+| Job | `xf-make:job` |
+| Member statistic | `xf-make:member-stat` |
+| Public navigation | `xf-make:navigation` |
+| Option | `xf-make:option` |
+| Option group | `xf-make:option-group` |
+| Permission | `xf-make:permission` |
+| Permission interface group | `xf-make:permission-interface-group` |
+| Phrase | `xf-make:phrase` |
+| Repository | `xf-make:repository` |
+| Route, optionally related artifacts | `xf-make:route` |
+| Service | `xf-make:service` |
+| Style property | `xf-make:style-property` |
+| Style-property group | `xf-make:style-property-group` |
+| Custom make stub publication | `xf-make:stub-publish` |
+| Template | `xf-make:template` |
+| Template modification | `xf-make:template-modification` |
+| Widget definition | `xf-make:widget-definition` |
+| Widget position | `xf-make:widget-position` |
+
+Every built-in development-output handler has a corresponding make command. Prefer composed options when creating related artifacts: options can create option groups, permissions can create interface groups, style properties can create style-property groups, listeners can create code events, controllers can create admin permissions or API scopes, and routes can create controllers, templates, navigation, permissions, and API scopes.
+
+Use direct filesystem authoring only when a locally installed add-on introduces a custom development-output handler without a command or UI authoring path. Follow the exceptional fallback documented by `xf-shared-policy` in that case.

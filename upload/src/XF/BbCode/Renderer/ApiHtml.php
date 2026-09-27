@@ -71,9 +71,14 @@ class ApiHtml extends Html
 		else if ($attachment->has_thumbnail)
 		{
 			$thumbnailUrl = $attachment->thumbnail_url_full;
+			$retinaThumbnailUrl = $attachment->retina_thumbnail_url_full;
+
+			$srcset = $retinaThumbnailUrl
+				? (htmlspecialchars($retinaThumbnailUrl) . ' 2x')
+				: '';
 
 			return '<a href="' . htmlspecialchars($fullUrl) . '">'
-				. '<img src="' . htmlspecialchars($thumbnailUrl) . '" alt="' . htmlspecialchars($alt) . '" />'
+				. '<img src="' . htmlspecialchars($thumbnailUrl) . '" srcset="' . $srcset . '" alt="' . htmlspecialchars($alt) . '" />'
 				. '</a>';
 		}
 		else

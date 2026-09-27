@@ -2,8 +2,8 @@
 
 namespace XF\Entity;
 
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Structure;
-use XF\Phrase;
 
 /**
  * COLUMNS
@@ -11,11 +11,11 @@ use XF\Phrase;
  * @property int $display_order
  *
  * GETTERS
- * @property-read Phrase|string $title
+ * @property-read string|\Stringable $title
  *
  * RELATIONS
- * @property-read \XF\Entity\Phrase|null $MasterTitle
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\ThreadPrefix> $Prefixes
+ * @property-read Phrase|null $MasterTitle
+ * @property-read AbstractCollection<ThreadPrefix> $Prefixes
  */
 class ThreadPrefixGroup extends AbstractPrefixGroup
 {

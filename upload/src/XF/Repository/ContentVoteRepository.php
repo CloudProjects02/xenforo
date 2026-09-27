@@ -141,6 +141,22 @@ class ContentVoteRepository extends Repository
 			return $this->getVoteByContentAndVoteUser($contentType, $contentId, $voteUser->user_id);
 		}
 
+		$voteHandler = $this->getVoteHandler($contentType, false);
+		if ($voteHandler)
+		{
+			$entity = $voteHandler->getContent($contentId);
+			if ($entity)
+			{
+				$event = ($voteType === ContentVote::VOTE_UP) ? 'upvote' : 'downvote';
+				$this->repository(WebhookRepository::class)->queueWebhook(
+					$contentType,
+					$contentId,
+					$event,
+					$entity
+				);
+			}
+		}
+
 		return $vote;
 	}
 

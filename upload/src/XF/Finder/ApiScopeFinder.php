@@ -2,14 +2,15 @@
 
 namespace XF\Finder;
 
+use XF\Entity\ApiScope;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Finder;
 
 /**
- * @method AbstractCollection<\XF\Entity\ApiScope> fetch(?int $limit = null, ?int $offset = null)
- * @method AbstractCollection<\XF\Entity\ApiScope> fetchDeferred(?int $limit = null, ?int $offset = null)
- * @method \XF\Entity\ApiScope|null fetchOne(?int $offset = null)
- * @extends Finder<\XF\Entity\ApiScope>
+ * @method AbstractCollection<ApiScope> fetch(?int $limit = null, ?int $offset = null)
+ * @method AbstractCollection<ApiScope> fetchDeferred(?int $limit = null, ?int $offset = null)
+ * @method ApiScope|null fetchOne(?int $offset = null)
+ * @extends Finder<ApiScope>
  */
 class ApiScopeFinder extends Finder
 {

@@ -19,6 +19,7 @@
 
 %left OP_OR .
 %left OP_AND .
+%right OP_NULL_COALESCE .
 %left OP_TERNARY_IF OP_TERNARY_ELSE OP_TERNARY_SHORT .
 %left OP_EQ OP_NE OP_ID OP_NID OP_GT OP_GTEQ OP_LT OP_LTEQ OP_IS OP_IS_NOT .
 %left OP_MINUS OP_PLUS OP_CONCAT .
@@ -168,7 +169,13 @@ expression_part(RES) ::= OP_MINUS(A) expression_part(B). [OP_U_MINUS] {
 	RES = new Syntax\UnaryOperator(@A, B, $this->line);
 }
 
-expression(RES) ::= expression(A) OP_OR|OP_AND|OP_INSTANCEOF(B) expression(C). {
+expression(RES) ::= expression(A) OP_OR(B) expression(C). {
+	RES = new Syntax\BinaryOperator(@B, A, C, $this->line);
+}
+expression(RES) ::= expression(A) OP_AND(B) expression(C). {
+	RES = new Syntax\BinaryOperator(@B, A, C, $this->line);
+}
+expression(RES) ::= expression(A) OP_INSTANCEOF(B) expression(C). {
 	RES = new Syntax\BinaryOperator(@B, A, C, $this->line);
 }
 expression(RES) ::= expression(A) OP_EQ|OP_NE|OP_ID|OP_NID|OP_GT|OP_GTEQ|OP_LT|OP_LTEQ(B) expression(C). {
@@ -180,7 +187,10 @@ expression(RES) ::= expression(A) OP_IS LITERAL(C) optional_args(D). {
 expression(RES) ::= expression(A) OP_IS_NOT LITERAL(C) optional_args(D). {
 	RES = new Syntax\Is(A, false, C, D ?: [], $this->line);
 }
-expression(RES) ::= expression(A) OP_MINUS|OP_PLUS|OP_MULTIPLY|OP_DIVIDE|OP_MOD|OP_CONCAT(B) expression(C). {
+expression(RES) ::= expression(A) OP_MINUS|OP_PLUS|OP_CONCAT(B) expression(C). {
+	RES = new Syntax\BinaryOperator(@B, A, C, $this->line);
+}
+expression(RES) ::= expression(A) OP_MULTIPLY|OP_DIVIDE|OP_MOD(B) expression(C). {
 	RES = new Syntax\BinaryOperator(@B, A, C, $this->line);
 }
 expression(RES) ::= OP_BANG(A) expression(B). {
@@ -188,6 +198,9 @@ expression(RES) ::= OP_BANG(A) expression(B). {
 }
 expression(RES) ::= expression(A) OP_TERNARY_SHORT expression(B). {
 	RES = new Syntax\TernaryShortOperator(A, B, $this->line);
+}
+expression(RES) ::= expression(A) OP_NULL_COALESCE expression(B). {
+	RES = new Syntax\NullCoalesceOperator(A, B, $this->line);
 }
 expression(RES) ::= expression(A) OP_TERNARY_IF expression(B) OP_TERNARY_ELSE expression(C). {
 	RES = new Syntax\TernaryOperator(A, B, C, $this->line);

@@ -21,7 +21,6 @@ class ActivitySummary
 			return;
 		}
 
-		/** @var ActivitySummaryRepository $repo */
 		$repo = \XF::repository(ActivitySummaryRepository::class);
 
 		$sections = $repo->findActivitySummarySectionsForDisplay()->fetch();

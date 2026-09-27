@@ -100,7 +100,6 @@ class AdvertisingPosition extends AbstractDataType
 	{
 		\XF::runOnce('rebuild_active_' . $this->getContainerTag(), function ()
 		{
-			/** @var AdvertisingRepository $repo */
 			$repo = $this->em->getRepository(AdvertisingRepository::class);
 			$repo->writeAdsTemplate();
 		});

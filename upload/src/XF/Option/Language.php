@@ -9,7 +9,6 @@ class Language extends AbstractOption
 {
 	public static function renderRadio(Option $option, array $htmlParams)
 	{
-		/** @var LanguageRepository $languageRepo */
 		$languageRepo = \XF::repository(LanguageRepository::class);
 
 		$choices = [];

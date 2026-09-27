@@ -9,6 +9,7 @@ use XF\Diff3;
 use XF\Entity\Style;
 use XF\Entity\Template;
 use XF\Finder\TemplateFinder;
+use XF\Finder\TemplateHistoryFinder;
 use XF\Job\TemplateMerge;
 use XF\Mvc\ParameterBag;
 use XF\Repository\StyleRepository;
@@ -73,7 +74,7 @@ class TemplateController extends AbstractController
 
 		$viewParams = [
 			'template' => $template,
-			'hasHistory' => $template->exists() ? $template->History->count() : false,
+			'hasHistory' => $template->exists() ? $this->getTemplateHistoryCount($template) > 0 : false,
 			'style' => $style,
 			'styleTree' => $this->getStyleRepo()->getStyleTree(),
 			'types' => $types,
@@ -194,14 +195,16 @@ class TemplateController extends AbstractController
 		$oldId = $this->filter('old', 'uint');
 		$newId = $this->filter('new', 'uint');
 
-		$list = [];
-
-		if ($template->History)
-		{
-			$list = $template->History;
-			$list = $list->toArray();
-			arsort($list);
-		}
+		$list = $this->finder(TemplateHistoryFinder::class)
+			->where([
+				'type' => $template->type,
+				'title' => $template->title,
+				'style_id' => $template->style_id,
+			])
+			->order('template_history_id', 'DESC')
+			->limit(100)
+			->fetch()
+			->toArray();
 		$newestHistory = reset($list);
 
 		if ($oldId)
@@ -445,7 +448,6 @@ class TemplateController extends AbstractController
 			return $this->error(\XF::phrase('custom_template_out_of_date_edited_recently_no_merge'));
 		}
 
-		/** @var TemplateHistoryRepository $historyRepo */
 		$historyRepo = $this->repository(TemplateHistoryRepository::class);
 		$previousVersion = $historyRepo->getHistoryForMerge($template, $parentTemplate);
 
@@ -547,6 +549,17 @@ class TemplateController extends AbstractController
 	protected function assertTemplateExists($id, $with = null, $phraseKey = null)
 	{
 		return $this->assertRecordExists(Template::class, $id, $with, $phraseKey);
+	}
+
+	protected function getTemplateHistoryCount(Template $template): int
+	{
+		return $this->finder(TemplateHistoryFinder::class)
+			->where([
+				'type' => $template->type,
+				'title' => $template->title,
+				'style_id' => $template->style_id,
+			])
+			->total();
 	}
 
 	/**

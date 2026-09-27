@@ -6,7 +6,7 @@ class TwitterProviderData extends AbstractProviderData
 {
 	public function getDefaultEndpoint()
 	{
-		return 'account/verify_credentials.json';
+		return 'https://api.x.com/1.1/account/verify_credentials.json';
 	}
 
 	public function getProviderKey()
@@ -36,7 +36,7 @@ class TwitterProviderData extends AbstractProviderData
 
 	public function getProfileLink()
 	{
-		return 'https://twitter.com/' . $this->getScreenName();
+		return 'https://x.com/' . $this->getScreenName();
 	}
 
 	public function getAvatarUrl()

@@ -2,14 +2,15 @@
 
 namespace XF\Finder;
 
+use XF\Entity\Moderator;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Finder;
 
 /**
- * @method AbstractCollection<\XF\Entity\Moderator> fetch(?int $limit = null, ?int $offset = null)
- * @method AbstractCollection<\XF\Entity\Moderator> fetchDeferred(?int $limit = null, ?int $offset = null)
- * @method \XF\Entity\Moderator|null fetchOne(?int $offset = null)
- * @extends Finder<\XF\Entity\Moderator>
+ * @method AbstractCollection<Moderator> fetch(?int $limit = null, ?int $offset = null)
+ * @method AbstractCollection<Moderator> fetchDeferred(?int $limit = null, ?int $offset = null)
+ * @method Moderator|null fetchOne(?int $offset = null)
+ * @extends Finder<Moderator>
  */
 class ModeratorFinder extends Finder
 {

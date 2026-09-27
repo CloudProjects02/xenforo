@@ -8,7 +8,6 @@ class EmailBounce
 {
 	public static function process()
 	{
-		/** @var EmailBounceRepository $bounceRepo */
 		$bounceRepo = \XF::repository(EmailBounceRepository::class);
 		$bounceRepo->pruneEmailBounceLogs();
 		$bounceRepo->pruneSoftBounceHistory();

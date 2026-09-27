@@ -76,7 +76,6 @@ class NodePermissions extends TreeContentPermissions
 
 	public function getContentTree()
 	{
-		/** @var NodeRepository $nodeRepo */
 		$nodeRepo = $this->builder->em()->getRepository(NodeRepository::class);
 		return $nodeRepo->createNodeTree($nodeRepo->getFullNodeList());
 	}

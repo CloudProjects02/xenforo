@@ -43,7 +43,6 @@ class UserAlert extends AbstractUserCriteriaJob
 		]);
 		$alert['alert_text'] = strtr($body, $replacements);
 
-		/** @var UserAlertRepository $alertRepo */
 		$alertRepo = $this->app->repository(UserAlertRepository::class);
 		$alertRepo->alert(
 			$user,

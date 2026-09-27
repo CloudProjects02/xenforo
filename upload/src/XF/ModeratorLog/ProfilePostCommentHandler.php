@@ -3,10 +3,13 @@
 namespace XF\ModeratorLog;
 
 use XF\Entity\ModeratorLog;
-use XF\Entity\Post;
+use XF\Entity\ProfilePostComment;
 use XF\Entity\User;
 use XF\Mvc\Entity\Entity;
 
+/**
+ * @extends AbstractHandler<ProfilePostComment>
+ */
 class ProfilePostCommentHandler extends AbstractHandler
 {
 	public function isLoggable(Entity $content, $action, User $actor)
@@ -56,7 +59,6 @@ class ProfilePostCommentHandler extends AbstractHandler
 
 	protected function setupLogEntityContent(ModeratorLog $log, Entity $content)
 	{
-		/** @var Post $content */
 		$log->content_user_id = $content->user_id;
 		$log->content_username = $content->username;
 		$log->content_title = '';

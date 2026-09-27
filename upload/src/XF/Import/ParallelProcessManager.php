@@ -285,7 +285,7 @@ class ParallelProcessManager
 			$end,
 		];
 
-		$process = new Process($cmd);
+		$process = new Process($cmd, \XF::getRootDirectory());
 		$process->setTimeout(null);
 		$process->start();
 

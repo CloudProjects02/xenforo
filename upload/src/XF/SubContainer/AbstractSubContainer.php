@@ -84,6 +84,8 @@ abstract class AbstractSubContainer implements \ArrayAccess
 	 */
 	public function offsetSet($key, $value): void
 	{
+		$this->parent->assertNotLocked();
+
 		$this->container->offsetSet($key, $value);
 	}
 
@@ -102,6 +104,8 @@ abstract class AbstractSubContainer implements \ArrayAccess
 	 */
 	public function offsetUnset($key): void
 	{
+		$this->parent->assertNotLocked();
+
 		$this->container->offsetUnset($key);
 	}
 

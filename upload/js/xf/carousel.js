@@ -16,25 +16,37 @@
 
 			this.slider = new Carousel(
 				this.target,
-				{
-					center: false,
-					direction: XF.isRtl() ? 'rtl' : 'ltr',
-					l10n: XF.CarouselL10n(),
-					on: {
-						ready: () =>
-						{
-							this.target.style.overflow = 'visible'
-						},
-					},
-					Autoplay: {
-						showProgress: false,
-						timeout: this.options.pause,
-					},
-					Dots: true,
-					Navigation: false,
-				},
-				{ Autoplay }
+				this.getCarouselOptions(),
+				this.getCarouselPlugins()
 			)
+		},
+
+		getCarouselOptions ()
+		{
+			return {
+				center: false,
+				direction: XF.isRtl() ? 'rtl' : 'ltr',
+				l10n: XF.CarouselL10n(),
+				on: {
+					ready: () =>
+					{
+						this.target.style.overflow = 'visible'
+					},
+				},
+				Autoplay: {
+					showProgress: false,
+					timeout: this.options.pause,
+				},
+				Dots: true,
+				Navigation: false,
+			}
+		},
+
+		getCarouselPlugins ()
+		{
+			return {
+				Autoplay,
+			}
 		},
 	})
 

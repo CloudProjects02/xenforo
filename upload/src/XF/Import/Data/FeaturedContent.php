@@ -2,6 +2,7 @@
 
 namespace XF\Import\Data;
 
+use XF\Mvc\Entity\Entity;
 use XF\Service\FeaturedContent\EditorService;
 
 /**
@@ -15,7 +16,7 @@ class FeaturedContent extends AbstractEmulatedData
 	protected $sourceImage = null;
 
 	/**
-	 * @var (callable(\XF\Mvc\Entity\Entity, \XF\Entity\FeaturedContent): void)|null
+	 * @var (callable(Entity, \XF\Entity\FeaturedContent): void)|null
 	 */
 	protected $contentCallback;
 
@@ -35,7 +36,7 @@ class FeaturedContent extends AbstractEmulatedData
 	}
 
 	/**
-	 * @param callable(\XF\Mvc\Entity\Entity, \XF\Entity\FeaturedContent): void $callback
+	 * @param callable(Entity, \XF\Entity\FeaturedContent): void $callback
 	 */
 	public function setContentCallback(callable $callback): void
 	{

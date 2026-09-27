@@ -2,10 +2,12 @@
 
 namespace XF\Report;
 
-use XF\Entity\Post;
 use XF\Entity\Report;
 use XF\Mvc\Entity\Entity;
 
+/**
+ * @extends AbstractHandler<\XF\Entity\ConversationMessage>
+ */
 class ConversationMessageHandler extends AbstractHandler
 {
 	protected function canActionContent(Report $report)
@@ -16,7 +18,6 @@ class ConversationMessageHandler extends AbstractHandler
 
 	public function setupReportEntityContent(Report $report, Entity $content)
 	{
-		/** @var Post $content */
 		$report->content_user_id = $content->user_id;
 		$report->content_info = [
 			'message' => $content->message,

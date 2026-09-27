@@ -18,7 +18,7 @@ class Compiler
 	protected $classParser;
 
 	/**
-	 * @var Annotation\RouteBlock[][]
+	 * @var RouteBlock[][]
 	 */
 	protected $routesByAddOn = [];
 
@@ -81,7 +81,7 @@ class Compiler
 		$this->routesByAddOn[$addOnId] = [];
 
 		$apiRoutes = \XF::db()->fetchAll("
-			SELECT route_prefix, format, controller
+			SELECT route_prefix, format, controller, action_prefix
 			FROM xf_route
 			WHERE route_type = 'api'
 				AND addon_id = ?
@@ -90,7 +90,8 @@ class Compiler
 		{
 			$controllerRoutes = $this->classParser->parseControllerClass(
 				$route['controller'],
-				$this->getRouteUrl($route['route_prefix'], $route['format'])
+				$this->getRouteUrl($route['route_prefix'], $route['format']),
+				$route['action_prefix'] ?? ''
 			);
 			$this->routesByAddOn[$addOnId] = array_merge($this->routesByAddOn[$addOnId], $controllerRoutes);
 		}
@@ -195,9 +196,9 @@ class Compiler
 	}
 
 	/**
-	 * @param Annotation\RouteBlock[] $routes
+	 * @param RouteBlock[] $routes
 	 *
-	 * @return Annotation\RouteBlock[]
+	 * @return RouteBlock[]
 	 */
 	public function sortRoutes(array $routes)
 	{
@@ -217,9 +218,9 @@ class Compiler
 	}
 
 	/**
-	 * @param Annotation\RouteBlock[][] $routesGrouped
+	 * @param RouteBlock[][] $routesGrouped
 	 *
-	 * @return Annotation\RouteBlock[][]
+	 * @return RouteBlock[][]
 	 */
 	public function sortRoutesGrouped(array $routesGrouped)
 	{
@@ -247,5 +248,125 @@ class Compiler
 	public function render(RendererInterface $renderer)
 	{
 		return $renderer->render($this->getRoutesByGroup(), $this->getTypes());
+	}
+
+	public function renderFiltered(RendererInterface $renderer, array $filters)
+	{
+		$filteredRoutes = $this->filterRoutes($filters);
+
+		$filteredTypes = $this->filterTypes($filteredRoutes);
+
+		return $renderer->render($this->groupRoutes($filteredRoutes), $filteredTypes);
+	}
+
+	public function filterRoutes(array $filters): array
+	{
+		$allRoutes = $this->getRoutesFlattened();
+		$filteredRoutes = [];
+
+		foreach ($filters AS $pair)
+		{
+			$pair = trim($pair);
+			if ($pair === '')
+			{
+				continue;
+			}
+
+			[$method, $route] = array_pad(explode(' ', $pair, 2), 2, null);
+
+			$method = $method ? strtoupper(trim($method)) : '';
+			$route = $route ? trim($route) : '';
+
+			if ($method === '' || $route === '')
+			{
+				continue;
+			}
+
+			foreach ($allRoutes AS $key => $routeBlock)
+			{
+				if ($routeBlock->method === $method && $routeBlock->route === $route)
+				{
+					$filteredRoutes[$key] = $routeBlock;
+				}
+			}
+		}
+
+		return $this->sortRoutes($filteredRoutes);
+	}
+
+	public function filterTypes(array $filteredRoutes): array
+	{
+		$allTypes = $this->getTypes();
+		$referencedTypes = [];
+
+		foreach ($filteredRoutes AS $route)
+		{
+			foreach ($route->inputs AS $input)
+			{
+				$referencedTypes = array_merge($referencedTypes, $input->types);
+			}
+			foreach ($route->outputs AS $output)
+			{
+				$referencedTypes = array_merge($referencedTypes, $output->types);
+			}
+		}
+
+		$referencedTypes = $this->normalizeTypeNames($referencedTypes);
+
+		$resolvedTypes = $this->resolveTypeDependencies($referencedTypes, $allTypes);
+
+		return $resolvedTypes;
+	}
+
+	protected function normalizeTypeNames(array $types): array
+	{
+		$normalized = [];
+		foreach ($types AS $type)
+		{
+			$normalized[] = rtrim($type, '[]');
+		}
+		return array_unique($normalized);
+	}
+
+	protected function resolveTypeDependencies(array $referencedTypes, array $allTypes): array
+	{
+		$resolved = [];
+		$queue = $referencedTypes;
+
+		while (!empty($queue))
+		{
+			$typeName = array_shift($queue);
+
+			if (isset($resolved[$typeName]))
+			{
+				continue;
+			}
+
+			if (isset($allTypes[$typeName]))
+			{
+				$typeBlock = $allTypes[$typeName];
+				$resolved[$typeName] = $typeBlock;
+
+				foreach ($typeBlock->structure AS $field)
+				{
+					$queue = array_merge($queue, $this->normalizeTypeNames($field->types));
+				}
+			}
+		}
+
+		return $resolved;
+	}
+
+	protected function groupRoutes(array $routes): array
+	{
+		$routeGroupings = [];
+
+		foreach ($routes AS $key => $route)
+		{
+			$group = $route->group ?: 'ungrouped';
+			$routeGroupings[$group][$key] = $route;
+		}
+
+		return $this->sortRoutesGrouped($routeGroupings);
 	}
 }

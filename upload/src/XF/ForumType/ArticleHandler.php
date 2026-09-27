@@ -167,7 +167,6 @@ class ArticleHandler extends AbstractHandler
 				}
 			}
 
-			/** @var AttachmentRepository $attachmentRepo */
 			$attachmentRepo = \XF::repository(AttachmentRepository::class);
 			$attachmentRepo->addAttachmentsToContent($firstPosts, 'post');
 		}

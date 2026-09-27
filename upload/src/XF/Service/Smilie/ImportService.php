@@ -222,7 +222,7 @@ class ImportService extends AbstractService
 		$directory = rtrim($directory, '/');
 		$fullPath = File::canonicalizePath($directory);
 
-		if (!file_exists($fullPath) || !is_readable($fullPath) || !is_dir($fullPath))
+		if (!@file_exists($fullPath) || !is_readable($fullPath) || !is_dir($fullPath))
 		{
 			throw new PrintableException(\XF::phrase('invalid_or_unreadable_directory'));
 		}

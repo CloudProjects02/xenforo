@@ -28,7 +28,6 @@ abstract class AbstractConfirmationService extends AbstractService
 
 		$this->user = $user;
 
-		/** @var UserConfirmationRepository $confirmationRepo */
 		$confirmationRepo = $this->repository(UserConfirmationRepository::class);
 		$this->confirmation = $confirmationRepo->getConfirmationRecordOrDefault($user, $this->getType());
 	}

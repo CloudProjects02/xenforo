@@ -15,7 +15,6 @@ class Counters
 	 */
 	public static function rebuildForumStatistics()
 	{
-		/** @var CountersRepository $countersRepo */
 		$countersRepo = \XF::app()->repository(CountersRepository::class);
 		$countersRepo->rebuildForumStatisticsCache();
 	}
@@ -25,7 +24,6 @@ class Counters
 	 */
 	public static function recordDailyStats()
 	{
-		/** @var StatsRepository $statsRepo */
 		$statsRepo = \XF::app()->repository(StatsRepository::class);
 
 		// get the the timestamp of 00:00 UTC for today

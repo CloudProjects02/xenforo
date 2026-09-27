@@ -5,7 +5,6 @@ namespace XF\Repository;
 use XF\Entity\User;
 use XF\Finder\UserFinder;
 use XF\Mvc\Entity\ArrayCollection;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 use XF\Util\Str;
 
@@ -345,13 +344,16 @@ class UserRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return UserFinder
 	 */
 	public function findValidUsers()
 	{
 		return $this->finder(UserFinder::class)->isValidUser();
 	}
 
+	/**
+	 * @return UserFinder
+	 */
 	public function findRecentlyActiveValidUsers()
 	{
 		return $this->finder(UserFinder::class)->isValidUser(true);

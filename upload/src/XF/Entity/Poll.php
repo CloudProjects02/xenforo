@@ -3,6 +3,7 @@
 namespace XF\Entity;
 
 use XF\Api\Result\EntityResult;
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XF\Poll\AbstractHandler;
@@ -18,7 +19,7 @@ use function intval, is_int;
  * @property int $content_id
  * @property string $question
  * @property string $question_
- * @property array $responses
+ * @property array|null $responses
  * @property int $voter_count
  * @property bool $public_votes
  * @property int $max_votes
@@ -31,8 +32,8 @@ use function intval, is_int;
  * @property-read Entity|null $Content
  *
  * RELATIONS
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\PollResponse> $Responses
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\PollVote> $Votes
+ * @property-read AbstractCollection<PollResponse> $Responses
+ * @property-read AbstractCollection<PollVote> $Votes
  */
 class Poll extends Entity
 {

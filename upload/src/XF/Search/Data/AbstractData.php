@@ -2,6 +2,7 @@
 
 namespace XF\Search\Data;
 
+use XF\Api\Result\EntityResult;
 use XF\Http\Request;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
@@ -102,6 +103,32 @@ abstract class AbstractData
 		return \XF::app()->templater()->renderTemplate($template, $data);
 	}
 
+	public function toApiResult(
+		Entity $entity,
+		int $verbosity = Entity::VERBOSITY_NORMAL,
+		array $options = []
+	): ?EntityResult
+	{
+		try
+		{
+			$result = $entity->toApiResult(
+				$verbosity,
+				array_merge($this->getDefaultApiResultOptions(), $options)
+			);
+		}
+		catch (\LogicException $e)
+		{
+			$result = null;
+		}
+
+		return $result;
+	}
+
+	protected function getDefaultApiResultOptions(): array
+	{
+		return [];
+	}
+
 	/**
 	 * @return list<string>
 	 */
@@ -111,7 +138,7 @@ abstract class AbstractData
 	}
 
 	/**
-	 * @return array{title: string, order?: int}|null
+	 * @return array{title: string|\Stringable, order?: int}|null
 	 */
 	public function getSearchFormTab()
 	{

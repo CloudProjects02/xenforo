@@ -39,7 +39,7 @@ class ThreadViewData
 
 	/**
 	 * @param Thread $thread
-	 * @param AbstractCollection|array $posts All fetched posts, including extra
+	 * @param AbstractCollection<Post>|array $posts All fetched posts, including extra
 	 * @param int[] $extraFetchedIds List of extra fetched post IDs (those not normally displayed on this page)
 	 */
 	public function __construct(Thread $thread, $posts, array $extraFetchedIds = [])

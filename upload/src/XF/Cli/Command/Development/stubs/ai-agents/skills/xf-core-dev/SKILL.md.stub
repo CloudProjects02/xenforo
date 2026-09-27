@@ -1,0 +1,38 @@
+---
+name: xf-core-dev
+description: Implement or review XenForo core framework work in src/XF, js/xf, src/addons/XF, installation and upgrade code, or core-only tests and CI.
+---
+
+# XenForo Core Development
+
+Load `xf-shared-policy`. Load `xf-environment` before running commands.
+
+## Work from the Framework Outward
+
+1. Identify the affected subsystem and its public/extensible contracts.
+2. Read sibling implementations and their callers before changing an abstraction.
+3. Keep controllers focused on request/response orchestration.
+4. Put multi-step domain operations in services, reusable query composition in finders or repositories, and persistence rules in entities.
+5. Preserve class-extension, code-event, and backwards-compatibility behavior unless the task explicitly changes it.
+6. For schema changes, update the base install schema and add the appropriate versioned upgrade path.
+
+Read [core-map.md](references/core-map.md) when ownership, installation, or extension implications are unclear.
+
+## Core-Only Tooling
+
+The repository's Composer scripts, `development/ci`, PHPStan setup, and PHPUnit suite are core development infrastructure. Do not present them as tools shipped to third-party add-on developers.
+
+In a managed environment, run scripts through the wrapper:
+
+```text
+xf composer run php-cs-fixer:fix
+xf composer run phplint
+xf composer run phpstan
+xf composer run phpunit
+```
+
+Use the narrowest applicable command or path first. Run a broader suite only when the change's reach justifies it.
+
+## Tests
+
+Read [testing.md](references/testing.md) before adding or substantially changing a core test. A code change does not automatically require a new test.

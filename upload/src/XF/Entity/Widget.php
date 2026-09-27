@@ -16,8 +16,8 @@ use XF\Widget\WidgetConfig;
  * @property int|null $widget_id
  * @property string $widget_key
  * @property string $definition_id
- * @property array $positions
- * @property array $options
+ * @property array|null $positions
+ * @property array|null $options
  * @property string $display_condition
  * @property string $condition_expression
  *
@@ -154,7 +154,6 @@ class Widget extends Entity
 			}
 			else
 			{
-				/** @var CompileService $compileService */
 				$compileService = $this->app()->service(CompileService::class, $this);
 				if ($isRename)
 				{

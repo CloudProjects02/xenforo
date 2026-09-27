@@ -72,7 +72,6 @@ class TfaService extends AbstractService
 		$limits = $this->getAttemptLimits();
 		$userId = $this->user->user_id;
 
-		/** @var TfaAttemptRepository $attemptRepo */
 		$attemptRepo = $this->repository(TfaAttemptRepository::class);
 
 		foreach ($limits AS $limit)
@@ -114,7 +113,6 @@ class TfaService extends AbstractService
 		$handler = $provider->handler;
 		$triggerData = $handler->trigger('login', $this->user, $providerData, $request);
 
-		/** @var TfaRepository $tfaRepo */
 		$tfaRepo = $this->repository(TfaRepository::class);
 		$tfaRepo->updateUserTfaData($this->user, $provider, $providerData, false);
 
@@ -158,7 +156,6 @@ class TfaService extends AbstractService
 			return;
 		}
 
-		/** @var TfaAttemptRepository $attemptRepo */
 		$attemptRepo = $this->repository(TfaAttemptRepository::class);
 		$attemptRepo->logFailedTfaAttempt($this->user->user_id);
 	}
@@ -170,7 +167,6 @@ class TfaService extends AbstractService
 			return;
 		}
 
-		/** @var TfaAttemptRepository $attemptRepo */
 		$attemptRepo = $this->repository(TfaAttemptRepository::class);
 		$attemptRepo->clearTfaAttempts($this->user->user_id);
 	}

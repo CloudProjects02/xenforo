@@ -1,0 +1,27 @@
+{
+    "legacy_addon_id": "",
+    "addon_id": "XenGenTr/XGTStyleV13",
+    "title": "[Graves] Style V13",
+    "description": "Turkhacks.com Style V13 destek eklentisi. Gelistirici: Graves",
+    "version_id": 1301702,
+    "version_string": "13.1.0.8",
+    "dev": "Graves",
+    "dev_url": "https://Turkhacks.com",
+    "faq_url": "",
+    "support_url": "https://Turkhacks.com",
+    "extra_urls": {
+        "Turkhacks.com": "https://turkahcks.com",
+        "TurkHacks": "https://Turkhacks.com"
+    },
+    "require": {
+        "XF": [
+            2030031,
+            "XenForo 2.3.0+"
+        ],
+        "php": [
+            "8.0.0",
+            "PHP 8.0.0+"
+        ]
+    },
+    "icon": "xgtStyleV13.png"
+}

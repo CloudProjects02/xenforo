@@ -229,10 +229,10 @@ class MySqlFt extends AbstractSource
 
 		$userIds = $query->getUserIds();
 		$skipFtQuery = (
-			$userIds &&
-			count($userIds) === 1 &&
-			!$matchEntries &&
-			($query->getOrder() === 'date' || $query->getOrder() === 'relevance')
+			$userIds
+			&& count($userIds) === 1
+			&& !$matchEntries
+			&& ($query->getOrder() === 'date' || $query->getOrder() === 'relevance')
 		);
 
 		if ($userIds)

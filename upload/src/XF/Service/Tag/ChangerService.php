@@ -95,6 +95,12 @@ class ChangerService extends AbstractService
 		return $this->contentId;
 	}
 
+	/**
+	 * @return array{
+	 *     editable: array<int, TagContent>,
+	 *     uneditable: array<int, TagContent>,
+	 * }
+	 */
 	public function getExistingTagsByEditability()
 	{
 		$editable = [];

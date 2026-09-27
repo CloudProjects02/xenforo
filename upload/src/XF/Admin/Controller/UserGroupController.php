@@ -44,11 +44,9 @@ class UserGroupController extends AbstractController
 			'userBanner userBanner--orange',
 		];
 
-		/** @var PermissionRepository $permissionRepo */
 		$permissionRepo = $this->repository(PermissionRepository::class);
 		$permissionData = $permissionRepo->getGlobalPermissionListData();
 
-		/** @var PermissionEntryRepository $entryRepo */
 		$entryRepo = $this->repository(PermissionEntryRepository::class);
 		$permissionData['values'] = $entryRepo->getGlobalUserGroupPermissionEntries($userGroup->user_group_id);
 
@@ -96,7 +94,6 @@ class UserGroupController extends AbstractController
 
 		$form->basicEntitySave($userGroup, $input);
 
-		/** @var UpdatePermissionsService $permissionUpdater */
 		$permissionUpdater = $this->service(UpdatePermissionsService::class);
 		$permissions = $this->filter('permissions', 'array');
 

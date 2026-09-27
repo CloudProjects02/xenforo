@@ -6,7 +6,6 @@ use XF\App;
 use XF\Entity\User;
 use XF\Job\Atomic;
 use XF\Job\UserDeleteCleanUp;
-use XF\Job\UserRenameCleanUp;
 use XF\Service\AbstractService;
 
 class DeleteService extends AbstractService
@@ -92,18 +91,11 @@ class DeleteService extends AbstractService
 		{
 			$jobList = [
 				[
-					UserRenameCleanUp::class,
-					[
-						'originalUserId' => $user->user_id,
-						'originalUserName' => $this->originalUserName,
-						'newUserName' => $this->renameTo,
-					],
-				],
-				[
 					UserDeleteCleanUp::class,
 					[
 						'userId' => $user->user_id,
 						'username' => $this->renameTo,
+						'originalUserName' => $this->originalUserName,
 					],
 				],
 			];

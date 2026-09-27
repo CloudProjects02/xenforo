@@ -6,6 +6,9 @@ use XF\Entity\ModeratorLog;
 use XF\Entity\User;
 use XF\Mvc\Entity\Entity;
 
+/**
+ * @extends AbstractHandler<User>
+ */
 class UserHandler extends AbstractHandler
 {
 	protected function getLogActionForChange(Entity $content, $field, $newValue, $oldValue)
@@ -25,13 +28,12 @@ class UserHandler extends AbstractHandler
 
 	protected function setupLogEntityContent(ModeratorLog $log, Entity $content)
 	{
-		/** @var User $content */
-		$log->content_user_id = $content->user_id;
+		$log->content_user_id = $content->user_id ?? 0;
 		$log->content_username = $content->username;
 		$log->content_title = $content->username;
 		$log->content_url = \XF::app()->router('public')->buildLink('nopath:members', $content);
 		$log->discussion_content_type = 'user';
-		$log->discussion_content_id = $content->user_id;
+		$log->discussion_content_id = $content->user_id ?? 0;
 	}
 
 	public function getContentTitle(ModeratorLog $log)

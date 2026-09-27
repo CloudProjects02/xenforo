@@ -155,7 +155,6 @@ class UpdatePermissionsService extends AbstractService
 
 	protected function getAvailablePermissionsGrouped()
 	{
-		/** @var PermissionRepository $permissionRepo */
 		$permissionRepo = $this->repository(PermissionRepository::class);
 		return $permissionRepo->getPermissionsGrouped();
 	}
@@ -209,7 +208,6 @@ class UpdatePermissionsService extends AbstractService
 
 	public function triggerCacheRebuild()
 	{
-		/** @var PermissionCombinationRepository $combinationRepo */
 		$combinationRepo = $this->repository(PermissionCombinationRepository::class);
 
 		if ($this->user)

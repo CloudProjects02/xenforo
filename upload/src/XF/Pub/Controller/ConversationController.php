@@ -17,7 +17,6 @@ use XF\Entity\ConversationUser;
 use XF\Entity\User;
 use XF\Finder\ConversationMessageFinder;
 use XF\Finder\ConversationUserFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\ParameterBag;
 use XF\Mvc\Reply\AbstractReply;
 use XF\Mvc\Reply\Exception;
@@ -220,19 +219,15 @@ class ConversationController extends AbstractController
 		$messageList = $conversationMessageRepo->findMessagesForConversationView($conversation);
 		$messages = $messageList->limitByPage($page, $perPage)->fetch();
 
-		/** @var AttachmentRepository $attachmentRepo */
 		$attachmentRepo = $this->repository(AttachmentRepository::class);
 		$attachmentRepo->addAttachmentsToContent($messages, 'conversation_message');
 
-		/** @var UserAlertRepository $userAlertRepo */
 		$userAlertRepo = $this->repository(UserAlertRepository::class);
 		$userAlertRepo->markUserAlertsReadForContent('conversation_message', $messages->keys());
 
-		/** @var UnfurlRepository $unfurlRepo */
 		$unfurlRepo = $this->repository(UnfurlRepository::class);
 		$unfurlRepo->addUnfurlsToContent($messages, false);
 
-		/** @var EmbedResolverRepository $embedRepo */
 		$embedRepo = $this->repository(EmbedResolverRepository::class);
 		$embedRepo->addEmbedsToContent($messages);
 
@@ -320,7 +315,6 @@ class ConversationController extends AbstractController
 
 		$visitor = \XF::visitor();
 
-		/** @var CreatorService $creator */
 		$creator = $this->service(CreatorService::class, $visitor);
 		$creator->setOptions($options);
 		$creator->setRecipients($recipients);
@@ -392,7 +386,6 @@ class ConversationController extends AbstractController
 
 			if ($conversation->canUploadAndManageAttachments())
 			{
-				/** @var AttachmentRepository $attachmentRepo */
 				$attachmentRepo = $this->repository(AttachmentRepository::class);
 				$attachmentData = $attachmentRepo->getEditorData('conversation_message', null, $draft->attachment_hash);
 			}
@@ -474,7 +467,6 @@ class ConversationController extends AbstractController
 		$visitor = \XF::visitor();
 		$message = $this->plugin(EditorPlugin::class)->fromInput('message');
 
-		/** @var ReplierService $replier */
 		$replier = $this->service(ReplierService::class, $conversation, $visitor);
 		$replier->setMessageContent($message);
 
@@ -559,7 +551,6 @@ class ConversationController extends AbstractController
 			$limit = 3;
 			$lastDate = $this->filter('last_date', 'uint');
 
-			/** @var Finder $messageList */
 			$messageList = $convMessageRepo->findNewestMessagesInConversation($conversation, $lastDate)->limit($limit + 1);
 			$messages = $messageList->fetch();
 
@@ -580,7 +571,6 @@ class ConversationController extends AbstractController
 			// put the posts into oldest-first order
 			$messages = $messages->reverse(true);
 
-			/** @var AttachmentRepository $attachmentRepo */
 			$attachmentRepo = $this->repository(AttachmentRepository::class);
 			$attachmentRepo->addAttachmentsToContent($messages, 'conversation_message');
 
@@ -713,7 +703,6 @@ class ConversationController extends AbstractController
 	 */
 	protected function setupConversationEdit(ConversationMaster $conversation)
 	{
-		/** @var EditorService $editor */
 		$editor = $this->service(EditorService::class, $conversation);
 
 		$editor->setTitle($this->filter('title', 'str'));
@@ -844,7 +833,6 @@ class ConversationController extends AbstractController
 
 		if ($this->isPost())
 		{
-			/** @var InviterService $inviter */
 			$inviter = $this->service(InviterService::class, $conversation, \XF::visitor());
 
 			$recipients = $this->filter('recipients', 'str');
@@ -970,7 +958,7 @@ class ConversationController extends AbstractController
 		$reactionPlugin = $this->plugin(ReactionPlugin::class);
 		return $reactionPlugin->actionReactions(
 			$message,
-			'conversations/replies/reactions',
+			'direct-messages/replies/reactions',
 			$title,
 			$breadcrumbs
 		);
@@ -1001,7 +989,6 @@ class ConversationController extends AbstractController
 	{
 		$message = $this->plugin(EditorPlugin::class)->fromInput('message');
 
-		/** @var MessageEditorService $editor */
 		$editor = $this->service(MessageEditorService::class, $conversationMessage);
 		$editor->setMessageContent($message);
 
@@ -1040,7 +1027,6 @@ class ConversationController extends AbstractController
 
 			if ($this->filter('_xfWithData', 'bool') && $this->filter('_xfInlineEdit', 'bool'))
 			{
-				/** @var AttachmentRepository $attachmentRepo */
 				$attachmentRepo = $this->repository(AttachmentRepository::class);
 				$attachmentRepo->addAttachmentsToContent([
 					$message->message_id => $message,
@@ -1063,7 +1049,6 @@ class ConversationController extends AbstractController
 		{
 			if ($conversation->canUploadAndManageAttachments())
 			{
-				/** @var AttachmentRepository $attachmentRepo */
 				$attachmentRepo = $this->repository(AttachmentRepository::class);
 				$attachmentData = $attachmentRepo->getEditorData('conversation_message', $message);
 			}
@@ -1111,7 +1096,6 @@ class ConversationController extends AbstractController
 
 		if ($conversation->canUploadAndManageAttachments())
 		{
-			/** @var AttachmentRepository $attachmentRepo */
 			$attachmentRepo = $this->repository(AttachmentRepository::class);
 			$attachmentData = $attachmentRepo->getEditorData('conversation_message', $message, $tempHash);
 			$attachments = $attachmentData['attachments'];
@@ -1180,7 +1164,6 @@ class ConversationController extends AbstractController
 	{
 		$visitor = \XF::visitor();
 
-		/** @var ConversationUserFinder $finder */
 		$finder = $this->finder(ConversationUserFinder::class);
 		$finder->forUser($visitor, false);
 		$finder->where('conversation_id', $conversationId);
@@ -1248,7 +1231,6 @@ class ConversationController extends AbstractController
 				$attachmentHash = $conversation->draft_reply->attachment_hash;
 			}
 
-			/** @var AttachmentRepository $attachmentRepo */
 			$attachmentRepo = $this->repository(AttachmentRepository::class);
 			return $attachmentRepo->getEditorData('conversation_message', $conversation, $attachmentHash);
 		}

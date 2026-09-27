@@ -86,7 +86,7 @@ if (!function_exists('utf8_strpos'))
 	/**
 	 * @deprecated in 2.3.0 and will be removed in 3.0.0
 	 *
-	 * @return int<0,max>|false
+	 * @return int<0,\max>|false
 	 */
 	function utf8_strpos(string $haystack, string $needle, int $offset = 0)
 	{

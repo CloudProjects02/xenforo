@@ -230,12 +230,12 @@ class Manager
 			case JobResult::RESULT_FAILED:
 				$this->cancelAndDequeueJob($job);
 
-				$this->app->db()->insert('xf_failed_job', [
-					'execute_class' => $job['execute_class'],
-					'execute_data' => serialize($result->data),
-					'exception' => $result->exception,
-					'fail_date' => time(),
-				]);
+				if ($result->exception)
+				{
+					$jobForLogging = $job;
+					$jobForLogging['execute_data'] = serialize($result->data);
+					$this->logFailedJob($jobForLogging, $result->exception);
+				}
 
 				break;
 		}
@@ -275,7 +275,7 @@ class Manager
 			$result = $runner->run($maxRunTime);
 			$this->runningJob = null;
 		}
-		catch (\Exception $e)
+		catch (\Throwable $e)
 		{
 			$this->runningJob = null;
 
@@ -290,10 +290,25 @@ class Manager
 
 				throw $e;
 			}
-			else
+
+			$this->app->logException($e, false, "$job[execute_class]: ");
+
+			$data = unserialize($job['execute_data']);
+			$result = null;
+
+			if (method_exists($runner, 'getNextAttemptDate'))
 			{
-				$this->app->logException($e, false, "Job $job[execute_class]: ");
-				$result = JobResult::newComplete($job['job_id'], [], "$job[execute_class] threw exception. See error log.");
+				$nextTry = $runner->getNextAttemptDate($job['attempts']);
+				if ($nextTry !== null)
+				{
+					$result = JobResult::newReattempt($job['job_id'], $nextTry, $data);
+				}
+			}
+
+			if (!$result)
+			{
+				$exception = $e instanceof \Exception ? $e : new \Exception($e->getMessage(), (int) $e->getCode(), $e);
+				$result = JobResult::newFailed($job['job_id'], $data, $exception);
 			}
 		}
 
@@ -318,8 +333,10 @@ class Manager
 
 		try
 		{
+			$error = error_get_last();
+
 			// job is being run manually, there's no error which implies a call to exit, or forced re-enqueue
-			if ($job['manual_execute'] || !error_get_last() || $this->app->config()['development']['throwJobErrors'])
+			if ($job['manual_execute'] || !$error || $this->app->config()['development']['throwJobErrors'])
 			{
 				$this->db->rollbackAll();
 
@@ -327,12 +344,49 @@ class Manager
 					'trigger_date' => $job['trigger_date'],
 					'last_run_date' => time(),
 				], 'job_id = ?', $job['job_id']);
-
-				$this->updateNextRunTime();
 			}
+			else
+			{
+				$this->db->rollbackAll();
+
+				$exception = new \Exception("{$error['message']} in {$error['file']}:{$error['line']}");
+				$this->app->logException($exception, false, "Job $job[execute_class]: ");
+
+				$shouldRetry = false;
+				$runner = $this->getJobRunner($job);
+				if ($runner && method_exists($runner, 'getNextAttemptDate'))
+				{
+					$nextTry = $runner->getNextAttemptDate($job['attempts']);
+					if ($nextTry !== null)
+					{
+						$this->db->update('xf_job', [
+							'trigger_date' => $nextTry,
+							'last_run_date' => time(),
+							'attempts' => $job['attempts'] + 1,
+						], 'job_id = ?', $job['job_id']);
+
+						$shouldRetry = true;
+					}
+				}
+
+				if (!$shouldRetry)
+				{
+					$this->db->delete('xf_job', 'job_id = ?', $job['job_id']);
+					$this->logFailedJob($job, $exception);
+				}
+			}
+
+			$this->updateNextRunTime();
 		}
-		catch (\Exception $e)
+		catch (\Throwable $e)
 		{
+			try
+			{
+				$this->app->logException($e, false, 'Job shutdown handler error: ');
+			}
+			catch (\Throwable $logError)
+			{
+			}
 		}
 	}
 
@@ -373,6 +427,23 @@ class Manager
 		{
 			unset($this->uniqueEnqueued[$job['unique_key']]);
 		}
+	}
+
+	protected function logFailedJob(array $job, \Exception $exception): bool
+	{
+		if (!\XF::$debugMode)
+		{
+			return false;
+		}
+
+		$this->db->insert('xf_failed_job', [
+			'execute_class' => $job['execute_class'],
+			'execute_data' => $job['execute_data'],
+			'exception' => $exception,
+			'fail_date' => time(),
+		]);
+
+		return true;
 	}
 
 	public function getRunnable($manual)

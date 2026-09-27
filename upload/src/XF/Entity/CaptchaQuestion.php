@@ -11,7 +11,7 @@ use function in_array, strval;
  * COLUMNS
  * @property int|null $captcha_question_id
  * @property string $question
- * @property array $answers
+ * @property array|null $answers
  * @property bool $active
  *
  * GETTERS

@@ -146,8 +146,8 @@ class Extension
 	 */
 	public function extendClass($class, $fakeBaseClass = null)
 	{
-		$class = ltrim($class, '\\');
-		$class = $this->getAliasedClass($class);
+		$originalClass = ltrim($class, '\\');
+		$class = $this->getAliasedClass($originalClass);
 
 		if (isset($this->extensionMap[$class]))
 		{
@@ -159,11 +159,10 @@ class Extension
 			return $class;
 		}
 
-		$extensions = !empty($this->classExtensions[$class]) ? $this->classExtensions[$class] : [];
+		$extensions = $this->classExtensions[$class] ?? [];
 		if (!$extensions)
 		{
-			$this->extensionMap[$class] = $class;
-			$this->inverseExtensionMap[$class] = $class;
+			$this->mapExtension($originalClass, $class, $class);
 			return $class;
 		}
 
@@ -176,8 +175,7 @@ class Extension
 			}
 			else
 			{
-				$this->extensionMap[$class] = $class;
-				$this->inverseExtensionMap[$class] = $class;
+				$this->mapExtension($originalClass, $class, $class);
 				return $class;
 			}
 		}
@@ -220,15 +218,33 @@ class Extension
 		}
 		catch (\Exception $e)
 		{
-			$this->extensionMap[$class] = $class;
-			$this->inverseExtensionMap[$class] = $class;
+			$this->mapExtension($originalClass, $class, $class);
 			throw $e;
 		}
 
-		$this->extensionMap[$class] = $finalClass;
-		$this->inverseExtensionMap[$finalClass] = $class;
+		$this->mapExtension($originalClass, $class, $finalClass);
 
 		return $finalClass;
+	}
+
+	/**
+	 * @param class-string $originalClass
+	 * @param class-string $class
+	 * @param class-string $finalClass
+	 *
+	 * @return void
+	 */
+	protected function mapExtension(string $originalClass, string $class, string $finalClass): void
+	{
+		$this->extensionMap[$class] = $finalClass;
+		$this->inverseExtensionMap[$finalClass] = $class;
+		$this->inverseExtensionMap[$class] = $class;
+
+		if ($originalClass !== $class)
+		{
+			$this->extensionMap[$originalClass] = $finalClass;
+			$this->inverseExtensionMap[$originalClass] = $class;
+		}
 	}
 
 	/**

@@ -245,7 +245,6 @@ class NodeType extends AbstractType
 
 			if ($descendantWhere)
 			{
-				/** @var NodeFinder $descendantFinder */
 				$descendantFinder = $em->getFinder(NodeFinder::class);
 				$descendantFinder
 					->whereOr($descendantWhere)

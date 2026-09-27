@@ -44,7 +44,6 @@ abstract class AbstractContentPermissions
 
 	public function setupBuildData()
 	{
-		/** @var PermissionEntryRepository $entryRepo */
 		$entryRepo = $this->builder->em()->getRepository(PermissionEntryRepository::class);
 
 		$entries = $entryRepo->getContentPermissionEntriesGrouped($this->getContentType());

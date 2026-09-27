@@ -97,14 +97,12 @@ class EmailConfirmationService extends AbstractConfirmationService
 
 		if ($originalUserState == 'email_confirm' && $user->user_state == 'valid')
 		{
-			/** @var RegistrationCompleteService $regComplete */
 			$regComplete = $this->service(RegistrationCompleteService::class, $user);
 			$regComplete->triggerCompletionActions();
 			$this->preRegContent = $regComplete->getPreRegContent();
 		}
 		else
 		{
-			/** @var PreRegActionRepository $preRegActionRepo */
 			$preRegActionRepo = $this->repository(PreRegActionRepository::class);
 			$preRegActionRepo->completeUserActionIfPossible($user);
 		}

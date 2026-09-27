@@ -74,7 +74,6 @@ class ReportRepository extends Repository
 
 	public function getModeratorsWhoCanHandleReport(Report $report, $notifiableOnly = false)
 	{
-		/** @var ModeratorRepository $moderatorRepo */
 		$moderatorRepo = $this->repository(ModeratorRepository::class);
 
 		$moderators = $moderatorRepo->findModeratorsForList()->with('User.PermissionCombination')->fetch();

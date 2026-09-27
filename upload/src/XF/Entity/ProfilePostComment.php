@@ -4,6 +4,7 @@ namespace XF\Entity;
 
 use XF\Api\Result\EntityResult;
 use XF\BbCode\RenderableContentInterface;
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XF\Repository\AttachmentRepository;
@@ -25,8 +26,8 @@ use XF\Spam\ContentChecker;
  * @property string $warning_message
  * @property array|null $embed_metadata
  * @property int $reaction_score
- * @property array $reactions_
- * @property array $reaction_users_
+ * @property array|null $reactions_
+ * @property array|null $reaction_users_
  *
  * GETTERS
  * @property-read mixed $Unfurls
@@ -39,11 +40,13 @@ use XF\Spam\ContentChecker;
  * @property-read ProfilePost|null $ProfilePost
  * @property-read DeletionLog|null $DeletionLog
  * @property-read ApprovalQueue|null $ApprovalQueue
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\Attachment> $Attachments
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\ReactionContent> $Reactions
+ * @property-read AbstractCollection<Attachment> $Attachments
+ * @property-read AbstractCollection<ReactionContent> $Reactions
  */
-class ProfilePostComment extends Entity implements RenderableContentInterface, LinkableInterface, ViewableInterface
+class ProfilePostComment extends Entity implements ContainableInterface, DatableInterface, RenderableContentInterface, LinkableInterface, ViewableInterface
 {
+	use ContainableTrait;
+	use DatableTrait;
 	use EmbedRendererTrait;
 	use ReactionTrait;
 
@@ -135,8 +138,7 @@ class ProfilePostComment extends Entity implements RenderableContentInterface, L
 				&& $visitor->user_id == $this->ProfilePost->profile_user_id
 				&& $visitor->hasPermission('profilePost', 'manageOwn')
 			)
-			||
-			(
+			|| (
 				$visitor->user_id == $this->user_id
 				&& $visitor->hasPermission('profilePost', 'deleteOwn')
 			)
@@ -354,7 +356,6 @@ class ProfilePostComment extends Entity implements RenderableContentInterface, L
 
 	protected function commentHidden($hardDelete = false)
 	{
-		/** @var UserAlertRepository $alertRepo */
 		$alertRepo = $this->repository(UserAlertRepository::class);
 		$alertRepo->fastDeleteAlertsForContent('profile_post_comment', $this->profile_post_comment_id);
 	}
@@ -419,7 +420,6 @@ class ProfilePostComment extends Entity implements RenderableContentInterface, L
 			$this->app()->logger()->logModeratorAction('profile_post_comment', $this, 'delete_hard');
 		}
 
-		/** @var AttachmentRepository $attachRepo */
 		$attachRepo = $this->repository(AttachmentRepository::class);
 		$attachRepo->fastDeleteContentAttachments('profile_post_comment', $this->profile_post_comment_id);
 	}
@@ -498,6 +498,21 @@ class ProfilePostComment extends Entity implements RenderableContentInterface, L
 			$result->can_react = $this->canReact();
 			$result->can_view_attachments = $this->canViewAttachments();
 		}
+	}
+
+	public function getContentContainerIdColumn(): string
+	{
+		return 'profile_post_id';
+	}
+
+	public function getContentContainerType(): string
+	{
+		return 'profile_post';
+	}
+
+	public function getContentDateColumn(): string
+	{
+		return 'comment_date';
 	}
 
 	public function getContentUrl(bool $canonical = false, array $extraParams = [], $hash = null)

@@ -53,7 +53,7 @@ class FileCleanUpRepository extends Repository
 					continue;
 				}
 
-				$relativePath = File::stripRootPathPrefix($file->getPathname());
+				$relativePath = str_replace('\\', '/', File::stripRootPathPrefix($file->getPathname()));
 				if (!in_array($relativePath, $currentFiles))
 				{
 					$filesToDelete[] = $relativePath;
@@ -66,6 +66,8 @@ class FileCleanUpRepository extends Repository
 
 	public function isFileValidForDeletion(string $addOnId, string $file, array $allowedPaths): bool
 	{
+		$file = str_replace('\\', '/', $file);
+
 		$undeletablePaths = [
 			"src/addons/$addOnId/_output/",
 			"src/addons/$addOnId/hashes.json",
@@ -91,6 +93,7 @@ class FileCleanUpRepository extends Repository
 
 		foreach ($allowedPaths AS $prefix)
 		{
+			$prefix = str_replace('\\', '/', $prefix);
 			if (strpos($file, $prefix) === 0)
 			{
 				return true;

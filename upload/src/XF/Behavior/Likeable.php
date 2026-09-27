@@ -35,7 +35,6 @@ class Likeable extends Behavior
 
 			if ($this->entity->isUpdate() && ($visibilityChange == 'enter' || $visibilityChange == 'leave'))
 			{
-				/** @var LikedContentRepository $likeRepo */
 				$likeRepo = $this->repository(LikedContentRepository::class);
 				$likeRepo->recalculateLikeIsCounted($this->contentType(), $this->id());
 			}
@@ -44,7 +43,6 @@ class Likeable extends Behavior
 
 	public function postDelete()
 	{
-		/** @var LikedContentRepository $likeRepo */
 		$likeRepo = $this->repository(LikedContentRepository::class);
 		$likeRepo->fastDeleteLikes($this->contentType(), $this->id());
 	}

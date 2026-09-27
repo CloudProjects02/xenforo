@@ -4,6 +4,7 @@ namespace XF\Entity;
 
 use XF\Finder\TemplateFinder;
 use XF\Finder\TemplateMapFinder;
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XF\Repository\AddOnRepository;
@@ -39,7 +40,7 @@ use function is_array, is_int, strval;
  *
  * RELATIONS
  * @property-read AddOn|null $AddOn
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\TemplateHistory> $History
+ * @property-read AbstractCollection<TemplateHistory> $History
  * @property-read Style|null $Style_
  */
 class Template extends Entity
@@ -191,7 +192,6 @@ class Template extends Entity
 	{
 		$compiler = $this->app()->templateCompiler();
 
-		/** @var TemplateModificationRepository $templateModRepo */
 		$templateModRepo = $this->repository(TemplateModificationRepository::class);
 		$templateWithModifications = $templateModRepo->applyModificationsToTemplate(
 			$this->type,
@@ -490,7 +490,6 @@ class Template extends Entity
 
 	protected function _setupDefaults()
 	{
-		/** @var AddOnRepository $addOnRepo */
 		$addOnRepo = $this->_em->getRepository(AddOnRepository::class);
 		$this->addon_id = $addOnRepo->getDefaultAddOnId();
 	}

@@ -27,7 +27,7 @@ use XF\Repository\OptionRepository;
  * @property-read Phrase $description
  *
  * RELATIONS
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\OptionGroupRelation> $Relations
+ * @property-read AbstractCollection<OptionGroupRelation> $Relations
  * @property-read AddOn|null $AddOn
  * @property-read \XF\Entity\Phrase|null $MasterTitle
  * @property-read \XF\Entity\Phrase|null $MasterDescription
@@ -158,7 +158,6 @@ class OptionGroup extends Entity
 
 		$db = $this->db();
 
-		/** @var AbstractCollection $options */
 		$options = $this->Options;
 
 		$optionIds = $options->keys();
@@ -202,7 +201,6 @@ class OptionGroup extends Entity
 
 	protected function _setupDefaults()
 	{
-		/** @var AddOnRepository $addOnRepo */
 		$addOnRepo = $this->_em->getRepository(AddOnRepository::class);
 		$this->addon_id = $addOnRepo->getDefaultAddOnId();
 	}

@@ -267,7 +267,6 @@ class App extends \XF\App
 		$params['listenersDisabled'] = $this->config('enableListeners') ? false : true;
 		$params['mailDisabled'] = $this->config('enableMail') ? false : true;
 
-		/** @var UpgradeCheckRepository $upgradeCheckRepo */
 		$upgradeCheckRepo = $this->repository(UpgradeCheckRepository::class);
 		$upgradeCheck = $upgradeCheckRepo->canCheckForUpgrades() ? $upgradeCheckRepo->getLatestUpgradeCheck() : null;
 		$params['upgradeCheck'] = $upgradeCheck;

@@ -5,14 +5,13 @@ namespace XF\Repository;
 use XF\Entity\User;
 use XF\Finder\SpamCleanerLogFinder;
 use XF\Finder\SpamTriggerLogFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 use XF\Spam\Cleaner\AbstractHandler;
 
 class SpamRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return SpamCleanLogFinder
 	 */
 	public function findSpamCleanerLogsForList()
 	{
@@ -22,7 +21,7 @@ class SpamRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return SpamTriggerLogFinder
 	 */
 	public function findSpamTriggerLogsForList()
 	{

@@ -5,6 +5,9 @@ namespace XF\Sitemap;
 use XF\Entity\Node;
 use XF\Finder\NodeFinder;
 
+/**
+ * @extends AbstractHandler<Node>
+ */
 class NodeHandler extends AbstractHandler
 {
 	public function getRecords($start)
@@ -26,14 +29,12 @@ class NodeHandler extends AbstractHandler
 
 	public function getEntry($record)
 	{
-		/** @var Node $record */
 		$url = $this->app->router('public')->buildLink('canonical:' . $record->getRoute(), $record);
 		return Entry::create($url);
 	}
 
 	public function isIncluded($record)
 	{
-		/** @var Node $record */
 		if (!$record->isSearchEngineIndexable())
 		{
 			return false;

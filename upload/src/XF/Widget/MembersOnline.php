@@ -21,7 +21,6 @@ class MembersOnline extends AbstractWidget
 			return '';
 		}
 
-		/** @var SessionActivityRepository $activityRepo */
 		$activityRepo = $this->repository(SessionActivityRepository::class);
 
 		$viewParams = [

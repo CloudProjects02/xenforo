@@ -59,7 +59,6 @@ class MergerService extends AbstractService
 
 		$source->delete();
 
-		/** @var TagRepository $tagRepo */
 		$tagRepo = $this->repository(TagRepository::class);
 		$tagRepo->recalculateTagUsageCache($targetTagId);
 

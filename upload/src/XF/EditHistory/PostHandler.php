@@ -8,35 +8,26 @@ use XF\Mvc\Entity\Entity;
 use XF\Mvc\Router;
 use XF\Service\Post\EditorService;
 
+/**
+ * @extends AbstractHandler<Post>
+ */
 class PostHandler extends AbstractHandler
 {
-	/**
-	 * @param Post $content
-	 */
 	public function canViewHistory(Entity $content)
 	{
 		return ($content->canView() && $content->canViewHistory());
 	}
 
-	/**
-	 * @param Post $content
-	 */
 	public function canRevertContent(Entity $content)
 	{
 		return $content->canEdit();
 	}
 
-	/**
-	 * @param Post $content
-	 */
 	public function getContentText(Entity $content)
 	{
 		return $content->message;
 	}
 
-	/**
-	 * @param Post $content
-	 */
 	public function getBreadcrumbs(Entity $content)
 	{
 		/** @var Router $router */
@@ -50,12 +41,8 @@ class PostHandler extends AbstractHandler
 		return $breadcrumbs;
 	}
 
-	/**
-	 * @param Post $content
-	 */
 	public function revertToVersion(Entity $content, EditHistory $history, ?EditHistory $previous = null)
 	{
-		/** @var EditorService $editor */
 		$editor = \XF::app()->service(EditorService::class, $content);
 
 		$editor->logEdit(false);

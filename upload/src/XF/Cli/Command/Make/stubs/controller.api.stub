@@ -1,0 +1,32 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use XF\Api\Controller\AbstractController;
+use XF\Api\Mvc\Reply\ApiResult;
+use XF\Mvc\ParameterBag;
+
+/**
+ * @api-group {{ apiGroup }}
+ */
+class {{ class }} extends AbstractController
+{
+	protected function preDispatchController(string $action, ParameterBag $params): void
+	{
+		$this->assertApiScopeByRequestMethod('{{ apiScope }}');
+	}
+
+	/**
+	 * @api-desc Gets a list of items
+	 *
+	 * @api-out array $items
+	 */
+	public function actionGet(ParameterBag $params): ApiResult
+	{
+		$viewParams = [];
+
+		return $this->apiResult($viewParams);
+	}
+}

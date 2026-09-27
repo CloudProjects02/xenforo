@@ -4,7 +4,6 @@ namespace XF\Repository;
 
 use XF\Entity\LoginAttempt;
 use XF\Finder\LoginAttemptFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 use XF\Util\Ip;
 use XF\Util\Str;
@@ -40,7 +39,6 @@ class LoginAttemptRepository extends Repository
 
 	public function clearLoginAttempts($login, $ip)
 	{
-		/** @var Finder $finder */
 		$finder = $this->finder(LoginAttemptFinder::class);
 
 		$attempts = $finder->where('login', $login)

@@ -3,20 +3,23 @@
 namespace XF\Mail;
 
 use Symfony\Component\Mailer\Exception\TransportException;
+use Symfony\Component\Mailer\SentMessage;
 use Symfony\Component\Mailer\Transport\AbstractTransport;
 use Symfony\Component\Mailer\Transport\Dsn;
 use Symfony\Component\Mailer\Transport\SendmailTransport;
 use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransport;
 use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransportFactory;
 use Symfony\Component\Mailer\Transport\Smtp\Stream\SocketStream;
+use Symfony\Component\Mailer\Transport\TransportInterface;
 use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Crypto\DkimSigner;
 use Symfony\Component\Mime\Message;
 use Symfony\Component\Mime\MessageConverter;
 use XF\Entity\User;
 use XF\Job\MailSend;
 use XF\Language;
 
-use function is_array;
+use function count, is_array;
 
 class Mailer
 {
@@ -40,11 +43,34 @@ class Mailer
 	 */
 	protected $queue;
 
+	/**
+	 * @var DkimSigner|null
+	 */
+	protected $signer;
+
+	/**
+	 * @var string|null
+	 */
 	protected $defaultFromEmail;
+
+	/**
+	 * @var string|null
+	 */
 	protected $defaultFromName;
+
+	/**
+	 * @var string|null
+	 */
 	protected $defaultReturnPath;
+
+	/**
+	 * @var bool
+	 */
 	protected $defaultUseVerp;
 
+	/**
+	 * @var class-string<Mail>
+	 */
 	protected $mailClass = Mail::class;
 
 	public function __construct(Templater $templater, AbstractTransport $defaultTransport, ?Styler $styler = null, bool $queue = true)
@@ -53,18 +79,53 @@ class Mailer
 		$this->defaultTransport = $defaultTransport;
 		$this->styler = $styler;
 		$this->queue = $queue;
+
+		$dkimOptions = \XF::options()->emailDkim;
+		if (
+			$dkimOptions['enabled']
+			&& $dkimOptions['verified']
+			&& extension_loaded('openssl')
+		)
+		{
+			$key = \XF::registry()->get('emailDkimKey');
+
+			if ($key)
+			{
+				$selector = $dkimOptions['selector'] ?? 'xenforo';
+				$this->signer = new DkimSigner(
+					$key,
+					$dkimOptions['domain'],
+					$selector
+				);
+			}
+		}
+
 	}
 
+	/**
+	 * @return class-string<Mail>
+	 */
 	public function getMailClass()
 	{
 		return $this->mailClass;
 	}
 
+	/**
+	 * @param class-string<Mail> $class
+	 *
+	 * @return void
+	 */
 	public function setMailClass($class)
 	{
 		$this->mailClass = $class;
 	}
 
+	/**
+	 * @param string $email
+	 * @param string|null $name
+	 *
+	 * @return void
+	 */
 	public function setDefaultFrom($email, $name = null)
 	{
 		if ($email)
@@ -79,16 +140,28 @@ class Mailer
 		}
 	}
 
+	/**
+	 * @return string|null
+	 */
 	public function getDefaultFromEmail()
 	{
 		return $this->defaultFromEmail;
 	}
 
+	/**
+	 * @return string|null
+	 */
 	public function getDefaultFromName()
 	{
 		return $this->defaultFromName;
 	}
 
+	/**
+	 * @param string|null $email
+	 * @param bool $useVerp
+	 *
+	 * @return void
+	 */
 	public function setDefaultReturnPath($email, $useVerp = false)
 	{
 		if ($email)
@@ -101,16 +174,25 @@ class Mailer
 		}
 	}
 
+	/**
+	 * @return string|null
+	 */
 	public function getDefaultReturnPath()
 	{
 		return $this->defaultReturnPath;
 	}
 
+	/**
+	 * @return void
+	 */
 	public function setDefaultUseVerp(bool $useVerp = false)
 	{
 		$this->defaultUseVerp = $useVerp;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function getDefaultUseVerp()
 	{
 		return $this->defaultUseVerp;
@@ -128,6 +210,9 @@ class Mailer
 		return $mail;
 	}
 
+	/**
+	 * @return void
+	 */
 	public function applyMailDefaults(Mail $mail)
 	{
 		if ($this->defaultFromEmail)
@@ -140,11 +225,21 @@ class Mailer
 		}
 	}
 
+	/**
+	 * @param string $toEmail
+	 *
+	 * @return string
+	 */
 	public function calculateBounceHmac($toEmail)
 	{
 		return substr(hash_hmac('md5', $toEmail, \XF::config('globalSalt')), 0, 8);
 	}
 
+	/**
+	 * @param string $html
+	 *
+	 * @return string
+	 */
 	public function generateTextBody($html)
 	{
 		if ($this->styler)
@@ -155,6 +250,17 @@ class Mailer
 		return '';
 	}
 
+	/**
+	 * @param string $name
+	 * @param array<string, mixed> $params
+	 *
+	 * @return array{
+	 *     subject: string,
+	 *     html: string,
+	 *     text: string,
+	 *     headers: array<string, string>,
+	 * }
+	 */
 	public function renderMailTemplate($name, array $params, ?Language $language = null, ?User $toUser = null)
 	{
 		if (!$language)
@@ -219,6 +325,12 @@ class Mailer
 		];
 	}
 
+	/**
+	 * @param string $name
+	 * @param array<string, mixed> $params
+	 *
+	 * @return string
+	 */
 	public function renderPartialMailTemplate($name, array $params, ?Language $language = null, ?User $toUser = null)
 	{
 		if (!$language)
@@ -236,16 +348,48 @@ class Mailer
 		return $templater->renderTemplate("email:$name", $params);
 	}
 
+	/**
+	 * @return array<string, mixed>
+	 */
 	protected function getDefaultTemplateParams(Language $language, ?User $toUser = null)
 	{
+		$app = \XF::app();
+
 		return [
-			'language' => $language,
-			'isRtl' => $language->isRtl(),
-			'options' => \XF::options(),
+			'versionVisible' => preg_replace('/^(\d+)\.(\d+)\..+$/', '$1.$2', \XF::$version),
+			'versionId' => \XF::$versionId,
+			'version' => \XF::$version,
+			'app' => $app,
+			'time' => \XF::$time,
+			'timeDetails' => $language->getDayStartTimestamps(),
+			'debug' => \XF::$debugMode,
+			'development' => \XF::$developmentMode,
+			'designer' => $app->config('designer')['enabled'],
 			'toUser' => $toUser,
+			'language' => $language,
+			'style' => $this->templater->getStyle(),
+			'isRtl' => $language->isRtl(),
+			'options' => $app->options(),
+			'reactions' => $app->get('reactions'),
+			'reactionsActive' => array_filter($app->get('reactions'), function (array $reaction)
+			{
+				return ($reaction['active'] === true);
+			}),
+			'addOns' => $app->container('addon.cache'),
+			'simpleCache' => $app->simpleCache(),
+			'contactUrl' => $app->container('contactUrl'),
+			'privacyPolicyUrl' => $app->container('privacyPolicyUrl'),
+			'tosUrl' => $app->container('tosUrl'),
+			'homePageUrl' => $app->container('homePageUrl'),
+			'helpPageCount' => $app->container('helpPageCount'),
 		];
 	}
 
+	/**
+	 * @param string $output
+	 *
+	 * @return array{subject: string, html: string, text: string}
+	 */
 	protected function pullComponentsFromTemplateOutput($output)
 	{
 		if (preg_match('#<mail:subject>(.*)</mail:subject>#siU', $output, $match))
@@ -289,9 +433,30 @@ class Mailer
 		];
 	}
 
+	/**
+	 * @return SentMessage|false|null
+	 */
 	public function send(Message $email, ?AbstractTransport $transport = null)
 	{
 		$email = MessageConverter::toEmail($email);
+		$originalEmail = $email;
+
+		if ($this->signer)
+		{
+			$from = $email->getFrom();
+
+			if (count($from) === 1)
+			{
+				$dkimOptions = \XF::options()->emailDkim;
+				$fromAddress = $from[0]->getAddress();
+				$fromDomain = substr(strrchr($fromAddress, '@') ?: '', 1);
+
+				if ($dkimOptions['domain'] === $fromDomain)
+				{
+					$email = $this->signer->sign($email);
+				}
+			}
+		}
 
 		if (!$transport)
 		{
@@ -316,14 +481,14 @@ class Mailer
 				{
 					return $address->getAddress();
 				},
-				$email->getTo()
+				$originalEmail->getTo()
 			));
 			$fromEmail = implode(', ', array_map(
 				function (Address $address): string
 				{
 					return $address->getAddress();
 				},
-				$email->getFrom()
+				$originalEmail->getFrom()
 			));
 
 			\XF::logException($e, false, "Email to {$toEmails} from {$fromEmail} failed:");
@@ -332,6 +497,9 @@ class Mailer
 		return $sent;
 	}
 
+	/**
+	 * @return int|SentMessage|false|null
+	 */
 	public function queue(Message $email)
 	{
 		if (!$this->queue)
@@ -342,16 +510,28 @@ class Mailer
 		return \XF::app()->jobManager()->enqueue(MailSend::class, ['email' => $email]);
 	}
 
+	/**
+	 * @return AbstractTransport
+	 */
 	public function getDefaultTransport()
 	{
 		return $this->defaultTransport;
 	}
 
+	/**
+	 * @return void
+	 */
 	public function setDefaultTransport(AbstractTransport $transport)
 	{
 		$this->defaultTransport = $transport;
 	}
 
+	/**
+	 * @param string $type
+	 * @param array<string, mixed> $config
+	 *
+	 * @return TransportInterface
+	 */
 	public static function getTransportFromOption($type, array $config)
 	{
 		switch ($type)
@@ -381,6 +561,18 @@ class Mailer
 					$stream->disableTls();
 				}
 
+				$hostname = gethostname();
+				if ($hostname !== false && $hostname !== '')
+				{
+					$transport->setLocalDomain($hostname);
+				}
+
+				$pingThreshold = (int) \XF::app()->config('smtpKeepAlivePingThreshold');
+				if ($pingThreshold > 0)
+				{
+					$transport->setPingThreshold($pingThreshold);
+				}
+
 				return $transport;
 
 			case 'file':
@@ -397,9 +589,10 @@ class Mailer
 				if (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN')
 				{
 					$iniSmtpHost = ini_get('SMTP');
-					$iniSmtpPort = ini_get('smtp_port');
+					$iniSmtpPort = (int) ini_get('smtp_port');
 
 					$factory = new EsmtpTransportFactory();
+					/** @var EsmtpTransport $transport */
 					$transport = $factory->create(new Dsn(
 						'',
 						$iniSmtpHost ?: 'localhost',
@@ -407,6 +600,12 @@ class Mailer
 						null,
 						$iniSmtpPort ?: 25
 					));
+
+					$hostname = gethostname();
+					if ($hostname !== false && $hostname !== '')
+					{
+						$transport->setLocalDomain($hostname);
+					}
 				}
 				else
 				{

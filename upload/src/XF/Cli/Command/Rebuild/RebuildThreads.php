@@ -3,6 +3,7 @@
 namespace XF\Cli\Command\Rebuild;
 
 use Symfony\Component\Console\Input\InputOption;
+use XF\Job\Thread;
 
 class RebuildThreads extends AbstractRebuildCommand
 {
@@ -18,7 +19,7 @@ class RebuildThreads extends AbstractRebuildCommand
 
 	protected function getRebuildClass()
 	{
-		return 'XF:Thread';
+		return Thread::class;
 	}
 
 	protected function configureOptions()

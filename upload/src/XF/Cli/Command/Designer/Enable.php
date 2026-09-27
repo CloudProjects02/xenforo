@@ -2,7 +2,7 @@
 
 namespace XF\Cli\Command\Designer;
 
-use League\Flysystem\FileNotFoundException;
+use League\Flysystem\FilesystemException;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -148,7 +148,7 @@ class Enable extends AbstractCommand
 			{
 				$metadata = $fs->getMetadata($dataUriPath);
 			}
-			catch (FileNotFoundException $e)
+			catch (FilesystemException $e)
 			{
 				$metadata = false;
 			}

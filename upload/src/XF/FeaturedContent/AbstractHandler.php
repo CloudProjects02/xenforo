@@ -450,7 +450,7 @@ abstract class AbstractHandler
 	 *
 	 * This may be called within a handler's addAttachmentsToContent method.
 	 *
-	 * @param AbstractCollection<T>
+	 * @param AbstractCollection<T> $content
 	 */
 	protected function addAttachmentsToContentInternal(
 		AbstractCollection $content,

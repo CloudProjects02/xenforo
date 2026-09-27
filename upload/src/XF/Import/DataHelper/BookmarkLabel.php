@@ -81,7 +81,6 @@ class BookmarkLabel extends AbstractHelper
 			WHERE label_id = ?
 		", [$extra['use_date'], $labelId]);
 
-		/** @var BookmarkRepository $repo */
 		$repo = $this->em()->getRepository(BookmarkRepository::class);
 		$repo->rebuildBookmarkLabelCache($bookmarkId);
 

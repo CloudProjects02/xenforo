@@ -5,7 +5,7 @@ namespace XF\ActivitySummary;
 use XF\Entity\Thread;
 use XF\Finder\ThreadFinder;
 use XF\Http\Request;
-use XF\Mvc\Entity\ArrayCollection;
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Finder;
 use XF\Repository\NodeRepository;
 
@@ -84,7 +84,7 @@ class LatestThreadsSection extends AbstractSection
 
 	protected function renderInternal(Instance $instance): string
 	{
-		/** @var ArrayCollection|Thread[] $threads */
+		/** @var AbstractCollection<Thread> $threads */
 		$threads = $this->fetchData();
 
 		$nodeIds = $threads->pluckNamed('node_id');

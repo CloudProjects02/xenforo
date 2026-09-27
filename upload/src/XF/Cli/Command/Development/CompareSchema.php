@@ -195,8 +195,8 @@ class CompareSchema extends AbstractCommand
 						$column1Print = ($column[$compare] ?? 'NULL');
 						$column2Print = ($column2[$compare] ?? 'NULL');
 
-						$errors[$tableName][$columnName][$compare] =
-							"CHANGE $tableName.$columnName $compare: $column1Print --> $column2Print";
+						$errors[$tableName][$columnName][$compare]
+							= "CHANGE $tableName.$columnName $compare: $column1Print --> $column2Print";
 					}
 				}
 			}

@@ -12,6 +12,9 @@ use XF\Repository\BookmarkRepository;
  */
 trait BookmarkTrait
 {
+	/**
+	 * @param string|\Stringable|null $error
+	 */
 	abstract protected function canBookmarkContent(&$error = null);
 
 	public function canBookmark(&$error = null)

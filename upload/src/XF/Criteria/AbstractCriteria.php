@@ -126,15 +126,12 @@ abstract class AbstractCriteria
 
 	public function getExtraTemplateData()
 	{
-		/** @var ConnectedAccountRepository $connectedAccRepo */
 		$connectedAccRepo = $this->app->repository(ConnectedAccountRepository::class);
 		$connectedAccProviders = $connectedAccRepo->getConnectedAccountProviderTitlePairs();
 
-		/** @var UserGroupRepository $userGroupRepo */
 		$userGroupRepo = $this->app->repository(UserGroupRepository::class);
 		$userGroups = $userGroupRepo->getUserGroupTitlePairs();
 
-		/** @var LanguageRepository $languageRepo */
 		$languageRepo = $this->app->repository(LanguageRepository::class);
 		$languageTree = $languageRepo->getLanguageTree(false);
 
@@ -156,7 +153,6 @@ abstract class AbstractCriteria
 		$tzData = $this->app->data(TimeZone::class);
 		$timeZones = $tzData->getTimeZoneOptions();
 
-		/** @var NodeRepository $nodeRepo */
 		$nodeRepo = $this->app->repository(NodeRepository::class);
 		$nodes = $nodeRepo->getNodeOptionsData(false);
 
@@ -175,7 +171,7 @@ abstract class AbstractCriteria
 			'styleTree' => $styleTree,
 		];
 
-		$this->app->fire('criteria_template_data', [&$templateData]);
+		$this->app->fire('criteria_template_data', [&$templateData, $this]);
 
 		return $templateData;
 	}

@@ -51,7 +51,6 @@ class ChangeLoggable extends Behavior
 			return;
 		}
 
-		/** @var ChangeLogRepository $changeLogRepo */
 		$changeLogRepo = $this->repository(ChangeLogRepository::class);
 
 		$handler = $changeLogRepo->getChangeLogHandler($this->config['contentType'], true);

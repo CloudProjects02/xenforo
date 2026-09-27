@@ -279,7 +279,6 @@ class MoverService extends AbstractService
 		$target->Forum->rebuildCounters();
 		$target->Forum->save();
 
-		/** @var ThreadRepository $threadRepo */
 		$threadRepo = $this->repository(ThreadRepository::class);
 		$threadRepo->rebuildThreadPostPositions($target->thread_id);
 		$threadRepo->rebuildThreadUserPostCounters($target->thread_id);
@@ -287,7 +286,6 @@ class MoverService extends AbstractService
 
 	protected function updateSourceData()
 	{
-		/** @var ThreadRepository $threadRepo */
 		$threadRepo = $this->repository(ThreadRepository::class);
 
 		foreach ($this->sourceThreads AS $sourceThread)
@@ -380,7 +378,6 @@ class MoverService extends AbstractService
 		$reactionsDisable = [];
 		$userMessageCountAdjust = [];
 
-		/** @var NewsFeedRepository $newsFeedRepo */
 		$newsFeedRepo = $this->repository(NewsFeedRepository::class);
 
 		foreach ($this->sourcePosts AS $id => $post)
@@ -436,13 +433,11 @@ class MoverService extends AbstractService
 
 		if ($reactionsDisable)
 		{
-			/** @var ReactionRepository $reactionRepo */
 			$reactionRepo = $this->repository(ReactionRepository::class);
 			$reactionRepo->fastUpdateReactionIsCounted('post', $reactionsDisable, false);
 		}
 		if ($reactionsEnable)
 		{
-			/** @var ReactionRepository $reactionRepo */
 			$reactionRepo = $this->repository(ReactionRepository::class);
 			$reactionRepo->fastUpdateReactionIsCounted('post', $reactionsEnable, true);
 		}
@@ -463,7 +458,6 @@ class MoverService extends AbstractService
 	{
 		$target = $this->target;
 
-		/** @var PostRepository $postRepo */
 		$postRepo = $this->repository(PostRepository::class);
 
 		foreach ($this->sourcePosts AS $sourcePost)

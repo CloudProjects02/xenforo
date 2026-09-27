@@ -183,7 +183,6 @@ class WelcomeService extends AbstractService
 		}
 		$recipients[$this->user->user_id] = $this->user;
 
-		/** @var CreatorService $creator */
 		$creator = $this->service(CreatorService::class, $starterUser);
 		$creator->setIsAutomated();
 		$creator->setOptions([
@@ -199,7 +198,6 @@ class WelcomeService extends AbstractService
 		$creator->setAutoSendNotifications(false);
 		$conversation = $creator->save();
 
-		/** @var ConversationRepository $conversationRepo */
 		$conversationRepo = $this->app->repository(ConversationRepository::class);
 		$convRecipients = $conversation->getRelationFinder('Recipients')->with('ConversationUser')->fetch();
 
@@ -222,7 +220,6 @@ class WelcomeService extends AbstractService
 			}
 		}
 
-		/** @var NotifierService $notifier */
 		$notifier = $this->service(NotifierService::class, $conversation);
 		$notifier->addNotificationLimit($this->user)->notifyCreate();
 

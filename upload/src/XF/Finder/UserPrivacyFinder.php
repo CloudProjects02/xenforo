@@ -2,14 +2,15 @@
 
 namespace XF\Finder;
 
+use XF\Entity\UserPrivacy;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Finder;
 
 /**
- * @method AbstractCollection<\XF\Entity\UserPrivacy> fetch(?int $limit = null, ?int $offset = null)
- * @method AbstractCollection<\XF\Entity\UserPrivacy> fetchDeferred(?int $limit = null, ?int $offset = null)
- * @method \XF\Entity\UserPrivacy|null fetchOne(?int $offset = null)
- * @extends Finder<\XF\Entity\UserPrivacy>
+ * @method AbstractCollection<UserPrivacy> fetch(?int $limit = null, ?int $offset = null)
+ * @method AbstractCollection<UserPrivacy> fetchDeferred(?int $limit = null, ?int $offset = null)
+ * @method UserPrivacy|null fetchOne(?int $offset = null)
+ * @extends Finder<UserPrivacy>
  */
 class UserPrivacyFinder extends Finder
 {

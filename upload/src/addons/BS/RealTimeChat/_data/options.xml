@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<options>
+  <option option_id="realTimeChatAudio" edit_format="textbox" data_type="string" advanced="0">
+    <default_value>styles/default/bs/real_time_chat/alert.ogg</default_value>
+    <relation group_id="BSRealTimeChatOptions" display_order="120"/>
+  </option>
+  <option option_id="realTimeChatCountReactions" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="BSRealTimeChatOptions" display_order="250"/>
+  </option>
+  <option option_id="realTimeChatEnableSound" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="BSRealTimeChatOptions" display_order="110"/>
+  </option>
+  <option option_id="realTimeChatEnabledBbCodes" edit_format="checkbox" data_type="array" advanced="0">
+    <default_value>{"b":1,"i":1,"u":1,"s":1,"color":1,"url":1,"img":1,"media":1,"quote":1,"code":1,"icode":1}</default_value>
+    <edit_format_params>b={{ phrase('weight_bold') }}
+i={{ phrase('italic') }}
+u={{ phrase('underline') }}
+s={{ phrase('strike_through') }}
+color={{ phrase('color') }}
+url={{ phrase('link') }}
+img={{ phrase('image') }}
+media={{ phrase('media') }}
+quote={{ phrase('quote') }}
+code={{ phrase('code') }}
+icode={{ phrase('inline_code') }}</edit_format_params>
+    <sub_options>b
+i
+u
+s
+color
+url
+img
+media
+quote
+code
+icode</sub_options>
+    <relation group_id="BSRealTimeChatOptions" display_order="200"/>
+  </option>
+  <option option_id="realTimeChatMessageLimit" edit_format="spinbox" data_type="integer" advanced="0">
+    <default_value>30</default_value>
+    <relation group_id="BSRealTimeChatOptions" display_order="210"/>
+  </option>
+  <option option_id="realTimeChatMessageMaxLength" edit_format="spinbox" data_type="integer" advanced="0">
+    <default_value>2096</default_value>
+    <edit_format_params>units={{ phrase('characters') }}</edit_format_params>
+    <relation group_id="BSRealTimeChatOptions" display_order="240"/>
+  </option>
+  <option option_id="realTimeChatMinWallpaperSize" edit_format="template" data_type="array" advanced="0">
+    <default_value>{"width":"1920","height":"1080"}</default_value>
+    <edit_format_params>option_template_realTimeChatMinWallpaperSize</edit_format_params>
+    <sub_options>width
+height</sub_options>
+    <relation group_id="BSRealTimeChatOptions" display_order="140"/>
+  </option>
+  <option option_id="realTimeChatNotice" edit_format="textbox" data_type="string" advanced="0">
+    <default_value></default_value>
+    <edit_format_params>rows=3</edit_format_params>
+    <relation group_id="BSRealTimeChatOptions" display_order="130"/>
+  </option>
+  <option option_id="realTimeChatSendTimeout" edit_format="spinbox" data_type="integer" advanced="0">
+    <default_value>1</default_value>
+    <edit_format_params>min=0
+units={{ phrase('seconds') }}</edit_format_params>
+    <relation group_id="BSRealTimeChatOptions" display_order="230"/>
+  </option>
+  <option option_id="rtcDisable" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="BSRealTimeChatOptions" display_order="10"/>
+  </option>
+  <option option_id="rtcEnableAlerts" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="BSRealTimeChatOptions" display_order="40"/>
+  </option>
+  <option option_id="rtcMobilePopup" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="BSRealTimeChatOptions" display_order="30"/>
+  </option>
+  <option option_id="rtcPopup" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="BSRealTimeChatOptions" display_order="20"/>
+  </option>
+  <option option_id="rtcRoomMaxMembers" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>1000</default_value>
+    <relation group_id="BSRealTimeChatOptions" display_order="150"/>
+  </option>
+  <option option_id="rtcTranslationGptModel" edit_format="select" data_type="string" validation_class="BS\RealTimeChat\Option\GPTModel" validation_method="verifyOption" advanced="0">
+    <default_value>gpt-3.5-turbo</default_value>
+    <edit_format_params>gpt-3.5-turbo=gpt-3.5-turbo
+gpt-3.5-turbo-16k=gpt-3.5-turbo-16k
+gpt-4=gpt-4
+gpt-4-32k=gpt-4-32k</edit_format_params>
+    <relation group_id="BSRealTimeChatOptions" display_order="260"/>
+  </option>
+</options>

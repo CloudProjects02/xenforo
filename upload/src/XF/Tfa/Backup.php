@@ -24,10 +24,10 @@ class Backup extends AbstractProvider
 			$offset = $i * 4; // 4 bytes for each set
 
 			$code = (
-				((ord($random[$offset + 0]) & 0x7f) << 24) |
-				((ord($random[$offset + 1]) & 0xff) << 16) |
-				((ord($random[$offset + 2]) & 0xff) << 8) |
-				(ord($random[$offset + 3]) & 0xff)
+				((ord($random[$offset + 0]) & 0x7f) << 24)
+				| ((ord($random[$offset + 1]) & 0xff) << 16)
+				| ((ord($random[$offset + 2]) & 0xff) << 8)
+				| (ord($random[$offset + 3]) & 0xff)
 			);
 			$code = $code % 10 ** $length;
 			$code = str_pad($code, $length, '0', STR_PAD_LEFT);
@@ -136,7 +136,6 @@ class Backup extends AbstractProvider
 			{
 				$newProviderData = $this->generateInitialData($user);
 
-				/** @var TfaRepository $tfaRepo */
 				$tfaRepo = \XF::repository(TfaRepository::class);
 				$tfaRepo->updateUserTfaData($user, $provider, $newProviderData);
 

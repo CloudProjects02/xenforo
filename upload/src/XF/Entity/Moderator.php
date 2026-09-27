@@ -68,7 +68,6 @@ class Moderator extends Entity
 				$permissionValues[$permission->permission_group_id][$permission->permission_id] = 'unset';
 			}
 
-			/** @var UpdatePermissionsService $permissionUpdater */
 			$permissionUpdater = $this->app()->service(UpdatePermissionsService::class);
 			$permissionUpdater->setUser($this->User)->setGlobal();
 			$permissionUpdater->updatePermissions($permissionValues);

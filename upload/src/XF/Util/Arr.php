@@ -55,7 +55,7 @@ class Arr
 	 *
 	 * @param array $first
 	 * @param array $second
-	 *
+	 * @param array ...$arrays
 	 * @return array
 	 */
 	public static function mapMerge(array $first, array $second)
@@ -199,6 +199,13 @@ class Arr
 		return $values;
 	}
 
+	/**
+	 * @param array $array
+	 * @param callable|null $callable
+	 * @param $args
+	 * @param array ...$arguments
+	 * @return array|mixed
+	 */
 	public static function arrayFilterArgs($array, $callable, $args = null)
 	{
 		if (!is_callable($callable))
@@ -413,7 +420,7 @@ class Arr
 	 */
 	public static function stringToArray($string, $pattern = '/\s+/', $limit = -1)
 	{
-		if (!$string)
+		if ($string === null || $string === '')
 		{
 			return [];
 		}
@@ -469,7 +476,7 @@ class Arr
 	 *
 	 * @param array $array
 	 * @param array $array2
-	 *
+	 * @param array ...$arguments
 	 * @return array
 	 */
 	public static function arrayAssocSum(array $array, array $array2): array
@@ -490,5 +497,76 @@ class Arr
 		}
 
 		return $array;
+	}
+
+	/**
+	 * Returns true if the array is a list (sequential integer keys starting from 0).
+	 *
+	 * @param array $array
+	 *
+	 * @return bool
+	 */
+	public static function arrayIsList(array $array): bool
+	{
+		if (function_exists('array_is_list'))
+		{
+			return array_is_list($array);
+		}
+
+		if ($array === [] || $array === array_values($array))
+		{
+			return true;
+		}
+
+		$nextKey = -1;
+
+		foreach ($array AS $k => $v)
+		{
+			if ($k !== ++$nextKey)
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Returns the first value from an array, or null when empty.
+	 *
+	 * @param array $array
+	 *
+	 * @return mixed|null
+	 */
+	public static function arrayFirst(array $array)
+	{
+		if (function_exists('array_first'))
+		{
+			return array_first($array);
+		}
+
+		foreach ($array AS $value)
+		{
+			return $value;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last value from an array, or null when empty.
+	 *
+	 * @param array $array
+	 *
+	 * @return mixed|null
+	 */
+	public static function arrayLast(array $array)
+	{
+		if (function_exists('array_last'))
+		{
+			return array_last($array);
+		}
+
+		return $array ? current(array_slice($array, -1)) : null;
 	}
 }

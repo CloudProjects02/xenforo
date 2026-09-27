@@ -70,12 +70,10 @@ class CheckerService extends AbstractService
 
 	public function check(&$detailedError = null)
 	{
-		// Not apiKey
 		if (!$this->apiKey)
-		{
-			return null;
-		}
-
+        {
+            return null;
+        }
 		$client = $this->app->http()->client();
 		$errorMessage = null;
 		$errorCode = null;

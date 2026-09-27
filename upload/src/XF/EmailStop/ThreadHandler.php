@@ -39,7 +39,6 @@ class ThreadHandler extends AbstractHandler
 		$thread = \XF::em()->find(Thread::class, $contentId);
 		if ($thread)
 		{
-			/** @var ThreadWatchRepository $threadWatchRepo */
 			$threadWatchRepo = \XF::repository(ThreadWatchRepository::class);
 			$threadWatchRepo->setWatchState($thread, $user, 'no_email');
 		}
@@ -49,11 +48,9 @@ class ThreadHandler extends AbstractHandler
 	{
 		// Note that we stop all thread and forum notifications here, as the distinction of the source is unlikely
 		// to be clear and they've chosen to stop all emails of this type.
-		/** @var ThreadWatchRepository $threadWatchRepo */
 		$threadWatchRepo = \XF::repository(ThreadWatchRepository::class);
 		$threadWatchRepo->setWatchStateForAll($user, 'no_email');
 
-		/** @var ForumWatchRepository $forumWatchRepo */
 		$forumWatchRepo = \XF::repository(ForumWatchRepository::class);
 		$forumWatchRepo->setWatchStateForAll($user, 'no_email');
 	}

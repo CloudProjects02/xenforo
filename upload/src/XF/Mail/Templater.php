@@ -16,6 +16,9 @@ class Templater extends \XF\Template\Templater
 		$this->router = $app['router.public'];
 	}
 
+	/**
+	 * @return void
+	 */
 	public function setStyle(Style $style)
 	{
 		parent::setStyle($style);

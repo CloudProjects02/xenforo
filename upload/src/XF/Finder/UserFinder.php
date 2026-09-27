@@ -2,16 +2,17 @@
 
 namespace XF\Finder;
 
+use XF\Entity\User;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Finder;
 
 use function intval;
 
 /**
- * @method AbstractCollection<\XF\Entity\User> fetch(?int $limit = null, ?int $offset = null)
- * @method AbstractCollection<\XF\Entity\User> fetchDeferred(?int $limit = null, ?int $offset = null)
- * @method \XF\Entity\User|null fetchOne(?int $offset = null)
- * @extends Finder<\XF\Entity\User>
+ * @method AbstractCollection<User> fetch(?int $limit = null, ?int $offset = null)
+ * @method AbstractCollection<User> fetchDeferred(?int $limit = null, ?int $offset = null)
+ * @method User|null fetchOne(?int $offset = null)
+ * @extends Finder<User>
  */
 class UserFinder extends Finder
 {

@@ -182,7 +182,6 @@ trait PusherTrait
 
 	public function push()
 	{
-		/** @var PushNotificationService $pushNotification */
 		$pushNotification = $this->service(PushNotificationService::class, $this->receiver);
 
 		$pushNotification->setNotificationContent(

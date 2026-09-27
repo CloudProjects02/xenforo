@@ -7,7 +7,6 @@ use XF\Entity\User;
 use XF\Finder\LikedContentFinder;
 use XF\Like\AbstractHandler;
 use XF\Mvc\Entity\AbstractCollection;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 class LikedContentRepository extends Repository
@@ -32,7 +31,7 @@ class LikedContentRepository extends Repository
 	 * @param string $contentType
 	 * @param int $contentId
 	 *
-	 * @return Finder
+	 * @return LikedContentFinder
 	 */
 	public function findContentLikes($contentType, $contentId)
 	{
@@ -46,7 +45,7 @@ class LikedContentRepository extends Repository
 	/**
 	 * @param $likeUserId
 	 *
-	 * @return Finder
+	 * @return LikedContentFinder
 	 */
 	public function findLikesByLikeUserId($likeUserId)
 	{
@@ -129,7 +128,7 @@ class LikedContentRepository extends Repository
 	/**
 	 * @param $userId
 	 *
-	 * @return Finder
+	 * @return ReactionContentFinder
 	 */
 	public function findUserLikes($userId)
 	{

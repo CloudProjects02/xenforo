@@ -228,4 +228,58 @@ class Url
 
 		return in_array($tld, $localTlds, true);
 	}
+
+	/**
+	 * Returns a version of the passed in URL that is valid for use in a message or false
+	 * if the URL is definitively unusable. Note that this is distinct from the URL being valid
+	 * from an RFC perspective, as users may submit URLs that don't always have all components
+	 * URL encoded as needed. We generally defer to the browsers to handle this for us rather
+	 * than rejecting the URL.
+	 *
+	 * @param string $url
+	 * @param string|null $allowedProtocolRegex Regular expression for allowed protocols. Defaults to https?|ftp
+	 *
+	 * @return false|string
+	 */
+	public static function getValidUrl(string $url, ?string $allowedProtocolRegex = null)
+	{
+		if ($allowedProtocolRegex === null)
+		{
+			$allowedProtocolRegex = '#^(https?|ftp)://#i';
+		}
+
+		$url = trim($url);
+
+		if (preg_match('/proxy\.php\?\w+=(http[^&]+)&/i', $url, $match))
+		{
+			// proxy link of some sort, adjust to the original one
+			$proxiedUrl = urldecode($match[1]);
+			if (preg_match('/./su', $proxiedUrl))
+			{
+				$url = $proxiedUrl;
+			}
+		}
+
+		if (preg_match('/^(\?|\/|#|:)/', $url))
+		{
+			return false;
+		}
+
+		if (strpos($url, "\n") !== false)
+		{
+			return false;
+		}
+
+		if (preg_match('#^(data|https?://data|javascript|about):#i', $url))
+		{
+			return false;
+		}
+
+		if (preg_match($allowedProtocolRegex, $url))
+		{
+			return $url;
+		}
+
+		return 'http://' . $url;
+	}
 }

@@ -8,6 +8,7 @@ use XF\ControllerPlugin\LoginPlugin;
 use XF\ControllerPlugin\UserCriteriaActionPlugin;
 use XF\CustomField\Set;
 use XF\Data\TimeZone;
+use XF\Entity\OAuthClient;
 use XF\Entity\UserAuth;
 use XF\Entity\UserProfile;
 use XF\Finder\UserFinder;
@@ -26,6 +27,7 @@ use XF\Repository\ConnectedAccountRepository;
 use XF\Repository\ConversationRepository;
 use XF\Repository\IpRepository;
 use XF\Repository\LanguageRepository;
+use XF\Repository\OAuthRepository;
 use XF\Repository\StyleRepository;
 use XF\Repository\TfaRepository;
 use XF\Repository\ThreadWatchRepository;
@@ -128,7 +130,6 @@ class UserController extends AbstractController
 		{
 			$users = $finder->fetch();
 
-			/** @var UserGroupRepository $groupRepo */
 			$groupRepo = $this->repository(UserGroupRepository::class);
 
 			$viewParams = [
@@ -196,7 +197,6 @@ class UserController extends AbstractController
 
 	public function actionIpUsers()
 	{
-		/** @var IpRepository $ipRepo */
 		$ipRepo = $this->repository(IpRepository::class);
 
 		$ip = $this->filter('ip', 'str');
@@ -262,7 +262,6 @@ class UserController extends AbstractController
 
 		if ($q !== '' && Str::strlen($q) >= 2)
 		{
-			/** @var UserFinder $userFinder */
 			$userFinder = $this->finder(UserFinder::class);
 
 			$users = $userFinder
@@ -367,10 +366,8 @@ class UserController extends AbstractController
 		/** @var TimeZone $tzData */
 		$tzData = $this->data(TimeZone::class);
 
-		/** @var StyleRepository $styleRepo */
 		$styleRepo = $this->repository(StyleRepository::class);
 
-		/** @var LanguageRepository $languageRepo */
 		$languageRepo = $this->repository(LanguageRepository::class);
 
 		$viewParams = [
@@ -532,7 +529,6 @@ class UserController extends AbstractController
 		}
 		else if ($input['change_password'] == 'generate')
 		{
-			/** @var PasswordResetService $passwordReset */
 			$passwordReset = $this->service(PasswordResetService::class, $user);
 			$passwordReset->setAdminReset(true);
 
@@ -573,7 +569,6 @@ class UserController extends AbstractController
 
 		if ($user->exists() && $input['disable_tfa'])
 		{
-			/** @var TfaRepository $tfaRepo */
 			$tfaRepo = $this->repository(TfaRepository::class);
 
 			$form->complete(function () use ($user, $tfaRepo)
@@ -609,27 +604,53 @@ class UserController extends AbstractController
 	{
 		$user = $this->assertUserExists($params->user_id);
 
-		/** @var UserUpgradeRepository $upgradeRepo */
 		$upgradeRepo = $this->repository(UserUpgradeRepository::class);
 		$upgrades = $upgradeRepo->findActiveUserUpgradesForList()->where('user_id', $user->user_id)->fetch();
 
-		/** @var ConnectedAccountRepository $connectedRepo */
 		$connectedRepo = $this->repository(ConnectedAccountRepository::class);
 		$connectedProviders = $connectedRepo->getUsableProviders();
+
+		$authRepo = $this->repository(OAuthRepository::class);
+		$clients = $authRepo->getConnectedClientsForUser($user);
 
 		$viewParams = [
 			'user' => $user,
 			'upgrades' => $upgrades,
 			'connectedProviders' => $connectedProviders,
+			'clients' => $clients,
 		];
 		return $this->view('XF:User\Extra', 'user_extra', $viewParams);
+	}
+
+	public function actionApplicationRevoke(ParameterBag $params)
+	{
+		$user = $this->assertUserExists($params->user_id);
+
+		$client = $this->assertRecordExists(
+			OAuthClient::class,
+			$this->filter('client_id', 'str')
+		);
+
+		if ($this->isPost())
+		{
+			$authRepo = $this->repository(OAuthRepository::class);
+			$authRepo->revokeClientForUser($client, $user);
+
+			return $this->redirect($this->buildLink('users/edit', $user) . '#user-extras');
+		}
+
+		$viewParams = [
+			'user' => $user,
+			'client' => $client,
+		];
+
+		return $this->view('XF:User\ApplicationRevoke', 'user_application_revoke', $viewParams);
 	}
 
 	public function actionUserIps(ParameterBag $params)
 	{
 		$user = $this->assertUserExists($params->user_id);
 
-		/** @var IpRepository $ipRepo */
 		$ipRepo = $this->repository(IpRepository::class);
 
 		$ips = $ipRepo->getIpsByUser($user);
@@ -648,7 +669,6 @@ class UserController extends AbstractController
 
 		if ($this->isPost())
 		{
-			/** @var AvatarService $avatarService */
 			$avatarService = $this->service(AvatarService::class, $user);
 			$avatarService->logIp(false);
 
@@ -688,7 +708,6 @@ class UserController extends AbstractController
 
 		if ($this->isPost())
 		{
-			/** @var ProfileBannerService $bannerService */
 			$bannerService = $this->service(ProfileBannerService::class, $user);
 			$bannerService->logIp(false);
 
@@ -753,23 +772,14 @@ class UserController extends AbstractController
 				$this->buildLink('users/list')
 			);
 
-			/** @var DeleteService $deleter */
-			$deleter = $this->service(DeleteService::class, $user);
-
-			if ($this->filter('rename', 'bool'))
-			{
-				$renameTo = $this->filter('rename_to', 'str');
-				if (!$renameTo)
-				{
-					return $this->error(\XF::phrase('please_enter_name_to_rename_this_user_to'));
-				}
-				$deleter->renameTo($renameTo);
-			}
+			$deleter = $this->setupUserDelete($user);
 
 			if (!$deleter->delete($errors))
 			{
 				return $this->error($errors);
 			}
+
+			$this->finalizeUserDelete($deleter);
 
 			return $this->redirect($redirect);
 		}
@@ -785,6 +795,30 @@ class UserController extends AbstractController
 			];
 			return $this->view('XF:User\Delete', 'user_delete', $viewParams);
 		}
+	}
+
+	protected function setupUserDelete(\XF\Entity\User $user): DeleteService
+	{
+		$deleter = $this->service(DeleteService::class, $user);
+
+		if ($this->filter('rename', 'bool'))
+		{
+			$renameTo = $this->filter('rename_to', 'str');
+			if (!$renameTo)
+			{
+				throw $this->exception($this->error(
+					\XF::phrase('please_enter_name_to_rename_this_user_to')
+				));
+			}
+
+			$deleter->renameTo($renameTo);
+		}
+
+		return $deleter;
+	}
+
+	protected function finalizeUserDelete(DeleteService $deleter): void
+	{
 	}
 
 	public function actionChangeLog(ParameterBag $params)
@@ -863,7 +897,6 @@ class UserController extends AbstractController
 
 		if ($this->isPost())
 		{
-			/** @var ConversationRepository $convRepo */
 			$convRepo = $this->repository(ConversationRepository::class);
 
 			$db = \XF::db();
@@ -955,7 +988,6 @@ class UserController extends AbstractController
 
 		if ($this->isPost())
 		{
-			/** @var ThreadWatchRepository $threadWatchRepo */
 			$threadWatchRepo = $this->repository(ThreadWatchRepository::class);
 
 			$action = $this->filter('action', 'str');
@@ -1198,8 +1230,13 @@ class UserController extends AbstractController
 			}
 		}
 
-		$message['username'] = $user ? $user->username : '';
-		$message['user_id'] = $user ? $user->user_id : 0;
+		if (!$user)
+		{
+			throw $this->exception($this->error(\XF::phraseDeferred('please_complete_required_fields')));
+		}
+
+		$message['username'] = $user->username;
+		$message['user_id'] = $user->user_id;
 
 		if (!$message['message_title'] && !$message['message_body'])
 		{

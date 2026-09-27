@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style_properties>
+  <style_property property_name="quillEditorButton" group_name="bsQuillEditor" title="Button" property_type="css" display_order="60" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "font-size": "1.4rem",
+    "color": "@xf-textColorMuted",
+    "padding": "var(--editor-padding-v) 5px",
+    "extra": "line-height: 1;\nborder: none;\nborder-radius: 0;\nbackground: none;\n-webkit-tap-highlight-color: rgba(0,0,0,0);\n-webkit-tap-highlight-color: transparent;\ncursor: pointer;"
+}</value>
+  </style_property>
+  <style_property property_name="quillEditorButtonHover" group_name="bsQuillEditor" title="Button [Hovered]" property_type="css" display_order="70" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "color": "darken(@xf-textColorMuted, 25%)",
+    "background-color": "none"
+}</value>
+  </style_property>
+  <style_property property_name="quillEditorContainer" group_name="bsQuillEditor" title="Container" property_type="css" display_order="10" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "background-color": "var(--editor-background)",
+    "border-width": "1px",
+    "border-color": "@xf-borderColor",
+    "border-radius": "25px",
+    "extra": "--editor-background: @xf-contentBg;\n// horizontal padding for editor\n--editor-padding-h: 0;\n// vertical padding for editor\n--editor-padding-v: 14px;\n// tooltip \n--tooltip-background-color: @xf-contentBg;\n--tooltip-button-hover-background-color: @xf-contentAltBg;\n--tooltip-box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),0 3px 1px -2px rgba(0,0,0,.12),0 1px 5px 0 rgba(0,0,0,.2);\n// mentions \n--mention-background: @xf-contentHighlightBg;\n// colors\n--color-white: #fff;\n--color-red: #e60000;\n--color-orange: #f90;\n--color-yellow: #ff0;\n--color-green: #008a00;\n--color-blue: @xf-minorHeadingTextColor;\n--color-purple: #93f;\n--color-button: @xf-textColor;\n--color-code: @xf-textColor;\n--color-button-label: lighten(@xf-textColor, 35%);\n--color-button-muted: #777;\n// fonts\n--font-family-serif: Georgia, Times New Roman, serif;\n--font-family-monospace: Monaco, Courier New, monospace;\n--toolbar-font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;\n// backgrounds\n--background-black: #000;\n--background-red: #e60000;\n--background-orange: #f90;\n--background-yellow: #ff0;\n--background-green: #008a00;\n--background-blue: var(--color-blue);\n--background-purple: #93f;\n--background-code-inline: @xf-bbCodeBlock--background-color;\n--background-code: @xf-bbCodeBlock--background-color;\n// border colors\n--border-color-picker-separator: @xf-borderColorFaint;\n--border-color-picker-selected-separator: @xf-borderColor;"
+}</value>
+  </style_property>
+  <style_property property_name="quillEditorInput" group_name="bsQuillEditor" title="Editor" property_type="css" display_order="20" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "font-size": "16px",
+    "extra": "box-sizing: border-box;\nline-height: 1.42;\nheight: 100%;\nwidth: 100%;\noutline: none;\noverflow-y: auto;\nmargin: var(--editor-padding-v) var(--editor-padding-h);\ntab-size: 4;\n-moz-tab-size: 4;\ntext-align: left;\nwhite-space: pre-wrap;\nword-wrap: break-word;"
+}</value>
+  </style_property>
+  <style_property property_name="quillEditorTooltip" group_name="bsQuillEditor" title="Tooltip" property_type="css" display_order="30" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "background-color": "var(--tooltip-background-color)",
+    "border-radius": "10px",
+    "extra": "position: absolute;\ntransform: translateY(10px);\nz-index: 50;\nbox-shadow: var(--tooltip-box-shadow);\nwhite-space: nowrap;"
+}</value>
+  </style_property>
+  <style_property property_name="quillEditorTooltipButton" group_name="bsQuillEditor" title="Tooltip: Button" property_type="css" display_order="50" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "background-color": "none",
+    "border-radius": "8px",
+    "extra": "border: none;\ncursor: pointer;\ndisplay: inline-block;\nfloat: left;\npadding: 4px;\nheight: 30px;\nwidth: 30px;\n-webkit-tap-highlight-color: rgba(0,0,0,0);\n-webkit-tap-highlight-color: transparent;"
+}</value>
+  </style_property>
+  <style_property property_name="quillEditorTooltipFormats" group_name="bsQuillEditor" title="Tooltip: Button section" property_type="css" display_order="40" css_components="text,background,border,border_radius,border_width_simple,border_color_simple,border_radius_simple,padding,extra">
+    <value>{
+    "border-right-width": "1px",
+    "border-right-color": "@xf-borderColorFaint",
+    "padding": "0 4px",
+    "extra": "display: inline-flex;\nborder-right: 1px solid @xf-borderColorFaint;\nmargin: 8px 0;"
+}</value>
+  </style_property>
+</style_properties>

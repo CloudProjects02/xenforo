@@ -20,7 +20,7 @@ use XF\Repository\UserAlertRepository;
  * @property int $view_date
  * @property int $read_date
  * @property bool $auto_read
- * @property array $extra_data
+ * @property array|null $extra_data
  * @property string $depends_on_addon_id
  *
  * GETTERS

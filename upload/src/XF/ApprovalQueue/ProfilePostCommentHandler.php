@@ -6,17 +6,18 @@ use XF\Entity\ProfilePostComment;
 use XF\Mvc\Entity\Entity;
 use XF\Service\ProfilePostComment\ApproverService;
 
+/**
+ * @extends AbstractHandler<ProfilePostComment>
+ */
 class ProfilePostCommentHandler extends AbstractHandler
 {
 	protected function canActionContent(Entity $content, &$error = null)
 	{
-		/** @var $content \XF\Entity\ProfilePostComment */
 		return $content->canApproveUnapprove($error);
 	}
 
 	public function actionApprove(ProfilePostComment $comment)
 	{
-		/** @var ApproverService $approver */
 		$approver = \XF::service(ApproverService::class, $comment);
 		$approver->approve();
 	}

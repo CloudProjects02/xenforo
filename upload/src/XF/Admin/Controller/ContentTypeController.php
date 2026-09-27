@@ -22,7 +22,6 @@ class ContentTypeController extends AbstractController
 
 	public function actionIndex()
 	{
-		/** @var ContentTypeFieldRepository $fieldRepo */
 		$fieldRepo = $this->repository(ContentTypeFieldRepository::class);
 
 		$fields = $fieldRepo->findContentTypeFieldsForList()->fetch();

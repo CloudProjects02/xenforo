@@ -32,7 +32,6 @@ class EditorHtml extends Html
 		$this->addTag('u', ['replace' => ['<u>', '</u>']]);
 		$this->addTag('s', ['replace' => ['<s>', '</s>']]);
 
-		$this->addTag('icode', ['replace' => ['<code class="bbCodeInline">', '</code>']]);
 		$this->modifyTag('url', ['trimAfter' => 0]);
 
 		foreach ($this->undisplayableTags AS $tag)
@@ -64,6 +63,14 @@ class EditorHtml extends Html
 		$options['lightbox'] = false;
 
 		return $options;
+	}
+
+	public function renderTagInlineCode(array $children, $option, array $tag, array $options)
+	{
+		$class = $option === 'rich' ? 'bbCodeInline bbCodeInline--rich' : 'bbCodeInline';
+		$content = $this->renderSubTree($children, $options);
+
+		return $this->wrapHtml('<code class="' . $class . '">', $content, '</code>');
 	}
 
 	public function filterFinalOutput($output)
@@ -375,6 +382,11 @@ class EditorHtml extends Html
 			if ($type == 'thumb')
 			{
 				$url = $attachment->thumbnail_url;
+				$retinaUrl = $attachment->retina_thumbnail_url;
+			}
+			else
+			{
+				$retinaUrl = '';
 			}
 
 			switch ($align)
@@ -395,8 +407,9 @@ class EditorHtml extends Html
 			$alt = htmlspecialchars($alt ?: ($attachment ? $attachment->filename : ''));
 
 			$url = htmlspecialchars($url);
+			$srcset = $retinaUrl ? (htmlspecialchars($retinaUrl) . ' 2x') : '';
 
-			return "<img src=\"{$url}\" data-attachment=\"{$type}:{$id}\" alt=\"{$alt}\" class=\"{$alignClass}\" style=\"{$styleAttr}\" />";
+			return "<img src=\"{$url}\" srcset=\"{$srcset}\" data-attachment=\"{$type}:{$id}\" alt=\"{$alt}\" class=\"{$alignClass}\" style=\"{$styleAttr}\" />";
 		}
 		else
 		{
@@ -573,7 +586,7 @@ class EditorHtml extends Html
 
 	protected function renderFinalTableHtml($tableHtml, $tagOption, $extraContent)
 	{
-		$width = $tagOption['width'] ?? '100%';
+		$width = htmlspecialchars($tagOption['width'] ?? '100%', ENT_QUOTES);
 		$output = "<table style='width: $width'>$tableHtml</table>";
 
 		if (strlen($extraContent))

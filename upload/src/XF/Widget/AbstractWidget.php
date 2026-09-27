@@ -21,13 +21,29 @@ abstract class AbstractWidget
 	 */
 	protected $widgetConfig;
 
+	/**
+	 * @var array<string, mixed>
+	 */
 	protected $contextParams = [];
 
+	/**
+	 * @var array<string, mixed>
+	 */
 	protected $options;
+
+	/**
+	 * @var array<string, mixed>
+	 */
 	protected $defaultOptions = [];
 
+	/**
+	 * @return string|null
+	 */
 	abstract public function render();
 
+	/**
+	 * @param array<string, mixed> $contextParams
+	 */
 	public function __construct(App $app, WidgetConfig $widgetConfig, array $contextParams = [])
 	{
 		$this->app = $app;
@@ -36,16 +52,27 @@ abstract class AbstractWidget
 		$this->options = $this->setupOptions($widgetConfig->options);
 	}
 
+	/**
+	 * @return array<string, mixed>
+	 */
 	public function getContextParams()
 	{
 		return $this->contextParams;
 	}
 
+	/**
+	 * @param array<string, mixed> $options
+	 *
+	 * @return array<string, mixed>
+	 */
 	protected function setupOptions(array $options)
 	{
 		return array_replace($this->defaultOptions, $options);
 	}
 
+	/**
+	 * @return string
+	 */
 	public function renderOptions()
 	{
 		$templateName = $this->getOptionsTemplate();
@@ -67,16 +94,28 @@ abstract class AbstractWidget
 		return 'admin:widget_def_options_' . $this->widgetConfig->definitionId;
 	}
 
+	/**
+	 * @param array<string, mixed> $options
+	 * @param string|\Stringable|null $error
+	 *
+	 * @return bool
+	 */
 	public function verifyOptions(Request $request, array &$options, &$error = null)
 	{
 		return true;
 	}
 
+	/**
+	 * @return WidgetConfig
+	 */
 	public function getWidgetConfig()
 	{
 		return $this->widgetConfig;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getTitle()
 	{
 		$widgetConfig = $this->widgetConfig;
@@ -97,6 +136,9 @@ abstract class AbstractWidget
 		return $title;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getDefaultTitle()
 	{
 		$widgetConfig = $this->widgetConfig;
@@ -105,7 +147,7 @@ abstract class AbstractWidget
 
 	/**
 	 * @param string $templateName
-	 * @param array $viewParams
+	 * @param array<string, mixed> $viewParams
 	 *
 	 * @return WidgetRenderer
 	 */
@@ -118,6 +160,11 @@ abstract class AbstractWidget
 		return new $class($app->templater(), 'public:' . $templateName, $viewParams);
 	}
 
+	/**
+	 * @param string $context
+	 *
+	 * @return array<string, mixed>
+	 */
 	protected function getDefaultTemplateParams($context)
 	{
 		$widgetConfig = $this->widgetConfig;

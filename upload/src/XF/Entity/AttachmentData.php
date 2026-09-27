@@ -4,6 +4,7 @@ namespace XF\Entity;
 
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
+use XF\Repository\AttachmentRepository;
 use XF\Util\File;
 use XF\Util\Str;
 
@@ -25,12 +26,15 @@ use function strlen;
  * @property int $height
  * @property int $thumbnail_width
  * @property int $thumbnail_height
+ * @property bool $thumbnail_retina
  * @property int $attach_count
  *
  * GETTERS
  * @property-read string $extension
  * @property-read bool $has_thumbnail
+ * @property-read bool $has_retina_thumbnail
  * @property-read string|null $thumbnail_url
+ * @property-read string|null $retina_thumbnail_url
  * @property-read bool $is_video
  * @property-read bool $is_audio
  * @property-read string $type_grouping
@@ -40,6 +44,22 @@ use function strlen;
  */
 class AttachmentData extends Entity
 {
+	public function canCreateThumbnails(): bool
+	{
+		if (!$this->width || !$this->height)
+		{
+			return false;
+		}
+
+		$imageManager = \XF::app()->imageManager();
+		if (!$imageManager->canResize($this->width, $this->height))
+		{
+			return false;
+		}
+
+		return true;
+	}
+
 	/**
 	 * @return string
 	 */
@@ -95,30 +115,71 @@ class AttachmentData extends Entity
 		}
 	}
 
-	public function getAbstractedThumbnailPath()
+	public function getAbstractedThumbnailPathForSize(int $size): string
 	{
-		return $this->_getAbstractedThumbnailPath(
-			$this->data_id,
-			$this->file_key
-		);
-	}
-
-	public function getExistingAbstractedThumbnailPath()
-	{
-		return $this->_getAbstractedThumbnailPath(
+		return $this->_getAbstractedThumbnailPathForSize(
 			$this->getExistingValue('data_id'),
+			$size,
 			$this->getExistingValue('file_key')
 		);
 	}
 
-	protected function _getAbstractedThumbnailPath($dataId, $fileKey)
+	/**
+	 * @deprecated Use getAbstractedThumbnailPathForSize() instead
+	 */
+	public function getAbstractedThumbnailPath()
 	{
+		return $this->getAbstractedThumbnailPathForSize(1);
+	}
+
+	public function getExistingAbstractedThumbnailPathForSize(int $size): string
+	{
+		return $this->_getAbstractedThumbnailPathForSize(
+			$this->getExistingValue('data_id'),
+			$size,
+			$this->getExistingValue('file_key')
+		);
+	}
+
+	/**
+	 * @deprecated Use getExistingAbstractedThumbnailPathForSize() instead
+	 */
+	public function getExistingAbstractedThumbnailPath()
+	{
+		return $this->getExistingAbstractedThumbnailPathForSize(1);
+	}
+
+	protected function _getAbstractedThumbnailPathForSize(
+		int $dataId,
+		int $size,
+		string $fileKey
+	): string
+	{
+		if ($size === 1)
+		{
+			return sprintf(
+				'data://attachments/%d/%d-%s.jpg',
+				floor($dataId / 1000),
+				$dataId,
+				$fileKey
+			);
+		}
+
 		return sprintf(
-			'data://attachments/%d/%d-%s.jpg',
+			'data://attachments/%d/%dx/%d-%s.jpg',
 			floor($dataId / 1000),
+			$size,
 			$dataId,
 			$fileKey
 		);
+	}
+
+	/**
+	 * @deprecated Use _getAbstractedThumbnailPathForSize() instead
+	 */
+	protected function _getAbstractedThumbnailPath($dataId, $fileKey)
+	{
+		return $this->_getAbstractedThumbnailPathForSize($dataId, 1, $fileKey);
 	}
 
 	/**
@@ -126,7 +187,28 @@ class AttachmentData extends Entity
 	 */
 	public function getThumbnailUrl($canonical = false)
 	{
+		return $this->getThumbnailUrlForSize(1, $canonical);
+	}
+
+	/**
+	 * @return string|null
+	 */
+	public function getRetinaThumbnailUrl($canonical = false)
+	{
+		return $this->getThumbnailUrlForSize(2, $canonical);
+	}
+
+	protected function getThumbnailUrlForSize(
+		int $size,
+		bool $canonical = false
+	): ?string
+	{
 		if (!$this->thumbnail_width)
+		{
+			return null;
+		}
+
+		if ($size > 1 && !$this->has_retina_thumbnail)
 		{
 			return null;
 		}
@@ -137,13 +219,28 @@ class AttachmentData extends Entity
 
 		$dataId = $this->data_id;
 
-		$path = sprintf(
-			'attachments/%d/%d-%s.jpg?hash=%s',
-			floor($dataId / 1000),
-			$dataId,
-			$this->file_key,
-			$hash
-		);
+		if ($size === 1)
+		{
+			$path = sprintf(
+				'attachments/%d/%d-%s.jpg?hash=%s',
+				floor($dataId / 1000),
+				$dataId,
+				$this->file_key,
+				$hash
+			);
+		}
+		else
+		{
+			$path = sprintf(
+				'attachments/%d/%dx/%d-%s.jpg?hash=%s',
+				floor($dataId / 1000),
+				$size,
+				$dataId,
+				$this->file_key,
+				$hash
+			);
+		}
+
 		return $this->app()->applyExternalDataUrl($path, $canonical);
 	}
 
@@ -153,6 +250,11 @@ class AttachmentData extends Entity
 	public function hasThumbnail()
 	{
 		return $this->thumbnail_width ? true : false;
+	}
+
+	public function hasRetinaThumbnail(): bool
+	{
+		return $this->has_thumbnail ? $this->thumbnail_retina : false;
 	}
 
 	public function isVideo(): bool
@@ -227,11 +329,16 @@ class AttachmentData extends Entity
 			return null;
 		}
 
+		$hash = base64_encode(hex2bin($this->file_hash));
+		$hash = strtr($hash, '+/', '-_');
+		$hash = substr($hash, 0, 10);
+
 		$path = $this->_getAbstractedDataPath(
 			$this->data_id,
 			substr($path, 7),
 			$this->file_key
 		);
+		$path .= '?hash=' . $hash;
 		return $this->app()->applyExternalDataUrl($path, $canonical);
 	}
 
@@ -296,8 +403,13 @@ class AttachmentData extends Entity
 		$filePath = $this->getAbstractedDataPath();
 		File::deleteFromAbstractedPath($filePath);
 
-		$thumbPath = $this->getAbstractedThumbnailPath();
-		File::deleteFromAbstractedPath($thumbPath);
+		$attachmentRepo = $this->repository(AttachmentRepository::class);
+		$thumbnailSizes = array_keys($attachmentRepo->getThumbnailSizes(true));
+		foreach ($thumbnailSizes AS $thumbnailSize)
+		{
+			$thumbPath = $this->getAbstractedThumbnailPathForSize($thumbnailSize);
+			File::deleteFromAbstractedPath($thumbPath);
+		}
 	}
 
 	public static function getStructure(Structure $structure)
@@ -321,12 +433,15 @@ class AttachmentData extends Entity
 			'height' => ['type' => self::UINT, 'default' => 0],
 			'thumbnail_width' => ['type' => self::UINT, 'default' => 0],
 			'thumbnail_height' => ['type' => self::UINT, 'default' => 0],
+			'thumbnail_retina' => ['type' => self::BOOL, 'default' => false],
 			'attach_count' => ['type' => self::UINT, 'default' => 0, 'forced' => true],
 		];
 		$structure->getters = [
 			'extension' => ['getter' => 'getExtension', 'cache' => false],
 			'has_thumbnail' => ['getter' => 'hasThumbnail', 'cache' => false],
+			'has_retina_thumbnail' => ['getter' => 'hasRetinaThumbnail', 'cache' => false],
 			'thumbnail_url' => true,
+			'retina_thumbnail_url' => true,
 			'is_video' => ['getter' => 'isVideo', 'cache' => true],
 			'is_audio' => ['getter' => 'isAudio', 'cache' => true],
 			'type_grouping' => true,

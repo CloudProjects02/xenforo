@@ -4,13 +4,12 @@ namespace XF\Repository;
 
 use XF\Entity\Admin;
 use XF\Finder\AdminPermissionFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 class AdminPermissionRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return AdminPermissionFinder
 	 */
 	public function findPermissionsForList()
 	{

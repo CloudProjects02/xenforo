@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style_property_groups>
+  <style_property_group group_name="xenforoMessengerMessages" title="[XenForo Messenger] Messages" display_order="222"/>
+  <style_property_group group_name="xenforoMessengerRooms" title="[XenForo Messenger] Conversations" display_order="221"/>
+  <style_property_group group_name="xenforoMessengerSearch" title="[XenForo Messenger] Search" display_order="224"/>
+</style_property_groups>

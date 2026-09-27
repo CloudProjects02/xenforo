@@ -2,6 +2,7 @@
 
 namespace XF\Entity;
 
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XF\Repository\PollRepository;
@@ -13,10 +14,10 @@ use XF\Repository\PollRepository;
  * @property string $response
  * @property string $response_
  * @property int $response_vote_count
- * @property array $voters
+ * @property array|null $voters
  *
  * RELATIONS
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\PollVote> $Votes
+ * @property-read AbstractCollection<PollVote> $Votes
  */
 class PollResponse extends Entity
 {

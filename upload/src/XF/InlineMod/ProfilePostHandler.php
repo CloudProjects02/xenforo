@@ -40,7 +40,6 @@ class ProfilePostHandler extends AbstractHandler
 				/** @var ProfilePost $entity */
 				if ($entity->message_state == 'moderated')
 				{
-					/** @var ApproverService $approver */
 					$approver = \XF::service(ApproverService::class, $entity);
 					$approver->approve();
 				}

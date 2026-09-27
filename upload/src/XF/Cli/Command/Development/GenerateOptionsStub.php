@@ -31,6 +31,13 @@ class GenerateOptionsStub extends AbstractCommand
 				null,
 				InputOption::VALUE_NONE,
 				'If enabled, the stub is printed instead of written to a file'
+			)
+			->addOption(
+				'addon',
+				null,
+				InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY,
+				'Limit the stub to options owned by the given add-on(s). Defaults to core only.',
+				['XF']
 			);
 	}
 
@@ -41,7 +48,7 @@ class GenerateOptionsStub extends AbstractCommand
 	{
 		$io = new SymfonyStyle($input, $output);
 
-		$stub = $this->getOptionStub();
+		$stub = $this->getOptionStub($input->getOption('addon'));
 		if ($stub === null)
 		{
 			$io->error('The stubs could not be generated.');
@@ -72,17 +79,24 @@ class GenerateOptionsStub extends AbstractCommand
 		return static::SUCCESS;
 	}
 
-	protected function getOptionStub(): ?string
+	protected function getOptionStub(array $addOnIds): ?string
 	{
 		$optionRepo = \XF::repository(OptionRepository::class);
-		$optionFinder = $this->getOptionFinder();
+		$optionFinder = $this->getOptionFinder($addOnIds);
 
 		return $optionRepo->getOptionCacheFileValue($optionFinder);
 	}
 
-	protected function getOptionFinder(): OptionFinder
+	protected function getOptionFinder(array $addOnIds): OptionFinder
 	{
-		return \XF::finder(OptionFinder::class)
+		$finder = \XF::finder(OptionFinder::class)
 			->order('option_id');
+
+		if ($addOnIds)
+		{
+			$finder->where('addon_id', $addOnIds);
+		}
+
+		return $finder;
 	}
 }

@@ -137,7 +137,6 @@ class ButtonManagerController extends AbstractController
 		$typeConfig = $this->filter('editor_toolbar_config.' . $type, 'json-array');
 		$buttonConfig[$type] = $typeConfig;
 
-		/** @var OptionRepository $optionRepo */
 		$optionRepo = $this->repository(OptionRepository::class);
 		$optionRepo->updateOption('editorToolbarConfig', $buttonConfig);
 
@@ -163,7 +162,6 @@ class ButtonManagerController extends AbstractController
 			$buttonConfig = $this->options()->editorToolbarConfig;
 			$buttonConfig[$type] = $this->getEditorRepo()->getDefaultToolbarConfig($type);
 
-			/** @var OptionRepository $optionRepo */
 			$optionRepo = $this->repository(OptionRepository::class);
 			$optionRepo->updateOption('editorToolbarConfig', $buttonConfig);
 

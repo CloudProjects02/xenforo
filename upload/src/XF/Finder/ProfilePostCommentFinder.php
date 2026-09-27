@@ -3,14 +3,15 @@
 namespace XF\Finder;
 
 use XF\Entity\ProfilePost;
+use XF\Entity\ProfilePostComment;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Finder;
 
 /**
- * @method AbstractCollection<\XF\Entity\ProfilePostComment> fetch(?int $limit = null, ?int $offset = null)
- * @method AbstractCollection<\XF\Entity\ProfilePostComment> fetchDeferred(?int $limit = null, ?int $offset = null)
- * @method \XF\Entity\ProfilePostComment|null fetchOne(?int $offset = null)
- * @extends Finder<\XF\Entity\ProfilePostComment>
+ * @method AbstractCollection<ProfilePostComment> fetch(?int $limit = null, ?int $offset = null)
+ * @method AbstractCollection<ProfilePostComment> fetchDeferred(?int $limit = null, ?int $offset = null)
+ * @method ProfilePostComment|null fetchOne(?int $offset = null)
+ * @extends Finder<ProfilePostComment>
  */
 class ProfilePostCommentFinder extends Finder
 {

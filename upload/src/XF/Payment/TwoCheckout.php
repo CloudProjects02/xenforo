@@ -73,10 +73,10 @@ class TwoCheckout extends AbstractProvider
 		$options = $paymentProfile->options;
 
 		$md5Hash = strtoupper(md5(
-			$options['secret_word'] .
-			$options['account_number'] .
-			($input['demo'] === 'Y' ? 1 : $input['order_number']) .
-			$purchaseRequest->cost_amount
+			$options['secret_word']
+			. $options['account_number']
+			. ($input['demo'] === 'Y' ? 1 : $input['order_number'])
+			. $purchaseRequest->cost_amount
 		));
 
 		if ($md5Hash !== $input['key'])
@@ -236,10 +236,10 @@ class TwoCheckout extends AbstractProvider
 		$options = $paymentProfile->options;
 
 		$md5Hash = strtoupper(md5(
-			$state->saleId .
-			$options['account_number'] .
-			$state->invoiceId .
-			$options['secret_word']
+			$state->saleId
+			. $options['account_number']
+			. $state->invoiceId
+			. $options['secret_word']
 		));
 
 		if ($md5Hash !== $state->md5Hash)

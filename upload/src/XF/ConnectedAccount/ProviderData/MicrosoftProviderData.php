@@ -42,9 +42,9 @@ class MicrosoftProviderData extends AbstractProviderData
 	public function getDob()
 	{
 		return $this->prepareBirthday(
-			$this->requestFromEndpoint('birth_day') . '/' .
-			$this->requestFromEndpoint('birth_month') . '/' .
-			$this->requestFromEndpoint('birth_year'),
+			$this->requestFromEndpoint('birth_day') . '/'
+			. $this->requestFromEndpoint('birth_month') . '/'
+			. $this->requestFromEndpoint('birth_year'),
 			'd/m/y'
 		);
 	}

@@ -167,7 +167,6 @@ class UserUpgrade extends AbstractPurchasable
 			'Active|' . $purchaser->user_id
 		);
 
-		/** @var UpgradeService $upgradeService */
 		$upgradeService = \XF::app()->service(UpgradeService::class, $userUpgrade, $purchaser);
 
 		if ($state->extraData && is_array($state->extraData))
@@ -273,7 +272,6 @@ class UserUpgrade extends AbstractPurchasable
 			'Active|' . $purchaser->user_id
 		);
 
-		/** @var DowngradeService $downgradeService */
 		$downgradeService = \XF::app()->service(DowngradeService::class, $userUpgrade, $purchaser);
 		$downgradeService->setSendAlert(false);
 		$downgradeService->downgrade();

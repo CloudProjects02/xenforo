@@ -5,8 +5,8 @@ namespace XF\Mail;
 use Symfony\Component\Mailer\SentMessage;
 use Symfony\Component\Mailer\Transport\AbstractTransport;
 use Symfony\Component\Mime\Address;
-use Symfony\Component\Mime\Crypto\DkimSigner;
 use Symfony\Component\Mime\Email;
+use Symfony\Component\Mime\Message;
 use XF\Entity\User;
 use XF\Language;
 
@@ -34,29 +34,55 @@ class Mail
 	 */
 	protected $toUser;
 
+	/**
+	 * @var string|null
+	 */
 	protected $bounceHmac;
+
+	/**
+	 * @var string|null
+	 */
 	protected $bounceVerpBase;
 
+	/**
+	 * @var string|null
+	 */
 	protected $templateName;
+
+	/**
+	 * @var array<string, mixed>
+	 */
 	protected $templateParams = [];
+
+	/**
+	 * @var string|null
+	 */
 	protected $renderedTemplateName;
 
 	/**
-	 * Valid values are 'no', 'auto-generated', 'auto-replied', 'auto-notified'
-	 *
-	 * @var string
+	 * @var 'auto-generated'|'auto-replied'|'no'
 	 */
 	protected $autoSubmitted = 'auto-generated';
 
 	/**
-	 * @var null|\Exception
+	 * @var \Exception|null
 	 */
 	protected $setupError;
 
+	/**
+	 * @var bool
+	 */
 	protected $listUnsubscribeMailtoSet = false;
 
+	/**
+	 * @var bool
+	 */
 	protected $listUnsubscribeHttpSet = false;
 
+	/**
+	 * @param string|null $templateName
+	 * @param array<string, mixed>|null $templateParams
+	 */
 	public function __construct(Mailer $mailer, $templateName = null, ?array $templateParams = null)
 	{
 		$this->mailer = $mailer;
@@ -69,6 +95,12 @@ class Mail
 		}
 	}
 
+	/**
+	 * @param string $email
+	 * @param string|null $name
+	 *
+	 * @return $this
+	 */
 	public function setTo($email, $name = null): Mail
 	{
 		try
@@ -100,6 +132,9 @@ class Mail
 		return $this;
 	}
 
+	/**
+	 * @return $this
+	 */
 	public function setToUser(User $user): Mail
 	{
 		if (!$user->email)
@@ -119,11 +154,20 @@ class Mail
 		return $this;
 	}
 
+	/**
+	 * @return User|null
+	 */
 	public function getToUser()
 	{
 		return $this->toUser;
 	}
 
+	/**
+	 * @param string $email
+	 * @param string|null $name
+	 *
+	 * @return $this
+	 */
 	public function setFrom($email, $name = null): Mail
 	{
 		try
@@ -140,6 +184,12 @@ class Mail
 		return $this;
 	}
 
+	/**
+	 * @param string $email
+	 * @param string|null $name
+	 *
+	 * @return $this
+	 */
 	public function setReplyTo($email, $name = null): Mail
 	{
 		try
@@ -156,6 +206,12 @@ class Mail
 		return $this;
 	}
 
+	/**
+	 * @param string $email
+	 * @param bool $useVerp
+	 *
+	 * @return $this
+	 */
 	public function setReturnPath($email, $useVerp = false): Mail
 	{
 		$email = preg_replace('/["\'\s\\\\]/', '', $email);
@@ -178,6 +234,9 @@ class Mail
 		return $this;
 	}
 
+	/**
+	 * @return $this
+	 */
 	public function setListUnsubscribeFromOption(): Mail
 	{
 		$options = \XF::options();
@@ -199,6 +258,12 @@ class Mail
 		return $this;
 	}
 
+	/**
+	 * @param string $unsubEmail
+	 * @param bool $useVerp
+	 *
+	 * @return $this
+	 */
 	public function setListUnsubscribe($unsubEmail, $useVerp = false): Mail
 	{
 		if (!$unsubEmail || !$this->toUser)
@@ -237,6 +302,9 @@ class Mail
 		return $this;
 	}
 
+	/**
+	 * @return $this
+	 */
 	public function setListUnsubscribeHttp()
 	{
 		if (!$user = $this->toUser)
@@ -278,6 +346,9 @@ class Mail
 		return $this;
 	}
 
+	/**
+	 * @return string|null
+	 */
 	protected function applyVerp()
 	{
 		$verpAddress = $this->getVerpAddress($this->bounceHmac, $this->bounceVerpBase);
@@ -296,6 +367,13 @@ class Mail
 		return $verpAddress;
 	}
 
+	/**
+	 * @param string $hmac
+	 * @param string $verpBase
+	 * @param string|null $to
+	 *
+	 * @return string|null
+	 */
 	protected function getVerpAddress($hmac, $verpBase, $to = null)
 	{
 		if (!$hmac || !$verpBase)
@@ -322,6 +400,12 @@ class Mail
 		return $verpAddress;
 	}
 
+	/**
+	 * @param string $sender
+	 * @param string|null $name
+	 *
+	 * @return $this
+	 */
 	public function setSender($sender, $name = null): Mail
 	{
 		try
@@ -338,6 +422,11 @@ class Mail
 		return $this;
 	}
 
+	/**
+	 * @param string $id
+	 *
+	 * @return $this
+	 */
 	public function setId($id): Mail
 	{
 		try
@@ -352,6 +441,12 @@ class Mail
 		return $this;
 	}
 
+	/**
+	 * @param string $name
+	 * @param string $value
+	 *
+	 * @return $this
+	 */
 	public function addHeader($name, $value): Mail
 	{
 		$this->email->getHeaders()->addTextHeader($name, $value);
@@ -359,6 +454,13 @@ class Mail
 		return $this;
 	}
 
+	/**
+	 * @param string $subject
+	 * @param string $htmlBody
+	 * @param string|null $textBody
+	 *
+	 * @return $this
+	 */
 	public function setContent($subject, $htmlBody, $textBody = null): Mail
 	{
 		$htmlBodyStr = (string) $htmlBody;
@@ -395,6 +497,12 @@ class Mail
 		return $this;
 	}
 
+	/**
+	 * @param string $name
+	 * @param array<string, mixed> $params
+	 *
+	 * @return $this
+	 */
 	public function setTemplate($name, array $params = []): Mail
 	{
 		$this->templateName = $name;
@@ -403,11 +511,17 @@ class Mail
 		return $this;
 	}
 
+	/**
+	 * @return string|null
+	 */
 	public function getTemplateName()
 	{
 		return $this->templateName;
 	}
 
+	/**
+	 * @return $this
+	 */
 	public function renderTemplate(): Mail
 	{
 		if (!$this->templateName)
@@ -438,6 +552,9 @@ class Mail
 		return $this;
 	}
 
+	/**
+	 * @return $this
+	 */
 	public function setLanguage(?Language $language = null): Mail
 	{
 		$this->language = $language;
@@ -445,11 +562,19 @@ class Mail
 		return $this;
 	}
 
+	/**
+	 * @return Language|null
+	 */
 	public function getLanguage()
 	{
 		return $this->language;
 	}
 
+	/**
+	 * @param 'auto-generated'|'auto-replied'|'no' $autoSubmitted
+	 *
+	 * @return $this
+	 */
 	public function setAutoSubmitted(string $autoSubmitted): Mail
 	{
 		$this->autoSubmitted = $autoSubmitted;
@@ -457,11 +582,17 @@ class Mail
 		return $this;
 	}
 
+	/**
+	 * @return 'auto-generated'|'auto-replied'|'no'
+	 */
 	public function getAutoSubmitted(): string
 	{
 		return $this->autoSubmitted;
 	}
 
+	/**
+	 * @return string|null
+	 */
 	public function getFromAddress(): ?string
 	{
 		$from = $this->email->getFrom();
@@ -514,6 +645,9 @@ class Mail
 		return preg_match("#$emailStopRegex#i", $body) > 0;
 	}
 
+	/**
+	 * @return Message
+	 */
 	protected function setFinalHeaders()
 	{
 		$email = $this->email;
@@ -527,22 +661,6 @@ class Mail
 				break;
 		}
 
-		$dkimOptions = \XF::options()->emailDkim;
-		if ($dkimOptions['enabled']
-			&& $dkimOptions['verified']
-			&& extension_loaded('openssl')
-			&& $dkimOptions['domain'] == substr(strrchr($this->getFromAddress(), '@'), 1)
-		)
-		{
-			$key = \XF::registry()->get('emailDkimKey');
-
-			if ($key)
-			{
-				$signer = new DkimSigner($key, $dkimOptions['domain'], 'xenforo');
-				$email = $signer->sign($email);
-			}
-		}
-
 		if ($this->contentContainsEmailStop())
 		{
 			$this->setListUnsubscribeFromOption();
@@ -552,10 +670,9 @@ class Mail
 	}
 
 	/**
-	 * @param AbstractTransport|null $transport
-	 * @param bool                   $allowRetry
+	 * @param bool $allowRetry
 	 *
-	 * @return false|SentMessage|null
+	 * @return SentMessage|false|null
 	 */
 	public function send(?AbstractTransport $transport = null, $allowRetry = true)
 	{
@@ -576,6 +693,9 @@ class Mail
 		return $this->mailer->send($email, $transport);
 	}
 
+	/**
+	 * @return SentMessage|int|false|null
+	 */
 	public function queue()
 	{
 		if ($this->setupError)
@@ -598,9 +718,6 @@ class Mail
 	/**
 	 * Handles the application of the setup error. Throws the exception immediately in debug mode.
 	 * (In normal execution, queues it for logging when the email is sent.)
-	 *
-	 * @param \Exception $e
-	 * @throws \Exception
 	 */
 	protected function applySetupError(\Exception $e): void
 	{

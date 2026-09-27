@@ -15,7 +15,6 @@ class UserGroupPromotion
 	 */
 	public static function runPromotions()
 	{
-		/** @var UserGroupPromotionRepository $promotionRepo */
 		$promotionRepo = \XF::repository(UserGroupPromotionRepository::class);
 
 		$promotions = $promotionRepo->getActiveUserGroupPromotions();
@@ -24,7 +23,6 @@ class UserGroupPromotion
 			return;
 		}
 
-		/** @var UserFinder $userFinder */
 		$userFinder = \XF::app()->finder(UserFinder::class);
 		$userFinder->where('last_activity', '>', time() - 2 * 3600)
 			->with(['Profile', 'Option'])

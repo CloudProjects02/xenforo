@@ -160,9 +160,9 @@ class Runner
 	{
 		$commandAddOn = $this->getAddOnForCommand($command);
 		if (
-			$commandAddOn && $commandAddOn !== 'XF' &&
-			!\XF::isAddOnActive($commandAddOn) &&
-			!($command instanceof AllowInactiveAddOnCommandInterface)
+			$commandAddOn && $commandAddOn !== 'XF'
+			&& !\XF::isAddOnActive($commandAddOn)
+			&& !($command instanceof AllowInactiveAddOnCommandInterface)
 		)
 		{
 			$error = "This command belongs to an inactive add-on ($commandAddOn). You must activate this add-on before running this command.";

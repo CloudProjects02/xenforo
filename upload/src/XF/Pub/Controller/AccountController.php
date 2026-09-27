@@ -11,7 +11,6 @@ use XF\Entity\ConnectedAccountProvider;
 use XF\Entity\Notice;
 use XF\Entity\OAuthClient;
 use XF\Entity\Passkey;
-use XF\Entity\PaymentProfile;
 use XF\Entity\Purchasable;
 use XF\Entity\ReactionContent;
 use XF\Entity\TfaProvider;
@@ -23,7 +22,6 @@ use XF\Entity\UserProfile;
 use XF\Entity\UserTfa;
 use XF\Finder\UserFinder;
 use XF\Mvc\Entity\AbstractCollection;
-use XF\Mvc\Entity\ArrayCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\FormAction;
 use XF\Mvc\ParameterBag;
@@ -62,6 +60,8 @@ class AccountController extends AbstractController
 	protected function preDispatchController($action, ParameterBag $params)
 	{
 		$this->assertRegistrationRequired();
+
+		$this->app()->response()->header('Cache-Control', 'no-store');
 	}
 
 	public function actionIndex()
@@ -175,7 +175,6 @@ class AccountController extends AbstractController
 
 		$form->complete(function () use ($visitor)
 		{
-			/** @var IpRepository $ipRepo */
 			$ipRepo = $this->repository(IpRepository::class);
 			$ipRepo->logIp($visitor->user_id, $this->request->getIp(), 'user', $visitor->user_id, 'account_details_edit');
 		});
@@ -185,7 +184,6 @@ class AccountController extends AbstractController
 
 	protected function setupUsernameChange(): UsernameChangeService
 	{
-		/** @var UsernameChangeService $service */
 		$service = $this->service(UsernameChangeService::class, \XF::visitor());
 
 		$service->setNewUsername($this->filter('username', 'str'));
@@ -289,7 +287,6 @@ class AccountController extends AbstractController
 
 		if ($input['email'] != $visitor->email || $visitor->user_state === 'email_bounce')
 		{
-			/** @var EmailChangeService $emailChange */
 			$emailChange = $this->service(EmailChangeService::class, $visitor, $input['email']);
 
 			$form->validate(function (FormAction $form) use ($visitor, $input, $emailChange)
@@ -366,7 +363,6 @@ class AccountController extends AbstractController
 		$visitor = \XF::visitor();
 		$form->complete(function () use ($visitor)
 		{
-			/** @var IpRepository $ipRepo */
 			$ipRepo = $this->repository(IpRepository::class);
 			$ipRepo->logIp($visitor->user_id, $this->request->getIp(), 'user', $visitor->user_id, 'signature_edit');
 		});
@@ -426,7 +422,6 @@ class AccountController extends AbstractController
 
 		$form->complete(function () use ($visitor)
 		{
-			/** @var IpRepository $ipRepo */
 			$ipRepo = $this->repository(IpRepository::class);
 			$ipRepo->logIp($visitor->user_id, $this->request->getIp(), 'user', $visitor->user_id, 'privacy_edit');
 		});
@@ -445,7 +440,6 @@ class AccountController extends AbstractController
 		{
 			$styles = $this->repository(StyleRepository::class)->getUserSelectableStyles();
 
-			/** @var LanguageRepository $languageRepo */
 			$languageRepo = $this->repository(LanguageRepository::class);
 
 			/** @var TimeZone $tzData */
@@ -558,7 +552,6 @@ class AccountController extends AbstractController
 		});
 		$form->complete(function () use ($visitor)
 		{
-			/** @var IpRepository $ipRepo */
 			$ipRepo = $this->repository(IpRepository::class);
 			$ipRepo->logIp($visitor->user_id, $this->request->getIp(), 'user', $visitor->user_id, 'preferences_edit');
 		});
@@ -600,7 +593,6 @@ class AccountController extends AbstractController
 		{
 			$useCustom = $this->filter('use_custom', 'bool');
 
-			/** @var AvatarService $avatarService */
 			$avatarService = $this->service(AvatarService::class, $visitor);
 
 			if ($this->filter('delete_avatar', 'bool'))
@@ -701,7 +693,6 @@ class AccountController extends AbstractController
 
 		if ($this->isPost())
 		{
-			/** @var ProfileBannerService $bannerService */
 			$bannerService = $this->service(ProfileBannerService::class, $visitor);
 
 			if ($this->filter('delete_banner', 'bool'))
@@ -801,7 +792,6 @@ class AccountController extends AbstractController
 
 		$visitor = \XF::visitor();
 
-		/** @var ReactionRepository $reactionRepo */
 		$reactionRepo = $this->repository(ReactionRepository::class);
 
 		$page = $this->filterPage();
@@ -826,7 +816,6 @@ class AccountController extends AbstractController
 			$reactionFinder->where('reaction_id', array_keys($typeTotals));
 		}
 
-		/** @var ArrayCollection|ReactionContent[] $reactions */
 		$reactions = $reactionFinder->fetch();
 		$hasNext = count($reactions) > $perPage;
 		$reactions = $reactions->slice(0, $perPage);
@@ -881,7 +870,6 @@ class AccountController extends AbstractController
 		}
 		else
 		{
-			/** @var TfaRepository $tfaRepo */
 			$tfaRepo = $this->repository(TfaRepository::class);
 			$enabledProviders = [];
 			$deprecatedProviders = [];
@@ -949,6 +937,11 @@ class AccountController extends AbstractController
 
 	public function actionPasskeyAdd()
 	{
+		if (!$this->request->isSecure() && !$this->request->isHostLocal())
+		{
+			return $this->notFound();
+		}
+
 		if ($this->isPost())
 		{
 			$newPasskey = $this->service(ManagerService::class, $this->session());
@@ -996,7 +989,14 @@ class AccountController extends AbstractController
 
 	public function actionPasskeyEdit(ParameterBag $params)
 	{
+		$this->assertPasswordVerified(3600);
+
 		$passkey = $this->assertPasskeyExists($params->passkey_id);
+
+		if ($passkey->user_id !== \XF::visitor()->user_id)
+		{
+			throw $this->exception($this->noPermission());
+		}
 
 		if ($this->isPost())
 		{
@@ -1016,7 +1016,14 @@ class AccountController extends AbstractController
 
 	public function actionPasskeyDelete(ParameterBag $params)
 	{
+		$this->assertPasswordVerified(3600);
+
 		$passkey = $this->assertPasskeyExists($params->passkey_id);
+
+		if ($passkey->user_id !== \XF::visitor()->user_id)
+		{
+			throw $this->exception($this->noPermission());
+		}
 
 		return $this->plugin(DeletePlugin::class)->actionDelete(
 			$passkey,
@@ -1089,7 +1096,6 @@ class AccountController extends AbstractController
 
 			if ($sendConfirmation)
 			{
-				/** @var PasswordResetService $passwordConfirmation */
 				$passwordConfirmation = $this->service(PasswordResetService::class, $visitor);
 				$passwordConfirmation->triggerConfirmation();
 			}
@@ -1135,14 +1141,12 @@ class AccountController extends AbstractController
 		$this->assertTfaEnabled();
 		$this->assertTwoStepPasswordVerified();
 
-		/** @var TfaRepository $tfaRepo */
 		$tfaRepo = $this->repository(TfaRepository::class);
 
 		/** @var LoginPlugin $loginPlugin */
 		$loginPlugin = $this->plugin(LoginPlugin::class);
 		$currentTrustKey = $loginPlugin->getCurrentTrustKey();
 
-		/** @var UserTfaTrustedRepository $tfaTrustRepo */
 		$tfaTrustRepo = $this->repository(UserTfaTrustedRepository::class);
 
 		$visitor = \XF::visitor();
@@ -1242,11 +1246,9 @@ class AccountController extends AbstractController
 				return $this->error(\XF::phrase('two_step_verification_value_could_not_be_confirmed'));
 			}
 
-			/** @var TfaRepository $tfaRepo */
 			$tfaRepo = $this->repository(TfaRepository::class);
 			$tfaRepo->enableUserTfaProvider($visitor, $provider, $providerData, $backupAdded);
 
-			/** @var IpRepository $ipRepo */
 			$ipRepo = $this->repository(IpRepository::class);
 			$ipRepo->logIp($visitor->user_id, $this->request->getIp(), 'user', $visitor->user_id, 'tfa_enable');
 
@@ -1323,11 +1325,9 @@ class AccountController extends AbstractController
 				return $this->error(\XF::phrase('two_step_verification_value_could_not_be_confirmed'));
 			}
 
-			/** @var TfaRepository $tfaRepo */
 			$tfaRepo = $this->repository(TfaRepository::class);
 			$tfaRepo->enableUserTfaProvider($visitor, $provider, $providerData, $backupAdded);
 
-			/** @var IpRepository $ipRepo */
 			$ipRepo = $this->repository(IpRepository::class);
 			$ipRepo->logIp($visitor->user_id, $this->request->getIp(), 'user', $visitor->user_id, 'tfa_enable');
 
@@ -1400,12 +1400,10 @@ class AccountController extends AbstractController
 			}
 			else
 			{
-				/** @var TfaRepository $tfaRepo */
 				$tfaRepo = $this->repository(TfaRepository::class);
 				$tfaRepo->disableTfaForUser(\XF::visitor());
 			}
 
-			/** @var IpRepository $ipRepo */
 			$ipRepo = $this->repository(IpRepository::class);
 			$ipRepo->logIp($visitor->user_id, $this->request->getIp(), 'user', $visitor->user_id, 'tfa_disable');
 
@@ -1454,7 +1452,6 @@ class AccountController extends AbstractController
 		$this->assertPostOnly();
 		$this->assertTwoStepPasswordVerified();
 
-		/** @var UserTfaTrustedRepository $tfaTrustRepo */
 		$tfaTrustRepo = $this->repository(UserTfaTrustedRepository::class);
 
 		/** @var LoginPlugin $loginPlugin */
@@ -1514,7 +1511,6 @@ class AccountController extends AbstractController
 		}
 
 		$paymentRepo = $this->repository(PaymentRepository::class);
-		/** @var AbstractCollection|PaymentProfile[] $profiles */
 		$profiles = $paymentRepo->findPaymentProfilesForList()->fetch();
 		$profileThirdParties = [];
 		foreach ($profiles AS $profileId => $profile)
@@ -1571,7 +1567,6 @@ class AccountController extends AbstractController
 		$page = $this->filterPage();
 		$perPage = $this->options()->alertsPerPage;
 
-		/** @var UserAlertRepository $alertRepo */
 		$alertRepo = $this->repository(UserAlertRepository::class);
 
 		$alertsFinder = $alertRepo->findAlertsForUser($visitor->user_id);
@@ -1609,7 +1604,6 @@ class AccountController extends AbstractController
 
 		$visitor = \XF::visitor();
 
-		/** @var UserAlertRepository $alertRepo */
 		$alertRepo = $this->repository(UserAlertRepository::class);
 
 		$cutOff = \XF::$time - $this->options()->alertsPopupExpiryDays * 86400;
@@ -1669,7 +1663,6 @@ class AccountController extends AbstractController
 			}
 		}
 
-		/** @var UserAlertRepository $alertRepo */
 		$alertRepo = $this->repository(UserAlertRepository::class);
 
 		$alertRepo->markInaccessibleAlertsRead($visitor);
@@ -1679,7 +1672,6 @@ class AccountController extends AbstractController
 	{
 		$visitor = \XF::visitor();
 
-		/** @var UserAlertRepository $alertRepo */
 		$alertRepo = $this->repository(UserAlertRepository::class);
 
 		$redirect = $this->getDynamicRedirect($this->buildLink('account/alerts'));
@@ -1705,7 +1697,6 @@ class AccountController extends AbstractController
 		$alertId = $this->filter('alert_id', 'uint');
 		$alert = $this->assertViewableAlert($alertId);
 
-		/** @var UserAlertRepository $alertRepo */
 		$alertRepo = $this->repository(UserAlertRepository::class);
 
 		$newUnreadStatus = $this->filter('unread', '?bool');
@@ -1761,7 +1752,6 @@ class AccountController extends AbstractController
 		$page = $this->filterPage();
 		$perPage = 20;
 
-		/** @var BookmarkRepository $bookmarkRepo */
 		$bookmarkRepo = $this->repository(BookmarkRepository::class);
 
 		$label = $this->filter('label', 'str');
@@ -1810,7 +1800,6 @@ class AccountController extends AbstractController
 			return $this->noPermission();
 		}
 
-		/** @var BookmarkRepository $bookmarkRepo */
 		$bookmarkRepo = $this->repository(BookmarkRepository::class);
 
 		$label = $this->filter('label', 'str');

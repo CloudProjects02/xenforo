@@ -202,8 +202,8 @@ class NotifierService extends AbstractService
 	protected function sendCreateNotification(Moderator $moderator): void
 	{
 		if (
-			!empty($this->usersEmailed[$moderator->User->user_id]) ||
-			!$moderator->notify_report
+			!empty($this->usersEmailed[$moderator->User->user_id])
+			|| !$moderator->notify_report
 		)
 		{
 			return;

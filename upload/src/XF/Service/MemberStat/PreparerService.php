@@ -267,8 +267,8 @@ class PreparerService extends AbstractService
 	protected function getValueField()
 	{
 		if (
-			!$this->memberStat->show_value ||
-			!$this->userSearcher->isSortOrderNumeric($this->memberStat->sort_order)
+			!$this->memberStat->show_value
+			|| !$this->userSearcher->isSortOrderNumeric($this->memberStat->sort_order)
 		)
 		{
 			return null;

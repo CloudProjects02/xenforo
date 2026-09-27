@@ -21,4 +21,20 @@ class ErrorLogRepository extends Repository
 
 		return (bool) $hasErrors;
 	}
+
+	public function pruneErrorLogs(?int $cutOff = null): int
+	{
+		if ($cutOff === null)
+		{
+			$logLength = $this->options()->errorLogLength;
+			if (!$logLength)
+			{
+				return 0;
+			}
+
+			$cutOff = \XF::$time - 86400 * $logLength;
+		}
+
+		return $this->db()->delete('xf_error_log', 'exception_date < ?', $cutOff);
+	}
 }

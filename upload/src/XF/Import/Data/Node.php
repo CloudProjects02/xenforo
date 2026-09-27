@@ -50,7 +50,6 @@ class Node extends AbstractEmulatedData
 
 		\XF::runOnce('nodeImport', function ()
 		{
-			/** @var RebuildNestedSetService $service */
 			$service = \XF::service(RebuildNestedSetService::class, NodeFinder::class, [
 				'parentField' => 'parent_node_id',
 			]);

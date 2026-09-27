@@ -7,7 +7,6 @@ use XF\Entity\User;
 use XF\Finder\NoticeFinder;
 use XF\Finder\TemplateFinder;
 use XF\Mvc\Entity\AbstractCollection;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 use XF\Util\Php;
 
@@ -16,7 +15,7 @@ use function count, in_array;
 class NoticeRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return NoticeFinder
 	 */
 	public function findNoticesForList()
 	{
@@ -27,7 +26,7 @@ class NoticeRepository extends Repository
 	 * Checks through notices to see if any have page criteria which may no longer being valid.
 	 * This could be templates, views or controllers from old XF versions or uninstalled add-ons.
 	 *
-	 * @param AbstractCollection|Notice[] $notices
+	 * @param AbstractCollection<Notice> $notices
 	 * @return array
 	 */
 	public function getInvalidNotices(AbstractCollection $notices)

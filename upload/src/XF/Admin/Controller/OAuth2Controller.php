@@ -74,14 +74,6 @@ class OAuth2Controller extends AbstractController
 
 		$input['redirect_uris'] = array_filter($input['redirect_uris']);
 
-		$form->validate(function (FormAction $form) use ($input)
-		{
-			if ($input['title'] === '')
-			{
-				$form->logError(\XF::phrase('please_enter_valid_title'), 'title');
-			}
-		});
-
 		$form->basicEntitySave($client, $input);
 
 		return $form;

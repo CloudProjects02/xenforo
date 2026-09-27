@@ -12,7 +12,6 @@ use XF\Mvc\ParameterBag;
 use XF\Repository\EmailDkimRepository;
 use XF\Repository\OptionRepository;
 use XF\Util\Arr;
-
 use XF\Util\File;
 
 use function count, is_array;
@@ -414,8 +413,8 @@ class OptionController extends AbstractController
 		foreach ($option->Relations AS $relation)
 		{
 			if (
-				!$relation->OptionGroup->AddOn ||
-				!$relation->OptionGroup->AddOn->active
+				!$relation->OptionGroup->AddOn
+				|| !$relation->OptionGroup->AddOn->active
 			)
 			{
 				continue;
@@ -738,11 +737,11 @@ class OptionController extends AbstractController
 
 		if ($this->isPost())
 		{
-			/** @var EmailDkimRepository $emailDkimRepo */
 			$emailDkimRepo = $this->repository(EmailDkimRepository::class);
 			$emailDkimRepo->generateAndSaveNewKey();
 
 			$optionValue['domain'] = $this->filter('domain', 'str');
+			$optionValue['selector'] = $emailDkimRepo->generateUniqueSelector();
 			$optionValue['enabled'] = true;
 
 			$this->getOptionRepo()->updateOption($option->option_id, $optionValue);
@@ -772,7 +771,6 @@ class OptionController extends AbstractController
 
 		$option = $this->assertOptionExists($params->option_id);
 
-		/** @var EmailDkimRepository $emailDkimRepo */
 		$emailDkimRepo = $this->repository(EmailDkimRepository::class);
 
 		$verified = $emailDkimRepo->verifyDnsRecordForDomain(

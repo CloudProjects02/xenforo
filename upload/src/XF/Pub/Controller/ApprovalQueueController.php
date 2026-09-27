@@ -4,7 +4,6 @@ namespace XF\Pub\Controller;
 
 use XF\Entity\ApprovalQueue;
 use XF\Job\ApprovalQueueProcess;
-use XF\Mvc\Entity\ArrayCollection;
 use XF\Mvc\Entity\Finder;
 use XF\Mvc\ParameterBag;
 use XF\Repository\ApprovalQueueRepository;
@@ -30,7 +29,6 @@ class ApprovalQueueController extends AbstractController
 		$filters = $this->getQueueFilterInput();
 		$this->applyQueueFilters($unapprovedFinder, $filters);
 
-		/** @var ApprovalQueue[]|ArrayCollection $unapprovedItems */
 		$unapprovedItems = $unapprovedFinder->fetch();
 
 		if ($unapprovedItems->count() != $this->app->unapprovedCounts['total'])

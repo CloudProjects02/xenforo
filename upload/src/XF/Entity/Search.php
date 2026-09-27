@@ -2,6 +2,7 @@
 
 namespace XF\Entity;
 
+use XF\Api\Result\EntityResult;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XF\Search\Query\KeywordQuery;
@@ -11,15 +12,15 @@ use function count, is_array, strval;
 /**
  * COLUMNS
  * @property int|null $search_id
- * @property array $search_results
+ * @property array|null $search_results
  * @property int $result_count
  * @property string $search_type
  * @property string $search_query
- * @property array $search_constraints
+ * @property array|null $search_constraints
  * @property string $search_order
  * @property bool $search_grouping
- * @property array $user_results
- * @property array $warnings
+ * @property array|null $user_results
+ * @property array|null $warnings
  * @property int $user_id
  * @property int $search_date
  * @property string $query_hash
@@ -88,25 +89,48 @@ class Search extends Entity
 		return true;
 	}
 
+	/**
+	 * @param int $verbosity
+	 *
+	 * @api-out int $search_id
+	 * @api-out int $result_count
+	 * @api-out string $search_type
+	 * @api-out string $search_query
+	 * @api-out array $search_constraints
+	 * @api-out string $search_order
+	 * @api-out bool $search_grouping
+	 * @api-out array $warnings
+	 * @api-out int $user_id
+	 * @api-out int $search_date
+	 * @api-out string $query_hash
+	 */
+	protected function setupApiResultData(
+		EntityResult $result,
+		$verbosity = self::VERBOSITY_NORMAL,
+		array $options = []
+	)
+	{
+	}
+
 	public static function getStructure(Structure $structure)
 	{
 		$structure->table = 'xf_search';
 		$structure->shortName = 'XF:Search';
 		$structure->primaryKey = 'search_id';
 		$structure->columns = [
-			'search_id' => ['type' => self::UINT, 'autoIncrement' => true, 'nullable' => true],
+			'search_id' => ['type' => self::UINT, 'autoIncrement' => true, 'nullable' => true, 'api' => true],
 			'search_results' => ['type' => self::JSON_ARRAY, 'required' => true],
-			'result_count' => ['type' => self::UINT, 'default' => 0],
-			'search_type' => ['type' => self::STR, 'maxLength' => 25, 'default' => ''],
-			'search_query' => ['type' => self::STR, 'maxLength' => 200, 'default' => ''],
-			'search_constraints' => ['type' => self::JSON_ARRAY, 'default' => []],
-			'search_order' => ['type' => self::STR, 'maxLength' => 50, 'default' => ''],
-			'search_grouping' => ['type' => self::BOOL, 'default' => false],
+			'result_count' => ['type' => self::UINT, 'default' => 0, 'api' => true],
+			'search_type' => ['type' => self::STR, 'maxLength' => 25, 'default' => '', 'api' => true],
+			'search_query' => ['type' => self::STR, 'maxLength' => 200, 'default' => '', 'api' => true],
+			'search_constraints' => ['type' => self::JSON_ARRAY, 'default' => [], 'api' => true],
+			'search_order' => ['type' => self::STR, 'maxLength' => 50, 'default' => '', 'api' => true],
+			'search_grouping' => ['type' => self::BOOL, 'default' => false, 'api' => true],
 			'user_results' => ['type' => self::JSON_ARRAY, 'default' => []],
-			'warnings' => ['type' => self::JSON_ARRAY, 'default' => []],
-			'user_id' => ['type' => self::UINT, 'required' => true],
-			'search_date' => ['type' => self::UINT, 'default' => \XF::$time],
-			'query_hash' => ['type' => self::STR, 'maxLength' => 32, 'default' => ''],
+			'warnings' => ['type' => self::JSON_ARRAY, 'default' => [], 'api' => true],
+			'user_id' => ['type' => self::UINT, 'required' => true, 'api' => true],
+			'search_date' => ['type' => self::UINT, 'default' => \XF::$time, 'api' => true],
+			'query_hash' => ['type' => self::STR, 'maxLength' => 32, 'default' => '', 'api' => true],
 		];
 		$structure->getters = [
 		];

@@ -110,7 +110,6 @@ class ImportService extends AbstractXmlImport
 
 		if ($user->save(false))
 		{
-			/** @var PasswordResetService $passwordReset */
 			$passwordReset = $this->service(PasswordResetService::class, $user);
 			$passwordReset->setAdminReset(true);
 			$passwordReset->triggerConfirmation();

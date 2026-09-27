@@ -5,6 +5,7 @@ namespace XF\Entity;
 use XF\Api\Result\EntityResult;
 use XF\Api\Result\EntityResultInterface;
 use XF\BbCode\RenderableContentInterface;
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XF\Repository\AttachmentRepository;
@@ -26,14 +27,14 @@ use XF\ThreadType\QuestionHandler;
  * @property int $warning_id
  * @property string $warning_message
  * @property int $position
- * @property array $type_data
+ * @property array|null $type_data
  * @property int $last_edit_date
  * @property int $last_edit_user_id
  * @property int $edit_count
  * @property array|null $embed_metadata
  * @property int $reaction_score
- * @property array $reactions_
- * @property array $reaction_users_
+ * @property array|null $reactions_
+ * @property array|null $reaction_users_
  * @property int $vote_score
  * @property int $vote_count
  *
@@ -44,24 +45,29 @@ use XF\ThreadType\QuestionHandler;
  * @property mixed $reaction_users
  * @property-read mixed $vote_score_short
  * @property-read array $Embeds
+ * @property-read string $ip_address
  *
  * RELATIONS
  * @property-read Thread|null $Thread
  * @property-read User|null $User
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\Attachment> $Attachments
+ * @property-read AbstractCollection<Attachment> $Attachments
  * @property-read DeletionLog|null $DeletionLog
  * @property-read ApprovalQueue|null $ApprovalQueue
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\ReactionContent> $Reactions
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\BookmarkItem> $Bookmarks
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\ContentVote> $ContentVotes
+ * @property-read AbstractCollection<ReactionContent> $Reactions
+ * @property-read AbstractCollection<BookmarkItem> $Bookmarks
+ * @property-read AbstractCollection<ContentVote> $ContentVotes
+ * @property-read Ip|null $Ip
  */
-class Post extends Entity implements LinkableInterface, QuotableInterface, RenderableContentInterface, ViewableInterface
+class Post extends Entity implements ContainableInterface, DatableInterface, LinkableInterface, QuotableInterface, RenderableContentInterface, ViewableInterface
 {
 	use BookmarkTrait;
+	use ContainableTrait;
 	use ContentVoteTrait;
+	use DatableTrait;
 	use EmbedRendererTrait;
 	use EmbedResolverTrait;
 	use ReactionTrait;
+	use IpTrait;
 
 	public function canView(&$error = null)
 	{
@@ -796,7 +802,6 @@ class Post extends Entity implements LinkableInterface, QuotableInterface, Rende
 		$this->adjustUserMessageCountIfNeeded(-1);
 		$this->adjustThreadUserPostCount(-1);
 
-		/** @var UserAlertRepository $alertRepo */
 		$alertRepo = $this->repository(UserAlertRepository::class);
 		$alertRepo->fastDeleteAlertsForContent('post', $this->post_id);
 	}
@@ -858,7 +863,6 @@ class Post extends Entity implements LinkableInterface, QuotableInterface, Rende
 
 		$this->db()->delete('xf_edit_history', 'content_type = ? AND content_id = ?', ['post', $this->post_id]);
 
-		/** @var AttachmentRepository $attachRepo */
 		$attachRepo = $this->repository(AttachmentRepository::class);
 		$attachRepo->fastDeleteContentAttachments('post', $this->post_id);
 
@@ -973,6 +977,21 @@ class Post extends Entity implements LinkableInterface, QuotableInterface, Rende
 			// this is repeated, mostly because attachments are post associated, even if the permission comes from above
 			$result->can_view_attachments = $this->Thread->canViewAttachments();
 		}
+	}
+
+	public function getContentContainerIdColumn(): string
+	{
+		return 'thread_id';
+	}
+
+	public function getContentContainerType(): string
+	{
+		return 'thread';
+	}
+
+	public function getContentDateColumn(): string
+	{
+		return 'post_date';
 	}
 
 	public function getContentUrl(bool $canonical = false, array $extraParams = [], $hash = null)
@@ -1156,6 +1175,7 @@ class Post extends Entity implements LinkableInterface, QuotableInterface, Rende
 		static::addVotableStructureElements($structure);
 		static::addEmbedRendererStructureElements($structure);
 		static::addEmbedResolverStructureElements($structure);
+		static::addIpStructureElements($structure);
 
 		return $structure;
 	}

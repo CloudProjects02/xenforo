@@ -4,13 +4,12 @@ namespace XF\Repository;
 
 use XF\Finder\ModeratorLogFinder;
 use XF\ModeratorLog\AbstractHandler;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 class ModeratorLogRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return ModeratorLogFinder
 	 */
 	public function findLogsForList()
 	{
@@ -20,7 +19,7 @@ class ModeratorLogRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return ModeratorLogFinder
 	 */
 	public function findLogsForDiscussion($discussionContentType, $discussionId)
 	{

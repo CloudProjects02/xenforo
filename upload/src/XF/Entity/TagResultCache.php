@@ -15,7 +15,7 @@ use function array_slice, intval, is_array;
  * @property int $user_id
  * @property int $cache_date
  * @property int $expiry_date
- * @property array $results
+ * @property array|null $results
  *
  * RELATIONS
  * @property-read Tag|null $Tag

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<code_events>
+  <event event_id="broadcast_channels"><![CDATA[<p>Allows to add new channels.</p>
+
+<p>Callback signature:</p>
+<blockquote><code><em>array</em> &amp;$channels</code></blockquote>
+
+<p>Arguments:</p>
+<ol>
+	<li><code><em>array</em> &amp;$channels</code> - channels array in format [['name_pattern' => 'channel_class'], ...]</li>
+</ol>]]></event>
+</code_events>

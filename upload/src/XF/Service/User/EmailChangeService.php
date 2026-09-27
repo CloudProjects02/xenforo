@@ -169,7 +169,6 @@ class EmailChangeService extends AbstractService
 
 	protected function sendEmailConfirmation()
 	{
-		/** @var EmailConfirmationService $emailConfirmation */
 		$emailConfirmation = $this->service(EmailConfirmationService::class, $this->user);
 		$emailConfirmation->triggerConfirmation();
 
@@ -206,7 +205,6 @@ class EmailChangeService extends AbstractService
 	{
 		$user = $this->user;
 
-		/** @var IpRepository $ipRepo */
 		$ipRepo = $this->repository(IpRepository::class);
 		$ipRepo->logIp($user->user_id, $ip, 'user', $user->user_id, 'email_change');
 	}

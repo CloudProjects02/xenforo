@@ -53,7 +53,6 @@ class SearchForum extends AbstractRebuildJob
 			return;
 		}
 
-		/** @var SearchForumRepository $searchForumRepo */
 		$searchForumRepo = $this->app->repository(SearchForumRepository::class);
 		$searchForumRepo->rebuildThreadsForSearchForum($searchForum);
 	}

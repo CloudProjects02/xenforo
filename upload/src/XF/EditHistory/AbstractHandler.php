@@ -4,29 +4,75 @@ namespace XF\EditHistory;
 
 use XF\Entity\EditHistory;
 use XF\Entity\LinkableInterface;
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 
 use function get_class;
 
+/**
+ * @template T of Entity
+ */
 abstract class AbstractHandler
 {
+	/**
+	 * @var string
+	 */
 	protected $contentType;
 
+	/**
+	 * @param string $contentType
+	 */
 	public function __construct($contentType)
 	{
 		$this->contentType = $contentType;
 	}
 
+	/**
+	 * @param T $content
+	 *
+	 * @return bool
+	 */
 	abstract public function canViewHistory(Entity $content);
+
+	/**
+	 * @param T $content
+	 *
+	 * @return bool
+	 */
 	abstract public function canRevertContent(Entity $content);
 
+	/**
+	 * @param T $content
+	 *
+	 * @return string
+	 */
 	abstract public function getContentText(Entity $content);
+
+	/**
+	 * @param T $content
+	 *
+	 * @return list<array{value: string|\Stringable, href: string}>
+	 */
 	abstract public function getBreadcrumbs(Entity $content);
 
+	/**
+	 * @param T $content
+	 */
 	abstract public function revertToVersion(Entity $content, EditHistory $history, ?EditHistory $previous = null);
 
+	/**
+	 * @param string $text
+	 * @param T|null $content
+	 *
+	 * @return string
+	 */
 	abstract public function getHtmlFormattedContent($text, ?Entity $content = null);
 
+	/**
+	 * @param T $content
+	 *
+	 * @return string
+	 */
 	public function getContentLink(Entity $content)
 	{
 		if ($content instanceof LinkableInterface)
@@ -40,6 +86,11 @@ abstract class AbstractHandler
 		);
 	}
 
+	/**
+	 * @param T $content
+	 *
+	 * @return string|\Stringable
+	 */
 	public function getContentTitle(Entity $content)
 	{
 		if ($content instanceof LinkableInterface)
@@ -53,21 +104,37 @@ abstract class AbstractHandler
 		);
 	}
 
+	/**
+	 * @param T $content
+	 *
+	 * @return int
+	 */
 	public function getEditCount(Entity $content)
 	{
 		return $content->edit_count;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getSectionContext()
 	{
 		return '';
 	}
 
+	/**
+	 * @return list<string>
+	 */
 	public function getEntityWith()
 	{
 		return [];
 	}
 
+	/**
+	 * @param int|list<int> $id
+	 *
+	 * @return T|AbstractCollection<T>
+	 */
 	public function getContent($id)
 	{
 		return \XF::app()->findByContentType($this->contentType, $id, $this->getEntityWith());

@@ -22,7 +22,7 @@ class Search implements ResultSetInterface
 	protected $source;
 
 	/**
-	 * @var array<string, class-string<Data\AbstractData>>
+	 * @var array<string, class-string<AbstractData>>
 	 */
 	protected $types;
 
@@ -32,7 +32,7 @@ class Search implements ResultSetInterface
 	protected $handlers = [];
 
 	/**
-	 * @param array<string, class-string<Data\AbstractData>> $types
+	 * @param array<string, class-string<AbstractData>> $types
 	 */
 	public function __construct(AbstractSource $source, array $types)
 	{
@@ -291,13 +291,22 @@ class Search implements ResultSetInterface
 					return null;
 				}
 
-				return array_filter(array_merge(
+				$autoCompleteResult = $handler->getAutoCompleteResult(
+					$result,
+					$options
+				);
+				if ($autoCompleteResult === null)
+				{
+					return null;
+				}
+
+				return array_merge(
 					[
 						'id' => $result->getEntityContentTypeId(),
 						'type' => \XF::app()->getContentTypePhrase($type),
 					],
-					$handler->getAutoCompleteResult($result, $options)
-				));
+					$autoCompleteResult
+				);
 			}
 		);
 	}
@@ -430,7 +439,24 @@ class Search implements ResultSetInterface
 		}
 
 		$handler = $this->handler($type);
-		$entities = $handler->getContent($ids, true);
+
+		$cached = [];
+		$fetch = [];
+		$entityName = \XF::app()->getContentTypeEntity($type);
+		foreach ($ids AS $id)
+		{
+			$entity = \XF::em()->findCached($entityName, $id);
+			if (!$entity)
+			{
+				$fetch[] = $id;
+				continue;
+			}
+
+			$cached[$id] = $entity;
+		}
+
+		$cached = \XF::em()->getBasicCollection($cached);
+		$entities = $cached->merge($handler->getContent($fetch, true));
 
 		if ($filterViewable)
 		{
@@ -463,6 +489,34 @@ class Search implements ResultSetInterface
 		{
 			return new RenderWrapper($this->handler($type), $result, $options);
 		});
+	}
+
+	public function getResultSetApiResults(
+		ResultSet $resultSet,
+		int $verbosity = Entity::VERBOSITY_NORMAL,
+		array $options = []
+	): array
+	{
+		return array_values(
+			$resultSet->getResultsDataCallback(function (
+				Entity $result,
+				string $type,
+				int $id
+			) use (
+				$verbosity,
+				$options
+			): array
+			{
+				$handler = $this->handler($type);
+				$result = $handler->toApiResult($result, $verbosity, $options);
+
+				return [
+					'type' => $type,
+					'id' => $id,
+					'result' => $result,
+				];
+			})
+		);
 	}
 
 	/**

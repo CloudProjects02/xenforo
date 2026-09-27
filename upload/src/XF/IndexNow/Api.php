@@ -80,10 +80,13 @@ class Api
 
 				$body = $response->getBody();
 				$contents = @json_decode($body->getContents(), true);
-				$message = $contents['message'] ?? \XF::phrase('unexpected_error_occurred');
+				$message = $contents['message'] ?? false;
 
-				$error = 'IndexNow error: [' . $statusCode . '] ' . $message;
-				\XF::logError($error);
+				if ($message)
+				{
+					$error = 'IndexNow error: [' . $statusCode . '] ' . $message;
+					\XF::logError($error);
+				}
 			}
 		}
 		catch (TransferException $e)

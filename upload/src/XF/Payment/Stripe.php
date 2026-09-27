@@ -27,7 +27,7 @@ use XF\Purchasable\Purchase;
 use XF\Util\Str;
 use XF\Validator\Email;
 
-use function array_key_exists, in_array, intval, is_string, strlen, strval;
+use function array_key_exists, in_array, intval, is_array, is_string, strlen, strval;
 
 class Stripe extends AbstractProvider
 {
@@ -370,7 +370,7 @@ class Stripe extends AbstractProvider
 	protected function getStripeProductAndPlanId(Purchase $purchase)
 	{
 		return $purchase->purchasableTypeId . '_' . md5(
-			$purchase->currency . $purchase->cost . $purchase->lengthAmount . $purchase->lengthUnit
+			$purchase->purchasableId . $purchase->currency . $purchase->cost . $purchase->lengthAmount . $purchase->lengthUnit
 		);
 	}
 
@@ -532,11 +532,22 @@ class Stripe extends AbstractProvider
 		return $this->renderCancellationDefault($purchaseRequest);
 	}
 
+	protected function getProviderMetadata(PurchaseRequest $purchaseRequest): array
+	{
+		$providerMetadata = json_decode($purchaseRequest->provider_metadata ?? '[]', true);
+		if (is_array($providerMetadata))
+		{
+			return $providerMetadata;
+		}
+		return [];
+	}
+
 	protected function getSubscriberIdFromPurchaseRequest(PurchaseRequest $purchaseRequest): ?string
 	{
 		$subscriberId = null;
+		$providerMetadata = $this->getProviderMetadata($purchaseRequest);
 
-		if (!$purchaseRequest->provider_metadata || strpos($purchaseRequest->provider_metadata, 'sub_') !== 0)
+		if (!isset($providerMetadata['subscription']))
 		{
 			$logFinder = \XF::finder(PaymentProviderLogFinder::class)
 				->where('purchase_request_key', $purchaseRequest->request_key)
@@ -556,7 +567,7 @@ class Stripe extends AbstractProvider
 		}
 		else
 		{
-			$subscriberId = $purchaseRequest->provider_metadata;
+			$subscriberId = $providerMetadata['subscription'];
 		}
 
 		return $subscriberId;
@@ -655,106 +666,149 @@ class Stripe extends AbstractProvider
 
 		$input = @json_decode($inputRaw, true);
 		$filtered = \XF::app()->inputFilterer()->filterArray($input ?: [], [
-			'data' => 'array',
 			'id' => 'str',
+			'api_version' => 'str',
+			'data' => 'array',
 			'type' => 'str',
 		]);
 
-		$event = $filtered['data'];
-
 		$state->transactionId = $filtered['id'];
+		$state->apiVersion = $filtered['api_version'];
+		$state->event = $filtered['data']['object'] ?? [];
 		$state->eventType = $filtered['type'];
-		$state->event = $event['object'] ?? [];
 
-		if (isset($state->event['metadata']['request_key']))
+		if (($state->event['metadata']['request_key'] ?? null) !== null)
 		{
 			$state->requestKey = $state->event['metadata']['request_key'];
-
 		}
-		else if (isset($state->event['subscription'])
-			&& is_string($state->event['subscription'])
-			&& strpos($state->event['subscription'], 'sub_') === 0
-		)
+		else if (($state->event['subscription_details']['metadata']['request_key'] ?? null) !== null)
 		{
-			if (!$this->setPurchaseRequestFromSubscriptionId(
-				$state->event['subscription'],
-				$state
-			))
-			{
-				// if we don't have the subscription ID listed yet
-				if (isset($state->event['id']) && strpos($state->event['id'], 'in_') === 0)
-				{
-					$lines = $state->event['lines']['data'] ?? [];
-					foreach ($lines AS $line)
-					{
-						$requestKey = $line['metadata']['request_key'] ?? null;
-						if ($requestKey)
-						{
-							$state->requestKey = $requestKey;
-							break;
-						}
-					}
-				}
-			}
+			$state->requestKey = $state->event['subscription_details']['metadata']['request_key'];
 		}
-		else if (isset($state->event['object']) && ($state->event['object'] == 'review' || $state->event['object'] == 'dispute'))
+		else if (($state->event['parent']['subscription_details']['metadata']['request_key'] ?? null) !== null)
 		{
-			// reviews/disputes don't have a metadata object, but set the payment intent or charge id
-			if (!empty($state->event['payment_intent']))
-			{
-				$providerMetadata = $state->event['payment_intent'];
-			}
-			else if (!empty($state->event['charge']))
-			{
-				$providerMetadata = $state->event['charge'];
-			}
-			else
-			{
-				return $state;
-			}
-
-			$purchaseRequest = \XF::em()->findOne(PurchaseRequest::class, ['provider_metadata' => $providerMetadata]);
-			$state->purchaseRequest = $purchaseRequest; // sets request key too
+			$state->requestKey = $state->event['parent']['subscription_details']['metadata']['request_key'];
 		}
-		else if (isset($state->event['object']) && $state->event['object'] == 'charge')
+
+		if (($state->event['subscription'] ?? null) !== null)
 		{
-			// generally for legacy one off payments where the charge object metadata doesn't contain the request key
-			$chargeId = $state->event['id'];
+			$state->subscriberId = $state->event['subscription'];
+		}
+		else if (($state->event['parent']['subscription_details']['subscription'] ?? null) !== null)
+		{
+			$state->subscriberId = $state->event['parent']['subscription_details']['subscription'];
+		}
 
-			$purchaseRequest = \XF::em()->findOne(PurchaseRequest::class, ['provider_metadata' => $chargeId]);
+		if (!$state->purchaseRequest)
+		{
+			$object = $state->event['object'] ?? null;
+			$charge = $object === 'charge'
+				? ($state->event['id'] ?? null)
+				: ($state->event['charge'] ?? null);
+			$identifiers = [
+				'subscription' => $state->subscriberId ?? null,
+				'payment_intent' => $state->event['payment_intent'] ?? null,
+				'charge' => $charge,
+			];
 
-			if (!$purchaseRequest && !empty($state->event['invoice']) && $state->eventType === 'charge.refunded')
-			{
-				// ...or a subscription being refunded/terminated early.
-				// Note that with the current code, we only want to check this for refunds as otherwise
-				// this will pick up for charge.succeeded and potentially process an upgrade twice.
-				$finder = \XF::finder(PaymentProfileFinder::class)->where('provider_id', 'stripe');
-				foreach ($finder->fetch() AS $profile)
-				{
-					$this->setupStripe($profile);
-
-					try
-					{
-						$invoice = Invoice::retrieve($state->event['invoice']);
-						if ($invoice && $invoice->subscription)
-						{
-							$this->setPurchaseRequestFromSubscriptionId(
-								$invoice->subscription,
-								$state
-							);
-							break;
-						}
-					}
-					catch (ExceptionInterface $e)
-					{
-						// just continue on
-					}
-				}
-			}
-			else
+			$purchaseRequest = $this->findPurchaseRequestByMetadata($identifiers);
+			if ($purchaseRequest)
 			{
 				$state->purchaseRequest = $purchaseRequest; // sets request key too
 			}
+		}
+
+		// mostly legacy / fallback logic
+		if (!$state->purchaseRequest)
+		{
+			if (isset($state->event['subscription'])
+				&& is_string($state->event['subscription'])
+				&& strpos($state->event['subscription'], 'sub_') === 0
+			)
+			{
+				if (!$this->setPurchaseRequestFromSubscriptionId(
+					$state->event['subscription'],
+					$state
+				))
+				{
+					// if we don't have the subscription ID listed yet
+					if (isset($state->event['id']) && strpos($state->event['id'], 'in_') === 0)
+					{
+						$lines = $state->event['lines']['data'] ?? [];
+						foreach ($lines AS $line)
+						{
+							$requestKey = $line['metadata']['request_key'] ?? null;
+							if ($requestKey)
+							{
+								$state->requestKey = $requestKey;
+								break;
+							}
+						}
+					}
+				}
+			}
+			else if (isset($state->event['object']) && ($state->event['object'] == 'review' || $state->event['object'] == 'dispute'))
+			{
+				// reviews/disputes don't have a metadata object, but set the payment intent or charge id
+				$identifiers = [
+					'payment_intent' => $state->event['payment_intent'] ?? null,
+					'charge' => ($state->event['object'] === 'charge') ? $state->event['id'] : $state->event['charge'] ?? null,
+				];
+
+				$purchaseRequest = $this->findPurchaseRequestByMetadata($identifiers);
+				if ($purchaseRequest)
+				{
+					$state->purchaseRequest = $purchaseRequest; // sets request key too
+				}
+			}
+			else if (isset($state->event['object']) && $state->event['object'] == 'charge')
+			{
+				// generally for legacy one off payments where the charge object metadata doesn't contain the request key
+				$chargeId = $state->event['id'];
+
+				$identifiers = [
+					'charge' => $chargeId,
+				];
+				$purchaseRequest = $this->findPurchaseRequestByMetadata($identifiers);
+
+				if (!$purchaseRequest && !empty($state->event['invoice']) && $state->eventType === 'charge.refunded')
+				{
+					// ...or a subscription being refunded/terminated early.
+					// Note that with the current code, we only want to check this for refunds as otherwise
+					// this will pick up for charge.succeeded and potentially process an upgrade twice.
+					$finder = \XF::finder(PaymentProfileFinder::class)->where('provider_id', 'stripe');
+					foreach ($finder->fetch() AS $profile)
+					{
+						$this->setupStripe($profile);
+
+						try
+						{
+							$invoice = Invoice::retrieve($state->event['invoice']);
+							if ($invoice && $invoice->subscription)
+							{
+								$this->setPurchaseRequestFromSubscriptionId(
+									$invoice->subscription,
+									$state
+								);
+								break;
+							}
+						}
+						catch (ExceptionInterface $e)
+						{
+							// just continue on
+						}
+					}
+				}
+				else
+				{
+					$state->purchaseRequest = $purchaseRequest; // sets request key too
+				}
+			}
+		}
+
+		if ($state->purchaseRequest)
+		{
+			$this->synchronizeProviderMetadata($state, $state->purchaseRequest);
 		}
 
 		return $state;
@@ -778,12 +832,56 @@ class Stripe extends AbstractProvider
 		return false;
 	}
 
+	protected function findPurchaseRequestByMetadata(array $identifiers): ?PurchaseRequest
+	{
+		foreach ($identifiers AS $key => $value)
+		{
+			if (!$value)
+			{
+				continue;
+			}
+
+			$purchaseRequestFinder = \XF::finder(PurchaseRequestFinder::class);
+			$purchaseRequestFinder
+				->where('provider_metadata', 'LIKE', $purchaseRequestFinder->escapeLike(
+					'"' . $key . '":"' . $value . '"',
+					'%?%'
+				));
+
+			$purchaseRequest = $purchaseRequestFinder->fetchOne();
+			if ($purchaseRequest)
+			{
+				return $purchaseRequest;
+			}
+		}
+
+		return null;
+	}
+
+	protected function synchronizeProviderMetadata(CallbackState $state, PurchaseRequest $purchaseRequest): void
+	{
+		$existingMetadata = $this->getProviderMetadata($purchaseRequest);
+
+		$identifiers = [
+			'subscription' => $state->event['subscription'] ?? null,
+			'payment_intent' => $state->event['payment_intent'] ?? null,
+			'charge' => ($state->event['object'] === 'charge') ? $state->event['id'] : $state->event['charge'] ?? null,
+		];
+		$identifiers = array_merge($existingMetadata, array_filter($identifiers));
+
+		if ($identifiers)
+		{
+			ksort($identifiers);
+			$purchaseRequest->provider_metadata = json_encode($identifiers);
+			$purchaseRequest->save();
+		}
+	}
+
 	protected function getPurchaseRequestFromSubscriptionId(string $subscriptionId): ?PurchaseRequest
 	{
-		$purchaseRequest = \XF::em()->findOne(
-			PurchaseRequestFinder::class,
-			['provider_metadata' => $subscriptionId]
-		);
+		$purchaseRequest = $this->findPurchaseRequestByMetadata([
+			'subscription' => $subscriptionId,
+		]);
 
 		if ($purchaseRequest)
 		{
@@ -859,6 +957,7 @@ class Stripe extends AbstractProvider
 			'checkout.session.completed',
 			'invoice.payment_succeeded',
 			'review.closed',
+			'review.opened',
 		];
 	}
 
@@ -868,6 +967,13 @@ class Stripe extends AbstractProvider
 
 		if (!in_array($eventType, $this->getActionableEvents()))
 		{
+			return true;
+		}
+
+		if ($eventType === 'charge.succeeded' && ($state->event['metadata']['request_key'] ?? '') === '')
+		{
+			// charge succeeded without a request key
+			// (likely from subscription creation, wait for invoice event)
 			return true;
 		}
 
@@ -1048,16 +1154,11 @@ class Stripe extends AbstractProvider
 					$state->logMessage = 'Charge succeeded but not authorized, it may require review in the Stripe Dashboard.';
 				}
 
-				// sleep for 5 seconds to offset an insanely fast webhook
-				// being processed before the user is redirected
-				// TODO: consider a different (better) approach
-				usleep(5 * 1000000);
-
 				$purchaseRequest = $state->purchaseRequest;
+				$providerMetadata = $this->getProviderMetadata($purchaseRequest);
 
 				if ($purchaseRequest
-					&& $purchaseRequest->provider_metadata
-					&& strpos($purchaseRequest->provider_metadata, 'sub_') === 0
+					&& !empty($providerMetadata['subscription'])
 					&& !empty($state->event['payment_method'])
 				)
 				{
@@ -1067,7 +1168,7 @@ class Stripe extends AbstractProvider
 					{
 						/** @var Subscription $subscription */
 						$subscription = Subscription::retrieve(
-							$purchaseRequest->provider_metadata
+							$providerMetadata['subscription']
 						);
 
 						/** @var PaymentMethod $paymentMethod */
@@ -1102,6 +1203,11 @@ class Stripe extends AbstractProvider
 				}
 				break;
 
+			case 'review.opened':
+				$state->logType = 'info';
+				$state->logMessage = 'A previous payment has been placed under review.';
+				break;
+
 			case 'charge.refunded':
 			case 'charge.dispute.funds_withdrawn':
 				$state->paymentResult = CallbackState::PAYMENT_REVERSED;
@@ -1116,6 +1222,7 @@ class Stripe extends AbstractProvider
 	public function prepareLogData(CallbackState $state)
 	{
 		$state->logDetails = $state->event;
+		$state->logDetails['apiVersion'] = $state->apiVersion;
 		$state->logDetails['eventType'] = $state->eventType;
 	}
 

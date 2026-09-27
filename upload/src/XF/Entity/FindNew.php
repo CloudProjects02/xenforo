@@ -11,7 +11,7 @@ use function array_slice, count, intval, is_array;
  * COLUMNS
  * @property int|null $find_new_id
  * @property string $content_type
- * @property array $filters
+ * @property array|null $filters
  * @property string $filter_hash
  * @property int $user_id
  * @property array $results

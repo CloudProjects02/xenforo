@@ -1,0 +1,26 @@
+---
+name: xf-environment
+description: Run XenForo, PHP, Composer, database, Docker-environment, and worktree commands in local development; diagnose wrapper and container failures without mistaking sandbox permissions for downtime.
+---
+
+# XenForo Development Environment
+
+Use the repository's execution mode consistently.
+
+## Select the Runner
+
+1. If the repository root contains `compose.yaml` and `xf` is available on `PATH`, use the `xf` CLI. It selects the checkout's managed development container.
+2. If `compose.yaml` exists but `xf` is unavailable, inspect the project instructions, scripts, and Compose services for its runner. A developer may use Docker without the optional XenForo CLI; do not assume host `php cmd.php` or XF-specific container commands will work.
+3. If the checkout is not containerized, run XenForo commands with `php cmd.php` and use the host's PHP and Composer.
+4. Do not switch runners merely because a command failed. Diagnose that failure first.
+
+| Task | `xf`-managed environment | Direct environment |
+|---|---|---|
+| XenForo command | `xf xf-dev:import --addon=Vendor/AddOn` | `php cmd.php xf-dev:import --addon=Vendor/AddOn` |
+| Composer script | `xf composer run php-cs-fixer:fix` | `composer run php-cs-fixer:fix` |
+| PHP executable | `xf php -- -v` | `php -v` |
+| XenForo command help | `xf xf-make:template --help` | `php cmd.php xf-make:template --help` |
+
+`xf php`, `xf composer`, `xf compose`, `xf exec`, and `xf debug` are pass-through commands. Put their arguments directly after the command. Use `xf help composer` or `xf help php` for wrapper help; `xf composer --help` passes `--help` to Composer.
+
+Read [managed-environment.md](references/managed-environment.md) before diagnosing an `xf`-managed environment, accessing its database, or managing its worktrees. Do not apply its hostnames or recovery commands to an unrelated Compose setup.

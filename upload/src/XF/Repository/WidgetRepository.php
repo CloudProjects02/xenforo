@@ -6,7 +6,6 @@ use XF\Finder\WidgetDefinitionFinder;
 use XF\Finder\WidgetFinder;
 use XF\Finder\WidgetPositionFinder;
 use XF\Mvc\Entity\ArrayCollection;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 use XF\Service\Widget\CompileService;
 
@@ -15,7 +14,7 @@ use function count;
 class WidgetRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return WidgetFinder
 	 */
 	public function findWidgetsForList()
 	{
@@ -61,7 +60,7 @@ class WidgetRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return WidgetDefinitionFinder
 	 */
 	public function findWidgetDefinitionsForList($activeOnly = false)
 	{
@@ -80,7 +79,7 @@ class WidgetRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return WidgetPositionFinder
 	 */
 	public function findWidgetPositionsForList($activeOnly = false)
 	{
@@ -166,7 +165,6 @@ class WidgetRepository extends Repository
 		{
 			foreach ($widgets AS $widget)
 			{
-				/** @var CompileService $compileService */
 				$compileService = $this->app()->service(CompileService::class, $widget);
 				$compileService->compile();
 			}

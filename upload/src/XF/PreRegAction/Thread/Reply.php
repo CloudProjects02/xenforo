@@ -58,7 +58,6 @@ class Reply extends AbstractHandler
 		Thread $thread
 	): ReplierService
 	{
-		/** @var ReplierService $replier */
 		$replier = \XF::app()->service(ReplierService::class, $thread);
 		$replier->setMessage($action->action_data['message']);
 		$replier->logIp($action->ip_address);
@@ -81,7 +80,6 @@ class Reply extends AbstractHandler
 		/** @var Post $post */
 		$post = $executeContent;
 
-		/** @var UserAlertRepository $alertRepo */
 		$alertRepo = \XF::repository(UserAlertRepository::class);
 
 		$alertRepo->alertFromUser(

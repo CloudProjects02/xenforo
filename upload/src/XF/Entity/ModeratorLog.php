@@ -21,7 +21,7 @@ use XF\Phrase;
  * @property string $discussion_content_type
  * @property int $discussion_content_id
  * @property string $action
- * @property array $action_params
+ * @property array|null $action_params
  *
  * GETTERS
  * @property string $content_title

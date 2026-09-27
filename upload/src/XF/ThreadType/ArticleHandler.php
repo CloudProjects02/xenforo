@@ -37,6 +37,11 @@ class ArticleHandler extends AbstractHandler
 		return 'Article';
 	}
 
+	public function getMicrodataContentField(Thread $thread): string
+	{
+		return 'articleBody';
+	}
+
 	public function isFirstPostPinned(Thread $thread): bool
 	{
 		return true;

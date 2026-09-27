@@ -7,6 +7,8 @@ use XF\Db\AbstractAdapter;
 use XF\Db\AbstractStatement;
 use XF\Db\Exception;
 use XF\Db\Schema\Alter;
+use XF\Db\Schema\Create;
+use XF\Db\Schema\Drop;
 use XF\Db\SchemaManager;
 use XF\Entity\ActivitySummarySection;
 use XF\Entity\Phrase;
@@ -892,6 +894,10 @@ trait InstallHelperTrait
 		return $this->db()->getSchemaManager();
 	}
 
+	/**
+	 * @param string $tableName
+	 * @param \Closure(Alter): void $toApply
+	 */
 	protected function alterTable($tableName, \Closure $toApply)
 	{
 		$this->schemaManager()->alterTable($tableName, $toApply);
@@ -902,11 +908,19 @@ trait InstallHelperTrait
 		$this->schemaManager()->renameTable($oldTableName, $newTableName);
 	}
 
+	/**
+	 * @param $tableName
+	 * @param \Closure(Create): void $toApply
+	 */
 	protected function createTable($tableName, \Closure $toApply)
 	{
 		$this->schemaManager()->createTable($tableName, $toApply);
 	}
 
+	/**
+	 * @param $tableName
+	 * @param (\Closure(Drop): void)|null $toApply
+	 */
 	protected function dropTable($tableName, ?\Closure $toApply = null)
 	{
 		$this->schemaManager()->dropTable($tableName, $toApply);

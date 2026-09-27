@@ -126,7 +126,6 @@ class SessionActivity extends Entity
 
 	protected function applyActivityDetails()
 	{
-		/** @var SessionActivityRepository $repo */
 		$repo = $this->repository(SessionActivityRepository::class);
 		$repo->applyActivityDetails($this);
 	}

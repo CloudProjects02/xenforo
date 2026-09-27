@@ -3,13 +3,12 @@
 namespace XF\Repository;
 
 use XF\Finder\UserRejectFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 class UserRejectRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return UserRejectFinder
 	 */
 	public function findUserRejectionsForList()
 	{

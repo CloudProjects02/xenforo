@@ -36,6 +36,16 @@ class CodeEvent extends AbstractDataType
 			$this->exportMappedAttributes($node, $entry);
 			$this->exportCdata($node, $entry->description);
 
+			if (!empty($entry->arguments))
+			{
+				$node->setAttribute('arguments', json_encode($entry->arguments));
+			}
+
+			if (!empty($entry->hint_description))
+			{
+				$node->setAttribute('hint_description', $entry->hint_description);
+			}
+
 			$container->appendChild($node);
 		}
 
@@ -73,6 +83,18 @@ class CodeEvent extends AbstractDataType
 			$entity->description = $this->getCdataValue($entry);
 			$entity->addon_id = $addOnId;
 
+			$argumentsAttr = (string) $entry['arguments'];
+			if ($argumentsAttr !== '')
+			{
+				$entity->arguments = json_decode($argumentsAttr, true) ?: [];
+			}
+
+			$hintDescAttr = (string) $entry['hint_description'];
+			if ($hintDescAttr !== '')
+			{
+				$entity->hint_description = $hintDescAttr;
+			}
+
 			$entity->save(true, false);
 
 			if ($this->resume($maxRunTime, $startTime))
@@ -93,7 +115,6 @@ class CodeEvent extends AbstractDataType
 	{
 		\XF::runOnce('rebuild_active_code_event_listeners', function ()
 		{
-			/** @var CodeEventListenerRepository $repo */
 			$repo = $this->em->getRepository(CodeEventListenerRepository::class);
 			$repo->rebuildListenerCache();
 		});

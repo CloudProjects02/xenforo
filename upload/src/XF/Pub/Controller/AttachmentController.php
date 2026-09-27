@@ -104,6 +104,7 @@ class AttachmentController extends AbstractController
 							'file_size' => $attachment->file_size,
 							'file_size_printable' => \XF::language()->fileSizeFormat($attachment->file_size),
 							'thumbnail_url' => $attachment->thumbnail_url,
+							'retina_thumbnail_url' => $attachment->retina_thumbnail_url,
 							'width' => $attachment->Data->width,
 							'height' => $attachment->Data->height,
 							'icon' => $attachment->icon,

@@ -16,7 +16,6 @@ class PollPlugin extends AbstractPlugin
 {
 	public function actionCreate($contentType, Entity $content, array $breadcrumbs = [])
 	{
-		/** @var PollRepository $pollRepo */
 		$pollRepo = $this->repository(PollRepository::class);
 		$handler = $pollRepo->getPollHandler($contentType);
 
@@ -65,7 +64,6 @@ class PollPlugin extends AbstractPlugin
 		/** @var Poll $pollHelper */
 		$pollHelper = $this->helper(Poll::class);
 
-		/** @var CreatorService $creator */
 		$creator = $this->service(CreatorService::class, $contentType, $content);
 
 		return $pollHelper->configureCreatorFromInput(
@@ -130,7 +128,6 @@ class PollPlugin extends AbstractPlugin
 	{
 		$pollInput = $this->getPollInput();
 
-		/** @var EditorService $editor */
 		$editor = $this->service(EditorService::class, $poll);
 
 		if ($poll->canEditDetails())
@@ -220,7 +217,6 @@ class PollPlugin extends AbstractPlugin
 		{
 			$voteResponseIds = $this->filter('responses', 'array-uint');
 
-			/** @var VoterService $voter */
 			$voter = $this->service(VoterService::class, $poll, $voteResponseIds);
 			if (!$voter->validate($errors))
 			{

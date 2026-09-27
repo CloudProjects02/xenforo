@@ -192,14 +192,27 @@ class Php
 		}
 	}
 
-	public static function nameIndicatesReadOnly($name)
+	/**
+	 * @param string $name
+	 * @param int $argumentCount
+	 *
+	 * @return bool
+	 */
+	public static function nameIndicatesReadOnly($name, $argumentCount = 0)
 	{
 		$matches = [
+			'fetch',
 			'first',
 			'last',
 		];
-		if (preg_match('/^(' . implode('|', $matches) . ')$/i', $name))
+		if (preg_match('/^(' . implode('|', $matches) . ')$/', $name, $matches))
 		{
+			$method = $matches[1];
+			if ($name === 'fetch' && $argumentCount !== 0)
+			{
+				return false;
+			}
+
 			return true;
 		}
 
@@ -211,7 +224,6 @@ class Php
 			'display',
 			'does',
 			'exists',
-			'fetch',
 			'filter',
 			'find',
 			'get',
@@ -227,7 +239,7 @@ class Php
 			'verify',
 			'view',
 		];
-		if (preg_match('/^(' . implode('|', $prefixes) . ')/i', $name))
+		if (preg_match('/^(' . implode('|', $prefixes) . ')([A-Z_]|$)/', $name))
 		{
 			return true;
 		}

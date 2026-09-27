@@ -196,7 +196,7 @@ class Random
 	public static function getAvailableSources()
 	{
 		$available = [
-			'random_byes' => '_genRandomBytes',
+			'random_bytes' => '_genRandomBytes',
 		];
 
 		if (function_exists('mcrypt_create_iv'))

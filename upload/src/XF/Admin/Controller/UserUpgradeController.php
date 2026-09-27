@@ -7,16 +7,16 @@ use XF\ControllerPlugin\TogglePlugin;
 use XF\Entity\User;
 use XF\Entity\UserUpgrade;
 use XF\Entity\UserUpgradeActive;
+use XF\Finder\UserUpgradeActiveFinder;
+use XF\Finder\UserUpgradeExpiredFinder;
 use XF\Finder\UserUpgradeFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\ParameterBag;
+use XF\Mvc\Reply\AbstractReply;
 use XF\Repository\PaymentRepository;
 use XF\Repository\UserGroupRepository;
 use XF\Repository\UserUpgradeRepository;
 use XF\Service\User\DowngradeService;
 use XF\Service\User\UpgradeService;
-
-use function in_array;
 
 class UserUpgradeController extends AbstractController
 {
@@ -176,7 +176,6 @@ class UserUpgradeController extends AbstractController
 				? $this->filter('end_date', 'datetime')
 				: 0;
 
-			/** @var UpgradeService $upgradeService */
 			$upgradeService = $this->service(UpgradeService::class, $upgrade, $user);
 			$upgradeService->setEndDate($endDate);
 			$upgradeService->ignoreUnpurchasable(true);
@@ -203,128 +202,119 @@ class UserUpgradeController extends AbstractController
 		}
 	}
 
-	protected function prepareActiveExpiredList(Finder $finder, ParameterBag $params, array &$linkParams)
+	protected function setupUserUpgradeActiveFilterer(string $type = 'active'): \XF\Filterer\UserUpgrade
 	{
-		$userUpgrade = null;
-		if ($params->user_upgrade_id)
-		{
-			$userUpgrade = $this->assertUpgradeExists($params->user_upgrade_id);
-			$finder->where('user_upgrade_id', $params->user_upgrade_id);
-		}
-
-		$order = $this->filter('order', 'str');
-		if ($order && in_array($order, $this->getValidSortOrders()))
-		{
-			$direction = $this->filter('direction', 'str');
-			if (!in_array($direction, ['asc', 'desc']))
-			{
-				$direction = 'desc';
-			}
-
-			if ($order == 'username')
-			{
-				$finder->order('User.username', $direction);
-			}
-			else
-			{
-				$finder->order($order, $direction);
-			}
-
-			$linkParams['order'] = $order;
-			$linkParams['direction'] = $direction;
-		}
-
-		if ($username = $this->filter('username', 'str'))
-		{
-			$user = $this->em()->findOne(User::class, ['username' => $username]);
-			if (!$user)
-			{
-				throw $this->exception($this->error(\XF::phrase('requested_user_not_found')));
-			}
-			$finder->where('user_id', $user->user_id);
-			$linkParams['username'] = $username;
-		}
-
-		return $userUpgrade;
-	}
-
-	/**
-	 * @return string[]
-	 */
-	protected function getValidSortOrders(): array
-	{
-		return [
-			'username',
-			'start_date',
-			'end_date',
+		$setupData = [
+			'finderType' => $type === 'active' ? UserUpgradeActiveFinder::class : UserUpgradeExpiredFinder::class,
+			'defaultOrder' => $type === 'active' ? 'start_date' : 'end_date',
 		];
+
+		$filterer = $this->app->filterer(\XF\Filterer\UserUpgrade::class, $setupData);
+		$filterer->addFilters($this->request, $this->filter('_skipFilter', 'str'));
+
+		return $filterer;
 	}
 
 	public function actionActive(ParameterBag $params)
 	{
-		$userUpgradeRepo = $this->getUserUpgradeRepo();
-		$activeFinder = $userUpgradeRepo->findActiveUserUpgradesForList();
-
-		$linkParams = [];
-		$userUpgrade = $this->prepareActiveExpiredList($activeFinder, $params, $linkParams);
+		// Redirect old-style URLs with user_upgrade_id in path to query parameter format
+		if ($params->user_upgrade_id)
+		{
+			return $this->redirect($this->buildLink('user-upgrades/active', null, ['user_upgrade_id' => $params->user_upgrade_id]));
+		}
 
 		$page = $this->filterPage();
 		$perPage = 20;
 
-		$activeFinder->limitByPage($page, $perPage);
-		$totalActive = $activeFinder->total();
+		$filterer = $this->setupUserUpgradeActiveFilterer('active');
+		$finder = $filterer->apply()->limitByPage($page, $perPage);
 
-		$this->assertValidPage($page, $perPage, $totalActive, 'user-upgrades/active', $userUpgrade);
+		$linkParams = $filterer->getLinkParams();
+		$totalActive = $finder->total();
+
+		$this->assertValidPage($page, $perPage, $totalActive, 'user-upgrades/active');
 
 		if ($this->isPost())
 		{
 			// Redirect to GET
-			return $this->redirect($this->buildLink('user-upgrades/active', $userUpgrade, $linkParams));
+			return $this->redirect($this->buildLink('user-upgrades/active', null, $linkParams));
 		}
 
 		$viewParams = [
 			'page' => $page,
 			'perPage' => $perPage,
 			'linkParams' => $linkParams,
-			'userUpgrade' => $userUpgrade,
+			'filterDisplay' => $filterer->getDisplayValues(),
 			'totalActive' => $totalActive,
-			'activeUpgrades' => $activeFinder->fetch(),
+			'activeUpgrades' => $finder->fetch(),
 		];
 		return $this->view('XF:UserUpgrade\Active', 'user_upgrade_active_list', $viewParams);
 	}
 
 	public function actionExpired(ParameterBag $params)
 	{
-		$userUpgradeRepo = $this->getUserUpgradeRepo();
-		$expiredFinder = $userUpgradeRepo->findExpiredUserUpgradesForList()
-			->with('Upgrade', true);
-
-		$linkParams = [];
-		$userUpgrade = $this->prepareActiveExpiredList($expiredFinder, $params, $linkParams);
+		// Redirect old-style URLs with user_upgrade_id in path to query parameter format
+		if ($params->user_upgrade_id)
+		{
+			return $this->redirect($this->buildLink('user-upgrades/expired', null, ['user_upgrade_id' => $params->user_upgrade_id]));
+		}
 
 		$page = $this->filterPage();
 		$perPage = 20;
 
-		$expiredFinder->limitByPage($page, $perPage);
-		$totalExpired = $expiredFinder->total();
+		$filterer = $this->setupUserUpgradeActiveFilterer('expired');
+		$finder = $filterer->apply()->limitByPage($page, $perPage);
 
-		$this->assertValidPage($page, $perPage, $totalExpired, 'user-upgrades/expired', $userUpgrade);
+		$linkParams = $filterer->getLinkParams();
+		$totalExpired = $finder->total();
+
+		$this->assertValidPage($page, $perPage, $totalExpired, 'user-upgrades/expired');
 
 		if ($this->isPost())
 		{
 			// Redirect to GET
-			return $this->redirect($this->buildLink('user-upgrades/expired', $userUpgrade, $linkParams));
+			return $this->redirect($this->buildLink('user-upgrades/expired', null, $linkParams));
 		}
 
 		$viewParams = [
 			'page' => $page,
 			'perPage' => $perPage,
 			'linkParams' => $linkParams,
-			'userUpgrade' => $userUpgrade,
+			'filterDisplay' => $filterer->getDisplayValues(),
 			'totalExpired' => $totalExpired,
-			'expiredUpgrades' => $expiredFinder->fetch(),
+			'expiredUpgrades' => $finder->fetch(),
 		];
 		return $this->view('XF:UserUpgrade\Expired', 'user_upgrade_expired_list', $viewParams);
+	}
+
+	public function actionActiveFilter(): AbstractReply
+	{
+		return $this->upgradeFilterView('active');
+	}
+
+	public function actionExpiredFilter(): AbstractReply
+	{
+		return $this->upgradeFilterView('expired');
+	}
+
+	protected function upgradeFilterView(string $type): AbstractReply
+	{
+		$filterer = $this->setupUserUpgradeActiveFilterer($type);
+
+		$upgradeRepo = $this->getUserUpgradeRepo();
+		$upgrades = $upgradeRepo->findUserUpgradesForList()->fetch();
+
+		$paymentRepo = $this->repository(PaymentRepository::class);
+		$paymentProfiles = $paymentRepo->findPaymentProfilesForList()->fetch();
+
+		$viewParams = [
+			'upgrades' => $upgrades,
+			'paymentProfiles' => $paymentProfiles,
+			'conditions' => $filterer->getFiltersForForm(),
+			'datePresets' => \XF::language()->getDatePresets(),
+			'type' => $type,
+		];
+		return $this->view('XF:UserUpgrade\Filter', 'user_upgrade_filter', $viewParams);
 	}
 
 	public function actionEditActive()
@@ -371,7 +361,6 @@ class UserUpgradeController extends AbstractController
 
 		if ($this->isPost())
 		{
-			/** @var DowngradeService $downgradeService */
 			$downgradeService = $this->service(DowngradeService::class, $activeUpgrade->Upgrade, $activeUpgrade->User);
 			$downgradeService->setSendAlert(false);
 			$downgradeService->downgrade();

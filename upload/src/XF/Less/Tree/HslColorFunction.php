@@ -479,7 +479,7 @@ class HslColorFunction extends Tree
 			$threshold = new Dimension(67, '%');
 		}
 
-		return $color->setLight($this->getCalc(
+		$light = $this->getCalc(
 			$this->getCalc(
 				$color->getLight(),
 				'-',
@@ -487,14 +487,26 @@ class HslColorFunction extends Tree
 			),
 			'*',
 			new Dimension(-100)
-		));
+		);
+
+		$clamp = new HslClamp(
+			[
+				new Dimension(0, '%'),
+				$light,
+				new Dimension(100, '%'),
+			],
+			$this->index,
+			$this->currentFileInfo
+		);
+
+		return $color->setLight($clamp);
 	}
 
 	protected function assertValidDimensionArgument(Tree $node): void
 	{
 		if (
-			!($node instanceof Dimension) &&
-			!($node instanceof HslColorVariable)
+			!($node instanceof Dimension)
+			&& !($node instanceof HslColorVariable)
 		)
 		{
 			throw new \TypeError(

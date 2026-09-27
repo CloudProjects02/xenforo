@@ -19,7 +19,6 @@ class PermissionRebuild extends AbstractRebuildJob
 	{
 		if (!$this->data['cleaned'])
 		{
-			/** @var PermissionCombinationRepository $combinationRepo */
 			$combinationRepo = $this->app->repository(PermissionCombinationRepository::class);
 			$combinationRepo->deleteUnusedPermissionCombinations();
 

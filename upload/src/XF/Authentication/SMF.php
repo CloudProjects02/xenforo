@@ -25,6 +25,14 @@ class SMF extends AbstractAuth
 			return false;
 		}
 
+		// note: importer already stores username strtolower
+		if (password_verify($this->data['username'] . $password, $this->data['hash']))
+		{
+			// SMF 2.1
+			return true;
+		}
+
+		// pre-SMF 2.1
 		$userHash = $this->createHash($password, $this->data['username']);
 		return hash_equals($this->data['hash'], $userHash);
 	}

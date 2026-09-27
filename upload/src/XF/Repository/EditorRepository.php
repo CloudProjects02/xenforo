@@ -3,13 +3,12 @@
 namespace XF\Repository;
 
 use XF\Finder\EditorDropdownFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 class EditorRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return EditorDropdownFinder
 	 */
 	public function findEditorDropdownsForList()
 	{
@@ -41,14 +40,12 @@ class EditorRepository extends Repository
 	{
 		$dropdownCache = $this->getEditorDropdownCache();
 
-		/** @var OptionRepository $optionRepo */
 		$optionRepo = $this->repository(OptionRepository::class);
 		$optionRepo->updateOption('editorDropdownConfig', $dropdownCache);
 	}
 
 	public function getToolbarTypes()
 	{
-		/** @var EditorRepository $editorRepo */
 		$editorRepo = $this->repository(EditorRepository::class);
 		$toolbarSizes = $editorRepo->getToolbarSizes();
 

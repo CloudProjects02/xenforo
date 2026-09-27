@@ -404,7 +404,6 @@ class AutoLink implements FiltererInterface
 
 	protected function getUnfurlBbCode($url)
 	{
-		/** @var UnfurlRepository $unfurlRepo */
 		$unfurlRepo = $this->app->repository(UnfurlRepository::class);
 		$result = $unfurlRepo->logPendingUnfurl($url);
 
@@ -432,7 +431,6 @@ class AutoLink implements FiltererInterface
 
 	protected function getEmbedBbCode(string $url)
 	{
-		/** @var EmbedResolverRepository $embedRepo */
 		$embedRepo = $this->app->repository(EmbedResolverRepository::class);
 		$content = $embedRepo->getEntityFromUrl($url);
 
@@ -469,7 +467,6 @@ class AutoLink implements FiltererInterface
 
 	protected function cacheOembedResponse($site, $mediaId)
 	{
-		/** @var OembedService $oEmbedService */
 		$oEmbedService = $this->app->service(OembedService::class);
 		$oEmbedService->getOembed($site->media_site_id, $mediaId);
 	}

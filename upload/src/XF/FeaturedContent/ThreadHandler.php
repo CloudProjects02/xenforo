@@ -48,8 +48,8 @@ class ThreadHandler extends AbstractHandler
 		];
 
 		if (
-			in_array($style, ['article', 'carousel'], true) ||
-			$this->areAttachmentsHydratedForStyle($style)
+			in_array($style, ['article', 'carousel'], true)
+			|| $this->areAttachmentsHydratedForStyle($style)
 		)
 		{
 			$with[] = 'FirstPost';

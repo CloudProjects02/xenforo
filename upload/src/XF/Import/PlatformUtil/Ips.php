@@ -435,7 +435,6 @@ class Ips
 						$url = $matches[1];
 					}
 
-					/** @var BbCodeMediaSiteRepository $mediaSiteRepo */
 					$mediaSiteRepo = \XF::repository(BbCodeMediaSiteRepository::class);
 					$matchedSite = $mediaSiteRepo->urlMatchesMediaSiteList($url, self::getMediaSites());
 
@@ -458,7 +457,6 @@ class Ips
 				'#<div [^>]*class=(?:"|\')ipsEmbeddedOther.*?(?:"|\')[^>]*>.*?<iframe [^>]*data-embed-src=(?:"|\').*;url=(.*)(?:"|\')[^>]*></iframe>.*?</div>#siU',
 				function (array $matches)
 				{
-					/** @var BbCodeMediaSiteRepository $mediaSiteRepo */
 					$mediaSiteRepo = \XF::repository(BbCodeMediaSiteRepository::class);
 					$matchedSite = $mediaSiteRepo->urlMatchesMediaSiteList($matches[1], self::getMediaSites());
 

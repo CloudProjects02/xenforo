@@ -294,7 +294,6 @@ class App extends \XF\App
 			// if we've recently been active, let cron handle it
 			if ($visitor->getValue('last_activity') < \XF::$time - 1800)
 			{
-				/** @var UserGroupPromotionRepository $userGroupPromotionRepo */
 				$userGroupPromotionRepo = $this->repository(UserGroupPromotionRepository::class);
 				$userGroupPromotionRepo->updatePromotionsForUser($visitor);
 			}
@@ -307,7 +306,6 @@ class App extends \XF\App
 			// if we've recently been active, let cron handle it
 			if ($visitor->getValue('last_activity') < \XF::$time - 1800)
 			{
-				/** @var TrophyRepository $trophyRepo */
 				$trophyRepo = $this->repository(TrophyRepository::class);
 				$trophyRepo->updateTrophiesForUser($visitor);
 			}
@@ -325,7 +323,6 @@ class App extends \XF\App
 			// count unread/unviewed alerts if last activity was over 30 days ago (the alert expiry cut off)
 			if ($visitor->getValue('last_activity') < \XF::$time - (30 * 86400))
 			{
-				/** @var UserAlertRepository $alertRepo */
 				$alertRepo = $this->repository(UserAlertRepository::class);
 				$alertRepo->updateUnviewedCountForUser($visitor);
 				$alertRepo->updateUnreadCountForUser($visitor);
@@ -355,7 +352,6 @@ class App extends \XF\App
 			|| ($sessionReportCounts && ($sessionReportCounts['lastBuilt'] < $registryReportCounts['lastModified']))
 		)
 		{
-			/** @var ReportFinder $reportsFinder */
 			$reportsFinder = $this->finder(ReportFinder::class);
 			$reports = $reportsFinder->isActive()->fetch()->filterViewable();
 
@@ -387,7 +383,6 @@ class App extends \XF\App
 			|| ($sessionUnapprovedCounts && ($sessionUnapprovedCounts['lastBuilt'] < $registryUnapprovedCounts['lastModified']))
 		)
 		{
-			/** @var ApprovalQueueRepository $approvalQueueRepo */
 			$approvalQueueRepo = $this->repository(ApprovalQueueRepository::class);
 
 			$unapprovedItems = $approvalQueueRepo->findUnapprovedContent()->fetch();
@@ -421,7 +416,6 @@ class App extends \XF\App
 			return null;
 		}
 
-		/** @var UserRememberRepository $rememberRepo */
 		$rememberRepo = $this->repository(UserRememberRepository::class);
 		if (!$rememberRepo->validateByCookieValue($rememberCookie, $remember))
 		{
@@ -429,7 +423,6 @@ class App extends \XF\App
 			return null;
 		}
 
-		/** @var UserRepository $userRepo */
 		$userRepo = $this->repository(UserRepository::class);
 		$user = $userRepo->getVisitor($remember->user_id);
 		if (!$user)
@@ -439,7 +432,6 @@ class App extends \XF\App
 
 		$trustKey = $this->request()->getCookie('tfa_trust');
 
-		/** @var TfaRepository $tfaRepo */
 		$tfaRepo = $this->repository(TfaRepository::class);
 		if ($tfaRepo->isUserTfaConfirmationRequired($user, $trustKey))
 		{
@@ -452,7 +444,6 @@ class App extends \XF\App
 
 		$session->changeUser($user);
 
-		/** @var IpRepository $ipRepo */
 		$ipRepo = $this->repository(IpRepository::class);
 		$ipRepo->logCookieLoginIfNeeded($user->user_id, $this->request()->getIp());
 
@@ -743,8 +734,8 @@ class App extends \XF\App
 		$cookieConsent = $this->options()->cookieConsent ?? [];
 		$cookieConsentMode = $cookieConsent['type'] ?? 'disabled';
 		if (
-			$cookieConsentMode === CookieConsent::MODE_ADVANCED ||
-			(!$visitor->user_id && $cookieConsentMode === CookieConsent::MODE_SIMPLE)
+			$cookieConsentMode === CookieConsent::MODE_ADVANCED
+			|| (!$visitor->user_id && $cookieConsentMode === CookieConsent::MODE_SIMPLE)
 		)
 		{
 			$cookieCssClasses = ['notice--primary'];

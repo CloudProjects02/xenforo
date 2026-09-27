@@ -17,7 +17,7 @@ use function is_array;
  * @property string $entry_id
  * @property string $cron_class
  * @property string $cron_method
- * @property array $run_rules
+ * @property array|null $run_rules
  * @property bool $active
  * @property int $next_run
  * @property string $addon_id
@@ -77,9 +77,13 @@ class CronEntry extends Entity
 
 	public function calculateNextRun()
 	{
-		/** @var CalculateNextRunService $service */
 		$service = $this->app()->service(CalculateNextRunService::class);
-		return $service->calculateNextRunTime($this->run_rules);
+		return $service->calculateNextRunTime($this->getEffectiveRunRules());
+	}
+
+	public function getEffectiveRunRules(): array
+	{
+		return $this->run_rules;
 	}
 
 	protected function verifyRunRules(array &$rules)
@@ -213,7 +217,6 @@ class CronEntry extends Entity
 
 	protected function rebuildNextRunTime()
 	{
-		/** @var CalculateNextRunService $runService */
 		$runService = $this->app()->service(CalculateNextRunService::class);
 
 		\XF::runOnce('cronNextRunTimeRebuild', function () use ($runService)
@@ -224,7 +227,6 @@ class CronEntry extends Entity
 
 	protected function _setupDefaults()
 	{
-		/** @var AddOnRepository $addOnRepo */
 		$addOnRepo = $this->_em->getRepository(AddOnRepository::class);
 		$this->addon_id = $addOnRepo->getDefaultAddOnId();
 

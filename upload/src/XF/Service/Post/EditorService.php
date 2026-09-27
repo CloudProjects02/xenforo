@@ -209,14 +209,12 @@ class EditorService extends AbstractService
 
 		if ($this->oldMessage)
 		{
-			/** @var EditHistoryRepository $repo */
 			$repo = $this->repository(EditHistoryRepository::class);
 			$repo->insertEditHistory('post', $post, $visitor, $this->oldMessage, $this->app->request()->getIp());
 		}
 
 		if ($post->message_state == 'visible' && $this->alert && $post->user_id != $visitor->user_id)
 		{
-			/** @var PostRepository $postRepo */
 			$postRepo = $this->repository(PostRepository::class);
 			$postRepo->sendModeratorActionAlert($post, 'edit', $this->alertReason);
 		}

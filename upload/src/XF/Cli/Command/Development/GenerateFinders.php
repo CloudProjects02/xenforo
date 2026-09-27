@@ -95,14 +95,26 @@ class GenerateFinders extends AbstractCommand
 			}
 
 			$fileName = $path . \XF::$DS . $finderClass . '.php';
+			$legacyFileName = $path . \XF::$DS . $entityClass . '.php';
 
-			if (!class_exists($fqFinderClass))
+			$entityShortName = substr($fqEntityClass, strrpos($fqEntityClass, '\\') + 1);
+			$entityClassForImport = ltrim($fqEntityClass, '\\');
+
+			// Skip add-ons not yet migrated to the Finder suffix: the suffixed
+			// stub would shadow their real legacy finder via class aliasing.
+			if ($entityClass !== $finderClass && is_file($legacyFileName))
+			{
+				continue;
+			}
+
+			if (!is_file($fileName))
 			{
 				// Generating new finder
 
 				$importClasses = [
 					'use XF\Mvc\Entity\Finder;',
 					'use XF\Mvc\Entity\AbstractCollection;',
+					"use $entityClassForImport;",
 				];
 
 				sort($importClasses);
@@ -136,6 +148,19 @@ FINDEROUT;
 				$contents = file_get_contents($fileName);
 				$existingComment = $finderReflection->getDocComment();
 
+				$pattern = '/^use\s+\\\\?' . preg_quote($entityClassForImport, '/') . ';\s*\n/m';
+				$contents = preg_replace($pattern, '', $contents);
+
+				preg_match_all('/^use .+;$/m', $contents, $matches, PREG_OFFSET_CAPTURE);
+				$firstUse = $matches[0][0];
+				$insertPos = $firstUse[1];
+				$contents = substr_replace(
+					$contents,
+					"use $entityClassForImport;\n",
+					$insertPos,
+					0
+				);
+
 				if (!$existingComment)
 				{
 					$search = 'class ' . $finderClass . ' extends ';
@@ -150,17 +175,25 @@ FINDEROUT;
 
 			$newComment = <<< COMMENTOUT
 /**
- * @method AbstractCollection<$fqEntityClass> fetch(?int \$limit = null, ?int \$offset = null)
- * @method AbstractCollection<$fqEntityClass> fetchDeferred(?int \$limit = null, ?int \$offset = null)
- * @method $fqEntityClass|null fetchOne(?int \$offset = null)
- * @extends Finder<$fqEntityClass>
+ * @method AbstractCollection<$entityShortName> fetch(?int \$limit = null, ?int \$offset = null)
+ * @method AbstractCollection<$entityShortName> fetchDeferred(?int \$limit = null, ?int \$offset = null)
+ * @method $entityShortName|null fetchOne(?int \$offset = null)
+ * @extends Finder<$entityShortName>
  */
 COMMENTOUT;
+			$newComment = rtrim($newComment);
 
 			$fileOutput = str_replace($docPlaceholder, $newComment, $fileOutput);
 			$output->writeln("Writing Finder for entity $entity...");
 
-			if (!is_writable(dirname($fileName)))
+			$finderDir = dirname($fileName);
+			if (!file_exists($finderDir) && !File::createDirectory($finderDir, false))
+			{
+				$output->writeln("Could not create directory $finderDir. Check permissions.");
+				return 5;
+			}
+
+			if (!is_writable($finderDir))
 			{
 				$output->writeln("File for $fileName could not be written to. Check directories exist and permissions.");
 				return 5;

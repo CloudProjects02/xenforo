@@ -64,7 +64,6 @@ class Create extends AbstractHandler
 		Forum $forum
 	): CreatorService
 	{
-		/** @var CreatorService $creator */
 		$creator = \XF::app()->service(CreatorService::class, $forum);
 		$creator->setContent($action->action_data['title'], $action->action_data['message']);
 		$creator->setCustomFields($action->action_data['custom_fields']);
@@ -105,7 +104,6 @@ class Create extends AbstractHandler
 		/** @var Thread $thread */
 		$thread = $executeContent;
 
-		/** @var UserAlertRepository $alertRepo */
 		$alertRepo = \XF::repository(UserAlertRepository::class);
 
 		$alertRepo->alertFromUser(

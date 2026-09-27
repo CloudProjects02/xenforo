@@ -14,7 +14,7 @@ use function is_int, is_string;
  * @property int $user_id
  * @property array $extra_user_group_ids
  * @property int $last_login
- * @property array $permission_cache
+ * @property array|null $permission_cache
  * @property string $admin_style_variation
  * @property int $admin_language_id
  * @property bool $advanced

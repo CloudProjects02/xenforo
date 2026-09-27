@@ -2,14 +2,15 @@
 
 namespace XF\Finder;
 
+use XF\Entity\Option;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Finder;
 
 /**
- * @method AbstractCollection<\XF\Entity\Option> fetch(?int $limit = null, ?int $offset = null)
- * @method AbstractCollection<\XF\Entity\Option> fetchDeferred(?int $limit = null, ?int $offset = null)
- * @method \XF\Entity\Option|null fetchOne(?int $offset = null)
- * @extends Finder<\XF\Entity\Option>
+ * @method AbstractCollection<Option> fetch(?int $limit = null, ?int $offset = null)
+ * @method AbstractCollection<Option> fetchDeferred(?int $limit = null, ?int $offset = null)
+ * @method Option|null fetchOne(?int $offset = null)
+ * @extends Finder<Option>
  */
 class OptionFinder extends Finder
 {

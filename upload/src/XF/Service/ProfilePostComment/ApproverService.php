@@ -51,7 +51,6 @@ class ApproverService extends AbstractService
 	{
 		if ($this->comment->isLastComment())
 		{
-			/** @var NotifierService $notifier */
 			$notifier = $this->service(NotifierService::class, $this->comment);
 			$notifier->notify();
 		}

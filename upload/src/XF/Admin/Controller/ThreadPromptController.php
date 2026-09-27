@@ -34,7 +34,6 @@ class ThreadPromptController extends AbstractPrompt
 
 	protected function getNodeParams(ThreadPrompt $prompt)
 	{
-		/** @var NodeRepository $nodeRepo */
 		$nodeRepo = \XF::repository(NodeRepository::class);
 		$nodeTree = $nodeRepo->createNodeTree($nodeRepo->getFullNodeList());
 

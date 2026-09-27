@@ -231,8 +231,8 @@ class MergerService extends AbstractService
 			{
 				$reactionUserId = $reactionContent['reaction_user_id'];
 				if (
-					($reactionUserId && $reactionUserId === $target->user_id) ||
-					isset($targetReactions[$reactionUserId])
+					($reactionUserId && $reactionUserId === $target->user_id)
+					|| isset($targetReactions[$reactionUserId])
 				)
 				{
 					// reaction is from the content user
@@ -252,8 +252,8 @@ class MergerService extends AbstractService
 			{
 				$updateReactionsQuoted = $db->quote($updateReactions);
 				$targetReactionsCount = (
-					$target->message_state == 'visible' &&
-					$target->Thread->discussion_state == 'visible'
+					$target->message_state == 'visible'
+					&& $target->Thread->discussion_state == 'visible'
 				);
 
 				$db->update(
@@ -310,7 +310,6 @@ class MergerService extends AbstractService
 
 	protected function updateSourceData()
 	{
-		/** @var ThreadRepository $threadRepo */
 		$threadRepo = $this->repository(ThreadRepository::class);
 
 		foreach ($this->sourceThreads AS $sourceThread)
@@ -373,8 +372,8 @@ class MergerService extends AbstractService
 
 		$userReactionCountAdjust = [];
 		$targetReactionsCount = (
-			$target->message_state == 'visible' &&
-			$target->Thread->discussion_state == 'visible'
+			$target->message_state == 'visible'
+			&& $target->Thread->discussion_state == 'visible'
 		);
 
 		foreach ($this->movedReactions AS $reactionContentId => $reactionContent)
@@ -423,7 +422,6 @@ class MergerService extends AbstractService
 
 	protected function sendAlert()
 	{
-		/** @var PostRepository $postRepo */
 		$postRepo = $this->repository(PostRepository::class);
 
 		$alerted = [];
@@ -473,7 +471,6 @@ class MergerService extends AbstractService
 			$visitor = \XF::visitor();
 			$ip = $this->app->request()->getIp();
 
-			/** @var EditHistoryRepository $editHistoryRepo */
 			$editHistoryRepo = $this->app->repository(EditHistoryRepository::class);
 
 			// Log an edit history record for the target post's original message then log a further record
@@ -514,12 +511,10 @@ class MergerService extends AbstractService
 			);
 		}
 
-		/** @var ThreadRepository $threadRepo */
 		$threadRepo = $this->repository(ThreadRepository::class);
 		$threadRepo->rebuildThreadPostPositions($targetThread->thread_id);
 		$threadRepo->rebuildThreadUserPostCounters($targetThread->thread_id);
 
-		/** @var ReactionRepository $reactionRepo */
 		$reactionRepo = $this->repository(ReactionRepository::class);
 		$reactionRepo->rebuildContentReactionCache('post', $target->post_id);
 	}

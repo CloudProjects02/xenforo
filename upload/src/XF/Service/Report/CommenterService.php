@@ -168,13 +168,11 @@ class CommenterService extends AbstractService
 
 		if ($this->comment->isClosureComment() && $this->sendAlert)
 		{
-			/** @var ClosureNotifierService $closureNotifier */
 			$closureNotifier = $this->service(ClosureNotifierService::class, $this->report);
 			$closureNotifier->setAlertComment($this->alertComment);
 			$closureNotifier->notify();
 		}
 
-		/** @var NotifierService $notifier */
 		$notifier = $this->service(NotifierService::class, $this->report, $this->comment);
 		$notifier->setNotifyMentioned($this->commentPreparer->getMentionedUserIds());
 		$notifier->notifyMentioned();

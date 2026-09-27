@@ -21,6 +21,7 @@ class JsMinifierService extends AbstractService
 	 */
 	protected $client;
 
+	// @phpstan-ignore-next-line
 	public function __construct(App $app, $jsPath, $minPath = null, array $compilerOptions = [])
 	{
 		parent::__construct($app);
@@ -35,7 +36,6 @@ class JsMinifierService extends AbstractService
 			$this->minPath = preg_replace('(\.js$)', '.min.js', $jsPath, 1);
 		}
 
-		$this->setCompilerOptions($compilerOptions);
 		$this->setHttpClient();
 	}
 
@@ -44,6 +44,8 @@ class JsMinifierService extends AbstractService
 	 * Only used if $config['development']['closureCompilerPath'] is not set.
 	 *
 	 * @param array $options
+	 *
+	 * @deprecated No longer used.
 	 */
 	protected function setCompilerOptions(array $options = [])
 	{
@@ -77,9 +79,9 @@ class JsMinifierService extends AbstractService
 
 		if ($compilerPath !== null)
 		{
-			$result = shell_exec("java -jar $compilerPath --js $this->jsPath --rewrite_polyfills false --warning_level QUIET");
+			$result = shell_exec("java -jar " . escapeshellarg($compilerPath) . " --js " . escapeshellarg($this->jsPath) . " --rewrite_polyfills false --warning_level QUIET");
 
-			if ($result === false || $result === null)
+			if ($result === false || trim($result) === '')
 			{
 				throw new \ErrorException('Empty result or error provided by the compiler.');
 			}
@@ -92,22 +94,7 @@ class JsMinifierService extends AbstractService
 			{
 				$this->processErrors($result['serverErrors'], 'Server errors encountered while compiling: ');
 			}
-			else if (isset($result['compiledCode']) && $result['compiledCode'] === '')
-			{
-				$errors = $this->request(true);
-				if (!empty($errors['errors']))
-				{
-					$this->processErrors($errors['errors'], 'Syntax errors encountered while compiling: ');
-				}
-
-				$result = null;
-			}
-			else if (empty($result['compiledCode']))
-			{
-				$result = null;
-			}
-
-			if (!$result)
+			else if (!isset($result['compiledCode']) || trim($result['compiledCode']) === '')
 			{
 				throw new \ErrorException('Empty result provided by the compiler.');
 			}
@@ -123,17 +110,15 @@ class JsMinifierService extends AbstractService
 	protected function request($getErrors = false)
 	{
 		$client = $this->client;
-		$options = $this->options;
-
-		if ($getErrors)
-		{
-			$options['output_info'] = 'errors';
-		}
 
 		try
 		{
-			$response = $client->post('https://closure-compiler.appspot.com/compile', [
-				'form_params' => $options,
+			$response = $client->post(\XF::XF_API_URL . 'closure-compiler.json', [
+				'http_errors' => false,
+				'headers' => [
+					'XF-LICENSE-API-KEY' => \XF::XF_LICENSE_KEY,
+				],
+				'body' => file_get_contents($this->jsPath),
 			]);
 			$contents = $response->getBody()->getContents();
 
@@ -155,7 +140,7 @@ class JsMinifierService extends AbstractService
 		$output = [];
 		foreach ($errors AS $error)
 		{
-			$output[] = $error['error'];
+			$output[] = $error['error'] ?? $error;
 		}
 		throw new \ErrorException(($errorPrefix ? $errorPrefix . ' ' : '') . implode(', ', $output));
 	}

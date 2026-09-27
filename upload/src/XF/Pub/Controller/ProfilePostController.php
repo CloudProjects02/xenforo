@@ -12,7 +12,6 @@ use XF\ControllerPlugin\WarnPlugin;
 use XF\Entity\ProfilePost;
 use XF\Entity\ProfilePostComment;
 use XF\Mvc\Entity\Entity;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\ParameterBag;
 use XF\Mvc\Reply\Exception;
 use XF\Mvc\RouteMatch;
@@ -56,7 +55,6 @@ class ProfilePostController extends AbstractController
 		$profilePostRepo = $this->getProfilePostRepo();
 		$profilePost = $profilePostRepo->addCommentsToProfilePost($profilePost);
 
-		/** @var AttachmentRepository $attachmentRepo */
 		$attachmentRepo = $this->repository(AttachmentRepository::class);
 		$attachmentRepo->addAttachmentsToContent([$profilePost->profile_post_id => $profilePost], 'profile_post');
 
@@ -102,7 +100,6 @@ class ProfilePostController extends AbstractController
 			{
 				$profilePosts = [$profilePost->profile_post_id => $profilePost];
 
-				/** @var AttachmentRepository $attachmentRepo */
 				$attachmentRepo = $this->repository(AttachmentRepository::class);
 				$attachmentRepo->addAttachmentsToContent($profilePosts, 'profile_post');
 
@@ -135,7 +132,6 @@ class ProfilePostController extends AbstractController
 		{
 			if ($profilePost->ProfileUser->canUploadAndManageAttachmentsOnProfile())
 			{
-				/** @var AttachmentRepository $attachmentRepo */
 				$attachmentRepo = $this->repository(AttachmentRepository::class);
 				$attachmentData = $attachmentRepo->getEditorData('profile_post', $profilePost);
 			}
@@ -175,7 +171,6 @@ class ProfilePostController extends AbstractController
 				return $this->noPermission($error);
 			}
 
-			/** @var DeleterService $deleter */
 			$deleter = $this->service(DeleterService::class, $profilePost);
 
 			if ($this->filter('author_alert', 'bool') && $profilePost->canSendModeratorActionAlert())
@@ -299,7 +294,6 @@ class ProfilePostController extends AbstractController
 	{
 		$message = $this->plugin(EditorPlugin::class)->fromInput('message');
 
-		/** @var CreatorService $creator */
 		$creator = $this->service(CreatorService::class, $profilePost);
 		$creator->setContent($message);
 
@@ -344,7 +338,6 @@ class ProfilePostController extends AbstractController
 
 			$lastDate = $this->filter('last_date', 'uint');
 
-			/** @var Finder $profilePostCommentList */
 			$profilePostCommentList = $profilePostRepo->findNewestCommentsForProfilePost($profilePost, $lastDate);
 			$profilePostComments = $profilePostCommentList->fetch();
 
@@ -446,7 +439,6 @@ class ProfilePostController extends AbstractController
 			return $this->noPermission($error);
 		}
 
-		/** @var AttachmentRepository $attachmentRepo */
 		$attachmentRepo = $this->repository(AttachmentRepository::class);
 
 		if ($this->isPost())
@@ -520,7 +512,6 @@ class ProfilePostController extends AbstractController
 				return $this->noPermission($error);
 			}
 
-			/** @var \XF\Service\ProfilePostComment\DeleterService $deleter */
 			$deleter = $this->service(\XF\Service\ProfilePostComment\DeleterService::class, $comment);
 
 			if ($this->filter('author_alert', 'bool') && $comment->canSendModeratorActionAlert())
@@ -569,7 +560,6 @@ class ProfilePostController extends AbstractController
 			return $this->noPermission($error);
 		}
 
-		/** @var ApproverService $approver */
 		$approver = \XF::service(ApproverService::class, $comment);
 		$approver->approve();
 
@@ -674,7 +664,6 @@ class ProfilePostController extends AbstractController
 	{
 		$message = $this->plugin(EditorPlugin::class)->fromInput('message');
 
-		/** @var EditorService $editor */
 		$editor = $this->service(EditorService::class, $profilePost);
 		$editor->setMessage($message);
 
@@ -704,7 +693,6 @@ class ProfilePostController extends AbstractController
 	{
 		$message = $this->plugin(EditorPlugin::class)->fromInput('message');
 
-		/** @var \XF\Service\ProfilePostComment\EditorService $editor */
 		$editor = $this->service(\XF\Service\ProfilePostComment\EditorService::class, $comment);
 		$editor->setMessage($message);
 

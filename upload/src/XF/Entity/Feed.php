@@ -106,7 +106,6 @@ class Feed extends Entity
 			)
 		)
 		{
-			/** @var ReaderService $reader */
 			$reader = $this->app()->service(ReaderService::class, $this->url);
 			$title = $reader->getTitle();
 

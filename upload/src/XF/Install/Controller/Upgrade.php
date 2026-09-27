@@ -309,7 +309,6 @@ class Upgrade extends AbstractController
 				true
 			);
 
-			/** @var OptionRepository $optionRepo */
 			$optionRepo = $this->repository(OptionRepository::class);
 			$optionRepo->updateOptions($options);
 
@@ -320,7 +319,6 @@ class Upgrade extends AbstractController
 		}
 		else
 		{
-			/** @var CollectStatsRepository $collectStatsRepo */
 			$collectStatsRepo = $this->repository(CollectStatsRepository::class);
 
 			$viewParams = [
@@ -382,7 +380,6 @@ class Upgrade extends AbstractController
 
 			try
 			{
-				/** @var LoginService $loginService */
 				$loginService = $this->service(LoginService::class, $input['login'], $ip);
 				if ($loginService->isLoginLimited($limitType))
 				{

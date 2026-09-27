@@ -37,10 +37,11 @@ class ArchiveValidatorService extends AbstractService
 	// all extensions in lower case
 	public const EXTENSION_WHITELIST = [
 		'avi', 'eot', 'gif',
-		'html', 'ico', 'jpg',
-		'jpeg', 'jpe', 'js',
-		'json', 'map', 'md',
-		'mov', 'mp4', 'png',
+		'html', 'ico', 'jpe',
+		'jpeg', 'jpg', 'js',
+		'json', 'less', 'map',
+		'md', 'mov', 'mp4',
+		'otf', 'png', 'scss',
 		'svg', 'ttf', 'txt',
 		'webp', 'woff', 'woff2',
 		'zip',
@@ -73,6 +74,7 @@ class ArchiveValidatorService extends AbstractService
 		$errors = [];
 
 		$rootPath = $this->filePath;
+		$disallowedExtFiles = [];
 
 		$files = File::getRecursiveDirectoryIterator($rootPath);
 		foreach ($files AS $file)
@@ -129,10 +131,7 @@ class ArchiveValidatorService extends AbstractService
 			$extension = $file->getExtension();
 			if (!$this->isFileWithWhitelistedExtension($extension))
 			{
-				if (!isset($errors['whitelisted_ext']))
-				{
-					$errors['whitelisted_ext'] = \XF::phrase('one_or_more_files_do_not_have_allowed_extension_x', ['allowed' => implode(', ', self::EXTENSION_WHITELIST)]);
-				}
+				$disallowedExtFiles[] = $stdPath;
 				continue;
 			}
 
@@ -144,6 +143,14 @@ class ArchiveValidatorService extends AbstractService
 				}
 				continue;
 			}
+		}
+
+		if ($disallowedExtFiles)
+		{
+			$errors['whitelisted_ext'] = \XF::phrase('one_or_more_files_do_not_have_allowed_extension_x', [
+				'allowed' => implode(', ', self::EXTENSION_WHITELIST),
+				'files' => implode(', ', $disallowedExtFiles),
+			]);
 		}
 
 		return count($errors) == 0;

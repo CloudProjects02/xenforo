@@ -5,7 +5,6 @@ namespace XF\Entity;
 use XF\Api\Result\EntityResult;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
-use XF\Phrase;
 
 /**
  * COLUMNS
@@ -17,10 +16,10 @@ use XF\Phrase;
  * @property int[] $allowed_user_group_ids
  *
  * GETTERS
- * @property-read Phrase|string $title
+ * @property-read string|\Stringable $title
  * @property-read bool $has_usage_help
- * @property-read Phrase|string $description
- * @property-read Phrase|string $usage_help
+ * @property-read string|\Stringable $description
+ * @property-read string|\Stringable $usage_help
  *
  * RELATIONS
  * @property-read Phrase|null $MasterTitle
@@ -57,7 +56,7 @@ abstract class AbstractPrefix extends Entity
 	}
 
 	/**
-	 * @return string|Phrase
+	 * @return string|\Stringable
 	 */
 	public function getTitle()
 	{
@@ -65,7 +64,7 @@ abstract class AbstractPrefix extends Entity
 	}
 
 	/**
-	 * @return string|Phrase
+	 * @return string|\Stringable
 	 */
 	public function getDescription()
 	{
@@ -78,7 +77,7 @@ abstract class AbstractPrefix extends Entity
 	}
 
 	/**
-	 * @return string|Phrase
+	 * @return string|\Stringable
 	 */
 	public function getUsageHelp()
 	{
@@ -166,7 +165,7 @@ abstract class AbstractPrefix extends Entity
 	 * @param string $phraseType
 	 * @param bool $allowHtml
 	 *
-	 * @return string|Phrase
+	 * @return string|\Stringable
 	 */
 	protected function getPhraseValueByType(string $phraseType, bool $allowHtml)
 	{
@@ -197,7 +196,7 @@ abstract class AbstractPrefix extends Entity
 	 * @param string $relationName
 	 * @param string $phraseType
 	 *
-	 * @return null|Phrase
+	 * @return Phrase|null
 	 */
 	protected function getMasterPhraseByType(string $relationName, string $phraseType)
 	{
@@ -214,7 +213,7 @@ abstract class AbstractPrefix extends Entity
 				return $this->getPhraseNameByType($phraseType);
 			};
 
-			$phrase = $this->_em->create(\XF\Entity\Phrase::class);
+			$phrase = $this->_em->create(Phrase::class);
 			$phrase->title = $this->_getDeferredValue($titleClosure, 'save');
 			$phrase->language_id = 0;
 			$phrase->addon_id = '';
@@ -309,7 +308,15 @@ abstract class AbstractPrefix extends Entity
 			'display_order' => ['type' => self::UINT, 'forced' => true, 'default' => 1, 'api' => true],
 			'materialized_order' => ['type' => self::UINT, 'forced' => true, 'default' => 0, 'api' => true],
 			'css_class' => ['type' => self::STR, 'maxLength' => 50, 'default' => 'label label--primary'],
-			'allowed_user_group_ids' => ['type' => self::LIST_COMMA, 'default' => [-1]],
+			'allowed_user_group_ids' => [
+				'type' => self::LIST_COMMA,
+				'default' => [-1],
+				'list' => [
+					'type' => 'int',
+					'unique' => true,
+					'sort' => SORT_NUMERIC,
+				],
+			],
 		];
 		$structure->getters = [
 			'title' => true,

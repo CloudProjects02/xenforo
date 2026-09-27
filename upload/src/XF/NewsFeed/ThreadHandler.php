@@ -4,6 +4,9 @@ namespace XF\NewsFeed;
 
 use XF\Repository\AttachmentRepository;
 
+/**
+ * @extends AbstractHandler<\XF\Entity\Thread>
+ */
 class ThreadHandler extends AbstractHandler
 {
 	public function getEntityWith()
@@ -25,7 +28,6 @@ class ThreadHandler extends AbstractHandler
 			}
 		}
 
-		/** @var AttachmentRepository $attachmentRepo */
 		$attachmentRepo = \XF::repository(AttachmentRepository::class);
 		$attachmentRepo->addAttachmentsToContent($firstPosts, 'post');
 

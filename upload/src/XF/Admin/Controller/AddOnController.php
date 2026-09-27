@@ -71,7 +71,6 @@ class AddOnController extends AbstractController
 			}
 		}
 
-		/** @var UpgradeCheckRepository $upgradeCheckRepo */
 		$upgradeCheckRepo = $this->repository(UpgradeCheckRepository::class);
 		$upgradeCheck = $upgradeCheckRepo->canCheckForUpgrades() ? $upgradeCheckRepo->getLatestUpgradeCheck() : null;
 
@@ -138,10 +137,8 @@ class AddOnController extends AbstractController
 
 	public function actionMassToggle()
 	{
-		/** @var AddOnRepository $addOnRepo */
 		$addOnRepo = $this->repository(AddOnRepository::class);
 
-		/** @var ArrayCollection|AddOn[] $addOns */
 		$addOns = $addOnRepo->findAddOnsForList()
 			->where('addon_id', '<>', 'XF')
 			->fetch();
@@ -244,7 +241,6 @@ class AddOnController extends AbstractController
 		$json = $addOn->getJson();
 		if (!isset($json['options']) || $json['options'] === null)
 		{
-			/** @var OptionRepository $optionRepo */
 			$optionRepo = $this->repository(OptionRepository::class);
 
 			/** @var ArrayCollection $options */
@@ -467,7 +463,6 @@ class AddOnController extends AbstractController
 	 */
 	protected function getBatchCreatorService(array $uploads)
 	{
-		/** @var InstallBatchCreatorService $creator */
 		$creator = $this->service(InstallBatchCreatorService::class, $this->getAddOnManager());
 
 		foreach ($uploads AS $upload)

@@ -2,8 +2,8 @@
 
 namespace XF\Entity;
 
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Structure;
-use XF\Phrase;
 use XF\Repository\ForumPrefixRepository;
 
 /**
@@ -16,17 +16,17 @@ use XF\Repository\ForumPrefixRepository;
  * @property array $allowed_user_group_ids
  *
  * GETTERS
- * @property-read string|Phrase $title
+ * @property-read string|\Stringable $title
  * @property-read bool $has_usage_help
- * @property-read string|Phrase $description
- * @property-read string|Phrase $usage_help
+ * @property-read string|\Stringable $description
+ * @property-read string|\Stringable $usage_help
  *
  * RELATIONS
- * @property-read \XF\Entity\Phrase|null $MasterTitle
+ * @property-read Phrase|null $MasterTitle
  * @property-read ThreadPrefixGroup|null $PrefixGroup
- * @property-read \XF\Entity\Phrase|null $MasterDescription
- * @property-read \XF\Entity\Phrase|null $MasterUsageHelp
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\ForumPrefix> $ForumPrefixes
+ * @property-read Phrase|null $MasterDescription
+ * @property-read Phrase|null $MasterUsageHelp
+ * @property-read AbstractCollection<ForumPrefix> $ForumPrefixes
  */
 class ThreadPrefix extends AbstractPrefix
 {

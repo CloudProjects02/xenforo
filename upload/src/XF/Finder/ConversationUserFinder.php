@@ -2,15 +2,16 @@
 
 namespace XF\Finder;
 
+use XF\Entity\ConversationUser;
 use XF\Entity\User;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Finder;
 
 /**
- * @method AbstractCollection<\XF\Entity\ConversationUser> fetch(?int $limit = null, ?int $offset = null)
- * @method AbstractCollection<\XF\Entity\ConversationUser> fetchDeferred(?int $limit = null, ?int $offset = null)
- * @method \XF\Entity\ConversationUser|null fetchOne(?int $offset = null)
- * @extends Finder<\XF\Entity\ConversationUser>
+ * @method AbstractCollection<ConversationUser> fetch(?int $limit = null, ?int $offset = null)
+ * @method AbstractCollection<ConversationUser> fetchDeferred(?int $limit = null, ?int $offset = null)
+ * @method ConversationUser|null fetchOne(?int $offset = null)
+ * @extends Finder<ConversationUser>
  */
 class ConversationUserFinder extends Finder
 {

@@ -33,5 +33,6 @@
   <admin_permission admin_permission_id="viewOnlineStaff" display_order="429"/>
   <admin_permission admin_permission_id="viewStatistics" display_order="430"/>
   <admin_permission admin_permission_id="warning" display_order="240"/>
+  <admin_permission admin_permission_id="webhook" display_order="427"/>
   <admin_permission admin_permission_id="widget" display_order="330"/>
 </admin_permission>

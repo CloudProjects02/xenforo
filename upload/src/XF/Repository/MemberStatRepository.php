@@ -3,13 +3,12 @@
 namespace XF\Repository;
 
 use XF\Finder\MemberStatFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 class MemberStatRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return MemberStatFinder
 	 */
 	public function findMemberStatsForList()
 	{
@@ -18,11 +17,10 @@ class MemberStatRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return MemberStatFinder
 	 */
 	public function findMemberStatsForDisplay()
 	{
-		/** @var MemberStatFinder $finder */
 		$finder = $this->finder(MemberStatFinder::class);
 
 		$finder
@@ -34,11 +32,10 @@ class MemberStatRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return MemberStatFinder
 	 */
 	public function findCacheableMemberStats()
 	{
-		/** @var MemberStatFinder $finder */
 		$finder = $this->finder(MemberStatFinder::class);
 
 		$finder
@@ -51,7 +48,6 @@ class MemberStatRepository extends Repository
 
 	public function emptyCache($memberStatKey)
 	{
-		/** @var MemberStatFinder $finder */
 		$finder = $this->finder(MemberStatFinder::class);
 
 		$memberStat = $finder

@@ -9,7 +9,6 @@ use XF\Entity\OptionGroupRelation;
 use XF\Finder\OptionFinder;
 use XF\Finder\OptionGroupFinder;
 use XF\Finder\OptionGroupRelationFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 use XF\Options;
 
@@ -20,7 +19,7 @@ class OptionRepository extends Repository
 	/**
 	 * @param array $options
 	 *
-	 * @return Finder
+	 * @return OptionGroupFinder
 	 */
 	public function findOptionGroupList(array $options = [])
 	{
@@ -45,7 +44,7 @@ class OptionRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return OptionGroupFinder
 	 */
 	public function findAllGroups()
 	{
@@ -59,7 +58,7 @@ class OptionRepository extends Repository
 	 * @param OptionGroup $group
 	 * @param array $options
 	 *
-	 * @return Finder
+	 * @return OptionFinder
 	 */
 	public function findOptionsInGroup(OptionGroup $group, array $options = [])
 	{

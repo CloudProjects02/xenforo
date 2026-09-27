@@ -20,10 +20,10 @@ class Email extends AbstractProvider
 
 		$random = \XF::generateRandomString(4, true);
 		$code = (
-			((ord($random[0]) & 0x7f) << 24) |
-			((ord($random[1]) & 0xff) << 16) |
-			((ord($random[2]) & 0xff) << 8) |
-			(ord($random[3]) & 0xff)
+			((ord($random[0]) & 0x7f) << 24)
+			| ((ord($random[1]) & 0xff) << 16)
+			| ((ord($random[2]) & 0xff) << 8)
+			| (ord($random[3]) & 0xff)
 		);
 		$code = $code % 10 ** $length;
 		$code = str_pad($code, $length, '0', STR_PAD_LEFT);

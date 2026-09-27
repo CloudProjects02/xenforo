@@ -60,6 +60,11 @@ class ConversationEmbedMetadata extends AbstractEmbedMetadataJob
 		$embedMetadata['images'] = $preparer->getEmbeddedImages();
 	}
 
+	protected function rebuildUnfurls(Entity $record, PreparerService $preparer, array &$embedMetadata): void
+	{
+		$embedMetadata['unfurls'] = $preparer->getEmbeddedUnfurls();
+	}
+
 	protected function getActionDescription(): string
 	{
 		$rebuildPhrase = \XF::phrase('rebuilding');

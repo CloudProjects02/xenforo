@@ -96,7 +96,8 @@ class Conversation extends AbstractData implements AutoCompletableInterface
 			$entity->title,
 			$entity->getContentUrl(),
 			$entity->FirstMessage->message,
-			$entity->Starter
+			$entity->Starter,
+			$entity->username
 		);
 	}
 }

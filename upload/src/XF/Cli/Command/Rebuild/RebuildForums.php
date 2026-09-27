@@ -2,6 +2,8 @@
 
 namespace XF\Cli\Command\Rebuild;
 
+use XF\Job\Forum;
+
 class RebuildForums extends AbstractRebuildCommand
 {
 	protected function getRebuildName()
@@ -16,6 +18,6 @@ class RebuildForums extends AbstractRebuildCommand
 
 	protected function getRebuildClass()
 	{
-		return 'XF:Forum';
+		return Forum::class;
 	}
 }

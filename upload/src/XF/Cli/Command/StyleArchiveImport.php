@@ -69,10 +69,8 @@ class StyleArchiveImport extends AbstractCommand
 			return 1;
 		}
 
-		/** @var ImportService $styleImporter */
 		$styleImporter = \XF::service(ImportService::class);
 
-		/** @var ArchiveImportService $styleArchiveImporter */
 		$styleArchiveImporter = \XF::service(ArchiveImportService::class, $archiveFile);
 
 		if (!$styleArchiveImporter->validateArchive($errors))

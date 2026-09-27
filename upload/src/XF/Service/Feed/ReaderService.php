@@ -2,7 +2,6 @@
 
 namespace XF\Service\Feed;
 
-use GuzzleHttp\Client;
 use Laminas\Feed\Reader\Feed\Rss;
 use Laminas\Feed\Reader\Reader;
 use XF\App;
@@ -16,9 +15,6 @@ class ReaderService extends AbstractService
 {
 	protected $url;
 
-	/** @var Client */
-	protected $client;
-
 	/** @var Rss|null */
 	protected $feed;
 
@@ -31,7 +27,6 @@ class ReaderService extends AbstractService
 	{
 		parent::__construct($app);
 		$this->setUrl($url);
-		$this->setClient();
 		$this->setFeed();
 	}
 
@@ -47,18 +42,23 @@ class ReaderService extends AbstractService
 		$this->url = $url;
 	}
 
-	protected function setClient()
-	{
-		$this->client = $this->app->http()->client();
-	}
-
 	protected function setFeed()
 	{
 		try
 		{
-			$content = $this->client->get($this->url)
-				->getBody()
-				->getContents();
+			$limits = [
+				'time' => 10,
+				'bytes' => -1,
+			];
+
+			$error = null;
+			$response = $this->app->http()->reader()->getUntrusted($this->url, $limits, null, [], $error);
+			if (!$response)
+			{
+				throw new \Exception($error ?: 'The feed URL could not be requested.');
+			}
+
+			$content = $response->getBody()->getContents();
 
 			$this->feed = Reader::importString($content);
 		}
@@ -123,7 +123,11 @@ class ReaderService extends AbstractService
 		$feed = $this->feed;
 		foreach ($feed AS $entry)
 		{
-			$title = $entry->getTitle() ?: $entry->getDescription();
+			$title = $entry->getTitle();
+			if (!$title)
+			{
+				$title = trim(strip_tags($entry->getDescription()));
+			}
 			$description = $entry->getDescription() ?: $entry->getTitle();
 
 			try

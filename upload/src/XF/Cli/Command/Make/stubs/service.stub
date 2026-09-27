@@ -1,0 +1,16 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use XF\App;
+use XF\Service\AbstractService;
+
+class {{ class }} extends AbstractService
+{
+	public function __construct(App $app)
+	{
+		parent::__construct($app);
+	}
+}

@@ -80,7 +80,6 @@ class ConversationMessageController extends AbstractController
 	 */
 	protected function setupMessageEdit(ConversationMessage $message)
 	{
-		/** @var MessageEditorService $editor */
 		$editor = $this->service(MessageEditorService::class, $message);
 
 		$content = $this->filter('message', '?str');

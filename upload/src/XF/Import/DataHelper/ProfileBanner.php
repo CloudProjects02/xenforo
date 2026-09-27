@@ -32,7 +32,6 @@ class ProfileBanner extends AbstractHelper
 
 	public function setBannerFromFile($sourceFile, User $user)
 	{
-		/** @var ProfileBannerService $bannerService */
 		$bannerService = $this->dataManager->app()->service(ProfileBannerService::class, $user);
 		$bannerService->logIp(false);
 		$bannerService->logChange(false);

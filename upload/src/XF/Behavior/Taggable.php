@@ -35,7 +35,6 @@ class Taggable extends Behavior
 
 			if ($this->entity->isUpdate())
 			{
-				/** @var TagRepository $tagRepo */
 				$tagRepo = $this->repository(TagRepository::class);
 
 				if ($visibilityChange == 'enter')
@@ -52,7 +51,6 @@ class Taggable extends Behavior
 
 	public function postDelete()
 	{
-		/** @var TagRepository $tagRepo */
 		$tagRepo = $this->repository(TagRepository::class);
 		$tagRepo->removeContentTags($this->contentType(), $this->id());
 	}

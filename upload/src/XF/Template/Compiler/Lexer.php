@@ -45,6 +45,7 @@ class Lexer
 		'-' => 'MINUS',
 		'+' => 'PLUS',
 		'.' => 'CONCAT',
+		'??' => 'NULL_COALESCE',
 		'?:' => 'TERNARY_SHORT',
 		'?' => 'TERNARY_IF',
 		':' => 'TERNARY_ELSE',

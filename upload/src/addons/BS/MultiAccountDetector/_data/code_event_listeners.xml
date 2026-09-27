@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<code_event_listeners>
+  <listener event_id="app_setup" execute_order="10" callback_class="BS\MultiAccountDetector\Listener" callback_method="appSetup" active="1"/>
+  <listener event_id="entity_post_delete" execute_order="10" callback_class="BS\MultiAccountDetector\Listener" callback_method="entityPostDeleteUser" active="1" hint="XF\Entity\User"/>
+  <listener event_id="entity_structure" execute_order="10" callback_class="BS\MultiAccountDetector\Listener" callback_method="entityStructureUser" active="1" hint="XF\Entity\User"/>
+  <listener event_id="user_merge_combine" execute_order="10" callback_class="BS\MultiAccountDetector\Listener" callback_method="userMergeCombine" active="1"/>
+</code_event_listeners>

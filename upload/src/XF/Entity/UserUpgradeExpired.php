@@ -11,7 +11,7 @@ use XF\Mvc\Entity\Structure;
  * @property int $user_id
  * @property string|null $purchase_request_key
  * @property int $user_upgrade_id
- * @property array $extra
+ * @property array|null $extra
  * @property int $start_date
  * @property int $end_date
  * @property int $original_end_date

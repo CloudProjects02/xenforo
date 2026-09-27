@@ -2,6 +2,8 @@
 
 namespace XF\Job;
 
+use XF\PrintableException;
+
 use function intval, is_array;
 
 class SearchRebuild extends AbstractJob
@@ -34,7 +36,21 @@ class SearchRebuild extends AbstractJob
 		{
 			if ($this->data['type'])
 			{
-				$this->data['rebuild_types'] = is_array($this->data['type']) ? array_unique($this->data['type']) : [$this->data['type']];
+				$types = is_array($this->data['type']) ? array_unique($this->data['type']) : [$this->data['type']];
+
+				$invalidTypes = array_filter($types, function ($type) use ($search)
+				{
+					return !$search->isValidContentType($type);
+				});
+
+				if ($invalidTypes)
+				{
+					throw new PrintableException(
+						"Invalid content type(s): " . implode(', ', $invalidTypes)
+					);
+				}
+
+				$this->data['rebuild_types'] = $types;
 			}
 			else
 			{
@@ -56,12 +72,6 @@ class SearchRebuild extends AbstractJob
 
 		$type = $this->data['type'];
 		$start = $this->data['start'];
-
-		if (!$search->isValidContentType($type))
-		{
-			$this->data['type'] = null;
-			return $this->resume();
-		}
 
 		$this->builtType = $this->data['type'];
 

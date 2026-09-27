@@ -77,15 +77,34 @@ class LoginController extends AbstractController
 		$webAuthnPayload = $this->filter('webauthn_payload', 'json-array');
 		if ($webAuthnPayload)
 		{
+			$ip = $this->request->getIp();
 			$passkey = $this->service(ManagerService::class, $this->session());
+
+			// Check for IP-based rate limiting before validation
+			if ($passkey->hasTooManyLoginAttempts($ip))
+			{
+				$passkey->clearStateFromSession($this->session());
+				return $this->error(\XF::phrase('your_account_has_temporarily_been_locked_due_to_failed_login_attempts'));
+			}
+
 			if (!$passkey->validate($this->request(), $error))
 			{
 				$passkey->clearStateFromSession($this->session());
 				return $this->error($error);
 			}
 
+			// Check again after validation in case user-specific limits are hit
+			if ($passkey->isLoginLimited($ip, $limitType))
+			{
+				$passkey->clearStateFromSession($this->session());
+				return $this->error(\XF::phrase('your_account_has_temporarily_been_locked_due_to_failed_login_attempts'));
+			}
+
+			$passkey->clearFailedAttempts($ip);
+
 			/** @var LoginPlugin $loginPlugin */
 			$loginPlugin = $this->plugin(LoginPlugin::class);
+			$loginPlugin->setDeviceTrusted($passkey->getPasskeyUser()->user_id);
 			$loginPlugin->completeLogin($passkey->getPasskeyUser(), true);
 
 			return $this->redirect($redirect, '');
@@ -99,7 +118,6 @@ class LoginController extends AbstractController
 
 		$ip = $this->request->getIp();
 
-		/** @var LoginService $loginService */
 		$loginService = $this->service(LoginService::class, $input['login'], $ip);
 		if ($loginService->isLoginLimited($limitType))
 		{

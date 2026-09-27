@@ -2,14 +2,15 @@
 
 namespace XF\Finder;
 
+use XF\Entity\SearchForum;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Finder;
 
 /**
- * @method AbstractCollection<\XF\Entity\SearchForum> fetch(?int $limit = null, ?int $offset = null)
- * @method AbstractCollection<\XF\Entity\SearchForum> fetchDeferred(?int $limit = null, ?int $offset = null)
- * @method \XF\Entity\SearchForum|null fetchOne(?int $offset = null)
- * @extends Finder<\XF\Entity\SearchForum>
+ * @method AbstractCollection<SearchForum> fetch(?int $limit = null, ?int $offset = null)
+ * @method AbstractCollection<SearchForum> fetchDeferred(?int $limit = null, ?int $offset = null)
+ * @method SearchForum|null fetchOne(?int $offset = null)
+ * @extends Finder<SearchForum>
  */
 class SearchForumFinder extends Finder
 {

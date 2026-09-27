@@ -1,0 +1,32 @@
+---
+name: xf-addon-dev
+description: Implement or review third-party XenForo add-ons, including Setup.php, class extensions, add-on runtime code, development output, and release lifecycle.
+---
+
+# XenForo Add-on Development
+
+Load `xf-shared-policy`. Load `xf-environment` before running commands. Load `xf-template-phrase` for UI or phrase work and `xf-scaffold-make` for new artifacts.
+
+## Keep Ownership Clear
+
+1. Confirm the exact add-on ID and `src/addons/<Vendor>/<AddOn>` path.
+2. Do not modify `src/XF`, `js/xf`, or `src/addons/XF` to implement third-party behavior. Use supported extension points.
+3. Reuse first-party patterns without copying internal behavior that is not an extension contract.
+4. Keep add-on PHP in its namespace, browser code in its add-on JS path, and data artifacts in its own `_output/`.
+
+## Extension Choices
+
+- Use class extensions when adapting an extensible class's behavior.
+- Use code events for the documented event surface and cross-cutting hooks.
+- Add entity columns or tables in `Setup.php`; add entity structure definitions through the supported extension/event mechanism.
+- Prefer services for multi-step writes and repositories/finders for reusable queries.
+- Create factories with native class strings, never legacy short names.
+
+## Installation and Upgrades
+
+- Keep fresh-install schema in `installStep*()` or reusable schema methods and changes for installed sites in `upgrade<versionId>Step<n>()`.
+- Make upgrade steps safe to resume. Batch long data migrations and separate them from schema operations when either may need recovery.
+- Do not bump the add-on version unless the user requests a new development/release version or an upgrade step needs an agreed target version. Read `addon.json` before proposing one.
+- Build a release only when explicitly requested. Release tooling owns its generated data; never create or edit release XML.
+
+Read [addon-checklist.md](references/addon-checklist.md) before finalizing an add-on change.

@@ -3,6 +3,7 @@
 namespace XF\Repository;
 
 use XF\Bookmark\AbstractHandler;
+use XF\Db\DuplicateKeyException;
 use XF\Entity\BookmarkItem;
 use XF\Entity\BookmarkLabel;
 use XF\Entity\User;
@@ -13,7 +14,6 @@ use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 use XF\Util\Arr;
-
 use XF\Util\Str;
 
 use function intval, is_array, strlen;
@@ -23,7 +23,7 @@ class BookmarkRepository extends Repository
 	/**
 	 * @param $userId
 	 *
-	 * @return Finder
+	 * @return BookmarkItemFinder
 	 */
 	public function findBookmarksForUser($userId)
 	{
@@ -36,7 +36,7 @@ class BookmarkRepository extends Repository
 	 * @param $userId
 	 * @param $labels
 	 *
-	 * @return Finder
+	 * @return BookmarkLabelUseFinder
 	 */
 	public function findBookmarksForUserByLabel($userId, $label)
 	{
@@ -52,7 +52,7 @@ class BookmarkRepository extends Repository
 	/**
 	 * @param $userId
 	 *
-	 * @return Finder
+	 * @return BookmarkLabelFinder
 	 */
 	public function findLabelsForUser($userId)
 	{
@@ -104,6 +104,11 @@ class BookmarkRepository extends Repository
 		$this->deleteBookmarksInternal($finder);
 	}
 
+	/**
+	 * @param BookmarkItemFinder $matches
+	 *
+	 * @return void
+	 */
 	protected function deleteBookmarksInternal(Finder $matches)
 	{
 		$delete = $matches->fetchColumns('bookmark_id');
@@ -323,15 +328,27 @@ class BookmarkRepository extends Repository
 
 		if ($label->hasErrors())
 		{
-			return $this->finder(BookmarkLabelFinder::class)
-				->where('label', $labelName)
-				->where('user_id', $user->user_id)
-				->fetchOne();
+			return $this->getLabelForUser($user, $labelName);
 		}
 
-		$label->save();
+		try
+		{
+			$label->save();
+		}
+		catch (DuplicateKeyException $e)
+		{
+			$label = $this->getLabelForUser($user, $labelName);
+		}
 
 		return $label;
+	}
+
+	protected function getLabelForUser(User $user, string $labelName): ?BookmarkLabel
+	{
+		return $this->finder(BookmarkLabelFinder::class)
+			->where('label', $labelName)
+			->where('user_id', $user->user_id)
+			->fetchOne();
 	}
 
 	public function modifyBookmarkLabelUses(BookmarkItem $bookmark, array $addIds, array $removeIds)

@@ -21,8 +21,11 @@ use XF\Repository\UserAlertRepository;
  * @property-read User|null $User
  * @property-read User|null $BannedBy
  */
-class ThreadReplyBan extends Entity
+class ThreadReplyBan extends Entity implements ContainableInterface, DatableInterface
 {
+	use ContainableTrait;
+	use DatableTrait;
+
 	protected function _preSave()
 	{
 		$ban = $this->em()->findOne(ThreadReplyBan::class, [
@@ -37,7 +40,6 @@ class ThreadReplyBan extends Entity
 
 	protected function _postDelete()
 	{
-		/** @var UserAlertRepository $alertRepo */
 		$alertRepo = $this->repository(UserAlertRepository::class);
 		$alertRepo->fastDeleteAlertsToUser($this->user_id, 'thread', $this->thread_id, 'reply_ban');
 
@@ -47,6 +49,21 @@ class ThreadReplyBan extends Entity
 			'reply_ban_delete',
 			['name' => $this->User->username]
 		);
+	}
+
+	public function getContentContainerIdColumn(): string
+	{
+		return 'thread_id';
+	}
+
+	public function getContentContainerType(): string
+	{
+		return 'thread';
+	}
+
+	public function getContentDateColumn(): string
+	{
+		return 'ban_date';
 	}
 
 	public static function getStructure(Structure $structure)

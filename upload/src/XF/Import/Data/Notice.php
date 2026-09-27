@@ -59,7 +59,6 @@ class Notice extends AbstractEmulatedData
 
 	protected function postSave($oldId, $newId)
 	{
-		/** @var NoticeRepository $repo */
 		$repo = $this->repository(NoticeRepository::class);
 
 		\XF::runOnce('noticeCacheRebuild', function () use ($repo)

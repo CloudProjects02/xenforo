@@ -10,7 +10,6 @@ use XF\Entity\UserBan;
 use XF\Finder\BanEmailFinder;
 use XF\Finder\IpMatchFinder;
 use XF\Finder\UserBanFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 use XF\PrintableException;
 use XF\Util\Ip;
@@ -18,7 +17,7 @@ use XF\Util\Ip;
 class BanningRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return UserBanFinder
 	 */
 	public function findUserBansForList()
 	{
@@ -90,7 +89,7 @@ class BanningRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return BanEmailFinder
 	 */
 	public function findEmailBans()
 	{
@@ -148,7 +147,7 @@ class BanningRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return IpMatchFinder
 	 */
 	public function findIpMatchesByRange($start, $end)
 	{
@@ -158,7 +157,7 @@ class BanningRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return IpMatchFinder
 	 */
 	public function findIpBans()
 	{
@@ -207,7 +206,7 @@ class BanningRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return IpMatchFinder
 	 */
 	public function findDiscouragedIps()
 	{

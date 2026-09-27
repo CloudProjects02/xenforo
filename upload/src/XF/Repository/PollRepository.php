@@ -94,6 +94,21 @@ class PollRepository extends Repository
 			$this->rebuildPollData($poll->poll_id);
 		}
 
+		$pollHandler = $this->getPollHandler($poll->content_type, false);
+		if ($pollHandler)
+		{
+			$entity = $pollHandler->getContent($poll->content_id);
+			if ($entity)
+			{
+				$this->repository(WebhookRepository::class)->queueWebhook(
+					$poll->content_type,
+					$poll->content_id,
+					'poll_vote',
+					$entity
+				);
+			}
+		}
+
 		$db->commit();
 
 		return true;

@@ -8,6 +8,9 @@ use function strlen;
 
 trait CoverImageTrait
 {
+	/**
+	 * @param AbstractCollection<Attachment> $attachments
+	 */
 	protected function getCoverImageInternal(
 		AbstractCollection $attachments,
 		bool $canViewAttachments,
@@ -16,14 +19,9 @@ trait CoverImageTrait
 	): ?string
 	{
 		$attachments = $attachments->filter(
-			function (Attachment $attachment) use ($canViewAttachments): bool
+			function (Attachment $attachment): bool
 			{
-				if ($attachment->type_grouping !== 'image')
-				{
-					return false;
-				}
-
-				return $canViewAttachments || $attachment->hasThumbnail();
+				return $attachment->type_grouping === 'image';
 			}
 		);
 
@@ -33,16 +31,13 @@ trait CoverImageTrait
 		);
 		foreach ($embeddedAttachments AS $attachment)
 		{
-			/** @var Attachment $attachment */
-			$url = $canViewAttachments
-				? $attachment->getDirectUrl(true)
-				: $attachment->getThumbnailUrlFull();
+			$url = $attachment->getDirectUrl(true);
 			if (!$url)
 			{
 				continue;
 			}
 
-			return $url;
+			return $canViewAttachments ? $url : null;
 		}
 
 		if (preg_match(
@@ -77,21 +72,18 @@ trait CoverImageTrait
 
 		foreach ($attachments AS $attachment)
 		{
-			/** @var Attachment $attachment */
-			if ($embeddedAttachments[$attachment->attachment_id])
+			if ($embeddedAttachments[$attachment->attachment_id] ?? null)
 			{
 				continue;
 			}
 
-			$url = $canViewAttachments
-				? $attachment->getDirectUrl(true)
-				: $attachment->getThumbnailUrlFull();
+			$url = $attachment->getDirectUrl(true);
 			if (!$url)
 			{
 				continue;
 			}
 
-			return $url;
+			return $canViewAttachments ? $url : null;
 		}
 
 		return null;

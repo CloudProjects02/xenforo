@@ -450,4 +450,110 @@ class Str
 	{
 		return \XF::app()->data(\XF\Data\Str::class);
 	}
+
+	public static function toSnakeCase(string $value, string $delimiter = '_'): string
+	{
+		return strtolower(preg_replace('/(?<!^)[A-Z]/', $delimiter . '$0', $value));
+	}
+
+	/**
+	 * Converts an English plural word to its singular form.
+	 *
+	 * Handles common English plural patterns and a small set of irregular plurals.
+	 * Note: This is a best-effort implementation for common cases; edge cases may
+	 * not be handled correctly (e.g. "News", "Series" which are already singular).
+	 */
+	public static function singularize(string $name): string
+	{
+		static $irregulars = [
+			'children' => 'child',
+			'people' => 'person',
+			'men' => 'man',
+			'women' => 'woman',
+			'teeth' => 'tooth',
+			'feet' => 'foot',
+			'geese' => 'goose',
+			'mice' => 'mouse',
+			'media' => 'medium',
+			'data' => 'datum',
+			'criteria' => 'criterion',
+			'phenomena' => 'phenomenon',
+			'indices' => 'index',
+			'appendices' => 'appendix',
+			'matrices' => 'matrix',
+		];
+
+		$lower = strtolower($name);
+
+		if (isset($irregulars[$lower]))
+		{
+			$singular = $irregulars[$lower];
+
+			if ($name === strtoupper($name))
+			{
+				return strtoupper($singular);
+			}
+
+			if ($name[0] === strtoupper($name[0]))
+			{
+				return ucfirst($singular);
+			}
+
+			return $singular;
+		}
+
+		$length = strlen($name);
+
+		if ($length > 3 && substr($name, -3) === 'ies')
+		{
+			return substr($name, 0, -3) . 'y';
+		}
+
+		if ($length > 3 && substr($name, -3) === 'ves')
+		{
+			return substr($name, 0, -3) . 'f';
+		}
+
+		if ($length > 4 && substr($name, -4) === 'ches')
+		{
+			return substr($name, 0, -2);
+		}
+
+		if ($length > 4 && substr($name, -4) === 'shes')
+		{
+			return substr($name, 0, -2);
+		}
+
+		if ($length > 3 && substr($name, -3) === 'ses')
+		{
+			return substr($name, 0, -2);
+		}
+
+		if ($length > 3 && substr($name, -3) === 'xes')
+		{
+			return substr($name, 0, -2);
+		}
+
+		if ($length > 3 && substr($name, -3) === 'zes')
+		{
+			return substr($name, 0, -2);
+		}
+
+		if ($length > 3 && substr($name, -3) === 'oes')
+		{
+			return substr($name, 0, -2);
+		}
+
+		if ($length > 1 && substr($name, -2) === 'ss')
+		{
+			return $name;
+		}
+
+		if ($length > 1 && substr($name, -1) === 's')
+		{
+			return substr($name, 0, -1);
+		}
+
+		return $name;
+	}
 }

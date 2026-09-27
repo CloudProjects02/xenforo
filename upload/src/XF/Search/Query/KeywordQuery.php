@@ -2,6 +2,8 @@
 
 namespace XF\Search\Query;
 
+use XF\Util\Str;
+
 class KeywordQuery extends Query
 {
 	/**
@@ -28,6 +30,14 @@ class KeywordQuery extends Query
 	public function withKeywords($keywords, $titleOnly = false)
 	{
 		$this->keywords = trim($keywords);
+		if (Str::strlen($keywords) > 200)
+		{
+			$this->error(
+				'keywords',
+				\XF::phrase('search_could_not_be_completed_because_search_keywords_were_too')
+			);
+		}
+
 		$this->parsedKeywords = $this->search->getParsedKeywords($this->keywords, $error, $warning);
 		$this->titleOnly = (bool) $titleOnly;
 

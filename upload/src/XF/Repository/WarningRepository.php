@@ -7,7 +7,6 @@ use XF\Finder\WarningActionFinder;
 use XF\Finder\WarningActionTriggerFinder;
 use XF\Finder\WarningDefinitionFinder;
 use XF\Finder\WarningFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 use XF\Warning\AbstractHandler;
 
@@ -16,7 +15,7 @@ use function intval;
 class WarningRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return WarningDefinitionFinder
 	 */
 	public function findWarningDefinitionsForList()
 	{
@@ -24,7 +23,7 @@ class WarningRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return WarningActionFinder
 	 */
 	public function findWarningActionsForList()
 	{
@@ -32,7 +31,7 @@ class WarningRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return WarningFinder
 	 */
 	public function findUserWarningsForList($userId)
 	{

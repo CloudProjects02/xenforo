@@ -5,6 +5,7 @@ namespace XF\Entity;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XF\Repository\OAuthRepository;
+use XF\Validator\Url;
 
 /**
  * COLUMNS
@@ -15,8 +16,8 @@ use XF\Repository\OAuthRepository;
  * @property string $description
  * @property string $image_url
  * @property string $homepage_url
- * @property array $redirect_uris
- * @property array $allowed_scopes
+ * @property array|null $redirect_uris
+ * @property array|null $allowed_scopes
  * @property bool $active
  * @property int $creation_user_id
  * @property int $creation_date
@@ -77,6 +78,26 @@ class OAuthClient extends Entity
 		return \XF::generateRandomString(32);
 	}
 
+	protected function verifyRedirectUris(&$value): bool
+	{
+		$urlValidator = \XF::app()->validator(Url::class);
+
+		foreach ($value AS &$uri)
+		{
+			$uri = $urlValidator->coerceValue($uri);
+			if (!$urlValidator->isValid($uri, $error))
+			{
+				$this->error(
+					\XF::phrase('please_enter_valid_redirect_uris'),
+					'redirect_uris'
+				);
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	protected function _preSave(): void
 	{
 		if ($this->isInsert())
@@ -123,13 +144,13 @@ class OAuthClient extends Entity
 			'client_type' => ['type' => self::STR, 'default' => 'confidential',
 				'allowedValues' => ['confidential', 'public'],
 			],
-			'title' => ['type' => self::STR, 'required' => true, 'maxLength' => 50],
+			'title' => ['type' => self::STR, 'required' => 'please_enter_valid_title', 'maxLength' => 50],
 			'description' => ['type' => self::STR, 'default' => ''],
 			'image_url' => ['type' => self::STR, 'default' => '', 'maxLength' => 200],
 			'homepage_url' => ['type' => self::STR, 'default' => '',
 				'match' => self::MATCH_URL_EMPTY, 'maxLength' => 200,
 			],
-			'redirect_uris' => ['type' => self::JSON_ARRAY, 'required' => true, 'default' => []],
+			'redirect_uris' => ['type' => self::JSON_ARRAY, 'required' => 'please_enter_valid_redirect_uris', 'default' => []],
 			'allowed_scopes' => ['type' => self::JSON_ARRAY, 'default' => []],
 			'active' => ['type' => self::BOOL, 'default' => true],
 			'creation_user_id' => ['type' => self::UINT, 'default' => 0],

@@ -63,6 +63,11 @@ class Definition implements \ArrayAccess
 				break;
 
 			case 'multiple':
+				if (!is_array($value))
+				{
+					$value = '';
+					break;
+				}
 				foreach ($value AS $key => &$phrase)
 				{
 					$phrase = $this->field_choices[$key];
@@ -331,6 +336,11 @@ class Definition implements \ArrayAccess
 
 		foreach ($value AS $key => $choice)
 		{
+			if (is_array($choice))
+			{
+				continue;
+			}
+
 			$choice = strval($choice);
 			if (isset($this->field_choices[$choice]))
 			{

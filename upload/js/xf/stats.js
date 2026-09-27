@@ -26,7 +26,7 @@
 		{
 			this.chartEl = XF.findRelativeIf(this.options.chart, this.target)
 
-			let data = {}
+			let data
 			const dataEl = XF.findRelativeIf(this.options.data, this.target)
 			let seriesLabels = {}
 			const seriesLabelsEl = XF.findRelativeIf(this.options.seriesLabels, this.target)

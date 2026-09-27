@@ -3,16 +3,18 @@
 namespace XF\Payment;
 
 use GuzzleHttp\Exception\BadResponseException;
+use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\ResponseInterface;
 use XF\Entity\PaymentProfile;
 use XF\Entity\PurchaseRequest;
+use XF\Finder\PaymentProviderLogFinder;
 use XF\Http\Request;
 use XF\Mvc\Controller;
 use XF\Mvc\Reply\AbstractReply;
 use XF\PrintableException;
 use XF\Purchasable\Purchase;
 
-use function in_array;
+use function in_array, is_array;
 
 class PayPalRest extends AbstractProvider
 {
@@ -28,6 +30,11 @@ class PayPalRest extends AbstractProvider
 			'events' => $this->getActionableEvents(),
 		];
 		return \XF::app()->templater()->renderTemplate('admin:payment_profile_' . $this->providerId, $data);
+	}
+
+	public function renderCancellationTemplate(PurchaseRequest $purchaseRequest): string
+	{
+		return $this->renderCancellationDefault($purchaseRequest);
 	}
 
 	public function getApiEndpoint(): string
@@ -226,6 +233,80 @@ class PayPalRest extends AbstractProvider
 		return $accessToken;
 	}
 
+	protected function getProviderMetadata(PurchaseRequest $purchaseRequest): array
+	{
+		$providerMetadata = json_decode($purchaseRequest->provider_metadata ?? '[]', true);
+		if (is_array($providerMetadata))
+		{
+			return $providerMetadata;
+		}
+		return [];
+	}
+
+	protected function getSubscriberIdFromPurchaseRequest(PurchaseRequest $purchaseRequest): ?string
+	{
+		$providerMetadata = $this->getProviderMetadata($purchaseRequest);
+
+		if (isset($providerMetadata['subscription']))
+		{
+			return $providerMetadata['subscription'];
+		}
+
+		$logFinder = \XF::finder(PaymentProviderLogFinder::class)
+			->where('purchase_request_key', $purchaseRequest->request_key)
+			->where('provider_id', $this->providerId)
+			->where('subscriber_id', 'LIKE', 'I-%')
+			->order('log_date', 'desc');
+
+		$log = $logFinder->fetchOne();
+
+		return $log->subscriber_id ?? null;
+	}
+
+	public function processCancellation(
+		Controller $controller,
+		PurchaseRequest $purchaseRequest,
+		PaymentProfile $paymentProfile
+	): AbstractReply
+	{
+		$subscriberId = $this->getSubscriberIdFromPurchaseRequest($purchaseRequest);
+
+		if (!$subscriberId)
+		{
+			return $controller->error(\XF::phrase('could_not_find_subscriber_id_for_this_purchase_request'));
+		}
+
+		$options = $paymentProfile->options;
+		$accessToken = $this->assertAccessToken($options['client_id'], $options['secret_key']);
+
+		$errors = [];
+		$this->makePayPalRequest(
+			'post',
+			"v1/billing/subscriptions/{$subscriberId}/cancel",
+			['json' => ['reason' => 'Cancelled by user']],
+			$accessToken,
+			$errors
+		);
+
+		if ($errors)
+		{
+			throw $controller->exception($controller->error(
+				\XF::phrase('this_subscription_cannot_be_cancelled_maybe_already_cancelled')
+			));
+		}
+
+		$purchasable = $purchaseRequest->Purchasable;
+		if ($purchasable && $purchasable->handler)
+		{
+			$purchasable->handler->processCancellation($purchaseRequest);
+		}
+
+		return $controller->redirect(
+			$controller->getDynamicRedirect(),
+			\XF::phrase('paypal_subscription_cancelled_successfully')
+		);
+	}
+
 	protected function getSubscriptionParams(string $planId, PurchaseRequest $purchaseRequest, Purchase $purchase): array
 	{
 		return [
@@ -266,28 +347,11 @@ class PayPalRest extends AbstractProvider
 		];
 	}
 
-	public function getPlanByProductId(Purchase $purchase, string $productId): array
+	protected function getPlanParams(string $productId, Purchase $purchase): array
 	{
-		$paymentProfile = $purchase->paymentProfile;
-		$options = $paymentProfile->options;
-
-		$accessToken = $this->assertAccessToken($options['client_id'], $options['secret_key']);
-		$planDetails = $this->makePayPalRequest('get', 'v1/billing/plans', [
-			'json' => [
-				'product_id' => $productId,
-				'page_size' => 1,
-			],
-		], $accessToken);
-
-		$plan = reset($planDetails['plans']);
-		if (isset($plan['id']))
-		{
-			return $plan;
-		}
-
-		$params = [
+		return [
 			'product_id' => $productId,
-			'name' => substr($purchase->title, 0, 127),
+			'name' => substr($purchase->purchasableTitle, 0, 127),
 			'status' => 'ACTIVE',
 			'billing_cycles' => [
 				[
@@ -310,9 +374,55 @@ class PayPalRest extends AbstractProvider
 				'payment_failure_threshold' => 2,
 			],
 		];
+	}
+
+	public function getPlanByProductId(Purchase $purchase, string $productId): array
+	{
+		$paymentProfile = $purchase->paymentProfile;
+		$options = $paymentProfile->options;
+
+		$accessToken = $this->assertAccessToken($options['client_id'], $options['secret_key']);
+		$planDetails = $this->makePayPalRequest('get', 'v1/billing/plans', [
+			'query' => [
+				'product_id' => $productId,
+				'page_size' => 1,
+			],
+		], $accessToken);
+
+		$plan = reset($planDetails['plans']);
+		if (isset($plan['id']))
+		{
+			if ($plan['name'] !== substr($purchase->purchasableTitle, 0, 127))
+			{
+				$patchData = [
+					[
+						'op' => 'replace',
+						'path' => '/name',
+						'value' => substr($purchase->purchasableTitle, 0, 127),
+					],
+				];
+
+				$this->makePayPalRequest(
+					'patch',
+					"v1/billing/plans/{$plan['id']}",
+					['json' => $patchData],
+					$accessToken
+				);
+
+				$planDetails = $this->makePayPalRequest('get', 'v1/billing/plans', [
+					'query' => [
+						'product_id' => $productId,
+						'page_size' => 1,
+					],
+				], $accessToken);
+				$plan = reset($planDetails['plans']);
+			}
+
+			return $plan;
+		}
 
 		$plan = $this->makePayPalRequest('post', 'v1/billing/plans', [
-			'json' => $params,
+			'json' => $this->getPlanParams($productId, $purchase),
 		], $accessToken, $errors);
 
 		if ($errors)
@@ -331,15 +441,36 @@ class PayPalRest extends AbstractProvider
 
 		$accessToken = $this->assertAccessToken($options['client_id'], $options['secret_key']);
 		$productDetails = $this->makePayPalRequest('get', "v1/catalogs/products/$productId", [], $accessToken);
+
 		if (isset($productDetails['id']))
 		{
+			if ($productDetails['name'] !== $purchase->purchasableTitle)
+			{
+				$patchData = [
+					[
+						'op' => 'replace',
+						'path' => '/name',
+						'value' => $purchase->purchasableTitle,
+					],
+				];
+
+				$this->makePayPalRequest(
+					'patch',
+					"v1/catalogs/products/$productId",
+					['json' => $patchData],
+					$accessToken
+				);
+
+				$productDetails = $this->makePayPalRequest('get', "v1/catalogs/products/$productId", [], $accessToken);
+			}
+
 			return $productDetails;
 		}
 
 		$productDetails = $this->makePayPalRequest('post', 'v1/catalogs/products', [
 			'json' => [
 				'id' => $productId,
-				'name' => $purchase->title,
+				'name' => $purchase->purchasableTitle,
 				'type' => 'DIGITAL',
 				'category' => 'MISCELLANEOUS_GENERAL_SERVICES',
 			],
@@ -549,8 +680,8 @@ class PayPalRest extends AbstractProvider
 	{
 		if (!extension_loaded('openssl'))
 		{
-			\XF::logError('PayPal REST webhook signature verification requires the openssl extension. Signature verification will be skipped.');
-			return true;
+			\XF::logError('PayPal REST webhook signature verification requires the openssl extension. Rejecting callback.');
+			return false;
 		}
 
 		$webhookBody = $state->webhookBody;
@@ -564,8 +695,12 @@ class PayPalRest extends AbstractProvider
 
 		if (!in_array($algo, openssl_get_md_methods(true)))
 		{
-			\XF::logError("PayPal REST webhook signature verification requires the $algo hashing algorithm. Signature verification will be skipped.");
-			return true;
+			\XF::logError(
+				"PayPal REST webhook signature verification requires the "
+				. ($webhookHeaders['auth_algo'] ?? '(missing)')
+				. " hashing algorithm. Rejecting callback."
+			);
+			return false;
 		}
 
 		$cert = $this->fetchWebhookCert($state);
@@ -597,20 +732,83 @@ class PayPalRest extends AbstractProvider
 
 	protected function fetchWebhookCert(CallbackState $state): ?string
 	{
-		$reader = \XF::app()->http()->reader();
-		$certUrl = $state->webhookHeaders['cert_url'];
-
-		$response = $reader->get($certUrl);
-		if (!$response)
+		$certUrl = $state->webhookHeaders['cert_url'] ?: '';
+		if (!$certUrl)
 		{
+			\XF::logError('PayPal REST webhook: missing certificate URL');
+			return null;
+		}
+
+		try
+		{
+			$initialUri = new Uri($certUrl);
+		}
+		catch (\InvalidArgumentException $e)
+		{
+			\XF::logError('PayPal REST webhook: rejecting certificate URL ' . $certUrl);
+			return null;
+		}
+
+		if (!$this->isValidWebhookCertUri($initialUri))
+		{
+			\XF::logError('PayPal REST webhook: rejecting certificate URL ' . $certUrl);
+			return null;
+		}
+
+		$reader = \XF::app()->http()->reader();
+		$response = $reader->getUntrusted($certUrl);
+
+		try
+		{
+			$finalUri = new Uri($reader->getLastLocation() ?: $certUrl);
+		}
+		catch (\InvalidArgumentException $e)
+		{
+			$finalUri = null;
+		}
+
+		if (!$response || $finalUri === null || !$this->isValidWebhookCertUri($finalUri))
+		{
+			\XF::logError('PayPal REST webhook: rejecting certificate URL ' . $certUrl);
 			return null;
 		}
 
 		return $response->getBody()->getContents();
 	}
 
+	protected function isValidWebhookCertUri(Uri $uri): bool
+	{
+		if ($uri->getScheme() !== 'https')
+		{
+			return false;
+		}
+
+		$port = $uri->getPort();
+		if ($port !== null && $port !== 443)
+		{
+			return false;
+		}
+
+		if ($uri->getUserInfo() !== '')
+		{
+			return false;
+		}
+
+		$host = strtolower($uri->getHost());
+
+		return (
+			$host === 'paypal.com'
+			|| substr($host, -11) === '.paypal.com'
+		);
+	}
+
 	public function validateTransaction(CallbackState $state): bool
 	{
+		if (!$this->isDisputeEvent($state) && !parent::validateTransaction($state))
+		{
+			return false;
+		}
+
 		if (!$state->requestKey)
 		{
 			$state->logType = 'info';
@@ -633,6 +831,14 @@ class PayPalRest extends AbstractProvider
 		}
 
 		return true;
+	}
+
+	protected function isDisputeEvent(CallbackState $state): bool
+	{
+		return (
+			$state->eventType === 'CUSTOMER.DISPUTE.CREATED'
+			|| $state->eventType === 'CUSTOMER.DISPUTE.RESOLVED'
+		);
 	}
 
 	public function validatePurchaseRequest(CallbackState $state): bool

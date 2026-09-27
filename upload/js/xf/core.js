@@ -70,6 +70,17 @@
 		return target
 	}
 
+	/**
+	 * @param {string} tagName
+	 * @param {{}} properties
+	 * @param {object} properties.properties
+	 * @param {object} properties.attributes
+	 * @param {object} properties.dataset
+	 * @param {object} properties.style
+	 * @param {HTMLElement} parent
+	 *
+	 * @return {HTMLElement}
+	 */
 	XF.createElement = (tagName, properties = {}, parent = null) =>
 	{
 		const element = document.createElement(tagName)
@@ -116,11 +127,11 @@
 
 		let element
 
-		if (DOM.children.length > 1)
+		if (DOM.childNodes.length > 1)
 		{
 			const container = document.createElement('div')
 			container.classList.add('js-createdContainer')
-			container.append(...DOM.children)
+			container.append(...DOM.childNodes)
 			element = container
 		}
 		else
@@ -324,39 +335,40 @@
 			const namespacedEvent = eventObject.type
 			const [event, namespace = 'default'] = namespacedEvent.split('.')
 
-			if (!XF.eventHandlers[namespace] || !XF.eventHandlers[namespace][event])
-			{
-				return !(event.cancelable && event.defaultPrevented)
-			}
-
 			if (namespace === 'default')
 			{
+				// always dispatch — namespaced listeners are attached via addEventListener under
+				// the base event name, so they must receive plain triggers despite not appearing
+				// in the default-namespace registry
 				return element.dispatchEvent(eventObject)
 			}
-			else
+
+			if (!XF.eventHandlers[namespace] || !XF.eventHandlers[namespace][event])
 			{
-				XF.eventHandlers[namespace][event].forEach(handlerData =>
-				{
-					if (element === handlerData.element)
-					{
-						const { handler, options } = handlerData
-
-						if (options.once)
-						{
-							XF.off(element, namespacedEvent, handler, options)
-						}
-
-						handler.call(element, eventObject)
-
-						if (options.passive && eventObject.defaultPrevented)
-						{
-							console.warn('preventDefault() was called on a namespaced passive event listener and this is not supported.')
-						}
-					}
-				})
-
-				return !(event.cancelable && event.defaultPrevented)
+				return !(eventObject.cancelable && eventObject.defaultPrevented)
 			}
+
+			XF.eventHandlers[namespace][event].forEach(handlerData =>
+			{
+				if (element === handlerData.element)
+				{
+					const { handler, options } = handlerData
+
+					if (options.once)
+					{
+						XF.off(element, namespacedEvent, handler, options)
+					}
+
+					handler.call(element, eventObject)
+
+					if (options.passive && eventObject.defaultPrevented)
+					{
+						console.warn('preventDefault() was called on a namespaced passive event listener and this is not supported.')
+					}
+				}
+			})
+
+			return !(eventObject.cancelable && eventObject.defaultPrevented)
 		},
 
 		/**
@@ -1516,10 +1528,6 @@
 				{
 					el.outerHTML = `<div>[QUOTE]${ quote.innerHTML }[/QUOTE]</div>`
 				}
-				else
-				{
-					quote.querySelector('.bbCodeBlock-expand').remove()
-				}
 			})
 
 			// now for PHP, CODE and HTML
@@ -1534,9 +1542,9 @@
 				const cl = code.className, match = cl ? cl.match(/language-(\S+)/) : null,
 					language = match ? match[1] : null
 
+				code.setAttribute('data-language', language || 'none')
 				code.removeAttribute('class')
 				el.outerHTML = code.outerHTML
-				code.setAttribute('data-language', language || 'none')
 			})
 
 			// handle [URL unfurl=true] tags
@@ -1589,6 +1597,11 @@
 			{
 				const spoilerText = el.innerHTML
 				el.outerHTML = `[ISPOILER]${ spoilerText }[/ISPOILER]`
+			})
+
+			div.querySelectorAll('.bbPlain').forEach(el =>
+			{
+				el.outerHTML = `[PLAIN]${ XF.htmlspecialchars(el.textContent) }[/PLAIN]`
 			})
 
 			return div.innerHTML
@@ -1905,7 +1918,36 @@
 				}
 				else
 				{
-					body = JSON.stringify(data)
+					function makeJsonSafe(value)
+					{
+						if (value instanceof Map) // Convert Map to a plain object
+						{
+							return Object.fromEntries([...value.entries()].map(([k, v]) => [k, makeJsonSafe(v)]))
+						}
+						else if (value instanceof Set) // Convert Set to an array
+						{
+							return [...value].map(makeJsonSafe)
+						}
+						else if (Array.isArray(value)) // Recursively process arrays
+						{
+							return value.map(makeJsonSafe)
+						}
+						else if (value && typeof value === 'object') // Recursively process plain objects
+						{
+							const result = {}
+							for (const [key, val] of Object.entries(value))
+							{
+								result[key] = makeJsonSafe(val)
+							}
+							return result
+						}
+						else // Primitive values (number, string, boolean, null, undefined)
+						{
+							return value
+						}
+					}
+
+					body = JSON.stringify(makeJsonSafe(data))
 					headers['Content-Type'] = 'application/json'
 				}
 			}
@@ -1968,12 +2010,22 @@
 				{
 					data = await response.text()
 
+					let success = false
 					try
 					{
 						data = JSON.parse(data)
-						onSuccess(request, response, data)
+						success = true
 					}
 					catch
+					{
+						// handled below
+					}
+
+					if (success)
+					{
+						onSuccess(request, response, data)
+					}
+					else
 					{
 						onError(request, response, data)
 					}
@@ -2126,7 +2178,7 @@
 				throw error
 			}
 
-			console.error('Error: ' + data)
+			console.error('Error:', data)
 			XF.alert(XF.phrase('oops_we_ran_into_some_problems_more_details_console'))
 		},
 
@@ -2597,7 +2649,6 @@
 
 			if (typeof content === 'object' && content.constructor === Object)
 			{
-				options = XF.extendObject(options, content)
 				if (content.html)
 				{
 					content = content.html
@@ -2717,7 +2768,7 @@
 			string = string.toString()
 			for (const key of Object.keys(pairs))
 			{
-				const regex = new RegExp(XF.regexQuote(key, 'g'))
+				const regex = new RegExp(XF.regexQuote(key), 'g')
 				string = string.replace(regex, pairs[key])
 			}
 			return string
@@ -2786,6 +2837,29 @@
 			}
 
 			url = XF.canonicalizeUrl(url)
+			if (url === false)
+			{
+				XF.isRedirecting = false
+				return false
+			}
+
+			try
+			{
+				url = new URL(url, window.location.href)
+			}
+			catch (e)
+			{
+				XF.isRedirecting = false
+				return false
+			}
+
+			if (url.protocol !== 'http:' && url.protocol !== 'https:')
+			{
+				XF.isRedirecting = false
+				return false
+			}
+
+			url = url.href
 
 			const location = window.location
 
@@ -3487,14 +3561,21 @@
 				{
 					const t = window.twttr || {}
 
-					if (XF.loadScript('https://platform.twitter.com/widgets.js'))
+					XF.loadScript('https://platform.twitter.com/widgets.js', () =>
 					{
 						t._e = []
-						t.ready = f =>
+						t.ready = function(f)
 						{
 							t._e.push(f)
 						}
-					}
+
+						XF.on(document, 'embed:loaded', () =>
+						{
+							const tweets = document.querySelectorAll('blockquote.twitter-tweet')
+							tweets.forEach(tweet => t.widgets.load(tweet))
+						})
+					})
+
 					return t
 				})())
 
@@ -3585,6 +3666,19 @@
 					XF.on(document, 'xf:reinit', e =>
 					{
 						PinUtils.build(e.target)
+					})
+				})
+
+				return true
+			},
+
+			bluesky: () =>
+			{
+				XF.loadScript('https://embed.bsky.app/static/embed.js', () =>
+				{
+					XF.on(document, 'embed:loaded', () =>
+					{
+						window?.bluesky?.scan()
 					})
 				})
 
@@ -3884,7 +3978,6 @@
 			}
 			else if (typeof scrollTo === 'number')
 			{
-				content = null
 				top = scrollTo
 			}
 
@@ -4313,6 +4406,12 @@
 			if (!enabled)
 			{
 				options.speed = 0
+			}
+
+			if (!(element instanceof Element))
+			{
+				options.complete()
+				return
 			}
 
 			let data = options.start(element)
@@ -6145,48 +6244,49 @@
 
 		const updateMenu = (icon) =>
 		{
-			const menu = document.querySelector('.js-styleVariationsMenu')
-			if (menu)
+			const menus = document.querySelectorAll('.js-styleVariationsMenu')
+			for (const menu of menus)
 			{
 				XF.trigger(menu, 'menu:close')
 			}
 
-			const menuLink = document.querySelector('.js-styleVariationsLink')
-			if (!menuLink || !icon)
+			if (!icon)
 			{
 				return
 			}
 
-			const menuIcon = menuLink.querySelector('i.fa--xf')
-			if (!menuIcon)
+			const menuLinks = document.querySelectorAll('.js-styleVariationsLink')
+			for (const menuLink of menuLinks)
 			{
-				return
-			}
+				const menuIcon = menuLink.querySelector('i.fa--xf')
+				if (!menuIcon)
+				{
+					continue
+				}
 
-			const newIcon = XF.createElementFromString(
-				XF.Icon.getIcon('default', icon)
-			)
-			menuIcon.replaceWith(newIcon)
+				const newIcon = XF.createElementFromString(
+					XF.Icon.getIcon('default', icon)
+				)
+				menuIcon.replaceWith(newIcon)
+			}
 		}
 
 		const updateMenuSelection = (variation) =>
 		{
-			const menu = document.querySelector('.js-styleVariationsMenu')
-			if (!menu)
+			const menus = document.querySelectorAll('.js-styleVariationsMenu')
+			for (const menu of menus)
 			{
-				return
-			}
-
-			const rows = menu.querySelectorAll('.menu-linkRow')
-			for (const row of rows)
-			{
-				if (row.dataset.variation === variation)
+				const rows = menu.querySelectorAll('.menu-linkRow')
+				for (const row of rows)
 				{
-					row.classList.add('is-selected')
-				}
-				else
-				{
-					row.classList.remove('is-selected')
+					if (row.dataset.variation === variation)
+					{
+						row.classList.add('is-selected')
+					}
+					else
+					{
+						row.classList.remove('is-selected')
+					}
 				}
 			}
 		}
@@ -7288,8 +7388,8 @@
 		{
 			if (window.location.hash)
 			{
-				const cleanedHash = window.location.hash.replace(/[^\w_#-]/g, '')
-				if (cleanedHash === '#')
+				const cleanedHash = window.location.hash.replace(/[^\w_-]/g, '')
+				if (cleanedHash === '')
 				{
 					return
 				}
@@ -9452,8 +9552,10 @@
 	XF.UnfurlLoader = (() =>
 	{
 		let unfurlIds = []
+		let unfurlTokens = []
 		let pending = false
 		let pendingIds = []
+		let pendingTokens = []
 
 		const activateContainer = container =>
 		{
@@ -9476,13 +9578,16 @@
 				XF.DataStore.set(unfurl, 'pending-seen', true)
 
 				const id = unfurl.dataset.resultId
+				const token = unfurl.dataset.resultToken || ''
 				if (pending)
 				{
 					pendingIds.push(id)
+					pendingTokens.push(token)
 				}
 				else
 				{
 					unfurlIds.push(id)
+					unfurlTokens.push(token)
 				}
 			})
 
@@ -9551,7 +9656,7 @@
 							'Content-Type': 'application/json',
 							'X-Requested-With': 'XMLHttpRequest',
 						},
-						body: JSON.stringify({ result_ids: unfurlIds }),
+						body: JSON.stringify({ result_ids: unfurlIds, result_tokens: unfurlTokens }),
 						cache: 'no-store',
 					},
 				)
@@ -9565,12 +9670,15 @@
 			finally
 			{
 				unfurlIds = []
+				unfurlTokens = []
 				pending = false
 
 				if (pendingIds)
 				{
 					unfurlIds = pendingIds
+					unfurlTokens = pendingTokens
 					pendingIds = []
+					pendingTokens = []
 					setTimeout(unfurl, 0)
 				}
 			}
@@ -10115,7 +10223,7 @@
 			const listItem = XF.createElement('li', {
 				unselectable: 'on',
 				role: 'option',
-				style: { cursor: 'pointer' }
+				dataset: { id: result.id }
 			})
 
 			listItem.innerHTML = Mustache.render(
@@ -10910,7 +11018,7 @@
 	XF.pageDisplayTime = Date.now()
 
 	// defer onload callback until the config object is available
-	XF.on(window, 'DOMContentLoaded', () => setTimeout(XF.onPageLoad, 0))
+	XF.ready(XF.onPageLoad)
 
 	XF.on(window, 'pageshow', () =>
 	{

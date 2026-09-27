@@ -9,6 +9,16 @@ use function intval;
 
 class Imap extends \Laminas\Mail\Storage\Imap
 {
+	/**
+	 * @param array{
+	 *     host: string,
+	 *     port: int|string|null,
+	 *     encryption: string|null,
+	 *     username: string,
+	 *     password: string,
+	 *     oauth?: bool
+	 * } $handler
+	 */
 	public static function setupFromHandler(array $handler): self
 	{
 		$config = [
@@ -21,7 +31,7 @@ class Imap extends \Laminas\Mail\Storage\Imap
 
 		if (!empty($handler['oauth']))
 		{
-			/** @var array|OAuthImap $protocol */
+			/** @var OAuthImap $protocol */
 			$protocol = new OAuthImap($config['host'], $config['port'], $config['ssl']);
 		}
 		else

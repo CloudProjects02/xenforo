@@ -2,16 +2,17 @@
 
 namespace XF\Finder;
 
+use XF\Entity\Report;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Finder;
 
 use function is_array;
 
 /**
- * @method AbstractCollection<\XF\Entity\Report> fetch(?int $limit = null, ?int $offset = null)
- * @method AbstractCollection<\XF\Entity\Report> fetchDeferred(?int $limit = null, ?int $offset = null)
- * @method \XF\Entity\Report|null fetchOne(?int $offset = null)
- * @extends Finder<\XF\Entity\Report>
+ * @method AbstractCollection<Report> fetch(?int $limit = null, ?int $offset = null)
+ * @method AbstractCollection<Report> fetchDeferred(?int $limit = null, ?int $offset = null)
+ * @method Report|null fetchOne(?int $offset = null)
+ * @extends Finder<Report>
  */
 class ReportFinder extends Finder
 {

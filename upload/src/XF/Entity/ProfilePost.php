@@ -4,7 +4,7 @@ namespace XF\Entity;
 
 use XF\Api\Result\EntityResult;
 use XF\BbCode\RenderableContentInterface;
-use XF\Mvc\Entity\ArrayCollection;
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XF\Repository\AttachmentRepository;
@@ -28,15 +28,15 @@ use XF\Spam\ContentChecker;
  * @property int $comment_count
  * @property int $first_comment_date
  * @property int $last_comment_date
- * @property array $latest_comment_ids
+ * @property array|null $latest_comment_ids
  * @property array|null $embed_metadata
  * @property int $reaction_score
- * @property array $reactions_
- * @property array $reaction_users_
+ * @property array|null $reactions_
+ * @property array|null $reaction_users_
  *
  * GETTERS
  * @property-read array $comment_ids
- * @property-read ArrayCollection|null $LatestComments
+ * @property-read AbstractCollection<ProfilePostComment> $LatestComments
  * @property-read mixed $Unfurls
  * @property mixed $reactions
  * @property mixed $reaction_users
@@ -47,9 +47,9 @@ use XF\Spam\ContentChecker;
  * @property-read User|null $User
  * @property-read DeletionLog|null $DeletionLog
  * @property-read ApprovalQueue|null $ApprovalQueue
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\ProfilePostComment> $Comments
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\Attachment> $Attachments
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\ReactionContent> $Reactions
+ * @property-read AbstractCollection<ProfilePostComment> $Comments
+ * @property-read AbstractCollection<Attachment> $Attachments
+ * @property-read AbstractCollection<ReactionContent> $Reactions
  */
 class ProfilePost extends Entity implements RenderableContentInterface, LinkableInterface, ViewableInterface, ContainableInterface, DatableInterface
 {
@@ -171,8 +171,7 @@ class ProfilePost extends Entity implements RenderableContentInterface, Linkable
 				$visitor->user_id == $this->profile_user_id
 				&& $visitor->hasPermission('profilePost', 'manageOwn')
 			)
-			||
-			(
+			|| (
 				$visitor->user_id == $this->user_id
 				&& $visitor->hasPermission('profilePost', 'deleteOwn')
 			)
@@ -390,7 +389,7 @@ class ProfilePost extends Entity implements RenderableContentInterface, Linkable
 	}
 
 	/**
-	 * @return ArrayCollection|null
+	 * @return AbstractCollection<ProfilePostComment>
 	 */
 	public function getLatestComments()
 	{
@@ -637,7 +636,6 @@ class ProfilePost extends Entity implements RenderableContentInterface, Linkable
 
 	protected function profilePostHidden($hardDelete = false)
 	{
-		/** @var UserAlertRepository $alertRepo */
 		$alertRepo = $this->repository(UserAlertRepository::class);
 		$alertRepo->fastDeleteAlertsForContent('profile_post', $this->profile_post_id);
 		$alertRepo->fastDeleteAlertsForContent('profile_post_comment', $this->comment_ids);
@@ -672,7 +670,6 @@ class ProfilePost extends Entity implements RenderableContentInterface, Linkable
 			$this->app()->logger()->logModeratorAction('profile_post', $this, 'delete_hard');
 		}
 
-		/** @var AttachmentRepository $attachRepo */
 		$attachRepo = $this->repository(AttachmentRepository::class);
 		$attachRepo->fastDeleteContentAttachments('profile_post', $this->profile_post_id);
 

@@ -5,6 +5,8 @@ namespace XF\Template\Compiler\Syntax;
 use XF\Template\Compiler;
 use XF\Util\Php;
 
+use function count;
+
 class Variable extends AbstractSyntax
 {
 	public $name = '';
@@ -55,7 +57,7 @@ class Variable extends AbstractSyntax
 					/** @var Func $syntax */
 					$var = implode('', $code);
 
-					if (!$this->isFunctionCallAllowed($syntax->name))
+					if (!$this->isFunctionCallAllowed($syntax->name, count($syntax->arguments)))
 					{
 						throw $this->exception(\XF::phrase('function_x_may_not_be_called_in_template', ['name' => $syntax->name]));
 					}
@@ -91,9 +93,15 @@ class Variable extends AbstractSyntax
 		}
 	}
 
-	protected function isFunctionCallAllowed($name)
+	/**
+	 * @param string $name
+	 * @param int $argumentCount
+	 *
+	 * @return bool
+	 */
+	protected function isFunctionCallAllowed($name, $argumentCount = 0)
 	{
-		return Php::nameIndicatesReadOnly($name);
+		return Php::nameIndicatesReadOnly($name, $argumentCount);
 	}
 
 	public function compileToVarContainer($targetVar, Compiler $compiler, array $context, $inlineExpected)

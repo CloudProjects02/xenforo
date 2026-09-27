@@ -5,7 +5,6 @@ namespace XF\Webhook\Criteria;
 use XF\App;
 use XF\Util\Arr;
 use XF\Util\Php;
-
 use XF\Util\Str;
 
 use function is_array;

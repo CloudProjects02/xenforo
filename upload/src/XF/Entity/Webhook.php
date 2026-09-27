@@ -18,8 +18,8 @@ use function count;
  * @property string $secret
  * @property string $content_type
  * @property bool $ssl_verify
- * @property array $events
- * @property array $criteria
+ * @property array|null $events
+ * @property array|null $criteria
  * @property bool $active
  * @property int $creation_date
  *

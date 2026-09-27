@@ -10,7 +10,6 @@ use XF\Job\StyleAssetRebuild;
 use XF\Job\StylePropertyRebuild;
 use XF\Job\TemplateRebuild;
 use XF\Mvc\Entity\AbstractCollection;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 use XF\Service\Style\AssetRebuildService;
 use XF\Service\StyleProperty\RebuildService;
@@ -19,7 +18,7 @@ use XF\Tree;
 class StyleRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return StyleFinder
 	 */
 	public function findStyles()
 	{
@@ -53,6 +52,27 @@ class StyleRepository extends Repository
 			}
 		}
 		return $styles;
+	}
+
+	public function getSelectedStyleIdForUser(?User $user = null): int
+	{
+		$user = $user ?? \XF::visitor();
+
+		$styleId = $user->style_id !== 0
+			? $user->style_id
+			: (int) \XF::options()->defaultStyleId;
+
+		$styles = \XF::app()->container('style.cache');
+		$selectedStyle = $styles[$styleId] ?? null;
+		if (
+			!$selectedStyle
+			|| !$selectedStyle['user_selectable'] && !$user->is_admin
+		)
+		{
+			$styleId = (int) \XF::options()->defaultStyleId;
+		}
+
+		return $styleId;
 	}
 
 	/**

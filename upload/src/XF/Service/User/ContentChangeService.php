@@ -25,6 +25,8 @@ class ContentChangeService extends AbstractService
 	protected $newUserId = null;
 	protected $newUserName = null;
 
+	protected $deleteTargetUserName = null;
+
 	protected $steps = [
 		'stepReassignContent',
 		'stepMergeThreadUserPost',
@@ -173,10 +175,17 @@ class ContentChangeService extends AbstractService
 		return $this->newUserName;
 	}
 
+	public function setDeleteTargetUserName($username)
+	{
+		$this->deleteTargetUserName = $username;
+
+		return $this;
+	}
+
 	public function setupForDelete()
 	{
 		$this->newUserId = 0;
-		$this->newUserName = $this->originalUserName; // ensure the values are correct
+		$this->newUserName = $this->deleteTargetUserName ?: $this->originalUserName;
 
 		return $this;
 	}
@@ -205,6 +214,9 @@ class ContentChangeService extends AbstractService
 		return $this;
 	}
 
+	/**
+	 * @return list<string>
+	 */
 	protected function getSteps()
 	{
 		$steps = $this->steps;
@@ -322,7 +334,6 @@ class ContentChangeService extends AbstractService
 		$thisOffset = -1;
 		$start = microtime(true);
 
-		/** @var LikedContentRepository $likeRepo */
 		$likeRepo = $this->repository(LikedContentRepository::class);
 		foreach ($likeRepo->getLikeHandlers() AS $contentType => $likeHandler)
 		{
@@ -358,7 +369,6 @@ class ContentChangeService extends AbstractService
 		$thisOffset = -1;
 		$start = microtime(true);
 
-		/** @var ReactionRepository $reactionRepo */
 		$reactionRepo = $this->repository(ReactionRepository::class);
 		foreach ($reactionRepo->getReactionHandlers() AS $contentType => $reactionHandler)
 		{
@@ -390,7 +400,6 @@ class ContentChangeService extends AbstractService
 		$newUserId = $this->newUserId ?? $this->originalUserId;
 		$newUserName = $this->newUserName ?? $this->originalUserName;
 
-		/** @var ConversationRepository $convRepo */
 		$convRepo = $this->repository(ConversationRepository::class);
 		$convRepo->updateRecipientCacheForUserChange(
 			$this->originalUserId,

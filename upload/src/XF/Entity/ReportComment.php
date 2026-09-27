@@ -28,9 +28,9 @@ class ReportComment extends Entity implements RenderableContentInterface
 	public function hasSaveableChanges()
 	{
 		return (
-			$this->state_change ||
-			strlen($this->message) ||
-			$this->Report->isChanged('assigned_user_id')
+			$this->state_change
+			|| strlen($this->message)
+			|| $this->Report->isChanged('assigned_user_id')
 		);
 	}
 

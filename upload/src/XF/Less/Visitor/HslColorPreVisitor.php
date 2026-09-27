@@ -15,8 +15,28 @@ class HslColorPreVisitor extends VisitorReplacing
 	 */
 	public $isPreVisitor = true;
 
+	/**
+	 * @var bool
+	 */
+	protected $enabled = true;
+
+	public function setEnabled(bool $enabled): void
+	{
+		$this->enabled = $enabled;
+	}
+
+	public function getEnabled(): bool
+	{
+		return $this->enabled;
+	}
+
 	public function run(Ruleset $root): Tree
 	{
+		if (!$this->enabled)
+		{
+			return $root;
+		}
+
 		return $this->visitObj($root);
 	}
 

@@ -2,6 +2,7 @@
 
 namespace XF\Finder;
 
+use XF\Entity\Post;
 use XF\Entity\Thread;
 use XF\Entity\User;
 use XF\Mvc\Entity\AbstractCollection;
@@ -10,10 +11,10 @@ use XF\Mvc\Entity\Finder;
 use function intval;
 
 /**
- * @method AbstractCollection<\XF\Entity\Post> fetch(?int $limit = null, ?int $offset = null)
- * @method AbstractCollection<\XF\Entity\Post> fetchDeferred(?int $limit = null, ?int $offset = null)
- * @method \XF\Entity\Post|null fetchOne(?int $offset = null)
- * @extends Finder<\XF\Entity\Post>
+ * @method AbstractCollection<Post> fetch(?int $limit = null, ?int $offset = null)
+ * @method AbstractCollection<Post> fetchDeferred(?int $limit = null, ?int $offset = null)
+ * @method Post|null fetchOne(?int $offset = null)
+ * @extends Finder<Post>
  */
 class PostFinder extends Finder
 {

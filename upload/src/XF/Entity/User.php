@@ -7,6 +7,7 @@ use XF\CustomField\Definition;
 use XF\Finder\UserFinder;
 use XF\Job\UserDeleteCleanUp;
 use XF\Job\UserRenameCleanUp;
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XF\PermissionSet;
@@ -16,6 +17,7 @@ use XF\Repository\IpRepository;
 use XF\Repository\MemberStatRepository;
 use XF\Repository\PermissionCombinationRepository;
 use XF\Repository\SpamRepository;
+use XF\Repository\StyleRepository;
 use XF\Repository\UserConfirmationRepository;
 use XF\Repository\UserGroupRepository;
 use XF\Repository\UserIgnoredRepository;
@@ -90,7 +92,7 @@ use function array_slice, count, in_array, is_array;
  * RELATIONS
  * @property-read Admin|null $Admin
  * @property-read UserAuth|null $Auth
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\UserConnectedAccount> $ConnectedAccounts
+ * @property-read AbstractCollection<UserConnectedAccount> $ConnectedAccounts
  * @property-read UserOption|null $Option
  * @property-read PermissionCombination|null $PermissionCombination
  * @property-read UserProfile|null $Profile
@@ -99,7 +101,7 @@ use function array_slice, count, in_array, is_array;
  * @property-read UserReject|null $Reject
  * @property-read SessionActivity|null $Activity
  * @property-read ApprovalQueue|null $ApprovalQueue
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\UserFollow> $Following
+ * @property-read AbstractCollection<UserFollow> $Following
  * @property-read UsernameChange|null $PendingUsernameChange
  * @property-read PreRegAction|null $PreRegAction
  * @property-read Moderator|null $Moderator
@@ -297,7 +299,6 @@ class User extends Entity implements LinkableInterface
 
 	public function getIp($type)
 	{
-		/** @var IpRepository $ipRepo */
 		$ipRepo = $this->repository(IpRepository::class);
 
 		return $ipRepo->getLoggedIp('user', $this->user_id, $type);
@@ -305,7 +306,6 @@ class User extends Entity implements LinkableInterface
 
 	public function getSharedIpUsers($logDays)
 	{
-		/** @var IpRepository $ipRepo */
 		$ipRepo = $this->repository(IpRepository::class);
 
 		return $ipRepo->getSharedIpUsers($this->user_id, $logDays);
@@ -313,7 +313,6 @@ class User extends Entity implements LinkableInterface
 
 	public function getSpamDetails()
 	{
-		/** @var SpamRepository $spamRepo */
 		$spamRepo = $this->repository(SpamRepository::class);
 
 		$spamTriggerLogsFinder = $spamRepo->findSpamTriggerLogs()->forContent('user', $this->user_id);
@@ -419,7 +418,6 @@ class User extends Entity implements LinkableInterface
 	 */
 	public function getWarningCount()
 	{
-		/** @var WarningRepository $warningRepo */
 		$warningRepo = $this->repository(WarningRepository::class);
 		return $warningRepo->findUserWarningsForList($this->user_id)->total();
 	}
@@ -457,9 +455,9 @@ class User extends Entity implements LinkableInterface
 		$visitor = \XF::visitor();
 
 		return (
-			$visitor->user_id &&
-			$visitor->is_moderator &&
-			$visitor->hasPermission('general', 'banUser')
+			$visitor->user_id
+			&& $visitor->is_moderator
+			&& $visitor->hasPermission('general', 'banUser')
 		);
 	}
 
@@ -680,20 +678,8 @@ class User extends Entity implements LinkableInterface
 
 	public function canChangeStyleVariation(Style $style, &$error = null): bool
 	{
-		$styleId = $this->style_id !== 0
-			? $this->style_id
-			: $this->app()->options->defaultStyleId;
-
-		$styles = $this->app()->container('style.cache');
-		$selectedStyle = $styles[$styleId] ?? null;
-		if (
-			!$selectedStyle ||
-			!$selectedStyle['user_selectable'] && !$this->is_admin
-		)
-		{
-			$styleId = $this->app()->options->defaultStyleId;
-		}
-
+		$styleRepo = \XF::repository(StyleRepository::class);
+		$styleId = $styleRepo->getSelectedStyleIdForUser($this);
 		if ($style->getId() !== $styleId)
 		{
 			return false;
@@ -1334,7 +1320,7 @@ class User extends Entity implements LinkableInterface
 			];
 		}
 
-		if($newTransaction)
+		if ($newTransaction)
 		{
 			$db->beginTransaction();
 		}
@@ -1370,7 +1356,6 @@ class User extends Entity implements LinkableInterface
 			throw new \LogicException("User must be saved first");
 		}
 
-		/** @var WarningRepository $warningRepo */
 		$warningRepo = $this->repository(WarningRepository::class);
 		$points = $warningRepo->getActiveWarningPointsForUser($this->user_id);
 		if ($points != $this->warning_points)
@@ -1386,7 +1371,6 @@ class User extends Entity implements LinkableInterface
 			throw new \LogicException("User must be saved first");
 		}
 
-		/** @var PermissionCombinationRepository $combinationRepo */
 		$combinationRepo = $this->repository(PermissionCombinationRepository::class);
 		$combinationRepo->updatePermissionCombinationForUser($this);
 	}
@@ -1472,7 +1456,6 @@ class User extends Entity implements LinkableInterface
 			return true;
 		}
 
-		/** @var BanningRepository $banningRepo */
 		$banningRepo = $this->repository(BanningRepository::class);
 
 		$bannedEmails = $this->app()->container('bannedEmails');
@@ -1715,7 +1698,6 @@ class User extends Entity implements LinkableInterface
 				]);
 			}
 
-			/** @var UsernameChangeRepository $usernameChangeRepo */
 			$usernameChangeRepo = $this->repository(UsernameChangeRepository::class);
 
 			// if user has a pending username change then handle them
@@ -1818,11 +1800,9 @@ class User extends Entity implements LinkableInterface
 		$db->delete('xf_user_profile', 'user_id = ?', $userId);
 		$db->delete('xf_user_privacy', 'user_id = ?', $userId);
 
-		/** @var AvatarService $avatar */
 		$avatar = $this->app()->service(AvatarService::class, $this);
 		$avatar->deleteAvatarForUserDelete();
 
-		/** @var ProfileBannerService $banner */
 		$banner = $this->app()->service(ProfileBannerService::class, $this);
 		$banner->deleteBannerForUserDelete();
 
@@ -1831,7 +1811,7 @@ class User extends Entity implements LinkableInterface
 			$this->app()->jobManager()->enqueue(UserDeleteCleanUp::class, [
 				'userId' => $this->user_id,
 				'username' => $this->username,
-			]);
+			], false, 10);
 		}
 	}
 

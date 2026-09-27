@@ -121,7 +121,6 @@ abstract class AbstractProvider
 
 	public function validateTransaction(CallbackState $state)
 	{
-		/** @var PaymentRepository $paymentRepo */
 		$paymentRepo = \XF::repository(PaymentRepository::class);
 		if ($paymentRepo->findLogsByTransactionIdForProvider($state->transactionId, $this->providerId)->total())
 		{
@@ -252,7 +251,6 @@ abstract class AbstractProvider
 	{
 		$this->prepareLogData($state);
 
-		/** @var PaymentRepository $paymentRepo */
 		$paymentRepo = \XF::repository(PaymentRepository::class);
 		$paymentRepo->logCallback(
 			$state->requestKey,

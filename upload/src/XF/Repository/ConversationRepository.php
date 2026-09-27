@@ -8,7 +8,6 @@ use XF\Entity\User;
 use XF\Finder\ConversationMasterFinder;
 use XF\Finder\ConversationUserFinder;
 use XF\Mvc\Entity\AbstractCollection;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 use XF\Util\Arr;
 
@@ -18,7 +17,6 @@ class ConversationRepository extends Repository
 {
 	public function findUserConversations(User $user, $forList = true)
 	{
-		/** @var ConversationUserFinder $finder */
 		$finder = $this->finder(ConversationUserFinder::class);
 		$finder->forUser($user, $forList)
 			->setDefaultOrder('last_message_date', 'desc');
@@ -129,7 +127,7 @@ class ConversationRepository extends Repository
 	/**
 	 * @param User $user
 	 *
-	 * @return Finder
+	 * @return ConversationMasterFinder
 	 */
 	public function findConversationsStartedByUser(User $user)
 	{
@@ -184,7 +182,6 @@ class ConversationRepository extends Repository
 
 		if ($type == 'name')
 		{
-			/** @var UserRepository $userRepo */
 			$userRepo = $this->repository(UserRepository::class);
 			$users = $userRepo->getUsersByNames($recipients, $notFound, ['Privacy']);
 

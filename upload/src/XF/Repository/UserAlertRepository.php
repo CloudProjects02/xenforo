@@ -13,7 +13,7 @@ use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 use XF\Service\Alert\PusherService;
 
-use function is_array;
+use function count, is_array;
 
 class UserAlertRepository extends Repository
 {
@@ -56,7 +56,7 @@ class UserAlertRepository extends Repository
 	 */
 	public function userReceivesAlert(User $receiver, $senderId, $contentType, $action)
 	{
-		if (!$receiver->user_id)
+		if (!$receiver->user_id || $receiver->is_banned)
 		{
 			return false;
 		}
@@ -273,7 +273,7 @@ class UserAlertRepository extends Repository
 
 	/**
 	 * @param string $contentType
-	 * @param int $contentId
+	 * @param int[]|int $contentId
 	 */
 	public function fastDeleteAlertsForContent($contentType, $contentId)
 	{
@@ -288,13 +288,15 @@ class UserAlertRepository extends Repository
 
 	/**
 	 * @param UserAlertFinder $matches
+	 *
+	 * @return int Number of alerts deleted
 	 */
 	protected function deleteAlertsInternal(Finder $matches)
 	{
 		$results = $matches->fetchColumns('alert_id', 'alerted_user_id', 'view_date', 'read_date');
 		if (!$results)
 		{
-			return;
+			return 0;
 		}
 
 		$userIds = [];
@@ -352,6 +354,8 @@ class UserAlertRepository extends Repository
 		}
 
 		$db->commit();
+
+		return count($delete);
 	}
 
 	/**
@@ -564,8 +568,8 @@ class UserAlertRepository extends Repository
 		$invalidAlerts = $unreadAlerts->filter(function (UserAlert $alert) use ($addOns): bool
 		{
 			if (
-				$alert->depends_on_addon_id &&
-				!isset($addOns[$alert->depends_on_addon_id])
+				$alert->depends_on_addon_id
+				&& !isset($addOns[$alert->depends_on_addon_id])
 			)
 			{
 				return true;
@@ -876,6 +880,8 @@ class UserAlertRepository extends Repository
 
 	/**
 	 * @param int|null $cutOff
+	 *
+	 * @return int Number of alerts deleted
 	 */
 	public function pruneViewedAlerts($cutOff = null)
 	{
@@ -883,13 +889,16 @@ class UserAlertRepository extends Repository
 
 		$finder = $this->finder(UserAlertFinder::class)
 			->where('view_date', '>', 0)
-			->where('view_date', '<', $cutOff);
+			->where('view_date', '<', $cutOff)
+			->limit(1000);
 
-		$this->deleteAlertsInternal($finder);
+		return $this->deleteAlertsInternal($finder);
 	}
 
 	/**
 	 * @param int|null $cutOff
+	 *
+	 * @return int Number of alerts deleted
 	 */
 	public function pruneUnviewedAlerts($cutOff = null)
 	{
@@ -897,9 +906,10 @@ class UserAlertRepository extends Repository
 
 		$finder = $this->finder(UserAlertFinder::class)
 			->where('view_date', 0)
-			->where('event_date', '<', $cutOff);
+			->where('event_date', '<', $cutOff)
+			->limit(1000);
 
-		$this->deleteAlertsInternal($finder);
+		return $this->deleteAlertsInternal($finder);
 	}
 
 	/**

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="PAGE_CONTAINER" modification_key="xf_websockets_PAGE_CONTAINER_copyright" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[{{ phrase('extra_copyright') }}]]></find>
+    <replace><![CDATA[$0
+<xf:if is="$xf.options.bsXFWebSocketsCopyright">
+	<a href="https://devsell.io/xenforo-websockets/" class="u-concealed" dir="ltr" target="_blank" rel="sponsored noopener">
+		Real-time communication with XenForo WebSockets<sup>®</sup>
+	</a>
+</xf:if>]]></replace>
+  </modification>
+  <modification type="public" template="helper_js_global" modification_key="xf_websockets_helper_js_global_core_js" description="Add websockets core js" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[/(<xf:macro (name|id)="body" arg-app="!".*?>)(.*?)(<\/xf:macro>)/s]]></find>
+    <replace><![CDATA[$1$3
+<xf:if is="$xf.visitor.hasPermission('websockets', 'use')">
+	<script src="{{ js_url('bs/websockets/vendor/pusher.min.js') }}"></script>
+	<script src="{{ js_url('bs/websockets/vendor/echo.min.js') }}"></script>
+	<script src="{{ js_url($xf.fullJs ? 'bs/websockets/event.js' : 'bs/websockets/event.min.js') }}" defer></script>
+	<script src="{{ js_url($xf.fullJs ? 'bs/websockets/app-state-manager.js' : 'bs/websockets/app-state-manager.min.js') }}" defer></script>
+	<script src="{{ js_url($xf.fullJs ? 'bs/websockets/core.js' : 'bs/websockets/core.min.js') }}" defer></script>
+</xf:if>
+$4]]></replace>
+  </modification>
+  <modification type="public" template="helper_js_global" modification_key="xf_websockets_helper_js_global_echo_config" description="Add Echo config" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[// <!--[XF:js_global:xf_extend_start]-->]]></find>
+    <replace><![CDATA[$0
+<xf:if is="$xf.visitor.hasPermission('websockets', 'use')">
+echo: {{ xfws_echo_config()|json|raw }},
+</xf:if>]]></replace>
+  </modification>
+</template_modifications>

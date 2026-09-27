@@ -1,0 +1,28 @@
+# Scaffold Decisions
+
+## Composite Commands
+
+Some commands can create related artifacts. For example, entity generation can add a finder or repository, and route generation can add a controller or template. Use those options only when each generated piece is part of the requested design. Empty layers and placeholder classes make later decisions harder.
+
+## Existing Targets
+
+Do not use `--force` until you have inspected the existing database entity and file. Force mode may update an artifact rather than merely regenerate boilerplate. For ordinary edits, modify the existing source directly and run its scoped import if it is development output.
+
+## No Matching Command
+
+Absence of a make command is not a blocker and does not authorize guessing:
+
+1. Check for a dedicated non-make XenForo command and the control-panel authoring surface.
+2. Use an available browser/preview automation surface with user approval, or ask the user to make the control-panel change if agent access is unavailable.
+3. Only as a last fallback, read the matching entity and `src/XF/DevelopmentOutput/<Type>.php` handler.
+4. Compare multiple first-party payloads under `src/addons/XF/_output/<type>/`.
+5. Create the smallest payload in the owning add-on's `_output/` directory.
+6. Run the type-specific importer with `--addon` and verify the payload and metadata diff.
+
+Do not add `_metadata.json` entries. Importing the payload writes them.
+
+## After Generation
+
+- Replace generic boilerplate with the local domain pattern.
+- Remove generated files only when you have confirmed the command did not create a required database record or registration.
+- Do not import output created by the make command.

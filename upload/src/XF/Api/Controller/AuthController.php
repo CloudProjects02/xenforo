@@ -44,7 +44,6 @@ class AuthController extends AbstractController
 			'limit_ip' => 'str',
 		]);
 
-		/** @var LoginService $loginService */
 		$loginService = $this->service(LoginService::class, $input['login'], $input['limit_ip']);
 		if ($loginService->isLoginLimited($limitType))
 		{
@@ -120,7 +119,6 @@ class AuthController extends AbstractController
 
 		if ($rememberCookie)
 		{
-			/** @var UserRememberRepository $rememberRepo */
 			$rememberRepo = $this->repository(UserRememberRepository::class);
 
 			if ($rememberRepo->validateByCookieValue($rememberCookie, $remember))

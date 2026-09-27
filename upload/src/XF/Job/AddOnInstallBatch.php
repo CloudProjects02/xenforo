@@ -142,7 +142,6 @@ class AddOnInstallBatch extends AbstractJob
 		$this->data['current_data']['file'] = $zipFile;
 		$this->data['current_data']['file_temp'] = true;
 
-		/** @var ExtractorService $extractor */
 		$extractor = $this->app->service(ExtractorService::class, $addOnId, $zipFile);
 		if ($this->currentExistingAddOn && !$this->data['force_overwrite'])
 		{
@@ -177,7 +176,6 @@ class AddOnInstallBatch extends AbstractJob
 		$zipFile = $this->data['current_data']['file'];
 		$hashChanges = $this->data['current_data']['hash_changes'];
 
-		/** @var ExtractorService $extractor */
 		$extractor = $this->app->service(ExtractorService::class, $addOnId, $zipFile);
 		$result = $extractor->copyFiles($hashChanges, $params['start'], $timer);
 

@@ -9,6 +9,9 @@ use XF\Service\Post\DeleterService;
 
 use function is_string, strlen;
 
+/**
+ * @extends AbstractHandler<Post>
+ */
 class PostHandler extends AbstractHandler
 {
 	public function getStoredTitle(Entity $entity)
@@ -28,13 +31,11 @@ class PostHandler extends AbstractHandler
 
 	public function getContentUser(Entity $entity)
 	{
-		/** @var Post $entity */
 		return $entity->User;
 	}
 
 	public function canViewContent(Entity $entity, &$error = null)
 	{
-		/** @var Post $entity */
 		return $entity->canView();
 	}
 
@@ -70,7 +71,6 @@ class PostHandler extends AbstractHandler
 				$reason = '';
 			}
 
-			/** @var DeleterService $deleter */
 			$deleter = \XF::app()->service(DeleterService::class, $entity);
 			$deleter->delete('soft', $reason);
 		}
@@ -83,7 +83,6 @@ class PostHandler extends AbstractHandler
 
 	protected function canDeleteContent(Entity $entity)
 	{
-		/** @var Post $entity */
 		return $entity->canDelete('soft');
 	}
 

@@ -30,6 +30,7 @@ class AdminNavigation extends AbstractHandler
 			'admin_permission_id',
 			'debug_only',
 			'development_only',
+			'super_admin_only',
 			'hide_no_children',
 		];
 		$json = $this->pullEntityKeys($navigation, $keys);

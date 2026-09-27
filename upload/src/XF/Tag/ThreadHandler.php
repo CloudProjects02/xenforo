@@ -6,6 +6,9 @@ use XF\Entity\Forum;
 use XF\Entity\Thread;
 use XF\Mvc\Entity\Entity;
 
+/**
+ * @extends AbstractHandler<Thread>
+ */
 class ThreadHandler extends AbstractHandler
 {
 	public function getPermissionsFromContext(Entity $entity)
@@ -85,7 +88,6 @@ class ThreadHandler extends AbstractHandler
 
 	public function canUseInlineModeration(Entity $entity, &$error = null)
 	{
-		/** @var Thread $entity */
 		return $entity->canUseInlineModeration($error);
 	}
 }

@@ -5,13 +5,12 @@ namespace XF\Repository;
 use XF\ActivitySummary\Instance;
 use XF\Finder\ActivitySummaryDefinitionFinder;
 use XF\Finder\ActivitySummarySectionFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 class ActivitySummaryRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return ActivitySummarySectionFinder
 	 */
 	public function findActivitySummarySectionsForList(): ActivitySummarySectionFinder
 	{
@@ -28,7 +27,7 @@ class ActivitySummaryRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return ActivitySummaryDefinitionFinder
 	 */
 	public function findActivitySummaryDefinitionsForList($activeOnly = false)
 	{
@@ -107,7 +106,6 @@ class ActivitySummaryRepository extends Repository
 			// count unviewed alerts if last activity was over 30 days ago (the alert expiry cut off)
 			if ($user->getValue('last_activity') < \XF::$time - (30 * 86400))
 			{
-				/** @var UserAlertRepository $alertRepo */
 				$alertRepo = $this->repository(UserAlertRepository::class);
 				$alertRepo->updateUnviewedCountForUser($user);
 			}
@@ -123,7 +121,6 @@ class ActivitySummaryRepository extends Repository
 			$instance->addDisplayValue(\XF::phrase('direct_messages'), $user->conversations_unread);
 		}
 
-		/** @var ReactionRepository $reactionRepo */
 		$reactionRepo = $this->repository(ReactionRepository::class);
 
 		$reactionScore = $reactionRepo->getUserReactionScoreSince($user, $this->getMinLastActivityCutOff());
@@ -139,7 +136,6 @@ class ActivitySummaryRepository extends Repository
 	{
 		$globalDisplayValues = [];
 
-		/** @var UserRepository $userRepo */
 		$userRepo = $this->repository(UserRepository::class);
 
 		$userCount = $userRepo->findValidUsers()

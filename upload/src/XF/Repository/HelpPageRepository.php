@@ -3,13 +3,12 @@
 namespace XF\Repository;
 
 use XF\Finder\HelpPageFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 class HelpPageRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return HelpPageFinder
 	 */
 	public function findHelpPagesForList()
 	{
@@ -18,7 +17,7 @@ class HelpPageRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return HelpPageFinder
 	 */
 	public function findActiveHelpPages()
 	{

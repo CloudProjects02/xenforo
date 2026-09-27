@@ -24,12 +24,39 @@ class Style implements \ArrayAccess
 	 */
 	public const VARIABLE_KEY = '_variables';
 
+	/**
+	 * @var int
+	 */
 	protected $id;
 
+	/**
+	 * @var int
+	 */
 	protected $lastModified;
 
+	/**
+	 * @var array<string, array{
+	 *     _type: string,
+	 *     default: mixed,
+	 *     _variable?: string,
+	 *     _variables?: array<string, string>,
+	 *     ...<string, mixed>,
+	 * }
+	 */
 	protected $properties;
 
+	/**
+	 * @var array{
+	 *     parent_id: int,
+	 *     parent_list: list<int>,
+	 *     title: string,
+	 *     description: string,
+	 *     assets: array<string, string>,
+	 *     effective_assets: array<string, string>,
+	 *     enable_variations: bool,
+	 *     user_selectable: bool,
+	 * }
+	 */
 	protected $options = [
 		'parent_id' => 0,
 		'parent_list' => '',
@@ -37,8 +64,8 @@ class Style implements \ArrayAccess
 		'description' => '',
 		'assets' => [],
 		'effective_assets' => [],
-		'enable_variations' => 1,
-		'user_selectable' => 1,
+		'enable_variations' => true,
+		'user_selectable' => true,
 	];
 
 	/**
@@ -46,6 +73,27 @@ class Style implements \ArrayAccess
 	 */
 	protected $variation = self::VARIATION_DEFAULT;
 
+	/**
+	 * @param int $id
+	 * @param array<string, array{
+	 *     _type: string,
+	 *     default: mixed,
+	 *     _variable?: string,
+	 *     _variables?: array<string, string>,
+	 *     ...<string, mixed>,
+	 * } $properties
+	 * @param int|null $lastModified
+	 * @param array{
+	 *     parent_id: int,
+	 *     parent_list: list<int>,
+	 *     title: string,
+	 *     description: string,
+	 *     assets: array<string, string>,
+	 *     effective_assets: array<string, string>,
+	 *     enable_variations: bool,
+	 *     user_selectable: bool,
+	 * }|null $options
+	 */
 	public function __construct($id, array $properties, $lastModified = null, ?array $options = null)
 	{
 		if ($lastModified === null && $options === null)
@@ -80,16 +128,25 @@ class Style implements \ArrayAccess
 		}
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getId()
 	{
 		return $this->id;
 	}
 
+	/**
+	 * @param int $lastModified
+	 */
 	public function setLastModified($lastModified)
 	{
 		$this->lastModified = (int) $lastModified;
 	}
 
+	/**
+	 * @return int
+	 */
 	public function getLastModified()
 	{
 		return $this->lastModified;
@@ -110,8 +167,8 @@ class Style implements \ArrayAccess
 		}
 
 		if (
-			!in_array($variation, $this->getVariations()) &&
-			$variation !== self::VARIATION_VARIABLE
+			!in_array($variation, $this->getVariations())
+			&& $variation !== self::VARIATION_VARIABLE
 		)
 		{
 			throw new \InvalidArgumentException(
@@ -142,6 +199,9 @@ class Style implements \ArrayAccess
 		return 'fa-adjust';
 	}
 
+	/**
+	 * @return list<string>
+	 */
 	public function getVariations(bool $includeDefault = true): array
 	{
 		if (!$this->isVariationsEnabled())
@@ -201,6 +261,9 @@ class Style implements \ArrayAccess
 		return null;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function isUsable(User $user)
 	{
 		if ($this->options['user_selectable'])
@@ -211,11 +274,17 @@ class Style implements \ArrayAccess
 		return $user->is_admin ? true : false;
 	}
 
+	/**
+	 * @return string|null
+	 */
 	public function getAsset($key)
 	{
 		return $this->options['effective_assets'][$key] ?? null;
 	}
 
+	/**
+	 * @return array<string, mixed>
+	 */
 	public function getVariationVariables(
 		string $variation,
 		bool $colors = false
@@ -231,8 +300,8 @@ class Style implements \ArrayAccess
 		foreach ($this->properties AS $name => $property)
 		{
 			if (
-				($colors && $property['_type'] !== 'color') ||
-				(!$colors && $property['_type'] === 'color')
+				($colors && $property['_type'] !== 'color')
+				|| (!$colors && $property['_type'] === 'color')
 			)
 			{
 				continue;
@@ -250,11 +319,22 @@ class Style implements \ArrayAccess
 		return $values;
 	}
 
+	/**
+	 * @param string $name
+	 * @param mixed $fallback
+	 *
+	 * @return mixed
+	 */
 	public function getProperty($name, $fallback = '')
 	{
 		return $this->getPropertyVariation($name, $this->variation, $fallback);
 	}
 
+	/**
+	 * @param mixed $fallback
+	 *
+	 * @return mixed
+	 */
 	public function getPropertyVariation(
 		string $name,
 		string $variation,
@@ -307,7 +387,8 @@ class Style implements \ArrayAccess
 	}
 
 	/**
-	 * @param string[]|string|null $filters
+	 * @param string $name
+	 * @param list<string>|string|null $filters
 	 *
 	 * @return string
 	 */
@@ -317,7 +398,7 @@ class Style implements \ArrayAccess
 	}
 
 	/**
-	 * @param string[]|string|null $filters
+	 * @param list<string>|string|null $filters
 	 *
 	 * @return string
 	 */
@@ -345,6 +426,12 @@ class Style implements \ArrayAccess
 		return $this->compileCssPropertyValue($value, $filters);
 	}
 
+	/**
+	 * @param array<string, mixed> $css
+	 * @param list<string>|string|null $filters
+	 *
+	 * @return string
+	 */
 	public function compileCssPropertyValue(array $css, array $filters = [])
 	{
 		$include = [
@@ -494,16 +581,39 @@ class Style implements \ArrayAccess
 		return $return;
 	}
 
+	/**
+	 * @return array<string, array{
+	 *     _type: string,
+	 *     default: mixed,
+	 *     _variable?: string,
+	 *     _variables?: array<string, string>,
+	 *     ...<string, mixed>,
+	 * }
+	 */
 	public function getProperties()
 	{
 		return $this->properties ?: [];
 	}
 
+	/**
+	 * @param array<string, array{
+	 *     _type: string,
+	 *     default: mixed,
+	 *     _variable?: string,
+	 *     _variables?: array<string, string>,
+	 *     ...<string, mixed>,
+	 * } $properties
+	 */
 	public function setProperties(array $properties)
 	{
 		$this->properties = $properties;
 	}
 
+	/**
+	 * @param mixed $key
+	 *
+	 * @return mixed
+	 */
 	#[\ReturnTypeWillChange]
 	public function offsetGet($key)
 	{
@@ -515,6 +625,9 @@ class Style implements \ArrayAccess
 		}
 	}
 
+	/**
+	 * @param mixed $key
+	 */
 	public function offsetExists($key): bool
 	{
 		switch ($key)
@@ -528,11 +641,18 @@ class Style implements \ArrayAccess
 		}
 	}
 
+	/**
+	 * @param mixed $key
+	 * @param mixed $value
+	 */
 	public function offsetSet($key, $value): void
 	{
 		throw new \LogicException("Style object options cannot be written to.");
 	}
 
+	/**
+	 * @param mixed $key
+	 */
 	public function offsetUnset($key): void
 	{
 		throw new \LogicException("Style object options cannot be written to.");

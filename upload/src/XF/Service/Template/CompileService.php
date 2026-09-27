@@ -155,7 +155,6 @@ class CompileService extends AbstractService
 
 	protected function finalize(Template $template)
 	{
-		/** @var StyleRepository $repo */
 		$repo = $this->app->repository(StyleRepository::class);
 		$repo->updateAllStylesLastModifiedDateLater();
 	}

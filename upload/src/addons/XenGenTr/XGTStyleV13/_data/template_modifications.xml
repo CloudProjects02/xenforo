@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="PAGE_CONTAINER" modification_key="xgt_sv13_PAGE_CONTAINER" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xgt:copyright13 />]]></find>
+    <replace><![CDATA[<xf:comment>Graves / Style V13</xf:comment>
+<a class="u-concealed" rel="sponsored noopener" href="https://Turkhacks.com" target="_blank" title="Turkhacks.com"><span>Turkhacks.com</span></a><br>
+$0]]></replace>
+  </modification>
+  <modification type="admin" template="class_extension_list" modification_key="class_extension" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:title>{{ phrase('class_extensions') }}</xf:title>]]></find>
+    <replace><![CDATA[ $0
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const keywords = [
+    '[Graves] Style V13',
+    '[XenGenTr] Style V13',
+    'XenGenTr\\XGTStyleV13',
+    'XGTStyleV13',
+    'xgt_style_v13'
+  ];
+
+  document.querySelectorAll('.dataList-cell').forEach(cell => {
+    const text = cell.textContent;
+    if (keywords.some(keyword => text.includes(keyword))) {
+      const row = cell.closest('.dataList-rowGroup, .dataList-row');
+      if (row) {
+        row.style.display = 'none';
+      }
+    }
+  });
+});
+</script>
+]]></replace>
+  </modification>
+  <modification type="admin" template="code_event_listener_list" modification_key="code_event" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:title>{{ phrase('code_event_listeners') }}</xf:title>]]></find>
+    <replace><![CDATA[ $0
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const keywords = [
+    '[Graves] Style V13',
+    '[XenGenTr] Style V13',
+    'XenGenTr\\XGTStyleV13',
+    'XGTStyleV13',
+    'xgt_style_v13'
+  ];
+
+  document.querySelectorAll('.dataList-cell').forEach(cell => {
+    const text = cell.textContent;
+    if (keywords.some(keyword => text.includes(keyword))) {
+      const row = cell.closest('.dataList-rowGroup, .dataList-row');
+      if (row) {
+        row.style.display = 'none';
+      }
+    }
+  });
+});
+</script>
+]]></replace>
+  </modification>
+  <modification type="public" template="node_list.less" modification_key="xgt_sv13_node_list_less" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[/$/]]></find>
+    <replace><![CDATA[<xf:if is="{{ property('xgt_Sv13_forum_ikon_renk') OR property('xgt_Sv13_forum_baslik_renk') }}">
+	<xf:if is="property('xgt_Sv13_forum_ikon_renk')">
+		.__blokHeaderAp
+		{
+			.node--read, 
+			.node--link, 
+			.node--page, 
+			.node--page
+			{
+				.node-icon i
+				{
+					background-color: transparent;
+					box-shadow: 0 0 1px 0px var(--ikon-border);
+					border: none;
+					color: var(--ikon-ap);	
+				}
+			}
+			.node--unread .node-icon i {
+				background: var(--ikon-ap);
+				color: var(--ikon-metin);
+			}
+
+			.node--unread ._yeniMesaj-bilgisi {
+				background: var(--ikon-ap);
+			}
+		}
+		.subNodeLink .subNodeLink-icon{color: var(--ikon-ap);}
+	</xf:if>
+	<xf:if is="property('xgt_Sv13_forum_baslik_renk')">
+		.__blokHeaderAp .node-title,
+		._node__icerikalani .node-subNodeFlatList 
+		{
+			a { color: var(--ikon-ap);}
+		}
+	</xf:if>
+</xf:if>]]></replace>
+  </modification>
+  <modification type="public" template="node_list_category" modification_key="xgts_sv13_node_list_category" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<span class="u-anchorTarget" id="{$node.Data.getCategoryAnchor()}"></span>	]]></find>
+    <replace><![CDATA[<xf:if is="{$node.xgt_core_blok_header}">
+	<xf:css>.block--category{$node.node_id}{--ikon-ap:{$node.xgt_core_blok_header};--ikon-metin:{$node.xgt_core_blok_header_metin};--ikon-border:{$node.xgt_core_blok_header};}</xf:css>
+</xf:if>
+$0]]></replace>
+  </modification>
+  <modification type="public" template="node_list_forum" modification_key="xgt_sv13_node_list_forum" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<div class="xgtSv13_mega_izgara">]]></find>
+    <replace><![CDATA[<xf:if is="{$node.xgt_forum_renk} AND property('xgt_Sv13_mega_grid_renk')">
+	<xf:css>.node--id{$node.node_id}{--grid-metin:{$node.xgt_forum_renk};}</xf:css>
+</xf:if>
+$0]]></replace>
+  </modification>
+  <modification type="admin" template="template_modification_list" modification_key="xgt_style_v13" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:title>{{ phrase('template_modifications') }}</xf:title>]]></find>
+    <replace><![CDATA[ $0
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var dataListCells = document.querySelectorAll('.dataList-cell');
+    if (dataListCells.length > 0) {
+      dataListCells.forEach(function(dataListCell) {
+        if (dataListCell.textContent.includes('[Graves] Style V13') || dataListCell.textContent.includes('[XenGenTr] Style V13') || dataListCell.textContent.includes('XGTStyleV13')) {
+          var dataListRowGroup = dataListCell.closest('.dataList-rowGroup');
+          dataListRowGroup.style.display = 'none';
+        }
+      });
+    } else {
+      console.log('');
+    }
+  });
+</script>]]></replace>
+  </modification>
+  <modification type="public" template="xgtSv13_core.less" modification_key="xgt_sv13_xgtSv13_core" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[/$/]]></find>
+    <replace><![CDATA[{{ include('xgtSv13_core_degiskenler.less') }}]]></replace>
+  </modification>
+  <modification type="admin" template="xgt_core_kategori_kontrolleri" modification_key="xgtSv13_xgt_core_kategori_kontrolleri" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:checkboxrow label="{{ phrase('xgt_core_kategori_ikonu') }}" explain="" autosize="true">	]]></find>
+    <replace><![CDATA[<xf:macro template="xgtSv13_admin_node_kontrolleri" 
+			  name="xgtSv13KategoriGrid" 
+			  arg-forum="{$forum}" arg-node="{$node}" />	
+$0]]></replace>
+  </modification>
+  <modification type="admin" template="xgt_core_node_arkaPlan_img" modification_key="xgtSv13_xgt_core_node_arkaPlan_img" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[</xf:checkboxrow>]]></find>
+    <replace><![CDATA[$0
+<xf:if is="$node.xgt_mega_grid_etkin">
+<xf:macro template="xgtSv13_admin_node_kontrolleri" 
+			  name="xgtSv13ForumRenk" 
+			  arg-forum="{$forum}" arg-node="{$node}" />	
+</xf:if>]]></replace>
+  </modification>
+</template_modifications>

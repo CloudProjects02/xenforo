@@ -2,16 +2,17 @@
 
 namespace XF\Finder;
 
+use XF\Entity\Phrase;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Finder;
 
 use function strlen;
 
 /**
- * @method AbstractCollection<\XF\Entity\Phrase> fetch(?int $limit = null, ?int $offset = null)
- * @method AbstractCollection<\XF\Entity\Phrase> fetchDeferred(?int $limit = null, ?int $offset = null)
- * @method \XF\Entity\Phrase|null fetchOne(?int $offset = null)
- * @extends Finder<\XF\Entity\Phrase>
+ * @method AbstractCollection<Phrase> fetch(?int $limit = null, ?int $offset = null)
+ * @method AbstractCollection<Phrase> fetchDeferred(?int $limit = null, ?int $offset = null)
+ * @method Phrase|null fetchOne(?int $offset = null)
+ * @extends Finder<Phrase>
  */
 class PhraseFinder extends Finder
 {

@@ -14,7 +14,7 @@ use function strval;
  * @property int $user_id
  * @property string $temp_hash
  * @property string $content_type
- * @property array $context
+ * @property array|null $context
  */
 class ApiAttachmentKey extends Entity
 {

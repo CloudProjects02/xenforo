@@ -142,7 +142,6 @@ class PasswordChangeService extends AbstractService
 	{
 		$user = $this->user;
 
-		/** @var IpRepository $ipRepo */
 		$ipRepo = $this->repository(IpRepository::class);
 		$ipRepo->logIp($user->user_id, $ip, 'user', $user->user_id, 'password_change');
 	}

@@ -9,7 +9,6 @@ class Style extends AbstractOption
 {
 	public static function renderRadio(Option $option, array $htmlParams)
 	{
-		/** @var StyleRepository $styleRepo */
 		$styleRepo = \XF::repository(StyleRepository::class);
 
 		$forEmailStyle = ($option->option_id == 'defaultEmailStyleId');

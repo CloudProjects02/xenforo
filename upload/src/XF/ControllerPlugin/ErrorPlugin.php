@@ -102,7 +102,6 @@ class ErrorPlugin extends AbstractPlugin
 
 			if ($visitor->Ban['triggered'] && !$banEndDate)
 			{
-				/** @var WarningRepository $warningRepo */
 				$warningRepo = $this->repository(WarningRepository::class);
 
 				$minUnbanDate = $warningRepo->getMinimumUnbanDate($visitor->user_id);

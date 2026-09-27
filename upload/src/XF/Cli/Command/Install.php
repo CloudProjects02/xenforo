@@ -336,7 +336,6 @@ class Install extends AbstractCommand implements CustomAppCommandInterface
 			}
 		}
 
-		/** @var OptionRepository $optionRepo */
 		$optionRepo = \XF::repository(OptionRepository::class);
 
 		// if applicable, updating collectServerStats will enqueue stats collection automatically

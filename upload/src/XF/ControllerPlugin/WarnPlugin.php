@@ -15,7 +15,6 @@ class WarnPlugin extends AbstractPlugin
 {
 	public function actionWarn($contentType, Entity $content, $warnUrl, array $breadcrumbs = [])
 	{
-		/** @var WarningRepository $warningRepo */
 		$warningRepo = $this->repository(WarningRepository::class);
 
 		$warningHandler = $warningRepo->getWarningHandler($contentType, true);
@@ -121,7 +120,6 @@ class WarnPlugin extends AbstractPlugin
 			throw $this->exception($this->error(\XF::phrase('warning_not_filled_try_again')));
 		}
 
-		/** @var WarnService $warnService */
 		$warnService = $this->service(WarnService::class, $user, $contentType, $content, \XF::visitor());
 
 		$definition = $input['warning_definition_id']

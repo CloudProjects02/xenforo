@@ -85,7 +85,6 @@ class TemplateMerge extends AbstractJob
 			return false;
 		}
 
-		/** @var TemplateHistoryRepository $historyRepo */
 		$historyRepo = $em->getRepository(TemplateHistoryRepository::class);
 		$previousVersion = $historyRepo->getHistoryForMerge($template, $parentTemplate);
 		if (!$previousVersion)

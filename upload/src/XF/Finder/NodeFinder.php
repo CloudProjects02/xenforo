@@ -7,10 +7,10 @@ use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Finder;
 
 /**
- * @method AbstractCollection<\XF\Entity\Node> fetch(?int $limit = null, ?int $offset = null)
- * @method AbstractCollection<\XF\Entity\Node> fetchDeferred(?int $limit = null, ?int $offset = null)
- * @method \XF\Entity\Node|null fetchOne(?int $offset = null)
- * @extends Finder<\XF\Entity\Node>
+ * @method AbstractCollection<Node> fetch(?int $limit = null, ?int $offset = null)
+ * @method AbstractCollection<Node> fetchDeferred(?int $limit = null, ?int $offset = null)
+ * @method Node|null fetchOne(?int $offset = null)
+ * @extends Finder<Node>
  */
 class NodeFinder extends Finder
 {

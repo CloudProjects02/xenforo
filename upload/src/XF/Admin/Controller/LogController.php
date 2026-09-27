@@ -47,7 +47,6 @@ use XF\Repository\UserRejectRepository;
 use XF\Service\ImageProxyService;
 use XF\Service\OembedService;
 use XF\Util\Ip;
-
 use XF\Util\Str;
 
 use function count, strlen;
@@ -180,7 +179,6 @@ class LogController extends AbstractController
 			$page = $this->filterPage();
 			$perPage = 20;
 
-			/** @var ModeratorLogRepository $modLogRepo */
 			$modLogRepo = $this->repository(ModeratorLogRepository::class);
 
 			$logFinder = $modLogRepo->findLogsForList()
@@ -234,7 +232,6 @@ class LogController extends AbstractController
 			$page = $this->filterPage();
 			$perPage = 20;
 
-			/** @var AdminLogRepository $adminLogRepo */
 			$adminLogRepo = $this->repository(AdminLogRepository::class);
 
 			$logFinder = $adminLogRepo->findLogsForList()
@@ -275,7 +272,6 @@ class LogController extends AbstractController
 		$page = $this->filterPage();
 		$perPage = 20;
 
-		/** @var SpamRepository $spamRepo */
 		$spamRepo = $this->repository(SpamRepository::class);
 
 		$logFinder = $spamRepo->findSpamCleanerLogsForList()
@@ -324,7 +320,6 @@ class LogController extends AbstractController
 		$page = $this->filterPage();
 		$perPage = 20;
 
-		/** @var SpamRepository $spamRepo */
 		$spamRepo = $this->repository(SpamRepository::class);
 
 		$logFinder = $spamRepo->findSpamTriggerLogsForList()
@@ -382,7 +377,6 @@ class LogController extends AbstractController
 		$page = $this->filterPage();
 		$perPage = 20;
 
-		/** @var LinkProxyRepository $proxyRepo */
 		$proxyRepo = $this->repository(LinkProxyRepository::class);
 
 		$logFinder = $proxyRepo->findLinkProxyLogsForList()
@@ -445,7 +439,6 @@ class LogController extends AbstractController
 		$page = $this->filterPage();
 		$perPage = 20;
 
-		/** @var ImageProxyRepository $proxyRepo */
 		$proxyRepo = $this->repository(ImageProxyRepository::class);
 
 		$logFinder = $proxyRepo->findImageProxyLogsForList()
@@ -471,7 +464,6 @@ class LogController extends AbstractController
 
 		if (!$image->isValid() || $image->isRefreshRequired())
 		{
-			/** @var ImageProxyService $proxyService */
 			$proxyService = $this->service(ImageProxyService::class);
 			$image = $proxyService->refetchImage($image);
 		}
@@ -536,7 +528,6 @@ class LogController extends AbstractController
 		$page = $this->filterPage();
 		$perPage = 20;
 
-		/** @var OembedRepository $oEmbedRepo */
 		$oEmbedRepo = $this->repository(OembedRepository::class);
 
 		$logFinder = $oEmbedRepo->findOembedLogsForList()
@@ -566,7 +557,6 @@ class LogController extends AbstractController
 
 		if (!$oEmbed->isValid() || $oEmbed->isRefreshRequired())
 		{
-			/** @var OembedService $oEmbedService */
 			$oEmbedService = $this->service(OembedService::class);
 			$oEmbed = $oEmbedService->refetchOembed($oEmbed);
 		}
@@ -598,7 +588,6 @@ class LogController extends AbstractController
 
 	public function actionSitemap()
 	{
-		/** @var SitemapLogRepository $sitemapRepo */
 		$sitemapRepo = $this->repository(SitemapLogRepository::class);
 
 		$viewParams = [
@@ -992,7 +981,6 @@ class LogController extends AbstractController
 		$page = $this->filterPage();
 		$perPage = 20;
 
-		/** @var EmailBounceRepository $bounceRepo */
 		$bounceRepo = $this->repository(EmailBounceRepository::class);
 
 		$finder = $bounceRepo->findEmailBounceLogsForList()->limitByPage($page, $perPage);
@@ -1022,7 +1010,6 @@ class LogController extends AbstractController
 		}
 		else
 		{
-			/** @var UserRejectRepository $rejectRepo */
 			$rejectRepo = $this->repository(UserRejectRepository::class);
 
 			$page = $this->filterPage();

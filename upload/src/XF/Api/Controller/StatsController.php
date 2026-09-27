@@ -70,7 +70,6 @@ class StatsController extends AbstractController
 
 	protected function getOnlineStats(): array
 	{
-		/** @var SessionActivityRepository $activityRepo */
 		$activityRepo = $this->repository(SessionActivityRepository::class);
 
 		$counts = $activityRepo->getOnlineCounts();

@@ -1,0 +1,41 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use XF\Mvc\Entity\Entity;
+use XF\Mvc\Entity\Structure;
+
+/**
+ * COLUMNS
+ * @property int|null $id
+ * @property int $created_at
+ * @property int $updated_at
+ */
+class {{ class }} extends Entity
+{
+	protected function _preSave(): void
+	{
+		if ($this->isUpdate())
+		{
+			$this->updated_at = \XF::$time;
+		}
+	}
+
+	public static function getStructure(Structure $structure): Structure
+	{
+		$structure->table = '{{ table }}';
+		$structure->shortName = '{{ shortName }}';
+		$structure->primaryKey = 'id';
+		$structure->columns = [
+			'id' => ['type' => self::UINT, 'autoIncrement' => true, 'nullable' => true],
+			'created_at' => ['type' => self::UINT, 'default' => \XF::$time],
+			'updated_at' => ['type' => self::UINT, 'default' => \XF::$time],
+		];
+		$structure->getters = [];
+		$structure->relations = [];
+
+		return $structure;
+	}
+}

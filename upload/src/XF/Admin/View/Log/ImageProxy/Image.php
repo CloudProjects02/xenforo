@@ -2,7 +2,7 @@
 
 namespace XF\Admin\View\Log\ImageProxy;
 
-use League\Flysystem\FileNotFoundException;
+use League\Flysystem\FilesystemException;
 use XF\Entity\ImageProxy;
 use XF\Mvc\View;
 
@@ -29,7 +29,7 @@ class Image extends View
 				$resource = \XF::fs()->readStream($image->getAbstractedImagePath());
 				return $this->response->responseStream($resource, $image->file_size);
 			}
-			catch (FileNotFoundException $e)
+			catch (FilesystemException $e)
 			{
 				// the file was pruned mid-request
 				return $this->response->responseFile($placeHolderImage->getPlaceholderPath());

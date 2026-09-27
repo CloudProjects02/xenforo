@@ -53,7 +53,6 @@ class MessageManagerService extends AbstractService
 	 */
 	protected function getMessagePreparer($format = true)
 	{
-		/** @var PreparerService $preparer */
 		$preparer = $this->service(PreparerService::class, 'conversation_message', $this->conversationMessage);
 		if (!$format)
 		{
@@ -122,7 +121,6 @@ class MessageManagerService extends AbstractService
 	{
 		$conversationMessage = $this->conversationMessage;
 
-		/** @var \XF\Service\Attachment\PreparerService $inserter */
 		$inserter = $this->service(\XF\Service\Attachment\PreparerService::class);
 		$associated = $inserter->associateAttachmentsWithContent($hash, 'conversation_message', $conversationMessage->message_id);
 		if ($associated)
@@ -135,7 +133,6 @@ class MessageManagerService extends AbstractService
 	{
 		$conversationMessage = $this->conversationMessage;
 
-		/** @var IpRepository $ipRepo */
 		$ipRepo = $this->repository(IpRepository::class);
 		$ipEnt = $ipRepo->logIp($conversationMessage->user_id, $ip, 'conversation_message', $conversationMessage->message_id);
 		if ($ipEnt)

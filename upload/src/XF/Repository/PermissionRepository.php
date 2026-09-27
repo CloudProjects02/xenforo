@@ -4,7 +4,6 @@ namespace XF\Repository;
 
 use XF\Finder\PermissionFinder;
 use XF\Finder\PermissionInterfaceGroupFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 use XF\Permission\AbstractContentPermissions;
 
@@ -43,7 +42,7 @@ class PermissionRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return PermissionFinder
 	 */
 	public function findPermissionsForList()
 	{
@@ -60,7 +59,7 @@ class PermissionRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return PermissionInterfaceGroupFinder
 	 */
 	public function findInterfaceGroupsForList()
 	{

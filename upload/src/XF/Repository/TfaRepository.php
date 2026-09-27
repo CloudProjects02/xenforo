@@ -6,7 +6,6 @@ use XF\Entity\TfaProvider;
 use XF\Entity\User;
 use XF\Entity\UserTfa;
 use XF\Finder\TfaProviderFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 use XF\Tfa\Backup;
 
@@ -15,7 +14,7 @@ use function count;
 class TfaRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return TfaProviderFinder
 	 */
 	public function findProvidersForList()
 	{
@@ -105,7 +104,6 @@ class TfaRepository extends Repository
 			return false;
 		}
 
-		/** @var UserTfaTrustedRepository $tfaTrustRepo */
 		$tfaTrustRepo = $this->repository(UserTfaTrustedRepository::class);
 		if ($trustKey && $tfaTrustRepo->getTfaTrustRecord($user->user_id, $trustKey))
 		{

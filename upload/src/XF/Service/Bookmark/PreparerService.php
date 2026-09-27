@@ -45,7 +45,6 @@ class PreparerService extends AbstractService
 	 */
 	protected function getStructuredTextPreparer($format = true)
 	{
-		/** @var \XF\Service\StructuredText\PreparerService $preparer */
 		$preparer = $this->service(\XF\Service\StructuredText\PreparerService::class, 'bookmark', $this->bookmark);
 		if (!$format)
 		{

@@ -2,11 +2,12 @@
 
 namespace XF\Report;
 
-use XF\Entity\Post;
 use XF\Entity\Report;
-use XF\Entity\ThreadPrefix;
 use XF\Mvc\Entity\Entity;
 
+/**
+ * @extends AbstractHandler<\XF\Entity\Post>
+ */
 class PostHandler extends AbstractHandler
 {
 	protected function canViewContent(Report $report)
@@ -25,7 +26,6 @@ class PostHandler extends AbstractHandler
 	{
 		if (!empty($content->Thread->prefix_id) && $content->Thread->Prefix)
 		{
-			/** @var ThreadPrefix $prefix */
 			$prefix = $content->Thread->Prefix;
 			$prefixPhrase = \XF::phrase($prefix->getPhraseName());
 			$prefixPhrase = $prefixPhrase->render();
@@ -37,7 +37,6 @@ class PostHandler extends AbstractHandler
 			$threadTitle = $content->Thread->title;
 		}
 
-		/** @var Post $content */
 		$report->content_user_id = $content->user_id;
 		$report->content_info = [
 			'message' => $content->message,

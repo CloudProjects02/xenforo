@@ -5,7 +5,6 @@ namespace XF\Entity;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
-use XF\Phrase;
 use XF\Repository\AbstractPrefix;
 
 /**
@@ -14,11 +13,11 @@ use XF\Repository\AbstractPrefix;
  * @property int $display_order
  *
  * GETTERS
- * @property-read Phrase|string $title
+ * @property-read string|\Stringable $title
  *
  * RELATIONS
  * @property-read Phrase|null $MasterTitle
- * @property-read AbstractCollection|AbstractPrefix[] $Prefixes
+ * @property-read AbstractCollection<AbstractPrefix> $Prefixes
  */
 abstract class AbstractPrefixGroup extends Entity
 {
@@ -35,7 +34,7 @@ abstract class AbstractPrefixGroup extends Entity
 	}
 
 	/**
-	 * @return Phrase|string
+	 * @return string|\Stringable
 	 */
 	public function getTitle()
 	{
@@ -47,7 +46,7 @@ abstract class AbstractPrefixGroup extends Entity
 		$phrase = $this->MasterTitle;
 		if (!$phrase)
 		{
-			$phrase = $this->_em->create(\XF\Entity\Phrase::class);
+			$phrase = $this->_em->create(Phrase::class);
 			$phrase->title = $this->_getDeferredValue(function () { return $this->getPhraseName(); }, 'save');
 			$phrase->language_id = 0;
 			$phrase->addon_id = '';

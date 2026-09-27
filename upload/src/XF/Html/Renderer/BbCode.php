@@ -599,7 +599,7 @@ class BbCode
 		{
 			$baseParts['path'] .= '/';
 		}
-		if ($url[0] == '/')
+		if (($url[0] ?? '') === '/')
 		{
 			// path has trailing slash
 			$url = substr($url, 1);
@@ -610,6 +610,11 @@ class BbCode
 
 	public function handleTagSpan($text, Tag $tag)
 	{
+		if ($tag->hasClass('bbPlain'))
+		{
+			return '[PLAIN]' . $text . '[/PLAIN]';
+		}
+
 		if ($tag->hasClass('smilie') && $tag->attribute('data-smilie'))
 		{
 			$smilies = \XF::app()->container('smilies');
@@ -1028,7 +1033,8 @@ class BbCode
 		}
 		else
 		{
-			return '[ICODE]' . $text . '[/ICODE]';
+			$richOption = $tag->hasClass('bbCodeInline--rich') ? '=rich' : '';
+			return '[ICODE' . $richOption . ']' . $text . '[/ICODE]';
 		}
 	}
 

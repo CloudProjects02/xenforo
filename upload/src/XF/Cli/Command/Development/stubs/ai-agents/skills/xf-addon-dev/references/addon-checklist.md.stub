@@ -1,0 +1,44 @@
+# Add-on Checklist
+
+## Scope
+
+1. Confirm the installed add-on ID and path under `src/addons/<Vendor>/<AddOn>/`.
+2. Check `addon.json`, `Setup.php`, `_output/`, `_files/`, `build.json`, and `_stubs/` only as relevant to the task.
+3. Identify whether the change is runtime code, database schema/data, development output, copied files, or a combination.
+
+## Implementation
+
+1. Use a local `xf-make:*` command when it covers the artifact.
+2. Keep runtime behavior in code and editable data in `_output/`. Treat `_data` XML as immutable build output.
+3. Use the add-on's existing abstractions and naming. Do not introduce a parallel architecture for one feature.
+4. Check permissions and ownership at the controller/service boundary for user-triggered operations.
+5. Account for enable, disable, uninstall, and upgrade behavior where the feature stores data or registers handlers.
+
+## Setup.php Upgrade Steps
+
+1. Use `upgrade<versionId>Step<n>()` for changes to an already-installed version.
+2. Treat every released `upgrade<versionId>Step<n>()` as an immutable historical migration. Never add a later column, index, data change, or other new behavior to an older upgrade step.
+3. Put each new change in a new step for the current target version. Upgrades run in sequence, so changing an earlier table-creation step to include a column that a later step adds can make that later step fail because the column already exists.
+4. Reflect the final result separately in the clean-install path. If an upgrade adds or changes schema/data, update the applicable `installStep*()`, install helper, or initial data so a fresh installation reaches the same final state without running historical upgrades.
+5. Keep a step cohesive and restart-safe. Do not combine unrelated schema and data work.
+6. Use the schema manager and existing Setup helpers rather than raw, vendor-specific SQL where a framework API exists.
+7. Return a progress offset for batched work and make repeated execution safe.
+
+## Class Extensions
+
+1. Use `xf-make:extension` to create the class and registration record.
+2. Extend the generated `XFCP_<ClassName>` proxy; do not replace it with the concrete core parent.
+3. Override the narrowest method and call the parent where the extension contract requires composition.
+4. Treat execution order as a compatibility tool, not a substitute for composable behavior.
+5. Add entity relations through an entity class extension. Pair added columns with `Setup.php` schema changes and the supported entity-structure extension mechanism.
+
+## Registered Data
+
+Content-type fields, permissions, widget definitions, and several other development-output types may not have a make command in the installed version. Check `xf list xf-make`, then follow the UI-first fallback in `xf-shared-policy/references/development-output.md`.
+
+## Lifecycle
+
+1. Import only changed filesystem-authored output types, scoped to the add-on.
+2. Inspect payload and `_metadata.json` diffs after import; never repair metadata manually.
+3. Run checks that exist in the add-on's own project. Do not assume XenForo core's private CI scripts ship with a release.
+4. Before a release, verify `addon.json`, upgrade coverage, copied-file rules, and the clean output diff, then use `xf-addon:build-release`.

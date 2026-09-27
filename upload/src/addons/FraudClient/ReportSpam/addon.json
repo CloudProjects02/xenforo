@@ -1,0 +1,17 @@
+{
+    "legacy_addon_id": "",
+    "title": "FraudClient - ReportSpam",
+    "description": "Securely check and report XenForo members through FraudClient.",
+    "version_id": 1010170,
+    "version_string": "1.1.1",
+    "dev": "Moazam Shakoor / FraudClient",
+    "dev_url": "https://fraudclient.com",
+    "faq_url": "https://fraudclient.com",
+    "support_url": "https://fraudclient.com/forum",
+    "extra_urls": [],
+    "require": {
+        "XF": [2030000, "XenForo 2.3.0+"],
+        "php": ["7.4.0", "PHP 7.4.0+"]
+    },
+    "icon": ""
+}

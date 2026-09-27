@@ -3,10 +3,8 @@
 namespace XF\Api\Controller;
 
 use XF\Entity\ConversationMaster;
-use XF\Entity\ConversationUser;
 use XF\Entity\User;
 use XF\Finder\ConversationUserFinder;
-use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\ParameterBag;
 use XF\Repository\ConversationRepository;
@@ -45,7 +43,6 @@ class ConversationsController extends AbstractController
 		$conversationFinder = $this->setupConversationFinder();
 		$conversationFinder->limitByPage($page, $perPage);
 
-		/** @var ConversationUser[]|AbstractCollection $conversations */
 		$conversations = $conversationFinder->fetch();
 		$totalConversations = $conversationFinder->total();
 
@@ -161,7 +158,6 @@ class ConversationsController extends AbstractController
 
 		$recipients = $this->em()->findByIds(User::class, $input['recipient_ids']);
 
-		/** @var CreatorService $creator */
 		$creator = $this->service(CreatorService::class, $visitor);
 		$creator->setOptions([
 			'open_invite' => $input['open_invite'],

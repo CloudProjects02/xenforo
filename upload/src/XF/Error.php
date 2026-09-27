@@ -4,7 +4,6 @@ namespace XF;
 
 use XF\Util\File;
 use XF\Util\Ip;
-
 use XF\Util\Str;
 
 use function get_class, gettype, intval, strlen, strval;
@@ -104,7 +103,7 @@ class Error
 						return false;
 					}
 
-					if (!File::installLockExists())
+					if (!File::installLockExists(false))
 					{
 						// install hasn't finished yet, don't write
 						return false;
@@ -149,7 +148,7 @@ class Error
 				$db->insert('xf_error_log', [
 					'exception_date' => \XF::$time,
 					'user_id' => $userId,
-					'ip_address' => Ip::stringToBinary($this->app->request()->getIp()),
+					'ip_address' => $this->app->request()->getIp() ? Ip::stringToBinary($this->app->request()->getIp()) : '',
 					'exception_type' => Str::substr(get_class($e), 0, 75),
 					'message' => Str::substr($messagePrefix . $exceptionMessage, 0, 20000),
 					'filename' => Str::substr($file, 0, 255),
@@ -369,7 +368,7 @@ class Error
 	public function displayFatalExceptionMessage($e)
 	{
 		$upgradePending = $this->hasPendingUpgrade();
-		$isInstalled = File::installLockExists();
+		$isInstalled = File::installLockExists(false);
 		$ignorePendingUpgrade = (!$isInstalled || $this->ignorePendingUpgrade || $this->forceShowTrace);
 
 		if (\XF::$debugMode || !$isInstalled || $this->forceShowTrace)
@@ -445,7 +444,8 @@ class Error
 	{
 		/** @var \Throwable $e */
 
-		$rootDir = \XF::getRootDirectory() . \XF::$DS;
+		$rootDirRaw = \XF::getRootDirectory();
+		$rootDir = $rootDirRaw . \XF::$DS;
 
 		if (PHP_SAPI == 'cli' || \XF::app()->request()->isXhr())
 		{
@@ -453,9 +453,10 @@ class Error
 			$trace = str_replace($rootDir, '', $this->buildTraceString($e));
 
 			$class = get_class($e);
+			$message = str_replace($rootDirRaw, '', $e->getMessage());
 
 			return PHP_EOL
-				. "An exception occurred: [$class] {$e->getMessage()} in {$file} on line {$e->getLine()}"
+				. "An exception occurred: [$class] {$message} in {$file} on line {$e->getLine()}"
 				. PHP_EOL . $trace . PHP_EOL;
 		}
 
@@ -476,7 +477,7 @@ class Error
 		}
 
 		$class = htmlspecialchars(get_class($e));
-		$message = htmlspecialchars($e->getMessage());
+		$message = htmlspecialchars(str_replace($rootDirRaw, '', $e->getMessage()));
 		$file = htmlspecialchars(str_replace($rootDir, '', $e->getFile()));
 		$line = $e->getLine();
 

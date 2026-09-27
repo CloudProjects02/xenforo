@@ -15,6 +15,8 @@ class PushSend extends AbstractJob
 	use Retryable;
 
 	/**
+	 * @deprecated Use \XF\Repository\UserPushRepository::getInvalidEndpoints()
+	 *
 	 * @var string
 	 */
 	protected const GCM_URL = 'https://android.googleapis.com/gcm/send';
@@ -76,9 +78,8 @@ class PushSend extends AbstractJob
 
 		foreach ($userSubscriptions AS $userSubscription)
 		{
-			if (strpos($userSubscription['endpoint'], static::GCM_URL) === 0)
+			if (!$userPushRepo->isValidEndpoint($userSubscription['endpoint']))
 			{
-				// GCM is deprecated, skip it
 				continue;
 			}
 
@@ -211,16 +212,27 @@ class PushSend extends AbstractJob
 		);
 	}
 
+	/**
+	 * Handle a failed push MessageSentReport and update subscription state accordingly.
+	 *
+	 * If the report has no HTTP response or the response status code is considered temporary,
+	 * the failure is left for a later retry. Otherwise the subscription is removed from the
+	 * job's pending list; if the status code is considered a permanent error the subscription
+	 * record is deleted from the database. For all other non-temporary errors an error is logged
+	 * with the report reason.
+	 *
+	 * @param MessageSentReport $report The send report to handle.
+	 */
 	protected function handleReportError(MessageSentReport $report): void
 	{
 		$response = $report->getResponse();
-		if (!$response && $this->willBeRetried())
+		if (!$response)
 		{
-			// do nothing -- will be retried later
+			// do nothing -- will be retried later if attempts remain
 			return;
 		}
 
-		$code = $response ? $response->getStatusCode() : null;
+		$code = $response->getStatusCode();
 
 		if (in_array($code, $this->getTemporaryErrorCodes(), true))
 		{

@@ -16,7 +16,7 @@ use XF\Mvc\Entity\Structure;
  * @property string|null $code_challenge
  * @property string|null $code_challenge_method
  * @property int $request_date
- * @property array $scopes
+ * @property array|null $scopes
  *
  * RELATIONS
  * @property-read OAuthClient|null $OAuthClient
@@ -39,7 +39,14 @@ class OAuthRequest extends Entity
 	public function getRedirectUriSnippet(): string
 	{
 		$uri = $this->redirect_uri;
-		return parse_url($uri, PHP_URL_SCHEME) . '://' . parse_url($uri, PHP_URL_HOST);
+		$parts = parse_url($uri);
+
+		if ($parts === false || empty($parts['scheme']) || empty($parts['host']))
+		{
+			return '';
+		}
+
+		return $parts['scheme'] . '://' . $parts['host'];
 	}
 
 	protected function _preSave()

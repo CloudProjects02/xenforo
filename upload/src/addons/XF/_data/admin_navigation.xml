@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <admin_navigation>
   <admin_navigation_entry navigation_id="activitySummary" parent_navigation_id="communication" display_order="200" link="activity-summary" admin_permission_id="activitySummary" debug_only="0" development_only="0" hide_no_children="0"/>
-  <admin_navigation_entry navigation_id="activitySummaryDefinitions" parent_navigation_id="development" display_order="400" link="activity-summary/definitions/" admin_permission_id="activitySummary" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="activitySummaryDefinitions" parent_navigation_id="development" display_order="400" link="activity-summary/definitions/" debug_only="0" development_only="1" hide_no_children="0"/>
   <admin_navigation_entry navigation_id="addOns" display_order="200" link="add-ons" icon="fa-puzzle-piece" debug_only="0" development_only="0" hide_no_children="1"/>
   <admin_navigation_entry navigation_id="adminLog" parent_navigation_id="logsUser" display_order="400" link="logs/admin" admin_permission_id="viewLogs" debug_only="0" development_only="0" hide_no_children="0"/>
   <admin_navigation_entry navigation_id="adminNavigation" parent_navigation_id="devNavigation" display_order="600" link="admin-navigation" debug_only="0" development_only="1" hide_no_children="0"/>
@@ -141,7 +141,7 @@
   <admin_navigation_entry navigation_id="usernameChangeLog" parent_navigation_id="logsUser" display_order="210" link="logs/username-change" admin_permission_id="viewLogs" debug_only="0" development_only="0" hide_no_children="0"/>
   <admin_navigation_entry navigation_id="users" display_order="10000" link="users" icon="fa-user" debug_only="0" development_only="0" hide_no_children="1"/>
   <admin_navigation_entry navigation_id="usersStaff" parent_navigation_id="groupsAndPermissions" display_order="2000" icon="fa-shield" debug_only="0" development_only="0" hide_no_children="1"/>
-  <admin_navigation_entry navigation_id="webhooks" parent_navigation_id="serviceProviders" display_order="600" link="webhooks" admin_permission_id="user" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="webhooks" parent_navigation_id="serviceProviders" display_order="600" link="webhooks" admin_permission_id="webhook" debug_only="0" development_only="0" hide_no_children="0"/>
   <admin_navigation_entry navigation_id="widgetDefinitions" parent_navigation_id="development" display_order="300" link="widgets/definitions/" admin_permission_id="widget" debug_only="0" development_only="1" hide_no_children="0"/>
   <admin_navigation_entry navigation_id="widgetPositions" parent_navigation_id="development" display_order="200" link="widgets/positions/" admin_permission_id="widget" debug_only="0" development_only="1" hide_no_children="0"/>
   <admin_navigation_entry navigation_id="widgets" parent_navigation_id="appearance" display_order="300" link="widgets" admin_permission_id="widget" debug_only="0" development_only="0" hide_no_children="0"/>

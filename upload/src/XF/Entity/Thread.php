@@ -6,6 +6,7 @@ use XF\Api\Result\EntityResult;
 use XF\Behavior\ActivityLoggable;
 use XF\CustomField\Set;
 use XF\Draft;
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XF\Repository\ActivityLogRepository;
@@ -35,7 +36,7 @@ use function count, is_int;
  * @property string $discussion_state
  * @property bool $discussion_open
  * @property string $discussion_type
- * @property array $type_data_
+ * @property array|null $type_data_
  * @property string $index_state
  * @property int $first_post_id
  * @property int $last_post_date
@@ -45,8 +46,8 @@ use function count, is_int;
  * @property int $first_post_reaction_score
  * @property array|null $first_post_reactions
  * @property int $prefix_id
- * @property array $custom_fields_
- * @property array $tags
+ * @property array|null $custom_fields_
+ * @property array|null $tags
  * @property int $vote_score
  * @property int $vote_count
  * @property bool $featured
@@ -68,19 +69,19 @@ use function count, is_int;
  * @property-read Post|null $LastPost
  * @property-read User|null $LastPoster
  * @property-read ThreadPrefix|null $Prefix
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\ThreadRead> $Read
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\ThreadWatch> $Watch
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\ThreadUserPost> $UserPosts
+ * @property-read AbstractCollection<ThreadRead> $Read
+ * @property-read AbstractCollection<ThreadWatch> $Watch
+ * @property-read AbstractCollection<ThreadUserPost> $UserPosts
  * @property-read DeletionLog|null $DeletionLog
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\Draft> $DraftReplies
+ * @property-read AbstractCollection<\XF\Entity\Draft> $DraftReplies
  * @property-read ApprovalQueue|null $ApprovalQueue
  * @property-read ThreadRedirect|null $Redirect
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\ThreadReplyBan> $ReplyBans
+ * @property-read AbstractCollection<ThreadReplyBan> $ReplyBans
  * @property-read Poll|null $Poll
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\ThreadFieldValue> $CustomFields
+ * @property-read AbstractCollection<ThreadFieldValue> $CustomFields
  * @property-read ThreadQuestion|null $Question
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\TagContent> $Tags
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\ContentVote> $ContentVotes
+ * @property-read AbstractCollection<TagContent> $Tags
+ * @property-read AbstractCollection<ContentVote> $ContentVotes
  * @property-read FeaturedContent|null $Feature
  */
 class Thread extends Entity implements ContainableInterface, DatableInterface, LinkableInterface, ViewableInterface
@@ -862,6 +863,11 @@ class Thread extends Entity implements ContainableInterface, DatableInterface, L
 		return $this->TypeHandler->getMicrodataType($this);
 	}
 
+	public function getMicrodataContentField(): string
+	{
+		return $this->TypeHandler->getMicrodataContentField($this);
+	}
+
 	public function getReplyMicrodataType(): string
 	{
 		return $this->TypeHandler->getReplyMicrodataType($this);
@@ -1155,7 +1161,6 @@ class Thread extends Entity implements ContainableInterface, DatableInterface, L
 		// TODO: this may need a different process with big threads
 		$this->adjustUserMessageCountIfNeeded(1);
 
-		/** @var ReactionRepository $reactionRepo */
 		$reactionRepo = $this->repository(ReactionRepository::class);
 		$reactionRepo->recalculateReactionIsCounted('post', $this->post_ids);
 
@@ -1169,12 +1174,10 @@ class Thread extends Entity implements ContainableInterface, DatableInterface, L
 		if (!$hardDelete)
 		{
 			// hard delete will remove the reactions, so skip that here
-			/** @var ReactionRepository $reactionRepo */
 			$reactionRepo = $this->repository(ReactionRepository::class);
 			$reactionRepo->fastUpdateReactionIsCounted('post', $this->post_ids, false);
 		}
 
-		/** @var UserAlertRepository $alertRepo */
 		$alertRepo = $this->repository(UserAlertRepository::class);
 		$alertRepo->fastDeleteAlertsForContent('post', $this->post_ids);
 
@@ -1185,7 +1188,6 @@ class Thread extends Entity implements ContainableInterface, DatableInterface, L
 
 		if ($this->discussion_type != 'redirect')
 		{
-			/** @var ThreadRedirectRepository $redirectRepo */
 			$redirectRepo = $this->repository(ThreadRedirectRepository::class);
 			$redirectRepo->deleteRedirectsToThread($this);
 		}
@@ -1214,7 +1216,6 @@ class Thread extends Entity implements ContainableInterface, DatableInterface, L
 			}
 		}
 
-		/** @var ThreadRedirectRepository $redirectRepo */
 		$redirectRepo = $this->repository(ThreadRedirectRepository::class);
 
 		if ($this->discussion_type == 'redirect')
@@ -1376,11 +1377,9 @@ class Thread extends Entity implements ContainableInterface, DatableInterface, L
 	{
 		$db = $this->db();
 
-		/** @var AttachmentRepository $attachRepo */
 		$attachRepo = $this->repository(AttachmentRepository::class);
 		$attachRepo->fastDeleteContentAttachments('post', $postIds);
 
-		/** @var ReactionRepository $reactionRepo */
 		$reactionRepo = $this->repository(ReactionRepository::class);
 		$reactionRepo->fastDeleteReactions('post', $postIds);
 
@@ -1481,7 +1480,12 @@ class Thread extends Entity implements ContainableInterface, DatableInterface, L
 			{
 				$result->skipRelation('Forum');
 			}
-			// TODO: option for first and last post? last poster?
+
+			// TODO: option for last post? last poster?
+			if (!empty($options['with_first_post']))
+			{
+				$result->includeRelation('FirstPost');
+			}
 
 			$result->can_edit = $this->canEdit();
 			$result->can_edit_tags = $this->canEditTags();

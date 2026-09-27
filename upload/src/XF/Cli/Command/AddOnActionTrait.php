@@ -227,7 +227,7 @@ trait AddOnActionTrait
 			$builderOptions[] = $verbosityOption;
 		}
 
-		$process = new Process($builderOptions);
+		$process = new Process($builderOptions, \XF::getRootDirectory());
 		$process->setTimeout(null);
 
 		/** @var ProcessHelper $processHelper */
@@ -303,7 +303,6 @@ trait AddOnActionTrait
 
 	public function validateAndExtractAddOnZip($zipFile, &$error = null)
 	{
-		/** @var AddOnRepository $addOnRepo */
 		$addOnRepo = \XF::repository(AddOnRepository::class);
 
 		if ($zipFile === '-')
@@ -320,7 +319,6 @@ trait AddOnActionTrait
 			return null;
 		}
 
-		/** @var ValidatorService $validator */
 		$validator = \XF::service(ValidatorService::class, $zipFile);
 		if (!$validator->validate($error))
 		{
@@ -329,7 +327,6 @@ trait AddOnActionTrait
 
 		$addOnId = $validator->getAddOnId();
 
-		/** @var ExtractorService $extractor */
 		$extractor = \XF::service(ExtractorService::class, $addOnId, $zipFile);
 		$result = $extractor->copyFiles();
 

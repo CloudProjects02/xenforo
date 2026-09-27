@@ -51,7 +51,7 @@ class DataManager
 	protected $em;
 
 	/**
-	 * @var DataType\AbstractDataType[]|null
+	 * @var AbstractDataType[]|null
 	 */
 	protected $types;
 
@@ -226,15 +226,12 @@ class DataManager
 
 		\XF::runOnce('rebuild_addon_active', function ()
 		{
-			/** @var ForumTypeRepository $forumTypeRepo */
 			$forumTypeRepo = $this->em->getRepository(ForumTypeRepository::class);
 			$forumTypeRepo->rebuildForumTypeCache();
 
-			/** @var ThreadTypeRepository $threadTypeRepo */
 			$threadTypeRepo = $this->em->getRepository(ThreadTypeRepository::class);
 			$threadTypeRepo->rebuildThreadTypeCache();
 
-			/** @var PaymentRepository $paymentRepo */
 			$paymentRepo = $this->em->getRepository(PaymentRepository::class);
 			$paymentRepo->rebuildPaymentProviderCache();
 		});

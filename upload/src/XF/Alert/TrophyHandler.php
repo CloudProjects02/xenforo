@@ -4,6 +4,9 @@ namespace XF\Alert;
 
 use XF\Mvc\Entity\Entity;
 
+/**
+ * @extends AbstractHandler<\XF\Entity\Trophy>
+ */
 class TrophyHandler extends AbstractHandler
 {
 	public function canViewContent(Entity $entity, &$error = null)

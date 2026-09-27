@@ -2,16 +2,17 @@
 
 namespace XF\Finder;
 
+use XF\Entity\Template;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Finder;
 
 use function strlen;
 
 /**
- * @method AbstractCollection<\XF\Entity\Template> fetch(?int $limit = null, ?int $offset = null)
- * @method AbstractCollection<\XF\Entity\Template> fetchDeferred(?int $limit = null, ?int $offset = null)
- * @method \XF\Entity\Template|null fetchOne(?int $offset = null)
- * @extends Finder<\XF\Entity\Template>
+ * @method AbstractCollection<Template> fetch(?int $limit = null, ?int $offset = null)
+ * @method AbstractCollection<Template> fetchDeferred(?int $limit = null, ?int $offset = null)
+ * @method Template|null fetchOne(?int $offset = null)
+ * @extends Finder<Template>
  */
 class TemplateFinder extends Finder
 {

@@ -5,7 +5,6 @@ namespace XF;
 use Symfony\Component\VarDumper\VarDumper;
 use XF\Db\AbstractAdapter;
 use XF\Util\File;
-
 use XF\Util\Str;
 
 use function count, is_array, strlen, strval;

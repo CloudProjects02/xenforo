@@ -2,6 +2,7 @@
 
 namespace XF\Entity;
 
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 
@@ -24,8 +25,8 @@ use function in_array;
  * @property bool $use_tfa
  *
  * RELATIONS
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\UserAlertOptOut> $AlertOptOut
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\UserPushOptOut> $PushOptOut
+ * @property-read AbstractCollection<UserAlertOptOut> $AlertOptOut
+ * @property-read AbstractCollection<UserPushOptOut> $PushOptOut
  * @property-read User|null $User
  */
 class UserOption extends Entity

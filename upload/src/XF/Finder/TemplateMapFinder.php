@@ -2,16 +2,17 @@
 
 namespace XF\Finder;
 
+use XF\Entity\TemplateMap;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Finder;
 
 use function in_array, is_array;
 
 /**
- * @method AbstractCollection<\XF\Entity\TemplateMap> fetch(?int $limit = null, ?int $offset = null)
- * @method AbstractCollection<\XF\Entity\TemplateMap> fetchDeferred(?int $limit = null, ?int $offset = null)
- * @method \XF\Entity\TemplateMap|null fetchOne(?int $offset = null)
- * @extends Finder<\XF\Entity\TemplateMap>
+ * @method AbstractCollection<TemplateMap> fetch(?int $limit = null, ?int $offset = null)
+ * @method AbstractCollection<TemplateMap> fetchDeferred(?int $limit = null, ?int $offset = null)
+ * @method TemplateMap|null fetchOne(?int $offset = null)
+ * @extends Finder<TemplateMap>
  */
 class TemplateMapFinder extends Finder
 {

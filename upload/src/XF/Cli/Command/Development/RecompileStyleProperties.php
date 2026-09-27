@@ -25,7 +25,6 @@ class RecompileStyleProperties extends AbstractCommand
 
 		$output->writeln("Recompiling style properties...");
 
-		/** @var RebuildService $rebuildService */
 		$spRebuildService = $app->service(RebuildService::class);
 		$spRebuildService->rebuildFullPropertyMap();
 		$spRebuildService->rebuildPropertyStyleCache();

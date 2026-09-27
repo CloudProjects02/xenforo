@@ -2,16 +2,13 @@
 
 namespace XF\Repository;
 
-use XF\Entity\CodeEventListener;
 use XF\Finder\CodeEventListenerFinder;
-use XF\Mvc\Entity\AbstractCollection;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 class CodeEventListenerRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return CodeEventListenerFinder
 	 */
 	public function findListenersForList()
 	{
@@ -23,7 +20,6 @@ class CodeEventListenerRepository extends Repository
 
 	public function getListenerCacheData()
 	{
-		/** @var AbstractCollection|CodeEventListener[] $listeners */
 		$listeners = $this->finder(CodeEventListenerFinder::class)
 			->whereAddOnActive(['disableProcessing' => true])
 			->where('active', 1)

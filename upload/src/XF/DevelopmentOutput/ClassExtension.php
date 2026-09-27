@@ -123,7 +123,7 @@ class ClassExtension extends AbstractHandler
 	{
 		$finder = \XF::finder(ClassExtensionFinder::class)
 			->where('addon_id', $addOnId)
-			->order('to_class');
+			->order(['from_class', 'to_class', 'execute_order']);
 		$extensions = $finder->fetch();
 
 		$grouped = [];
@@ -167,6 +167,7 @@ class ClassExtension extends AbstractHandler
 
 /**
  * @noinspection PhpIllegalPsrClassPathInspection
+ * @noinspection PhpMultipleClassesDeclarationsInOneFile
  */
 
 {$output}

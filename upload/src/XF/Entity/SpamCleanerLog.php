@@ -13,7 +13,7 @@ use XF\Mvc\Entity\Structure;
  * @property int $applying_user_id
  * @property string $applying_username
  * @property int $application_date
- * @property array $data
+ * @property array|null $data
  * @property int $restored_date
  *
  * RELATIONS

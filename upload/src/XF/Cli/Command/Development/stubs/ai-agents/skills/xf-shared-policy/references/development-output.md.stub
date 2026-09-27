@@ -1,0 +1,75 @@
+# Development Output
+
+Command examples use the optional `xf`-managed runner. Use the runner selected by `xf-environment` for the checkout.
+
+## Three Representations
+
+Many XenForo data artifacts have three representations:
+
+1. A database entity used by the running application.
+2. A development file under `src/addons/<AddOn>/_output/<type>/`.
+3. Generated XML under `_data/`, produced by core and add-on release/build tooling as an immutable snapshot of database state.
+
+Development work synchronizes the database and `_output/`. `_data/*.xml` is never an authoring or repair surface: do not create, edit, amend, or use it to determine a development-output format. Build tooling owns it completely.
+
+Never run `xf-dev:export` as a development sync step. Export writes database state over filesystem development output and can destroy changes that have not been imported.
+
+## Payload JSON and `_metadata.json`
+
+These files serve different purposes:
+
+- Files such as `routes/example.json` and `options/example.json` are artifact payloads, but their readable format does not make them a hand-editing surface. When a matching `xf-make:*` command or control-panel editor exists, use it. Direct filesystem creation or editing is permitted only when no make command exists and neither agent-driven nor user-assisted UI work is available.
+- Each type directory's `_metadata.json` is an index maintained by XenForo. Its entries contain hashes and, for some types, version data used to detect changes and choose import behavior.
+
+Do not create, delete, or edit `_metadata.json` entries manually. Saving an entity through XenForo or importing a changed payload updates the index. Any non-byte-identical artifact change that updates development output must have the corresponding `_metadata.json` change and both belong in the same commit.
+
+If an expected metadata change is absent, either the filesystem content is byte-identical to the database value or the relevant import was not run. Import before finishing and recheck the diff. Do not rely on a later page visit to import a template lazily; that leaves its metadata update detached from the change that caused it.
+
+## Common Workflows
+
+### Create with a make command
+
+```text
+xf xf-make:template public:vendor_example --addon=Vendor/AddOn
+```
+
+The command saves the database entity and writes `_output/templates/public/vendor_example.html` plus metadata. The creation itself needs no import. If the generated file is then edited directly, import that changed file before finishing. Never export it back from the database.
+
+### Edit an existing template or phrase file
+
+Edit the file, then run the type-specific, add-on-scoped importer:
+
+```text
+xf xf-dev:import-templates --addon=Vendor/AddOn
+xf xf-dev:import-phrases --addon=Vendor/AddOn
+```
+
+Use `xf xf-dev:import --addon=Vendor/AddOn` only when several output types changed together. For example, `xf xf-dev:import --addon=XFMG` limits a full development-output import to XFMG. The import compiles templates, updates database entities, refreshes metadata, and rebuilds relevant caches.
+
+### Create a payload without a make command
+
+1. Confirm that no local `xf-make:*` command covers the artifact.
+2. Check whether the agent harness exposes a browser, preview, or computer-control surface that can operate the XenForo control panel. Obtain user approval before making the control-panel change and allow the user to authenticate in that surface when needed.
+3. If the agent cannot operate the control panel, ask whether the user will create or update the artifact there on the agent's behalf.
+4. Only when neither UI route is available, inspect the matching `src/XF/DevelopmentOutput/<Type>.php` handler and two or more first-party `_output/<type>/` examples.
+5. Add or edit only the artifact payload. Do not add or alter its metadata entry.
+6. Run the narrowest type-specific importer with `--addon=<AddOn>` and inspect the resulting payload and metadata diff.
+
+Manual payload creation is an exceptional fallback. Reproduce the database entity's development-output format exactly, import it through XenForo, and require XenForo to generate the matching metadata change before considering the work complete.
+
+## Import Scope and Deletions
+
+An importer treats the filesystem as the source set for its output type and add-on. Database records absent from that set can be deleted. Before an import:
+
+- confirm the add-on ID;
+- prefer a type-specific importer;
+- inspect deleted and renamed files;
+- avoid an unscoped `xf-dev:import` unless the task genuinely spans every installed add-on.
+
+To delete an artifact, prefer deleting it through XenForo so development output is updated. If a filesystem deletion is intentional, run the type-specific scoped importer and verify that only the intended database record disappeared.
+
+## Export and Release
+
+- Do not run `xf-dev:export` manually. It overwrites development files with database state and can erase unimported filesystem changes.
+- For an explicit release task, use the supported core or add-on build command. The build command owns release-data generation and packaging.
+- Review source and `_output/` before the build. Treat every generated `_data/*.xml` file as immutable build output.

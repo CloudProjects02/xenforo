@@ -3,13 +3,12 @@
 namespace XF\Repository;
 
 use XF\Finder\CaptchaQuestionFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 class CaptchaQuestionRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return CaptchaQuestionFinder
 	 */
 	public function findCaptchaQuestionsForList()
 	{

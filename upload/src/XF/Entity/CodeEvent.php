@@ -11,13 +11,65 @@ use XF\Repository\CodeEventListenerRepository;
  * COLUMNS
  * @property string $event_id
  * @property string $description
+ * @property array|null $arguments
+ * @property string|null $hint_description
  * @property string $addon_id
+ *
+ * GETTERS
+ * @property-read string $callback_signature
  *
  * RELATIONS
  * @property-read AddOn|null $AddOn
  */
 class CodeEvent extends Entity
 {
+	public function getCallbackSignature(): string
+	{
+		$arguments = $this->arguments;
+		if (empty($arguments))
+		{
+			return '';
+		}
+
+		$params = [];
+		foreach ($arguments AS $arg)
+		{
+			$name = $arg['name'] ?? '';
+			$type = $arg['type'] ?? '';
+
+			if (empty($name))
+			{
+				continue;
+			}
+
+			$byRef = str_starts_with($name, '&');
+			if ($byRef)
+			{
+				$name = substr($name, 1);
+			}
+
+			if (!str_starts_with($name, '$'))
+			{
+				$name = '$' . $name;
+			}
+
+			$param = '';
+			if (!empty($type))
+			{
+				$param .= $type . ' ';
+			}
+			if ($byRef)
+			{
+				$param .= '&';
+			}
+			$param .= $name;
+
+			$params[] = $param;
+		}
+
+		return implode(', ', $params);
+	}
+
 	protected function _postSave()
 	{
 		if ($this->isUpdate() && $this->isChanged('event_id'))
@@ -47,7 +99,6 @@ class CodeEvent extends Entity
 
 	protected function _setupDefaults()
 	{
-		/** @var AddOnRepository $addOnRepo */
 		$addOnRepo = $this->_em->getRepository(AddOnRepository::class);
 		$this->addon_id = $addOnRepo->getDefaultAddOnId();
 	}
@@ -64,12 +115,16 @@ class CodeEvent extends Entity
 				'match' => self::MATCH_ALPHANUMERIC,
 			],
 			'description' => ['type' => self::STR, 'default' => ''],
+			'arguments' => ['type' => self::JSON_ARRAY, 'default' => [], 'nullable' => true],
+			'hint_description' => ['type' => self::STR, 'default' => '', 'nullable' => true],
 			'addon_id' => ['type' => self::BINARY, 'maxLength' => 50, 'required' => true],
 		];
 		$structure->behaviors = [
 			'XF:DevOutputWritable' => [],
 		];
-		$structure->getters = [];
+		$structure->getters = [
+			'callback_signature' => true,
+		];
 		$structure->relations = [
 			'AddOn' => [
 				'entity' => 'XF:AddOn',

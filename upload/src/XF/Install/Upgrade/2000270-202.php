@@ -158,7 +158,6 @@ class Version2000270 extends AbstractUpgrade
 
 		if ($this->db()->update('xf_thread_prefix', ['css_class' => 'label label--hidden'], 'css_class = ?', ''))
 		{
-			/** @var ThreadPrefixRepository $threadPrefixRepo */
 			$threadPrefixRepo = $this->app->repository(ThreadPrefixRepository::class);
 
 			$threadPrefixRepo->rebuildPrefixCache();

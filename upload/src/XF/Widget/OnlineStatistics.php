@@ -8,7 +8,6 @@ class OnlineStatistics extends AbstractWidget
 {
 	public function render()
 	{
-		/** @var SessionActivityRepository $activityRepo */
 		$activityRepo = $this->repository(SessionActivityRepository::class);
 
 		$viewParams = [

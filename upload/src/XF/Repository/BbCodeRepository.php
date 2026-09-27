@@ -3,13 +3,12 @@
 namespace XF\Repository;
 
 use XF\Finder\BbCodeFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 class BbCodeRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return BbCodeFinder
 	 */
 	public function findBbCodesForList()
 	{
@@ -17,7 +16,7 @@ class BbCodeRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return BbCodeFinder
 	 */
 	public function findActiveBbCodes()
 	{

@@ -14,8 +14,8 @@ use XF\Mvc\Entity\Structure;
  * @property int $user_id
  * @property string $ip_address
  * @property string $result
- * @property array $details_
- * @property array $request_state
+ * @property array|null $details_
+ * @property array|null $request_state
  *
  * GETTERS
  * @property mixed $details

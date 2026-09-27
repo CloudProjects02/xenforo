@@ -17,7 +17,6 @@ class EmailConfirmationPlugin extends AbstractPlugin
 			'extraViewParams' => [],
 		], $options);
 
-		/** @var EmailConfirmationService $emailConfirmation */
 		$emailConfirmation = $this->service(EmailConfirmationService::class, $user);
 
 		if (!$emailConfirmation->canTriggerConfirmation($error))

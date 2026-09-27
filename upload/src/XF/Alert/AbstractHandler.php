@@ -2,18 +2,35 @@
 
 namespace XF\Alert;
 
+use XF\Entity\User;
 use XF\Entity\UserAlert;
+use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 
+/**
+ * @template T of Entity
+ */
 abstract class AbstractHandler
 {
+	/**
+	 * @var string
+	 */
 	protected $contentType;
 
+	/**
+	 * @param string $contentType
+	 */
 	public function __construct($contentType)
 	{
 		$this->contentType = $contentType;
 	}
 
+	/**
+	 * @param T $entity
+	 * @param string|\Stringable|null $error
+	 *
+	 * @return bool
+	 */
 	public function canViewContent(Entity $entity, &$error = null)
 	{
 		if (method_exists($entity, 'canView'))
@@ -24,6 +41,11 @@ abstract class AbstractHandler
 		throw new \LogicException("Could not determine content viewability; please override");
 	}
 
+	/**
+	 * @param string|\Stringable|null $error
+	 *
+	 * @return bool
+	 */
 	public function canViewAlert(UserAlert $alert, &$error = null)
 	{
 		return true;
@@ -34,7 +56,8 @@ abstract class AbstractHandler
 	 * If no value is provided or the template does not exist, the push contents will come from a
 	 * rendered version of the normal alert template with HTML tags stripped.
 	 *
-	 * @param $action
+	 * @param string $action
+	 *
 	 * @return string|null
 	 */
 	public function getPushTemplateName($action)
@@ -42,11 +65,27 @@ abstract class AbstractHandler
 		return 'public:push_' . $this->contentType . '_' . $action;
 	}
 
+	/**
+	 * @param string $action
+	 *
+	 * @return string
+	 */
 	public function getTemplateName($action)
 	{
 		return 'public:alert_' . $this->contentType . '_' . $action;
 	}
 
+	/**
+	 * @param string $action
+	 * @param T|null $content
+	 *
+	 * @return array{
+	 *     alert: UserAlert,
+	 *     user: User,
+	 *     extra: array<mixed>,
+	 *     content: T,
+	 * }
+	 */
 	public function getTemplateData($action, UserAlert $alert, ?Entity $content = null)
 	{
 		if (!$content)
@@ -62,6 +101,11 @@ abstract class AbstractHandler
 		];
 	}
 
+	/**
+	 * @param T|null $content
+	 *
+	 * @return string
+	 */
 	public function render(UserAlert $alert, ?Entity $content = null)
 	{
 		if (!$content)
@@ -80,12 +124,21 @@ abstract class AbstractHandler
 		return \XF::app()->templater()->renderTemplate($template, $data);
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function isAlertRenderable(UserAlert $alert)
 	{
 		$template = $this->getTemplateName($alert->action);
 		return \XF::app()->templater()->isKnownTemplate($template);
 	}
 
+	/**
+	 * @return array{
+	 *     text: string,
+	 *     url: string,
+	 * }
+	 */
 	public function getApiOutput(UserAlert $alert)
 	{
 		$templater = \XF::app()->templater();
@@ -125,16 +178,27 @@ abstract class AbstractHandler
 		];
 	}
 
+	/**
+	 * @return list<string>
+	 */
 	public function getEntityWith()
 	{
 		return [];
 	}
 
+	/**
+	 * @param int|list<int> $id
+	 *
+	 * @return T|AbstractCollection<T>
+	 */
 	public function getContent($id)
 	{
 		return \XF::app()->findByContentType($this->contentType, $id, $this->getEntityWith());
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getContentType()
 	{
 		return $this->contentType;
@@ -143,7 +207,7 @@ abstract class AbstractHandler
 	/**
 	 * An array of alert actions which can be opted out of for this type.
 	 *
-	 * @return array
+	 * @return list<string>
 	 */
 	public function getOptOutActions()
 	{
@@ -161,9 +225,7 @@ abstract class AbstractHandler
 	}
 
 	/**
-	 *
-	 *
-	 * @return array
+	 * @return array<string, string|\Stringable>
 	 */
 	public function getOptOutsMap()
 	{

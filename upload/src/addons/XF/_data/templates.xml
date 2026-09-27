@@ -41,7 +41,7 @@
 
 </body>
 </html>]]></template>
-  <template type="admin" title="PAGE_CONTAINER" version_id="2030053" version_string="2.3.0 Release Candidate 3"><![CDATA[<!DOCTYPE html>
+  <template type="admin" title="PAGE_CONTAINER" version_id="2031170" version_string="2.3.11"><![CDATA[<!DOCTYPE html>
 <html id="XF" lang="{$xf.language.language_code}" dir="{$xf.language.text_direction}"
 	class="has-no-js {{ $template ? 'template-' . $template : '' }} {{ $xf.visitor.Admin.advanced ? 'acp--advanced-mode' : 'acp--simple-mode' }}" data-template="{$template}"
 	data-xf="{$xf.versionVisible}"
@@ -57,19 +57,25 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
+	<xf:macro id="theme_color_meta" arg-color="!" arg-media="">
+		<xf:if is="$color">
+			<meta name="theme-color"{{ $media ? ' media="' . $media . '"' : '' }} content="{$color}" />
+		</xf:if>
+	</xf:macro>
+
 	<xf:if is="$xf.style.isVariationsEnabled()">
 		<xf:if is="$xf.visitor.Admin.admin_style_variation">
-			<meta name="theme-color" content="{{ parse_less_color(property_variation('metaThemeColor', $xf.visitor.Admin.admin_style_variation)) }}" />
+			<xf:macro id="theme_color_meta" arg-color="{{ parse_less_color(property_variation('metaThemeColor', $xf.visitor.Admin.admin_style_variation)) }}" />
 		<xf:else />
 			<xf:if is="$xf.style.hasAlternateStyleTypeVariation()">
-				<meta name="theme-color" media="(prefers-color-scheme: {{ $xf.style.getDefaultStyleType() }})" content="{{ parse_less_color(property_variation('metaThemeColor', 'default')) }}" />
-				<meta name="theme-color" media="(prefers-color-scheme: {{ $xf.style.getAlternateStyleType() }})" content="{{ parse_less_color(property_variation('metaThemeColor', $xf.style.getAlternateStyleTypeVariation())) }}" />
+				<xf:macro id="theme_color_meta" arg-color="{{ parse_less_color(property_variation('metaThemeColor', 'default')) }}" arg-media="(prefers-color-scheme: {{ $xf.style.getDefaultStyleType() }})" />
+				<xf:macro id="theme_color_meta" arg-color="{{ parse_less_color(property_variation('metaThemeColor', $xf.style.getAlternateStyleTypeVariation())) }}" arg-media="(prefers-color-scheme: {{ $xf.style.getAlternateStyleType() }})" />
 			<xf:else />
-				<meta name="theme-color" content="{{ parse_less_color(property_variation('metaThemeColor', 'default')) }}" />
+				<xf:macro id="theme_color_meta" arg-color="{{ parse_less_color(property_variation('metaThemeColor', 'default')) }}" />
 			</xf:if>
 		</xf:if>
 	<xf:else />
-		<meta name="theme-color" content="{{ parse_less_color(property_variation('metaThemeColor', 'default')) }}" />
+		<xf:macro id="theme_color_meta" arg-color="{{ parse_less_color(property_variation('metaThemeColor', 'default')) }}" />
 	</xf:if>
 
 	<title>
@@ -1804,7 +1810,7 @@
 	<xf:redirect />
 
 </xf:form>]]></template>
-  <template type="admin" title="admin_navigation_edit" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:if is="$navigation.isInsert()">
+  <template type="admin" title="admin_navigation_edit" version_id="2030870" version_string="2.3.8"><![CDATA[<xf:if is="$navigation.isInsert()">
 	<xf:title>{{ phrase('add_navigation') }}</xf:title>
 <xf:else />
 	<xf:title>{{ phrase('edit_navigation:') }} {$navigation.title}</xf:title>
@@ -1862,6 +1868,9 @@
 				</xf:option>
 				<xf:option name="development_only" selected="$navigation.development_only">{{
 					phrase('display_this_navigation_in_development_mode_only') }}
+				</xf:option>
+				<xf:option name="super_admin_only" selected="$navigation.super_admin_only">{{
+					phrase('display_this_navigation_to_super_administrators_only') }}
 				</xf:option>
 				<xf:option name="hide_no_children" selected="$navigation.hide_no_children">{{
 					phrase('hide_this_navigation_when_there_no_viewable_children') }}
@@ -3863,7 +3872,7 @@ html
 		form.querySelector(ctrl.dataset.end || 'input[name=end]').value = ''
 	})
 </xf:js>]]></template>
-  <template type="admin" title="attachment_list" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:title>{{ phrase('attachment_browser') }}</xf:title>
+  <template type="admin" title="attachment_list" version_id="2030870" version_string="2.3.8"><![CDATA[<xf:title>{{ phrase('attachment_browser') }}</xf:title>
 
 <xf:css>
 	.attachment-tooltip-image
@@ -3910,7 +3919,7 @@ html
 									style="background-image: url({$attachment.thumbnail_url})"
 									alt="{$attachment.filename}"
 									data-xf-init="element-tooltip" data-element="| .tooltip-element">
-									<span class="tooltip-element"><img src="{$attachment.thumbnail_url}" class="attachment-tooltip-image" /></span>
+									<span class="tooltip-element"><img src="{$attachment.thumbnail_url}" srcset="{{ $attachment.has_retina_thumbnail ? $attachment.retina_thumbnail_url . ' 2x' : '' }}" class="attachment-tooltip-image" /></span>
 								</xf:cell>
 							<xf:else />
 								<xf:cell class="dataList-cell--attachment"
@@ -4266,23 +4275,24 @@ html
 	<div class="blockMessage">{{ phrase('there_no_banned_users') }}</div>
 </xf:if>]]></template>
   <template type="admin" title="banning_import" version_id="2000631" version_string="2.0.6 Beta 1"><![CDATA[<xf:include template="xml_import" />]]></template>
-  <template type="admin" title="base_custom_field_delete" version_id="2001070" version_string="2.0.10"><![CDATA[<xf:title>{{ phrase('confirm_action') }}</xf:title>
+  <template type="admin" title="base_custom_field_delete" version_id="2030570" version_string="2.3.5"><![CDATA[<xf:title>{{ phrase('confirm_action') }}</xf:title>
 
 <xf:form action="{{ link($prefix . '/delete', $field) }}" ajax="true" class="block">
 	<div class="block-container">
 		<div class="block-body">
 			<xf:inforow rowtype="confirm">
 				{{ phrase('please_confirm_that_you_want_to_delete_following:') }}
-				<strong><a href="{{ link($prefix . '/edit', $field) }}">{$field.title|htmlspecialchars}</a></strong>
+				<strong><a href="{{ link($prefix . '/edit', $field) }}">{$field.title}</a></strong>
 			</xf:inforow>
 		</div>
 		<xf:submitrow icon="delete" rowtype="simple" />
 	</div>
 </xf:form>]]></template>
-  <template type="admin" title="base_custom_field_edit" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:if is="$field.isInsert()">
+  <template type="admin" title="base_custom_field_edit" version_id="2030570" version_string="2.3.5"><![CDATA[<xf:if is="$field.isInsert()">
 	<xf:title>{{ phrase('add_field') }}</xf:title>
 <xf:else />
-	<xf:title>{{ phrase('edit_field:') }} {$field.title|htmlspecialchars}</xf:title>
+	<xf:title>{{ phrase('edit_field:') }} {$field.title|strip_tags}</xf:title>
+	<xf:h1>{{ phrase('edit_field:') }} {$field.title}</xf:h1>
 </xf:if>
 
 <xf:pageaction if="$field.isUpdate()">
@@ -4510,7 +4520,7 @@ html
 		<xf:option value="">{{ phrase('any') }}</xf:option>
 	</xf:radio>
 </xf:macro>]]></template>
-  <template type="admin" title="base_custom_field_list" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:pageaction>
+  <template type="admin" title="base_custom_field_list" version_id="2030570" version_string="2.3.5"><![CDATA[<xf:pageaction>
 	<xf:button href="{{ link($prefix . '/add') }}" icon="add">{{ phrase('add_field') }}</xf:button>
 </xf:pageaction>
 
@@ -4530,7 +4540,7 @@ html
 								</xf:datarow>
 								<xf:foreach loop="{$fieldsGrouped.{$displayGroupId}}" value="$field">
 									<xf:datarow
-										label="{$field.title|htmlspecialchars}"
+										label="{$field.title}"
 										href="{{ link($prefix . '/edit', $field) }}"
 										delete="{{ link($prefix . '/delete', $field) }}"
 										hash="{$field.field_id}">
@@ -6464,7 +6474,7 @@ html
 		overflow: auto;
 	}
 }]]></template>
-  <template type="admin" title="code_event_edit" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:if is="$event.isInsert()">
+  <template type="admin" title="code_event_edit" version_id="2040010" version_string="2.4.0 Alpha"><![CDATA[<xf:if is="$event.isInsert()">
 	<xf:title>{{ phrase('add_code_event') }}</xf:title>
 <xf:else />
 	<xf:title>{{ phrase('edit_code_event:') }} {$event.event_id}</xf:title>
@@ -6482,8 +6492,54 @@ html
 				dir="ltr" />
 
 			<xf:codeeditorrow name="description" value="{$event.description}" mode="html"
+				class="codeEditor--short"
 				label="{{ phrase('description') }}"
 				hint="{{ phrase('you_may_use_html') }}" />
+
+			<hr class="formRowSep" />
+
+			<xf:formrow rowtype="input"
+				label="{{ phrase('code_event_arguments') }}"
+				explain="{{ phrase('code_event_arguments_desc') }}">
+
+				<ul class="listPlain inputGroup-container">
+					<xf:foreach loop="$event.arguments" key="$counter" value="$arg">
+						<li class="inputGroup inputGroup--joined">
+							<xf:textbox name="arguments[{$counter}][name]" value="{{ $arg.name }}"
+								placeholder="{{ phrase('code_event_argument_name') }}"
+								size="15" dir="ltr" />
+							<span class="inputGroup-splitter"></span>
+							<xf:textbox name="arguments[{$counter}][type]" value="{{ $arg.type }}"
+								placeholder="{{ phrase('code_event_argument_type') }}"
+								size="25" dir="ltr" />
+							<span class="inputGroup-splitter"></span>
+							<xf:textbox name="arguments[{$counter}][description]" value="{{ $arg.description }}"
+								placeholder="{{ phrase('code_event_argument_description') }}"
+								size="40" />
+						</li>
+					</xf:foreach>
+
+					<li class="inputGroup inputGroup--joined" data-xf-init="field-adder" data-increment-format="arguments[{counter}]">
+						<xf:textbox name="arguments[{$nextCounter}][name]"
+							placeholder="{{ phrase('code_event_argument_name') }}"
+							size="15" dir="ltr" />
+						<span class="inputGroup-splitter"></span>
+						<xf:textbox name="arguments[{$nextCounter}][type]"
+							placeholder="{{ phrase('code_event_argument_type') }}"
+							size="25" dir="ltr" />
+						<span class="inputGroup-splitter"></span>
+						<xf:textbox name="arguments[{$nextCounter}][description]"
+							placeholder="{{ phrase('code_event_argument_description') }}"
+							size="40" />
+					</li>
+				</ul>
+			</xf:formrow>
+
+			<xf:textboxrow name="hint_description" value="{$event.hint_description}"
+				label="{{ phrase('code_event_hint_description') }}"
+				explain="{{ phrase('code_event_hint_description_desc') }}" />
+
+			<hr class="formRowSep" />
 
 			<xf:macro id="addon_macros::addon_edit" arg-addOnId="{$event.addon_id}" />
 		</div>
@@ -6523,7 +6579,7 @@ html
 <xf:else />
 	<div class="blockMessage">{{ phrase('no_items_have_been_created_yet') }}</div>
 </xf:if>]]></template>
-  <template type="admin" title="code_event_listener_edit" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:if is="$listener.isInsert()">
+  <template type="admin" title="code_event_listener_edit" version_id="2040010" version_string="2.4.0 Alpha"><![CDATA[<xf:if is="$listener.isInsert()">
 	<xf:title>{{ phrase('add_code_event_listener') }}</xf:title>
 <xf:else />
 	<xf:title>{{ phrase('edit_code_event_listener:') }} {$listener.event_id}</xf:title>
@@ -6542,12 +6598,16 @@ html
 			<xf:selectrow name="event_id" value="{$listener}"
 				label="{{ phrase('listen_to_event') }}"
 				data-xf-init="desc-loader"
-				data-desc-url="{{ link('code-events/get-description') }}">
+				data-desc-url="{{ link('code-events/get-event-details') }}">
 
 				<xf:option />
 				<xf:options source="{$events}" />
 				<xf:html>
-					<div class="js-descTarget eventDescription" dir="ltr">{$listener.Event.description|raw}</div>
+					<div class="js-descTarget eventDescription" dir="ltr">
+						<xf:if is="$listener.Event">
+							<xf:macro template="code_event_macros" name="event_details" arg-event="{$listener.Event}" />
+						</xf:if>
+					</div>
 				</xf:html>
 			</xf:selectrow>
 
@@ -6632,6 +6692,42 @@ html
 <xf:else />
 	<div class="blockMessage">{{ phrase('no_items_have_been_created_yet') }}</div>
 </xf:if>]]></template>
+  <template type="admin" title="code_event_macros" version_id="2040010" version_string="2.4.0 Alpha"><![CDATA[<xf:macro name="event_details" arg-event="!">
+	<xf:if is="$event.description">
+		<div class="eventDescription-description">{$event.description|raw}</div>
+	</xf:if>
+
+	<xf:if is="$event.hint_description">
+		<h4 class="block-textHeader block-textHeader--scaled">{{ phrase('event_hint') }}</h4>
+		<div class="eventDescription-description">{{ $event.hint_description }}</div>
+	</xf:if>
+
+	<xf:if is="$event.arguments">
+		<h4 class="block-textHeader block-textHeader--scaled">{{ phrase('code_event_callback_signature') }}</h4>
+		<pre class="codeBlock" dir="ltr"><code>{{ $event.callback_signature }}</code></pre>
+
+		<h4 class="block-textHeader block-textHeader--scaled">{{ phrase('code_event_arguments') }}</h4>
+		<table class="dataList dataList--separated" style="margin-top: 10px;">
+			<thead>
+				<tr class="dataList-row dataList-row--header">
+					<th class="dataList-cell">{{ phrase('code_event_argument_name') }}</th>
+					<th class="dataList-cell">{{ phrase('code_event_argument_type') }}</th>
+					<th class="dataList-cell">{{ phrase('code_event_argument_description') }}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<xf:foreach loop="$event.arguments" value="$arg">
+					<tr class="dataList-row">
+						<td class="dataList-cell"><code>{{ $arg.name }}</code></td>
+						<td class="dataList-cell"><xf:if is="$arg.type"><code>{{ $arg.type }}</code></xf:if></td>
+						<td class="dataList-cell">{{ $arg.description }}</td>
+					</tr>
+				</xf:foreach>
+			</tbody>
+		</table>
+	</xf:if>
+</xf:macro>
+]]></template>
   <template type="admin" title="connected_account_provider_apple" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:inforow>{{ phrase('configure_private_email_relay_service') }}</xf:inforow>
 
 <xf:textboxrow name="options[team_id]" value="{$options.team_id}"
@@ -6922,7 +7018,7 @@ html
 	<xf:macro id="connected_account_provider_test_macros::picture"
 		arg-url="{$providerData.avatar_url}" />
 </xf:if>]]></template>
-  <template type="admin" title="connected_account_provider_test_twitter" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:if is="!$providerData">
+  <template type="admin" title="connected_account_provider_test_x" version_id="2030570" version_string="2.3.5"><![CDATA[<xf:if is="!$providerData">
 	<xf:macro id="connected_account_provider_test_macros::explain"
 		arg-providerTitle="{$provider.title}"
 		arg-keyName="{{ phrase('consumer_key') }}"
@@ -6965,15 +7061,15 @@ html
 	<xf:macro id="connected_account_provider_test_macros::picture"
 		arg-url="{$providerData.avatar_url}" />
 </xf:if>]]></template>
-  <template type="admin" title="connected_account_provider_twitter" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[<xf:textboxrow name="options[consumer_key]" value="{$options.consumer_key}"
+  <template type="admin" title="connected_account_provider_x" version_id="2030570" version_string="2.3.5"><![CDATA[<xf:textboxrow name="options[consumer_key]" value="{$options.consumer_key}"
 	label="{{ phrase('consumer_key') }}"
 	hint="{{ phrase('required') }}"
-	explain="{{ phrase('con_acc_twitter_consumer_key_explain') }}" />
+	explain="{{ phrase('con_acc_x_consumer_key_explain') }}" />
 
 <xf:textboxrow name="options[consumer_secret]" value="{$options.consumer_secret}"
 	label="{{ phrase('consumer_secret') }}"
 	hint="{{ phrase('required') }}"
-	explain="{{ phrase('con_acc_twitter_consumer_secret_explain') }}" />]]></template>
+	explain="{{ phrase('con_acc_x_consumer_secret_explain') }}" />]]></template>
   <template type="admin" title="connected_account_provider_xenforo" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:textboxrow name="options[display_title]"
 	value="{$options.display_title}"
 	label="{{ phrase('display_title') }}"
@@ -9195,28 +9291,29 @@ html
 		{$panes|raw}
 	</xf:if>
 </xf:macro>]]></template>
-  <template type="admin" title="helper_js_global" version_id="2030170" version_string="2.3.1"><![CDATA[<xf:macro id="head" arg-app="!">
+  <template type="admin" title="helper_js_global" version_id="2030570" version_string="2.3.5"><![CDATA[<xf:macro id="head" arg-app="!">
 	<xf:macro id="public:helper_js_global::head" arg-app="{$app}" />
 	<xf:js src="xf/admin.js" min="1" />
-</xf:macro>
-
-<xf:macro id="body" arg-jsState="{{ null }}">
-	<xf:macro id="public:helper_js_global::body" arg-app="admin" arg-jsState="{$jsState}" />
 	<script{{ $xf.request.isRocketLoaderDisabled() ? ' data-cfasync="false"' : ''}}>
-		window.addEventListener('DOMContentLoaded', function() {
+		XF.ready(() =>
+		{
 			XF.extendObject(true, XF.config, {
 				job: {
 					manualUrl: "{{ link('tools/run-job')|escape('js') }}"
 				},
 				visitorCounts: null
-			});
+			})
 			XF.extendObject(XF.phrases, {
 				cancel: "{{ phrase('cancel')|escape('js') }}",
 				cancelling: "{{ phrase('cancelling')|escape('js') }}",
 				no_items_matched_your_filter: "{{ phrase('no_items_matched_your_filter')|escape('js') }}"
-			});
-		});
+			})
+		})
 	</script>
+</xf:macro>
+
+<xf:macro id="body" arg-jsState="{{ null }}">
+	<xf:macro id="public:helper_js_global::body" arg-app="admin" arg-jsState="{$jsState}" />
 </xf:macro>]]></template>
   <template type="admin" title="helper_node_delete_children" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:macro id="delete_row" arg-node="!" arg-nodeTree="!">
 	<xf:if is="$node.hasChildren()">
@@ -12758,7 +12855,7 @@ html
 		</div>
 	</div>
 </div>]]></template>
-  <template type="admin" title="login_form" version_id="2030038" version_string="2.3.0 Beta 8"><![CDATA[<xf:page option="template">LOGIN_CONTAINER</xf:page>
+  <template type="admin" title="login_form" version_id="2030570" version_string="2.3.5"><![CDATA[<xf:page option="template">LOGIN_CONTAINER</xf:page>
 
 <xf:js src="xf/webauthn.js" min="1" />
 
@@ -12802,8 +12899,8 @@ html
 				data-verifying="{{ phrase('verifying...') }}">
 
 				<div class="adminLogin-row adminLogin-row--submit">
-					<xf:button class="button--provider button--provider--passkey js-webauthnStart">
-						{{ passkey_icon() }} {{ phrase('passkey_login') }}
+					<xf:button class="button--icon button--provider button--provider--passkey js-webauthnStart">
+						{{ phrase('passkey_login') }}
 					</xf:button>
 
 					<xf:hiddenval name="webauthn_payload" />
@@ -12816,23 +12913,54 @@ html
 	<div class="adminLogin-boardTitle">{$xf.options.boardTitle}</div>
 
 </div>]]></template>
-  <template type="admin" title="login_password_confirm" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:title>{{ phrase('password_confirmation') }}</xf:title>
+  <template type="admin" title="login_password_confirm" version_id="2030870" version_string="2.3.8"><![CDATA[<xf:js src="xf/webauthn.js" min="1" />
 
-<xf:form action="{{ link('login/password-confirm') }}" class="block" ajax="true">
-	<div class="block-container">
-		<div class="block-body">
-			<xf:inforow rowtype="confirm">
-				{{ phrase('to_access_this_page_you_must_first_confirm_your_password') }}
-			</xf:inforow>
+<xf:title>{{ phrase('password_confirmation') }}</xf:title>
 
-			<xf:formrow label="{{ phrase('user_name') }}">{$xf.visitor.username}</xf:formrow>
+<div class="blocks">
+	<xf:form action="{{ link('login/password-confirm') }}" class="block" ajax="true">
+		<div class="block-container">
+			<div class="block-body">
+				<xf:inforow rowtype="confirm">
+					{{ phrase('to_access_this_page_you_must_first_confirm_your_password') }}
+				</xf:inforow>
 
-			<xf:passwordboxrow name="password" label="{{ phrase('password') }}" />
+				<xf:formrow label="{{ phrase('user_name') }}">{$xf.visitor.username}</xf:formrow>
+
+				<xf:passwordboxrow name="password" label="{{ phrase('password') }}" />
+			</div>
+			<xf:submitrow submit="{{ phrase('confirm') }}" />
 		</div>
-		<xf:submitrow submit="{{ phrase('confirm') }}" />
-	</div>
-	<xf:redirect url="{$redirect}" />
-</xf:form>]]></template>
+		<xf:redirect url="{$redirect}" />
+	</xf:form>
+
+	<xf:if is="$passkey && count($existingCredentials) > 0">
+		<div class="blocks-textJoiner"><span></span><em>{{ phrase('or_separator') }}</em><span></span></div>
+
+		<div class="block">
+			<div class="block-container">
+				<div class="block-body">
+					<xf:formrow rowtype="button">
+						<xf:form action="{{ link('login/password-confirm') }}" data-xf-init="webauthn"
+							data-type="get"
+							data-autotrigger="false"
+							data-autosubmit="true"
+							data-verifying="{{ phrase('verifying...') }}">
+
+							<xf:button class="button--icon button--provider button--provider--passkey js-webauthnStart">
+								{{ phrase('passkey') }}
+							</xf:button>
+
+							<xf:hiddenval name="webauthn_payload" />
+							<xf:hiddenval name="webauthn_challenge">{{ $passkey ? $passkey.getChallenge() : '' }}</xf:hiddenval>
+							<xf:redirect url="{$redirect}" />
+						</xf:form>
+					</xf:formrow>
+				</div>
+			</div>
+		</div>
+	</xf:if>
+</div>]]></template>
   <template type="admin" title="login_two_step" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[<xf:title>{{ phrase('two_step_verification_required') }}</xf:title>
 
 <xf:page option="loginWide" value="{{ true }}" />
@@ -14866,7 +14994,7 @@ html
 	arg-group="{$group}"
 	arg-options="{$group.Options}"
 	arg-forceShowAdvanced="{{ false }}" />]]></template>
-  <template type="admin" title="option_macros" version_id="2030038" version_string="2.3.0 Beta 8"><![CDATA[<xf:macro id="option_row" arg-group="" arg-option="!" arg-includeAddOnHint="{{ true }}" arg-forceShowAdvanced="{{ false }}">
+  <template type="admin" title="option_macros" version_id="2030870" version_string="2.3.8"><![CDATA[<xf:macro id="option_row" arg-group="" arg-option="!" arg-includeAddOnHint="{{ true }}" arg-forceShowAdvanced="{{ false }}">
 	<xf:set var="$formatParams" value="{$option.formatParams}" />
 	<xf:set var="$rowClass" value="{{ ($option.advanced AND !$forceShowAdvanced) ? 'acp--advanced' : '' }}" />
 	<xf:set var="$inputName"><xf:macro id="input_name" arg-id="{$option.option_id}" /></xf:set>
@@ -14976,6 +15104,13 @@ html
 		<xf:else />
 			{$includeHtml}
 		</xf:if>
+	<xf:elseif is="$option.edit_format == 'textbox' && $formatParams.asset && $formatParams.asset is not empty" />
+		<xf:assetuploadrow name="{$inputName}" value="{$option.option_value}" class="{$formatParams.class}" rowclass="{$rowClass}" asset="{$formatParams.asset}" accept="{$formatParams.accept}">
+			<xf:label>{$option.title}</xf:label>
+			<xf:hint>{$hintHtml}</xf:hint>
+			<xf:explain>{$explainHtml}</xf:explain>
+			<xf:finalhtml>{$listedHtml}</xf:finalhtml>
+		</xf:assetuploadrow>
 	<xf:elseif is="$option.edit_format == 'textbox' && $formatParams.rows && $formatParams.rows > 1" />
 		<xf:textarearow name="{$inputName}" value="{$option.option_value}" rows="{$formatParams.rows}" autosize="true" class="{$formatParams.class}" rowclass="{$rowClass}">
 			<xf:label>{$option.title}</xf:label>
@@ -23428,7 +23563,7 @@ table.cssPropertySet
 		<xf:submitrow icon="download" submit="{{ phrase('download_and_install...') }}"/>
 	</div>
 </xf:form>]]></template>
-  <template type="admin" title="tools_rebuild" version_id="2030170" version_string="2.3.1"><![CDATA[<xf:title>{{ phrase('rebuild_caches') }}</xf:title>
+  <template type="admin" title="tools_rebuild" version_id="2030870" version_string="2.3.8"><![CDATA[<xf:title>{{ phrase('rebuild_caches') }}</xf:title>
 
 <xf:if is="$success">
 	<div class="blockMessage blockMessage--success blockMessage--iconic">{{ phrase('cache_rebuilt_successfully') }}</div>
@@ -23500,6 +23635,11 @@ table.cssPropertySet
 	arg-header="{{ phrase('rebuild_trophies') }}"
 	arg-job="XF:Trophy" />
 <!--[XF:after_trophies]-->
+
+<xf:macro id="rebuild_job"
+	arg-header="{{ phrase('rebuild_message_counts') }}"
+	arg-job="XF:MessageCount" />
+<!--[XF:after_message_count]-->
 
 <xf:macro id="rebuild_job"
 	arg-header="{{ phrase('rebuild_reaction_score') }}"
@@ -23611,6 +23751,9 @@ table.cssPropertySet
 		<xf:option value="images"
 			label="{{ phrase('images') }}"
 			selected="true" />
+		<xf:option value="unfurls"
+			label="{{ phrase('unfurls') }}"
+			selected="true" />
 	</xf:checkboxrow>
 </xf:set>
 <xf:macro id="rebuild_job"
@@ -23631,6 +23774,9 @@ table.cssPropertySet
 			selected="true" />
 		<xf:option value="images"
 			label="{{ phrase('images') }}"
+			selected="true" />
+		<xf:option value="unfurls"
+			label="{{ phrase('unfurls') }}"
 			selected="true" />
 	</xf:checkboxrow>
 </xf:set>
@@ -23653,6 +23799,9 @@ table.cssPropertySet
 		<xf:option value="images"
 			label="{{ phrase('images') }}"
 			selected="true" />
+		<xf:option value="unfurls"
+			label="{{ phrase('unfurls') }}"
+			selected="true" />
 	</xf:checkboxrow>
 </xf:set>
 <xf:macro id="rebuild_job"
@@ -23673,6 +23822,9 @@ table.cssPropertySet
 			selected="true" />
 		<xf:option value="images"
 			label="{{ phrase('images') }}"
+			selected="true" />
+		<xf:option value="unfurls"
+			label="{{ phrase('unfurls') }}"
 			selected="true" />
 	</xf:checkboxrow>
 </xf:set>
@@ -24472,6 +24624,18 @@ table.cssPropertySet
 	<xf:hiddenval name="link_title">{$alert.link_title}</xf:hiddenval>
 	<xf:hiddenval name="alert_body">{$alert.alert_body}</xf:hiddenval>
 </xf:form>]]></template>
+  <template type="admin" title="user_application_revoke" version_id="2030770" version_string="2.3.7"><![CDATA[<xf:title>{{ phrase('revoke_application_for_x', {'username': $user.username}) }}</xf:title>
+
+<xf:form action="{{ link('users/application-revoke', $user, {'client_id': $client.client_id}) }}" class="block" ajax="true">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:inforow rowtype="confirm">
+				{{ phrase('please_confirm_that_you_want_to_revoke_this_application') }}
+			</xf:inforow>
+		</div>
+		<xf:submitrow submit="{{ phrase('revoke_access') }}" rowtype="simple" />
+	</div>
+</xf:form>]]></template>
   <template type="admin" title="user_avatar" version_id="2030055" version_string="2.3.0 Release Candidate 5"><![CDATA[<xf:title>{{ phrase('avatar') }}</xf:title>
 
 <xf:form action="{{ link('users/avatar', $user) }}" upload="true" ajax="true" class="block">
@@ -24727,7 +24891,7 @@ table.cssPropertySet
 		<xf:submitrow rowtype="simple" icon="delete" />
 	</div>
 </xf:form>]]></template>
-  <template type="admin" title="user_edit" version_id="2030470" version_string="2.3.4"><![CDATA[<xf:if is="$user.isInsert()">
+  <template type="admin" title="user_edit" version_id="2030870" version_string="2.3.8"><![CDATA[<xf:if is="$user.isInsert()">
 	<xf:title>{{ phrase('add_user') }}</xf:title>
 <xf:else />
 	<xf:title>{{ phrase('edit_user:') }} {$user.username}</xf:title>
@@ -25033,15 +25197,19 @@ table.cssPropertySet
 						label="{{ phrase('trophy_points') }}" />
 				</div>
 
-				<h3 class="block-formSectionHeader">
-					<span class="collapseTrigger collapseTrigger--block" data-xf-click="toggle" data-target="< :up:next">
-						<span class="block-formSectionHeader-aligner">{{ phrase('additional_contact') }}</span>
-					</span>
-				</h3>
-				<div class="block-body block-body--collapsible">
-					<xf:macro id="public:custom_fields_macros::custom_fields_edit"
-						arg-type="users" arg-group="contact" arg-set="{$user.Profile.custom_fields}" arg-editMode="admin" />
-				</div>
+				<xf:if contentcheck="true">
+					<h3 class="block-formSectionHeader">
+						<span class="collapseTrigger collapseTrigger--block" data-xf-click="toggle" data-target="< :up:next">
+							<span class="block-formSectionHeader-aligner">{{ phrase('additional_contact') }}</span>
+						</span>
+					</h3>
+					<div class="block-body block-body--collapsible">
+						<xf:contentcheck>
+							<xf:macro id="public:custom_fields_macros::custom_fields_edit"
+								arg-type="users" arg-group="contact" arg-set="{$user.Profile.custom_fields}" arg-editMode="admin" />
+						</xf:contentcheck>
+					</div>
+				</xf:if>
 
 				<h3 class="block-formSectionHeader">
 					<span class="collapseTrigger collapseTrigger--block" data-xf-click="toggle" data-target="< :up:next">
@@ -25337,7 +25505,7 @@ table.cssPropertySet
 		</div>
 	</div>
 </div>]]></template>
-  <template type="admin" title="user_extra" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[<xf:title>{$user.username}</xf:title>
+  <template type="admin" title="user_extra" version_id="2030870" version_string="2.3.8"><![CDATA[<xf:title>{$user.username}</xf:title>
 
 <div class="block">
 	<div class="block-container">
@@ -25376,6 +25544,36 @@ table.cssPropertySet
 				</dl>
 			<xf:else />
 				{{ phrase('none') }}
+			</xf:foreach>
+		</div>
+
+		<h3 class="block-minorHeader">{{ phrase('authorised_applications') }}</h3>
+		<div class="block-body">
+			<xf:foreach loop="$clients" value="$client">
+				<li class="block-row block-row--separated">
+					<div class="contentRow">
+						<div class="contentRow-figure contentRow-figure--fixedSmall">
+							<xf:if is="$client.image_url">
+								<img src="{{ base_url($client.image_url) }}" alt="{$client.title}" />
+							<xf:else />
+								<xf:fa icon="fa-cog fa-3x u-muted" />
+							</xf:if>
+						</div>
+						<div class="contentRow-main">
+							<div class="contentRow-extra">
+								<xf:button href="{{ link('users/application-revoke', $user, {'client_id': $client.client_id}) }}" class="button--link" overlay="true">{{ phrase('revoke') }}</xf:button>
+							</div>
+
+							<h3 class="contentRow-header">
+								<a href="{{ link('oauth2/clients/edit', $client) }}" target="_blank">{$client.title}</a>
+							</h3>
+						</div>
+					</div>
+				</li>
+			<xf:else />
+				<div class="block-row">
+					{{ phrase('none') }}
+				</div>
 			</xf:foreach>
 		</div>
 	</div>
@@ -26191,22 +26389,35 @@ table.cssPropertySet
 		<xf:submitrow sticky="true" icon="save" />
 	</div>
 </xf:form>]]></template>
-  <template type="admin" title="user_upgrade_active_list" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:title>{{ phrase('active_user_upgrades') }}{{ $userUpgrade ? ': ' . $userUpgrade.title : '' }}</xf:title>
+  <template type="admin" title="user_upgrade_active_list" version_id="2030870" version_string="2.3.8"><![CDATA[<xf:title>{{ phrase('active_user_upgrades') }}</xf:title>
 
-<xf:form action="{{ link('user-upgrades/active', $userUpgrade) }}" class="block">
+<div class="block">
 	<div class="block-container">
-		<div class="block-body">
-			<xf:formrow label="{{ phrase('filter_by_user') }}" rowtype="input">
-				<xf:textbox name="username" class="input--inline" ac="single" />
-				<xf:button type="submit">{{ phrase('filter') }}</xf:button>
-			</xf:formrow>
-		</div>
-	</div>
-</xf:form>
+		<xf:macro name="filter_macros::filter_bar"
+			arg-route="user-upgrades/active"
+			arg-content="{{ null }}"
+			arg-params="{$linkParams}"
+			arg-displayValues="{$filterDisplay}"
+			arg-phrases="{{ {
+				'key:username': phrase('user_name:'),
+				'key:user_upgrade_id': phrase('upgrade:'),
+				'key:payment_profile_id': phrase('payment_profile:'),
+				'key:start_from': phrase('started_from:'),
+				'key:start_to': phrase('started_to:'),
+				'key:end_from': phrase('expires_from:'),
+				'key:end_to': phrase('expires_to:'),
+				'key:order': phrase('sort_by:'),
+				'val:username_desc': phrase('user_name') . ' - ' . phrase('descending'),
+				'val:username_asc': phrase('user_name') . ' - ' . phrase('ascending'),
+				'val:start_date_desc': phrase('start_date') . ' - ' . phrase('descending'),
+				'val:start_date_asc': phrase('start_date') . ' - ' . phrase('ascending'),
+				'val:end_date_desc': phrase('end_date') . ' - ' . phrase('descending'),
+				'val:end_date_asc': phrase('end_date') . ' - ' . phrase('ascending')
+			} }}"
+			arg-menu="user-upgrades/active-filter"
+			arg-menuTitle="{{ phrase('filter') }}" />
 
-<xf:if is="$activeUpgrades is not empty">
-	<div class="block">
-		<div class="block-container">
+		<xf:if is="$activeUpgrades is not empty">
 			<div class="block-body">
 				<xf:datalist data-xf-init="responsive-data-list">
 					<xf:datarow rowtype="header">
@@ -26244,15 +26455,15 @@ table.cssPropertySet
 			<div class="block-footer">
 				<span class="block-footer-counter">{{ display_totals($activeUpgrades, $totalActive) }}</span>
 			</div>
-		</div>
-
-		<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$totalActive}"
-			link="user-upgrades/active" data="{$userUpgrade}" params="{$linkParams}"
-			wrapperclass="block-outer block-outer--after" />
+		<xf:else />
+			<div class="blockMessage">{{ phrase('no_results_found') }}</div>
+		</xf:if>
 	</div>
-<xf:else />
-	<div class="blockMessage">{{ phrase('no_results_found') }}</div>
-</xf:if>]]></template>
+
+	<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$totalActive}"
+		link="user-upgrades/active" params="{$linkParams}"
+		wrapperclass="block-outer block-outer--after" />
+</div>]]></template>
   <template type="admin" title="user_upgrade_edit" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:if is="$upgrade.isInsert()">
 	<xf:title>{{ phrase('add_user_upgrade') }}</xf:title>
 <xf:else />
@@ -26343,22 +26554,35 @@ table.cssPropertySet
 		<xf:submitrow icon="save" sticky="true" />
 	</div>
 </xf:form>]]></template>
-  <template type="admin" title="user_upgrade_expired_list" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:title>{{ phrase('expired_user_upgrades') }}{{ $userUpgrade ? ': ' . $userUpgrade.title : '' }}</xf:title>
+  <template type="admin" title="user_upgrade_expired_list" version_id="2030870" version_string="2.3.8"><![CDATA[<xf:title>{{ phrase('expired_user_upgrades') }}</xf:title>
 
-<xf:form action="{{ link('user-upgrades/expired', $userUpgrade) }}" class="block">
+<div class="block">
 	<div class="block-container">
-		<div class="block-body">
-			<xf:formrow label="{{ phrase('filter_by_user') }}" rowtype="input">
-				<xf:textbox name="username" class="input--inline" ac="single" />
-				<xf:button type="submit">{{ phrase('filter') }}</xf:button>
-			</xf:formrow>
-		</div>
-	</div>
-</xf:form>
+		<xf:macro name="filter_macros::filter_bar"
+			arg-route="user-upgrades/expired"
+			arg-content="{{ null }}"
+			arg-params="{$linkParams}"
+			arg-displayValues="{$filterDisplay}"
+			arg-phrases="{{ {
+				'key:username': phrase('user_name:'),
+				'key:user_upgrade_id': phrase('upgrade:'),
+				'key:payment_profile_id': phrase('payment_profile:'),
+				'key:start_from': phrase('started_from:'),
+				'key:start_to': phrase('started_to:'),
+				'key:end_from': phrase('expired_from:'),
+				'key:end_to': phrase('expired_to:'),
+				'key:order': phrase('sort_by:'),
+				'val:username_desc': phrase('user_name') . ' - ' . phrase('descending'),
+				'val:username_asc': phrase('user_name') . ' - ' . phrase('ascending'),
+				'val:start_date_desc': phrase('start_date') . ' - ' . phrase('descending'),
+				'val:start_date_asc': phrase('start_date') . ' - ' . phrase('ascending'),
+				'val:end_date_desc': phrase('end_date') . ' - ' . phrase('descending'),
+				'val:end_date_asc': phrase('end_date') . ' - ' . phrase('ascending')
+			} }}"
+			arg-menu="user-upgrades/expired-filter"
+			arg-menuTitle="{{ phrase('filter') }}" />
 
-<xf:if is="$expiredUpgrades is not empty">
-	<div class="block">
-		<div class="block-container">
+		<xf:if is="$expiredUpgrades is not empty">
 			<div class="block-body">
 				<xf:datalist data-xf-init="responsive-data-list">
 					<xf:datarow rowtype="header">
@@ -26393,15 +26617,141 @@ table.cssPropertySet
 			<div class="block-footer">
 				<span class="block-footer-counter">{{ display_totals($expiredUpgrades, $totalExpired) }}</span>
 			</div>
-		</div>
-
-		<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$totalExpired}"
-			link="user-upgrades/expired" data="{$userUpgrade}" params="{$linkParams}"
-			wrapperclass="block-outer block-outer--after" />
+		<xf:else />
+			<div class="blockMessage">{{ phrase('no_results_found') }}</div>
+		</xf:if>
 	</div>
-<xf:else />
-	<div class="blockMessage">{{ phrase('no_results_found') }}</div>
-</xf:if>]]></template>
+
+	<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$totalExpired}"
+		link="user-upgrades/expired" params="{$linkParams}"
+		wrapperclass="block-outer block-outer--after" />
+</div>]]></template>
+  <template type="admin" title="user_upgrade_filter" version_id="2030870" version_string="2.3.8"><![CDATA[<xf:form action="{{ link('user-upgrades/' . $type) }}" class="menu-content">
+	<div class="menu-row">
+		{{ phrase('user_name:') }}
+		<div class="u-inputSpacer">
+			<xf:textbox name="username" ac="single" value="{$conditions.username}" dir="ltr" />
+		</div>
+	</div>
+
+	<div class="menu-row">
+		{{ phrase('upgrade:') }}
+		<div class="u-inputSpacer">
+			<xf:select name="user_upgrade_id" value="{$conditions.user_upgrade_id}">
+				<xf:option value="">{{ phrase('(all)') }}</xf:option>
+				<xf:foreach loop="$upgrades" value="$upgrade">
+					<xf:option value="{$upgrade.user_upgrade_id}">{$upgrade.title}</xf:option>
+				</xf:foreach>
+			</xf:select>
+		</div>
+	</div>
+
+	<div class="menu-row menu-row--separated">
+		{{ phrase('payment_profile:') }}
+		<div class="u-inputSpacer">
+			<xf:select name="payment_profile_id" value="{$conditions.payment_profile_id}">
+				<xf:option value="">{{ phrase('(all)') }}</xf:option>
+				<xf:foreach loop="$paymentProfiles" value="$profile">
+					<xf:option value="{$profile.payment_profile_id}">{$profile.title}</xf:option>
+				</xf:foreach>
+			</xf:select>
+		</div>
+	</div>
+
+	<div class="menu-row">
+		{{ phrase('started_between:') }}
+		<div class="u-inputSpacer inputGroup inputGroup--auto">
+			<xf:dateinput name="start_from" value="{{ $conditions.start_from ? date($conditions.start_from, 'Y-m-d') : '' }}" />
+			<span class="inputGroup-text">-</span>
+			<xf:dateinput name="start_to" value="{{ $conditions.start_to ? date($conditions.start_to, 'Y-m-d') : '' }}" />
+		</div>
+	</div>
+	<div class="menu-row menu-row--separated">
+		{{ phrase('date_presets:') }}
+		<div class="u-inputSpacer">
+			<xf:select name="date_preset_start" class="js-presetChange filterBlock-input" data-start="input[name=start_from]" data-end="input[name=start_to]">
+				<xf:option label="" value="-1" />
+				<xf:options source="{$datePresets}" />
+				<xf:option value="1995-01-01">{{ phrase('all_time') }}</xf:option>
+			</xf:select>
+		</div>
+	</div>
+
+	<div class="menu-row">
+		{{ phrase('expires_between:') }}
+		<div class="u-inputSpacer inputGroup inputGroup--auto">
+			<xf:dateinput name="end_from" value="{{ $conditions.end_from ? date($conditions.end_from, 'Y-m-d') : '' }}" />
+			<span class="inputGroup-text">-</span>
+			<xf:dateinput name="end_to" value="{{ $conditions.end_to ? date($conditions.end_to, 'Y-m-d') : '' }}" />
+		</div>
+	</div>
+	<xf:if is="$type === 'expired'">
+		<div class="menu-row menu-row--separated">
+			{{ phrase('date_presets:') }}
+			<div class="u-inputSpacer">
+				<xf:select name="date_preset_end" class="js-presetChange filterBlock-input" data-start="input[name=end_from]" data-end="input[name=end_to]">
+					<xf:option label="" value="-1" />
+					<xf:options source="{$datePresets}" />
+					<xf:option value="1995-01-01">{{ phrase('all_time') }}</xf:option>
+				</xf:select>
+			</div>
+		</div>
+	</xf:if>
+
+	<div class="menu-row">
+		{{ phrase('sort_by:') }}
+		<div class="u-inputSpacer inputGroup">
+			<xf:select name="order" value="{{ $conditions.order ?: ($type == 'active' ? 'start_date' : 'end_date') }}">
+				<xf:option value="username">{{ phrase('user_name') }}</xf:option>
+				<xf:option value="start_date">{{ phrase('start_date') }}</xf:option>
+				<xf:option value="end_date">{{ phrase('end_date') }}</xf:option>
+			</xf:select>
+			<span class="inputGroup-splitter"></span>
+			<xf:select name="direction" value="{{ $conditions.direction ?: 'desc' }}">
+				<xf:option value="desc">{{ phrase('descending') }}</xf:option>
+				<xf:option value="asc">{{ phrase('ascending') }}</xf:option>
+			</xf:select>
+		</div>
+	</div>
+
+	<div class="menu-footer">
+		<span class="menu-footer-controls">
+			<xf:button type="submit" icon="search" class="button--primary">{{ phrase('filter') }}</xf:button>
+		</span>
+	</div>
+</xf:form>
+
+<xf:js>
+	document.querySelectorAll('.js-presetChange').forEach(ctrl =>
+	{
+		XF.on(ctrl, 'change', e =>
+		{
+			const value = ctrl.value
+			const form = ctrl.closest('form')
+
+			if (value == -1)
+			{
+				return
+			}
+
+			const startSelector = ctrl.dataset.start || 'input[name=start]'
+			const endSelector = ctrl.dataset.end || 'input[name=end]'
+
+			const startInput = form.querySelector(startSelector)
+			const endInput = form.querySelector(endSelector)
+
+			if (startInput)
+			{
+				startInput.value = value
+			}
+			if (endInput)
+			{
+				endInput.value = ''
+			}
+		})
+	})
+</xf:js>
+]]></template>
   <template type="admin" title="user_upgrade_list" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:title>{{ phrase('user_upgrades') }}</xf:title>
 
 <xf:pageaction>
@@ -27705,13 +28055,13 @@ table.cssPropertySet
 
 {{ phrase('email_footer_text') }}
 </mail:text>]]></template>
-  <template type="email" title="activity_summary" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:page option="template">ACTIVITY_SUMMARY_CONTAINER</xf:page>
+  <template type="email" title="activity_summary" version_id="2030870" version_string="2.3.8"><![CDATA[<xf:page option="template">ACTIVITY_SUMMARY_CONTAINER</xf:page>
 
 <mail:subject>{$xf.options.boardTitle} - {{ phrase('see_what_you_have_missed') }}</mail:subject>
 
 <xf:if is="$displayValues">
 	<xf:macro id="activity_summary_macros::outer_header"
-		arg-title="{{ phrase('summary_of_what_you_missed_recently') }}" />
+		arg-title="{{ phrase('summary_of_what_you_missed_recently')|preescaped }}" />
 
 	<xf:set var="$content">
 		<table border="0" width="100%" cellpadding="0" cellspacing="0" class="statsContainer">
@@ -27942,7 +28292,7 @@ table.cssPropertySet
 
 	<p>{{ phrase('by_user_x', {'name': username_link_email($content.User, $content.username) }) }}</p>
 </xf:extension>]]></template>
-  <template type="email" title="bb_code_tag_attach" version_id="2020032" version_string="2.2.0 Beta 2"><![CDATA[<xf:if is="!$attachment"><xf:trim>
+  <template type="email" title="bb_code_tag_attach" version_id="2030870" version_string="2.3.8"><![CDATA[<xf:if is="!$attachment"><xf:trim>
 	<a href="{{ link('canonical:attachments', {'attachment_id': $id}) }}" target="_blank">{{ phrase('view_attachment_x', {'name': $id}) }}</a>
 </xf:trim><xf:elseif is="($attachment.is_video OR $attachment.is_audio) AND $full AND $canView" /><xf:trim>
 	<div class="mediaPlaceholder">{{ phrase('embedded_media') }}</div>
@@ -27951,6 +28301,7 @@ table.cssPropertySet
 </xf:trim><xf:else /><xf:trim>
 	<a href="{{ link('canonical:attachments', $attachment, {'hash': $attachment.temp_hash}) }}"
 		target="_blank"><img src="{$attachment.thumbnail_url_full}"
+		srcset="{{ $attachment.has_retina_thumbnail ? $attachment.retina_thumbnail_url_full . ' 2x' : '' }}"
 		class="bbImage"
 		style="{$styleAttr}"
 		alt="{$alt}"
@@ -28799,7 +29150,7 @@ pre.code
 <xf:macro name="public:helper_js_global::body" arg-app="public" />
 </body>
 </html>]]></template>
-  <template type="public" title="OAUTH_CONTAINER" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<!DOCTYPE html>
+  <template type="public" title="OAUTH_CONTAINER" version_id="2031170" version_string="2.3.11"><![CDATA[<!DOCTYPE html>
 <html id="XF" lang="{$xf.language.language_code}" dir="{$xf.language.text_direction}"
 	data-app="public"
 	{{ ($xf.style.isVariationsEnabled() && $xf.visitor.style_variation) ? 'data-variation="' . $xf.visitor.style_variation . '"' : '' }}
@@ -28815,19 +29166,25 @@ class="{{ $template ? 'template-' . $template : '' }}">
 
 	<title>{{ phrase('authorize_access_to_your_account') }} | {$xf.options.boardTitle}</title>
 
+	<xf:macro id="theme_color_meta" arg-color="!" arg-media="">
+		<xf:if is="$color">
+			<meta name="theme-color"{{ $media ? ' media="' . $media . '"' : '' }} content="{$color}" />
+		</xf:if>
+	</xf:macro>
+
 	<xf:if is="$xf.style.isVariationsEnabled()">
 		<xf:if is="$xf.visitor.style_variation">
-			<meta name="theme-color" content="{{ parse_less_color(property_variation('metaThemeColor', $xf.visitor.style_variation)) }}" />
-			<xf:else />
+			<xf:macro id="theme_color_meta" arg-color="{{ parse_less_color(property_variation('metaThemeColor', $xf.visitor.style_variation)) }}" />
+		<xf:else />
 			<xf:if is="$xf.style.hasAlternateStyleTypeVariation()">
-				<meta name="theme-color" media="(prefers-color-scheme: {{ $xf.style.getDefaultStyleType() }})" content="{{ parse_less_color(property_variation('metaThemeColor', 'default')) }}" />
-				<meta name="theme-color" media="(prefers-color-scheme: {{ $xf.style.getAlternateStyleType() }})" content="{{ parse_less_color(property_variation('metaThemeColor', $xf.style.getAlternateStyleTypeVariation())) }}" />
-				<xf:else />
-				<meta name="theme-color" content="{{ parse_less_color(property_variation('metaThemeColor', 'default')) }}" />
+				<xf:macro id="theme_color_meta" arg-color="{{ parse_less_color(property_variation('metaThemeColor', 'default')) }}" arg-media="(prefers-color-scheme: {{ $xf.style.getDefaultStyleType() }})" />
+				<xf:macro id="theme_color_meta" arg-color="{{ parse_less_color(property_variation('metaThemeColor', $xf.style.getAlternateStyleTypeVariation())) }}" arg-media="(prefers-color-scheme: {{ $xf.style.getAlternateStyleType() }})" />
+			<xf:else />
+				<xf:macro id="theme_color_meta" arg-color="{{ parse_less_color(property_variation('metaThemeColor', 'default')) }}" />
 			</xf:if>
 		</xf:if>
-		<xf:else />
-		<meta name="theme-color" content="{{ parse_less_color(property_variation('metaThemeColor', 'default')) }}" />
+	<xf:else />
+		<xf:macro id="theme_color_meta" arg-color="{{ parse_less_color(property_variation('metaThemeColor', 'default')) }}" />
 	</xf:if>
 
 	<xf:foreach loop="$head" value="$headTag">
@@ -28848,7 +29205,7 @@ class="{{ $template ? 'template-' . $template : '' }}">
 
 </body>
 </html>]]></template>
-  <template type="public" title="OFFLINE_CONTAINER" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<!DOCTYPE html>
+  <template type="public" title="OFFLINE_CONTAINER" version_id="2031170" version_string="2.3.11"><![CDATA[<!DOCTYPE html>
 <html id="XF" lang="{$xf.language.language_code}" dir="{$xf.language.text_direction}"
 	data-app="public"
 	{{ ($xf.style.isVariationsEnabled() && $xf.visitor.style_variation) ? 'data-variation="' . $xf.visitor.style_variation . '"' : '' }}
@@ -28868,19 +29225,25 @@ class="{{ $template ? 'template-' . $template : '' }}">
 		<title><xf:title formatter="%s | %s" fallback="{$xf.options.boardTitle}" page="{$pageNumber}" /></title>
 		<xf:set var="$description"><xf:description /></xf:set>
 
+		<xf:macro id="theme_color_meta" arg-color="!" arg-media="">
+			<xf:if is="$color">
+				<meta name="theme-color"{{ $media ? ' media="' . $media . '"' : '' }} content="{$color}" />
+			</xf:if>
+		</xf:macro>
+
 		<xf:if is="$xf.style.isVariationsEnabled()">
 			<xf:if is="$xf.visitor.style_variation">
-				<meta name="theme-color" content="{{ parse_less_color(property_variation('metaThemeColor', $xf.visitor.style_variation)) }}" />
+				<xf:macro id="theme_color_meta" arg-color="{{ parse_less_color(property_variation('metaThemeColor', $xf.visitor.style_variation)) }}" />
 			<xf:else />
 				<xf:if is="$xf.style.hasAlternateStyleTypeVariation()">
-					<meta name="theme-color" media="(prefers-color-scheme: {{ $xf.style.getDefaultStyleType() }})" content="{{ parse_less_color(property_variation('metaThemeColor', 'default')) }}" />
-					<meta name="theme-color" media="(prefers-color-scheme: {{ $xf.style.getAlternateStyleType() }})" content="{{ parse_less_color(property_variation('metaThemeColor', $xf.style.getAlternateStyleTypeVariation())) }}" />
+					<xf:macro id="theme_color_meta" arg-color="{{ parse_less_color(property_variation('metaThemeColor', 'default')) }}" arg-media="(prefers-color-scheme: {{ $xf.style.getDefaultStyleType() }})" />
+					<xf:macro id="theme_color_meta" arg-color="{{ parse_less_color(property_variation('metaThemeColor', $xf.style.getAlternateStyleTypeVariation())) }}" arg-media="(prefers-color-scheme: {{ $xf.style.getAlternateStyleType() }})" />
 				<xf:else />
-					<meta name="theme-color" content="{{ parse_less_color(property_variation('metaThemeColor', 'default')) }}" />
+					<xf:macro id="theme_color_meta" arg-color="{{ parse_less_color(property_variation('metaThemeColor', 'default')) }}" />
 				</xf:if>
 			</xf:if>
 		<xf:else />
-			<meta name="theme-color" content="{{ parse_less_color(property_variation('metaThemeColor', 'default')) }}" />
+			<xf:macro id="theme_color_meta" arg-color="{{ parse_less_color(property_variation('metaThemeColor', 'default')) }}" />
 		</xf:if>
 
 		<xf:foreach loop="$head" value="$headTag">
@@ -28900,7 +29263,7 @@ class="{{ $template ? 'template-' . $template : '' }}">
 		{$content|raw}
 	</body>
 </html>]]></template>
-  <template type="public" title="PAGE_CONTAINER" version_id="2030470" version_string="2.3.4"><![CDATA[<!DOCTYPE html>
+  <template type="public" title="PAGE_CONTAINER" version_id="2031170" version_string="2.3.11"><![CDATA[<!DOCTYPE html>
 <html id="XF" lang="{$xf.language.language_code}" dir="{$xf.language.text_direction}"
 	data-xf="{$xf.versionVisible}"
 	data-app="public"
@@ -28926,19 +29289,25 @@ class="{{ $template ? 'template-' . $template : '' }}">
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
+	<xf:macro id="theme_color_meta" arg-color="!" arg-media="">
+		<xf:if is="$color">
+			<meta name="theme-color"{{ $media ? ' media="' . $media . '"' : '' }} content="{$color}" />
+		</xf:if>
+	</xf:macro>
+
 	<xf:if is="$xf.style.isVariationsEnabled()">
 		<xf:if is="$xf.visitor.style_variation">
-			<meta name="theme-color" content="{{ parse_less_color(property_variation('metaThemeColor', $xf.visitor.style_variation)) }}" />
+			<xf:macro id="theme_color_meta" arg-color="{{ parse_less_color(property_variation('metaThemeColor', $xf.visitor.style_variation)) }}" />
 		<xf:else />
 			<xf:if is="$xf.style.hasAlternateStyleTypeVariation()">
-				<meta name="theme-color" media="(prefers-color-scheme: {{ $xf.style.getDefaultStyleType() }})" content="{{ parse_less_color(property_variation('metaThemeColor', 'default')) }}" />
-				<meta name="theme-color" media="(prefers-color-scheme: {{ $xf.style.getAlternateStyleType() }})" content="{{ parse_less_color(property_variation('metaThemeColor', $xf.style.getAlternateStyleTypeVariation())) }}" />
+				<xf:macro id="theme_color_meta" arg-color="{{ parse_less_color(property_variation('metaThemeColor', 'default')) }}" arg-media="(prefers-color-scheme: {{ $xf.style.getDefaultStyleType() }})" />
+				<xf:macro id="theme_color_meta" arg-color="{{ parse_less_color(property_variation('metaThemeColor', $xf.style.getAlternateStyleTypeVariation())) }}" arg-media="(prefers-color-scheme: {{ $xf.style.getAlternateStyleType() }})" />
 			<xf:else />
-				<meta name="theme-color" content="{{ parse_less_color(property_variation('metaThemeColor', 'default')) }}" />
+				<xf:macro id="theme_color_meta" arg-color="{{ parse_less_color(property_variation('metaThemeColor', 'default')) }}" />
 			</xf:if>
 		</xf:if>
 	<xf:else />
-		<meta name="theme-color" content="{{ parse_less_color(property_variation('metaThemeColor', 'default')) }}" />
+		<xf:macro id="theme_color_meta" arg-color="{{ parse_less_color(property_variation('metaThemeColor', 'default')) }}" />
 	</xf:if>
 
 	<meta name="apple-mobile-web-app-title" content="{{ $xf.options.boardShortTitle ?: $xf.options.boardTitle }}">
@@ -30055,7 +30424,7 @@ class="{{ $template ? 'template-' . $template : '' }}">
 		</xf:datarow>
 	</xf:foreach>
 </xf:datalist>]]></template>
-  <template type="public" title="_help_page_privacy_policy" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[{{ phrase('privacy_policy_text', {'board_title': $xf.options.boardTitle, 'contactUrl': $xf.contactUrl, 'cookieHelp': link('help/cookies')}) }}
+  <template type="public" title="_help_page_privacy_policy" version_id="2030870" version_string="2.3.8"><![CDATA[{{ phrase('privacy_policy_text', {'board_title': $xf.options.boardTitle, 'contactUrl': $xf.contactUrl, 'cookieHelp': link('help/cookies/')}) }}
 
 <!--[XF:captcha_after_policy_text]-->
 
@@ -31255,7 +31624,7 @@ class="{{ $template ? 'template-' . $template : '' }}">
 		</dd>
 	</dl>
 </xf:macro>]]></template>
-  <template type="public" title="account_reactions" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:title>{{ phrase('reactions_received') }}</xf:title>
+  <template type="public" title="account_reactions" version_id="2030870" version_string="2.3.8"><![CDATA[<xf:title>{{ phrase('reactions_received') }}</xf:title>
 
 <xf:wrap template="account_wrapper" />
 
@@ -31332,7 +31701,7 @@ class="{{ $template ? 'template-' . $template : '' }}">
 				<span class="block-footer-controls"><xf:button href="{{ link('account/reactions', null, {'reaction_id': $reactionId, 'page': $page + 1}) }}"
 					data-xf-click="inserter"
 					data-replace=".js-reactionList-{$reactionId}"
-					data-scroll-target="< .overlay">
+					data-scroll-target="< .block">
 						{{ phrase('more...') }}
 				</xf:button></span>
 			</li>
@@ -31817,7 +32186,7 @@ class="{{ $template ? 'template-' . $template : '' }}">
 
 	<xf:redirect />
 </xf:form>]]></template>
-  <template type="public" title="account_visitor_menu" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:if contentcheck="true">
+  <template type="public" title="account_visitor_menu" version_id="2030870" version_string="2.3.8"><![CDATA[<xf:if contentcheck="true">
 	<h4 class="menu-tabHeader tabs" data-xf-init="tabs" role="tablist">
 		<span class="hScroller" data-xf-init="h-scroller">
 			<span class="hScroller-scroll">
@@ -31860,9 +32229,13 @@ class="{{ $template ? 'template-' . $template : '' }}">
 					<dl class="pairs pairs--justified fauxBlockLink">
 						<dt>{{ phrase('messages') }}</dt>
 						<dd>
-							<a href="{{ link('search/member', null, {'user_id': $xf.visitor.user_id}) }}" class="fauxBlockLink-linkRow u-concealed">
+							<xf:if is="$xf.visitor.canSearch()">
+								<a href="{{ link('search/member', null, {'user_id': $xf.visitor.user_id, 'content': 'post'}) }}" class="fauxBlockLink-linkRow u-concealed">
+									{$xf.visitor.message_count|number}
+								</a>
+							<xf:else />
 								{$xf.visitor.message_count|number}
-							</a>
+							</xf:if>
 						</dd>
 					</dl>
 					<!--[XF:stats_pairs:above_reactions]-->
@@ -34689,14 +35062,20 @@ html.has-os-ios.has-displaymodestandalone
 		</div>
 	</div>
 </xf:macro>]]></template>
-  <template type="public" title="attachment_macros" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:macro id="attachment_list_item" arg-attachment="!" arg-canView="!">
+  <template type="public" title="attachment_macros" version_id="2030970" version_string="2.3.9"><![CDATA[<xf:macro id="attachment_list_item" arg-attachment="!" arg-canView="!">
 	<li class="file file--linked">
 		<a class="u-anchorTarget" id="attachment-{$attachment.attachment_id}"></a>
 		<xf:if is="$attachment.has_thumbnail">
 			<xf:macro id="lightbox_macros::setup" arg-canViewAttachments="{$canView}" />
 
-			<a class="file-preview {{ $canView ? 'js-lbImage' : '' }}" href="{$attachment.direct_url}" target="_blank">
-				<img src="{$attachment.thumbnail_url}" alt="{$attachment.filename}"
+			<a
+				class="file-preview {{ $canView ? 'js-lbImage' : '' }}"
+				href="{$attachment.direct_url}"
+				data-type="{{ $canView ? 'image' : '' }}"
+				target="_blank">
+				<img src="{$attachment.thumbnail_url}"
+					srcset="{{ $attachment.has_retina_thumbnail ? $attachment.retina_thumbnail_url . ' 2x' : '' }}"
+					alt="{$attachment.filename}"
 					width="{$attachment.thumbnail_width}" height="{$attachment.thumbnail_height}" loading="lazy" />
 			</a>
 		<xf:elseif is="$attachment.is_video AND $canView" />
@@ -35812,7 +36191,7 @@ a.bbCodeBlock-sourceJump
 	padding-bottom: 3px; // mostly to ensure icode doesn't overflow unexpectedly
 	font-family: @xf-fontFamilyBody;
 }]]></template>
-  <template type="public" title="bb_code_tag_attach" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:if is="!$attachment"><xf:trim>
+  <template type="public" title="bb_code_tag_attach" version_id="2030970" version_string="2.3.9"><![CDATA[<xf:if is="!$attachment"><xf:trim>
 	<a href="{{ link('full:attachments', {'attachment_id': $id}) }}" target="_blank">{{ phrase('view_attachment_x', {'name': $id}) }}</a>
 </xf:trim><xf:elseif is="$attachment.is_video AND $full AND $canView" /><xf:trim>
 	<div class="bbMediaWrapper bbMediaWrapper--inline {$alignClass}">
@@ -35860,7 +36239,9 @@ a.bbCodeBlock-sourceJump
 	<xf:macro id="lightbox_macros::setup" arg-canViewAttachments="{$canView}" />
 	<a href="{{ link('full:attachments', $attachment, {'hash': $attachment.temp_hash}) }}"
 		target="_blank" class="js-lbImage"><img src="{$attachment.thumbnail_url_full}"
+		srcset="{{ $attachment.has_retina_thumbnail ? $attachment.retina_thumbnail_url_full . ' 2x' : '' }}"
 		class="bbImage {$alignClass}"
+		data-type="image"
 		style="{$styleAttr}"
 		alt="{$alt}"
 		title="{$alt}"
@@ -35868,6 +36249,7 @@ a.bbCodeBlock-sourceJump
 </xf:trim><xf:else /><xf:trim>
 	<a href="{{ link('full:attachments', $attachment, {'hash': $attachment.temp_hash}) }}"
 		target="_blank"><img src="{$attachment.thumbnail_url_full}"
+		srcset="{{ $attachment.has_retina_thumbnail ? $attachment.retina_thumbnail_url_full . ' 2x' : '' }}"
 		class="bbImage {$alignClass}"
 		style="{$styleAttr}"
 		alt="{$alt}"
@@ -35951,7 +36333,7 @@ a.bbCodeBlock-sourceJump
 		</div>
 	</div>
 </div>]]></template>
-  <template type="public" title="bb_code_tag_url_unfurl" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:if is="$result.isBasicLink()">
+  <template type="public" title="bb_code_tag_url_unfurl" version_id="2031370" version_string="2.3.13"><![CDATA[<xf:if is="$result.isBasicLink()">
 	<div>
 		<a href="{$result.url}"
 			class="{{ $linkInfo.class ?: '' }}"
@@ -35965,7 +36347,7 @@ a.bbCodeBlock-sourceJump
 	<xf:css src="bb_code.less" />
 
 	<div class="bbCodeBlock bbCodeBlock--unfurl {{ $result.pending ? 'is-pending' : '' }} {{ $result.is_recrawl ? 'is-recrawl' : '' }} {{ $simple ? 'is-simple' : '' }} js-unfurl fauxBlockLink"
-		data-unfurl="true" data-result-id="{$result.result_id}" data-url="{$result.url}" data-host="{$result.host}" data-pending="{{ $result.pending ? 'true' : 'false' }}">
+		data-unfurl="true" data-result-id="{$result.result_id}" data-result-token="{$result.unfurl_token}" data-url="{$result.url}" data-host="{$result.host}" data-pending="{{ $result.pending ? 'true' : 'false' }}">
 		<div class="contentRow">
 			<xf:if is="($result.pending OR $imageUrl) AND !$simple">
 				<div class="contentRow-figure contentRow-figure--fixedSmall js-unfurl-figure">
@@ -36318,7 +36700,7 @@ a.bbCodeBlock-sourceJump
   <template type="public" title="captcha_turnstile" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:js src="xf/captcha.js" min="1" />
 
 <div data-xf-init="turnstile" data-sitekey="{$siteKey}" data-action="{$context}"></div>]]></template>
-  <template type="public" title="carousel.less" version_id="2030470" version_string="2.3.4"><![CDATA[:root
+  <template type="public" title="carousel.less" version_id="2030770" version_string="2.3.7"><![CDATA[:root
 {
 	--f-carousel-theme-color: @xf-linkColor;
 }
@@ -36352,6 +36734,11 @@ a.bbCodeBlock-sourceJump
 		flex: 0 0 auto;
 		width: calc((100% - (var(--f-carousel-spacing) * (var(--xf-slidesPerPage) - 1))) / var(--xf-slidesPerPage));
 		margin: 0 var(--f-carousel-spacing) 0 0;
+
+		& when(@rtl)
+        {
+            margin: 0 0 0 var(--f-carousel-spacing);
+        }
 	}
 
 	@media (min-width: 700px)
@@ -38303,7 +38690,7 @@ a.bbCodeBlock-sourceJump
 
 	<xf:js src="xf/code_editor.js" min="1" />
 </xf:macro>]]></template>
-  <template type="public" title="code_editor.less" version_id="2030032" version_string="2.3.0 Beta 2"><![CDATA[/* XF-RTL:disable */
+  <template type="public" title="code_editor.less" version_id="2030570" version_string="2.3.5"><![CDATA[/* XF-RTL:disable */
 
 .codeEditor
 {
@@ -38400,7 +38787,7 @@ a.bbCodeBlock-sourceJump
 @_cm-bcd: #bcd;
 @_cm-d7d4f0: @xf-contentHighlightBg;
 @_cm-rgb_20_255_20: rgba(20, 255, 20, 0.5);
-@_cm-rgba_255_255_0: rgba(255, 255, 0, .4);
+@_cm-rgba_255_255_0: @xf-editorSelectionBg;
 
 .CodeMirror-scrollbar-filler, .CodeMirror-gutter-filler { background-color: @_cm-white; } // white
 .CodeMirror-gutters {
@@ -38435,7 +38822,9 @@ a.bbCodeBlock-sourceJump
 .CodeMirror-line::-moz-selection, .CodeMirror-line > span::-moz-selection, .CodeMirror-line > span > span::-moz-selection {
 	background: @_cm-d7d4f0; } // #d7d4f0
 .cm-searching {
-	background-color: @_cm-rgba_255_255_0; } // rgba(255, 255, 0, .4)
+	background-color: @_cm-rgba_255_255_0;
+	color: @xf-editorSelectionColor !important;
+} // rgba(255, 255, 0, .4)
 .CodeMirror-simplescroll-horizontal div, .CodeMirror-simplescroll-vertical div {
 	background: @_cm-ccc; // #ccc
 	border-color: @_cm-bbb; } // #bbb
@@ -39483,11 +39872,11 @@ span.CodeMirror-selectedtext { background: none; }
 	</a>
 </xf:if>
 <div><a href="https://profile.live.com/{$connectedAccounts.microsoft}" target="_blank">{{ $providerData.username ?: phrase('view_account') }}</a></div>]]></template>
-  <template type="public" title="connected_account_associated_twitter" version_id="2010033" version_string="2.1.0 Beta 3"><![CDATA[<xf:if is="$providerData">
-	<a href="https://twitter.com/{$providerData.screen_name}" target="_blank">
+  <template type="public" title="connected_account_associated_x" version_id="2030570" version_string="2.3.5"><![CDATA[<xf:if is="$providerData">
+	<a href="https://x.com/{$providerData.screen_name}" target="_blank">
 		<img src="{$providerData.avatar_url}" width="48" alt="" />
 	</a>
-	<div><a href="https://twitter.com/{$providerData.screen_name}" target="_blank">@{$providerData.screen_name} {$providerData.username|parens}</a></div>
+	<div><a href="https://x.com/{$providerData.screen_name}" target="_blank">@{$providerData.screen_name} {$providerData.username|parens}</a></div>
 <xf:else />
 	{{ phrase('account_associated') }}
 </xf:if>]]></template>
@@ -39499,8 +39888,8 @@ span.CodeMirror-selectedtext { background: none; }
 	<img src="{$providerData.avatar_url}" width="48" alt="" />
 </xf:if>
 <div>{{ $providerData.username ?: phrase('account_associated') }}</div>]]></template>
-  <template type="public" title="connected_account_macros" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:macro id="associate" arg-provider="!">
-	<xf:formrow label="{$provider.title}">
+  <template type="public" title="connected_account_macros" version_id="2030770" version_string="2.3.7"><![CDATA[<xf:macro id="associate" arg-provider="!">
+	<xf:formrow label="{$provider.title}" rowtype="button">
 
 		<xf:macro id="connected_account_macros::button"
 			arg-provider="{$provider}"
@@ -39533,7 +39922,9 @@ span.CodeMirror-selectedtext { background: none; }
 <xf:macro id="button" arg-provider="!" arg-link="{{ null }}" arg-text="{{ null }}">
 	<xf:button href="{{ $link ?: link('register/connected-accounts', $provider, {'setup': true}) }}"
 		fa="{$provider.icon_class}"
-		class="button--provider button--provider--{$provider.provider_id}">
+		class="button--provider button--provider--{$provider.provider_id}"
+		data-xf-click="overlay">
+
 		<xf:if is="!$provider.icon_class && $provider.icon_url">
 			<img class="button-icon" alt="" src="{$provider.icon_url}" />
 		</xf:if>
@@ -40647,7 +41038,7 @@ span.CodeMirror-selectedtext { background: none; }
 		</div>
 	</li>
 </xf:macro>]]></template>
-  <template type="public" title="core.less" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[// ########################## GLOBAL BASE SETUP #######################
+  <template type="public" title="core.less" version_id="2030870" version_string="2.3.8"><![CDATA[// ########################## GLOBAL BASE SETUP #######################
 
 html
 {
@@ -40766,6 +41157,12 @@ svg
 	&.autoCompleteList--fullWidth
 	{
 		min-width: 100%;
+	}
+
+	&.autoCompleteList--scrollable
+	{
+		max-height: 250px;
+		overflow-y: scroll;
 	}
 }
 
@@ -41163,9 +41560,11 @@ a.ui
 		@media (max-width: @xf-responsiveNarrow) { content: "Narrow < @{xf-responsiveNarrow}"; }
 	}
 }]]></template>
-  <template type="public" title="core_action_bar.less" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[.actionBar
+  <template type="public" title="core_action_bar.less" version_id="2030870" version_string="2.3.8"><![CDATA[.actionBar
 {
 	.m-clearFix();
+	-webkit-user-select: none;
+	user-select: none;
 }
 
 .actionBar-set
@@ -43002,7 +43401,7 @@ a.ui
 	&--warning:before { .m-faContent("@{fa-var-exclamation-triangle}\20"); }
 	&--ignored:before { .m-faContent("@{fa-var-microphone-slash}\20"); }
 }]]></template>
-  <template type="public" title="core_button.less" version_id="2030370" version_string="2.3.3"><![CDATA[// ############################ BUTTONS #################
+  <template type="public" title="core_button.less" version_id="2030570" version_string="2.3.5"><![CDATA[// ############################ BUTTONS #################
 
 .button,
 a.button // needed for specificity over a:link
@@ -43301,9 +43700,9 @@ a.button // needed for specificity over a:link
 			.m-buttonColorVariation(#3B5998, white);
 		}
 
-		&--twitter
+		&--x
 		{
-			.m-buttonColorVariation(#1DA1F3, white);
+			.m-buttonColorVariation(#000000, white);
 		}
 
 		&--google
@@ -43345,12 +43744,13 @@ a.button // needed for specificity over a:link
 
 		&--passkey
 		{
-			svg
+			.m-buttonIcon(@fa-var-brands-passkey, .88em);
+
+			.button-text::before
 			{
-				font-size: 120%;
-				vertical-align: .04em;
-				display: inline-block;
-				margin: -0.255em 0px -0.255em 0;
+				width: 1.2em;
+				height: 1.2em;
+				vertical-align: -0.125em;
 			}
 		}
 	}
@@ -44118,7 +44518,7 @@ a.button // needed for specificity over a:link
 		}
 	}
 }]]></template>
-  <template type="public" title="core_datalist.less" version_id="2030031" version_string="2.3.0 Beta 1"><![CDATA[// ################################# DATA LISTS ###################
+  <template type="public" title="core_datalist.less" version_id="2030770" version_string="2.3.7"><![CDATA[// ################################# DATA LISTS ###################
 
 .dataList
 {
@@ -44640,13 +45040,13 @@ a.button // needed for specificity over a:link
 
 	&.dataList-cell--imageBg
 	{
-		--bg: url('data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=');
+		--button-bg: url('data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=');
 		width: var(--imageBgWidth);
-		background: top left / cover var(--bg);
+		background: top left / cover var(--button-bg);
 
 		.dataList-row--disabled &
 		{
-			background-image: linear-gradient(black, black), var(--bg);
+			background-image: linear-gradient(black, black), var(--button-bg);
 			background-blend-mode: saturation;
 		}
 	}
@@ -54459,7 +54859,7 @@ img.fr-draggable {
 		<xf:submitrow submit="{{ phrase('continue') }}" id="editor_spoiler_submit" />
 	</div>
 </form>]]></template>
-  <template type="public" title="editor_insert_gif" version_id="2030033" version_string="2.3.0 Beta 3"><![CDATA[<xf:css src="editor_insert_gif.less" />
+  <template type="public" title="editor_insert_gif" version_id="2030570" version_string="2.3.5"><![CDATA[<xf:css src="editor_insert_gif.less" />
 
 <div class="menu-row menu-row--alt menu-row--close menu-row--search">
 	<div class="inputGroup">
@@ -54503,7 +54903,8 @@ img.fr-draggable {
 				arg-dark="styles/default/xenforo/giphy_dark.png"
 				arg-width="100"
 				arg-height="11"
-				arg-alt="{{ phrase('powered_by_giphy') }}" />
+				arg-alt="{{ phrase('powered_by_giphy') }}"
+				arg-lazy="true" />
 		</a>
 	</div>
 </div>]]></template>
@@ -54933,7 +55334,7 @@ img.fr-draggable {
 		<xf:reactions summary="true" reactions="{$content.reactions}"/>
 	</div>
 </div>]]></template>
-  <template type="public" title="embed_resolver_thread" version_id="2030053" version_string="2.3.0 Release Candidate 3"><![CDATA[<xf:css src="help_page_smilies.less" />
+  <template type="public" title="embed_resolver_thread" version_id="2030870" version_string="2.3.8"><![CDATA[<xf:css src="help_page_smilies.less" />
 
 <div class="embed-container contentRow contentRow--alignMiddle">
 	<div class="contentRow-figure">
@@ -54953,9 +55354,11 @@ img.fr-draggable {
 	</div>
 </div>
 
-<div class="embed-preview">
-	{{ bb_code_snippet($content.FirstPost.message, 'post', $content.FirstPost, 600, {'withinEmbedResolver': true}) }}
-</div>
+<xf:if is="$content.FirstPost.message">
+	<div class="embed-preview">
+			{{ bb_code_snippet($content.FirstPost.message, 'post', $content.FirstPost, 600, {'withinEmbedResolver': true}) }}
+	</div>
+</xf:if>
 
 <xf:comment>
 <xf:if is="$content.cover_image_data.src">
@@ -56760,7 +57163,7 @@ html.with-fancybox body.hide-scrollbar
 		</span>
 	</div>
 </xf:form>]]></template>
-  <template type="public" title="featured_content_item" version_id="2030055" version_string="2.3.0 Release Candidate 5"><![CDATA[<xf:macro id="article" extends="content_display_macros::article"
+  <template type="public" title="featured_content_item" version_id="2031370" version_string="2.3.13"><![CDATA[<xf:macro id="article" extends="content_display_macros::article"
 	arg-feature="!"
 	arg-content="!"
 	arg-snippetLength="{{ 0 }}">
@@ -56800,7 +57203,7 @@ html.with-fancybox body.hide-scrollbar
 		<li><xf:avatar user="{$feature.ContentUser}" size="xxs" defaultname="{$feature.content_username}"/></li>
 		<li class="articlePreview-by">{{ phrase('by_user_x', {'name': $username}) }}</li>
 		<li><a href="{$feature.content_link}" class="u-concealed" rel="nofollow"><xf:date time="{$feature.content_date}"/></a></li>
-		<li><span data-xf-init="tooltip" title="{{ phrase('featured_on_x', {'date': date($feature.feature_date)}) }}"><xf:fa icon="fa-award" /></li>
+		<li><span data-xf-init="tooltip" title="{{ phrase('featured_on_x', {'date': date($feature.feature_date)}) }}"><xf:fa icon="fa-award" /></span></li>
 	</xf:extension>
 
 	<xf:extension id="metadata">
@@ -56833,9 +57236,11 @@ html.with-fancybox body.hide-scrollbar
 	<xf:extension id="meta">
 		<xf:extensionparent />
 
-		<li>{{ $feature.ContentUser.username ?: $feature.content_username }}</li>
+		<li>
+			<xf:username user="$feature.ContentUser" href="" defaultname="{$feature.content_username}" />
+		</li>
 		<li><xf:date time="{$feature.content_date}" /></li>
-		<li><span data-xf-init="tooltip" title="{{ phrase('featured_on_x', {'date': date($feature.feature_date)}) }}"><xf:fa icon="fa-award" /></li>
+		<li><span data-xf-init="tooltip" title="{{ phrase('featured_on_x', {'date': date($feature.feature_date)}) }}"><xf:fa icon="fa-award" /></span></li>
 	</xf:extension>
 </xf:macro>
 
@@ -56869,7 +57274,7 @@ html.with-fancybox body.hide-scrollbar
 
 		<li><xf:username user="{$feature.ContentUser}" defaultname="{$feature.content_username}" /></li>
 		<li><xf:date time="{$feature.content_date}" /></li>
-		<li><span data-xf-init="tooltip" title="{{ phrase('featured_on_x', {'date': date($feature.feature_date)}) }}"><xf:fa icon="fa-award" /></li>
+		<li><span data-xf-init="tooltip" title="{{ phrase('featured_on_x', {'date': date($feature.feature_date)}) }}"><xf:fa icon="fa-award" /></span></li>
 	</xf:extension>
 </xf:macro>]]></template>
   <template type="public" title="featured_content_item_thread" version_id="2030037" version_string="2.3.0 Beta 7"><![CDATA[<xf:macro id="article" extends="featured_content_item::article"
@@ -58931,7 +59336,7 @@ html.with-fancybox body.hide-scrollbar
 		</xf:option>
 	</xf:radiorow>
 </xf:macro>]]></template>
-  <template type="public" title="helper_attach_upload" version_id="2030470" version_string="2.3.4"><![CDATA[<xf:macro id="upload_link"
+  <template type="public" title="helper_attach_upload" version_id="2030870" version_string="2.3.8"><![CDATA[<xf:macro id="upload_link"
 	arg-type="!"
 	arg-hash="!"
 	arg-context="!"
@@ -59015,7 +59420,10 @@ html.with-fancybox body.hide-scrollbar
 	<li class="js-attachmentFile file" data-attachment-id="{$attachment.attachment_id}">
 		<xf:if is="$attachment.has_thumbnail">
 			<a class="file-preview js-attachmentView" href="{$attachment.direct_url}" target="_blank">
-				<img src="{{ base_url($attachment.thumbnail_url) }}" class="js-attachmentThumb" alt="{$attachment.filename}"
+				<img src="{{ base_url($attachment.thumbnail_url) }}"
+					srcset="{{ $attachment.has_retina_thumbnail ? base_url($attachment.retina_thumbnail_url) . ' 2x' : '' }}"
+					class="js-attachmentThumb"
+					alt="{$attachment.filename}"
 					width="{$attachment.thumbnail_width}" height="{$attachment.thumbnail_height}" loading="lazy" />
 			</a>
 		<xf:elseif is="$attachment.is_video" />
@@ -59118,9 +59526,16 @@ html.with-fancybox body.hide-scrollbar
 			</xf:mustache>
 			<xf:mustache name="^uploading">
 				<xf:mustache name="#thumbnail_url">
-					<a class="file-preview js-attachmentView" href="{{ mustache('link') }}" target="_blank">
-						<img src="{{ mustache('thumbnail_url') }}" class="js-attachmentThumb" alt="{{ mustache('filename') }}" />
-					</a>
+					<xf:mustache name="#retina_thumbnail_url">
+						<a class="file-preview js-attachmentView" href="{{ mustache('link') }}" target="_blank">
+							<img src="{{ mustache('thumbnail_url') }}" srcset="{{ mustache('retina_thumbnail_url') }} 2x" class="js-attachmentThumb" alt="{{ mustache('filename') }}" />
+						</a>
+					</xf:mustache>
+					<xf:mustache name="^retina_thumbnail_url">
+						<a class="file-preview js-attachmentView" href="{{ mustache('link') }}" target="_blank">
+							<img src="{{ mustache('thumbnail_url') }}" class="js-attachmentThumb" alt="{{ mustache('filename') }}" />
+						</a>
+					</xf:mustache>
 				</xf:mustache>
 				<xf:mustache name="^thumbnail_url">
 					<xf:mustache name="#is_video">
@@ -59259,7 +59674,7 @@ html.with-fancybox body.hide-scrollbar
 	</div>
 </div>
 </xf:macro>]]></template>
-  <template type="public" title="helper_js_global" version_id="2030370" version_string="2.3.3"><![CDATA[<xf:macro id="head" arg-app="!" arg-jsState="{{ null }}">
+  <template type="public" title="helper_js_global" version_id="2030570" version_string="2.3.5"><![CDATA[<xf:macro id="head" arg-app="!" arg-jsState="{{ null }}">
 	<xf:set var="$cssUrls" value="{{ ['public:normalize.css', 'public:fa.css'] }}" />
 	<xf:if is="$xf.style.isVariationsEnabled()">
 		<xf:set var="$cssUrls" value="{{ array_merge($cssUrls, ['public:variations.less']) }}" />
@@ -59279,7 +59694,8 @@ html.with-fancybox body.hide-scrollbar
 	<xf:corejs />
 
 	<script{{ $xf.request.isRocketLoaderDisabled() ? ' data-cfasync="false"' : ''}}>
-		window.addEventListener('DOMContentLoaded', function() {
+		XF.ready(() =>
+		{
 			XF.extendObject(true, XF.config, {
 				// <!--[XF:js_global:xf_extend_start]-->
 				userId: {$xf.visitor.user_id},
@@ -59348,7 +59764,7 @@ html.with-fancybox body.hide-scrollbar
 				jsState: {{ $jsState ? $jsState|json|raw : '{}' }},
 				publicMetadataLogoUrl: '{{ property('publicMetadataLogoUrl') ? base_url(property('publicMetadataLogoUrl'), true) : '' }}',
 				publicPushBadgeUrl: '{{ property('publicPushBadgeUrl') ? base_url(property('publicPushBadgeUrl'), true) : '' }}'
-			});
+			})
 
 			XF.extendObject(XF.phrases, {
 				// <!--[XF:js_global:xf_phrase_start]-->
@@ -59428,8 +59844,8 @@ html.with-fancybox body.hide-scrollbar
 				pull_down_to_refresh: "{{ phrase('pull_down_to_refresh')|escape('js') }}",
 				release_to_refresh: "{{ phrase('release_to_refresh')|escape('js') }}",
 				refreshing: "{{ phrase('refreshing...')|escape('js') }}"
-			});
-		});
+			})
+		})
 	</script>
 
 	<!--XF:JS-->
@@ -60224,9 +60640,11 @@ html.with-fancybox body.hide-scrollbar
 		</xf:if>
 	</div>
 </div>]]></template>
-  <template type="public" title="lightbox.less" version_id="2030470" version_string="2.3.4"><![CDATA[{{ include('fancybox.less') }}
+  <template type="public" title="lightbox.less" version_id="2030871" version_string="2.3.8"><![CDATA[{{ include('fancybox.less') }}
 
 /** XF fancybox overrides **/
+
+@_sidebarWidth: 360px;
 
 .fancybox__caption
 {
@@ -60273,21 +60691,89 @@ body.compensate-for-scrollbar
 	background: transparent;
 	padding: 0;
 
+	width: 960px;
+	height: 540px;
+	max-width: 100%;
+	max-height: 100%;
+
+	> div
+	{
+		width: 100%;
+		height: 100%;
+	}
+
 	.bbMediaWrapper, .bbMediaJustifier, .bbOembed
 	{
-		margin-left: auto;
-		margin-right: auto;
+		width: 100%;
+		max-width: 100%;
+		height: 100%;
+		margin: 0;
+	}
+
+	.js-embedContent
+	{
+		width: 100%;
+		height: 100%;
+	}
+
+	.bbWrapper
+	{
+		width: 100%;
+		height: 100%;
+
+		> :first-child
+		{
+			margin: 0;
+			height: 100%;
+		}
 	}
 
 	.bbMediaWrapper-inner
 	{
-		position: static;
+		position: relative;
+		width: 100%;
+		height: 100%;
+		padding-bottom: 0; // Remove padding-based aspect ratio since we have explicit dimensions
 	}
 
-	iframe
+	iframe, video
 	{
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		border-radius: 5px;
 		margin-bottom: 0;
 	}
+}
+
+.fancybox__slide--video .fancybox__content:has(video[data-video-type="audio"][poster=""])
+{
+	width: 600px;
+	height: auto;
+	max-width: 100%;
+
+	> div,
+	.bbMediaWrapper,
+	.bbMediaWrapper-inner
+	{
+		height: auto;
+	}
+
+	video
+	{
+		position: relative;
+		width: 100%;
+		height: 40px;
+		margin-top: 7px;
+	}
+}
+
+// Adjust video max-width when sidebar is open
+.fancybox-show-sidebar .fancybox__slide--video .fancybox__content
+{
+	max-width: calc(100% - @_sidebarWidth / 2);
 }
 
 .fancybox-progress
@@ -60585,8 +61071,6 @@ body.compensate-for-scrollbar
 
 
 // sidebar suppprt
-@_sidebarWidth: 360px;
-
 .fancybox-show-sidebar
 {
 	.fancybox__toolbar,
@@ -60692,7 +61176,7 @@ body.compensate-for-scrollbar
 		}
 	}
 }]]></template>
-  <template type="public" title="lightbox_macros" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:macro id="setup" arg-canViewAttachments="!">
+  <template type="public" title="lightbox_macros" version_id="2031370" version_string="2.3.13"><![CDATA[<xf:macro id="setup" arg-canViewAttachments="!">
 	<xf:if is="$canViewAttachments">
 		<xf:css src="lightbox.less" />
 		<xf:js prod="xf/lightbox-compiled.js" dev="vendor/fancyapps/fancybox/fancybox.umd.js, xf/lightbox.js" />
@@ -60737,12 +61221,17 @@ body.compensate-for-scrollbar
 	<xf:macro id="setup" arg-canViewAttachments="{$canViewAttachments}" />
 
 	<div class="bbImageWrapper {$alignClass} js-lbImage" title="{$alt|for_attr}"
-		data-src="{$src}" data-lb-sidebar-href="{$sidebarHref}" data-lb-caption-extra-html="{$captionExtraHtml|for_attr}" data-single-image="1">
+		data-src="{$src}"
+		data-type="image"
+		data-lb-sidebar-href="{$sidebarHref}"
+		data-lb-caption-extra-html="{$captionExtraHtml|for_attr}"
+		data-single-image="1"
+		style="{$styleAttr}"
+	>
 		<img src="{$src}"
 			data-url="{$dataUrl}"
 			class="bbImage"
 			data-zoom-target="1"
-			style="{$styleAttr}"
 			alt="{$alt|for_attr}"
 			title="{$title|for_attr}"
 			width="{$width}" height="{$height}" loading="lazy" />
@@ -60803,7 +61292,7 @@ body.compensate-for-scrollbar
   <template type="public" title="like_list_row" version_id="2000038" version_string="2.0.0 Beta 8"><![CDATA[<i class="likeIcon" title="{{ phrase('likes')|for_attr }}" aria-hidden="true"></i>
 <span class="u-srOnly">{{ phrase('likes:') }}</span>
 <a href="{$url}" data-xf-click="overlay">{$likes}</a>]]></template>
-  <template type="public" title="login" version_id="2030033" version_string="2.3.0 Beta 3"><![CDATA[<xf:js src="xf/login_signup.js" min="1" />
+  <template type="public" title="login" version_id="2030570" version_string="2.3.5"><![CDATA[<xf:js src="xf/login_signup.js" min="1" />
 <xf:js src="xf/webauthn.js" min="1" />
 
 <xf:title>{{ phrase('log_in') }}</xf:title>
@@ -60880,8 +61369,8 @@ body.compensate-for-scrollbar
 								data-autosubmit="true"
 								data-verifying="{{ phrase('verifying...') }}">
 
-									<xf:button class="button--provider button--provider--passkey js-webauthnStart">
-										{{ passkey_icon() }} {{ phrase('passkey') }}
+									<xf:button class="button--icon button--provider button--provider--passkey js-webauthnStart">
+										{{ phrase('passkey') }}
 									</xf:button>
 
 								<xf:hiddenval name="webauthn_payload" />
@@ -60901,23 +61390,54 @@ body.compensate-for-scrollbar
 		</div>
 	</div>
 </div>]]></template>
-  <template type="public" title="login_password_confirm" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:title>{{ phrase('password_confirmation') }}</xf:title>
+  <template type="public" title="login_password_confirm" version_id="2030870" version_string="2.3.8"><![CDATA[<xf:js src="xf/webauthn.js" min="1" />
 
-<xf:form action="{{ link('login/password-confirm') }}" class="block" ajax="true">
-	<div class="block-container">
-		<div class="block-body">
-			<xf:inforow rowtype="confirm">
-				{{ phrase('to_access_this_page_you_must_first_confirm_your_password') }}
-			</xf:inforow>
+<xf:title>{{ phrase('password_confirmation') }}</xf:title>
 
-			<xf:formrow label="{{ phrase('user_name') }}">{$xf.visitor.username}</xf:formrow>
+<div class="blocks">
+	<xf:form action="{{ link('login/password-confirm') }}" class="block" ajax="true">
+		<div class="block-container">
+			<div class="block-body">
+				<xf:inforow rowtype="confirm">
+					{{ phrase('to_access_this_page_you_must_first_confirm_your_password') }}
+				</xf:inforow>
 
-			<xf:passwordboxrow name="password" label="{{ phrase('password') }}" />
+				<xf:formrow label="{{ phrase('user_name') }}">{$xf.visitor.username}</xf:formrow>
+
+				<xf:passwordboxrow name="password" label="{{ phrase('password') }}" />
+			</div>
+			<xf:submitrow submit="{{ phrase('confirm') }}" />
 		</div>
-		<xf:submitrow submit="{{ phrase('confirm') }}" />
-	</div>
-	<xf:redirect url="{$redirect}" />
-</xf:form>]]></template>
+		<xf:redirect url="{$redirect}" />
+	</xf:form>
+
+	<xf:if is="$passkey && count($existingCredentials) > 0">
+		<div class="blocks-textJoiner"><span></span><em>{{ phrase('or_separator') }}</em><span></span></div>
+
+		<div class="block">
+			<div class="block-container">
+				<div class="block-body">
+					<xf:formrow rowtype="button">
+						<xf:form action="{{ link('login/password-confirm') }}" data-xf-init="webauthn"
+							data-type="get"
+							data-autotrigger="false"
+							data-autosubmit="true"
+							data-verifying="{{ phrase('verifying...') }}">
+
+							<xf:button class="button--icon button--provider button--provider--passkey js-webauthnStart">
+								{{ phrase('passkey') }}
+							</xf:button>
+
+							<xf:hiddenval name="webauthn_payload" />
+							<xf:hiddenval name="webauthn_challenge">{{ $passkey ? $passkey.getChallenge() : '' }}</xf:hiddenval>
+							<xf:redirect url="{$redirect}" />
+						</xf:form>
+					</xf:formrow>
+				</div>
+			</div>
+		</div>
+	</xf:if>
+</div>]]></template>
   <template type="public" title="login_two_step" version_id="2030038" version_string="2.3.0 Beta 8"><![CDATA[<xf:title>{{ phrase('two_step_verification_required') }}</xf:title>
 
 <xf:if is="$provider.isDeprecated()">
@@ -61276,7 +61796,7 @@ body.compensate-for-scrollbar
 		min-height: (@avatar-l + 20);
 	}
 }]]></template>
-  <template type="public" title="member_about" version_id="2030038" version_string="2.3.0 Beta 8"><![CDATA[<xf:title>{$user.username}</xf:title>
+  <template type="public" title="member_about" version_id="2030870" version_string="2.3.8"><![CDATA[<xf:title>{$user.username}</xf:title>
 
 <div class="block">
 	<div class="block-container">
@@ -61361,7 +61881,7 @@ body.compensate-for-scrollbar
 				</xf:if>
 			</xf:if>
 
-			<xf:if is="$user.Profile.signature">
+			<xf:if is="$user.Profile.signature != ''">
 				<div class="block-row block-row--separated">
 					<h4 class="block-textHeader">{{ phrase('signature') }}</h4>
 					{{ bb_code($user.Profile.signature, 'user:signature', $user) }}
@@ -61434,7 +61954,7 @@ body.compensate-for-scrollbar
 		</div>
 	</div>
 </div>]]></template>
-  <template type="public" title="member_ban_edit" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:if is="$user.is_banned">
+  <template type="public" title="member_ban_edit" version_id="2030770" version_string="2.3.7"><![CDATA[<xf:if is="$user.is_banned">
 	<xf:title>{{ phrase('edit_ban:') }} {$user.username}</xf:title>
 <xf:else />
 	<xf:title>{{ phrase('ban_member') }}</xf:title>
@@ -61475,7 +61995,7 @@ body.compensate-for-scrollbar
 		<xf:submitrow icon="save">
 			<xf:html>
 				<xf:if is="$user.is_banned">
-					<xf:button href="{{ link('members/ban/lift', $userBan) }}" overlay="true">
+					<xf:button href="{{ link('members/ban/lift', $user) }}" overlay="true">
 						{{ phrase('lift_ban') }}
 					</xf:button>
 				</xf:if>
@@ -61843,7 +62363,7 @@ body.compensate-for-scrollbar
 		</div>
 	</div>
 </xf:macro>]]></template>
-  <template type="public" title="member_macros" version_id="2030038" version_string="2.3.0 Beta 8"><![CDATA[<xf:macro id="moderator_menu_actions" arg-user="!" arg-context="!">
+  <template type="public" title="member_macros" version_id="2030870" version_string="2.3.8"><![CDATA[<xf:macro id="moderator_menu_actions" arg-user="!" arg-context="!">
 	<!--[XF:moderator_menu:top]-->
 	<xf:if is="$xf.visitor.canCleanSpam() && $user.isPossibleSpammer()">
 		<a href="{{ link('spam-cleaner', $user, {'no_redirect': 1}) }}" class="menu-linkRow" data-xf-click="overlay">{{ phrase('spam') }}</a>
@@ -61879,9 +62399,13 @@ body.compensate-for-scrollbar
 	<dl class="pairs pairs--rows pairs--rows--centered fauxBlockLink">
 		<dt>{{ phrase('messages') }}</dt>
 		<dd>
-			<a href="{{ link('search/member', null, {'user_id': $user.user_id}) }}" rel="nofollow" class="fauxBlockLink-linkRow u-concealed">
+			<xf:if is="$xf.visitor.canSearch()">
+				<a href="{{ link('search/member', null, {'user_id': $user.user_id, 'content': 'post'}) }}" rel="nofollow" class="fauxBlockLink-linkRow u-concealed">
+					{$user.message_count|number}
+				</a>
+			<xf:else />
 				{$user.message_count|number}
-			</a>
+			</xf:if>
 		</dd>
 	</dl>
 	<xf:if is="$user.question_solution_count">
@@ -61974,7 +62498,7 @@ body.compensate-for-scrollbar
 							<h4 class="menu-header">{{ phrase('find_content') }}</h4>
 							<!--[XF:find_menu:top]-->
 							<a href="{{ link('search/member', null, {'user_id': $user.user_id}) }}" rel="nofollow" class="menu-linkRow">{{ phrase('find_all_content_by_x', {'name': $user.username}) }}</a>
-							<a href="{{ link('search/member', null, {'user_id': $user.user_id, 'content': 'thread'}) }}" rel="nofollow" class="menu-linkRow">{{ phrase('find_all_threads_by_x', {'name': $user.username}) }}</a>
+							<a href="{{ link('search/member', null, {'user_id': $user.user_id, 'content': 'post', 'type': 'thread'}) }}" rel="nofollow" class="menu-linkRow">{{ phrase('find_all_threads_by_x', {'name': $user.username}) }}</a>
 							<!--[XF:find_menu:bottom]-->
 						</div>
 					</div>
@@ -62102,7 +62626,7 @@ body.compensate-for-scrollbar
 	</xf:if>
 </xf:foreach>
 ]]></template>
-  <template type="public" title="member_recent_content" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:title>{{ phrase('recent_content_by_x', {'name': $user.username}) }}</xf:title>
+  <template type="public" title="member_recent_content" version_id="2030870" version_string="2.3.8"><![CDATA[<xf:title>{{ phrase('recent_content_by_x', {'name': $user.username}) }}</xf:title>
 
 <xf:head option="metaNoindex"><meta name="robots" content="noindex" /></xf:head>
 
@@ -62120,7 +62644,7 @@ body.compensate-for-scrollbar
 			</ol>
 			<xf:if is="$xf.visitor.canSearch()">
 				<div class="block-footer">
-					<span class="block-footer-controls"><xf:button href="{{ link('search/member', null, {'user_id': $user.user_id}) }}" rel="nofollow">
+					<span class="block-footer-controls"><xf:button href="{{ link('search/member', null, {'user_id': $user.user_id, 'content': 'post'}) }}" rel="nofollow">
 						{{ phrase('see_more') }}
 					</xf:button></span>
 				</div>
@@ -62342,29 +62866,25 @@ body.compensate-for-scrollbar
 		</xf:if>
 	</div>
 </div>]]></template>
-  <template type="public" title="member_tooltip.less" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[@_memberTooltip-padding: @xf-paddingMedium;
+  <template type="public" title="member_tooltip.less" version_id="2030870" version_string="2.3.8"><![CDATA[@_memberTooltip-padding: @xf-paddingMedium;
 @_memberTooltip-avatarSize: @avatar-m;
 
 .memberTooltip-header
 {
-	display: table;
-	table-layout: fixed;
-	width: 100%;
+	display: flex;
 	padding: @_memberTooltip-padding;
 	.xf-memberTooltipHeader();
 }
 
 .memberTooltip-avatar
 {
-	display: table-cell;
 	width: (@_memberTooltip-padding * 2 + @_memberTooltip-avatarSize);
-	vertical-align: top;
 }
 
 .memberTooltip-headerInfo
 {
-	display: table-cell;
-	vertical-align: top;
+	flex: 1;
+	min-width: 0;
 }
 
 .memberTooltip-name
@@ -63133,7 +63653,7 @@ body.compensate-for-scrollbar
 
 <xf:widgetpos id="member_wrapper_sidenav" position="sidenav" />
 {$innerContent|raw}]]></template>
-  <template type="public" title="message.less" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[@_message-actionColumnWidth: 40px;
+  <template type="public" title="message.less" version_id="2030870" version_string="2.3.8"><![CDATA[@_message-actionColumnWidth: 40px;
 @_messageSimple-userColumnWidth: 70px;
 
 //signature-spicy.local/xf23/css.php?css=public%3A
@@ -64773,7 +65293,7 @@ a.message-newIndicator:hover
 		}
 	}
 }]]></template>
-  <template type="public" title="message_macros" version_id="2030470" version_string="2.3.4"><![CDATA[<xf:macro id="user_info"
+  <template type="public" title="message_macros" version_id="2030870" version_string="2.3.8"><![CDATA[<xf:macro id="user_info"
 	arg-user="!"
 	arg-fallbackName=""
 	arg-includeMicrodata="{{ true }}"
@@ -64925,7 +65445,7 @@ a.message-newIndicator:hover
 </xf:macro>
 
 <xf:macro id="signature" arg-user="!">
-	<xf:if is="$xf.visitor.Option.content_show_signature AND $user.Profile.signature">
+	<xf:if is="$xf.visitor.Option.content_show_signature AND $user.Profile.signature != ''">
 		<xf:if contentcheck="true">
 			<aside class="message-signature">
 			<xf:contentcheck>
@@ -65573,13 +66093,15 @@ a.message-newIndicator:hover
 		</xf:if>
 	</div>
 </div>]]></template>
-  <template type="public" title="news_feed_attached_images" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:macro id="attached_images" arg-attachments="!" arg-link="!">
+  <template type="public" title="news_feed_attached_images" version_id="2030870" version_string="2.3.8"><![CDATA[<xf:macro id="attached_images" arg-attachments="!" arg-link="!">
 	<xf:if contentcheck="true">
 		<ul class="listPlain listInline listInline--block">
 			<xf:contentcheck>
 				<xf:foreach loop="$attachments" value="$attachment" if="$attachment.has_thumbnail">
 					<li>
-						<a href="{$link}"><img src="{$attachment.thumbnail_url}" alt="{$attachment.filename}"
+						<a href="{$link}"><img src="{$attachment.thumbnail_url}"
+							srcset="{{ $attachment.has_retina_thumbnail ? $attachment.retina_thumbnail_url . ' 2x' : '' }}"
+							alt="{$attachment.filename}"
 							width="{$attachment.thumbnail_width}" height="{$attachment.thumbnail_height}" loading="lazy"/></a>
 					</li>
 				</xf:foreach>
@@ -67598,14 +68120,14 @@ a.button // needed for specificity over a:link
 		</div>
 	</xf:if>
 </xf:sidenav>]]></template>
-  <template type="public" title="passkeys_macros" version_id="2030370" version_string="2.3.3"><![CDATA[<xf:macro id="your_passkeys" arg-passkeys="!" arg-linkType="{$xf.appType}">
+  <template type="public" title="passkeys_macros" version_id="2030870" version_string="2.3.8"><![CDATA[<xf:macro id="your_passkeys" arg-passkeys="!" arg-linkType="{$xf.appType}">
 	<xf:js src="xf/webauthn.js" />
 
 	<div class="block">
 		<div class="block-container">
 			<h3 class="block-header">
 				{{ phrase('your_passkeys') }}
-				<xf:if is="$xf.request.isSecure()">
+				<xf:if is="$xf.request.isSecure() || $xf.request.isHostLocal()">
 					<span class="u-pullRight u-jsOnly">
 						<xf:button href="{{ link_type($linkType, 'account/passkey/add') }}" fa="fa-plus" data-xf-click="webauthn-click">{{ phrase('add_passkey') }}</xf:button>
 					</span>
@@ -67625,7 +68147,8 @@ a.button // needed for specificity over a:link
 										arg-light="{$passkey.getIcon('light')}"
 										arg-dark="{$passkey.getIcon('dark')}"
 										arg-width="100" arg-height="100"
-										arg-alt="{$passkey.getAuthenticatorName()}" />
+										arg-alt="{$passkey.getAuthenticatorName()}"
+										arg-lazy="true" />
 								</div>
 							</xf:if>
 							<div class="contentRow-main">
@@ -68487,7 +69010,7 @@ a.button // needed for specificity over a:link
 		</div>
 	</div>
 </div>]]></template>
-  <template type="public" title="post_article_macros" version_id="2030037" version_string="2.3.0 Beta 7"><![CDATA[<xf:macro id="article"
+  <template type="public" title="post_article_macros" version_id="2030570" version_string="2.3.5"><![CDATA[<xf:macro id="article"
 	arg-post="!"
 	arg-thread="!"
 	arg-forum="{{ null }}"
@@ -68715,7 +69238,7 @@ a.button // needed for specificity over a:link
 				<div class="articlePreview-headline">
 					<h2 class="articlePreview-title">
 						<xf:if is="$thread.discussion_state == 'moderated'">
-							<xf:fa icon="fa-shield" class="structItem-status--moderated" aria-hidden="true" title="{{ phrase('awaiting_approval')|for_attr }}" />
+							<i class="structItem-status structItem-status--moderated" aria-hidden="true" title="{{ phrase('awaiting_approval')|for_attr }}"></i>
 							<span class="u-srOnly">{{ phrase('awaiting_approval') }}</span>
 						<xf:elseif is="$thread.discussion_state == 'deleted'" />
 							<i class="structItem-status structItem-status--deleted" aria-hidden="true" title="{{ phrase('deleted')|for_attr }}"></i>
@@ -68966,7 +69489,7 @@ a.button // needed for specificity over a:link
 		arg-thread="{$thread}"
 		args="{$templateOverrides.post_macro_args}" />
 </xf:if>]]></template>
-  <template type="public" title="post_macros" version_id="2030370" version_string="2.3.3"><![CDATA[<xf:macro id="post"
+  <template type="public" title="post_macros" version_id="2030770" version_string="2.3.7"><![CDATA[<xf:macro id="post"
 	arg-post="!"
 	arg-thread="!"
 	arg-highlightedPosts="{{ [] }}">
@@ -68985,6 +69508,7 @@ a.button // needed for specificity over a:link
 
 		<xf:if is="$includeMicrodata">
 			<meta itemprop="parentItem" itemscope itemid="{{ link('canonical:threads', $thread) }}" />
+			<meta itemprop="name" content="{{ phrase('post_x', {'position': number($post.position + 1)}) }}" />
 		</xf:if>
 
 		<span class="u-anchorTarget" id="post-{$post.post_id}"></span>
@@ -71691,6 +72215,22 @@ a.button // needed for specificity over a:link
 	<xf:redirect url="{$redirect}" />
 	<xf:hiddenval name="timezone" value="" data-xf-init="auto-timezone" />
 </xf:form>]]></template>
+  <template type="public" title="register_connected_account_confirm" version_id="2030770" version_string="2.3.7"><![CDATA[<xf:title>{{ phrase('continue_with_x', {'provider': $provider.title}) }}</xf:title>
+
+<xf:form action="{{ link('register/connected-accounts', $provider, {'setup': true}) }}" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:inforow rowtype="confirm">
+				{{ phrase('you_sure_you_want_to_connect_account') }}
+				<strong>{$provider.title}</strong>
+			</xf:inforow>
+
+			<xf:redirect url="{$redirect}" />
+		</div>
+
+		<xf:submitrow icon="confirm" rowtype="simple" />
+	</div>
+</xf:form>]]></template>
   <template type="public" title="register_form" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:js src="xf/login_signup.js" min="1" />
 
 <xf:title>{{ phrase('register') }}</xf:title>
@@ -72162,7 +72702,7 @@ a.button // needed for specificity over a:link
 		<xf:showignored wrapperclass="block-outer-opposite" />
 	</div>
 </div>]]></template>
-  <template type="public" title="report_view" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:title>{{ phrase('reported_content:') }} {$report.title}</xf:title>
+  <template type="public" title="report_view" version_id="2030870" version_string="2.3.8"><![CDATA[<xf:title>{{ phrase('reported_content:') }} {$report.title}</xf:title>
 <xf:h1>{$report.title}</xf:h1>
 
 <xf:breadcrumb href="{{ link('reports') }}">{{ phrase('reports') }}</xf:breadcrumb>
@@ -72237,8 +72777,8 @@ a.button // needed for specificity over a:link
 								<header class="message-attribution message-attribution--plain">
 									<ul class="listInline listInline--bullet">
 										<li class="message-attribution-user">
-											<xf:avatar user="$comment.User" size="xxs" />
-											<h4 class="attribution"><xf:username user="$comment.User" rich="true" /></h4>
+											<xf:avatar user="$comment.User" size="xxs" defaultname="{$comment.username}" />
+											<h4 class="attribution"><xf:username user="$comment.User" rich="true" defaultname="{$comment.username}" /></h4>
 										</li>
 										<li><a href="#report-comment-{$comment.report_comment_id}" class="u-concealed"><xf:date time="$comment.comment_date" /></a></li>
 										<xf:if is="$comment.is_report">
@@ -73276,7 +73816,7 @@ a.button // needed for specificity over a:link
 		window.location.reload();
 	});
 </script>]]></template>
-  <template type="public" title="setup.less" version_id="2030170" version_string="2.3.1"><![CDATA[// Note that this file should never output any CSS directly. It should contain variables and mixins only.
+  <template type="public" title="setup.less" version_id="2030870" version_string="2.3.8"><![CDATA[// Note that this file should never output any CSS directly. It should contain variables and mixins only.
 // Output should go into core.less.
 
 // ################################ VARIABLES ###############################
@@ -73726,7 +74266,7 @@ a.button // needed for specificity over a:link
 .m-autoCompleteList(@wide: false)
 {
 	.m-listPlain();
-	cursor: default;
+	cursor: pointer;
 
 	.xf-menu();
 	min-width: 180px;
@@ -74375,7 +74915,7 @@ a.button // needed for specificity over a:link
   }
 }
 ]]></template>
-  <template type="public" title="share_controls.less" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[.shareButtons
+  <template type="public" title="share_controls.less" version_id="2030470" version_string="2.3.4"><![CDATA[.shareButtons
 {
 	.m-clearFix();
 }
@@ -74475,6 +75015,11 @@ a.button // needed for specificity over a:link
 		&:hover { background-color: #000000; }
 	}
 
+	&.shareButtons-button--bluesky
+	{
+		&:hover { background-color: #1185fe; }
+	}
+
 	&.shareButtons-button--pinterest
 	{
 		&:hover { background-color: #bd081c; }
@@ -74568,7 +75113,7 @@ a.button // needed for specificity over a:link
 		border-radius: @xf-borderRadiusMedium;
 	}
 }]]></template>
-  <template type="public" title="share_page_macros" version_id="2030055" version_string="2.3.0 Release Candidate 5"><![CDATA[<xf:macro id="buttons"
+  <template type="public" title="share_page_macros" version_id="2030870" version_string="2.3.8"><![CDATA[<xf:macro id="buttons"
 	arg-iconic="{{ false }}"
 	arg-hideLink="{{ false }}"
 	arg-label=""
@@ -74599,8 +75144,16 @@ a.button // needed for specificity over a:link
 					</xf:if>
 
 					<xf:if is="$xf.options.tweet.enabled">
-						<a class="shareButtons-button shareButtons-button--brand shareButtons-button--twitter" href="#{$id}" data-href="https://twitter.com/intent/tweet?url={url}&amp;text={title}{{ $xf.options.tweet.via ? '&amp;via=' . $xf.options.tweet.via : '' }}{{ $xf.options.tweet.related ? '&amp;related=' . $xf.options.tweet.related : '' }}">
-							{{ x_logo() }} <span>{{ phrase('x_twitter') }}</span>
+						<a class="shareButtons-button shareButtons-button--brand shareButtons-button--twitter" href="#{$id}" data-href="https://x.com/intent/tweet?url={url}&amp;text={title}{{ $xf.options.tweet.via ? '&amp;via=' . $xf.options.tweet.via : '' }}{{ $xf.options.tweet.related ? '&amp;related=' . $xf.options.tweet.related : '' }}">
+							<xf:fa icon="fab fa-x" />
+							<span>{{ phrase('x_twitter') }}</span>
+						</a>
+					</xf:if>
+
+					<xf:if is="$xf.options.blueskyShare">
+						<a class="shareButtons-button shareButtons-button--brand shareButtons-button--bluesky" href="#{$id}" data-href="https://bsky.app/intent/compose?text={url}">
+							<xf:fa icon="fab fa-bluesky" />
+							<span>{{ phrase('bluesky') }}</span>
 						</a>
 					</xf:if>
 
@@ -75342,12 +75895,13 @@ a.button // needed for specificity over a:link
   <template type="public" title="style_variation_input" version_id="2030032" version_string="2.3.0 Beta 2"><![CDATA[<xf:macro name="style_variation_macros::variation_input"
 	arg-style="{$style}"
 	arg-value="{$variation}" />]]></template>
-  <template type="public" title="style_variation_macros" version_id="2030170" version_string="2.3.1"><![CDATA[<xf:macro id="picture"
+  <template type="public" title="style_variation_macros" version_id="2030770" version_string="2.3.7"><![CDATA[<xf:macro id="picture"
 	arg-property="!"
 	arg-propertyRetina="{{ null }}"
 	arg-width="{{ null }}"
 	arg-height="{{ null }}"
-	arg-alt="{{ null }}">
+	arg-alt="{{ null }}"
+    arg-lazy="{{ false }}">
 
 	<xf:set var="$variations" value="{{ {} }}" />
 
@@ -75365,7 +75919,8 @@ a.button // needed for specificity over a:link
 		arg-variations="{$variations}"
 		arg-width="{$width}"
 		arg-height="{$height}"
-		arg-alt="{$alt}" />
+		arg-alt="{$alt}"
+		arg-lazy="{$lazy}" />
 </xf:macro>
 
 <xf:macro id="picture_color_scheme"
@@ -75373,7 +75928,8 @@ a.button // needed for specificity over a:link
 	arg-dark="!"
 	arg-width="{{ null }}"
 	arg-height="{{ null }}"
-	arg-alt="{{ null }}">
+	arg-alt="{{ null }}"
+    arg-lazy="{{ false }}">
 
 	<xf:set var="$light" value="{{ is_array($light) ? $light : { 1: $light } }}" />
 	<xf:set var="$dark" value="{{ is_array($dark) ? $dark : { 1: $dark } }}" />
@@ -75395,14 +75951,16 @@ a.button // needed for specificity over a:link
 		arg-variations="{$variations}"
 		arg-width="{$width}"
 		arg-height="{$height}"
-		arg-alt="{$alt}" />
+		arg-alt="{$alt}"
+		arg-lazy="{$lazy}" />
 </xf:macro>
 
 <xf:macro id="picture_variations"
 	arg-variations="!"
 	arg-width="{{ null }}"
 	arg-height="{{ null }}"
-	arg-alt="{{ null }}">
+	arg-alt="{{ null }}"
+    arg-lazy="{{ false }}">
 
 	<picture data-variations="{{ $variations|json }}">
 		<xf:set var="$variation" value="{{ ($xf.style.isVariationsEnabled() && $xf.visitor.style_variation) ? $xf.visitor.style_variation : 'default' }}" />
@@ -75419,7 +75977,7 @@ a.button // needed for specificity over a:link
 			</xf:if>
 		</xf:if>
 
-		<img src="{$src}" {{ $src2x ? 'srcset="' . $src2x . ' 2x"' : '' }} width="{$width}" height="{$height}" alt="{{ $alt|for_attr }}" />
+		<img src="{$src}" {{ $src2x ? 'srcset="' . $src2x . ' 2x"' : '' }} width="{$width}" height="{$height}" alt="{{ $alt|for_attr }}" {{ $lazy ? 'loading="lazy"' : '' }} />
 	</picture>
 </xf:macro>
 
@@ -75559,7 +76117,7 @@ a.button // needed for specificity over a:link
 	&Level6 { font-size: 200%; }
 	&Level7 { font-size: 225%; color: xf-intensify(@xf-linkColor, 10%); }
 }]]></template>
-  <template type="public" title="tag_macros" version_id="2030370" version_string="2.3.3"><![CDATA[<xf:macro id="edit_rows"
+  <template type="public" title="tag_macros" version_id="2030870" version_string="2.3.8"><![CDATA[<xf:macro id="edit_rows"
 	arg-uneditableTags="!"
 	arg-editableTags="!"
 	arg-minTags="{{ 0 }}"
@@ -75658,7 +76216,7 @@ a.button // needed for specificity over a:link
 		</xf:foreach>
 	</xf:if>
 </xf:macro>]]></template>
-  <template type="public" title="tag_search" version_id="2010052" version_string="2.1.0 Release Candidate 2"><![CDATA[<xf:title>{{ phrase('search_tags') }}</xf:title>
+  <template type="public" title="tag_search" version_id="2030870" version_string="2.3.8"><![CDATA[<xf:title>{{ phrase('search_tags') }}</xf:title>
 
 <xf:breadcrumb href="{{ link('tags') }}">{{ phrase('tags') }}</xf:breadcrumb>
 
@@ -75668,17 +76226,19 @@ a.button // needed for specificity over a:link
 
 <xf:form action="{{ link('tags') }}" class="block" ajax="true">
 	<div class="block-container">
-		<h2 class="block-tabHeader tabs hScroller" data-xf-init="h-scroller">
-			<span class="hScroller-scroll">
-				<a href="{{ link('search') }}" class="tabs-tab">{{ phrase('search_everything') }}</a>
-				<xf:foreach loop="$tabs" key="$tabType" value="$tab">
-					<a href="{{ link('search', null, {'type': $tabType}) }}" class="tabs-tab{{ $type == $tabType ? ' is-active' : '' }}">{$tab.title}</a>
-				</xf:foreach>
-				<xf:if is="$xf.options.enableTagging">
-					<a href="{{ link('tags') }}" class="tabs-tab is-active">{{ phrase('search_tags') }}</a>
-				</xf:if>
-			</span>
-		</h2>
+		<xf:if is="$xf.visitor.canSearch()">
+			<h2 class="block-tabHeader tabs hScroller" data-xf-init="h-scroller">
+				<span class="hScroller-scroll">
+					<a href="{{ link('search') }}" class="tabs-tab">{{ phrase('search_everything') }}</a>
+					<xf:foreach loop="$tabs" key="$tabType" value="$tab">
+						<a href="{{ link('search', null, {'type': $tabType}) }}" class="tabs-tab{{ $type == $tabType ? ' is-active' : '' }}">{$tab.title}</a>
+					</xf:foreach>
+					<xf:if is="$xf.options.enableTagging">
+						<a href="{{ link('tags') }}" class="tabs-tab is-active">{{ phrase('search_tags') }}</a>
+					</xf:if>
+				</span>
+			</h2>
+		</xf:if>
 		<div class="block-body">
 			<xf:tokeninputrow name="tags" value="{$tags}" href="{{ link('misc/tag-auto-complete') }}"
 				label="{{ phrase('tags') }}" />
@@ -78939,7 +79499,7 @@ a.button // needed for specificity over a:link
 		<a href="{{ $content.getContentUrl() }}">{{ $content.getContentTitle() }}</a>
 	</xf:extension>
 </xf:macro>]]></template>
-  <template type="public" title="trending_content_item_thread" version_id="2030170" version_string="2.3.1"><![CDATA[<xf:macro id="article" extends="trending_content_item::article"
+  <template type="public" title="trending_content_item_thread" version_id="2031370" version_string="2.3.13"><![CDATA[<xf:macro id="article" extends="trending_content_item::article"
 	arg-result="!"
 	arg-content="!"
 	arg-snippetLength="{{ 0 }}">
@@ -79018,7 +79578,9 @@ a.button // needed for specificity over a:link
 	<xf:extension id="meta">
 		<xf:extensionparent />
 
-		<li>{{ $content.User.username ?: $content.username }}</li>
+		<li>
+			<xf:username user="$content.User" href="" defaultname="{$content.username}" />
+		</li>
 		<li><xf:date time="{{ $content.getContentDate() }}" /></li>
 	</xf:extension>
 
@@ -79151,7 +79713,7 @@ a.button // needed for specificity over a:link
 	<xf:hiddenval name="webauthn_payload" />
 	<xf:hiddenval name="webauthn_challenge">{{ $passkey ? $passkey.getChallenge() : '' }}</xf:hiddenval>
 </xf:if>]]></template>
-  <template type="public" title="two_step_totp" version_id="2030170" version_string="2.3.1"><![CDATA[<xf:if is="$context == 'setup'">
+  <template type="public" title="two_step_totp" version_id="2030870" version_string="2.3.8"><![CDATA[<xf:if is="$context == 'setup'">
 	<xf:js src="vendor/kjua/kjua.min.js" />
 	<xf:formrow label="{{ phrase('setup') }}">
 		{{ phrase('totp_recieve_codes_via_app_desc') }}
@@ -79161,7 +79723,8 @@ a.button // needed for specificity over a:link
 	<xf:js>
 		const el = document.querySelector('#js-totpQrCode')
 		const qr = kjua({
-			text: '{$otpUrl|escape('js')}'
+			text: '{$otpUrl|escape('js')}',
+			render: 'img',
 		})
 		el.innerHTML = ''
 		el.append(qr)
@@ -79811,7 +80374,7 @@ a.button // needed for specificity over a:link
 		</div>
 	</xf:if>
 </div>]]></template>
-  <template type="public" title="whats_new_wrapper" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:if is="{$pageSelected} != 'overview'">
+  <template type="public" title="whats_new_wrapper" version_id="2030770" version_string="2.3.7"><![CDATA[<xf:if is="!in_array($pageSelected, ['overview', 'featured'])">
 	<xf:head option="metaNoindex"><meta name="robots" content="noindex" /></xf:head>
 </xf:if>
 

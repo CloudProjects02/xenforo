@@ -104,7 +104,6 @@ class NotifierService extends AbstractService
 
 		if (empty($this->usersAlerted[$user->user_id]))
 		{
-			/** @var UserAlertRepository $alertRepo */
 			$alertRepo = $this->app->repository(UserAlertRepository::class);
 			$alerted = $alertRepo->alert(
 				$user,

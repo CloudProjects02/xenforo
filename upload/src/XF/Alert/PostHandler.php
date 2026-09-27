@@ -2,6 +2,9 @@
 
 namespace XF\Alert;
 
+/**
+ * @extends AbstractHandler<\XF\Entity\Post>
+ */
 class PostHandler extends AbstractHandler
 {
 	public function getEntityWith()

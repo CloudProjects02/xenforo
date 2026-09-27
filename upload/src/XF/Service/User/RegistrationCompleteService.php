@@ -29,7 +29,6 @@ class RegistrationCompleteService extends AbstractService
 
 	public function triggerCompletionActions()
 	{
-		/** @var WelcomeService $userWelcome */
 		$userWelcome = $this->service(WelcomeService::class, $this->user);
 		$userWelcome->send();
 

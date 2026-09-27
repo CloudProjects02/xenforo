@@ -191,7 +191,6 @@ class ReplierService extends AbstractService
 		$userConv = $this->conversation->Users[$this->user->user_id];
 		if ($userConv && $userConv->is_unread)
 		{
-			/** @var ConversationRepository $convRepo */
 			$convRepo = $this->repository(ConversationRepository::class);
 			$convRepo->markUserConversationRead($userConv, $this->message->message_date);
 		}
@@ -199,7 +198,6 @@ class ReplierService extends AbstractService
 
 	public function sendNotifications()
 	{
-		/** @var NotifierService $notifier */
 		$notifier = $this->service(NotifierService::class, $this->conversation);
 		$notifier->notifyReply($this->message);
 	}

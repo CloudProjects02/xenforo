@@ -64,6 +64,7 @@ class SendmailTransport extends AbstractTransport
         $this->stream = new ProcessStream();
         if (str_contains($this->command, ' -bs')) {
             $this->stream->setCommand($this->command);
+            $this->stream->setInteractive(true);
             $this->transport = new SmtpTransport($this->stream, $dispatcher, $logger);
         }
     }
@@ -106,6 +107,9 @@ class SendmailTransport extends AbstractTransport
             $chunks = AbstractStream::replace("\n.", "\n..", $chunks);
         }
 
+        if ($recipients) {
+            $command .= ' --';
+        }
         foreach ($recipients as $recipient) {
             $command .= ' '.escapeshellarg($recipient->getEncodedAddress());
         }

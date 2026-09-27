@@ -31,6 +31,13 @@ header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
 $resultIds = $request->filter('result_ids', 'array-uint');
+$resultTokens = $request->filter('result_tokens', 'array-str');
+
+$tokensByResultId = [];
+foreach ($resultIds AS $i => $resultId)
+{
+	$tokensByResultId[$resultId] = $resultTokens[$i] ?? '';
+}
 
 if (!$resultIds)
 {
@@ -64,6 +71,12 @@ $templater->addDefaultParam('xf', $app->getGlobalTemplateData());
 foreach ($results AS $result)
 {
 	if (!$result->pending)
+	{
+		continue;
+	}
+
+	$submittedToken = $tokensByResultId[$result->result_id] ?? '';
+	if (!$result->isValidUnfurlToken($submittedToken))
 	{
 		continue;
 	}

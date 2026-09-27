@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<permissions>
+  <permission permission_group_id="conversation" permission_id="deleteAnyMessages" permission_type="flag" interface_group_id="conversationModeratorPermissions" display_order="15"/>
+  <permission permission_group_id="conversation" permission_id="deleteOwnMessages" permission_type="flag" interface_group_id="conversationPermissions" display_order="45"/>
+  <permission permission_group_id="conversation" permission_id="translateMessages" permission_type="flag" interface_group_id="conversationPermissions" display_order="130"/>
+  <permission permission_group_id="conversation" permission_id="xfmSetIndividualWallpaper" permission_type="flag" interface_group_id="conversationPermissions" display_order="120"/>
+  <permission permission_group_id="conversation" permission_id="xfmSetWallpaper" permission_type="flag" interface_group_id="conversationPermissions" display_order="110"/>
+</permissions>

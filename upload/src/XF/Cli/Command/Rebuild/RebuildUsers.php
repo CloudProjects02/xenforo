@@ -2,6 +2,8 @@
 
 namespace XF\Cli\Command\Rebuild;
 
+use XF\Job\User;
+
 class RebuildUsers extends AbstractRebuildCommand
 {
 	protected function getRebuildName()
@@ -16,6 +18,6 @@ class RebuildUsers extends AbstractRebuildCommand
 
 	protected function getRebuildClass()
 	{
-		return 'XF:User';
+		return User::class;
 	}
 }

@@ -7,7 +7,6 @@ use XF\Api\Result\EntityResultInterface;
 use XF\Entity\Forum;
 use XF\Entity\Thread;
 use XF\Finder\ThreadFinder;
-use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\ParameterBag;
 use XF\Mvc\Reply\Exception;
@@ -108,7 +107,6 @@ class ForumController extends AbstractController
 		{
 			$stickyThreadFinder = clone $threadFinder;
 
-			/** @var Thread[]|AbstractCollection $stickyThreads */
 			$stickyThreads = $stickyThreadFinder->where('sticky', 1)->fetch();
 		}
 		else
@@ -129,7 +127,6 @@ class ForumController extends AbstractController
 
 		$this->assertValidApiPage($page, $perPage, $totalThreads);
 
-		/** @var Thread[]|AbstractCollection $threads */
 		$threads = $threadFinder->fetch();
 		if (\XF::isApiCheckingPermissions())
 		{

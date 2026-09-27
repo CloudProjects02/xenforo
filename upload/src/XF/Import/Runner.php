@@ -214,6 +214,8 @@ class Runner
 				$session->currentState = $state;
 				return;
 			}
+
+			throw new \LogicException("Step method $runMethod is not callable on " . get_class($this->importer));
 		}
 
 		// if reaching here, there are no remaining steps

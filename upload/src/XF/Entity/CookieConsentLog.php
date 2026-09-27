@@ -11,7 +11,7 @@ use XF\Mvc\Entity\Structure;
  * @property int $log_date
  * @property int $user_id
  * @property string $ip_address
- * @property array $consented_groups
+ * @property array|null $consented_groups
  *
  * RELATIONS
  * @property-read User|null $User

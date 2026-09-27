@@ -130,7 +130,7 @@ class Manager
 
 	public function canResize($width, $height)
 	{
-		if (!$this->maxResizePixels === null)
+		if ($this->maxResizePixels === null)
 		{
 			return true;
 		}

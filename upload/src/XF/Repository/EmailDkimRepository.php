@@ -8,7 +8,20 @@ class EmailDkimRepository extends Repository
 {
 	public function getDnsRecordName(): string
 	{
-		return 'xenforo._domainkey';
+		$selector = $this->getSelector();
+		return $selector . '._domainkey';
+	}
+
+	public function getSelector(): string
+	{
+		$dkimOptions = \XF::options()->emailDkim;
+		return $dkimOptions['selector'] ?? 'xenforo';
+	}
+
+	public function generateUniqueSelector(): string
+	{
+		$randomString = \XF::generateRandomString(10);
+		return 'xf-' . strtolower($randomString);
 	}
 
 	public function getDnsRecordValueFromPrivateKey(): string
@@ -21,7 +34,7 @@ class EmailDkimRepository extends Repository
 	public function verifyDnsRecordForDomain(string $domain): bool
 	{
 		$dnsRecordName = $this->getDnsRecordName();
-		$dnsRecord = dns_get_record("$dnsRecordName.$domain", DNS_TXT);
+		$dnsRecord = @dns_get_record("$dnsRecordName.$domain", DNS_TXT);
 
 		if (empty($dnsRecord))
 		{

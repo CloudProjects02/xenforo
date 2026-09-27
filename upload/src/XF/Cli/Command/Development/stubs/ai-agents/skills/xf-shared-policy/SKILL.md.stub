@@ -1,0 +1,60 @@
+---
+name: xf-shared-policy
+description: Required XenForo development policy for source authority, development-output synchronization, generated artifacts, factory typing, and reviewable code. Load with every other XenForo skill.
+---
+
+# XenForo Shared Policy
+
+Apply these rules to core and add-on work. Load the task-specific skill as well.
+
+## Establish the Local Context
+
+1. Read the nearest `AGENTS.md` or equivalent agent file.
+2. Identify whether the change belongs to core (`src/XF`, `js/xf`, `src/addons/XF`) or an add-on (`src/addons/<Vendor>/<AddOn>`).
+3. Inspect the local version and nearby first-party code before choosing an API or pattern. Do not assume another XenForo version behaves identically.
+4. Load `xf-environment` before running XenForo, PHP, Composer, database, container, or worktree commands.
+
+## Sources and Generated Artifacts
+
+- Treat PHP, JavaScript, LESS, and add-on `_output/` files as development sources.
+- Treat `_data/*.xml` as immutable output produced by core and add-on release tooling. Never create, edit, repair, or use it as a development source.
+- Discover a development-output schema from the corresponding handler in `src/XF/DevelopmentOutput/` and first-party `_output/` examples.
+- Never modify `src/vendor/` or other vendored/generated code directly.
+
+Read [development-output.md](references/development-output.md) whenever work touches templates, phrases, routes, options, permissions, listeners, or another `_output/` artifact.
+
+## Create Before Editing
+
+- Use a matching `xf-make:*` command to create an artifact when one exists.
+- Run `<runner> <command> --help` and use explicit options for automated work.
+- A make command creates the database record and development output. Do not import or export immediately afterward.
+- If no make command exists, use the product UI when it is the normal authoring surface. Check whether the agent harness can operate the control panel with user approval; otherwise ask the user to make the UI change. Use filesystem creation only when neither route is available, derive the exact format from the development-output handler and first-party examples, then run the narrowest importer.
+- Do not edit `_metadata.json` by hand. It is maintained by development-output writes and imports.
+
+## Factories and Types
+
+Use native PHP class strings. XenForo's factory methods declare generic return types, so an extra `@var` annotation is unnecessary.
+
+```php
+$finder = \XF::finder(UserFinder::class);
+$repository = \XF::repository(UserRepository::class);
+$service = \XF::service(UserService::class, $user);
+```
+
+Do not add annotations to recover types already supplied by the factory, and do not use legacy short names such as `XF:UserFinder` in new code.
+
+## Phrase Boundaries
+
+Preserve `~~user-facing text~~` markers in templates and PHP. XenForo's development phrase tooling uses these boundaries when converting literals to phrases; do not normalize or remove them as stray punctuation. Do not add the markers to JavaScript, where that phrase workflow is not supported.
+
+## Code and Comments
+
+- Follow first-party patterns in `src/XF` and `src/addons/XF`; use other installed add-ons as authorities only when they are first-party and relevant.
+- Prefer names and structure that make the code understandable without narration.
+- Comment a non-obvious reason, invariant, compatibility constraint, or workaround. Do not paraphrase the next statement, label routine steps, or add a docblock solely to restate native types.
+- Keep public contracts and useful generic/array-shape annotations. Remove explanatory prose that duplicates the signature or implementation.
+- Keep changes focused and backwards compatible unless the task requires otherwise.
+
+## Verification
+
+Review the diff for unrelated generated output before running the narrowest checks that cover the change. Do not create tests merely because code changed; core test policy is in `xf-core-dev`.

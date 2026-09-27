@@ -13,6 +13,11 @@ use XF\Repository\WebhookRepository;
 
 class WebhookController extends AbstractController
 {
+	protected function preDispatchController($action, ParameterBag $params)
+	{
+		$this->assertAdminPermission('webhook');
+	}
+
 	public function actionIndex(): AbstractReply
 	{
 		$webhookRepo = $this->getWebhookRepo();

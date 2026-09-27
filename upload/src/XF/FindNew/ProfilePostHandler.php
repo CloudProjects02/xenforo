@@ -11,6 +11,9 @@ use XF\Mvc\Entity\AbstractCollection;
 use XF\Repository\AttachmentRepository;
 use XF\Repository\ProfilePostRepository;
 
+/**
+ * @extends AbstractHandler<ProfilePost>
+ */
 class ProfilePostHandler extends AbstractHandler
 {
 	public function getRoute()
@@ -20,11 +23,9 @@ class ProfilePostHandler extends AbstractHandler
 
 	public function getPageReply(Controller $controller, FindNew $findNew, array $results, $page, $perPage)
 	{
-		/** @var ProfilePostRepository $profilePostRepo */
 		$profilePostRepo = \XF::repository(ProfilePostRepository::class);
 		$profilePosts = $profilePostRepo->addCommentsToProfilePosts($results);
 
-		/** @var AttachmentRepository $attachmentRepo */
 		$attachmentRepo = \XF::repository(AttachmentRepository::class);
 
 		$canInlineMod = false;
@@ -83,7 +84,6 @@ class ProfilePostHandler extends AbstractHandler
 
 	public function getResultIds(array $filters, $maxResults)
 	{
-		/** @var ProfilePostFinder $profilePostFinder */
 		$profilePostFinder = \XF::finder(ProfilePostFinder::class)
 			->where('message_state', '<>', 'moderated')
 			->where('message_state', '<>', 'deleted')
@@ -111,7 +111,6 @@ class ProfilePostHandler extends AbstractHandler
 	{
 		$ids = array_map('intval', $ids);
 
-		/** @var ProfilePostFinder $profilePostFinder */
 		$profilePostFinder = \XF::finder(ProfilePostFinder::class)
 			->where('profile_post_id', $ids)
 			->with('fullProfile');

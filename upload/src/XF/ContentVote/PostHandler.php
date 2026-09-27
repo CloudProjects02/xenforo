@@ -5,11 +5,13 @@ namespace XF\ContentVote;
 use XF\Entity\Post;
 use XF\Mvc\Entity\Entity;
 
+/**
+ * @extends AbstractHandler<Post>
+ */
 class PostHandler extends AbstractHandler
 {
 	public function isCountedForContentUser(Entity $entity)
 	{
-		/** @var Post $entity */
 		return $entity->isVisible();
 	}
 

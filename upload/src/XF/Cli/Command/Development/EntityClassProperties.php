@@ -145,8 +145,8 @@ class EntityClassProperties extends AbstractCommand
 				else if ($returnType)
 				{
 					if (
-						class_exists('\ReflectionUnionType') &&
-						$returnType instanceof \ReflectionUnionType
+						class_exists('\ReflectionUnionType')
+						&& $returnType instanceof \ReflectionUnionType
 					)
 					{
 						$returnTypes = $returnType->getTypes();
@@ -210,7 +210,7 @@ class EntityClassProperties extends AbstractCommand
 				$type = !empty($def['typeHint'])
 					? $def['typeHint']
 					: $typeMap[$def['type']];
-				$null = !empty($def['nullable']);
+				$null = !empty($def['nullable']) && !str_ends_with($type, '|null');
 
 				if (isset($getters[$column]))
 				{
@@ -347,8 +347,8 @@ class EntityClassProperties extends AbstractCommand
 			Entity::BINARY => 'string',
 			Entity::SERIALIZED => 'array|bool', // try to decode but bool on failure
 			Entity::SERIALIZED_ARRAY => 'array',
-			Entity::JSON => 'array|null', // try to decode but null on failure
-			Entity::JSON_ARRAY => 'array',
+			Entity::JSON => 'scalar|array|null',
+			Entity::JSON_ARRAY => 'array|null', // try to decode but null on failure
 			Entity::LIST_LINES => 'array',
 			Entity::LIST_COMMA => 'array',
 			Entity::LIST_ARRAY => 'array',

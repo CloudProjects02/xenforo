@@ -38,7 +38,6 @@ class StylePlugin extends AbstractPlugin
 
 		if ($styleId == 0)
 		{
-			/** @var StyleRepository $styleRepo */
 			$styleRepo = $this->repository(StyleRepository::class);
 			$style = $styleRepo->getMasterStyle();
 		}
@@ -67,7 +66,6 @@ class StylePlugin extends AbstractPlugin
 	{
 		if ($id === 0 || $id === "0")
 		{
-			/** @var StyleRepository $styleRepo */
 			$styleRepo = $this->repository(StyleRepository::class);
 			return $styleRepo->getMasterStyle();
 		}

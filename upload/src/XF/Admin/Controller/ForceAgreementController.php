@@ -4,10 +4,16 @@ namespace XF\Admin\Controller;
 
 use XF\Entity\Option;
 use XF\Mvc\Entity\Repository;
+use XF\Mvc\ParameterBag;
 use XF\Repository\OptionRepository;
 
 class ForceAgreementController extends AbstractController
 {
+	protected function preDispatchController($action, ParameterBag $params)
+	{
+		$this->assertAdminPermission('option');
+	}
+
 	public function actionPrivacyPolicy()
 	{
 		$privacyPolicyUrl = $this->app->container('privacyPolicyUrl');

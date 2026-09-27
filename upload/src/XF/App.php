@@ -27,7 +27,6 @@ use XF\Mail\Mailer;
 use XF\Mail\Styler;
 use XF\Mvc\Controller;
 use XF\Mvc\Dispatcher;
-use XF\Mvc\Entity\ArrayCollection;
 use XF\Mvc\Entity\ArrayValidator;
 use XF\Mvc\Entity\Manager;
 use XF\Mvc\Entity\ValueFormatter;
@@ -101,7 +100,7 @@ use XF\Util\File;
 use XF\Util\Php;
 use XF\Webhook\Criteria\AbstractCriteria;
 
-use function func_get_args, get_class, intval, is_array, is_scalar, is_string, strlen, strval;
+use function func_get_args, get_class, in_array, intval, is_array, is_scalar, is_string, strlen, strval;
 
 class App implements \ArrayAccess
 {
@@ -219,8 +218,10 @@ class App implements \ArrayAccess
 			'jobMaxRunTime' => 8,
 			'enableMail' => true,
 			'enableMailQueue' => true,
+			'smtpKeepAlivePingThreshold' => 9,
 			'enableListeners' => true,
 			'enableTemplateModificationCallbacks' => true,
+			'enableClearSiteData' => true,
 			'enableClickjackingProtection' => true,
 			'enableReverseTabnabbingProtection' => true,
 			'enableLoginCsrf' => true,
@@ -229,7 +230,7 @@ class App implements \ArrayAccess
 			'enableContentLength' => true,
 			'enableTfa' => true,
 			'enableLivePayments' => true,
-			'enableApi' => true,
+			'enableApi' => false,
 			'enableAddOnArchiveInstaller' => false,
 			'enableOneClickUpgrade' => true,
 			'disableRocketLoader' => null,
@@ -1264,7 +1265,6 @@ class App implements \ArrayAccess
 
 				if (!empty($config['oauth']))
 				{
-					/** @var OptionRepository $optionRepo */
 					$optionRepo = $this->repository(OptionRepository::class);
 					$config = $optionRepo->refreshEmailAccessTokenIfNeeded('emailTransport');
 				}
@@ -1511,7 +1511,7 @@ class App implements \ArrayAccess
 			$cache = $c['style.cache'];
 			if (!$id || !isset($cache[$id]))
 			{
-				$id = $c['options']->defaultStyleId;
+				$id = (int) $c['options']->defaultStyleId;
 			}
 
 			if (isset($cache[$id]))
@@ -2059,7 +2059,6 @@ class App implements \ArrayAccess
 			'tfa_trust' => CookieConsent::GROUP_REQUIRED,
 			'user' => CookieConsent::GROUP_REQUIRED,
 
-			'from_search' => CookieConsent::GROUP_OPTIONAL,
 			'emoji_usage' => CookieConsent::GROUP_OPTIONAL,
 		];
 		$cookieConsent->addCookies($cookies);
@@ -2244,27 +2243,32 @@ class App implements \ArrayAccess
 	{
 	}
 
+	protected function handleMissingConfig(array $config)
+	{
+		if ($config['legacyExists'])
+		{
+			echo 'The site is currently being upgraded. Please check back later.';
+			exit;
+		}
+		else if (File::installLockExists())
+		{
+			echo "Couldn't load src/config.php file.";
+			exit;
+		}
+		else
+		{
+			header('Location: install/index.php');
+			exit;
+		}
+	}
+
 	public function setup(array $options = [])
 	{
 		$config = $this->container('config');
 
 		if (!$config['exists'])
 		{
-			if ($config['legacyExists'])
-			{
-				echo 'The site is currently being upgraded. Please check back later.';
-				exit;
-			}
-			else if (File::installLockExists())
-			{
-				echo "Couldn't load src/config.php file.";
-				exit;
-			}
-			else
-			{
-				header('Location: install/index.php');
-				exit;
-			}
+			$this->handleMissingConfig($config);
 		}
 
 		$this->checkDebugMode();
@@ -2624,10 +2628,12 @@ class App implements \ArrayAccess
 			return $fallbackUrl;
 		}
 
+		$redirect = str_ireplace(['%0a', '%0d'], "\n", $redirect);
+
 		if (
-			strpos($redirect, "\n") !== false ||
-			strpos($redirect, "\r") !== false ||
-			strpos($redirect, '@') !== false
+			strpos($redirect, "\n") !== false
+			|| strpos($redirect, "\r") !== false
+			|| strpos($redirect, '@') !== false
 		)
 		{
 			// redirect contained newlines or user/pass
@@ -2636,6 +2642,14 @@ class App implements \ArrayAccess
 
 		$fullRedirect = $request->convertToAbsoluteUri($redirect);
 		$redirectParts = @parse_url($fullRedirect);
+
+		$redirectScheme = strtolower($redirectParts['scheme'] ?? '');
+		if (!in_array($redirectScheme, ['http', 'https'], true))
+		{
+			// redirect scheme is not http(s)
+			return $fallbackUrl;
+		}
+
 		$redirectHost = $redirectParts['host'] ?? null;
 		if (!$redirectHost)
 		{
@@ -3229,7 +3243,7 @@ class App implements \ArrayAccess
 	 * @param int|array $contentId
 	 * @param string|array $with
 	 *
-	 * @return null|ArrayCollection|Mvc\Entity\Entity
+	 * @return AbstractCollection|Mvc\Entity\Entity|null
 	 */
 	public function findByContentType($contentType, $contentId, $with = [])
 	{

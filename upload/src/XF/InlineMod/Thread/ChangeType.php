@@ -66,7 +66,6 @@ class ChangeType extends AbstractAction
 			return;
 		}
 
-		/** @var ChangeTypeService $typeChanger */
 		$typeChanger = $this->app()->service(ChangeTypeService::class, $entity);
 		$typeChanger->setDiscussionTypeForBulkChange($newThreadType->getTypeId());
 		if ($typeChanger->validate($errors))

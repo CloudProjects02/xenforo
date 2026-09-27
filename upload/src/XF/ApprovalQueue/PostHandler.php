@@ -6,11 +6,13 @@ use XF\Entity\Post;
 use XF\Mvc\Entity\Entity;
 use XF\Service\Post\ApproverService;
 
+/**
+ * @extends AbstractHandler<Post>
+ */
 class PostHandler extends AbstractHandler
 {
 	protected function canActionContent(Entity $content, &$error = null)
 	{
-		/** @var $content \XF\Entity\Post */
 		return $content->canApproveUnapprove($error);
 	}
 
@@ -23,7 +25,6 @@ class PostHandler extends AbstractHandler
 
 	public function actionApprove(Post $post)
 	{
-		/** @var ApproverService $approver */
 		$approver = \XF::service(ApproverService::class, $post);
 		$approver->setNotifyRunTime(1); // may be a lot happening
 		$approver->approve();

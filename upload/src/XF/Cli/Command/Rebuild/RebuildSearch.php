@@ -3,6 +3,7 @@
 namespace XF\Cli\Command\Rebuild;
 
 use Symfony\Component\Console\Input\InputOption;
+use XF\Job\SearchRebuild;
 
 class RebuildSearch extends AbstractRebuildCommand
 {
@@ -18,7 +19,7 @@ class RebuildSearch extends AbstractRebuildCommand
 
 	protected function getRebuildClass()
 	{
-		return 'XF:SearchRebuild';
+		return SearchRebuild::class;
 	}
 
 	protected function configureOptions()

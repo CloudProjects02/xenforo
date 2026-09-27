@@ -1,6 +1,6 @@
 /*
  * XenForo dragula.min.js
- * Copyright 2010-2024 XenForo Ltd.
+ * Copyright 2010-2026 XenForo Ltd.
  * Released under the XenForo License Agreement: https://xenforo.com/license-agreement
  */
 (function(aa){"object"===typeof exports&&"undefined"!==typeof module?module.exports=aa():"function"===typeof define&&define.amd?define([],aa):("undefined"!==typeof window?window:"undefined"!==typeof global?global:"undefined"!==typeof self?self:this).dragula=aa()})(function(){return function m(w,z,J){function r(g,C){if(!z[g]){if(!w[g]){var x="function"==typeof require&&require;if(!C&&x)return x(g,!0);if(d)return d(g,!0);C=Error("Cannot find module '"+g+"'");throw C.code="MODULE_NOT_FOUND",C;}C=z[g]=

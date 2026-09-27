@@ -38,9 +38,9 @@ class IndexController extends AbstractController
 			: null;
 
 		$showUnicodeWarning = (
-			$visitor->hasAdminPermission('serverInfo') &&
-			\XF::db()->getSchemaManager()->hasUnicodeMismatch($mismatchType) &&
-			$mismatchType === 'loose'
+			$visitor->hasAdminPermission('serverInfo')
+			&& \XF::db()->getSchemaManager()->hasUnicodeMismatch($mismatchType)
+			&& $mismatchType === 'loose'
 		);
 
 		$outdatedTemplates = 0;
@@ -65,8 +65,8 @@ class IndexController extends AbstractController
 		}
 
 		$legacyConfig = (
-			$visitor->hasAdminPermission('serverInfo') &&
-			file_exists(\XF::app()->container('config.legacyFile'))
+			$visitor->hasAdminPermission('serverInfo')
+			&& file_exists(\XF::app()->container('config.legacyFile'))
 		);
 
 		$hasStoppedJobs = false;

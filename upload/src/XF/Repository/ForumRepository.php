@@ -111,7 +111,6 @@ class ForumRepository extends Repository
 			return [];
 		}
 
-		/** @var NodeRepository $nodeRepo */
 		$nodeRepo = $this->repository(NodeRepository::class);
 
 		if ($baseNode)
@@ -229,7 +228,6 @@ class ForumRepository extends Repository
 			];
 		}
 
-		/** @var NodeRepository $nodeRepo */
 		$nodeRepo = $this->repository(NodeRepository::class);
 		$nodeList = $nodeRepo->getFullNodeList();
 		$nodeRepo->loadNodeTypeDataForNodes($nodeList);

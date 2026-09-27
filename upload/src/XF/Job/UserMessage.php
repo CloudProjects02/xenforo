@@ -36,7 +36,6 @@ class UserMessage extends AbstractUserCriteriaJob
 		$title = strtr($title, $tokens);
 		$body = strtr($body, $tokens);
 
-		/** @var CreatorService $creator */
 		$creator = $this->app->service(CreatorService::class, $this->author);
 		$creator->setIsAutomated();
 		$creator->setOptions([

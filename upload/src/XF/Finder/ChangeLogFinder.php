@@ -2,14 +2,15 @@
 
 namespace XF\Finder;
 
+use XF\Entity\ChangeLog;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Finder;
 
 /**
- * @method AbstractCollection<\XF\Entity\ChangeLog> fetch(?int $limit = null, ?int $offset = null)
- * @method AbstractCollection<\XF\Entity\ChangeLog> fetchDeferred(?int $limit = null, ?int $offset = null)
- * @method \XF\Entity\ChangeLog|null fetchOne(?int $offset = null)
- * @extends Finder<\XF\Entity\ChangeLog>
+ * @method AbstractCollection<ChangeLog> fetch(?int $limit = null, ?int $offset = null)
+ * @method AbstractCollection<ChangeLog> fetchDeferred(?int $limit = null, ?int $offset = null)
+ * @method ChangeLog|null fetchOne(?int $offset = null)
+ * @extends Finder<ChangeLog>
  */
 class ChangeLogFinder extends Finder
 {

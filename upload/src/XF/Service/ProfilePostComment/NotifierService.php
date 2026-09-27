@@ -59,7 +59,6 @@ class NotifierService extends AbstractService
 	{
 		if ($this->notifyOtherCommenters === null && $this->comment->ProfilePost)
 		{
-			/** @var ProfilePostRepository $repo */
 			$repo = $this->repository(ProfilePostRepository::class);
 			$comments = $repo->findProfilePostComments($this->comment->ProfilePost, ['visibility' => false])
 				->where('message_state', 'visible')
@@ -152,7 +151,6 @@ class NotifierService extends AbstractService
 
 		if (empty($this->usersAlerted[$user->user_id]))
 		{
-			/** @var UserAlertRepository $alertRepo */
 			$alertRepo = $this->app->repository(UserAlertRepository::class);
 			$alerted = $alertRepo->alert(
 				$user,

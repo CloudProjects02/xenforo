@@ -153,7 +153,6 @@ class PageCache
 		{
 			$activity = $result['sessionActivity'];
 
-			/** @var SessionActivityRepository $activityRepo */
 			$activityRepo = $app->repository(SessionActivityRepository::class);
 			$activityRepo->updateSessionActivity(
 				\XF::visitor()->user_id,

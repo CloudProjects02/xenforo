@@ -5,13 +5,12 @@ namespace XF\Repository;
 use XF\Entity\User;
 use XF\Entity\UserProfile;
 use XF\Finder\UserFollowFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 class UserFollowRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return UserFollowFinder
 	 */
 	public function findFollowingForProfile(User $user)
 	{
@@ -25,7 +24,7 @@ class UserFollowRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return UserFollowFinder
 	 */
 	public function findFollowersForProfile(User $user)
 	{

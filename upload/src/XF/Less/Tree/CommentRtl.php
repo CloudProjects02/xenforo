@@ -19,9 +19,9 @@ class CommentRtl extends Comment
 	public function isSilent(): bool
 	{
 		$isReference = (
-			$this->currentFileInfo &&
-			isset($this->currentFileInfo['reference']) &&
-			(!isset($this->isReferenced) || !$this->isReferenced)
+			$this->currentFileInfo
+			&& isset($this->currentFileInfo['reference'])
+			&& (!isset($this->isReferenced) || !$this->isReferenced)
 		);
 		return $this->silent || $isReference;
 	}

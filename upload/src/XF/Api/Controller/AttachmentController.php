@@ -69,6 +69,25 @@ class AttachmentController extends AbstractController
 	}
 
 	/**
+	 * @api-desc Gets the URL to the attachment's thumbnail, if it has one. URL returned via a 301 redirect.
+	 *
+	 * @api-out string $url The URL to the thumbnail is returned via a 301 redirect's Location header.
+	 *
+	 * @api-error not_found Not found if the attachment does not have a thumbnail
+	 */
+	public function actionGetRetinaThumbnail(ParameterBag $params)
+	{
+		$attachment = $this->assertViewableAttachment($params->attachment_id);
+
+		if (!$attachment->has_retina_thumbnail)
+		{
+			return $this->notFound();
+		}
+
+		return $this->redirectPermanently($attachment->Data->getRetinaThumbnailUrl(true));
+	}
+
+	/**
 	 * @api-desc Delete's the specified attachment.
 	 *
 	 * @api-out true $success

@@ -84,7 +84,7 @@ abstract class AbstractHandler
 
 	/**
 	 * @param T $entity
-	 * @param mixed $error
+	 * @param string|\Stringable|null $error
 	 *
 	 * @return bool
 	 */

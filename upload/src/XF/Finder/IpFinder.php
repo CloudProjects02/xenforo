@@ -2,14 +2,15 @@
 
 namespace XF\Finder;
 
+use XF\Entity\Ip;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Finder;
 
 /**
- * @method AbstractCollection<\XF\Entity\Ip> fetch(?int $limit = null, ?int $offset = null)
- * @method AbstractCollection<\XF\Entity\Ip> fetchDeferred(?int $limit = null, ?int $offset = null)
- * @method \XF\Entity\Ip|null fetchOne(?int $offset = null)
- * @extends Finder<\XF\Entity\Ip>
+ * @method AbstractCollection<Ip> fetch(?int $limit = null, ?int $offset = null)
+ * @method AbstractCollection<Ip> fetchDeferred(?int $limit = null, ?int $offset = null)
+ * @method Ip|null fetchOne(?int $offset = null)
+ * @extends Finder<Ip>
  */
 class IpFinder extends Finder
 {

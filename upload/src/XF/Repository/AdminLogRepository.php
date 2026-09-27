@@ -3,7 +3,6 @@
 namespace XF\Repository;
 
 use XF\Finder\AdminLogFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 use XF\Util\Ip;
 
@@ -12,7 +11,7 @@ use function intval;
 class AdminLogRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return AdminLogFinder
 	 */
 	public function findLogsForList()
 	{

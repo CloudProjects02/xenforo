@@ -53,7 +53,7 @@ class SearchForumUserCache extends Entity
 	 * @param int $perPage
 	 * @param string[] $extraWith
 	 *
-	 * @return AbstractCollection|Thread[]
+	 * @return AbstractCollection<Thread>
 	 */
 	public function getThreadsByPage(int $page, int $perPage, array $extraWith = [])
 	{

@@ -11,7 +11,7 @@ use XF\Repository\ConnectedAccountRepository;
  * @property int $user_id
  * @property string $provider
  * @property string $provider_key
- * @property array $extra_data
+ * @property array|null $extra_data
  *
  * RELATIONS
  * @property-read User|null $User

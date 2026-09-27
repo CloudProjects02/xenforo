@@ -66,7 +66,6 @@ class AdvertisingController extends AbstractController
 			->fetch()
 			->pluckNamed('title', 'position_id');
 
-		/** @var UserGroupRepository $userGroupRepo */
 		$userGroupRepo = $this->app->repository(UserGroupRepository::class);
 		$userGroups = $userGroupRepo->getUserGroupTitlePairs();
 

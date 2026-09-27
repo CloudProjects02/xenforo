@@ -3,9 +3,11 @@
 namespace XF\Report;
 
 use XF\Entity\Report;
-use XF\Entity\User;
 use XF\Mvc\Entity\Entity;
 
+/**
+ * @extends AbstractHandler<\XF\Entity\User>
+ */
 class UserHandler extends AbstractHandler
 {
 	protected function canActionContent(Report $report)
@@ -16,7 +18,6 @@ class UserHandler extends AbstractHandler
 
 	public function setupReportEntityContent(Report $report, Entity $content)
 	{
-		/** @var User $content */
 		$report->content_user_id = $content->user_id;
 		$report->content_info = [
 			'user_id' => $content->user_id,

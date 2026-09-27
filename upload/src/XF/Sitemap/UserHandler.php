@@ -5,6 +5,9 @@ namespace XF\Sitemap;
 use XF\Entity\User;
 use XF\Finder\UserFinder;
 
+/**
+ * @extends AbstractHandler<User>
+ */
 class UserHandler extends AbstractHandler
 {
 	public function getRecords($start)
@@ -25,7 +28,6 @@ class UserHandler extends AbstractHandler
 
 	public function getEntry($record)
 	{
-		/** @var User $record */
 		$entry = Entry::create($record->getContentUrl(true), [
 			'priority' => 0.3,
 		]);
@@ -39,7 +41,6 @@ class UserHandler extends AbstractHandler
 
 	public function isIncluded($record)
 	{
-		/** @var $record \XF\Entity\User */
 		if (!$record->isSearchEngineIndexable())
 		{
 			return false;

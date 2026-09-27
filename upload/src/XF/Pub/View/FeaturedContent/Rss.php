@@ -62,10 +62,11 @@ class Rss extends View
 			);
 		}
 
+		$link = $feature->getContentLink(true);
 		$entry
-			->setId((string) $feature->featured_content_id)
+			->setId(FeedHelper::buildGuid($feature->content_type, $feature->content_id))
 			->setTitle($feature->title)
-			->setLink($feature->getContentLink(true))
+			->setLink($link)
 			->setDateCreated($feature->feature_date)
 			->addAuthor($author);
 

@@ -10,7 +10,6 @@ class SpamThreadAction extends AbstractOption
 {
 	public static function renderOption(Option $option, array $htmlParams)
 	{
-		/** @var NodeRepository $nodeRepo */
 		$nodeRepo = \XF::repository(NodeRepository::class);
 		$nodeTree = $nodeRepo->createNodeTree($nodeRepo->getFullNodeList());
 

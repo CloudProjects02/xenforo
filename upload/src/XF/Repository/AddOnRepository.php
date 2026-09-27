@@ -5,7 +5,6 @@ namespace XF\Repository;
 use XF\Entity\AddOnInstallBatch;
 use XF\Finder\AddOnFinder;
 use XF\Finder\AddOnInstallBatchFinder;
-use XF\Mvc\Entity\Finder;
 use XF\Mvc\Entity\Repository;
 
 use function intval;
@@ -13,7 +12,7 @@ use function intval;
 class AddOnRepository extends Repository
 {
 	/**
-	 * @return Finder
+	 * @return AddOnFinder
 	 */
 	public function findAddOnsForList()
 	{
@@ -21,7 +20,7 @@ class AddOnRepository extends Repository
 	}
 
 	/**
-	 * @return Finder
+	 * @return AddOnFinder
 	 */
 	public function findActiveAddOnsForList()
 	{

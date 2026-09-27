@@ -125,8 +125,8 @@ class IconRenderer
 	protected function isIconSprited(string $variant, string $name): bool
 	{
 		if (
-			$variant === $this->getDefaultVariant() &&
-			$this->iconRepo->isIconSprited('default', $name)
+			$variant === $this->getDefaultVariant()
+			&& $this->iconRepo->isIconSprited('default', $name)
 		)
 		{
 			return true;

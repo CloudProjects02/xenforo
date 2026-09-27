@@ -77,7 +77,6 @@ class Controller
 	{
 		if ($this->validateOembedRequest($mediaSiteId, $mediaId, $error))
 		{
-			/** @var OembedService $oEmbedFetcher */
 			$oEmbedFetcher = $this->app->service(OembedService::class);
 
 			$oEmbed = $oEmbedFetcher->getOembed($mediaSiteId, $mediaId);
@@ -98,7 +97,6 @@ class Controller
 				$error = self::ERROR_FAILED;
 			}
 
-			/** @var OembedRepository $oEmbedRepo */
 			$oEmbedRepo = $this->app->repository(OembedRepository::class);
 			$oEmbed = $oEmbedRepo->getOembedFailure();
 		}

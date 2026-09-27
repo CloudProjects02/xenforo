@@ -22,7 +22,6 @@ class UserRemoveReactions extends AbstractJob
 			return $this->complete();
 		}
 
-		/** @var ReactionRepository $reactionRepo */
 		$reactionRepo = $this->app->repository(ReactionRepository::class);
 		$reactionFinder = $reactionRepo->findReactionsByReactionUserId($this->data['userId'])
 			->where('reaction_date', '>', $this->data['cutOff']);
@@ -44,7 +43,7 @@ class UserRemoveReactions extends AbstractJob
 			{
 				$reaction->delete(false);
 			}
-			catch(\Exception $e)
+			catch (\Exception $e)
 			{
 			}
 

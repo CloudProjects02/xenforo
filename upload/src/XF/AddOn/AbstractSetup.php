@@ -47,8 +47,8 @@ abstract class AbstractSetup
 	/**
 	 * Perform additional requirement checks.
 	 *
-	 * @param array $errors Errors will block the setup from continuing
-	 * @param array $warnings Warnings will be displayed but allow the user to continue setup
+	 * @param list<string|\Stringable> $errors Errors will block the setup from continuing
+	 * @param list<string|\Stringable> $warnings Warnings will be displayed but allow the user to continue setup
 	 *
 	 * @return void
 	 */
@@ -61,6 +61,10 @@ abstract class AbstractSetup
 	{
 	}
 
+	/**
+	 * @param int $previousVersion
+	 * @param array<string, mixed> $stateChanges
+	 */
 	public function postUpgrade($previousVersion, array &$stateChanges)
 	{
 	}

@@ -66,7 +66,6 @@ class CompileService extends AbstractService
 		", $title);
 		if ($templateIds)
 		{
-			/** @var \XF\Service\Template\CompileService $compileService */
 			$compileService = $this->service(\XF\Service\Template\CompileService::class);
 			$templates = $this->app->em()->findByIds(Template::class, $templateIds);
 			foreach ($templates AS $template)

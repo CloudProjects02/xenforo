@@ -6,9 +6,10 @@ use XF\Api\Controller\AbstractController;
 use XF\Api\Mvc\Dispatcher;
 use XF\Api\Mvc\Renderer\Api;
 use XF\Container;
-use XF\Entity\OAuthClient;
 use XF\Entity\OAuthToken;
 use XF\Entity\User;
+use XF\Finder\OAuthClientFinder;
+use XF\Finder\OAuthTokenFinder;
 use XF\Http\Response;
 use XF\Mvc\Renderer\AbstractRenderer;
 use XF\Mvc\Reply\AbstractReply;
@@ -204,7 +205,7 @@ class App extends \XF\App
 					$tokenOrSecret = base64_decode($tokenOrSecret);
 					[$clientId, $clientSecret] = explode(':', $tokenOrSecret, 2);
 
-					$client = $this->finder(OAuthClient::class)->where([
+					$client = $this->finder(OAuthClientFinder::class)->where([
 						'client_id' => $clientId,
 						'client_secret' => $clientSecret,
 					])->fetchOne();
@@ -219,7 +220,7 @@ class App extends \XF\App
 					return $this->repository(UserRepository::class)->getGuestUser();
 				case 'Bearer':
 					/** @var OAuthToken $token */
-					$token = $this->finder(OAuthToken::class)
+					$token = $this->finder(OAuthTokenFinder::class)
 						->where('token', $tokenOrSecret)
 						->fetchOne();
 
@@ -248,7 +249,6 @@ class App extends \XF\App
 			return $this->repository(UserRepository::class)->getGuestUser();
 		}
 
-		/** @var ApiRepository $apiRepo */
 		$apiRepo = $this->repository(ApiRepository::class);
 		$apiKey = $apiRepo->findApiKeyByKey($apiKeyValue);
 
@@ -266,7 +266,6 @@ class App extends \XF\App
 			return false;
 		}
 
-		/** @var UserRepository $userRepo */
 		$userRepo = $this->repository(UserRepository::class);
 
 		if ($apiKey->is_super_user)

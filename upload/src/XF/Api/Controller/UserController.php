@@ -131,7 +131,6 @@ class UserController extends AbstractController
 	 */
 	protected function setupProfilePostFinder(User $user)
 	{
-		/** @var ProfilePostFinder $finder */
 		$finder = $this->finder(ProfilePostFinder::class);
 		$finder->onProfile($user)
 			->order('post_date', 'DESC')
@@ -189,7 +188,20 @@ class UserController extends AbstractController
 			return $this->noPermission($error);
 		}
 
-		/** @var DeleteService $deleter */
+		$deleter = $this->setupUserDelete($user);
+
+		if (!$deleter->delete($errors))
+		{
+			return $this->error($errors);
+		}
+
+		$this->finalizeUserDelete($deleter);
+
+		return $this->apiSuccess();
+	}
+
+	protected function setupUserDelete(User $user): DeleteService
+	{
 		$deleter = $this->service(DeleteService::class, $user);
 
 		$renameTo = $this->filter('rename_to', 'str');
@@ -198,12 +210,11 @@ class UserController extends AbstractController
 			$deleter->renameTo($renameTo);
 		}
 
-		if (!$deleter->delete($errors))
-		{
-			return $this->error($errors);
-		}
+		return $deleter;
+	}
 
-		return $this->apiSuccess();
+	protected function finalizeUserDelete(DeleteService $deleter): void
+	{
 	}
 
 	/**

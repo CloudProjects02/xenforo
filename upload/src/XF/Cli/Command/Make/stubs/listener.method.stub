@@ -1,0 +1,4 @@
+public static function {{ method }}({{ params }}): void
+{
+	// TODO: Implement listener logic
+}

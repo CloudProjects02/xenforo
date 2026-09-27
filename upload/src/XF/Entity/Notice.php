@@ -16,8 +16,8 @@ use XF\Repository\NoticeRepository;
  * @property bool $dismissible
  * @property bool $active
  * @property int $display_order
- * @property array $user_criteria
- * @property array $page_criteria
+ * @property array|null $user_criteria
+ * @property array|null $page_criteria
  * @property string $display_image
  * @property string $image_url
  * @property string $visibility

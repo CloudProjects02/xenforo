@@ -14,7 +14,7 @@ use XF\Service\User\UserGroupChangeService;
  * @property int|null $promotion_id
  * @property string $title
  * @property bool $active
- * @property array $user_criteria
+ * @property array|null $user_criteria
  * @property array $extra_user_group_ids
  */
 class UserGroupPromotion extends Entity

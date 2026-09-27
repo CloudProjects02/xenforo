@@ -1,0 +1,41 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use XF\Job\AbstractJob;
+use XF\Job\JobResult;
+use XF\Timer;
+
+class {{ class }} extends AbstractJob
+{
+	protected $defaultData = [
+		'start' => 0,
+		'batch' => 100,
+	];
+
+	public function run($maxRunTime): JobResult
+	{
+		$timer = new Timer($maxRunTime);
+
+		// TODO: Implement job logic
+
+		return $this->complete();
+	}
+
+	public function getStatusMessage(): string
+	{
+		return '';
+	}
+
+	public function canCancel(): bool
+	{
+		return true;
+	}
+
+	public function canTriggerByChoice(): bool
+	{
+		return true;
+	}
+}

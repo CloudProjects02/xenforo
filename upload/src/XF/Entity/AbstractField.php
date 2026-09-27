@@ -514,7 +514,15 @@ abstract class AbstractField extends Entity
 		}
 		if ($options['has_user_group_editable'])
 		{
-			$structure->columns['editable_user_group_ids'] = ['type' => self::LIST_COMMA, 'default' => [-1]];
+			$structure->columns['editable_user_group_ids'] = [
+				'type' => self::LIST_COMMA,
+				'default' => [-1],
+				'list' => [
+					'type' => 'int',
+					'unique' => true,
+					'sort' => SORT_NUMERIC,
+				],
+			];
 		}
 		if ($options['has_wrapper_template'])
 		{

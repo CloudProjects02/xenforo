@@ -74,7 +74,6 @@ class Gravatar extends AbstractRebuildJob
 		$gravatar = $gravatarValidator->coerceValue($user->email);
 		if ($this->app->validator(\XF\Validator\Gravatar::class)->isValid($gravatar))
 		{
-			/** @var AvatarService $avatarService */
 			$avatarService = $this->app->service(AvatarService::class, $user);
 			$avatarService->setGravatar($gravatar);
 		}

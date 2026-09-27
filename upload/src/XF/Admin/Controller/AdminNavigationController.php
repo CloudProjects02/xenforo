@@ -35,7 +35,6 @@ class AdminNavigationController extends AbstractController
 
 	protected function navigationAddEdit(AdminNavigation $navigation)
 	{
-		/** @var AdminPermissionRepository $adminPermRepo */
 		$adminPermRepo = $this->repository(AdminPermissionRepository::class);
 
 		$viewParams = [
@@ -74,6 +73,7 @@ class AdminNavigationController extends AbstractController
 			'admin_permission_id' => 'str',
 			'debug_only' => 'bool',
 			'development_only' => 'bool',
+			'super_admin_only' => 'bool',
 			'hide_no_children' => 'bool',
 			'addon_id' => 'str',
 		]);

@@ -57,7 +57,6 @@ class UserAvatar200 extends AbstractJob
 				continue;
 			}
 
-			/** @var AvatarService $avatarService */
 			$avatarService = $this->app->service(AvatarService::class, $user);
 			$userProfile = $user->Profile;
 			if ($userProfile)

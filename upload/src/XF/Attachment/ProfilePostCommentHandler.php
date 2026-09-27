@@ -10,6 +10,14 @@ use XF\Repository\AttachmentRepository;
 
 use function intval;
 
+/**
+ * @phpstan-type TContext array{
+ *     profile_post_comment_id?: int|null,
+ *     profile_post_id?: int|null,
+ * }
+ *
+ * @extends AbstractHandler<ProfilePostComment, TContext>
+ */
 class ProfilePostCommentHandler extends AbstractHandler
 {
 	public function getContainerWith()
@@ -19,7 +27,6 @@ class ProfilePostCommentHandler extends AbstractHandler
 
 	public function canView(Attachment $attachment, Entity $container, &$error = null)
 	{
-		/** @var ProfilePostComment $container */
 		if (!$container->canView())
 		{
 			return false;
@@ -41,7 +48,6 @@ class ProfilePostCommentHandler extends AbstractHandler
 			return;
 		}
 
-		/** @var ProfilePostComment $container */
 		$container->attach_count--;
 		$container->save();
 
@@ -51,7 +57,6 @@ class ProfilePostCommentHandler extends AbstractHandler
 
 	public function getConstraints(array $context)
 	{
-		/** @var AttachmentRepository $attachRepo */
 		$attachRepo = \XF::repository(AttachmentRepository::class);
 
 		$constraints = $attachRepo->getDefaultAttachmentConstraints();
@@ -88,13 +93,17 @@ class ProfilePostCommentHandler extends AbstractHandler
 		return $extraContext;
 	}
 
+	/**
+	 * @param TContext $context
+	 *
+	 * @return ProfilePost|null
+	 */
 	protected function getProfilePostFromContext(array $context)
 	{
 		$em = \XF::em();
 
 		if (!empty($context['profile_post_comment_id']))
 		{
-			/** @var ProfilePostComment $profilePostComment */
 			$profilePostComment = $em->find(ProfilePostComment::class, intval($context['profile_post_comment_id']), ['ProfilePost']);
 			if (!$profilePostComment || !$profilePostComment->canView() || !$profilePostComment->canEdit())
 			{
@@ -105,7 +114,6 @@ class ProfilePostCommentHandler extends AbstractHandler
 		}
 		else if (!empty($context['profile_post_id']))
 		{
-			/** @var ProfilePost $profilePost */
 			$profilePost = $em->find(ProfilePost::class, intval($context['profile_post_id']));
 			if (!$profilePost)
 			{

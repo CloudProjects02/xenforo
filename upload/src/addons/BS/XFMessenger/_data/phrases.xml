@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="option.xfmEnableCrosspage" version_id="1000070" version_string="1.0.0"><![CDATA[Show new messages on all pages]]></phrase>
+  <phrase title="option.xfmEnablePopup" version_id="1000070" version_string="1.0.0"><![CDATA[Enable messenger popup]]></phrase>
+  <phrase title="option.xfmEnableSound" version_id="1000070" version_string="1.0.0"><![CDATA[Enable sound notifications]]></phrase>
+  <phrase title="option.xfmMessagesPerPage" version_id="1000070" version_string="1.0.0"><![CDATA[Messages per page]]></phrase>
+  <phrase title="option.xfmMobilePopup" version_id="1000070" version_string="1.0.0"><![CDATA[Enable messenger popup on mobile]]></phrase>
+  <phrase title="option.xfmReplaceConversationsWithMessenger" version_id="1000070" version_string="1.0.0"><![CDATA[Replace conversations with messenger]]></phrase>
+  <phrase title="option.xfmSoundPath" version_id="1000070" version_string="1.0.0"><![CDATA[Sound notification path]]></phrase>
+  <phrase title="option_explain.xfmEnableCrosspage" version_id="1000070" version_string="1.0.0"><![CDATA[If this option is enabled, users will be notified of a new message instantly on all pages.]]></phrase>
+  <phrase title="option_explain.xfmEnablePopup" version_id="1000070" version_string="1.0.0"><![CDATA[If enabled, users will be able to open the messenger popup on any page without having to go to the messenger page.]]></phrase>
+  <phrase title="option_explain.xfmEnableSound" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.xfmMessagesPerPage" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.xfmMobilePopup" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.xfmReplaceConversationsWithMessenger" version_id="1000070" version_string="1.0.0"><![CDATA[If the option is enabled, the conversations page will be replaced with the messenger page.]]></phrase>
+  <phrase title="option_explain.xfmSoundPath" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_group.xenforoMessenger" version_id="1000070" version_string="1.0.0"><![CDATA[[021] XenForo Messenger]]></phrase>
+  <phrase title="option_group_description.xenforoMessenger" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="permission.conversation_deleteAnyMessages" version_id="1000070" version_string="1.0.0"><![CDATA[Delete any messages]]></phrase>
+  <phrase title="permission.conversation_deleteOwnMessages" version_id="1000070" version_string="1.0.0"><![CDATA[Delete own messages]]></phrase>
+  <phrase title="permission.conversation_translateMessages" version_id="1000070" version_string="1.0.0"><![CDATA[Translate messages]]></phrase>
+  <phrase title="permission.conversation_xfmSetIndividualWallpaper" version_id="1000070" version_string="1.0.0"><![CDATA[Set individual wallpaper for conversation]]></phrase>
+  <phrase title="permission.conversation_xfmSetWallpaper" version_id="1000070" version_string="1.0.0"><![CDATA[Set wallpaper for conversation]]></phrase>
+  <phrase title="rtc_no_theme" version_id="1000070" version_string="1.0.0"><![CDATA[No theme]]></phrase>
+  <phrase title="style_prop.xfmActions" version_id="1000070" version_string="1.0.0"><![CDATA[Actions]]></phrase>
+  <phrase title="style_prop.xfmNoticeDuration" version_id="1000070" version_string="1.0.0"><![CDATA[Notification duration]]></phrase>
+  <phrase title="style_prop.xfmNoticeStyle" version_id="1000070" version_string="1.0.0"><![CDATA[Notice style]]></phrase>
+  <phrase title="style_prop.xfmPopup" version_id="1000070" version_string="1.0.0"><![CDATA[Popup]]></phrase>
+  <phrase title="style_prop.xfmPopupChatHeader" version_id="1000070" version_string="1.0.0"><![CDATA[Chat header]]></phrase>
+  <phrase title="style_prop.xfmPopupHeader" version_id="1000070" version_string="1.0.0"><![CDATA[Popup header]]></phrase>
+  <phrase title="style_prop.xfmRoomList" version_id="1000070" version_string="1.0.0"><![CDATA[List]]></phrase>
+  <phrase title="style_prop.xfmSearchFault" version_id="1000070" version_string="1.0.0"><![CDATA[Fault]]></phrase>
+  <phrase title="style_prop.xfmSearchFormInput" version_id="1000070" version_string="1.0.0"><![CDATA[Input]]></phrase>
+  <phrase title="style_prop.xfmSearchInput" version_id="1000070" version_string="1.0.0"><![CDATA[Input [Search]]]></phrase>
+  <phrase title="style_prop.xfmSearchInputIcon" version_id="1000070" version_string="1.0.0"><![CDATA[Icon: Search]]></phrase>
+  <phrase title="style_prop.xfmSearchInputResetIcon" version_id="1000070" version_string="1.0.0"><![CDATA[Icon: Reset]]></phrase>
+  <phrase title="style_prop_desc.xfmActions" version_id="1000070" version_string="1.0.0"><![CDATA[Button to the left of the search field]]></phrase>
+  <phrase title="style_prop_desc.xfmNoticeDuration" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.xfmNoticeStyle" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.xfmPopup" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.xfmPopupChatHeader" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.xfmPopupHeader" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.xfmRoomList" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.xfmSearchFault" version_id="1000070" version_string="1.0.0"><![CDATA[Displayed when no results are found for the query.]]></phrase>
+  <phrase title="style_prop_desc.xfmSearchFormInput" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.xfmSearchInput" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.xfmSearchInputIcon" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.xfmSearchInputResetIcon" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_group.xenforoMessengerMessages" version_id="1000070" version_string="1.0.0"><![CDATA[[XenForo Messenger] Messages]]></phrase>
+  <phrase title="style_prop_group.xenforoMessengerRooms" version_id="1000070" version_string="1.0.0"><![CDATA[[XenForo Messenger] Conversations]]></phrase>
+  <phrase title="style_prop_group.xenforoMessengerSearch" version_id="1000070" version_string="1.0.0"><![CDATA[[XenForo Messenger] Search]]></phrase>
+  <phrase title="style_prop_group_desc.xenforoMessengerMessages" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_group_desc.xenforoMessengerRooms" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_group_desc.xenforoMessengerSearch" version_id="1000070" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="xfm_message_has_been_read" version_id="1000070" version_string="1.0.0"><![CDATA[Message has been read]]></phrase>
+  <phrase title="xfm_messenger" version_id="1000070" version_string="1.0.0"><![CDATA[Messenger]]></phrase>
+  <phrase title="xfm_new_wallpaper" version_id="1000070" version_string="1.0.0"><![CDATA[New wallpaper]]></phrase>
+  <phrase title="xfm_no_attachments_found" version_id="1000070" version_string="1.0.0"><![CDATA[No attachments found.]]></phrase>
+  <phrase title="xfm_no_conversations_found_for_your_request" version_id="1000070" version_string="1.0.0"><![CDATA[No conversations found for your request.]]></phrase>
+  <phrase title="xfm_open_messenger" version_id="1000070" version_string="1.0.0"><![CDATA[Open messenger]]></phrase>
+  <phrase title="xfm_reset_conversation_wallpaper" version_id="1000070" version_string="1.0.0"><![CDATA[Reset conversation wallpaper]]></phrase>
+  <phrase title="xfm_set_wallpaper" version_id="1000070" version_string="1.0.0"><![CDATA[Set wallpaper]]></phrase>
+  <phrase title="xfm_unread" version_id="1000070" version_string="1.0.0"><![CDATA[Unread]]></phrase>
+  <phrase title="xfm_update_for_conversation" version_id="1000070" version_string="1.0.0"><![CDATA[Update for conversation]]></phrase>
+  <phrase title="xfm_your_conversations_will_appear_here" version_id="1000070" version_string="1.0.0"><![CDATA[Your conversations will appear here]]></phrase>
+</phrases>

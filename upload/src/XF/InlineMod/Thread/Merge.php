@@ -69,7 +69,6 @@ class Merge extends AbstractAction
 		$target = $source[$options['target_thread_id']];
 		unset($source[$options['target_thread_id']]);
 
-		/** @var MergerService $merger */
 		$merger = $this->app()->service(MergerService::class, $target);
 
 		if ($options['alert'])

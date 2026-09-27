@@ -82,7 +82,6 @@ class DeleterService extends AbstractService
 			&& $this->thread->discussion_state != 'redirect'
 		)
 		{
-			/** @var ThreadRepository $threadRepo */
 			$threadRepo = $this->repository(ThreadRepository::class);
 			$threadRepo->sendModeratorActionAlert($this->thread, 'delete', $this->alertReason);
 		}
