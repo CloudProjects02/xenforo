@@ -1,0 +1,83 @@
+<?php
+
+namespace DBTech\Credits\EventTrigger;
+
+use DBTech\Credits\Entity\Transaction as TransactionEntity;
+use DBTech\Credits\XF\Entity\ReportComment;
+use XF\Mvc\Entity\Entity;
+use XF\PrintableException;
+
+class ReportHandler extends AbstractHandler
+{
+	/**
+	 *
+	 */
+	protected function setupOptions(): void
+	{
+		$this->options = array_replace($this->options, [
+			'isGlobal' => true,
+			'canCancel' => true,
+			'canRebuild' => true,
+		]);
+	}
+
+	/**
+	 * @param TransactionEntity $transaction
+	 *
+	 * @return mixed
+	 */
+	public function alertTemplate(TransactionEntity $transaction): string
+	{
+		// For the benefit of the template
+		$which = $transaction->amount < 0.00 ? 'spent' : 'earned';
+
+		if ($which == 'spent')
+		{
+			return $this->getAlertPhrase('dbtech_credits_lost_x_y_via_report', $transaction);
+		}
+		else
+		{
+			return $this->getAlertPhrase('dbtech_credits_gained_x_y_via_report', $transaction);
+		}
+	}
+
+	/**
+	 * @return string|null
+	 */
+	public function getOptionsTemplate(): ?string
+	{
+		return null;
+	}
+
+	/**
+	 * @param Entity $entity
+	 *
+	 * @throws PrintableException
+	 */
+	public function rebuild(Entity $entity): void
+	{
+		/** @var ReportComment $entity */
+
+		if ($entity->is_report && $entity->Report)
+		{
+			$this->apply($entity->report_comment_id, [
+				'content_type' => $entity->Report->content_type,
+				'content_id'   => $entity->Report->content_id,
+
+				'timestamp'   => $entity->comment_date,
+				'enableAlert' => false,
+				'runPostSave' => false,
+			], $entity->User);
+		}
+	}
+
+	/**
+	 * @param bool $forView
+	 *
+	 * @return array
+	 */
+	public function getEntityWith(bool $forView = false): array
+	{
+		return ['User', 'Report'];
+	}
+}
