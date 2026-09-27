@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<content_type_fields>
+  <field content_type="moderator_panel" field_name="phrase">moderator_panel_item</field>
+  <field content_type="moderator_panel" field_name="phrase_plural">moderator_panel_items</field>
+  <field content_type="moderator_panel" field_name="stats_handler_class">Andrew\ModeratorPanel\Stats\ModeratorPanel</field>
+  <field content_type="user_note" field_name="entity">Andrew\ModeratorPanel:UserNote</field>
+  <field content_type="user_note" field_name="moderator_log_handler_class">Andrew\ModeratorPanel\ModeratorLog\UserNote</field>
+</content_type_fields>

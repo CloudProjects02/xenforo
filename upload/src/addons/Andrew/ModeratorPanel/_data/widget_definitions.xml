@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget_definitions>
+  <widget_definition definition_id="andrew_mp_recent_warnings" definition_class="Andrew\ModeratorPanel\Widget\RecentWarnings"/>
+</widget_definitions>

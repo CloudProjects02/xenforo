@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<routes>
+  <route route_type="admin" route_prefix="moderatorpanel" controller="Andrew\ModeratorPanel:ModeratorPanel" context="moderatorpanel"/>
+  <route route_type="admin" route_prefix="moderatorpanel" sub_name="user-file-tabs" format="user-file-tabs/" controller="Andrew\ModeratorPanel:UserFileTabs" context="userfiletabs"/>
+  <route route_type="admin" route_prefix="moderatorpanel" sub_name="user-note-categories" format="user-note-categories/:int&lt;note_category_id&gt;/" controller="Andrew\ModeratorPanel:UserNoteCategory" context="userNotesCategory"/>
+  <route route_type="public" route_prefix="moderatorpanel" controller="Andrew\ModeratorPanel:ModeratorPanel" context="Moderator Panel"/>
+  <route route_type="public" route_prefix="moderatorpanel" sub_name="banned-users" format="banned-users/" controller="Andrew\ModeratorPanel:BannedUser" context="Moderator Panel"/>
+  <route route_type="public" route_prefix="moderatorpanel" sub_name="discouraged-users" format="discouraged-users/" controller="Andrew\ModeratorPanel:DiscouragedUser" context="Moderator Panel"/>
+  <route route_type="public" route_prefix="moderatorpanel" sub_name="force-ignored" format="force-ignored/" controller="Andrew\ModeratorPanel:ForceIgnoredUser" context="Moderator Panel"/>
+  <route route_type="public" route_prefix="moderatorpanel" sub_name="moderated-users" format="moderated-users/" controller="Andrew\ModeratorPanel:ModeratedUser" context="Moderator Panel"/>
+  <route route_type="public" route_prefix="moderatorpanel" sub_name="moderator-log" format="moderator-log/" controller="Andrew\ModeratorPanel:ModeratorLog" context="Moderator Panel"/>
+  <route route_type="public" route_prefix="moderatorpanel" sub_name="most-ignored-users" format="most-ignored-users/" controller="Andrew\ModeratorPanel:MostIgnoredUser" context="Moderator Panel"/>
+  <route route_type="public" route_prefix="moderatorpanel" sub_name="most-reported-users" format="most-reported-users/" controller="Andrew\ModeratorPanel:MostReportedUser" context="Moderator Panel"/>
+  <route route_type="public" route_prefix="moderatorpanel" sub_name="most-warned-users" format="most-warned-users/" controller="Andrew\ModeratorPanel:MostWarnedUser" context="Moderator Panel"/>
+  <route route_type="public" route_prefix="moderatorpanel" sub_name="recent-logins" format="recent-logins" controller="Andrew\ModeratorPanel:RecentLogin" context="Moderator Panel"/>
+  <route route_type="public" route_prefix="moderatorpanel" sub_name="recent-registered" format="recent-registered/" controller="Andrew\ModeratorPanel:RegisteredUser" context="Moderator Panel"/>
+  <route route_type="public" route_prefix="moderatorpanel" sub_name="rejected-user-log" format="rejected-user-log/:int&lt;user_id,username&gt;/" controller="Andrew\ModeratorPanel:RejectedUserLog" context="Moderator Panel"/>
+  <route route_type="public" route_prefix="moderatorpanel" sub_name="spam-cleaner-log" format="spam-cleaner-log/" controller="Andrew\ModeratorPanel:SpamCleanerLog" context="Moderator Panel"/>
+  <route route_type="public" route_prefix="moderatorpanel" sub_name="spam-trigger-log" format="spam-trigger-log/:int&lt;trigger_log_id&gt;/" controller="Andrew\ModeratorPanel:SpamTriggerLog" context="Moderator Panel"/>
+  <route route_type="public" route_prefix="moderatorpanel" sub_name="thread-reply-bans" format="thread-reply-bans/" controller="Andrew\ModeratorPanel:ThreadReplyBan" context="Moderator Panel"/>
+  <route route_type="public" route_prefix="moderatorpanel" sub_name="thread-warnings" format="thread-warnings/:int&lt;thread_id,title&gt;/" controller="Andrew\ModeratorPanel:ThreadWarning" context="Moderator Panel"/>
+  <route route_type="public" route_prefix="moderatorpanel" sub_name="user" format="user/:int&lt;user_id,username&gt;/" controller="Andrew\ModeratorPanel:User" context="Moderator Panel"/>
+  <route route_type="public" route_prefix="moderatorpanel" sub_name="user-change-log" format="user-change-log/" controller="Andrew\ModeratorPanel:UserChangeLog" context="Moderator Panel"/>
+  <route route_type="public" route_prefix="moderatorpanel" sub_name="user-note" format="user-notes/:int&lt;note_id&gt;/" controller="Andrew\ModeratorPanel:UserNote" context="Moderator Panel"/>
+  <route route_type="public" route_prefix="moderatorpanel" sub_name="username-change-log" format="username-change-log/" controller="Andrew\ModeratorPanel:UsernameChangeLog" context="Moderator Panel"/>
+  <route route_type="public" route_prefix="moderatorpanel" sub_name="warned-users" format="warned-users/" controller="Andrew\ModeratorPanel:WarnedUser" context="Moderator Panel"/>
+</routes>

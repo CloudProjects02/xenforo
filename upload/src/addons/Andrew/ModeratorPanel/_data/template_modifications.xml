@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="PAGE_CONTAINER" modification_key="andrew_moderatorpanel_modlink" description="Adds the link to the moderator panel to the moderator dropdown" execution_order="15" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:mod_tools_menu:bottom]-->]]></find>
+    <replace><![CDATA[<xf:macro template="andrew_moderatorpanel_macros" 
+		  name="andrew_moderatorpanel_modlink"/>
+$0
+]]></replace>
+  </modification>
+  <modification type="public" template="andrew_moderatorpanel_user_view" modification_key="andrew_moderatorpanel_xon_multi" description="Adds Xon Multi Accounts Visibility" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[				<!---- After IPs Tab ---->]]></find>
+    <replace><![CDATA[<xf:if is="$xf.options.svSignupLogsOnProfileTab && $user.hasOption('svMultiAccountLogEvent') && $xf.visitor.canViewMultiAccountReport() && $user.HasMultiAccounts">
+	<xf:include template="svSignupBlocking_member_view_tabs" />
+</xf:if>
+$0]]></replace>
+  </modification>
+  <modification type="public" template="andrew_moderatorpanel_user_view" modification_key="andrew_moderatorpanel_xon_multi_panel" description="Adds the tab panel to Xon Mutli Accounts" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[	<!---- After IPs Content ---->]]></find>
+    <replace><![CDATA[<xf:if is="$xf.options.svSignupLogsOnProfileTab && $user.hasOption('svMultiAccountLogEvent') && $xf.visitor.canViewMultiAccountReport() && $user.HasMultiAccounts">
+	<xf:include template="svSignupBlocking_member_view_tab_panes" />
+</xf:if>
+$0
+]]></replace>
+  </modification>
+  <modification type="public" template="approval_queue" modification_key="andrew_moderator_panel_approval_queue" description="Add moderator panel sidebar to approval queue" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:title>{{ phrase('approval_queue') }}</xf:title>]]></find>
+    <replace><![CDATA[$0
+<xf:macro template="andrew_moderatorpanel_macros" name="andrew_moderatorpanel_sidenav" arg-pageSelected="approvalqueue" arg-log="!" />]]></replace>
+  </modification>
+  <modification type="public" template="content_ip_view" modification_key="andrew_moderatorpanel_ip_address" description="Add additional variables to the macro" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[arg-user="{$ip.User}" />]]></find>
+    <replace><![CDATA[arg-user="{$ip.User}" arg-country="{$country}" arg-region="{$region}" arg-city="{$city}" arg-zip="{$zip}" arg-latitude="{$latitude}" arg-longitude="{$longitude}" arg-latitudeDecimal="{$latitudeDecimal}" arg-longitudeDecimal="{$longitudeDecimal}" arg-continent="{$continent}" arg-isp="{$isp}" arg-is_proxy="{$is_proxy}" arg-connection_type="{$connection_type}" arg-is_tor="{$is_tor}" arg-is_relay="{$is_relay}" arg-is_vpn="{$is_vpn}" arg-org="{$org}" arg-country_flag="{$country_flag}"/>]]></replace>
+  </modification>
+  <modification type="public" template="helper_action" modification_key="andrew_moderatorpanel_is_privileged" description="Adds an is_privileged checkbox to the bottom of the editor" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[arg-clearEdit="{{ false }}">]]></find>
+    <replace><![CDATA[arg-clearEdit="{{ false }}" arg-is_privileged="" arg-userNote="">
+<xf:if is="$xf.visitor.canAddPrivilegedUserNotes() && $userNote">	
+
+		<ul class="inputChoices">
+			<li class="inputChoices-choice">
+				<label class="iconic">	
+					<xf:checkbox standalone="true">
+						<xf:option name="is_privileged"
+								   checked="{$is_privileged}"
+								   label="{{ phrase('andrew_moderatorpanel_privileged') }}" />
+					</xf:checkbox>
+				</label>
+				<dfn class="inputChoices-explain">{{ phrase('andrew_moderatorpanel_privileged_user_notes_are_only') }}</dfn>
+			</li>
+		</ul>
+</xf:if>
+]]></replace>
+  </modification>
+  <modification type="public" template="helper_ip" modification_key="andrew_moderator_panel_helper_ip" description="Add additional information to IP" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[				</xf:if>
+			</xf:if>]]></find>
+    <replace><![CDATA[$0
+<xf:if is="$isp is not empty">
+	<xf:formrow label="{{ phrase('andrew_moderatorpanel_isp') }}">
+		{$isp}
+	</xf:formrow>
+</xf:if>
+<xf:if is="$org is not empty">
+	<xf:formrow label="{{ phrase('andrew_moderatorpanel_organization') }}">
+		{$org}
+	</xf:formrow>
+</xf:if>
+<xf:if is="$vpn is not empty">
+	<xf:formrow label="{{ phrase('andrew_moderatorpanel_vpn') }}">
+		{$vpn}
+	</xf:formrow>
+</xf:if>
+<xf:if is="$is_proxy is not empty">
+	<xf:formrow label="{{ phrase('andrew_moderatorpanel_is_proxy') }}">
+		{$is_proxy}
+	</xf:formrow>
+</xf:if>
+<xf:if is="$is_tor is not empty">
+	<xf:formrow label="{{ phrase('andrew_moderatorpanel_is_tor') }}">
+		{$is_tor}
+	</xf:formrow>
+</xf:if>
+<xf:if is="$is_relay is not empty">
+	<xf:formrow label="{{ phrase('andrew_moderatorpanel_is_relay') }}">
+		{$is_relay}
+	</xf:formrow>
+</xf:if>
+<xf:if is="$connection_type is not empty">
+	<xf:formrow label="{{ phrase('andrew_moderatorpanel_connection_type') }}">
+		{$connection_type}
+	</xf:formrow>
+</xf:if>
+<xf:if is="$country is not empty">
+	<h2 class="block-formSectionHeader"><span class="block-formSectionHeader-aligner">{{ phrase('andrew_moderatorpanel_geolocation') }}</span></h2>
+</xf:if>
+<xf:if is="$continent is not empty">
+	<xf:formrow label="{{ phrase('andrew_moderatorpanel_continent') }}">
+		{$continent}
+	</xf:formrow>
+</xf:if>
+<xf:if is="$country is not empty">
+	<xf:formrow label="{{ phrase('andrew_moderatorpanel_country') }}">
+		{$country} 
+			<xf:if is="$country_flag is not empty">
+				<img src="{$country_flag}" width="23px" alt="{$country}"/>
+			</xf:if>
+	</xf:formrow>
+</xf:if>
+<xf:if is="$region is not empty">
+	<xf:formrow label="{{ phrase('andrew_moderatorpanel_region') }}">
+		{$region}
+	</xf:formrow>
+</xf:if>
+<xf:if is="$city is not empty">
+	<xf:formrow label="{{ phrase('andrew_moderatorpanel_city') }}">
+		{$city}
+	</xf:formrow>
+</xf:if>
+<xf:if is="$zip is not empty">
+	<xf:formrow label="{{ phrase('andrew_moderatorpanel_zip') }}">
+		{$zip}
+	</xf:formrow>
+</xf:if>
+<xf:if is="$latitude is not empty">
+	<xf:formrow label="{{ phrase('andrew_moderatorpanel_latitude') }}">
+		{$latitudeDecimal} ({$latitude})
+	</xf:formrow>
+</xf:if>
+<xf:if is="$longitude is not empty and ($latitude != 0 and $longitude !=0)">
+	<xf:formrow label="{{ phrase('andrew_moderatorpanel_longitude') }}">
+		{$longitudeDecimal} ({$longitude})
+	</xf:formrow>
+</xf:if>]]></replace>
+  </modification>
+  <modification type="public" template="helper_ip" modification_key="andrew_moderator_panel_ip_adds" description="Adds additional data to IP information" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[arg-heading="">
+]]></find>
+    <replace><![CDATA[arg-heading="" arg-country="" arg-region="" arg-city="" arg-zip="" arg-latitude="" arg-longitude="" arg-latitudeDecimal="" arg-longitudeDecimal="" arg-continent="" arg-isp="" arg-is_proxy="" arg-connection_type="" arg-is_tor="" arg-is_relay="" arg-is_vpn="" arg-org="" arg-country_flag="">
+]]></replace>
+  </modification>
+  <modification type="public" template="member_ban_edit" modification_key="andrew_moderator_panel_member_ban_edit" description="Requires a reason to ban users" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[			/<xf:textboxrow name="user_reason"[^>]*\/>/
+
+]]></find>
+    <replace><![CDATA[<xf:macro template="andrew_moderatorpanel_macros" 
+		  name="andrew_moderatorpanel_banreason"
+		  arg-userBan="{$userBan}"/>
+
+]]></replace>
+  </modification>
+  <modification type="public" template="member_edit" modification_key="andrew_moderator_panel_member_edit" description="Adds the Moderator Panel sidebar to the user edit screen" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[</xf:title>]]></find>
+    <replace><![CDATA[$0
+<xf:macro template="andrew_moderatorpanel_macros" name="andrew_moderatorpanel_sidenav" arg-pageSelected="usersearch" arg-log="!" />
+]]></replace>
+  </modification>
+  <modification type="public" template="member_edit" modification_key="andrew_moderator_panel_member_edit_discourage" description="Adds a discourage checkbox and moderate content checkbox to user edit" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[		</div>
+		<xf:submitrow icon="save" sticky="true" />]]></find>
+    <replace><![CDATA[<xf:formrow>
+	<div>
+		<xf:if is="$xf.visitor.canDiscourageUsers()  && $discourageProtected == false">
+			<xf:checkbox>
+				<xf:option name="option[is_discouraged]" selected="$user.Option.is_discouraged"
+						   hint="{{ phrase('discouraged_hint') }}">{{ phrase('discouraged') }}</xf:option>
+			</xf:checkbox>
+		</xf:if>
+		<xf:if is="$user.canModerate() and $xf.options.andrewModeratorPanelModeratedUsergroup > 0">
+			<xf:checkbox>
+			<xf:option name="is_moderated" selected="$is_moderated"
+						   hint="{{ phrase('andrew_moderatorpanel_moderated_hint') }}">{{ phrase('andrew_moderatorpanel_moderated') }}</xf:option>
+			</xf:checkbox>
+		</xf:if>
+	</div>
+</xf:formrow>
+$0]]></replace>
+  </modification>
+  <modification type="public" template="member_edit" modification_key="andrew_moderatorpanel_user_state_security_lock" description="Add user state and security lock to member edit" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[/<xf:textboxrow\s+name="user\[custom_title\]".*?\/>/s]]></find>
+    <replace><![CDATA[<xf:if is="$xf.visitor.canEditUserStateMP()">
+<hr class="formRowSep" />
+<xf:selectrow name="user[user_state]" value="{$user.user_state}"
+						label="{{ phrase('user_state') }}">
+
+						<xf:option value="valid">{{ phrase('valid') }}</xf:option>
+						<xf:option value="email_confirm">{{ phrase('awaiting_email_confirmation') }}</xf:option>
+						<xf:option value="email_confirm_edit">{{ phrase('awaiting_email_confirmation_from_edit') }}</xf:option>
+						<xf:option value="email_bounce">{{ phrase('email_invalid_bounced') }}</xf:option>
+						<xf:option value="moderated">{{ phrase('awaiting_approval') }}</xf:option>
+						<xf:option value="rejected">{{ phrase('rejected') }}</xf:option>
+						<xf:option value="disabled">{{ phrase('disabled') }}</xf:option>
+						<xf:explain>
+							{{ phrase('when_user_state_non_x_users_receive_permissions_guest_group', {'valid_state': phrase('valid'), 'guest': '<a href="' . link('user-groups/edit', {'user_group_id': 1, 'title': $userGroups.1}) . '" target="_blank">' . $userGroups.1 . '</a>'}) }}
+						</xf:explain>
+					</xf:selectrow>
+</xf:if>
+<xf:if is="$xf.visitor.canEditUserLockMP()">
+					<xf:selectrow name="user[security_lock]" value="{$user.security_lock}"
+						label="{{ phrase('security_lock') }}">
+
+						<xf:option value="">{{ phrase('none') }}</xf:option>
+						<xf:option value="change">{{ phrase('locked:') }} {{ phrase('user_must_change_password') }}</xf:option>
+						<xf:option value="reset">{{ phrase('locked:') }} {{ phrase('user_must_reset_password') }}</xf:option>
+						<xf:explain>
+							{{ phrase('user_security_lock_explain') }}
+						</xf:explain>
+					</xf:selectrow>
+<hr class="formRowSep" />
+</xf:if>
+$0]]></replace>
+  </modification>
+  <modification type="public" template="member_macros" modification_key="andrewModeratorPanelModToolsDiscourageModerate" description="Adds the discourage, moderate, ignore and update user group to moderator tools" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:moderator_menu:bottom]-->]]></find>
+    <replace><![CDATA[<xf:if is="$user.canForceIgnoreMP()">
+	<a href="{{ link('members/force-ignore', $user) }}" class="menu-linkRow" data-xf-click="overlay">
+		{{ phrase('andrew_moderatorpanel_force_ignore') }}
+	</a>
+</xf:if>
+<xf:if is="$user.canDiscourage()">
+		<xf:if is="$user.Option.is_discouraged">
+			<a href="{{ link('members/remove-discourage', $user) }}" class="menu-linkRow" data-xf-click="overlay">
+				{{ phrase('andrew_moderatorpanel_remove_discourage') }}
+			</a>
+			<xf:else />
+			<a href="{{ link('members/discourage', $user) }}" class="menu-linkRow" data-xf-click="overlay">
+				{{ phrase('discourage') }}
+			</a>
+		</xf:if>
+	</a>
+</xf:if>
+<xf:if is="$user.canModerate() and $xf.options.andrewModeratorPanelModeratedUsergroup > 0">
+		<xf:if is="$user.isMemberOf($xf.options.andrewModeratorPanelModeratedUsergroup)">
+			<a href="{{ link('members/remove-moderate', $user) }}" class="menu-linkRow" data-xf-click="overlay">	
+				{{ phrase('andrew_moderatorpanel_remove_moderation') }}
+			</a>
+			<xf:else />
+			<a href="{{ link('members/moderate', $user) }}" class="menu-linkRow" data-xf-click="overlay">
+				{{ phrase('andrew_moderatorpanel_moderate') }}
+			</a>
+		</xf:if>
+	</a>
+</xf:if>
+<xf:if is="$user.canUpdateUserGroup()">
+	<a href="{{ link('members/update-user-group', $user) }}" class="menu-linkRow" data-xf-click="overlay">
+		{{ phrase('andrew_moderatorpanel_update_user_group') }}
+	</a>
+</xf:if>
+$0]]></replace>
+  </modification>
+  <modification type="public" template="member_macros" modification_key="andrew_moderatorpanel_moderator_tools" description="Adds a link on moderator tools to view user file and user notes" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:moderator_menu:top]-->]]></find>
+    <replace><![CDATA[$0
+<xf:if is="$xf.visitor.canViewModeratorPanel()">
+	<a href="{{ link('moderatorpanel/user', $user) }}" class="menu-linkRow">{{ phrase('andrew_moderatorpanel_user_file') }}</a>
+</xf:if>
+<xf:if is="$xf.visitor.canViewUserNotes()">
+	<a href="{{ link('moderatorpanel/user/#user_notes', $user) }}" class="menu-linkRow">{{ phrase('andrew_moderatorpanel_user_notes') }} ({{ $user.getUserNoteCount() }})</a>
+</xf:if>]]></replace>
+  </modification>
+  <modification type="public" template="member_macros" modification_key="andrew_user_note_count" description="Adds user notes into stats of on toolip" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:stat_pairs:below_trophies]-->]]></find>
+    <replace><![CDATA[$0
+<xf:if is="$xf.visitor.canViewUserNotes() 
+			   and $user.getUserNoteCount() > 0
+			   and $xf.options.andrewModeratorPanelShowUserNote" >
+		<dl class="pairs pairs--rows pairs--rows--centered fauxBlockLink">
+			<dt>{{ phrase('andrew_moderatorpanel_user_notes') }}</dt>
+			<dd>
+				<a href="{{ link('moderatorpanel/user/#user_notes', $user) }}" role="tabpanel" aria-labelledby="user-notes" class="fauxBlockLink-linkRow u-concealed">
+					{{ $user.getUserNoteCount() }}
+				</a>
+			</dd>
+		</dl>
+	</xf:if>]]></replace>
+  </modification>
+  <modification type="public" template="member_warn" modification_key="andrew_moderatorpanel_side_bar_warn_user" description="Adds the Moderator Panel sidebar to the warn user screen" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:if is="$breadcrumbs">]]></find>
+    <replace><![CDATA[<xf:macro template="andrew_moderatorpanel_macros" name="andrew_moderatorpanel_sidenav" arg-pageSelected="usersearch" arg-log="!" />
+$0]]></replace>
+  </modification>
+  <modification type="public" template="quick_reply_macros" modification_key="andrew_moderator_panel_priv_checkbox" description="Adds a checkbox for privilege and category list into the quick reply from for user notes" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:if is="!$xf.visitor.user_id]]></find>
+    <replace><![CDATA[<xf:if is="$userNote && count($categoryList) > 0">
+	<xf:formrow label="{{ phrase('andrew_moderatorpanel_select_a_category') }}" rowtype="fullWidth noLabel">
+		<xf:select name="noteCategory" value="{$user_note.note_category_id}">
+			<xf:option value="">{{ phrase('andrew_moderatorpanel_select_a_category') }}</xf:option>
+			<xf:foreach loop="$categoryList" value="$category">
+				<xf:option value="{$category.note_category_id}">{$category.title}</xf:option>
+			</xf:foreach>
+		</xf:select>
+	</xf:formrow>
+</xf:if>
+<xf:if is="$userNote && $xf.visitor.canAddPrivilegedUserNotes()">
+	<div class="block-row">
+		<ul class="inputChoices">
+			<li class="inputChoices-choice">
+				<label class="iconic">	
+					<xf:checkbox standalone="true">
+						<xf:option name="is_privileged"
+								   checked=""
+								   label="{{ phrase('andrew_moderatorpanel_privileged') }}" />
+					</xf:checkbox>
+				</label>
+				<dfn class="inputChoices-explain">{{ phrase('andrew_moderatorpanel_privileged_user_notes_are_only') }}</dfn>
+			</li>
+		</ul>
+	</div>
+</xf:if>
+$0]]></replace>
+  </modification>
+  <modification type="public" template="quick_reply_macros" modification_key="andrew_moderatorpanel_quick_reply_body_user_note" description="Add user note into quick reply body" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[arg-submitText=""]]></find>
+    <replace><![CDATA[$0
+arg-userNote=""
+arg-categoryList=""
+]]></replace>
+  </modification>
+  <modification type="public" template="quick_reply_macros" modification_key="andrew_moderatorpanel_user_note_priv" description="Adds a privilege checkbox and note cateogry to the user note quick reply editor" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[							arg-message="{$message}"]]></find>
+    <replace><![CDATA[$0
+arg-userNote="{$userNote}"
+arg-categoryList="{$categoryList}"
+]]></replace>
+  </modification>
+  <modification type="public" template="report_content_conversation_message" modification_key="andrew_moderator_panel_conversation_reports" description="Add moderator panel sidebar to reported conversation messages" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<div class="block-row block-row--separated">]]></find>
+    <replace><![CDATA[<xf:macro template="andrew_moderatorpanel_macros" name="andrew_moderatorpanel_sidenav" arg-pageSelected="reports" arg-log="!" />
+$0]]></replace>
+  </modification>
+  <modification type="public" template="report_content_post" modification_key="andrew_moderator_panel_report_posts" description="Add moderator panel sidebar to reported posts" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<div class="block-row block-row--separated">]]></find>
+    <replace><![CDATA[<xf:macro template="andrew_moderatorpanel_macros" name="andrew_moderatorpanel_sidenav" arg-pageSelected="reports" arg-log="!" />
+$0]]></replace>
+  </modification>
+  <modification type="public" template="report_content_profile_post" modification_key="andrew_moderator_panel_profile_post_reports" description="Add moderator panel sidebar to reported profile posts messages" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<div class="block-row block-row--separated">]]></find>
+    <replace><![CDATA[<xf:macro template="andrew_moderatorpanel_macros" name="andrew_moderatorpanel_sidenav" arg-pageSelected="reports" arg-log="!" />
+$0]]></replace>
+  </modification>
+  <modification type="public" template="report_content_profile_post_comment" modification_key="andrew_moderator_panel_profilepost_comment_reports" description="Add moderator panel sidebar to reported profile post comments" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<div class="block-row block-row--separated">]]></find>
+    <replace><![CDATA[<xf:macro template="andrew_moderatorpanel_macros" name="andrew_moderatorpanel_sidenav" arg-pageSelected="reports" arg-log="!" />
+$0]]></replace>
+  </modification>
+  <modification type="public" template="report_content_user" modification_key="andrew_moderator_panel_user_reports" description="Add moderator panel sidebar to reported users" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<div class="block-row block-row--separated block-row--minor">]]></find>
+    <replace><![CDATA[<xf:macro template="andrew_moderatorpanel_macros" name="andrew_moderatorpanel_sidenav" arg-pageSelected="reports" arg-log="!" />
+$0]]></replace>
+  </modification>
+  <modification type="public" template="report_list" modification_key="andrew_moderator_panel_report_list" description="Add to moderator panel sidebar to the reports list" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:title>{{ phrase('reported_items') }}</xf:title>]]></find>
+    <replace><![CDATA[$0
+<xf:macro template="andrew_moderatorpanel_macros" name="andrew_moderatorpanel_sidenav" arg-pageSelected="reports" arg-log="!" />]]></replace>
+  </modification>
+  <modification type="public" template="report_list_closed" modification_key="andrew_moderator_panel_closed_reports" description="Add the moderator panel into the closed report list" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[</xf:title>]]></find>
+    <replace><![CDATA[$0
+<xf:macro template="andrew_moderatorpanel_macros" name="andrew_moderatorpanel_sidenav" arg-pageSelected="reports" arg-log="!" />]]></replace>
+  </modification>
+  <modification type="public" template="report_search" modification_key="andrewModeratorPanelReportSearchMenu" description="Adds the moderator panel menu to the report search" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[</xf:breadcrumb>]]></find>
+    <replace><![CDATA[$0
+<xf:macro template="andrew_moderatorpanel_macros" name="andrew_moderatorpanel_sidenav" arg-pageSelected="reports" arg-log="!" />
+]]></replace>
+  </modification>
+  <modification type="public" template="thread_view" modification_key="andrew_moderatorpanel_warnings_given" description="Displays a link to warnings given in a thread" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:thread_tools_menu:before_footer]-->]]></find>
+    <replace><![CDATA[<xf:if is="$xf.visitor.canViewThreadWarningsMP()">
+	<a href="{{ link('moderatorpanel/thread-warnings', $thread) }}" data-xf-click="overlay" class="menu-linkRow">{{ phrase('andrew_moderatorpanel_warnings_given') }}</a>
+</xf:if>
+$0]]></replace>
+  </modification>
+  <modification type="admin" template="tools_rebuild" modification_key="andrew_thread_warnings" description="Rebuilds thread warnings" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:after_thread]-->
+]]></find>
+    <replace><![CDATA[$0
+<xf:macro name="rebuild_job"
+	arg-header="{{ phrase('andrew_moderatorpanel_rebuild_thread_warnings') }}"
+	arg-job="Andrew\ModeratorPanel:ThreadWarning" />
+]]></replace>
+  </modification>
+  <modification type="admin" template="tools_rebuild" modification_key="andrew_user_notes" description="Rebuilds user notes" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:after_users]-->
+]]></find>
+    <replace><![CDATA[$0
+<xf:macro name="rebuild_job"
+	arg-header="{{ phrase('andrew_moderatorpanel_rebuild_user_notes') }}"
+	arg-job="Andrew\ModeratorPanel:UserNote" />
+]]></replace>
+  </modification>
+</template_modifications>

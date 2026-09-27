@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<options>
+  <option option_id="andrewModeralPanelEnabledIsStaff" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="andrew_moderatorpanel" display_order="100"/>
+  </option>
+  <option option_id="andrewModeralPanelEnabledProtectedUsers" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="andrew_moderatorpanel" display_order="2"/>
+  </option>
+  <option option_id="andrewModeralPanelRequireBanReason" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="andrew_moderatorpanel" display_order="3"/>
+  </option>
+  <option option_id="andrewModeratorPaneIPSearchIO" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="andrew_moderatorpanel" display_order="300"/>
+  </option>
+  <option option_id="andrewModeratorPaneUpdateUserGroup" edit_format="callback" data_type="array" advanced="0">
+    <default_value>[]</default_value>
+    <edit_format_params>XF\Option\UserGroup::renderSelectMultiple</edit_format_params>
+    <sub_options>*</sub_options>
+    <relation group_id="andrew_moderatorpanel" display_order="99"/>
+  </option>
+  <option option_id="andrewModeratorPanelAbstractAPIAPIKey" edit_format="textbox" data_type="string" advanced="0">
+    <default_value></default_value>
+    <relation group_id="andrew_moderatorpanel" display_order="220"/>
+  </option>
+  <option option_id="andrewModeratorPanelChartOneStatOne" edit_format="select" data_type="string" advanced="0">
+    <default_value>post</default_value>
+    <edit_format_params>post = Posts
+thread = Threads
+user_registration = User registrations
+user_activity = User Activity
+user_note = User Notes
+report = Reports
+warning = Warnings
+conversation = Conservations
+conversation_message = Conversation messages</edit_format_params>
+    <relation group_id="andrew_moderatorpanel" display_order="20"/>
+  </option>
+  <option option_id="andrewModeratorPanelChartOneStatTwo" edit_format="select" data_type="string" advanced="0">
+    <default_value>thread</default_value>
+    <edit_format_params>post = Posts
+thread = Threads
+user_registration = User registrations
+user_activity = User Activity
+user_note = User Notes
+report = Reports
+warning = Warnings
+conversation = Conservations
+conversation_message = Conversation messages</edit_format_params>
+    <relation group_id="andrew_moderatorpanel" display_order="21"/>
+  </option>
+  <option option_id="andrewModeratorPanelChartTwoStatOne" edit_format="select" data_type="string" advanced="0">
+    <default_value>user_registration</default_value>
+    <edit_format_params>post = Posts
+thread = Threads
+user_registration = User registrations
+user_activity = User Activity
+user_note = User Notes
+report = Reports
+warning = Warnings
+conversation = Direct messages
+conversation_message = Direct message replies</edit_format_params>
+    <relation group_id="andrew_moderatorpanel" display_order="21"/>
+  </option>
+  <option option_id="andrewModeratorPanelChartTwoStatTwo" edit_format="select" data_type="string" advanced="0">
+    <default_value>user_activity</default_value>
+    <edit_format_params>post = Posts
+thread = Threads
+user_registration = User registrations
+user_activity = User Activity
+user_note = User Notes
+report = Reports
+warning = Warnings
+conversation = Direct messages
+conversation_message = Direct message replies</edit_format_params>
+    <relation group_id="andrew_moderatorpanel" display_order="22"/>
+  </option>
+  <option option_id="andrewModeratorPanelDashboardFifthPosition" edit_format="select" data_type="integer" advanced="0">
+    <default_value>5</default_value>
+    <edit_format_params>0 = None
+1 = Five activity blocks
+2 = Statistics
+3 = Recently banned users
+4 = Recently warned users
+5 = Recent users notes
+6 = Recently registered users</edit_format_params>
+    <relation group_id="andrew_moderatorpanel" display_order="14"/>
+  </option>
+  <option option_id="andrewModeratorPanelDashboardFirstPosition" edit_format="select" data_type="integer" advanced="0">
+    <default_value>1</default_value>
+    <edit_format_params>0 = None
+1 = Five activity blocks
+2 = Statistics
+3 = Recently banned users
+4 = Recently warned users
+5 = Recent users notes
+6 = Recently registered users</edit_format_params>
+    <relation group_id="andrew_moderatorpanel" display_order="10"/>
+  </option>
+  <option option_id="andrewModeratorPanelDashboardFourthPosition" edit_format="select" data_type="integer" advanced="0">
+    <default_value>4</default_value>
+    <edit_format_params>0 = None
+1 = Five activity blocks
+2 = Statistics
+3 = Recently banned users
+4 = Recently warned users
+5 = Recent users notes
+6 = Recently registered users</edit_format_params>
+    <relation group_id="andrew_moderatorpanel" display_order="13"/>
+  </option>
+  <option option_id="andrewModeratorPanelDashboardSecondPosition" edit_format="select" data_type="integer" advanced="0">
+    <default_value>2</default_value>
+    <edit_format_params>0 = None
+1 = Five activity blocks
+2 = Statistics
+3 = Recently banned users
+4 = Recently warned users
+5 = Recent users notes
+6 = Recently registered users</edit_format_params>
+    <relation group_id="andrew_moderatorpanel" display_order="11"/>
+  </option>
+  <option option_id="andrewModeratorPanelDashboardSixthPosition" edit_format="select" data_type="integer" advanced="0">
+    <default_value>6</default_value>
+    <edit_format_params>0 = None
+1 = Five activity blocks
+2 = Statistics
+3 = Recently banned users
+4 = Recently warned users
+5 = Recent users notes
+6 = Recently registered users</edit_format_params>
+    <relation group_id="andrew_moderatorpanel" display_order="15"/>
+  </option>
+  <option option_id="andrewModeratorPanelDashboardThirdPosition" edit_format="select" data_type="integer" advanced="0">
+    <default_value>3</default_value>
+    <edit_format_params>0 = None
+1 = Five activity blocks
+2 = Statistics
+3 = Recently banned users
+4 = Recently warned users
+5 = Recent users notes
+6 = Recently registered users</edit_format_params>
+    <relation group_id="andrew_moderatorpanel" display_order="12"/>
+  </option>
+  <option option_id="andrewModeratorPanelEnabledIsMod" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <edit_format_params>0</edit_format_params>
+    <relation group_id="andrew_moderatorpanel" display_order="105"/>
+  </option>
+  <option option_id="andrewModeratorPanelHideAdminIp" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="andrew_moderatorpanel" display_order="125"/>
+  </option>
+  <option option_id="andrewModeratorPanelHideModeratorIp" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="andrew_moderatorpanel" display_order="130"/>
+  </option>
+  <option option_id="andrewModeratorPanelHideStaffIp" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="andrew_moderatorpanel" display_order="120"/>
+  </option>
+  <option option_id="andrewModeratorPanelIPService" edit_format="select" data_type="integer" advanced="0">
+    <default_value>0</default_value>
+    <edit_format_params>0 = None
+1 = FreeIPAPI.com
+2 = ProxyCheck.io
+3 = IPStack.com
+4 = VPNAPI.io
+5 = AbstractAPI.com</edit_format_params>
+    <relation group_id="andrew_moderatorpanel" display_order="200"/>
+  </option>
+  <option option_id="andrewModeratorPanelIPStackAPIKey" edit_format="textbox" data_type="string" advanced="0">
+    <default_value></default_value>
+    <relation group_id="andrew_moderatorpanel" display_order="210"/>
+  </option>
+  <option option_id="andrewModeratorPanelModMenu" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="andrew_moderatorpanel" display_order="1"/>
+  </option>
+  <option option_id="andrewModeratorPanelModeratedUsergroup" edit_format="callback" data_type="integer" advanced="0">
+    <default_value>0</default_value>
+    <edit_format_params>XF\Option\UserGroup::renderSelect</edit_format_params>
+    <relation group_id="andrew_moderatorpanel" display_order="4"/>
+  </option>
+  <option option_id="andrewModeratorPanelMostIgnoredBannedUsers" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="andrew_moderatorpanel" display_order="8"/>
+  </option>
+  <option option_id="andrewModeratorPanelMostReportedBannedUsers" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="andrew_moderatorpanel" display_order="6"/>
+  </option>
+  <option option_id="andrewModeratorPanelMostWarnedBannedUsers" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="andrew_moderatorpanel" display_order="7"/>
+  </option>
+  <option option_id="andrewModeratorPanelProtected" edit_format="callback" data_type="string" advanced="0">
+    <default_value></default_value>
+    <edit_format_params>XF\Option\UserGroup::renderSelect</edit_format_params>
+    <relation group_id="andrew_moderatorpanel" display_order="2"/>
+  </option>
+  <option option_id="andrewModeratorPanelProxyCheckAPIKey" edit_format="textbox" data_type="string" advanced="0">
+    <default_value></default_value>
+    <relation group_id="andrew_moderatorpanel" display_order="205"/>
+  </option>
+  <option option_id="andrewModeratorPanelShowSpamBan" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="andrew_moderatorpanel" display_order="5"/>
+  </option>
+  <option option_id="andrewModeratorPanelShowUserNote" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="andrew_moderatorpanel" display_order="9"/>
+  </option>
+  <option option_id="andrewModeratorPanelVPNAPIAPIKey" edit_format="textbox" data_type="string" advanced="0">
+    <default_value></default_value>
+    <relation group_id="andrew_moderatorpanel" display_order="215"/>
+  </option>
+</options>

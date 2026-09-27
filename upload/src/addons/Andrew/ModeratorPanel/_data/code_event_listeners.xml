@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<code_event_listeners>
+  <listener event_id="user_delete_clean_init" execute_order="10" callback_class="Andrew\ModeratorPanel\Listener" callback_method="userDeleteCleanInit" active="1" hint="andrew_moderatorpanel_user_cleanup"/>
+</code_event_listeners>

@@ -1,0 +1,22 @@
+{
+    "legacy_addon_id": "",
+    "title": "[Andrew] Moderator Panel",
+    "description": "Moderator panel with reporting and user insights",
+    "version_id": 2000970,
+    "version_string": "2.0.9",
+    "dev": "Andrew Simmons",
+    "dev_url": "https://xenbyandrew.com",
+    "faq_url": "https://xenforo.com/community/resources/andrew-moderator-panel.8131/field?field=faq",
+    "support_url": "https://xenforo.com/community/threads/andrew-moderator-panel.187755/",
+    "extra_urls": {
+        "Donate in USD": "https://www.paypal.com/donate/?hosted_button_id=G5Q6DK8DAVHUW",
+        "Donate in EUR": "https://www.paypal.com/donate/?hosted_button_id=ZQDLMRSAF3J4W"
+    },
+    "require": {
+        "XF": [
+            2010070,
+            "XenForo 2.1.0"
+        ]
+    },
+    "icon": "fa-badge-sheriff"
+}

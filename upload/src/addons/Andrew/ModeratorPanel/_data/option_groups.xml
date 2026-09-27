@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<option_groups>
+  <group group_id="andrew_moderatorpanel" icon="fa-badge-sheriff" display_order="4999" debug_only="0"/>
+</option_groups>

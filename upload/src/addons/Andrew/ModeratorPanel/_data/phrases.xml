@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="admin_navigation.andrewModeratorPanelAdminOptions" version_id="1100070" version_string="1.10.0"><![CDATA[Moderator Panel options]]></phrase>
+  <phrase title="admin_navigation.moderatorpanel" version_id="1100070" version_string="1.10.0"><![CDATA[Moderator Panel]]></phrase>
+  <phrase title="admin_navigation.userNotesCategory" version_id="1100070" version_string="1.10.0"><![CDATA[User note categories]]></phrase>
+  <phrase title="admin_permission.manageModeratorPanel" version_id="1100070" version_string="1.10.0"><![CDATA[Manage Moderator Panel]]></phrase>
+  <phrase title="andrew_moderator_panel" version_id="1" version_string="1.0.0 Alpha"><![CDATA[Moderator Panel]]></phrase>
+  <phrase title="andrew_moderator_panel_banned_by_x" version_id="1100070" version_string="1.10.0"><![CDATA[Banned by: {name}]]></phrase>
+  <phrase title="andrew_moderator_panel_given_by_x" version_id="1100070" version_string="1.10.0"><![CDATA[Given by: {name}]]></phrase>
+  <phrase title="andrew_moderator_panel_ignoring_x" version_id="1100070" version_string="1.10.0"><![CDATA[Ignoring: {name}]]></phrase>
+  <phrase title="andrew_moderator_panel_user_login_country_not_x" version_id="2000070" version_string="2.0.0"><![CDATA[Login country not: {name}]]></phrase>
+  <phrase title="andrew_moderator_panel_user_login_country_x" version_id="2000070" version_string="2.0.0"><![CDATA[Login country: {name}]]></phrase>
+  <phrase title="andrew_moderator_panel_user_registration_country_not_x" version_id="2000070" version_string="2.0.0"><![CDATA[Registration country not: {name}]]></phrase>
+  <phrase title="andrew_moderator_panel_user_registration_country_x" version_id="2000070" version_string="2.0.0"><![CDATA[Registration country: {name}]]></phrase>
+  <phrase title="andrew_moderator_panel_user_state_x" version_id="1100070" version_string="1.10.0"><![CDATA[User state: {name}]]></phrase>
+  <phrase title="andrew_moderator_panel_user_x" version_id="1100070" version_string="1.10.0"><![CDATA[User: {name}]]></phrase>
+  <phrase title="andrew_moderator_panel_warned_by_x" version_id="1100070" version_string="1.10.0"><![CDATA[Warned by: {name}]]></phrase>
+  <phrase title="andrew_moderatorpanel_active_points" version_id="1" version_string="1.0.0 Alpha"><![CDATA[Active points]]></phrase>
+  <phrase title="andrew_moderatorpanel_add_category" version_id="1100070" version_string="1.10.0"><![CDATA[Add category]]></phrase>
+  <phrase title="andrew_moderatorpanel_add_force_ignore" version_id="1060070" version_string="1.6.0"><![CDATA[Add force ignore]]></phrase>
+  <phrase title="andrew_moderatorpanel_add_user_note_category" version_id="1100070" version_string="1.10.0"><![CDATA[Add user note category]]></phrase>
+  <phrase title="andrew_moderatorpanel_anytime" version_id="2000070" version_string="2.0.0"><![CDATA[Anytime]]></phrase>
+  <phrase title="andrew_moderatorpanel_are_you_sure_you_want_to_delete_x" version_id="1100070" version_string="1.10.0"><![CDATA[Are you sure you want to delete {name}?]]></phrase>
+  <phrase title="andrew_moderatorpanel_ban_user" version_id="1" version_string="1.0.0 Alpha"><![CDATA[Ban user]]></phrase>
+  <phrase title="andrew_moderatorpanel_banned_users" version_id="1" version_string="1.0.0 Alpha"><![CDATA[Banned users]]></phrase>
+  <phrase title="andrew_moderatorpanel_batch_update_country" version_id="1100070" version_string="1.10.0"><![CDATA[Batch update country]]></phrase>
+  <phrase title="andrew_moderatorpanel_batch_update_country_warning" version_id="1100070" version_string="1.10.0"><![CDATA[This option updates the spelling of the country as identified for the user during registration. Use this option to correct spelling discrepancies when switching IP APIs. Note that this option does not alter the country's name as returned by the API.]]></phrase>
+  <phrase title="andrew_moderatorpanel_category" version_id="1100070" version_string="1.10.0"><![CDATA[Category]]></phrase>
+  <phrase title="andrew_moderatorpanel_category_title_must_be_unique" version_id="1100070" version_string="1.10.0"><![CDATA[Category title must be unique.]]></phrase>
+  <phrase title="andrew_moderatorpanel_change_username" version_id="1" version_string="1.0.0 Alpha"><![CDATA[Change username]]></phrase>
+  <phrase title="andrew_moderatorpanel_check_to_exclude" version_id="1100070" version_string="1.10.0"><![CDATA[Check to exclude selected country]]></phrase>
+  <phrase title="andrew_moderatorpanel_city" version_id="1070970" version_string="1.7.9"><![CDATA[City]]></phrase>
+  <phrase title="andrew_moderatorpanel_connection_type" version_id="1070970" version_string="1.7.9"><![CDATA[Connection type]]></phrase>
+  <phrase title="andrew_moderatorpanel_continent" version_id="1070970" version_string="1.7.9"><![CDATA[Continent]]></phrase>
+  <phrase title="andrew_moderatorpanel_country" version_id="1070970" version_string="1.7.9"><![CDATA[Country]]></phrase>
+  <phrase title="andrew_moderatorpanel_country_mismatch" version_id="1100070" version_string="1.10.0"><![CDATA[Country mismatch]]></phrase>
+  <phrase title="andrew_moderatorpanel_country_registration" version_id="2000770" version_string="2.0.7"><![CDATA[Country (registration)]]></phrase>
+  <phrase title="andrew_moderatorpanel_created_by" version_id="1100070" version_string="1.10.0"><![CDATA[Created by]]></phrase>
+  <phrase title="andrew_moderatorpanel_created_by_x" version_id="1100070" version_string="1.10.0"><![CDATA[Created by: {name}]]></phrase>
+  <phrase title="andrew_moderatorpanel_current_ban" version_id="1" version_string="1.0.0 Alpha"><![CDATA[Current ban]]></phrase>
+  <phrase title="andrew_moderatorpanel_dashboard" version_id="1" version_string="1.0.0 Alpha"><![CDATA[Dashboard]]></phrase>
+  <phrase title="andrew_moderatorpanel_delete_note_category" version_id="1100070" version_string="1.10.0"><![CDATA[Delete note category]]></phrase>
+  <phrase title="andrew_moderatorpanel_delete_user_note" version_id="2000870" version_string="2.0.8"><![CDATA[Delete user note]]></phrase>
+  <phrase title="andrew_moderatorpanel_details" version_id="1090970" version_string="1.9.9"><![CDATA[Details]]></phrase>
+  <phrase title="andrew_moderatorpanel_discourage_user" version_id="1030170" version_string="1.3.1"><![CDATA[Discourage user]]></phrase>
+  <phrase title="andrew_moderatorpanel_discouraged_users" version_id="1000970" version_string="1.0.9"><![CDATA[Discouraged users]]></phrase>
+  <phrase title="andrew_moderatorpanel_disposable_email" version_id="1090970" version_string="1.9.9"><![CDATA[Disposable email]]></phrase>
+  <phrase title="andrew_moderatorpanel_edit_category" version_id="1100070" version_string="1.10.0"><![CDATA[Edit category]]></phrase>
+  <phrase title="andrew_moderatorpanel_edit_user_note" version_id="1070370" version_string="1.7.3"><![CDATA[Edit user note]]></phrase>
+  <phrase title="andrew_moderatorpanel_edit_user_note_category" version_id="1100070" version_string="1.10.0"><![CDATA[Edit user note category]]></phrase>
+  <phrase title="andrew_moderatorpanel_entered_note_on" version_id="1010270" version_string="1.1.2"><![CDATA[entered note on]]></phrase>
+  <phrase title="andrew_moderatorpanel_expiry_date" version_id="1100070" version_string="1.10.0"><![CDATA[Expiry date]]></phrase>
+  <phrase title="andrew_moderatorpanel_force_ignore" version_id="1060070" version_string="1.6.0"><![CDATA[Force ignore]]></phrase>
+  <phrase title="andrew_moderatorpanel_force_ignore_user" version_id="1060070" version_string="1.6.0"><![CDATA[Force ignore user]]></phrase>
+  <phrase title="andrew_moderatorpanel_force_ignored_users" version_id="1060070" version_string="1.6.0"><![CDATA[Force ignored users]]></phrase>
+  <phrase title="andrew_moderatorpanel_gave_by" version_id="1090970" version_string="1.9.9"><![CDATA[Gave by]]></phrase>
+  <phrase title="andrew_moderatorpanel_geolocation" version_id="1070970" version_string="1.7.9"><![CDATA[Geolocation]]></phrase>
+  <phrase title="andrew_moderatorpanel_given_by" version_id="1100070" version_string="1.10.0"><![CDATA[Given by]]></phrase>
+  <phrase title="andrew_moderatorpanel_given_by_x" version_id="1100070" version_string="1.10.0"><![CDATA[Given by: {name}]]></phrase>
+  <phrase title="andrew_moderatorpanel_given_to" version_id="1090970" version_string="1.9.9"><![CDATA[Given to]]></phrase>
+  <phrase title="andrew_moderatorpanel_given_to_x" version_id="1090970" version_string="1.9.9"><![CDATA[Given to: {name}]]></phrase>
+  <phrase title="andrew_moderatorpanel_hide_users_banned_for_spam" version_id="1040370" version_string="1.4.3"><![CDATA[Hide users banned for spam]]></phrase>
+  <phrase title="andrew_moderatorpanel_ignored_by" version_id="1" version_string="1.0.0 Alpha"><![CDATA[Ignored by]]></phrase>
+  <phrase title="andrew_moderatorpanel_ignoring" version_id="1080070" version_string="1.8.0"><![CDATA[Ignoring]]></phrase>
+  <phrase title="andrew_moderatorpanel_ip_matches" version_id="1" version_string="1.0.0 Alpha"><![CDATA[IP matches]]></phrase>
+  <phrase title="andrew_moderatorpanel_ip_search" version_id="1" version_string="1.0.0 Alpha"><![CDATA[IP search]]></phrase>
+  <phrase title="andrew_moderatorpanel_is_proxy" version_id="1070970" version_string="1.7.9"><![CDATA[Proxy]]></phrase>
+  <phrase title="andrew_moderatorpanel_is_relay" version_id="1070970" version_string="1.7.9"><![CDATA[Relay]]></phrase>
+  <phrase title="andrew_moderatorpanel_is_tor" version_id="1070970" version_string="1.7.9"><![CDATA[TOR]]></phrase>
+  <phrase title="andrew_moderatorpanel_isp" version_id="1070970" version_string="1.7.9"><![CDATA[ISP]]></phrase>
+  <phrase title="andrew_moderatorpanel_last_edited_by" version_id="1070070" version_string="1.7.0" global_cache="1"><![CDATA[Last edited by]]></phrase>
+  <phrase title="andrew_moderatorpanel_latest_notes" version_id="1100070" version_string="1.10.0"><![CDATA[Latest notes]]></phrase>
+  <phrase title="andrew_moderatorpanel_latitude" version_id="1070970" version_string="1.7.9"><![CDATA[Latitude]]></phrase>
+  <phrase title="andrew_moderatorpanel_login_country" version_id="1100070" version_string="1.10.0"><![CDATA[Login country]]></phrase>
+  <phrase title="andrew_moderatorpanel_login_date" version_id="1100070" version_string="1.10.0"><![CDATA[Login date]]></phrase>
+  <phrase title="andrew_moderatorpanel_login_log" version_id="1100070" version_string="1.10.0"><![CDATA[Login log]]></phrase>
+  <phrase title="andrew_moderatorpanel_logins" version_id="1100070" version_string="1.10.0"><![CDATA[Logins:]]></phrase>
+  <phrase title="andrew_moderatorpanel_logs" version_id="1" version_string="1.0.0 Alpha"><![CDATA[Logs]]></phrase>
+  <phrase title="andrew_moderatorpanel_longitude" version_id="1070970" version_string="1.7.9"><![CDATA[Longitude]]></phrase>
+  <phrase title="andrew_moderatorpanel_make_both_ways" version_id="1060070" version_string="1.6.0"><![CDATA[Make both ways]]></phrase>
+  <phrase title="andrew_moderatorpanel_manage_force_ignored" version_id="1060070" version_string="1.6.0"><![CDATA[Manage force ignored]]></phrase>
+  <phrase title="andrew_moderatorpanel_manage_forced_ignore" version_id="1060070" version_string="1.6.0"><![CDATA[Manage forced ignore]]></phrase>
+  <phrase title="andrew_moderatorpanel_moderate" version_id="1030170" version_string="1.3.1"><![CDATA[Moderate]]></phrase>
+  <phrase title="andrew_moderatorpanel_moderate_content" version_id="1020270" version_string="1.2.2"><![CDATA[Moderate content]]></phrase>
+  <phrase title="andrew_moderatorpanel_moderate_user" version_id="1030170" version_string="1.3.1"><![CDATA[Moderate user]]></phrase>
+  <phrase title="andrew_moderatorpanel_moderated" version_id="1020270" version_string="1.2.2"><![CDATA[Moderated]]></phrase>
+  <phrase title="andrew_moderatorpanel_moderated_hint" version_id="1020270" version_string="1.2.2"><![CDATA[Moderated users are required to have all content approved by a moderator. All content, including posts, created by moderated users will be placed in the approval queue and require moderator approval.]]></phrase>
+  <phrase title="andrew_moderatorpanel_moderated_users" version_id="1010270" version_string="1.1.2"><![CDATA[Moderated users]]></phrase>
+  <phrase title="andrew_moderatorpanel_moderator_log" version_id="1030170" version_string="1.3.1"><![CDATA[Moderator log]]></phrase>
+  <phrase title="andrew_moderatorpanel_most_ignored_users" version_id="1" version_string="1.0.0 Alpha"><![CDATA[Most ignored users]]></phrase>
+  <phrase title="andrew_moderatorpanel_most_reported_users" version_id="1" version_string="1.0.0 Alpha"><![CDATA[Most reported users]]></phrase>
+  <phrase title="andrew_moderatorpanel_most_warned_users" version_id="1" version_string="1.0.0 Alpha"><![CDATA[Most warned users]]></phrase>
+  <phrase title="andrew_moderatorpanel_new_country_name" version_id="1100070" version_string="1.10.0"><![CDATA[New country name]]></phrase>
+  <phrase title="andrew_moderatorpanel_no_moderated_usergroup_configured_in_admin_panel" version_id="1060270" version_string="1.6.2"><![CDATA[No moderated user group configured in admin panel]]></phrase>
+  <phrase title="andrew_moderatorpanel_no_users_are_ignoring" version_id="1" version_string="1.0.0 Alpha"><![CDATA[No users are ignoring this user]]></phrase>
+  <phrase title="andrew_moderatorpanel_no_warnings_have_been_logged" version_id="1050370" version_string="1.5.3"><![CDATA[No warnings have been logged]]></phrase>
+  <phrase title="andrew_moderatorpanel_note_category_x" version_id="1100070" version_string="1.10.0"><![CDATA[Note category: {name}]]></phrase>
+  <phrase title="andrew_moderatorpanel_notes" version_id="1010270" version_string="1.1.2"><![CDATA[Notes]]></phrase>
+  <phrase title="andrew_moderatorpanel_only_return_privileged_user_notes" version_id="1090970" version_string="1.9.9"><![CDATA[Only return privileged user notes]]></phrase>
+  <phrase title="andrew_moderatorpanel_order" version_id="1090970" version_string="1.9.9"><![CDATA[Order]]></phrase>
+  <phrase title="andrew_moderatorpanel_organization" version_id="1070970" version_string="1.7.9"><![CDATA[Organization]]></phrase>
+  <phrase title="andrew_moderatorpanel_please_confirm_discourage" version_id="1030170" version_string="1.3.1"><![CDATA[Please confirm that you want to discourage the following user]]></phrase>
+  <phrase title="andrew_moderatorpanel_please_confirm_moderate" version_id="1030170" version_string="1.3.1"><![CDATA[Please confirm that you want to moderate the following user]]></phrase>
+  <phrase title="andrew_moderatorpanel_please_confirm_remove_discourage" version_id="1030170" version_string="1.3.1"><![CDATA[Please confirm that you no longer want to discourage the following user]]></phrase>
+  <phrase title="andrew_moderatorpanel_please_confirm_remove_moderate" version_id="1030270" version_string="1.3.2"><![CDATA[Please confirm that you no longer want to moderate the following user]]></phrase>
+  <phrase title="andrew_moderatorpanel_please_disable_SVReportImprovements_while_running_rebuild" version_id="1060070" version_string="1.6.0"><![CDATA[Please disable SV\ReportImprovements while running rebuild]]></phrase>
+  <phrase title="andrew_moderatorpanel_previous_warnings_may_have_been_removed" version_id="1050370" version_string="1.5.3"><![CDATA[Previous warnings may have been removed]]></phrase>
+  <phrase title="andrew_moderatorpanel_privileged" version_id="1090970" version_string="1.9.9"><![CDATA[Privileged]]></phrase>
+  <phrase title="andrew_moderatorpanel_privileged_user_notes_are_only" version_id="1090970" version_string="1.9.9"><![CDATA[Privileged user notes can only be seen by those with access]]></phrase>
+  <phrase title="andrew_moderatorpanel_profile" version_id="1020270" version_string="1.2.2"><![CDATA[Profile]]></phrase>
+  <phrase title="andrew_moderatorpanel_rank" version_id="1100070" version_string="1.10.0"><![CDATA[Rank]]></phrase>
+  <phrase title="andrew_moderatorpanel_rebuild_thread_warnings" version_id="1050370" version_string="1.5.3"><![CDATA[Rebuild thread warnings]]></phrase>
+  <phrase title="andrew_moderatorpanel_rebuild_user_notes" version_id="1050070" version_string="1.5.0"><![CDATA[Rebuild user notes]]></phrase>
+  <phrase title="andrew_moderatorpanel_recent_logins" version_id="1100070" version_string="1.10.0"><![CDATA[Recent logins]]></phrase>
+  <phrase title="andrew_moderatorpanel_recent_user_notes" version_id="1010270" version_string="1.1.2"><![CDATA[Recent user notes]]></phrase>
+  <phrase title="andrew_moderatorpanel_recently_banned_users" version_id="1000770" version_string="1.0.7"><![CDATA[Recently banned users]]></phrase>
+  <phrase title="andrew_moderatorpanel_recently_registered_users" version_id="1" version_string="1.0.0 Alpha"><![CDATA[Recently registered users]]></phrase>
+  <phrase title="andrew_moderatorpanel_recently_warned_users" version_id="1030270" version_string="1.3.2"><![CDATA[Recently warned users]]></phrase>
+  <phrase title="andrew_moderatorpanel_region" version_id="1070970" version_string="1.7.9"><![CDATA[Region]]></phrase>
+  <phrase title="andrew_moderatorpanel_register_country" version_id="1100070" version_string="1.10.0"><![CDATA[Register country]]></phrase>
+  <phrase title="andrew_moderatorpanel_registration_country" version_id="2000070" version_string="2.0.0"><![CDATA[Registration country]]></phrase>
+  <phrase title="andrew_moderatorpanel_rejected_user_log" version_id="1000970" version_string="1.0.9"><![CDATA[Rejected user log]]></phrase>
+  <phrase title="andrew_moderatorpanel_remove_discourage" version_id="1030170" version_string="1.3.1"><![CDATA[Remove discourage]]></phrase>
+  <phrase title="andrew_moderatorpanel_remove_moderation" version_id="1050370" version_string="1.5.3"><![CDATA[Remove moderation]]></phrase>
+  <phrase title="andrew_moderatorpanel_remove_user_from_moderation" version_id="1030170" version_string="1.3.1"><![CDATA[Remove user from moderation]]></phrase>
+  <phrase title="andrew_moderatorpanel_search_by_email" version_id="1060070" version_string="1.6.0"><![CDATA[Search by email]]></phrase>
+  <phrase title="andrew_moderatorpanel_select_a_category" version_id="1100070" version_string="1.10.0"><![CDATA[Select a category]]></phrase>
+  <phrase title="andrew_moderatorpanel_select_country" version_id="1100070" version_string="1.10.0"><![CDATA[Select country]]></phrase>
+  <phrase title="andrew_moderatorpanel_show_only_banned_users" version_id="1100070" version_string="1.10.0"><![CDATA[Show only: Banned users]]></phrase>
+  <phrase title="andrew_moderatorpanel_show_only_not_banned_users" version_id="1100070" version_string="1.10.0"><![CDATA[Show only: Not banned users]]></phrase>
+  <phrase title="andrew_moderatorpanel_show_spam_users" version_id="1100070" version_string="1.10.0"><![CDATA[Show spam users]]></phrase>
+  <phrase title="andrew_moderatorpanel_sort_by_date" version_id="1090970" version_string="1.9.9"><![CDATA[Sort by date]]></phrase>
+  <phrase title="andrew_moderatorpanel_spam_cleaner_log" version_id="1000970" version_string="1.0.9"><![CDATA[Spam cleaner log]]></phrase>
+  <phrase title="andrew_moderatorpanel_spam_trigger_log" version_id="1040170" version_string="1.4.1"><![CDATA[Spam trigger log]]></phrase>
+  <phrase title="andrew_moderatorpanel_this_user_is_not_ignoring_anyone" version_id="1080070" version_string="1.8.0"><![CDATA[This user is not ignoring anyone]]></phrase>
+  <phrase title="andrew_moderatorpanel_this_user_will_be_force_ignored" version_id="1060070" version_string="1.6.0"><![CDATA[This user will be force ignored]]></phrase>
+  <phrase title="andrew_moderatorpanel_thread_bans" version_id="1" version_string="1.0.0 Alpha"><![CDATA[Thread bans]]></phrase>
+  <phrase title="andrew_moderatorpanel_thread_reply_bans" version_id="1" version_string="1.0.0 Alpha"><![CDATA[Thread reply bans]]></phrase>
+  <phrase title="andrew_moderatorpanel_triggered" version_id="1090970" version_string="1.9.9"><![CDATA[Triggered]]></phrase>
+  <phrase title="andrew_moderatorpanel_update_country" version_id="1100070" version_string="1.10.0"><![CDATA[Update country]]></phrase>
+  <phrase title="andrew_moderatorpanel_update_user_group" version_id="1060270" version_string="1.6.2"><![CDATA[Update user group]]></phrase>
+  <phrase title="andrew_moderatorpanel_user_activity" version_id="1080070" version_string="1.8.0"><![CDATA[User activity]]></phrase>
+  <phrase title="andrew_moderatorpanel_user_agent" version_id="1100070" version_string="1.10.0"><![CDATA[User agent]]></phrase>
+  <phrase title="andrew_moderatorpanel_user_change_log" version_id="1" version_string="1.0.0 Alpha"><![CDATA[User change log]]></phrase>
+  <phrase title="andrew_moderatorpanel_user_data" version_id="1000670" version_string="1.0.6"><![CDATA[User data]]></phrase>
+  <phrase title="andrew_moderatorpanel_user_file" version_id="1000270" version_string="1.0.2"><![CDATA[User file]]></phrase>
+  <phrase title="andrew_moderatorpanel_user_has_no_entries" version_id="1100070" version_string="1.10.0"><![CDATA[User has no entries]]></phrase>
+  <phrase title="andrew_moderatorpanel_user_has_no_notes" version_id="1010270" version_string="1.1.2"><![CDATA[User does not have any notes]]></phrase>
+  <phrase title="andrew_moderatorpanel_user_has_no_notes_matching_filters" version_id="1090970" version_string="1.9.9"><![CDATA[User has no notes matching filters]]></phrase>
+  <phrase title="andrew_moderatorpanel_user_has_no_reports" version_id="1" version_string="1.0.0 Alpha"><![CDATA[This user does not have any reported items]]></phrase>
+  <phrase title="andrew_moderatorpanel_user_has_no_thread_bans" version_id="1" version_string="1.0.0 Alpha"><![CDATA[This user does not have any thread bans]]></phrase>
+  <phrase title="andrew_moderatorpanel_user_has_no_warnings" version_id="1" version_string="1.0.0 Alpha"><![CDATA[This user does not have any warnings]]></phrase>
+  <phrase title="andrew_moderatorpanel_user_lookup" version_id="1" version_string="1.0.0 Alpha"><![CDATA[User lookup]]></phrase>
+  <phrase title="andrew_moderatorpanel_user_not_found" version_id="1040070" version_string="1.4.0"><![CDATA[User not found]]></phrase>
+  <phrase title="andrew_moderatorpanel_user_note_categories" version_id="1100070" version_string="1.10.0"><![CDATA[User note categories]]></phrase>
+  <phrase title="andrew_moderatorpanel_user_notes" version_id="1010270" version_string="1.1.2"><![CDATA[User notes]]></phrase>
+  <phrase title="andrew_moderatorpanel_user_notes_category_description" version_id="1100070" version_string="1.10.0"><![CDATA[Add and edit categories for user notes in the moderator panel.]]></phrase>
+  <phrase title="andrew_moderatorpanel_username_change_log" version_id="1000770" version_string="1.0.7"><![CDATA[Username change log]]></phrase>
+  <phrase title="andrew_moderatorpanel_view_profile" version_id="1020270" version_string="1.2.2"><![CDATA[View profile]]></phrase>
+  <phrase title="andrew_moderatorpanel_vpn" version_id="1070970" version_string="1.7.9"><![CDATA[VPN]]></phrase>
+  <phrase title="andrew_moderatorpanel_warned_by" version_id="1100070" version_string="1.10.0"><![CDATA[Warned by]]></phrase>
+  <phrase title="andrew_moderatorpanel_warning_date" version_id="1100070" version_string="1.10.0"><![CDATA[Warning date]]></phrase>
+  <phrase title="andrew_moderatorpanel_warnings_given" version_id="1050370" version_string="1.5.3"><![CDATA[Warnings given]]></phrase>
+  <phrase title="andrew_moderatorpanel_you_do_not_have_permission_to_remove_this_ignore" version_id="1060070" version_string="1.6.0"><![CDATA[You do not have permission to remove this ignore]]></phrase>
+  <phrase title="andrew_moderatorpanel_your_notes" version_id="1100070" version_string="1.10.0"><![CDATA[Your notes]]></phrase>
+  <phrase title="andrew_moderatorpanel_zip" version_id="1070970" version_string="1.7.9"><![CDATA[Zip Code]]></phrase>
+  <phrase title="mod_log.user_note_delete_hard" version_id="1010270" version_string="1.1.2"><![CDATA[User note removed]]></phrase>
+  <phrase title="mod_log.user_user_note_removed" version_id="1030170" version_string="1.3.1"><![CDATA[User note removed]]></phrase>
+  <phrase title="moderator_panel" version_id="1100070" version_string="1.10.0"><![CDATA[Moderator Panel]]></phrase>
+  <phrase title="moderator_panel_item" version_id="1100070" version_string="1.10.0"><![CDATA[Moderator Panel Item]]></phrase>
+  <phrase title="moderator_panel_items" version_id="1100070" version_string="1.10.0"><![CDATA[Moderator Panel items]]></phrase>
+  <phrase title="option.andrewModeralPanelEnabledIsStaff" version_id="1070070" version_string="1.7.0"><![CDATA[Change user group of staff]]></phrase>
+  <phrase title="option.andrewModeralPanelEnabledProtectedUsers" version_id="1000270" version_string="1.0.2"><![CDATA[Enable protected users]]></phrase>
+  <phrase title="option.andrewModeralPanelRequireBanReason" version_id="1000270" version_string="1.0.2"><![CDATA[Require reason to ban]]></phrase>
+  <phrase title="option.andrewModeratorPaneIPSearchIO" version_id="1080070" version_string="1.8.0"><![CDATA[Use IPSearch.io for IP lookup]]></phrase>
+  <phrase title="option.andrewModeratorPaneUpdateUserGroup" version_id="1070470" version_string="1.7.4"><![CDATA[Assignable secondary user groups]]></phrase>
+  <phrase title="option.andrewModeratorPanelAbstractAPIAPIKey" version_id="1070970" version_string="1.7.9"><![CDATA[AbstractAPI.com API Key]]></phrase>
+  <phrase title="option.andrewModeratorPanelChartOneStatOne" version_id="2000070" version_string="2.0.0"><![CDATA[Dashboard Chart One - Stat One]]></phrase>
+  <phrase title="option.andrewModeratorPanelChartOneStatTwo" version_id="1100070" version_string="1.10.0"><![CDATA[Dashboard Chart One - Stat Two]]></phrase>
+  <phrase title="option.andrewModeratorPanelChartTwoStatOne" version_id="1100070" version_string="1.10.0"><![CDATA[Dashboard Chart Two - Stat One]]></phrase>
+  <phrase title="option.andrewModeratorPanelChartTwoStatTwo" version_id="1100070" version_string="1.10.0"><![CDATA[Dashboard Chart Two - Stat Two]]></phrase>
+  <phrase title="option.andrewModeratorPanelDashboardFifthPosition" version_id="1030270" version_string="1.3.2"><![CDATA[Fifth dashboard position]]></phrase>
+  <phrase title="option.andrewModeratorPanelDashboardFirstPosition" version_id="1030270" version_string="1.3.2"><![CDATA[First dashboard position]]></phrase>
+  <phrase title="option.andrewModeratorPanelDashboardFourthPosition" version_id="1030270" version_string="1.3.2"><![CDATA[Fourth dashboard position]]></phrase>
+  <phrase title="option.andrewModeratorPanelDashboardSecondPosition" version_id="1030270" version_string="1.3.2"><![CDATA[Second dashboard position]]></phrase>
+  <phrase title="option.andrewModeratorPanelDashboardSixthPosition" version_id="1100070" version_string="1.10.0"><![CDATA[Sixth dashboard position]]></phrase>
+  <phrase title="option.andrewModeratorPanelDashboardThirdPosition" version_id="1030270" version_string="1.3.2"><![CDATA[Third dashboard position]]></phrase>
+  <phrase title="option.andrewModeratorPanelEnabledIsMod" version_id="1070370" version_string="1.7.3"><![CDATA[Change user group of moderators]]></phrase>
+  <phrase title="option.andrewModeratorPanelHideAdminIp" version_id="1070570" version_string="1.7.5"><![CDATA[Hide IP address of admins in moderator panel]]></phrase>
+  <phrase title="option.andrewModeratorPanelHideModeratorIp" version_id="1070570" version_string="1.7.5"><![CDATA[Hide IP address of moderators in moderator panel]]></phrase>
+  <phrase title="option.andrewModeratorPanelHideStaffIp" version_id="1070570" version_string="1.7.5"><![CDATA[Hide IP address of staff in moderator panel]]></phrase>
+  <phrase title="option.andrewModeratorPanelIPService" version_id="2000870" version_string="2.0.8"><![CDATA[IP Lookup Service]]></phrase>
+  <phrase title="option.andrewModeratorPanelIPStackAPIKey" version_id="1070970" version_string="1.7.9"><![CDATA[IPStack.com API Key]]></phrase>
+  <phrase title="option.andrewModeratorPanelModMenu" version_id="100170" version_string="1.0.1"><![CDATA[Add link to moderator panel]]></phrase>
+  <phrase title="option.andrewModeratorPanelModeratedUsergroup" version_id="1010270" version_string="1.1.2"><![CDATA[Moderated user group]]></phrase>
+  <phrase title="option.andrewModeratorPanelMostIgnoredBannedUsers" version_id="1010070" version_string="1.1.0"><![CDATA[Show banned users on most ignored users list]]></phrase>
+  <phrase title="option.andrewModeratorPanelMostReportedBannedUsers" version_id="1010070" version_string="1.1.0"><![CDATA[Show banned users on most reported users list]]></phrase>
+  <phrase title="option.andrewModeratorPanelMostWarnedBannedUsers" version_id="1010070" version_string="1.1.0"><![CDATA[Show banned users on most warned users list]]></phrase>
+  <phrase title="option.andrewModeratorPanelProtected" version_id="1010270" version_string="1.1.2"><![CDATA[Protected user group]]></phrase>
+  <phrase title="option.andrewModeratorPanelProxyCheckAPIKey" version_id="1070970" version_string="1.7.9"><![CDATA[ProxyCheck.io API Key]]></phrase>
+  <phrase title="option.andrewModeratorPanelShowSpamBan" version_id="1010070" version_string="1.1.0"><![CDATA[Show spam cleaner users on banned users list]]></phrase>
+  <phrase title="option.andrewModeratorPanelShowUserNote" version_id="1050270" version_string="1.5.2"><![CDATA[Show user note on member cards and profile]]></phrase>
+  <phrase title="option.andrewModeratorPanelVPNAPIAPIKey" version_id="1070970" version_string="1.7.9"><![CDATA[VPNAPI.io API Key]]></phrase>
+  <phrase title="option_explain.andrewModeralPanelEnabledIsStaff" version_id="1070570" version_string="1.7.5"><![CDATA[If unchecked then staff members cannot have their user group updated through this feature]]></phrase>
+  <phrase title="option_explain.andrewModeralPanelEnabledProtectedUsers" version_id="1060270" version_string="1.6.2"><![CDATA[Protected users can only be banned or moderated by moderators or admins with the "Ban protected users" permission]]></phrase>
+  <phrase title="option_explain.andrewModeralPanelRequireBanReason" version_id="1010070" version_string="1.1.0"><![CDATA[This option will require a reason to be entered when banning users]]></phrase>
+  <phrase title="option_explain.andrewModeratorPaneIPSearchIO" version_id="1080070" version_string="1.8.0"><![CDATA[IPSearch.io is owned by the creator of this add-on.]]></phrase>
+  <phrase title="option_explain.andrewModeratorPaneUpdateUserGroup" version_id="1070070" version_string="1.7.0"><![CDATA[These user groups can be assigned and unassigned to users in the moderator panel. If a user is added to a user group on this list and then the user group is removed from the list then the user will be removed form the user group during the next save.]]></phrase>
+  <phrase title="option_explain.andrewModeratorPanelAbstractAPIAPIKey" version_id="1070970" version_string="1.7.9"><![CDATA[]]></phrase>
+  <phrase title="option_explain.andrewModeratorPanelChartOneStatOne" version_id="1100070" version_string="1.10.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.andrewModeratorPanelChartOneStatTwo" version_id="1100070" version_string="1.10.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.andrewModeratorPanelChartTwoStatOne" version_id="1100070" version_string="1.10.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.andrewModeratorPanelChartTwoStatTwo" version_id="1100070" version_string="1.10.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.andrewModeratorPanelDashboardFifthPosition" version_id="1030270" version_string="1.3.2"><![CDATA[]]></phrase>
+  <phrase title="option_explain.andrewModeratorPanelDashboardFirstPosition" version_id="1030270" version_string="1.3.2"><![CDATA[]]></phrase>
+  <phrase title="option_explain.andrewModeratorPanelDashboardFourthPosition" version_id="1030270" version_string="1.3.2"><![CDATA[]]></phrase>
+  <phrase title="option_explain.andrewModeratorPanelDashboardSecondPosition" version_id="1030270" version_string="1.3.2"><![CDATA[]]></phrase>
+  <phrase title="option_explain.andrewModeratorPanelDashboardSixthPosition" version_id="1090970" version_string="1.9.9"><![CDATA[]]></phrase>
+  <phrase title="option_explain.andrewModeratorPanelDashboardThirdPosition" version_id="1030270" version_string="1.3.2"><![CDATA[]]></phrase>
+  <phrase title="option_explain.andrewModeratorPanelEnabledIsMod" version_id="1070570" version_string="1.7.5"><![CDATA[If unchecked then moderators cannot have their user group updated through this feature]]></phrase>
+  <phrase title="option_explain.andrewModeratorPanelHideAdminIp" version_id="1070570" version_string="1.7.5"><![CDATA[Users marked as admin will have their IPs hidden in the moderator panel]]></phrase>
+  <phrase title="option_explain.andrewModeratorPanelHideModeratorIp" version_id="1070570" version_string="1.7.5"><![CDATA[Users marked as moderator will have their IPs hidden in the moderator panel]]></phrase>
+  <phrase title="option_explain.andrewModeratorPanelHideStaffIp" version_id="1070570" version_string="1.7.5"><![CDATA[Users marked as staff will have their IPs hidden in the moderator panel]]></phrase>
+  <phrase title="option_explain.andrewModeratorPanelIPService" version_id="1070970" version_string="1.7.9"><![CDATA[]]></phrase>
+  <phrase title="option_explain.andrewModeratorPanelIPStackAPIKey" version_id="1070970" version_string="1.7.9"><![CDATA[]]></phrase>
+  <phrase title="option_explain.andrewModeratorPanelModMenu" version_id="100170" version_string="1.0.1"><![CDATA[Add the "Moderator Panel" link to the moderator menu. If not selected then staff members will need to access the backend at "http://www.yourwebsite.com/moderatorpanel/"]]></phrase>
+  <phrase title="option_explain.andrewModeratorPanelModeratedUsergroup" version_id="1050370" version_string="1.5.3"><![CDATA[This user group requires manual setup and requires that user posts must be moderated.]]></phrase>
+  <phrase title="option_explain.andrewModeratorPanelMostIgnoredBannedUsers" version_id="1010070" version_string="1.1.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.andrewModeratorPanelMostReportedBannedUsers" version_id="1010070" version_string="1.1.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.andrewModeratorPanelMostWarnedBannedUsers" version_id="1010070" version_string="1.1.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.andrewModeratorPanelProtected" version_id="1090170" version_string="1.9.1"><![CDATA[This user group cannot be banned, discouraged, moderated, or have their user groups updated without having the corresponding permission.]]></phrase>
+  <phrase title="option_explain.andrewModeratorPanelProxyCheckAPIKey" version_id="1070970" version_string="1.7.9"><![CDATA[]]></phrase>
+  <phrase title="option_explain.andrewModeratorPanelShowSpamBan" version_id="1010070" version_string="1.1.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.andrewModeratorPanelShowUserNote" version_id="1050270" version_string="1.5.2"><![CDATA[]]></phrase>
+  <phrase title="option_explain.andrewModeratorPanelVPNAPIAPIKey" version_id="1070970" version_string="1.7.9"><![CDATA[]]></phrase>
+  <phrase title="option_group.andrew_moderatorpanel" version_id="1" version_string="1.0.0 Alpha"><![CDATA[[Andrew] Moderator Panel]]></phrase>
+  <phrase title="option_group_description.andrew_moderatorpanel" version_id="1090970" version_string="1.9.9"><![CDATA[Moderator Panel options]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_addDiscouragedUsers" version_id="1020270" version_string="1.2.2"><![CDATA[Discourage users]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_addModeratedUsers" version_id="1020270" version_string="1.2.2"><![CDATA[Moderate users]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_addPrivilegedUserNotes" version_id="1090970" version_string="1.9.9"><![CDATA[Add privileged user notes]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_addUserNote" version_id="1010270" version_string="1.1.2"><![CDATA[Add user note]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_canBanProtectedUsers" version_id="100170" version_string="1.0.1"><![CDATA[Ban protected users]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_canViewModeratorPanel" version_id="1" version_string="1.0.0 Alpha"><![CDATA[View moderator panel]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_deleteOtherPrivilegedUN" version_id="1090970" version_string="1.9.9"><![CDATA[Delete other privileged user note]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_deleteOtherUserNote" version_id="1070070" version_string="1.7.0"><![CDATA[Delete other user note]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_deleteOwnPrivilegedUN" version_id="1090970" version_string="1.9.9"><![CDATA[Delete own privileged user note]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_deleteOwnUserNote" version_id="1070070" version_string="1.7.0"><![CDATA[Delete own user note]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_discourageProtectedUsers" version_id="1020270" version_string="1.2.2"><![CDATA[Discourage protected users]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_editEmailMP" version_id="1070970" version_string="1.7.9"><![CDATA[Edit user email]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_editOtherPrivilegedUN" version_id="1090970" version_string="1.9.9"><![CDATA[Edit other privileged user notes]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_editOtherUserNote" version_id="1070070" version_string="1.7.0"><![CDATA[Edit other user note]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_editOwnPrivilegedUserNote" version_id="1090970" version_string="1.9.9"><![CDATA[Edit own privileged user note]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_editOwnUserNote" version_id="1070070" version_string="1.7.0"><![CDATA[Edit own user note]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_editPrivilegedUNSilently" version_id="1090970" version_string="1.9.9"><![CDATA[Edit privileged user notes silently]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_editUserLockMP" version_id="1070970" version_string="1.7.9"><![CDATA[Edit user lock]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_editUserNoteSilently" version_id="1080070" version_string="1.8.0"><![CDATA[Edit user note silently]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_editUserStateMP" version_id="1070970" version_string="1.7.9"><![CDATA[Edit user state]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_forceIgnoreMP" version_id="1060070" version_string="1.6.0"><![CDATA[Force ignore users]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_moderateProtectedUsers" version_id="1020270" version_string="1.2.2"><![CDATA[Moderate protected users]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_searchActivityEmailMP" version_id="1060270" version_string="1.6.2"><![CDATA[Search activity email]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_searchBannedStateMP" version_id="1060270" version_string="1.6.2"><![CDATA[Search banned state]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_searchCustomFieldsMP" version_id="1060270" version_string="1.6.2"><![CDATA[Search custom fields]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_searchDiscourageStateMP" version_id="1060270" version_string="1.6.2"><![CDATA[Search discouraged state]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_searchEmailMP" version_id="1060070" version_string="1.6.0"><![CDATA[Search by email]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_searchLastVisitedMP" version_id="1060270" version_string="1.6.2"><![CDATA[Search last visited date]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_searchMessageCountMP" version_id="1060270" version_string="1.6.2"><![CDATA[Search message count]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_searchQuestionsSolvedMP" version_id="1060270" version_string="1.6.2"><![CDATA[Search questions solved]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_searchReactionScoreMP" version_id="1060270" version_string="1.6.2"><![CDATA[Search reaction score]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_searchRegistrationDateMP" version_id="1060270" version_string="1.6.2"><![CDATA[Search registration date]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_searchSecurityLockMP" version_id="1060270" version_string="1.6.2"><![CDATA[Search security lock]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_searchStaffStateMP" version_id="1060270" version_string="1.6.2"><![CDATA[Search staff state]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_searchTrophyPointsMP" version_id="1060270" version_string="1.6.2"><![CDATA[Search trophy points]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_searchUserGroupMP" version_id="1060270" version_string="1.6.2"><![CDATA[Search user group]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_searchUserStateMP" version_id="1090270" version_string="1.9.2"><![CDATA[Search user state]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_searchUsers" version_id="100170" version_string="1.0.1"><![CDATA[Search users]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_updateUsrGrpPrtcdUsers" version_id="1060270" version_string="1.6.2"><![CDATA[Update user group of protected users]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_updateUsrGrpUsers" version_id="1060270" version_string="1.6.2"><![CDATA[Update user group of users]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_viewBannedUsersList" version_id="100170" version_string="1.0.1"><![CDATA[View banned users list]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_viewChangeLog" version_id="100170" version_string="1.0.1"><![CDATA[View change log]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_viewDiscouragedUsersList" version_id="1000970" version_string="1.0.9"><![CDATA[View discouraged users]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_viewForceIgnoreMP" version_id="1060070" version_string="1.6.0"><![CDATA[View force ignored users]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_viewIgnoredUsers" version_id="100170" version_string="1.0.1"><![CDATA[View ignored users]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_viewMemberStatsMP" version_id="1050270" version_string="1.5.2"><![CDATA[View member stats blocks]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_viewModeratedUsers" version_id="1010270" version_string="1.1.2"><![CDATA[View moderated users]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_viewModeratorLog" version_id="100170" version_string="1.0.1"><![CDATA[View moderator log]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_viewPrivilegedUserNotes" version_id="1090970" version_string="1.9.9"><![CDATA[View privileged user notes]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_viewRecentLogin" version_id="1100070" version_string="1.10.0"><![CDATA[View recent logins]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_viewRecentlyRegistered" version_id="100170" version_string="1.0.1"><![CDATA[View recently registered users]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_viewRejectedUserLog" version_id="1000970" version_string="1.0.9"><![CDATA[View rejected user log]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_viewReportedUsers" version_id="100170" version_string="1.0.1"><![CDATA[View reported users]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_viewSpamCleanerLog" version_id="1000970" version_string="1.0.9"><![CDATA[View spam cleaner log]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_viewSpamTriggerLog" version_id="1040170" version_string="1.4.1"><![CDATA[View spam trigger log]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_viewStatsGraphMP" version_id="1050270" version_string="1.5.2"><![CDATA[View stats graph]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_viewThreadBan" version_id="100170" version_string="1.0.1"><![CDATA[View thread ban]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_viewThreadWarningsMP" version_id="1050370" version_string="1.5.3"><![CDATA[View warnings in a thread]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_viewUserNameChangeLog" version_id="1000770" version_string="1.0.7"><![CDATA[View user name change log]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_viewUserNotes" version_id="1010270" version_string="1.1.2"><![CDATA[View user notes]]></phrase>
+  <phrase title="permission.andrew_moderatorpanel_viewWarnedUsers" version_id="100170" version_string="1.0.1"><![CDATA[View warned users]]></phrase>
+  <phrase title="permission_interface.andrew_moderatorpanel" version_id="1" version_string="1.0.0 Alpha"><![CDATA[[Andrew] Moderator Panel]]></phrase>
+  <phrase title="widget_def.andrew_mp_recent_warnings" version_id="1040370" version_string="1.4.3"><![CDATA[[Andrew] Recent Warnings]]></phrase>
+  <phrase title="widget_def_desc.andrew_mp_recent_warnings" version_id="1040370" version_string="1.4.3"><![CDATA[Displays recent warnings]]></phrase>
+  <phrase title="x_andrew_moderatorpanel_entered_note_on_y_z" version_id="2000870" version_string="2.0.8"><![CDATA[{noteEnteredByUser} entered note on {noteEnteredOnUser} {noteDate}]]></phrase>
+</phrases>

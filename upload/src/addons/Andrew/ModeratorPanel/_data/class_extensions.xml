@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<class_extensions>
+  <extension from_class="XF\ControllerPlugin\Ip" to_class="Andrew\ModeratorPanel\XF\ControllerPlugin\Ip" execute_order="10" active="1"/>
+  <extension from_class="XF\Entity\User" to_class="Andrew\ModeratorPanel\XF\Entity\User" execute_order="7000" active="1"/>
+  <extension from_class="XF\Entity\UserIgnored" to_class="Andrew\ModeratorPanel\XF\Entity\UserIgnored" execute_order="10" active="1"/>
+  <extension from_class="XF\Entity\Warning" to_class="Andrew\ModeratorPanel\XF\Entity\Warning" execute_order="10" active="1"/>
+  <extension from_class="XF\Pub\Controller\Member" to_class="Andrew\ModeratorPanel\XF\Pub\Controller\Member" execute_order="10" active="1"/>
+  <extension from_class="XF\Pub\Controller\Misc" to_class="Andrew\ModeratorPanel\XF\Pub\Controller\Misc" execute_order="10" active="1"/>
+  <extension from_class="XF\Repository\User" to_class="Andrew\ModeratorPanel\XF\Repository\User" execute_order="10" active="1"/>
+  <extension from_class="XF\Repository\UserGroup" to_class="Andrew\ModeratorPanel\XF\Repository\UserGroup" execute_order="10" active="1"/>
+  <extension from_class="XF\Service\Passkey\ManagerService" to_class="Andrew\ModeratorPanel\XF\Service\Passkey\ManagerService" execute_order="10" active="1"/>
+  <extension from_class="XF\Service\User\Login" to_class="Andrew\ModeratorPanel\XF\Service\User\Login" execute_order="6540" active="1"/>
+  <extension from_class="XF\Service\User\Tfa" to_class="Andrew\ModeratorPanel\XF\Service\User\Tfa" execute_order="10" active="1"/>
+</class_extensions>
