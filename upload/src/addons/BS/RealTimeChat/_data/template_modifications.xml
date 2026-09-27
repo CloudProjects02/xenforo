@@ -17,7 +17,7 @@
 <xf:js src="bs/messenger/search.js" min="1" />
 <xf:js src="bs/messenger/crosspage.js" min="1" />]]></replace>
   </modification>
-  <modification type="public" template="PAGE_CONTAINER" modification_key="rtc_PAGE_CONTAINER_chat_popup_button" description="Add popup button" execution_order="10" enabled="1" action="str_replace">
+  <modification type="public" template="PAGE_CONTAINER" modification_key="rtc_PAGE_CONTAINER_chat_popup_button" description="Add popup button" execution_order="10" enabled="0" action="str_replace">
     <find><![CDATA[js-bottomFixTarget">]]></find>
     <replace><![CDATA[$0
 <!-- We need rtc_popup.less for another add-ons that uses chat popup -->
@@ -78,7 +78,7 @@ $0]]></replace>
 
 <xf:include template="rtc_bs_ai_bot.chat_gpt_tab_panes" />]]></replace>
   </modification>
-  <modification type="public" template="core_avatar.less" modification_key="rtc_core_avatar_less_add_avatar_less" description="Add rtc_avatar.less" execution_order="10" enabled="1" action="preg_replace">
+  <modification type="public" template="core_avatar.less" modification_key="rtc_core_avatar_less_add_avatar_less" description="Add rtc_avatar.less" execution_order="10" enabled="0" action="preg_replace">
     <find><![CDATA[/$/]]></find>
     <replace><![CDATA[$0
 <xf:include template="rtc_avatar.less" />]]></replace>
