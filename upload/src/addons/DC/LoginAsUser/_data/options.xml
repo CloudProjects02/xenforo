@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<options>
+  <option option_id="dcLoginAsUser_logLength" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>365</default_value>
+    <edit_format_params>min=0</edit_format_params>
+    <relation group_id="dcLoginAsUser" display_order="20"/>
+  </option>
+  <option option_id="dcLoginAsUser_maxDuration" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>30</default_value>
+    <edit_format_params>min=0</edit_format_params>
+    <relation group_id="dcLoginAsUser" display_order="10"/>
+  </option>
+  <option option_id="dcLoginAsUser_requirePassword" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="dcLoginAsUser" display_order="5"/>
+  </option>
+  <option option_id="dcLoginAsUser_suppress" edit_format="checkbox" data_type="array" advanced="0">
+    <default_value>{"online":"1","last_activity":"1","read_marking":"1","alerts":"1","conversations":"1","ip_logging":"1"}</default_value>
+    <edit_format_params>online={{ phrase('dcLoginAsUser_suppress_online') }}
+last_activity={{ phrase('dcLoginAsUser_suppress_last_activity') }}
+read_marking={{ phrase('dcLoginAsUser_suppress_read_marking') }}
+alerts={{ phrase('dcLoginAsUser_suppress_alerts') }}
+conversations={{ phrase('dcLoginAsUser_suppress_conversations') }}
+ip_logging={{ phrase('dcLoginAsUser_suppress_ip_logging') }}</edit_format_params>
+    <sub_options>online
+last_activity
+read_marking
+alerts
+conversations
+ip_logging</sub_options>
+    <relation group_id="dcLoginAsUser" display_order="30"/>
+  </option>
+</options>

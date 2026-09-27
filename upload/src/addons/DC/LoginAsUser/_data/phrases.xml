@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="admin_navigation.dcLoginAsUserLog" version_id="1000070" version_string="1.0.0"><![CDATA[Login as user log]]></phrase>
+  <phrase title="admin_navigation.dcLoginAsUserSessions" version_id="1000070" version_string="1.0.0"><![CDATA[Active login-as sessions]]></phrase>
+  <phrase title="admin_permission.dcLoginAsUser" version_id="1000070" version_string="1.0.0"><![CDATA[Login as user: end active sessions]]></phrase>
+  <phrase title="cron_entry.dcLoginAsUser_closeStale" version_id="1000070" version_string="1.0.0"><![CDATA[Login as user: close abandoned sessions]]></phrase>
+  <phrase title="cron_entry.dcLoginAsUser_pruneLogs" version_id="1000070" version_string="1.0.0"><![CDATA[Login as user: prune log]]></phrase>
+  <phrase title="dcLoginAsUser_account_status" version_id="1000070" version_string="1.0.0"><![CDATA[Account status]]></phrase>
+  <phrase title="dcLoginAsUser_active_sessions" version_id="1000070" version_string="1.0.0"><![CDATA[Active login-as sessions]]></phrase>
+  <phrase title="dcLoginAsUser_active_sessions_only" version_id="1000070" version_string="1.0.0"><![CDATA[Only sessions that are still active]]></phrase>
+  <phrase title="dcLoginAsUser_actor_ip" version_id="1000070" version_string="1.0.0"><![CDATA[Staff member's IP address]]></phrase>
+  <phrase title="dcLoginAsUser_duration" version_id="1000070" version_string="1.0.0"><![CDATA[Duration]]></phrase>
+  <phrase title="dcLoginAsUser_email_bouncing" version_id="1000070" version_string="1.0.0"><![CDATA[Email bouncing]]></phrase>
+  <phrase title="dcLoginAsUser_end_session" version_id="1000070" version_string="1.0.0"><![CDATA[End session]]></phrase>
+  <phrase title="dcLoginAsUser_end_session_confirm" version_id="1000070" version_string="1.0.0"><![CDATA[End the session in which {actor} is signed in as {target}?]]></phrase>
+  <phrase title="dcLoginAsUser_end_session_explain" version_id="1000070" version_string="1.0.0"><![CDATA[{actor} will be signed out completely and will need to log in again as themselves. This is recorded in the log against your name.]]></phrase>
+  <phrase title="dcLoginAsUser_end_type.expired" version_id="1000070" version_string="1.0.0"><![CDATA[Time limit reached]]></phrase>
+  <phrase title="dcLoginAsUser_end_type.forced" version_id="1000070" version_string="1.0.0"><![CDATA[Ended by an administrator]]></phrase>
+  <phrase title="dcLoginAsUser_end_type.invalidated" version_id="1000070" version_string="1.0.0"><![CDATA[Session invalidated]]></phrase>
+  <phrase title="dcLoginAsUser_end_type.logout" version_id="1000070" version_string="1.0.0"><![CDATA[Logged out]]></phrase>
+  <phrase title="dcLoginAsUser_end_type.manual" version_id="1000070" version_string="1.0.0"><![CDATA[Returned to own account]]></phrase>
+  <phrase title="dcLoginAsUser_end_type.revoked" version_id="1000070" version_string="1.0.0"><![CDATA[Permission revoked]]></phrase>
+  <phrase title="dcLoginAsUser_end_type.stale" version_id="1000070" version_string="1.0.0"><![CDATA[Abandoned]]></phrase>
+  <phrase title="dcLoginAsUser_end_type.superseded" version_id="1000070" version_string="1.0.0"><![CDATA[Replaced by a newer session]]></phrase>
+  <phrase title="dcLoginAsUser_end_type.target_gone" version_id="1000070" version_string="1.0.0"><![CDATA[Member account removed]]></phrase>
+  <phrase title="dcLoginAsUser_end_type.unknown" version_id="1000070" version_string="1.0.0"><![CDATA[Ended]]></phrase>
+  <phrase title="dcLoginAsUser_ended" version_id="1000070" version_string="1.0.0"><![CDATA[Ended]]></phrase>
+  <phrase title="dcLoginAsUser_expires" version_id="1000070" version_string="1.0.0"><![CDATA[Expires]]></phrase>
+  <phrase title="dcLoginAsUser_filter_by_impersonated_member" version_id="1000070" version_string="1.0.0"><![CDATA[Signed in as...]]></phrase>
+  <phrase title="dcLoginAsUser_filter_by_staff_member" version_id="1000070" version_string="1.0.0"><![CDATA[Staff member:]]></phrase>
+  <phrase title="dcLoginAsUser_footprint_none" version_id="1000070" version_string="1.0.0"><![CDATA[Nothing hidden]]></phrase>
+  <phrase title="dcLoginAsUser_footprint_suppressed" version_id="1000070" version_string="1.0.0"><![CDATA[Hidden from the member]]></phrase>
+  <phrase title="dcLoginAsUser_log" version_id="1000070" version_string="1.0.0"><![CDATA[Login as user log]]></phrase>
+  <phrase title="dcLoginAsUser_log_in_as_author" version_id="1000070" version_string="1.0.0"><![CDATA[Log in as author]]></phrase>
+  <phrase title="dcLoginAsUser_log_in_as_ellipsis" version_id="1000070" version_string="1.0.0"><![CDATA[Log in as...]]></phrase>
+  <phrase title="dcLoginAsUser_log_in_as_this_member" version_id="1000070" version_string="1.0.0"><![CDATA[Log in as this member]]></phrase>
+  <phrase title="dcLoginAsUser_log_in_as_this_user" version_id="1000070" version_string="1.0.0"><![CDATA[Log in as this user]]></phrase>
+  <phrase title="dcLoginAsUser_log_in_as_x" version_id="1000070" version_string="1.0.0"><![CDATA[Log in as {name}]]></phrase>
+  <phrase title="dcLoginAsUser_logged_in_as_x" version_id="1000070" version_string="1.0.0"><![CDATA[Logged in as {name}]]></phrase>
+  <phrase title="dcLoginAsUser_no_active_sessions" version_id="1000070" version_string="1.0.0"><![CDATA[Nobody is signed in as another member right now.]]></phrase>
+  <phrase title="dcLoginAsUser_no_reason_given" version_id="1000070" version_string="1.0.0"><![CDATA[No reason given]]></phrase>
+  <phrase title="dcLoginAsUser_no_time_limit" version_id="1000070" version_string="1.0.0"><![CDATA[No time limit]]></phrase>
+  <phrase title="dcLoginAsUser_outcome" version_id="1000070" version_string="1.0.0"><![CDATA[Outcome]]></phrase>
+  <phrase title="dcLoginAsUser_reason" version_id="1000070" version_string="1.0.0"><![CDATA[Reason]]></phrase>
+  <phrase title="dcLoginAsUser_reason_explain" version_id="1000070" version_string="1.0.0"><![CDATA[Optional. Recorded in the log alongside this session.]]></phrase>
+  <phrase title="dcLoginAsUser_recent_targets" version_id="1000070" version_string="1.0.0"><![CDATA[Recently used]]></phrase>
+  <phrase title="dcLoginAsUser_requested_session_not_found" version_id="1000070" version_string="1.0.0"><![CDATA[The requested session could not be found.]]></phrase>
+  <phrase title="dcLoginAsUser_restricted_account_explain" version_id="1000070" version_string="1.0.0"><![CDATA[This account is restricted. You can still log in as it - the board will simply treat you as a restricted member for the duration of the session, so you will see exactly what they see.]]></phrase>
+  <phrase title="dcLoginAsUser_return_to_my_account" version_id="1000070" version_string="1.0.0"><![CDATA[Return to my account]]></phrase>
+  <phrase title="dcLoginAsUser_return_to_x" version_id="1000070" version_string="1.0.0"><![CDATA[Return to {name}]]></phrase>
+  <phrase title="dcLoginAsUser_session_ended" version_id="1000070" version_string="1.0.0"><![CDATA[The session was ended.]]></phrase>
+  <phrase title="dcLoginAsUser_session_is_no_longer_active" version_id="1000070" version_string="1.0.0"><![CDATA[That session has already ended.]]></phrase>
+  <phrase title="dcLoginAsUser_signed_in_as" version_id="1000070" version_string="1.0.0"><![CDATA[Signed in as]]></phrase>
+  <phrase title="dcLoginAsUser_staff_member" version_id="1000070" version_string="1.0.0"><![CDATA[Staff member]]></phrase>
+  <phrase title="dcLoginAsUser_start_session" version_id="1000070" version_string="1.0.0"><![CDATA[Start session]]></phrase>
+  <phrase title="dcLoginAsUser_started" version_id="1000070" version_string="1.0.0"><![CDATA[Started]]></phrase>
+  <phrase title="dcLoginAsUser_started_between" version_id="1000070" version_string="1.0.0"><![CDATA[Started between]]></phrase>
+  <phrase title="dcLoginAsUser_still_active" version_id="1000070" version_string="1.0.0"><![CDATA[Still active]]></phrase>
+  <phrase title="dcLoginAsUser_suppress_alerts" version_id="1000070" version_string="1.0.0"><![CDATA[Marking alerts as read]]></phrase>
+  <phrase title="dcLoginAsUser_suppress_conversations" version_id="1000070" version_string="1.0.0"><![CDATA[Marking direct messages as read]]></phrase>
+  <phrase title="dcLoginAsUser_suppress_ip_logging" version_id="1000070" version_string="1.0.0"><![CDATA[IP address logging]]></phrase>
+  <phrase title="dcLoginAsUser_suppress_last_activity" version_id="1000070" version_string="1.0.0"><![CDATA[Last activity time]]></phrase>
+  <phrase title="dcLoginAsUser_suppress_online" version_id="1000070" version_string="1.0.0"><![CDATA[Currently online list]]></phrase>
+  <phrase title="dcLoginAsUser_suppress_read_marking" version_id="1000070" version_string="1.0.0"><![CDATA[Marking threads and forums as read]]></phrase>
+  <phrase title="dcLoginAsUser_this_member_cannot_be_logged_in_as" version_id="1000070" version_string="1.0.0"><![CDATA[This member cannot be logged in as.]]></phrase>
+  <phrase title="dcLoginAsUser_user_name_explain" version_id="1000070" version_string="1.0.0"><![CDATA[Start typing a member name and pick a match.]]></phrase>
+  <phrase title="dcLoginAsUser_view_in_admin_log" version_id="1000070" version_string="1.0.0"><![CDATA[View in the administrator log]]></phrase>
+  <phrase title="dcLoginAsUser_who_do_you_want_to_log_in_as" version_id="1000070" version_string="1.0.0"><![CDATA[Who do you want to log in as?]]></phrase>
+  <phrase title="dcLoginAsUser_you_are_about_to_take_over_this_account_explain" version_id="1000070" version_string="1.0.0"><![CDATA[You are about to take over this account. Everything you do will be recorded against both this member and you.]]></phrase>
+  <phrase title="dcLoginAsUser_you_are_already_logged_in_as_another_member" version_id="1000070" version_string="1.0.0"><![CDATA[You are already logged in as another member. Return to your own account first.]]></phrase>
+  <phrase title="dcLoginAsUser_you_are_no_longer_logged_in_as_x" version_id="1000070" version_string="1.0.0"><![CDATA[You are no longer logged in as {name}.]]></phrase>
+  <phrase title="dcLoginAsUser_you_are_now_logged_in_as_x" version_id="1000070" version_string="1.0.0"><![CDATA[You are now logged in as {name}.]]></phrase>
+  <phrase title="dcLoginAsUser_you_may_not_log_in_as_an_administrator" version_id="1000070" version_string="1.0.0"><![CDATA[You may not log in as an administrator.]]></phrase>
+  <phrase title="option.dcLoginAsUser_logLength" version_id="1000070" version_string="1.0.0"><![CDATA[Log retention]]></phrase>
+  <phrase title="option.dcLoginAsUser_maxDuration" version_id="1000070" version_string="1.0.0"><![CDATA[Maximum session length]]></phrase>
+  <phrase title="option.dcLoginAsUser_requirePassword" version_id="1000070" version_string="1.0.0"><![CDATA[Require password confirmation]]></phrase>
+  <phrase title="option.dcLoginAsUser_suppress" version_id="1000070" version_string="1.0.0"><![CDATA[Hide the visit from the impersonated account]]></phrase>
+  <phrase title="option_explain.dcLoginAsUser_logLength" version_id="1000070" version_string="1.0.0"><![CDATA[In days. Completed sessions older than this are deleted. Sessions that are still open are never deleted, whatever their age. Enter 0 to keep the log forever.]]></phrase>
+  <phrase title="option_explain.dcLoginAsUser_maxDuration" version_id="1000070" version_string="1.0.0"><![CDATA[In minutes. A staff member is returned to their own account automatically once this long has passed. Enter 0 for no limit. The value in force is fixed when a session starts, so changing this does not lengthen or shorten a session that is already running. Note that XenForo's own session lifetime is a fixed 4 hours, so values above 240 can never be reached.]]></phrase>
+  <phrase title="option_explain.dcLoginAsUser_requirePassword" version_id="1000070" version_string="1.0.0"><![CDATA[Staff must re-enter their own password before taking over an account. A confirmation lasts 30 minutes, and taking over an account clears it again - so each impersonation is confirmed separately. Leaving this on means a stolen staff session is not by itself enough to access member accounts.]]></phrase>
+  <phrase title="option_explain.dcLoginAsUser_suppress" version_id="1000070" version_string="1.0.0"><![CDATA[Anything left ticked is suppressed while a staff member is signed in as another member, so the visit does not show up in that member's own account. Untick an item to let it behave normally. Note that "Currently online list" and "Last activity time" are the same underlying record in XenForo, so suppressing the first also freezes the second.]]></phrase>
+  <phrase title="option_group.dcLoginAsUser" version_id="1010070" version_string="1.1.0"><![CDATA[D.C Style - Login as user]]></phrase>
+  <phrase title="option_group_description.dcLoginAsUser" version_id="1000070" version_string="1.0.0"><![CDATA[Controls how long a staff member may stay signed in as another member, how long the audit log is kept, and how much of a trace the impersonated account is left with.]]></phrase>
+  <phrase title="permission.dcLoginAsUser_immuneFromLoginAs" version_id="1000070" version_string="1.0.0"><![CDATA[Cannot be logged in as]]></phrase>
+  <phrase title="permission.dcLoginAsUser_login" version_id="1000070" version_string="1.0.0"><![CDATA[Log in as another member]]></phrase>
+  <phrase title="permission_interface.dcLoginAsUser" version_id="1010070" version_string="1.1.0"><![CDATA[D.C Style - Login as user]]></phrase>
+</phrases>

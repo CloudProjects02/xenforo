@@ -1,0 +1,25 @@
+{
+    "legacy_addon_id": "",
+    "title": "D.C Style - Login As User",
+    "description": "Lets permitted staff browse the board as another member, with a full audit trail, a live session list and enforced time limits.",
+    "version_id": 1010093,
+    "version_string": "1.1.0 Patch Level 3",
+    "dev": "D.C Style",
+    "dev_url": "https://fb.com/DumpPenguin",
+    "faq_url": "",
+    "support_url": "https://dcstyle.info",
+    "extra_urls": {
+        "Blog": "https://fb.com/dcstylexf"
+    },
+    "require": {
+        "XF": [
+            2030000,
+            "XenForo 2.3.0+"
+        ],
+        "php": [
+            "8.0.0",
+            "PHP 8.0+"
+        ]
+    },
+    "icon": "logo.png"
+}

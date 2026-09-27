@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="dcLoginAsUser_log_list" version_id="1000070" version_string="1.0.0"><![CDATA[<xf:title>{{ phrase('dcLoginAsUser_log') }}</xf:title>
+
+<xf:form action="{{ link('login-as-user') }}" class="block" method="get">
+	<div class="block-container">
+		<div class="block-body block-row">
+			<span>
+				{{ phrase('dcLoginAsUser_filter_by_staff_member') }}
+				<xf:select name="actor_user_id" value="{$actorUserId}" class="input--inline">
+					<xf:option value="0">{{ phrase('any') }}</xf:option>
+					<xf:options source="$logUsers" />
+				</xf:select>
+			</span>
+
+			<xf:textbox name="target_username" value="{{ $limitTarget ? $limitTarget.username : '' }}"
+				ac="single" class="input--inline"
+				placeholder="{{ phrase('dcLoginAsUser_filter_by_impersonated_member') }}" />
+
+			<span class="inputGroup">
+				<xf:dateinput name="start" value="{$start}" size="15" />
+				<span class="inputGroup-text">-</span>
+				<xf:dateinput name="end" value="{$end}" size="15" />
+			</span>
+
+			<xf:checkbox standalone="true" class="input--inline">
+				<xf:option name="active_only" value="1" selected="{$activeOnly}"
+					label="{{ phrase('dcLoginAsUser_active_sessions_only') }}" />
+			</xf:checkbox>
+
+			<xf:button type="submit">{{ phrase('filter') }}</xf:button>
+		</div>
+	</div>
+</xf:form>
+
+<xf:if is="$entries is not empty">
+	<div class="block">
+		<div class="block-container">
+			<div class="block-body">
+				<xf:datalist data-xf-init="responsive-data-list">
+					<xf:datarow rowtype="header">
+						<xf:cell>{{ phrase('dcLoginAsUser_staff_member') }}</xf:cell>
+						<xf:cell>{{ phrase('dcLoginAsUser_signed_in_as') }}</xf:cell>
+						<xf:cell>{{ phrase('dcLoginAsUser_reason') }}</xf:cell>
+						<xf:cell>{{ phrase('ip_address') }}</xf:cell>
+						<xf:cell>{{ phrase('dcLoginAsUser_started') }}</xf:cell>
+						<xf:cell>{{ phrase('dcLoginAsUser_outcome') }}</xf:cell>
+					</xf:datarow>
+					<xf:foreach loop="$entries" value="$entry">
+						<xf:datarow>
+							<xf:comment>
+								defaultname falls back to the stored username so a deleted account still
+								names itself; href is suppressed in that case because there is nothing
+								left to link to.
+							</xf:comment>
+							<xf:cell>
+								<xf:username user="$entry.User" defaultname="{$entry.actor_username}"
+									href="{{ $entry.User ? link('users/edit', $entry.User) : '' }}" />
+							</xf:cell>
+							<xf:cell>
+								<xf:username user="$entry.Target" defaultname="{$entry.target_username}"
+									href="{{ $entry.Target ? link('users/edit', $entry.Target) : '' }}" />
+							</xf:cell>
+							<xf:cell>
+								<a href="{{ link('login-as-user/view', $entry) }}" data-xf-click="overlay">
+									<xf:if is="$entry.reason">{$entry.reason}<xf:else />{{ phrase('dcLoginAsUser_no_reason_given') }}</xf:if>
+								</a>
+							</xf:cell>
+							<xf:cell class="u-ltr">{{ $entry.ip_address ? $entry.ip_address|ip : '' }}</xf:cell>
+							<xf:cell>
+								<xf:date time="{$entry.start_date}" />
+								<div class="dataList-subRow">{{ phrase('dcLoginAsUser_duration') }}: {{ duration($entry.duration_minutes, 'minutes') }}</div>
+							</xf:cell>
+							<xf:cell>
+								<xf:if is="$entry.is_active">
+									<strong>{{ phrase('dcLoginAsUser_still_active') }}</strong>
+								<xf:else />
+									{$entry.end_type_text}
+								</xf:if>
+							</xf:cell>
+						</xf:datarow>
+					</xf:foreach>
+				</xf:datalist>
+			</div>
+			<div class="block-footer">
+				<span class="block-footer-counter">{{ display_totals($entries, $total) }}</span>
+			</div>
+		</div>
+		<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+			link="login-as-user" params="{$linkFilters}"
+			wrapperclass="block-outer block-outer--after" />
+	</div>
+<xf:else />
+	<div class="blockMessage">{{ phrase('no_entries_have_been_logged') }}</div>
+</xf:if>
+]]></template>
+  <template type="admin" title="dcLoginAsUser_log_view" version_id="1000070" version_string="1.0.0"><![CDATA[<xf:title>{{ phrase('dcLoginAsUser_log') }}</xf:title>
+
+<div class="block">
+	<div class="block-container">
+		<div class="block-body block-row">
+			<dl class="pairs pairs--columns">
+				<dt>{{ phrase('dcLoginAsUser_staff_member') }}</dt>
+				<dd><xf:username user="$entry.User" defaultname="{$entry.actor_username}"
+					href="{{ $entry.User ? link('users/edit', $entry.User) : '' }}" /></dd>
+			</dl>
+			<dl class="pairs pairs--columns">
+				<dt>{{ phrase('dcLoginAsUser_signed_in_as') }}</dt>
+				<dd><xf:username user="$entry.Target" defaultname="{$entry.target_username}"
+					href="{{ $entry.Target ? link('users/edit', $entry.Target) : '' }}" /></dd>
+			</dl>
+			<dl class="pairs pairs--columns">
+				<dt>{{ phrase('dcLoginAsUser_reason') }}</dt>
+				<dd><xf:if is="$entry.reason">{$entry.reason}<xf:else /><span class="u-muted">{{ phrase('dcLoginAsUser_no_reason_given') }}</span></xf:if></dd>
+			</dl>
+			<dl class="pairs pairs--columns">
+				<dt>{{ phrase('dcLoginAsUser_actor_ip') }}</dt>
+				<dd class="u-ltr">{{ $entry.ip_address ? $entry.ip_address|ip : '' }}</dd>
+			</dl>
+			<dl class="pairs pairs--columns">
+				<dt>{{ phrase('dcLoginAsUser_started') }}</dt>
+				<dd><xf:date time="{$entry.start_date}" /></dd>
+			</dl>
+			<dl class="pairs pairs--columns">
+				<dt>{{ phrase('dcLoginAsUser_ended') }}</dt>
+				<dd>
+					<xf:if is="$entry.is_active">
+						<strong>{{ phrase('dcLoginAsUser_still_active') }}</strong>
+					<xf:else />
+						<xf:date time="{$entry.end_date}" /> &mdash; {$entry.end_type_text}
+						<xf:if is="$entry.EndedBy">
+							(<xf:username user="$entry.EndedBy" href="{{ link('users/edit', $entry.EndedBy) }}" />)
+						</xf:if>
+					</xf:if>
+				</dd>
+			</dl>
+			<dl class="pairs pairs--columns">
+				<dt>{{ phrase('dcLoginAsUser_duration') }}</dt>
+				<dd>{{ duration($entry.duration_minutes, 'minutes') }}</dd>
+			</dl>
+			<dl class="pairs pairs--columns">
+				<dt>{{ phrase('dcLoginAsUser_footprint_suppressed') }}</dt>
+				<dd>
+					<xf:set var="$anySuppressed" value="{{ false }}" />
+					<ul class="listInline listInline--comma">
+						<xf:foreach loop="$entry.suppressed" key="$key" value="$on">
+							<xf:if is="$on">
+								<li>{{ phrase_dynamic('dcLoginAsUser_suppress_' . $key) }}</li>
+								<xf:set var="$anySuppressed" value="{{ true }}" />
+							</xf:if>
+						</xf:foreach>
+					</ul>
+					<xf:if is="!$anySuppressed"><span class="u-muted">{{ phrase('dcLoginAsUser_footprint_none') }}</span></xf:if>
+				</dd>
+			</dl>
+			<xf:comment>
+				logs/admin is gated behind assertSuperAdmin(), so offering the link to anyone else
+				would just hand them a permission error.
+			</xf:comment>
+			<xf:if is="$entry.admin_log_id AND $xf.visitor.is_super_admin">
+				<dl class="pairs pairs--columns">
+					<dt></dt>
+					<dd><a href="{{ link('logs/admin', {'admin_log_id': $entry.admin_log_id}) }}">{{ phrase('dcLoginAsUser_view_in_admin_log') }}</a></dd>
+				</dl>
+			</xf:if>
+		</div>
+	</div>
+</div>
+]]></template>
+  <template type="admin" title="dcLoginAsUser_session_end" version_id="1000070" version_string="1.0.0"><![CDATA[<xf:title>{{ phrase('confirm_action') }}</xf:title>
+
+<xf:form action="{{ link('login-as-user/sessions/end', $session) }}" class="block" ajax="true">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:inforow rowtype="confirm">
+				{{ phrase('dcLoginAsUser_end_session_confirm', {
+					'actor': $session.actor_username,
+					'target': $session.target_username
+				}) }}
+				<div class="dataList-subRow">
+					{{ phrase('dcLoginAsUser_end_session_explain', {'actor': $session.actor_username}) }}
+				</div>
+			</xf:inforow>
+		</div>
+
+		<xf:submitrow rowtype="simple" submit="{{ phrase('dcLoginAsUser_end_session') }}" icon="disable" />
+	</div>
+</xf:form>
+]]></template>
+  <template type="admin" title="dcLoginAsUser_session_list" version_id="1000070" version_string="1.0.0"><![CDATA[<xf:title>{{ phrase('dcLoginAsUser_active_sessions') }}</xf:title>
+
+<xf:if is="$sessions is not empty">
+	<div class="block">
+		<div class="block-container">
+			<div class="block-body">
+				<xf:datalist data-xf-init="responsive-data-list">
+					<xf:datarow rowtype="header">
+						<xf:cell>{{ phrase('dcLoginAsUser_staff_member') }}</xf:cell>
+						<xf:cell>{{ phrase('dcLoginAsUser_signed_in_as') }}</xf:cell>
+						<xf:cell>{{ phrase('dcLoginAsUser_reason') }}</xf:cell>
+						<xf:cell>{{ phrase('ip_address') }}</xf:cell>
+						<xf:cell>{{ phrase('dcLoginAsUser_started') }}</xf:cell>
+						<xf:cell>{{ phrase('dcLoginAsUser_expires') }}</xf:cell>
+						<xf:cell />
+					</xf:datarow>
+					<xf:foreach loop="$sessions" value="$entry">
+						<xf:datarow>
+							<xf:cell>
+								<xf:username user="$entry.User" defaultname="{$entry.actor_username}"
+									href="{{ $entry.User ? link('users/edit', $entry.User) : '' }}" />
+							</xf:cell>
+							<xf:cell>
+								<xf:username user="$entry.Target" defaultname="{$entry.target_username}"
+									href="{{ $entry.Target ? link('users/edit', $entry.Target) : '' }}" />
+							</xf:cell>
+							<xf:cell>
+								<xf:if is="$entry.reason">{$entry.reason}<xf:else /><span class="u-muted">{{ phrase('dcLoginAsUser_no_reason_given') }}</span></xf:if>
+							</xf:cell>
+							<xf:cell class="u-ltr">{{ $entry.ip_address ? $entry.ip_address|ip : '' }}</xf:cell>
+							<xf:cell>
+								<xf:date time="{$entry.start_date}" />
+								<div class="dataList-subRow">{{ duration($entry.duration_minutes, 'minutes') }}</div>
+							</xf:cell>
+							<xf:cell>
+								<xf:if is="$entry.expiry_date">
+									<xf:date time="{$entry.expiry_date}" />
+								<xf:else />
+									<span class="u-muted">{{ phrase('dcLoginAsUser_no_time_limit') }}</span>
+								</xf:if>
+							</xf:cell>
+							<xf:cell href="{{ link('login-as-user/sessions/end', $entry) }}" overlay="true"
+								class="dataList-cell--action">
+								{{ phrase('dcLoginAsUser_end_session') }}
+							</xf:cell>
+						</xf:datarow>
+					</xf:foreach>
+				</xf:datalist>
+			</div>
+		</div>
+	</div>
+<xf:else />
+	<div class="blockMessage">{{ phrase('dcLoginAsUser_no_active_sessions') }}</div>
+</xf:if>
+]]></template>
+  <template type="admin" title="dcLoginAsUser_user_confirm" version_id="1000070" version_string="1.0.0"><![CDATA[<xf:title>{{ phrase('dcLoginAsUser_log_in_as_x', {'name': $user.username}) }}</xf:title>
+
+<xf:form action="{{ link('users/login-as', $user) }}" class="block" ajax="true">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:inforow rowtype="confirm">
+				{{ phrase('dcLoginAsUser_you_are_about_to_take_over_this_account_explain') }}
+			</xf:inforow>
+
+			<xf:formrow label="{{ phrase('user_name') }}">
+				<xf:avatar user="$user" size="xxs" notooltip="true" />
+				<xf:username user="$user" rich="true" notooltip="true" href="" />
+				<span class="u-muted">{$user.email|email_display}</span>
+			</xf:formrow>
+
+			<xf:if is="$user.is_banned OR $user.user_state != 'valid'">
+				<xf:formrow label="{{ phrase('dcLoginAsUser_account_status') }}"
+					explain="{{ phrase('dcLoginAsUser_restricted_account_explain') }}">
+					<xf:comment>
+						Inlined rather than sharing the public dcLoginAsUser_macros template: XenForo
+						templates are typed, so an admin template cannot include a public one. Phrase
+						names must also be literal, hence the explicit chain. Every phrase here is a
+						core one, so this stays translated on any board.
+					</xf:comment>
+					<xf:if is="$user.is_banned">{{ phrase('banned') }}</xf:if>
+					<xf:if is="$user.user_state == 'disabled'">{{ phrase('disabled') }}
+					<xf:elseif is="$user.user_state == 'moderated'" />{{ phrase('awaiting_approval') }}
+					<xf:elseif is="$user.user_state == 'rejected'" />{{ phrase('rejected') }}
+					<xf:elseif is="$user.user_state == 'email_confirm' OR $user.user_state == 'email_confirm_edit'" />{{ phrase('awaiting_email_confirmation') }}
+					<xf:elseif is="$user.user_state == 'email_bounce'" />{{ phrase('dcLoginAsUser_email_bouncing') }}
+					</xf:if>
+				</xf:formrow>
+			</xf:if>
+
+			<xf:textboxrow name="reason" value="" maxlength="250"
+				label="{{ phrase('dcLoginAsUser_reason') }}"
+				explain="{{ phrase('dcLoginAsUser_reason_explain') }}" />
+		</div>
+		<xf:submitrow icon="login" submit="{{ phrase('dcLoginAsUser_start_session') }}" />
+	</div>
+</xf:form>
+]]></template>
+  <template type="public" title="dcLoginAsUser.less" version_id="1000070" version_string="1.0.0"><![CDATA[// ################ DC / Login as user ################
+//
+// Colour strategy: the HUE comes from a core semantic token, the LIGHTNESS always comes from
+// whatever surface the tint sits on. That is why nothing here can go unreadable on a dark skin --
+// the accent is never used as a solid background behind text, only as a translucent sheet over the
+// host surface and as a hard 2px edge.
+//
+// Only ONE level of xf-default() anywhere: CssRenderer substitutes it in a single non-recursive
+// pass, so a nested xf-default() inside a fallback would survive into the compiled LESS and break
+// the whole stylesheet. A bare @xf-* inside a fallback is fine -- that is handled by the next pass.
+//
+// Swap this one line if a board's attention colour clashes:
+@dcLoginAsUser-accent:     xf-default(@xf-textColorAttention, #d18f2e);
+
+@dcLoginAsUser-tintStrong: fade(@dcLoginAsUser-accent, 26%);
+@dcLoginAsUser-tintSoft:   fade(@dcLoginAsUser-accent, 14%);
+
+// ---------------- staff bar, impersonation active ----------------
+
+.p-staffBar--dcLoginAsUser
+{
+	// Two identical stops = a flat translucent sheet. background-color is left alone, so whatever
+	// the style set via the publicStaffBar css property still shows through and supplies the
+	// lightness. Deliberately NOT xf-intensify(): that only moves lightness, so on a near-black
+	// staff bar it yields a lighter grey that reads as "hover", not "you are impersonating".
+	background-image: linear-gradient(@dcLoginAsUser-tintStrong, @dcLoginAsUser-tintStrong);
+	box-shadow: inset 0 -2px 0 0 @dcLoginAsUser-accent;
+
+	.p-staffBar-link:hover
+	{
+		background: @dcLoginAsUser-tintSoft;
+	}
+}
+
+.dcLoginAsUser-status
+{
+	font-weight: 600;
+	cursor: default;
+
+	&:hover { background: none; }
+}
+
+.dcLoginAsUser-trigger .fa--xf,
+.dcLoginAsUser-status .fa--xf,
+.dcLoginAsUser-return .fa--xf
+{
+	margin-right: .35em;
+}
+
+// ---------------- return control ----------------
+
+.dcLoginAsUser-returnForm
+{
+	display: inline-block;
+	vertical-align: top;
+	margin: 0;
+}
+
+.dcLoginAsUser-return
+{
+	// a <button> inherits none of this from .p-staffBar-link
+	font: inherit;
+	color: inherit;
+	border: 0;
+	cursor: pointer;
+
+	background: @dcLoginAsUser-tintStrong;
+	border-radius: @xf-borderRadiusSmall;
+	box-shadow: inset 0 0 0 1px @dcLoginAsUser-accent;
+
+	&:hover,
+	&:focus
+	{
+		// stay in the same lightness family -- on a dark skin, lightening the background here would
+		// put light text on a light ground.
+		background: fade(@dcLoginAsUser-accent, 40%);
+		text-decoration: none;
+	}
+}
+
+// ---------------- overlays ----------------
+
+.dcLoginAsUser-target
+{
+	display: flex;
+	align-items: center;
+	gap: @xf-paddingMedium;
+}
+
+.dcLoginAsUser-target-main
+{
+	min-width: 0;
+}
+
+.dcLoginAsUser-flag
+{
+	display: inline-block;
+	padding: 1px @xf-paddingSmall;
+	border-radius: @xf-borderRadiusSmall;
+	font-size: @xf-fontSizeSmallest;
+	background: @dcLoginAsUser-tintSoft;
+	box-shadow: inset 0 0 0 1px @dcLoginAsUser-accent;
+
+	.fa--xf { margin-right: .25em; }
+}
+
+.dcLoginAsUser-recent
+{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.dcLoginAsUser-recent-item
+{
+	border-top: @xf-borderSize solid @xf-borderColorLight;
+
+	&:first-child { border-top: 0; }
+
+	> a
+	{
+		display: block;
+		padding: @xf-paddingMedium 0;
+
+		&:hover
+		{
+			background: @dcLoginAsUser-tintSoft;
+			text-decoration: none;
+		}
+	}
+}
+]]></template>
+  <template type="public" title="dcLoginAsUser_confirm" version_id="1000070" version_string="1.0.0"><![CDATA[<xf:title>{{ phrase('dcLoginAsUser_log_in_as_x', {'name': $user.username}) }}</xf:title>
+
+<xf:css src="dcLoginAsUser.less" />
+
+<xf:form action="{{ link('login-as/start', $user) }}" class="block" ajax="true">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:inforow rowtype="confirm">
+				{{ phrase('dcLoginAsUser_you_are_about_to_take_over_this_account_explain') }}
+			</xf:inforow>
+
+			<xf:formrow label="{{ phrase('member') }}">
+				<xf:macro template="dcLoginAsUser_macros" name="target_summary" arg-user="{$user}" />
+			</xf:formrow>
+
+			<xf:comment>
+				A plain boolean rather than contentcheck: <xf:contentcheck> has to be a DIRECT child
+				of its <xf:if contentcheck="true"> in the tag tree, and <xf:formrow> is a real tag,
+				so it would break the pairing. Raw HTML wrappers are fine because they never become
+				tag nodes -- which is why core templates appear to nest it inside a <div>.
+			</xf:comment>
+			<xf:if is="$user.is_banned OR $user.user_state != 'valid'">
+				<xf:formrow label="{{ phrase('dcLoginAsUser_account_status') }}"
+					explain="{{ phrase('dcLoginAsUser_restricted_account_explain') }}">
+					<xf:macro template="dcLoginAsUser_macros" name="target_state" arg-user="{$user}" />
+				</xf:formrow>
+			</xf:if>
+
+			<xf:textboxrow name="reason" value="{$reason}"
+				maxlength="250"
+				label="{{ phrase('dcLoginAsUser_reason') }}"
+				explain="{{ phrase('dcLoginAsUser_reason_explain') }}" />
+		</div>
+		<xf:submitrow icon="login" submit="{{ phrase('dcLoginAsUser_start_session') }}" />
+	</div>
+</xf:form>
+]]></template>
+  <template type="public" title="dcLoginAsUser_macros" version_id="1010070" version_string="1.1.0"><![CDATA[<xf:macro id="target_summary" arg-user="!">
+	<div class="dcLoginAsUser-target">
+		<xf:avatar user="$user" size="s" notooltip="true" href="" />
+		<div class="dcLoginAsUser-target-main">
+			<div><xf:username user="$user" rich="true" notooltip="true" href="" /></div>
+			<div class="u-muted">{$user.email|email_display}</div>
+		</div>
+	</div>
+</xf:macro>
+
+<xf:macro id="target_state" arg-user="!">
+	<xf:comment>
+		Phrase names must be literal in XenForo templates, so the states are an explicit chain rather
+		than a concatenation. Every phrase referenced here is a core one, so this stays translated on
+		any board the add-on is installed on.
+	</xf:comment>
+	<xf:if is="$user.is_banned">
+		<span class="dcLoginAsUser-flag"><xf:fa icon="fa-exclamation-triangle" /> {{ phrase('banned') }}</span>
+	</xf:if>
+	<xf:if is="$user.user_state == 'disabled'">
+		<span class="dcLoginAsUser-flag"><xf:fa icon="fa-exclamation-triangle" /> {{ phrase('disabled') }}</span>
+	<xf:elseif is="$user.user_state == 'moderated'" />
+		<span class="dcLoginAsUser-flag"><xf:fa icon="fa-exclamation-triangle" /> {{ phrase('awaiting_approval') }}</span>
+	<xf:elseif is="$user.user_state == 'rejected'" />
+		<span class="dcLoginAsUser-flag"><xf:fa icon="fa-exclamation-triangle" /> {{ phrase('rejected') }}</span>
+	<xf:elseif is="$user.user_state == 'email_confirm' OR $user.user_state == 'email_confirm_edit'" />
+		<span class="dcLoginAsUser-flag"><xf:fa icon="fa-exclamation-triangle" /> {{ phrase('awaiting_email_confirmation') }}</span>
+	<xf:elseif is="$user.user_state == 'email_bounce'" />
+		<span class="dcLoginAsUser-flag"><xf:fa icon="fa-exclamation-triangle" /> {{ phrase('dcLoginAsUser_email_bouncing') }}</span>
+	</xf:if>
+</xf:macro>]]></template>
+  <template type="public" title="dcLoginAsUser_quick" version_id="1000070" version_string="1.0.0"><![CDATA[<xf:title>{{ phrase('dcLoginAsUser_who_do_you_want_to_log_in_as') }}</xf:title>
+
+<xf:css src="dcLoginAsUser.less" />
+
+<xf:form action="{{ link('login-as/quick') }}" class="block" ajax="true">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:comment>
+				ac="single" is the XenForo user autocomplete. Do not hand-write data-xf-init here --
+				the templater expands this into data-xf-init="auto-complete" data-single="true" and
+				coerces the input type for you.
+			</xf:comment>
+			<xf:textboxrow name="username" value="{$username}" ac="single"
+				placeholder="{{ phrase('user_name...') }}"
+				label="{{ phrase('user_name') }}"
+				explain="{{ phrase('dcLoginAsUser_user_name_explain') }}" />
+		</div>
+
+		<xf:if is="$recentUsers is not empty">
+			<h3 class="block-textHeader">{{ phrase('dcLoginAsUser_recent_targets') }}</h3>
+			<div class="block-body">
+				<ul class="dcLoginAsUser-recent">
+					<xf:foreach loop="$recentUsers" value="$recent">
+						<xf:if is="$recent.canLoginAs()">
+							<li class="dcLoginAsUser-recent-item">
+								<a href="{{ link('login-as/confirm', $recent) }}"
+									data-xf-click="overlay"
+									data-cache="false">
+									<xf:macro template="dcLoginAsUser_macros" name="target_summary" arg-user="{$recent}" />
+								</a>
+							</li>
+						</xf:if>
+					</xf:foreach>
+				</ul>
+			</div>
+		</xf:if>
+
+		<xf:submitrow icon="login" submit="{{ phrase('continue') }}" />
+	</div>
+</xf:form>
+]]></template>
+  <template type="public" title="dcLoginAsUser_staff_bar" version_id="1000070" version_string="1.0.0"><![CDATA[<xf:if is="$xf.dcLoginAsUser.active">
+	<xf:css src="dcLoginAsUser.less" />
+
+	<span class="p-staffBar-link dcLoginAsUser-status">
+		<xf:fa icon="fa-user-secret" />
+		{{ phrase('dcLoginAsUser_logged_in_as_x', {'name': $xf.visitor.username}) }}
+	</span>
+
+	<xf:comment>
+		A real form, not data-xf-click. There is no generic "post" click handler in XenForo, and the
+		nearest candidate ("switch") is built to swap a label in place -- but ending an impersonation
+		changes the visitor identity, so the nav, the avatar, the permissions and the CSRF token are
+		all stale afterwards. A plain browser POST answered with a redirect re-renders everything.
+		Templater::form() emits csrf_input() unconditionally, so this is CSRF-protected with no
+		attribute of ours.
+	</xf:comment>
+	<xf:form action="{{ link('login-as/stop') }}" class="dcLoginAsUser-returnForm">
+		<button type="submit" class="p-staffBar-link dcLoginAsUser-return">
+			<xf:fa icon="fa-undo" />
+			{{ phrase('dcLoginAsUser_return_to_x', {'name': $xf.dcLoginAsUser.adminUsername}) }}
+		</button>
+	</xf:form>
+
+<xf:elseif is="$xf.visitor.canLoginAsUsers()" />
+	<xf:css src="dcLoginAsUser.less" />
+
+	<a href="{{ link('login-as/quick') }}"
+		class="p-staffBar-link dcLoginAsUser-trigger"
+		data-xf-click="overlay"
+		data-cache="false">
+		<xf:fa icon="fa-user-secret" />
+		{{ phrase('dcLoginAsUser_log_in_as_ellipsis') }}
+	</a>
+</xf:if>
+]]></template>
+</templates>

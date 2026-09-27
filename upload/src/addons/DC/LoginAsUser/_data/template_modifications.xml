@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="PAGE_CONTAINER" modification_key="dcLoginAsUser_PAGE_CONTAINER_staff_bar" description="Add the &quot;Log in as&quot; trigger and the impersonation return control to the staff bar" execution_order="70" enabled="1" action="preg_replace">
+    <find><![CDATA[#(<xf:if\s+is="\$xf\.visitor\.is_admin">\s*<a\s+href="\{\{\s*base_url\('admin\.php'\)\s*\}\}"\s+class="p-staffBar-link"\s+target="_blank">\{\{\s*phrase\('admin'\)\s*\}\}</a>\s*</xf:if>)#]]></find>
+    <replace><![CDATA[$1
+
+						<xf:include template="dcLoginAsUser_staff_bar" />]]></replace>
+  </modification>
+  <modification type="public" template="PAGE_CONTAINER" modification_key="dcLoginAsUser_PAGE_CONTAINER_staff_bar_tint" description="Tint the staff bar while an impersonation session is active" execution_order="70" enabled="1" action="preg_replace">
+    <find><![CDATA[#<div\s+class="p-staffBar">#]]></find>
+    <replace><![CDATA[<div class="p-staffBar{{ $xf.dcLoginAsUser.active ? ' p-staffBar--dcLoginAsUser' : '' }}">]]></replace>
+  </modification>
+  <modification type="public" template="member_macros" modification_key="dcLoginAsUser_member_macros" description="Add a &quot;Log in as this member&quot; action to the moderator tools menu" execution_order="70" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:moderator_menu:bottom]-->]]></find>
+    <replace><![CDATA[<xf:if is="$user.canLoginAs()">
+	<a href="{{ link('login-as/confirm', $user) }}"
+		class="menu-linkRow"
+		data-xf-click="overlay"
+		data-cache="false">{{ phrase('dcLoginAsUser_log_in_as_this_member') }}</a>
+</xf:if>
+$0]]></replace>
+  </modification>
+  <modification type="public" template="post_macros" modification_key="dcLoginAsUser_post_macros" description="Add a &quot;Log in as author&quot; item to the post action bar overflow menu" execution_order="70" enabled="1" action="preg_replace">
+    <find><![CDATA[#(<xf:if\s+is="\$hasActionBarMenu">)#]]></find>
+    <replace><![CDATA[<xf:if is="$post.User AND $post.User.canLoginAs()">
+				<a href="{{ link('login-as/confirm', $post.User) }}"
+					class="actionBar-action actionBar-action--dcLoginAsUser actionBar-action--menuItem"
+					data-xf-click="overlay"
+					data-cache="false">{{ phrase('dcLoginAsUser_log_in_as_author') }}</a>
+
+				<xf:set var="$hasActionBarMenu" value="{{ true }}" />
+			</xf:if>
+
+			$1]]></replace>
+  </modification>
+  <modification type="admin" template="user_edit" modification_key="dcLoginAsUser_user_edit" description="Add a &quot;Log in as this user&quot; entry to the ACP user actions menu" execution_order="70" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:actions_menu:bottom]-->]]></find>
+    <replace><![CDATA[<xf:if is="$user.canLoginAs()">
+					<a href="{{ link('users/login-as', $user) }}" class="menu-linkRow" data-xf-click="overlay" data-cache="false">{{ phrase('dcLoginAsUser_log_in_as_this_user') }}</a>
+				</xf:if>
+				$0]]></replace>
+  </modification>
+  <modification type="admin" template="user_list" modification_key="dcLoginAsUser_user_list_footer_colspan" description="Widen the filter-note footer cell to cover the added action column" execution_order="70" enabled="1" action="preg_replace">
+    <find><![CDATA[#(<xf:datarow\s+rowclass="dataList-row--note[^"]*">\s*<xf:cell\s+)colspan="3"#]]></find>
+    <replace><![CDATA[${1}colspan="4"]]></replace>
+  </modification>
+  <modification type="admin" template="user_list" modification_key="dcLoginAsUser_user_list_header_colspan" description="Widen the select-all header cell to cover the added action column" execution_order="70" enabled="1" action="preg_replace">
+    <find><![CDATA[#(<xf:if\s+is="\$showingAll">\s*<xf:cell\s+)colspan="4"#]]></find>
+    <replace><![CDATA[${1}colspan="5"]]></replace>
+  </modification>
+  <modification type="admin" template="user_list" modification_key="dcLoginAsUser_user_list_row_action" description="Add a per-row &quot;Log in as user&quot; action cell to the ACP user list" execution_order="70" enabled="1" action="preg_replace">
+    <find><![CDATA[#(<xf:delete\s+href="\{\{\s*link\('users/delete',\s*\$user\)\s*\}\}"\s*/>)#]]></find>
+    <replace><![CDATA[<xf:if is="$user.canLoginAs()">
+								<xf:action href="{{ link('users/login-as', $user) }}" overlay="true"
+									data-xf-init="tooltip"
+									title="{{ phrase('dcLoginAsUser_log_in_as_this_user')|for_attr }}"><xf:fa icon="fa-user-secret" /></xf:action>
+							<xf:else />
+								<xf:action></xf:action>
+							</xf:if>
+							$1]]></replace>
+  </modification>
+</template_modifications>

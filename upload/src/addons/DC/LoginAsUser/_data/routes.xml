@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<routes>
+  <route route_type="admin" route_prefix="login-as-user" controller="DC\LoginAsUser:Log"/>
+  <route route_type="admin" route_prefix="login-as-user" sub_name="sessions" format="sessions/:int&lt;session_id&gt;/" controller="DC\LoginAsUser:Log" action_prefix="sessions"/>
+  <route route_type="admin" route_prefix="login-as-user" sub_name="view" format="view/:int&lt;session_id&gt;/" controller="DC\LoginAsUser:Log" action_prefix="view"/>
+  <route route_type="public" route_prefix="login-as" format=":int&lt;user_id,username&gt;/" controller="DC\LoginAsUser:LoginAsUser"/>
+</routes>

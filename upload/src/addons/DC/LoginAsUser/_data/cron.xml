@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cron>
+  <entry entry_id="dcLoginAsUser_closeStale" cron_class="DC\LoginAsUser\Cron\CleanUp" cron_method="closeStaleSessions" active="1"><![CDATA[{"day_type":"dom","dom":[-1],"hours":[-1],"minutes":[5,20,35,50]}]]></entry>
+  <entry entry_id="dcLoginAsUser_pruneLogs" cron_class="DC\LoginAsUser\Cron\CleanUp" cron_method="pruneLogs" active="1"><![CDATA[{"day_type":"dom","dom":[-1],"hours":[4],"minutes":[15]}]]></entry>
+</cron>

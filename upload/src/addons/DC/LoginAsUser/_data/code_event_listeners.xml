@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<code_event_listeners>
+  <listener event_id="app_pub_start_end" execute_order="10" callback_class="DC\LoginAsUser\Listener" callback_method="appPubStartEnd" active="1" description="Hydrates impersonation state and enforces the auto-return deadline"/>
+  <listener event_id="templater_global_data" execute_order="10" callback_class="DC\LoginAsUser\Listener" callback_method="templaterGlobalData" active="1" description="Supplies $xf.dcLoginAsUser to public templates"/>
+</code_event_listeners>
