@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<permission_interface_groups>
+  <interface_group interface_group_id="dbtechShop" display_order="10150" is_moderator="0"/>
+  <interface_group interface_group_id="dbtechShopModerator" display_order="10160" is_moderator="1"/>
+  <interface_group interface_group_id="dbtechShopTradePostModeratorPermissions" display_order="10175" is_moderator="1"/>
+  <interface_group interface_group_id="dbtechShopTradePostPermissions" display_order="10170" is_moderator="0"/>
+</permission_interface_groups>

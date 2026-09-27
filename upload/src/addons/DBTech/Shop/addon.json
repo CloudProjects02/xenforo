@@ -1,0 +1,38 @@
+{
+    "legacy_addon_id": "dbtech_shop",
+    "title": "DragonByte Shop",
+    "description": "Members can buy permissions, features and more on your forum with points.",
+    "version_id": 907000470,
+    "version_string": "7.0.4",
+    "dev": "DragonByte Technologies",
+    "dev_url": "https://www.dragonbyte-tech.com",
+    "faq_url": "",
+    "support_url": "https://www.dragonbyte-tech.com/support/create-ticket",
+    "extra_urls": {
+        "Product Information": "https://www.dragonbyte-tech.com/store/dragonbyte-shop.336/",
+        "Twitter": "https://twitter.com/DragonByteTech"
+    },
+    "require": {
+        "XF": [
+            2030070,
+            "XenForo 2.3.0+"
+        ],
+        "php": [
+            "8.0.0",
+            "PHP 8.0.0+"
+        ]
+    },
+    "icon": "icon.png",
+    "require-soft": {
+        "php": [
+            "8.2.0",
+            "PHP 8.2.0+",
+            false
+        ],
+        "DBTech/Credits": [
+            905010070,
+            "DragonByte Credits v5.1.0+",
+            false
+        ]
+    }
+}

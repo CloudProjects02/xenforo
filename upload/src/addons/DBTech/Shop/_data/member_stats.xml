@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<member_stats>
+  <member_stat member_stat_key="dbtech_shop_most_items" callback_class="DBTech\Shop\MemberStat\Formatter" callback_method="number" sort_order="dbtech_shop_item_count" sort_direction="desc" permission_limit="dbtech_shop-view" show_value="1" user_limit="20" display_order="50" overview_display="1" active="1" cache_lifetime="60"><![CDATA[[]]]></member_stat>
+</member_stats>

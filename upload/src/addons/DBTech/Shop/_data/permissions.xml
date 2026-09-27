@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<permissions>
+  <permission permission_group_id="dbtechShopTradePost" permission_id="approveUnapprove" permission_type="flag" interface_group_id="dbtechShopTradePostModeratorPermissions" display_order="130"/>
+  <permission permission_group_id="dbtechShopTradePost" permission_id="comment" permission_type="flag" interface_group_id="dbtechShopTradePostPermissions" display_order="32"/>
+  <permission permission_group_id="dbtechShopTradePost" permission_id="deleteAny" permission_type="flag" interface_group_id="dbtechShopTradePostModeratorPermissions" display_order="20"/>
+  <permission permission_group_id="dbtechShopTradePost" permission_id="deleteOwn" permission_type="flag" interface_group_id="dbtechShopTradePostPermissions" display_order="35"/>
+  <permission permission_group_id="dbtechShopTradePost" permission_id="editAny" permission_type="flag" interface_group_id="dbtechShopTradePostModeratorPermissions" display_order="10"/>
+  <permission permission_group_id="dbtechShopTradePost" permission_id="editOwn" permission_type="flag" interface_group_id="dbtechShopTradePostPermissions" display_order="40"/>
+  <permission permission_group_id="dbtechShopTradePost" permission_id="hardDeleteAny" permission_type="flag" interface_group_id="dbtechShopTradePostModeratorPermissions" display_order="25"/>
+  <permission permission_group_id="dbtechShopTradePost" permission_id="inlineMod" permission_type="flag" interface_group_id="dbtechShopTradePostModeratorPermissions" display_order="1"/>
+  <permission permission_group_id="dbtechShopTradePost" permission_id="manageOwn" permission_type="flag" interface_group_id="dbtechShopTradePostPermissions" display_order="20"/>
+  <permission permission_group_id="dbtechShopTradePost" permission_id="post" permission_type="flag" interface_group_id="dbtechShopTradePostPermissions" display_order="30"/>
+  <permission permission_group_id="dbtechShopTradePost" permission_id="react" permission_type="flag" interface_group_id="dbtechShopTradePostPermissions" display_order="15"/>
+  <permission permission_group_id="dbtechShopTradePost" permission_id="undelete" permission_type="flag" interface_group_id="dbtechShopTradePostModeratorPermissions" display_order="120"/>
+  <permission permission_group_id="dbtechShopTradePost" permission_id="view" permission_type="flag" interface_group_id="dbtechShopTradePostPermissions" display_order="10"/>
+  <permission permission_group_id="dbtechShopTradePost" permission_id="viewDeleted" permission_type="flag" interface_group_id="dbtechShopTradePostModeratorPermissions" display_order="100"/>
+  <permission permission_group_id="dbtechShopTradePost" permission_id="viewModerated" permission_type="flag" interface_group_id="dbtechShopTradePostModeratorPermissions" display_order="110"/>
+  <permission permission_group_id="dbtechShopTradePost" permission_id="warn" permission_type="flag" interface_group_id="dbtechShopTradePostModeratorPermissions" display_order="30"/>
+  <permission permission_group_id="dbtech_shop" permission_id="add" permission_type="flag" interface_group_id="dbtechShop" display_order="60"/>
+  <permission permission_group_id="dbtech_shop" permission_id="addWithoutApproval" permission_type="flag" interface_group_id="dbtechShop" display_order="65"/>
+  <permission permission_group_id="dbtech_shop" permission_id="approveUnapprove" permission_type="flag" interface_group_id="dbtechShopModerator" display_order="70"/>
+  <permission permission_group_id="dbtech_shop" permission_id="bank" permission_type="flag" depend_permission_id="view" interface_group_id="dbtechShop" display_order="130"/>
+  <permission permission_group_id="dbtech_shop" permission_id="deleteAny" permission_type="flag" interface_group_id="dbtechShopModerator" display_order="10"/>
+  <permission permission_group_id="dbtech_shop" permission_id="deleteAnyReview" permission_type="flag" interface_group_id="dbtechShopModerator" display_order="30"/>
+  <permission permission_group_id="dbtech_shop" permission_id="deleteOwn" permission_type="flag" interface_group_id="dbtechShop" display_order="100"/>
+  <permission permission_group_id="dbtech_shop" permission_id="editAny" permission_type="flag" interface_group_id="dbtechShopModerator" display_order="40"/>
+  <permission permission_group_id="dbtech_shop" permission_id="hardDeleteAny" permission_type="flag" interface_group_id="dbtechShopModerator" display_order="20"/>
+  <permission permission_group_id="dbtech_shop" permission_id="inlineMod" permission_type="flag" interface_group_id="dbtechShopModerator" display_order="1"/>
+  <permission permission_group_id="dbtech_shop" permission_id="manageAnyTag" permission_type="flag" interface_group_id="dbtechShopModerator" display_order="50"/>
+  <permission permission_group_id="dbtech_shop" permission_id="manageOthersTagsOwnItem" permission_type="flag" interface_group_id="dbtechShop" display_order="87"/>
+  <permission permission_group_id="dbtech_shop" permission_id="purchase" permission_type="flag" depend_permission_id="view" interface_group_id="dbtechShop" display_order="25"/>
+  <permission permission_group_id="dbtech_shop" permission_id="rate" permission_type="flag" interface_group_id="dbtechShop" display_order="50"/>
+  <permission permission_group_id="dbtech_shop" permission_id="react" permission_type="flag" interface_group_id="dbtechShop" display_order="40"/>
+  <permission permission_group_id="dbtech_shop" permission_id="reassign" permission_type="flag" interface_group_id="dbtechShopModerator" display_order="45"/>
+  <permission permission_group_id="dbtech_shop" permission_id="special" permission_type="flag" interface_group_id="dbtechShop" display_order="135"/>
+  <permission permission_group_id="dbtech_shop" permission_id="steal" permission_type="flag" depend_permission_id="view" interface_group_id="dbtechShop" display_order="140"/>
+  <permission permission_group_id="dbtech_shop" permission_id="tagAnyItem" permission_type="flag" interface_group_id="dbtechShop" display_order="86"/>
+  <permission permission_group_id="dbtech_shop" permission_id="tagOwnItem" permission_type="flag" interface_group_id="dbtechShop" display_order="85"/>
+  <permission permission_group_id="dbtech_shop" permission_id="trade" permission_type="flag" depend_permission_id="view" interface_group_id="dbtechShop" display_order="160"/>
+  <permission permission_group_id="dbtech_shop" permission_id="undelete" permission_type="flag" interface_group_id="dbtechShopModerator" display_order="15"/>
+  <permission permission_group_id="dbtech_shop" permission_id="updateOwn" permission_type="flag" interface_group_id="dbtechShop" display_order="80"/>
+  <permission permission_group_id="dbtech_shop" permission_id="view" permission_type="flag" interface_group_id="dbtechShop" display_order="10"/>
+  <permission permission_group_id="dbtech_shop" permission_id="viewDeleted" permission_type="flag" interface_group_id="dbtechShopModerator" display_order="5"/>
+  <permission permission_group_id="dbtech_shop" permission_id="viewDeletedReviews" permission_type="flag" interface_group_id="dbtechShopModerator" display_order="19"/>
+  <permission permission_group_id="dbtech_shop" permission_id="viewLottery" permission_type="flag" depend_permission_id="view" interface_group_id="dbtechShop" display_order="120"/>
+  <permission permission_group_id="dbtech_shop" permission_id="viewModerated" permission_type="flag" interface_group_id="dbtechShopModerator" display_order="60"/>
+  <permission permission_group_id="dbtech_shop" permission_id="warn" permission_type="flag" interface_group_id="dbtechShopModerator" display_order="90"/>
+</permissions>

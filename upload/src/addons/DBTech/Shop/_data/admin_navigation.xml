@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<admin_navigation>
+  <admin_navigation_entry navigation_id="dbtShpCategoryPermissions" parent_navigation_id="permissions" display_order="380" link="permissions/dbtech-shop-categories" admin_permission_id="dbtechShop" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="dbtShpItemPermissions" parent_navigation_id="permissions" display_order="385" link="permissions/dbtech-shop-items" admin_permission_id="dbtechShop" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="dbtechShop" display_order="13050" link="dbtech-shop" icon="fa-shopping-basket" debug_only="0" development_only="0" hide_no_children="1"/>
+  <admin_navigation_entry navigation_id="dbtechShopCategory" parent_navigation_id="dbtechShop" display_order="20" link="dbtech-shop/categories/" admin_permission_id="dbtechShop" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="dbtechShopCurrency" parent_navigation_id="dbtechShop" display_order="10" link="dbtech-shop/currencies/" admin_permission_id="dbtechShop" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="dbtechShopItem" parent_navigation_id="dbtechShop" display_order="30" link="dbtech-shop/items/" admin_permission_id="dbtechShop" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="dbtechShopItemFields" parent_navigation_id="dbtechShop" display_order="45" link="dbtech-shop/items/fields" admin_permission_id="dbtechShop" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="dbtechShopItemPrefix" parent_navigation_id="dbtechShop" display_order="40" link="dbtech-shop/prefixes" admin_permission_id="dbtechShop" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="dbtechShopLogs" parent_navigation_id="dbtechShop" display_order="4000" icon="fa-history" debug_only="0" development_only="0" hide_no_children="1"/>
+  <admin_navigation_entry navigation_id="dbtechShopLotteries" parent_navigation_id="dbtechShopLottery" display_order="100" link="dbtech-shop/lotteries/lottery" admin_permission_id="dbtechShop" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="dbtechShopLottery" parent_navigation_id="dbtechShop" display_order="1000" debug_only="0" development_only="0" hide_no_children="1"/>
+  <admin_navigation_entry navigation_id="dbtechShopOpt" parent_navigation_id="dbtechShop" display_order="9001" link="options/groups/dbtech_shop/" admin_permission_id="option" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="dbtechShopPrize" parent_navigation_id="dbtechShopLottery" display_order="200" link="dbtech-shop/lotteries/prizes" admin_permission_id="dbtechShop" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="dbtechShopPurchase" parent_navigation_id="dbtechShop" display_order="70" link="dbtech-shop/purchases/" admin_permission_id="dbtechShop" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="dbtechShopTxnLog" parent_navigation_id="dbtechShopLogs" display_order="100" link="dbtech-shop/logs/transactions" admin_permission_id="dbtechShop" debug_only="0" development_only="0" hide_no_children="0"/>
+</admin_navigation>

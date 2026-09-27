@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<api_scopes>
+  <api_scope api_scope_id="dbtech_shop_trade_post:delete_hard"/>
+  <api_scope api_scope_id="dbtech_shop_trade_post:read"/>
+  <api_scope api_scope_id="dbtech_shop_trade_post:write"/>
+</api_scopes>

@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<options>
+  <option option_id="dbtechShopContentDeleteThreadAction" edit_format="template" data_type="array" advanced="0">
+    <default_value>{"action":"close","update_title":"1","title_template":"{title} [Deleted]","add_post":"1"}</default_value>
+    <edit_format_params>option_template_dbtechShopContentDeleteThreadAction</edit_format_params>
+    <sub_options>action
+update_title
+title_template
+add_post</sub_options>
+    <relation group_id="dbtech_shop" display_order="1015"/>
+  </option>
+  <option option_id="dbtechShopDefaultItemOwner" edit_format="username" data_type="unsigned_integer" advanced="0">
+    <default_value></default_value>
+    <relation group_id="dbtech_shop" display_order="1140"/>
+  </option>
+  <option option_id="dbtechShopEnableRate" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="dbtech_shop" display_order="1374"/>
+  </option>
+  <option option_id="dbtechShopInterestMinimumActivity" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>7</default_value>
+    <edit_format_params>min=0</edit_format_params>
+    <relation group_id="dbtech_shop" display_order="2320"/>
+  </option>
+  <option option_id="dbtechShopInventoryItemsPerPage" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>20</default_value>
+    <edit_format_params>min=1</edit_format_params>
+    <relation group_id="dbtech_shop" display_order="1248"/>
+  </option>
+  <option option_id="dbtechShopItemIconMaxDimensions" edit_format="template" data_type="array" validation_class="XF\Option\Style" validation_method="triggerStyleUpdate" advanced="0">
+    <default_value>{"width":"","height":"","disableScaling":false}</default_value>
+    <edit_format_params>option_template_dbtechShopItemIconMaxDimensions</edit_format_params>
+    <sub_options>width
+height
+disableScaling</sub_options>
+    <relation group_id="dbtech_shop" display_order="1030"/>
+  </option>
+  <option option_id="dbtechShopItemsPerPage" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>20</default_value>
+    <edit_format_params>min=1</edit_format_params>
+    <relation group_id="dbtech_shop" display_order="1245"/>
+  </option>
+  <option option_id="dbtechShopListDefaultOrder" edit_format="select" data_type="string" advanced="0">
+    <default_value>last_update</default_value>
+    <edit_format_params>last_update={{ phrase('dbtech_shop_last_update') }}
+creation_date={{ phrase('dbtech_shop_creation_date') }}
+rating_weighted={{ phrase('rating') }}
+purchases={{ phrase('dbtech_shop_purchases') }}
+title={{ phrase('title') }}
+display_order={{ phrase('display_order') }}</edit_format_params>
+    <relation group_id="dbtech_shop" display_order="1265"/>
+  </option>
+  <option option_id="dbtechShopLotteriesPerPage" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>20</default_value>
+    <edit_format_params>min=1</edit_format_params>
+    <relation group_id="dbtech_shop" display_order="1247"/>
+  </option>
+  <option option_id="dbtechShopMinimumReviewLength" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="dbtech_shop" display_order="1385"/>
+  </option>
+  <option option_id="dbtechShopMininumStealWallet" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>0</default_value>
+    <edit_format_params>min=0</edit_format_params>
+    <relation group_id="dbtech_shop" display_order="2215"/>
+  </option>
+  <option option_id="dbtechShopRequirePurchaseToRate" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="dbtech_shop" display_order="1375"/>
+  </option>
+  <option option_id="dbtechShopReviewRequired" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="dbtech_shop" display_order="1380"/>
+  </option>
+  <option option_id="dbtechShopReviewsPerPage" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>20</default_value>
+    <edit_format_params>min=1</edit_format_params>
+    <relation group_id="dbtech_shop" display_order="1255"/>
+  </option>
+  <option option_id="dbtechShopTradePostMaxLength" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>420</default_value>
+    <edit_format_params>min=0</edit_format_params>
+    <relation group_id="dbtech_shop" display_order="1250"/>
+    <relation group_id="messageOptions" display_order="521"/>
+  </option>
+  <option option_id="dbtechShopTradesPerPage" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>20</default_value>
+    <edit_format_params>min=1</edit_format_params>
+    <relation group_id="dbtech_shop" display_order="1249"/>
+  </option>
+  <option option_id="dbtechShopTransactions" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>25</default_value>
+    <relation group_id="dbtech_shop" display_order="1246"/>
+  </option>
+  <option option_id="dbtech_shop_bank_enabled" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="dbtech_shop" display_order="2300"/>
+  </option>
+  <option option_id="dbtech_shop_bank_postbit" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="debug" display_order="5120"/>
+  </option>
+  <option option_id="dbtech_shop_confignotification_pm" edit_format="username" data_type="unsigned_integer" advanced="0">
+    <default_value></default_value>
+    <relation group_id="dbtech_shop" display_order="3800"/>
+  </option>
+  <option option_id="dbtech_shop_enablegiftgiver" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="dbtech_shop" display_order="3010"/>
+  </option>
+  <option option_id="dbtech_shop_enableprofileblock" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="dbtech_shop_backup" display_order="1900"/>
+  </option>
+  <option option_id="dbtech_shop_forceformatting" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="dbtech_shop" display_order="1700"/>
+  </option>
+  <option option_id="dbtech_shop_icon_limit_by_position" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>0</default_value>
+    <edit_format_params>min=0</edit_format_params>
+    <relation group_id="dbtech_shop_backup" display_order="3500"/>
+  </option>
+  <option option_id="dbtech_shop_items_postbit" edit_format="callback" data_type="array" validation_class="DBTech\Shop\Option\Postbit" validation_method="verifyOption" advanced="0">
+    <default_value>[2]</default_value>
+    <edit_format_params>DBTech\Shop\Option\Postbit::renderCheckbox</edit_format_params>
+    <sub_options>*</sub_options>
+    <relation group_id="dbtech_shop" display_order="3000"/>
+  </option>
+  <option option_id="dbtech_shop_licensekey" edit_format="textbox" data_type="string" advanced="0">
+    <default_value>L-XFSHOP-28524UAO197LCW2</default_value>
+    <relation group_id="debug" display_order="10000"/>
+  </option>
+  <option option_id="dbtech_shop_lottery_enabled" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="dbtech_shop" display_order="2115"/>
+  </option>
+  <option option_id="dbtech_shop_manualinterest" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="dbtech_shop" display_order="2310"/>
+  </option>
+  <option option_id="dbtech_shop_maxsteal_amount" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>100</default_value>
+    <edit_format_params>min=0
+max=100</edit_format_params>
+    <relation group_id="dbtech_shop" display_order="2230"/>
+  </option>
+  <option option_id="dbtech_shop_maxsteal_chance" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>100</default_value>
+    <edit_format_params>min=0
+max=100</edit_format_params>
+    <relation group_id="dbtech_shop" display_order="2215"/>
+  </option>
+  <option option_id="dbtech_shop_maxsteal_lose" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>100</default_value>
+    <edit_format_params>min=0
+max=100</edit_format_params>
+    <relation group_id="dbtech_shop" display_order="2245"/>
+  </option>
+  <option option_id="dbtech_shop_navbar" edit_format="template" data_type="array" advanced="0">
+    <default_value>{"enabled":1,"right_position":false,"right_text":true}</default_value>
+    <edit_format_params>option_template_dbtech_shop_navbar</edit_format_params>
+    <sub_options>enabled
+right_position
+right_text</sub_options>
+    <relation group_id="dbtech_shop" display_order="1400"/>
+  </option>
+  <option option_id="dbtech_shop_numgifts" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>5</default_value>
+    <edit_format_params>min=0</edit_format_params>
+    <relation group_id="dbtech_shop" display_order="3050"/>
+  </option>
+  <option option_id="dbtech_shop_override_cancustomavatar" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="dbtech_shop_backup" display_order="3200"/>
+  </option>
+  <option option_id="dbtech_shop_override_cancustomavatar_exempt" edit_format="callback" data_type="array" advanced="0">
+    <default_value>[]</default_value>
+    <edit_format_params>XF\Option\UserGroup::renderSelectMultiple</edit_format_params>
+    <sub_options>*</sub_options>
+    <relation group_id="dbtech_shop_backup" display_order="3250"/>
+  </option>
+  <option option_id="dbtech_shop_override_cancustomsignature" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="dbtech_shop_backup" display_order="3300"/>
+  </option>
+  <option option_id="dbtech_shop_override_cancustomsignature_exempt" edit_format="callback" data_type="array" advanced="0">
+    <default_value>[]</default_value>
+    <edit_format_params>XF\Option\UserGroup::renderSelectMultiple</edit_format_params>
+    <sub_options>*</sub_options>
+    <relation group_id="dbtech_shop_backup" display_order="3350"/>
+  </option>
+  <option option_id="dbtech_shop_points_postbit" edit_format="callback" data_type="array" validation_class="DBTech\Shop\Option\Postbit" validation_method="verifyOption" advanced="0">
+    <default_value>[2]</default_value>
+    <edit_format_params>DBTech\Shop\Option\Postbit::renderCheckbox</edit_format_params>
+    <sub_options>*</sub_options>
+    <relation group_id="dbtech_shop" display_order="2010"/>
+  </option>
+  <option option_id="dbtech_shop_purchasenotification_pm" edit_format="username" data_type="unsigned_integer" advanced="0">
+    <default_value></default_value>
+    <relation group_id="dbtech_shop" display_order="3810"/>
+  </option>
+  <option option_id="dbtech_shop_smilies_maxheight" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>50</default_value>
+    <edit_format_params>min=0</edit_format_params>
+    <relation group_id="dbtech_shop_backup" display_order="3450"/>
+  </option>
+  <option option_id="dbtech_shop_smilies_maxwidth" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>50</default_value>
+    <edit_format_params>min=0</edit_format_params>
+    <relation group_id="dbtech_shop_backup" display_order="3400"/>
+  </option>
+  <option option_id="dbtech_shop_steal_amount" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>5</default_value>
+    <edit_format_params>min=0
+max=100</edit_format_params>
+    <relation group_id="dbtech_shop" display_order="2220"/>
+  </option>
+  <option option_id="dbtech_shop_steal_chance" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>5</default_value>
+    <edit_format_params>min=0
+max=100</edit_format_params>
+    <relation group_id="dbtech_shop" display_order="2210"/>
+  </option>
+  <option option_id="dbtech_shop_steal_enabled" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="dbtech_shop" display_order="2200"/>
+  </option>
+  <option option_id="dbtech_shop_steal_lose" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>10</default_value>
+    <edit_format_params>min=0
+max=100</edit_format_params>
+    <relation group_id="dbtech_shop" display_order="2240"/>
+  </option>
+  <option option_id="dbtech_shop_trade_enabled" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="dbtech_shop" display_order="3700"/>
+  </option>
+</options>

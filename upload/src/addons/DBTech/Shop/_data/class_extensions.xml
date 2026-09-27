@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<class_extensions>
+  <extension from_class="XF\Admin\Controller\UserController" to_class="DBTech\Shop\XF\Admin\Controller\UserController" execute_order="10" active="1"/>
+  <extension from_class="XF\Behavior\PermissionRebuildable" to_class="DBTech\Shop\XF\Behavior\PermissionRebuildable" execute_order="10" active="1"/>
+  <extension from_class="XF\CssRenderer" to_class="DBTech\Shop\XF\CssRenderer" execute_order="10" active="1"/>
+  <extension from_class="XF\Entity\Post" to_class="DBTech\Shop\XF\Entity\Post" execute_order="10" active="1"/>
+  <extension from_class="XF\Entity\Thread" to_class="DBTech\Shop\XF\Entity\Thread" execute_order="10" active="1"/>
+  <extension from_class="XF\Entity\User" to_class="DBTech\Shop\XF\Entity\User" execute_order="10" active="1"/>
+  <extension from_class="XF\Searcher\User" to_class="DBTech\Shop\XF\Searcher\User" execute_order="10" active="1"/>
+  <extension from_class="XF\Service\Post\PreparerService" to_class="DBTech\Shop\XF\Service\Post\PreparerService" execute_order="10" active="1"/>
+  <extension from_class="XF\Service\User\ContentChangeService" to_class="DBTech\Shop\XF\Service\User\ContentChangeService" execute_order="10" active="1"/>
+  <extension from_class="XF\Service\User\MergeService" to_class="DBTech\Shop\XF\Service\User\MergeService" execute_order="10" active="1"/>
+  <extension from_class="XF\Template\Templater" to_class="DBTech\Shop\XF\Template\Templater" execute_order="10" active="1"/>
+</class_extensions>

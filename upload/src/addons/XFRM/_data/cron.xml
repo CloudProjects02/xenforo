@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<cron>
-  <entry entry_id="xfrmCacheStats" cron_class="XFRM\Cron\Statistics" cron_method="cacheResourceManagerStatistics" active="1"><![CDATA[{"day_type":"dom","dom":[-1],"hours":[-1],"minutes":[10,40]}]]></entry>
-  <entry entry_id="xfrmViews" cron_class="XFRM\Cron\Views" cron_method="runViewUpdate" active="1"><![CDATA[{"day_type":"dom","dom":[-1],"hours":[-1],"minutes":[2,17,32,47]}]]></entry>
-</cron>

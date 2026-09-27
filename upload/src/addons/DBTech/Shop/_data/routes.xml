@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<routes>
+  <route route_type="admin" route_prefix="dbtech-shop" controller="DBTech\Shop:IndexController" context="dbtechShop"/>
+  <route route_type="admin" route_prefix="dbtech-shop" sub_name="categories" format="categories/:int&lt;category_id,title&gt;/" controller="DBTech\Shop:CategoryController" context="dbtechShopCategory"/>
+  <route route_type="admin" route_prefix="dbtech-shop" sub_name="currencies" format="currencies/:int&lt;currency_id,title&gt;/" controller="DBTech\Shop:CurrencyController" context="dbtechShopCurrency"/>
+  <route route_type="admin" route_prefix="dbtech-shop" sub_name="items" format="items/:int&lt;item_id,title&gt;/" controller="DBTech\Shop:ItemController" context="dbtechShopItem"/>
+  <route route_type="admin" route_prefix="dbtech-shop" sub_name="items/fields" format="items/fields/:str&lt;field_id&gt;/" controller="DBTech\Shop:ItemFieldController" context="dbtechShopItemFields"/>
+  <route route_type="admin" route_prefix="dbtech-shop" sub_name="logs" format="logs/" controller="DBTech\Shop:LogController" context="dbtechShopLogs"/>
+  <route route_type="admin" route_prefix="dbtech-shop" sub_name="logs/transactions" format="logs/transactions/:int&lt;transaction_log_id&gt;/" controller="DBTech\Shop:LogController" context="dbtechShopTxnLog" action_prefix="transaction"/>
+  <route route_type="admin" route_prefix="dbtech-shop" sub_name="lotteries" format="lotteries/" controller="DBTech\Shop:LotteryController" context="dbtechShopLotteries"/>
+  <route route_type="admin" route_prefix="dbtech-shop" sub_name="lotteries/lottery" format="lotteries/lottery/:int&lt;lottery_id,title&gt;/" controller="DBTech\Shop:LotteryController" context="dbtechShopLotteries" action_prefix="Lottery"/>
+  <route route_type="admin" route_prefix="dbtech-shop" sub_name="lotteries/prizes" format="lotteries/prizes/:int&lt;lottery_prize_id,title&gt;/" controller="DBTech\Shop:LotteryController" context="dbtechShopPrize" action_prefix="LotteryPrize"/>
+  <route route_type="admin" route_prefix="dbtech-shop" sub_name="prefixes" format="prefixes/:int&lt;prefix_id,title&gt;/" controller="DBTech\Shop:ItemPrefixController" context="dbtechShopItemPrefix"/>
+  <route route_type="admin" route_prefix="dbtech-shop" sub_name="prefixes/group" format="prefixes/group/:int&lt;prefix_group_id,title&gt;/" controller="DBTech\Shop:ItemPrefixController" context="dbtechShopItemPrefix" action_prefix="Group"/>
+  <route route_type="admin" route_prefix="dbtech-shop" sub_name="purchases" format="purchases/:int&lt;purchase_id&gt;/" controller="DBTech\Shop:PurchaseController" context="dbtechShopPurchase"/>
+  <route route_type="admin" route_prefix="dbtech-shop" sub_name="shops" format="shops/:int&lt;shop_id,title&gt;/" controller="DBTech\Shop:ShopController" context="dbtechShopShop"/>
+  <route route_type="admin" route_prefix="permissions" sub_name="dbtech-shop-categories" format="dbtech-shop-categories/:int&lt;category_id,title&gt;/" controller="DBTech\Shop:PermissionController" context="dbtShpCategoryPermissions" action_prefix="category"/>
+  <route route_type="admin" route_prefix="permissions" sub_name="dbtech-shop-items" format="dbtech-shop-items/:int&lt;item_id,title&gt;/" controller="DBTech\Shop:PermissionController" context="dbtShpItemPermissions" action_prefix="item"/>
+  <route route_type="api" route_prefix="dbtech-shop" sub_name="trade-post-comments/" format="trade-post-comments/" controller="DBTech\Shop:TradePostCommentsController"/>
+  <route route_type="api" route_prefix="dbtech-shop" sub_name="trade-post-comments/-" format="trade-post-comments/:+int&lt;trade_post_comment_id&gt;/" controller="DBTech\Shop:TradePostCommentController"/>
+  <route route_type="api" route_prefix="dbtech-shop" sub_name="trade-posts/" format="trade-posts/" controller="DBTech\Shop:TradePostsController"/>
+  <route route_type="api" route_prefix="dbtech-shop" sub_name="trade-posts/-" format="trade-posts/:+int&lt;trade_post_id&gt;/" controller="DBTech\Shop:TradePostController"/>
+  <route route_type="public" route_prefix="dbtech-shop" format=":int&lt;item_id,title&gt;/" controller="DBTech\Shop:ItemController" context="dbtechShop"/>
+  <route route_type="public" route_prefix="dbtech-shop" sub_name="authors" format="authors/:int&lt;user_id,username&gt;/" controller="DBTech\Shop:AuthorController" context="dbtechShop"/>
+  <route route_type="public" route_prefix="dbtech-shop" sub_name="bank" format="bank/:int&lt;currency_id,title&gt;/" controller="DBTech\Shop:BankController" context="dbtechShop"/>
+  <route route_type="public" route_prefix="dbtech-shop" sub_name="categories" format="categories/:int&lt;category_id,title&gt;/" controller="DBTech\Shop:CategoryController" context="dbtechShop"/>
+  <route route_type="public" route_prefix="dbtech-shop" sub_name="checkout" format="checkout" controller="DBTech\Shop:CheckoutController" context="dbtechShop"/>
+  <route route_type="public" route_prefix="dbtech-shop" sub_name="checkout/recipient" format="checkout/recipient/:int&lt;item_id,title&gt;/" controller="DBTech\Shop:CheckoutController" context="dbtechShop" action_prefix="recipient"/>
+  <route route_type="public" route_prefix="dbtech-shop" sub_name="checkout/remove-item" format="checkout/remove-item/:int&lt;item_id,title&gt;/" controller="DBTech\Shop:CheckoutController" context="dbtechShop" action_prefix="RemoveItem"/>
+  <route route_type="public" route_prefix="dbtech-shop" sub_name="inventory" format="inventory/:int&lt;purchase_id&gt;/" controller="DBTech\Shop:InventoryController" context="dbtechShop"/>
+  <route route_type="public" route_prefix="dbtech-shop" sub_name="lotteries" format="lotteries/:int&lt;lottery_id,title&gt;/" controller="DBTech\Shop:LotteryController" context="dbtechShop"/>
+  <route route_type="public" route_prefix="dbtech-shop" sub_name="lotteries/view-draw" format="lotteries/view-draw/:int&lt;lottery_history_id&gt;/" controller="DBTech\Shop:LotteryController" context="dbtechShop" action_prefix="ViewDraw"/>
+  <route route_type="public" route_prefix="dbtech-shop" sub_name="review" format=":+int&lt;item_id,item_title&gt;/review/:+int&lt;item_rating_id&gt;/" controller="DBTech\Shop:ReviewController" context="dbtechShop"/>
+  <route route_type="public" route_prefix="dbtech-shop" sub_name="steal" format="steal/" controller="DBTech\Shop:StealController" context="dbtechShop"/>
+  <route route_type="public" route_prefix="dbtech-shop" sub_name="trade-posts" format="trade-posts/:int&lt;trade_post_id&gt;/" controller="DBTech\Shop:TradePostController" context="dbtechShop"/>
+  <route route_type="public" route_prefix="dbtech-shop" sub_name="trade-posts/comments" format="trade-posts/comments/:int&lt;trade_post_comment_id&gt;/" controller="DBTech\Shop:TradePostController" context="dbtechShop" action_prefix="Comments"/>
+  <route route_type="public" route_prefix="dbtech-shop" sub_name="trades" format="trades/:int&lt;trade_id&gt;/" controller="DBTech\Shop:TradeController" context="dbtechShop"/>
+  <route route_type="public" route_prefix="dbtech-shop" sub_name="transactions" format="transactions/:int&lt;transaction_log_id&gt;/" controller="DBTech\Shop:TransactionsController" context="dbtechShop"/>
+  <route route_type="public" route_prefix="whats-new" sub_name="shop-items" format="shop-items/:int&lt;find_new_id&gt;/:page" controller="DBTech\Shop:WhatsNewItemController" context="dbtechShop"/>
+</routes>

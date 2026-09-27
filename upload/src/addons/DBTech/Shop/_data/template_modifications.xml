@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="PAGE_CONTAINER" modification_key="dbtech_shop_copyright_footer_display" description="Copyright Footer" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:copyright />]]></find>
+    <replace><![CDATA[$0
+				<xf:callback class="DBTech\Shop\Template\Callback\Copyright" method="getCopyrightText"></xf:callback>]]></replace>
+  </modification>
+  <modification type="public" template="PAGE_CONTAINER" modification_key="dbtech_shop_navbar_loop" description="Remove the navbar entry from the main loop if needed" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[#(<xf:macro\s+id="nav_entry"\s+arg-[^/]+>)(.*)(<\/xf:macro>)#siU]]></find>
+    <replace><![CDATA[$1
+<xf:if is="$navId != 'dbtechShop' OR $xf.options.dbtech_shop_navbar.enabled == 1">$2</xf:if>
+$3]]></replace>
+  </modification>
+  <modification type="public" template="PAGE_CONTAINER" modification_key="dbtech_shop_navbar_right_end" description="Add Navbar (Right Side - End)" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[#(<a href="{{ link\('account/alerts'\) }}"\s+class="[\w\-\s]+p-navgroup-link--alerts.*</div>.+)(</xf:if>)#siU]]></find>
+    <replace><![CDATA[$1	<xf:macro id="dbtech_shop_navbar_macro::navbar" arg-section="end" arg-nav="{$navTree.dbtechShop}" />
+						$2]]></replace>
+  </modification>
+  <modification type="public" template="PAGE_CONTAINER" modification_key="dbtech_shop_navbar_right_middle" description="Add Navbar (Right Side - Middle)" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[#<a href="{{ link\('account/alerts'\) }}"\s+class="[\w\-\s]+p-navgroup-link--alerts#siU]]></find>
+    <replace><![CDATA[<xf:macro id="dbtech_shop_navbar_macro::navbar" arg-section="middle" arg-nav="{$navTree.dbtechShop}" />
+							$0]]></replace>
+  </modification>
+  <modification type="public" template="PAGE_CONTAINER" modification_key="dbtech_shop_navbar_right_start" description="Add Navbar (Right Side - Start)" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[#<a href="{{ link\('account'\) }}"\s+class="[\w\-\s]+p-navgroup-link--user"\s+data-xf-click="menu"#siU]]></find>
+    <replace><![CDATA[<xf:macro id="dbtech_shop_navbar_macro::navbar" arg-section="start" arg-nav="{$navTree.dbtechShop}" />
+							$0]]></replace>
+  </modification>
+  <modification type="public" template="app.less" modification_key="dbtech_shop_app_less" description="Add Shop username styles to app.less" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[{{ include('app_user_banners.less') }}]]></find>
+    <replace><![CDATA[$0
+{{ include('dbtech_shop_app_username_styles.less') }}
+{{ include('dbtech_shop_app_user_title_styles.less') }}
+{{ include('dbtech_shop_app_avatar_styles.less') }}]]></replace>
+  </modification>
+  <modification type="public" template="app_nav.less" modification_key="dbtech_shop_app_nav_less_append" description="Append dbtech_shop_app_nav.less to app_nav.less" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[/$/]]></find>
+    <replace><![CDATA[{{ include('dbtech_shop_app_nav.less') }}]]></replace>
+  </modification>
+  <modification type="public" template="core.less" modification_key="dbtech_shop_core_less_append" description="Append dbtech_shop_core.less to core.less" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[/$/]]></find>
+    <replace><![CDATA[{{ include('dbtech_shop_core.less') }}]]></replace>
+  </modification>
+  <modification type="admin" template="helper_criteria" modification_key="dbtech_shop_trophy_criteria" description="Add user criteria" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:user:after_content]-->]]></find>
+    <replace><![CDATA[$0
+			<xf:include template="dbtech_shop_user_criteria" />]]></replace>
+  </modification>
+  <modification type="admin" template="helper_user_search_criteria" modification_key="dbtech_shop_helper_user_search_criteria" description="Add search criteria" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:checkboxrow name="criteria[user_state]" readonly="{$readOnly}"]]></find>
+    <replace><![CDATA[<xf:include template="dbtech_shop_helper_user_search_criteria" />
+
+$0]]></replace>
+  </modification>
+  <modification type="public" template="lfs_store_macros" modification_key="dbtech_shop_lfs_store_macros" description="Thread List Background" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[class="structItem structItem--thread]]></find>
+    <replace><![CDATA[style="{{ dbtech_shop_thread_background($thread) }}" $0]]></replace>
+  </modification>
+  <modification type="public" template="lfs_store_macros" modification_key="dbtech_shop_lfs_store_macros_2" description="Thread Title Style" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[{$thread.title]]></find>
+    <replace><![CDATA[$0|dbtech_shop_thread_style($thread)]]></replace>
+  </modification>
+  <modification type="public" template="lfs_tab_thread_definition_macros" modification_key="dbtech_shop_lfs_tab_thread_definition_macros" description="Thread List Background" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[class="structItem structItem--lfsItem item--thread]]></find>
+    <replace><![CDATA[style="{{ dbtech_shop_thread_background($thread) }}" $0]]></replace>
+  </modification>
+  <modification type="public" template="lfs_tab_thread_definition_macros" modification_key="dbtech_shop_lfs_tab_thread_definition_macros_2" description="Thread Title Style" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[{$thread.title]]></find>
+    <replace><![CDATA[$0|dbtech_shop_thread_style($thread)]]></replace>
+  </modification>
+  <modification type="public" template="member_list_macros" modification_key="dbtech_shop_member_list_macros_item_count" description="Add the item count to member stats." execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:stats:after_messages]-->]]></find>
+    <replace><![CDATA[$0
+<xf:if is="$xf.visitor.canViewDbtechShopItems() AND $user.dbtech_shop_item_count">
+	<li><dl class="pairs pairs--inline">
+		<dt>{{ phrase('dbtech_shop_items') }}</dt>
+		<dd>{$user.dbtech_shop_item_count|number}</dd>
+	</dl></li>
+</xf:if>]]></replace>
+  </modification>
+  <modification type="public" template="member_macros" modification_key="dbtech_shop_member_macros_item_count" description="Add the item count to member stats." execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:stat_pairs:above_reactions]-->]]></find>
+    <replace><![CDATA[<xf:if is="$xf.visitor.canViewDbtechShopItems() && $user.dbtech_shop_item_count">
+		<dl class="pairs pairs--rows pairs--rows--centered menu-fauxLinkRow">
+			<dt>{{ phrase('dbtech_shop_items') }}</dt>
+			<dd>
+				<a href="{{ link('dbtech-shop/authors', $user) }}" class="menu-fauxLinkRow-linkRow u-concealed">
+					{$user.dbtech_shop_item_count|number}
+				</a>
+			</dd>
+		</dl>
+	</xf:if>
+	$0]]></replace>
+  </modification>
+  <modification type="public" template="member_macros" modification_key="dbtech_shop_member_stats" description="Adds credits displays to the member stats" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:stat_pairs:below_trophies]-->]]></find>
+    <replace><![CDATA[<xf:include template="dbtech_shop_member_stats" />
+	$0]]></replace>
+  </modification>
+  <modification type="public" template="member_view" modification_key="dbtech_shop_profile_pane" description="Add &quot;Inventory&quot; tab to member profile (Pane)" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:tab_panes:end]-->]]></find>
+    <replace><![CDATA[<xf:include template="dbtech_shop_member_view_pane" />
+	$0]]></replace>
+  </modification>
+  <modification type="public" template="member_view" modification_key="dbtech_shop_profile_tab" description="Add &quot;Inventory&quot; tab to member profile (Tab)" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:tabs:end]-->]]></find>
+    <replace><![CDATA[<xf:include template="dbtech_shop_member_view_tab" />
+				$0]]></replace>
+  </modification>
+  <modification type="public" template="message_macros" modification_key="dbtech_shop_postbit" description="Add postbit information" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:if is="$extras.custom_fields">]]></find>
+    <replace><![CDATA[<xf:include template="dbtech_shop_postbit" />
+	$0]]></replace>
+  </modification>
+  <modification type="admin" template="permission_analyze" modification_key="dbtech_shop_permission_analyze" description="Add additional if checks to permission analysis" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:if is="$intermediate.type == 'system'">]]></find>
+    <replace><![CDATA[<xf:if is="$intermediate.type == 'shop-category-system'">
+										<xf:if is="$intermediate.contentId">
+											{$intermediate.contentTitle} - {{ phrase('dbtech_shop_category_wide') }}
+										<xf:else />
+											{{ phrase('dbtech_shop_category_wide') }}
+										</xf:if>
+									<xf:elseif is="$intermediate.type == 'shop-category-group'" />
+										<xf:if is="$intermediate.contentId">
+											{$intermediate.contentTitle} - {{ phrase('parent_category') }}
+										<xf:else />
+											{$userGroupTitles.{$intermediate.typeId}}
+										</xf:if>
+									<xf:elseif is="$intermediate.type == 'shop-category-user'" />
+										<xf:if is="$intermediate.contentId">
+											{$intermediate.contentTitle} - {{ phrase('dbtech_shop_user_value_parent_category') }}
+										<xf:else />
+											{{ phrase('dbtech_shop_user_value_parent_category') }}
+										</xf:if>
+									</xf:if>
+									$0]]></replace>
+  </modification>
+  <modification type="public" template="post_macros" modification_key="dbtech_shop_post_background" description="Post Background" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[/<div class="message-cell message-cell--main(.*)"/]]></find>
+    <replace><![CDATA[$0 style="{{ dbtech_shop_post_background($post) }}"]]></replace>
+  </modification>
+  <modification type="public" template="post_macros" modification_key="dbtech_shop_post_style" description="Post Style" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[/<xf:if is="\$snippet">.*<\/xf:if>/isU]]></find>
+    <replace><![CDATA[<div style="{{ dbtech_shop_post_style($post) }}">
+			$0
+			</div>]]></replace>
+  </modification>
+  <modification type="public" template="post_macros" modification_key="dbtech_shop_postbit_background" description="Postbit Background" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[/<div class="message-cell message-cell--user(.*)"/]]></find>
+    <replace><![CDATA[$0 style="{{ dbtech_shop_postbit_background($post) }}"]]></replace>
+  </modification>
+  <modification type="public" template="thread_list_macros" modification_key="dbtech_shop_thread_background" description="Thread List Background" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[class="structItem structItem--thread]]></find>
+    <replace><![CDATA[style="{{ dbtech_shop_thread_background($thread) }}" $0]]></replace>
+  </modification>
+  <modification type="public" template="thread_list_macros" modification_key="dbtech_shop_thread_style" description="Thread Title Style" execution_order="65535" enabled="1" action="str_replace">
+    <find><![CDATA[{$thread.title]]></find>
+    <replace><![CDATA[$0|dbtech_shop_thread_style($thread)]]></replace>
+  </modification>
+  <modification type="admin" template="tools_rebuild" modification_key="dbtech_shop_tools_rebuild" description="Append Shop rebuilds to the end of the rebuild caches system." execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:rebuild_bottom]-->]]></find>
+    <replace><![CDATA[$0
+<xf:include template="dbtech_shop_tools_rebuild" />]]></replace>
+  </modification>
+  <modification type="admin" template="user_edit" modification_key="dbtech_shop_user_edit_pane" description="Currency Edit (Tab Content)" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:tab_panes:end]-->]]></find>
+    <replace><![CDATA[<xf:include template="dbtech_shop_user_edit_pane" />
+			$0]]></replace>
+  </modification>
+  <modification type="admin" template="user_edit" modification_key="dbtech_shop_user_edit_tabs" description="Currency Edit (Tabs)" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:tabs:end]-->]]></find>
+    <replace><![CDATA[<xf:include template="dbtech_shop_user_edit_tab" />
+				$0]]></replace>
+  </modification>
+  <modification type="public" template="whats_new_wrapper" modification_key="dbtech_shop_whats_new_wrapper_link" description="Add the &quot;new items&quot; link to what's new pages." execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:links:after_thread]-->]]></find>
+    <replace><![CDATA[$0
+<xf:if is="$xf.visitor.canViewDbtechShopItems()">
+	<a class="{$baseClass} {{ $pageSelected == 'new_dbtech_shop_item' ? {$selectedClass} : '' }}" href="{{ link('whats-new/shop-items') }}" rel="nofollow">{{ phrase('dbtech_shop_new_items') }}</a>
+</xf:if>]]></replace>
+  </modification>
+</template_modifications>

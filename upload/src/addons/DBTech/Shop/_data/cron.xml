@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cron>
+  <entry entry_id="dbtechShopLotteryDraw" cron_class="DBTech\Shop\Cron\Lottery" cron_method="draw" active="1"><![CDATA[{"day_type":"dom","dom":[-1],"hours":[-1],"minutes":[1]}]]></entry>
+  <entry entry_id="dbtech_shop_autobump" cron_class="DBTech\Shop\Cron\Item" cron_method="autoBump" active="1"><![CDATA[{"day_type":"dom","dom":[-1],"hours":[-1],"minutes":[0,10,20,30,40,50]}]]></entry>
+  <entry entry_id="dbtech_shop_duration" cron_class="DBTech\Shop\Cron\Item" cron_method="duration" active="1"><![CDATA[{"day_type":"dom","dom":[-1],"hours":[-1],"minutes":[0,10,20,30,40,50]}]]></entry>
+  <entry entry_id="dbtech_shop_interest" cron_class="DBTech\Shop\Cron\Bank" cron_method="calculateInterest" active="1"><![CDATA[{"day_type":"dom","dom":[-1],"hours":[23],"minutes":[59]}]]></entry>
+  <entry entry_id="dbtech_shop_stock" cron_class="DBTech\Shop\Cron\Item" cron_method="refillStock" active="1"><![CDATA[{"day_type":"dom","dom":[-1],"hours":[0],"minutes":[0]}]]></entry>
+</cron>

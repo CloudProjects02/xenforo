@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget_positions>
+  <widget_position position_id="dbtech_shop_bank_sidebar" active="1"/>
+  <widget_position position_id="dbtech_shop_category_sidenav" active="1"/>
+  <widget_position position_id="dbtech_shop_item_sidebar" active="1"/>
+  <widget_position position_id="dbtech_shop_lottery_sidebar" active="1"/>
+  <widget_position position_id="dbtech_shop_overview_sidenav" active="1"/>
+  <widget_position position_id="dbtech_shop_steal_sidebar" active="1"/>
+  <widget_position position_id="dbtech_shop_trade_sidebar" active="1"/>
+</widget_positions>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget_definitions>
+  <widget_definition definition_id="dbt_shop_latest_reviews" definition_class="DBTech\Shop\Widget\LatestReviews"/>
+  <widget_definition definition_id="dbt_shop_new_items" definition_class="DBTech\Shop\Widget\NewItems"/>
+  <widget_definition definition_id="dbt_shop_top_items" definition_class="DBTech\Shop\Widget\TopItems"/>
+  <widget_definition definition_id="dbtech_shop_cart" definition_class="DBTech\Shop\Widget\Cart"/>
+  <widget_definition definition_id="dbtech_shop_profilemusic" definition_class="DBTech\Shop\Widget\ProfileMusic"/>
+  <widget_definition definition_id="dbtech_shop_richest" definition_class="DBTech\Shop\Widget\Richest"/>
+  <widget_definition definition_id="dbtech_shop_wallet" definition_class="DBTech\Shop\Widget\Wallet"/>
+</widget_definitions>
