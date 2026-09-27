@@ -1,5 +1,5 @@
 {
-    "src/addons/XenSoluce/InviteSystem/addon.json": "8fd65d98b6c89796432dc4cb9c1046a2832dc2ffbb5f7ddc80384e6f73bd029d",
+    "src/addons/XenSoluce/InviteSystem/addon.json": "b6a5cd3d60bf66b619879e245548239a728a9de956994a8522b0c60b2d2aa7d5",
     "src/addons/XenSoluce/InviteSystem/Admin/Controller/Invitation.php": "975befa3a47937079e23cf88029cdde8928890447a53315196ba4633cc01594f",
     "src/addons/XenSoluce/InviteSystem/Cron/InvitationBan.php": "53589eac83949a0a0f9a68acdf86c7490ecffb33a41f456528bd5ae67d942392",
     "src/addons/XenSoluce/InviteSystem/Cron/InviteCodeTime.php": "84ffae2fe098a1ec6e69d89128eb1b56028f844db52f784cc38c9d38fb84aab7",
