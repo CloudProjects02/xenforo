@@ -3566,7 +3566,7 @@
 .m-roomAvatarSize(@avatarSize) {
 	width: @avatarSize;
 	height: @avatarSize;
-	font-size: round((@avatarSize) * (@xf-avatarDynamicTextPercent / 150));
+	font-size: round((@avatarSize * @xf-avatarDynamicTextPercent / 150));
 }]]></template>
   <template type="public" title="rtc_delete_confirm" version_id="2000070" version_string="2.0.0"><![CDATA[<xf:title>{{ phrase('confirm_action') }}</xf:title>
 
