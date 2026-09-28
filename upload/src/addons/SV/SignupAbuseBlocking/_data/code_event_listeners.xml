@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<code_event_listeners>
+  <listener event_id="addon_post_install" execute_order="6812" callback_class="SV\SignupAbuseBlocking\InstallerListener" callback_method="addonPostInstall" active="1" description="Extend other add-ons as required."/>
+  <listener event_id="addon_post_rebuild" execute_order="6812" callback_class="SV\SignupAbuseBlocking\InstallerListener" callback_method="addonPostRebuild" active="1" description="Extend other add-ons as required."/>
+  <listener event_id="bb_code_renderer" execute_order="6812" callback_class="SV\SignupAbuseBlocking\BbCode\Listener" callback_method="bbCodeRender" active="1" description="Displays multiple account detection event and logs in content"/>
+  <listener event_id="patch_route_build_callback" execute_order="6812" callback_class="SV\SignupAbuseBlocking\Listener\LinkBuilder" callback_method="publicLinkBuilder" active="1" hint="Pub" description="Inject rewriting of register URLs"/>
+  <listener event_id="spam_asn_providers" execute_order="6812" callback_class="SV\SignupAbuseBlocking\Listener" callback_method="asnProviders" active="1" description="Built-in asn providers"/>
+  <listener event_id="spam_content_providers" execute_order="6812" callback_class="SV\SignupAbuseBlocking\Listener" callback_method="spamContentProviders" active="1" description="Smarter link checker"/>
+  <listener event_id="spam_geo_ip_providers" execute_order="6812" callback_class="SV\SignupAbuseBlocking\Listener" callback_method="geoIpProviders" active="1" description="Built-in geo-ip providers"/>
+  <listener event_id="spam_user_providers" execute_order="6812" callback_class="SV\SignupAbuseBlocking\Listener" callback_method="spamUserProviders" active="1" description="Add multiple account detection"/>
+  <listener event_id="templater_macro_pre_render" execute_order="6812" callback_class="SV\SignupAbuseBlocking\Listener" callback_method="preOptionsRender" active="1" hint="admin:option_macros:option_form_block" description="Tabbify options"/>
+  <listener event_id="templater_template_pre_render" execute_order="10" callback_class="SV\SignupAbuseBlocking\Listener" callback_method="errorTemplatePreRender" active="1" hint="public:error" description="Inject a &quot;log out&quot; link onto banned error page if &quot;Allow banned logout&quot; is true"/>
+</code_event_listeners>
+ 		 		 	   	 	  		  				  	 	 		 	 	   	    	 	  	 	  	 	 	 			    	 				 		    			 	 	  		  		  	 	 			 	   		  	 	 	  	 	   	 	 	 

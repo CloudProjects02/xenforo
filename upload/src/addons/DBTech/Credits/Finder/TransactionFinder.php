@@ -58,7 +58,7 @@ class TransactionFinder extends Finder
 			['Event.display', true],
 		]);
 
-		/** @var AbstractCollection<Currency> $currencies */
+		/** @var \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Currency> $currencies */
 		$container = \XF::app()->container();
 		if (isset($container['dbtechCredits.currencies']) && $currencies = $container['dbtechCredits.currencies'])
 		{

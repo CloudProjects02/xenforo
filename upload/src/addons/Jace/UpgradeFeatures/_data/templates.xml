@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="upgrade_feature_category_delete" version_id="1000010" version_string="1.0.2 Alpha"><![CDATA[<xf:title>{{ phrase('confirm_deletion') }}</xf:title>
+
+<xf:form action="{{ link('upgrade-feature-categories/delete', $category) }}" class="block" ajax="true">
+    <div class="block-container">
+        <div class="block-body">
+            {{ phrase('please_confirm_deletion_of_x', {'title': $category.title}) }}
+
+            <xf:if is="$featureCount">
+                <div class="blockMessage blockMessage--important blockMessage--iconic">
+                    {{ phrase('this_category_contains_x_upgrade_features', {'count': $featureCount}) }}
+                </div>
+
+                <xf:radiorow name="child_action" value="move" 
+                    label="{{ phrase('what_to_do_with_upgrade_features_in_this_category') }}">
+                    <xf:option value="move" label="{{ phrase('move_upgrade_features_to_uncategorized') }}" />
+                    <xf:option value="delete" label="{{ phrase('delete_upgrade_features') }}" />
+                </xf:radiorow>
+            </xf:if>
+        </div>
+		<xf:submitrow icon="delete" />
+    </div>
+</xf:form>]]></template>
+  <template type="admin" title="upgrade_feature_category_edit" version_id="1000010" version_string="1.0.2 Alpha"><![CDATA[<xf:if is="$category.isInsert()">
+    <xf:title>{{ phrase('add_upgrade_feature_category') }}</xf:title>
+<xf:else />
+    <xf:title>{{ phrase('edit_upgrade_feature_category:') }} {$category.title}</xf:title>
+</xf:if>
+
+<xf:pageaction if="$category.isUpdate()">
+    <xf:button href="{{ link('upgrade-feature-categories/delete', $category) }}" icon="delete" overlay="true" />
+</xf:pageaction>
+
+<xf:form action="{{ link('upgrade-feature-categories/save', $category) }}" ajax="true" class="block">
+    <div class="block-container">
+        <div class="block-body">
+            <xf:textboxrow name="title" value="{$category.MasterTitle.phrase_text}"
+                label="{{ phrase('title') }}"/>
+            <xf:textarearow name="description" value="{$category.MasterDescription.phrase_text}" rows="5" autosize="true"
+                label="{{ phrase('description') }}"/>
+
+            <xf:selectrow name="display_mode" value="{$category.display_mode}"
+                label="{{ phrase('upgrade_features_display_mode') }}">
+                <xf:options source="{$category.display_mode_options}" />
+            </xf:selectrow>
+
+            <xf:macro template="display_order_macros" name="row"
+                arg-value="{$category.display_order}" />
+
+            <xf:checkboxrow label="{{ phrase('upgrade_features_overwrite') }}" explain="{{ phrase('upgrade_features_overwrite_explain') }}">
+                <xf:option name="overwrite" selected="$category.overwrite"
+                    label="{{ phrase('yes') }}" />
+            </xf:checkboxrow>
+        </div>
+
+        <xf:submitrow icon="save" />
+    </div>
+</xf:form>]]></template>
+  <template type="admin" title="upgrade_feature_delete" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[<xf:title>{{ phrase('confirm_deletion') }}</xf:title>
+
+<xf:form action="{{ link('upgrade-features/delete', $feature) }}" ajax="true" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:inforow rowtype="confirm">
+				{{ phrase('please_confirm_that_you_want_to_delete_following_upgrade_feature') }}
+				<strong>{{ $feature.title }}</strong>
+			</xf:inforow>
+			
+			<xf:inforow rowtype="warning">
+				{{ phrase('deleting_upgrade_feature_will_remove_all_associated_data') }}
+			</xf:inforow>
+		</div>
+		
+		<xf:submitrow submit="{{ phrase('delete') }}" rowtype="simple" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="upgrade_feature_edit" version_id="1000010" version_string="1.0.2 Alpha"><![CDATA[<xf:if is="$feature.isInsert()">
+    <xf:title>{{ phrase('add_upgrade_feature') }}</xf:title>
+<xf:else />
+    <xf:title>{{ phrase('edit_upgrade_feature:') }} {$feature.title}</xf:title>
+</xf:if>
+
+<xf:pageaction if="$feature.isUpdate()">
+    <xf:button href="{{ link('upgrade-features/delete', $feature) }}" icon="delete" overlay="true" />
+</xf:pageaction>
+
+<xf:form action="{{ link('upgrade-features/save', $feature) }}" ajax="true" class="block">
+    <div class="block-container">
+        <div class="block-body">
+            <xf:textboxrow name="title" value="{$feature.title}" label="{{ phrase('title') }}" required="true" />
+            
+            <xf:textarearow name="description" value="{$feature.description}" label="{{ phrase('description') }}" autosize="true" />
+            
+            <xf:selectrow name="category_id" value="{$feature.category_id}" label="{{ phrase('category') }}">
+                <xf:options source="{$categoryOptions}" />
+            </xf:selectrow>
+            
+            <xf:selectrow name="feature_type" value="{$feature.feature_type}" label="{{ phrase('feature_type') }}" required="true">
+                <xf:option value="boolean">{{ phrase('upgrade_feature_type_boolean') }}</xf:option>
+                <xf:option value="numeric">{{ phrase('upgrade_feature_type_numeric') }}</xf:option>
+                <xf:option value="icon">{{ phrase('upgrade_feature_type_icon') }}</xf:option>
+                <xf:option value="userbar">{{ phrase('upgrade_feature_type_userbar') }}</xf:option>
+            </xf:selectrow>
+            
+            <xf:macro template="display_order_macros" name="row"
+                arg-value="{$feature.display_order}" />
+            
+            <xf:checkboxrow>
+                <xf:option name="active" value="1" selected="{$feature.active}" label="{{ phrase('active') }}" />
+            </xf:checkboxrow>
+        </div>
+        
+        <xf:submitrow submit="{{ $feature.feature_id ? phrase('save_changes') : phrase('add_upgrade_feature') }}" />
+    </div>
+</xf:form>]]></template>
+  <template type="admin" title="upgrade_feature_list" version_id="1000010" version_string="1.0.2 Alpha"><![CDATA[<xf:title>{{ phrase('upgrade_features') }}</xf:title>
+
+<xf:pageaction>
+    <div class="buttonGroup">
+        <xf:button href="{{ link('upgrade-features/add') }}" icon="add">{{ phrase('add_upgrade_feature') }}</xf:button>
+        <xf:button href="{{ link('upgrade-feature-categories/add') }}" icon="add">{{ phrase('add_upgrade_feature_category') }}</xf:button>
+    </div>
+</xf:pageaction>
+
+<xf:form action="{{ link('upgrade-features/toggle') }}" ajax="true" class="block">
+    <div class="block-outer">
+        <xf:macro template="filter_macros" name="quick_filter" arg-key="features" arg-class="block-outer-opposite" />
+    </div>
+    <div class="block-container">
+        <div class="block-body">
+            <xf:datalist>
+                <colgroup>
+                    <col style="width: 3%">
+                    <col style="width: 40%">
+                    <col style="width: 15%">
+                    <col style="width: 1%">
+                </colgroup>
+                <xf:foreach loop="$featureData.featureCategories" key="$featureCategoryId" value="$featureCategory">
+                    <tbody class="dataList-rowGroup">
+                        <xf:datarow rowtype="subsection"
+                            rowclass="{{ !$featureCategoryId ? 'dataList-row--noHover' : '' }}">
+
+                            <xf:if is="$featureCategoryId > 0">
+                                <xf:cell href="{{ link('upgrade-feature-categories/edit', $featureCategory) }}"
+                                         colspan="3">
+                                    {$featureCategory.title}
+                                </xf:cell>
+                                <xf:delete href="{{ link('upgrade-feature-categories/delete', $featureCategory) }}" />
+                            <xf:else />
+                                <xf:cell colspan="4">{$featureCategory.title}</xf:cell>
+                            </xf:if>
+                        </xf:datarow>
+
+                        <xf:foreach loop="{$featureData.features.{$featureCategoryId}}" key="$featureId" value="$feature">
+                            <xf:datarow>
+                                <xf:cell class="dataList-cell--min dataList-cell--image dataList-cell--imageMedium">
+                                    <span class="dataList-imagePlaceholder"></span>
+                                </xf:cell>
+                                <xf:cell href="{{ link('upgrade-features/edit', $feature) }}" class="dataList-cell--main">
+                                    <div class="dataList-mainRow" dir="auto">
+                                        {$feature.title}
+                                        <xf:if is="!$feature.active">
+                                            <span class="dataList-hint contentRow-extra u-hideNarrow" dir="auto">{{ phrase('inactive') }}</span>
+                                        </xf:if>
+                                    </div>
+                                    <div class="dataList-subRow">{$feature.description|nl2br}</div>
+                                </xf:cell>
+                                <xf:cell class="dataList-cell--min dataList-cell--featureType">
+                                    <span class="u-dimmed">{{ phrase_dynamic('upgrade_feature_type_' . $feature.feature_type) }}</span>
+                                </xf:cell>
+                                <xf:delete href="{{ link('upgrade-features/delete', $feature) }}" />
+                            </xf:datarow>
+                        <xf:else />
+                            <xf:datarow rowclass="dataList-row--noHover dataList-row--note">
+                                <xf:cell colspan="4" class="dataList-cell--noSearch">
+                                    <xf:if is="{{ count($featureData.featureCategories) > 1 }}">
+                                        {{ phrase('no_upgrade_features_in_category') }}
+                                    <xf:else />
+                                        {{ phrase('no_upgrade_features_have_been_created') }}
+                                    </xf:if>
+                                </xf:cell>
+                            </xf:datarow>
+                        </xf:foreach>
+                    </tbody>
+                </xf:foreach>
+            </xf:datalist>
+        </div>
+        <div class="block-footer block-footer--split">
+            <span class="block-footer-counter">{{ display_totals($featureData.totalFeatures) }}</span>
+        </div>
+    </div>
+</xf:form>
+
+<xf:css>
+.dataList-cell--featureType .u-dimmed {
+    font-size: 0.85em;
+    text-transform: capitalize;
+}
+</xf:css>]]></template>
+</templates>

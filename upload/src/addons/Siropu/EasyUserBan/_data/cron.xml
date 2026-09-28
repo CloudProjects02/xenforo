@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cron>
+  <entry entry_id="easyUserBanDeleteBans" cron_class="Siropu\EasyUserBan\Cron\Ban" cron_method="deleteExpiredBans" active="1"><![CDATA[{"day_type":"dom","dom":[-1],"hours":[7],"minutes":[0,17]}]]></entry>
+</cron>
+ 		  	   				  		 	 	  	  	  		 	  	   			   	  		 			 		 				  		 				   		 				 		  	 	 	   		  			   	 		 	  		 		  	 	 	  		  	 

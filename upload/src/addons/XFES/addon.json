@@ -1,0 +1,23 @@
+{
+    "legacy_addon_id": "XenES",
+    "title": "XenForo Enhanced Search",
+    "description": "An enhanced version of the XenForo search system, allowing higher quality results and faster searching for bigger installations.",
+    "version_id": 2031170,
+    "version_string": "2.3.11",
+    "dev": "XenForo Ltd.",
+    "dev_url": "https://xenforo.com/",
+    "faq_url": "https://xenforo.com/goto/xfes-help",
+    "support_url": "https://xenforo.com/community/forums/enhanced-search-support.56/",
+    "extra_urls": {
+        "NullForums": "https://nullforums.net",
+        "Download updates": "https://nullforums.net/resources/xenforo-enhanced-search-xfes.10049"
+    },
+    "require": {
+        "XF": [
+            2030010,
+            "XenForo 2.3.0"
+        ]
+    },
+    "icon": "icon.png",
+    "options": "enhanced-search"
+}

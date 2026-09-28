@@ -5,6 +5,7 @@ namespace DBTech\Credits\Entity;
 use DBTech\Credits\EventTrigger\AbstractHandler;
 use DBTech\Credits\Repository\EventTriggerRepository;
 use XF\Entity\User;
+use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XF\PrintableException;
 
@@ -17,7 +18,7 @@ use XF\PrintableException;
  * RELATIONS
  * @property-read User|null $User
  */
-class ContentAccessPurchase extends AbstractEntity
+class ContentAccessPurchase extends Entity
 {
 	/**
 	 * @return AbstractHandler|null

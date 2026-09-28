@@ -7,7 +7,6 @@ use DBTech\Credits\Pub\View;
 use DBTech\Credits\XF\Entity\User;
 use XF\Mvc\ParameterBag;
 use XF\Mvc\Reply\AbstractReply;
-use XF\Mvc\Reply\Exception as ReplyException;
 use XF\Pub\Controller\AbstractController;
 
 class IndexController extends AbstractController
@@ -16,7 +15,7 @@ class IndexController extends AbstractController
 	 * @param $action
 	 * @param ParameterBag $params
 	 *
-	 * @throws ReplyException
+	 * @throws \XF\Mvc\Reply\Exception
 	 */
 	protected function preDispatchController($action, ParameterBag $params): void
 	{
@@ -33,7 +32,7 @@ class IndexController extends AbstractController
 	 * @param ParameterBag $params
 	 *
 	 * @return AbstractReply
-	 * @throws ReplyException
+	 * @throws \XF\Mvc\Reply\Exception
 	 * @throws \Exception
 	 */
 	public function actionIndex(ParameterBag $params): AbstractReply

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="member_view" modification_key="mubi_add_in_profile_information_member_view" description="Adds a warning to the profile" execution_order="11000" enabled="1" action="str_replace">
+    <find><![CDATA[<ul class="tabPanes js-memberTabPanes">]]></find>
+    <replace><![CDATA[<xf:if is="{$user.is_banned}">
+	<xf:macro id="mubi_user_ban_macros::banInfo" arg-user="{$user}" />
+</xf:if>
+$0]]></replace>
+  </modification>
+  <modification type="public" template="post_macros" modification_key="mubi_add_in_post_warning_post_macros" description="Add blocking warning" execution_order="11000" enabled="1" action="preg_replace">
+    <find><![CDATA[/<div class="message-userContent(.*)"/is]]></find>
+    <replace><![CDATA[<xf:if is="{$post.User.is_banned}">
+	<xf:macro id="mubi_user_ban_macros::messageInfo" />
+</xf:if>
+$0]]></replace>
+  </modification>
+</template_modifications>

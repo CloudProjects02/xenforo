@@ -2,10 +2,13 @@
 
 namespace DBTech\Shop\Spam\Cleaner;
 
-use DBTech\Shop\Finder\TradePostCommentFinder;
-use XF\PrintableException;
 use XF\Spam\Cleaner\AbstractHandler;
 
+/**
+ * Class TradePostComment
+ *
+ * @package DBTech\Shop\Spam\Cleaner
+ */
 class TradePostComment extends AbstractHandler
 {
 	/**
@@ -17,19 +20,19 @@ class TradePostComment extends AbstractHandler
 	{
 		return !empty($options['delete_messages']);
 	}
-
+	
 	/**
 	 * @param array $log
 	 * @param null $error
 	 *
 	 * @return bool
-	 * @throws PrintableException
+	 * @throws \XF\PrintableException
 	 */
 	public function cleanUp(array &$log, &$error = null): bool
 	{
 		$app = \XF::app();
 
-		$tradePostCommentsFinder = \XF::app()->finder(TradePostCommentFinder::class);
+		$tradePostCommentsFinder = $app->finder('DBTech\Shop:TradePostComment');
 		$tradePostComments = $tradePostCommentsFinder
 			->where('user_id', $this->user->user_id)
 			->fetch();
@@ -44,7 +47,7 @@ class TradePostComment extends AbstractHandler
 
 			$log['dbtech_shop_trade_comment'] = [
 				'deleteType' => $deleteType,
-				'tradeePostCommentIds' => [],
+				'tradeePostCommentIds' => []
 			];
 
 			foreach ($tradePostComments AS $tradePostCommentId => $tradePostComment)
@@ -66,17 +69,17 @@ class TradePostComment extends AbstractHandler
 
 		return true;
 	}
-
+	
 	/**
 	 * @param array $log
 	 * @param null $error
 	 *
 	 * @return bool
-	 * @throws PrintableException
+	 * @throws \XF\PrintableException
 	 */
 	public function restore(array $log, &$error = null): bool
 	{
-		$tradePostCommentsFinder = \XF::app()->finder(TradePostCommentFinder::class);
+		$tradePostCommentsFinder = \XF::app()->finder('DBTech\Shop:TradePostComment');
 
 		if ($log['deleteType'] == 'soft')
 		{

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="editor_dropdown.xcHide" version_id="2000000" version_string="2.0.0"><![CDATA[Hide]]></phrase>
+  <phrase title="help_page_desc.hide_bb_codes" version_id="2000600" version_string="2.0.6"><![CDATA[The list of hide BB codes you can use to spice up the look of your messages. This page shows a list of all hide BB codes that are available.]]></phrase>
+  <phrase title="help_page_title.hide_bb_codes" version_id="2000600" version_string="2.0.6"><![CDATA[Hide BB codes]]></phrase>
+  <phrase title="option.xc_hide_bbcode_allow_hide_buttons_create_thread" version_id="2000800" version_string="2.0.8"><![CDATA[Allow hide tags on first post (Create thread)]]></phrase>
+  <phrase title="option.xc_hide_bbcode_allow_hide_buttons_reply_thread" version_id="2000800" version_string="2.0.8"><![CDATA[Allow hide tags on replies]]></phrase>
+  <phrase title="option.xc_hide_bbcode_disabled_hide_help_page" version_id="2000632" version_string="2.0.6 Beta 2"><![CDATA[Disabled hide tag in help page]]></phrase>
+  <phrase title="option.xc_hide_bbcode_hideMappedTo" version_id="2000800" version_string="2.0.8 Beta 1"><![CDATA[Hide tag mapped to]]></phrase>
+  <phrase title="option.xc_hide_bbcode_hideReactMappedTo" version_id="2000800" version_string="2.0.8 Beta 1"><![CDATA[Hide react tag mapped to]]></phrase>
+  <phrase title="option.xc_hide_bbcode_usableReactions" version_id="2000800" version_string="2.0.8"><![CDATA[Usable reactions]]></phrase>
+  <phrase title="option_explain.xc_hide_bbcode_allow_hide_buttons_create_thread" version_id="2000800" version_string="2.0.8"><![CDATA[The hide tags checked will be available when creating a thread.]]></phrase>
+  <phrase title="option_explain.xc_hide_bbcode_allow_hide_buttons_reply_thread" version_id="2000800" version_string="2.0.8"><![CDATA[The hide tags checked will be available when reply a threads.]]></phrase>
+  <phrase title="option_explain.xc_hide_bbcode_disabled_hide_help_page" version_id="2000632" version_string="2.0.6 Beta 2"><![CDATA[Cheked hide tags will not be displayed in the help page.]]></phrase>
+  <phrase title="option_explain.xc_hide_bbcode_hideMappedTo" version_id="2000800" version_string="2.0.8 Beta 1"><![CDATA[]]></phrase>
+  <phrase title="option_explain.xc_hide_bbcode_hideReactMappedTo" version_id="2000800" version_string="2.0.8 Beta 1"><![CDATA[]]></phrase>
+  <phrase title="option_explain.xc_hide_bbcode_usableReactions" version_id="2000800" version_string="2.0.8"><![CDATA[Usable reactions for tags: [HIDEREACT], [HIDEREPLYREACT], [HIDEREPLYORREACT]]]></phrase>
+  <phrase title="option_group.xc_hide_bbcode" version_id="2000400" version_string="2.0.4"><![CDATA[[XenConcept] Hide BBCode]]></phrase>
+  <phrase title="option_group_description.xc_hide_bbcode" version_id="2000400" version_string="2.0.4"><![CDATA[Options that control the hide bbcode add-on.]]></phrase>
+  <phrase title="permission.forum_bypassHideAge" version_id="2000834" version_string="2.0.8 Beta 4"><![CDATA[Bypass hide age]]></phrase>
+  <phrase title="permission.forum_bypassHideGuest" version_id="2000834" version_string="2.0.8 Beta 4"><![CDATA[Bypass hide guest]]></phrase>
+  <phrase title="permission.forum_bypassHidePost" version_id="2000000" version_string="2.0.0"><![CDATA[Bypass hide post]]></phrase>
+  <phrase title="permission.forum_bypassHideReact" version_id="2000000" version_string="2.0.0"><![CDATA[Bypass hide reactions]]></phrase>
+  <phrase title="permission.forum_bypassHideReactScore" version_id="2000300" version_string="2.0.3"><![CDATA[Bypass hide reaction score]]></phrase>
+  <phrase title="permission.forum_bypassHideReply" version_id="2000000" version_string="2.0.0"><![CDATA[Bypass hide reply]]></phrase>
+  <phrase title="permission.forum_bypassHideReplyOrReact" version_id="2000700" version_string="2.0.7"><![CDATA[Bypass hide reply or reactions]]></phrase>
+  <phrase title="permission.forum_bypassHideReplyReact" version_id="2000000" version_string="2.0.0"><![CDATA[Bypass hide reply reactions]]></phrase>
+  <phrase title="permission.forum_bypassHideReplyThanks" version_id="2000800" version_string="2.0.8"><![CDATA[Bypass hide reply thanks]]></phrase>
+  <phrase title="permission.forum_bypassHideShowtogroups" version_id="2000835" version_string="2.0.8 Beta 5"><![CDATA[Bypass hide showtogroup]]></phrase>
+  <phrase title="permission.forum_bypassHideThanks" version_id="2000800" version_string="2.0.8"><![CDATA[Bypass hide thanks]]></phrase>
+  <phrase title="permission.forum_bypassHideTrophy" version_id="2000300" version_string="2.0.3"><![CDATA[Bypass hide trophy]]></phrase>
+  <phrase title="permission.forum_bypassHideUser" version_id="2000100" version_string="2.0.1"><![CDATA[Bypass hide user]]></phrase>
+  <phrase title="permission.forum_bypassHideUserGroups" version_id="2000970" version_string="2.0.9"><![CDATA[Bypass hide usergroups]]></phrase>
+  <phrase title="permission.forum_useHideAge" version_id="2000834" version_string="2.0.8 Beta 4"><![CDATA[Use hide age]]></phrase>
+  <phrase title="permission.forum_useHideDefault" version_id="2000835" version_string="2.0.8 Beta 5"><![CDATA[Use hide]]></phrase>
+  <phrase title="permission.forum_useHideGuest" version_id="2000834" version_string="2.0.8 Beta 4"><![CDATA[Use hide guest]]></phrase>
+  <phrase title="permission.forum_useHidePosts" version_id="2000800" version_string="2.0.8"><![CDATA[Use hide post]]></phrase>
+  <phrase title="permission.forum_useHideReact" version_id="2000600" version_string="2.0.6"><![CDATA[Use hide reaction]]></phrase>
+  <phrase title="permission.forum_useHideReactScore" version_id="2000300" version_string="2.0.3"><![CDATA[Use hide reaction score]]></phrase>
+  <phrase title="permission.forum_useHideReply" version_id="2000000" version_string="2.0.0"><![CDATA[Use hide reply]]></phrase>
+  <phrase title="permission.forum_useHideReplyOrReact" version_id="2000700" version_string="2.0.7"><![CDATA[Use hide reply or reaction]]></phrase>
+  <phrase title="permission.forum_useHideReplyReact" version_id="2000600" version_string="2.0.6"><![CDATA[Use hide reply reaction]]></phrase>
+  <phrase title="permission.forum_useHideReplyThanks" version_id="2000800" version_string="2.0.8"><![CDATA[Use hide reply thanks]]></phrase>
+  <phrase title="permission.forum_useHideShowtogroups" version_id="2000835" version_string="2.0.8 Beta 5"><![CDATA[Use hide showtogroup]]></phrase>
+  <phrase title="permission.forum_useHideThanks" version_id="2000800" version_string="2.0.8"><![CDATA[Use hide thanks]]></phrase>
+  <phrase title="permission.forum_useHideTrophy" version_id="2000300" version_string="2.0.3"><![CDATA[Use hide trophy]]></phrase>
+  <phrase title="permission.forum_useHideUser" version_id="2000100" version_string="2.0.1"><![CDATA[Use hide user]]></phrase>
+  <phrase title="permission.forum_useHideUserGroups" version_id="2000970" version_string="2.0.9"><![CDATA[Use hide usergroups]]></phrase>
+  <phrase title="permission_interface.xc_hide_bbcode" version_id="2000000" version_string="2.0.0"><![CDATA[[XenConcept] Hide BBCode]]></phrase>
+  <phrase title="permission_interface.xc_hide_bbcode_moderator" version_id="2000700" version_string="2.0.7"><![CDATA[[XenConcept] Hide BBCode - Moderator]]></phrase>
+  <phrase title="style_prop.xc_hide_bbcode_hidden_border_color" version_id="2000000" version_string="2.0.0"><![CDATA[Hidden - Border Color]]></phrase>
+  <phrase title="style_prop.xc_hide_bbcode_unhidden_border_color" version_id="2000000" version_string="2.0.0"><![CDATA[UnHidden - Border Color]]></phrase>
+  <phrase title="style_prop_desc.xc_hide_bbcode_hidden_border_color" version_id="2000000" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.xc_hide_bbcode_unhidden_border_color" version_id="2000000" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="style_prop_group.xc_hide_bbcode" version_id="2000000" version_string="2.0.0"><![CDATA[[XenConcept] Hide BBCode]]></phrase>
+  <phrase title="style_prop_group_desc.xc_hide_bbcode" version_id="2000000" version_string="2.0.0"><![CDATA[Basic settings for HTML hide bbcode styling are included here.]]></phrase>
+  <phrase title="xc_bs_default_article_prefix_explain" version_id="2000134" version_string="2.0.1 Beta 3"><![CDATA[You may specify an article prefix to be automatically selected when visitors create new articles in this category. The selected prefix must also be selected in the 'Available prefixes' list above.]]></phrase>
+  <phrase title="xc_hide_bbcode_age_required" version_id="2000834" version_string="2.0.8 Beta 4"><![CDATA[Age required]]></phrase>
+  <phrase title="xc_hide_bbcode_age_required_explain" version_id="2000834" version_string="2.0.8 Beta 4"><![CDATA[]]></phrase>
+  <phrase title="xc_hide_bbcode_general_options" version_id="2000800" version_string="2.0.8"><![CDATA[General options]]></phrase>
+  <phrase title="xc_hide_bbcode_hidden_content" version_id="2000000" version_string="2.0.0 Beta 1"><![CDATA[Hidden content]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_desc.hide" version_id="2000800" version_string="2.0.8"><![CDATA[This tag can be mapped to any of the above BBCodes. (Default - [HIDEREPLY])]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_desc.hideage" version_id="2000834" version_string="2.0.8 Beta 4"><![CDATA[The content of this tag can only be seen by users who have the defined age.]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_desc.hideguest" version_id="2000834" version_string="2.0.8 Beta 4"><![CDATA[The content of this tag is only shown to registered user.]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_desc.hideposts" version_id="2000800" version_string="2.0.8"><![CDATA[Content within this tag can only be seen by people's who have more posts than defined number of posts.]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_desc.hidereact" version_id="2000800" version_string="2.0.8"><![CDATA[Content within can only be seen after the user a react this content.]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_desc.hidereactscore" version_id="2000800" version_string="2.0.8"><![CDATA[Content within this tag can only be seen by people's who have more reaction score than defined reaction score.]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_desc.hidereply" version_id="2000800" version_string="2.0.8"><![CDATA[Content within this tag is not shown to user until he/she replies in that thread.]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_desc.hidereplyorreact" version_id="2000800" version_string="2.0.8"><![CDATA[Content within can only be seen after the user a reply or a react this content.]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_desc.hidereplyreact" version_id="2000800" version_string="2.0.8"><![CDATA[Content within can only be seen after the user a reply to content and a react this content.]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_desc.hidereplythanks" version_id="2000800" version_string="2.0.8"><![CDATA[]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_desc.hideshowtogroups" version_id="2000800" version_string="2.0.8"><![CDATA[Content within this tag is only shown to defined usergroups.]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_desc.hidethanks" version_id="2000800" version_string="2.0.8"><![CDATA[]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_desc.hidetrophy" version_id="2000800" version_string="2.0.8"><![CDATA[Content within this tag can only be seen by people's who have more trophy points than defined trophy points.]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_desc.hideuser" version_id="2000800" version_string="2.0.8"><![CDATA[Content within this tag is only shown to defined user.]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_error_phrase.hideage" version_id="2000834" version_string="2.0.8 Beta 4"><![CDATA[You must be {value} years old to see this content]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_error_phrase.hideguest" version_id="2000834" version_string="2.0.8 Beta 4"><![CDATA[You must register or login to view this content.]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_error_phrase.hideposts" version_id="2000800" version_string="2.0.8 Beta 1"><![CDATA[To see this hidden content your post count must be {value} or greater.]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_error_phrase.hidereact" version_id="2000800" version_string="2.0.8"><![CDATA[To see this hidden content, you must react with one of the following reactions :]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_error_phrase.hidereactscore" version_id="2000800" version_string="2.0.8 Beta 1"><![CDATA[To see this hidden content your reaction score must be {value} or greater.]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_error_phrase.hidereply" version_id="2000800" version_string="2.0.8"><![CDATA[You must reply before you can see the hidden data contained here.]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_error_phrase.hidereplyorreact" version_id="2000800" version_string="2.0.8"><![CDATA[To see this hidden content, you must reply or react with one of the following reactions :]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_error_phrase.hidereplyreact" version_id="2000800" version_string="2.0.8"><![CDATA[To see this hidden content, you must reply and react with one of the following reactions :]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_error_phrase.hidereplythanks" version_id="2000800" version_string="2.0.8"><![CDATA[To see this hidden content, you must reply and like this content.]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_error_phrase.hideshowtogroups" version_id="2000800" version_string="2.0.8"><![CDATA[Content of this hidden block can only be seen by members of (usergroups: {groups}).]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_error_phrase.hidethanks" version_id="2000800" version_string="2.0.8"><![CDATA[To see this hidden content, you must like this content.]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_error_phrase.hidetrophy" version_id="2000800" version_string="2.0.8 Beta 1"><![CDATA[To see this hidden content your trophy points must be {value} or greater.]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_error_phrase.hideuser" version_id="2000800" version_string="2.0.8"><![CDATA[Content of this hidden block can only be seen by following members ({users}).]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_error_phrase.hideusergroups" version_id="2000970" version_string="2.0.9"><![CDATA[Content of this hidden block can only seen by members of (usergroups: {groups}).]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_example.hide" version_id="2000800" version_string="2.0.8"><![CDATA[[HIDE] Content [/HIDE]]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_example.hideage" version_id="2000834" version_string="2.0.8 Beta 4"><![CDATA[[HIDEAGE=60] Content[/HIDEAGE]]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_example.hideguest" version_id="2000834" version_string="2.0.8 Beta 4"><![CDATA[[HIDEGUEST] Content [/HIDEGUEST]]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_example.hideposts" version_id="2000800" version_string="2.0.8"><![CDATA[[HIDEPOSTS=10] Content [/HIDEPOSTS]]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_example.hidereact" version_id="2000800" version_string="2.0.8"><![CDATA[[HIDEREACT=1,2] Content [/HIDEREACT]]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_example.hidereactscore" version_id="2000800" version_string="2.0.8"><![CDATA[[HIDEREACTSCORE=10] Content [/HIDEREACTSCORE]]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_example.hidereply" version_id="2000800" version_string="2.0.8"><![CDATA[[HIDEREPLY] Content [/HIDEREPLY]]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_example.hidereplyorreact" version_id="2000800" version_string="2.0.8"><![CDATA[[HIDEREPLYORREACT=1,2] Content [/HIDEREPLYORREACT]]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_example.hidereplyreact" version_id="2000800" version_string="2.0.8"><![CDATA[[HIDEREPLYREACT=1,2] Content [/HIDEREPLYREACT]]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_example.hidereplythanks" version_id="2000800" version_string="2.0.8"><![CDATA[[HIDEREPLYTHANKS] Content [/HIDEREPLYTHANKS]]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_example.hideshowtogroups" version_id="2000800" version_string="2.0.8"><![CDATA[[HIDESHOWTOGROUPS=userGroupIds] Content [/HIDESHOWTOGROUPS]]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_example.hidethanks" version_id="2000800" version_string="2.0.8"><![CDATA[[HIDETHANKS] Content [/HIDETHANKS]]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_example.hidetrophy" version_id="2000800" version_string="2.0.8"><![CDATA[[HIDETROPHY=10] Content [/HIDETROPHY]]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_example.hideuser" version_id="2000800" version_string="2.0.8"><![CDATA[[HIDEUSER=userIds] Content [/USER]]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_output.hide" version_id="2000800" version_string="2.0.8"><![CDATA[]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_output.hideage" version_id="2000834" version_string="2.0.8 Beta 4"><![CDATA[]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_output.hideguest" version_id="2000834" version_string="2.0.8 Beta 4"><![CDATA[]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_output.hideposts" version_id="2000800" version_string="2.0.8"><![CDATA[]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_output.hidereact" version_id="2000800" version_string="2.0.8"><![CDATA[]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_output.hidereactscore" version_id="2000800" version_string="2.0.8"><![CDATA[]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_output.hidereply" version_id="2000800" version_string="2.0.8"><![CDATA[]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_output.hidereplyorreact" version_id="2000800" version_string="2.0.8"><![CDATA[]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_output.hidereplyreact" version_id="2000800" version_string="2.0.8"><![CDATA[]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_output.hidereplythanks" version_id="2000800" version_string="2.0.8"><![CDATA[]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_output.hideshowtogroups" version_id="2000800" version_string="2.0.8"><![CDATA[[HIDESHOWTOGROUPS=1] Content [/HIDESHOWTOGROUPS] ]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_output.hidethanks" version_id="2000800" version_string="2.0.8"><![CDATA[]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_output.hidetrophy" version_id="2000800" version_string="2.0.8"><![CDATA[]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_output.hideuser" version_id="2000800" version_string="2.0.8"><![CDATA[[HIDEUSER=1] Content [/HIDEUSER] ]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_title.hide" version_id="2000800" version_string="2.0.8"><![CDATA[Hide]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_title.hideage" version_id="2000834" version_string="2.0.8 Beta 4"><![CDATA[Hide age]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_title.hideguest" version_id="2000834" version_string="2.0.8 Beta 4"><![CDATA[Hide guest]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_title.hideposts" version_id="2000800" version_string="2.0.8"><![CDATA[Hide posts]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_title.hidereact" version_id="2000800" version_string="2.0.8"><![CDATA[Hide reaction]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_title.hidereactscore" version_id="2000800" version_string="2.0.8"><![CDATA[Hide reaction score]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_title.hidereply" version_id="2000800" version_string="2.0.8"><![CDATA[Hide reply]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_title.hidereplyorreact" version_id="2000800" version_string="2.0.8"><![CDATA[Hide reply or react]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_title.hidereplyreact" version_id="2000800" version_string="2.0.8"><![CDATA[Hide reply react]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_title.hidereplythanks" version_id="2000800" version_string="2.0.8"><![CDATA[Hide reply thanks]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_title.hideshowtogroups" version_id="2000800" version_string="2.0.8"><![CDATA[Hide showtogroups]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_title.hidethanks" version_id="2000800" version_string="2.0.8"><![CDATA[Hide thanks]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_title.hidetrophy" version_id="2000800" version_string="2.0.8"><![CDATA[Hide trophy]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_title.hideuser" version_id="2000800" version_string="2.0.8"><![CDATA[Hide user]]></phrase>
+  <phrase title="xc_hide_bbcode_hide_bb_code_title.hideusergroups" version_id="2000970" version_string="2.0.9"><![CDATA[Hide usergroups]]></phrase>
+  <phrase title="xc_hide_bbcode_post_count" version_id="2000000" version_string="2.0.0"><![CDATA[Post count]]></phrase>
+  <phrase title="xc_hide_bbcode_post_count_explain" version_id="2000000" version_string="2.0.0"><![CDATA[Number of posts user must have to see your [HIDEPOSTS] tag content.]]></phrase>
+  <phrase title="xc_hide_bbcode_thread_options" version_id="2000800" version_string="2.0.8"><![CDATA[Thread options]]></phrase>
+  <phrase title="xc_hide_bbcode_to_see_this_content_you_must_react_to_content" version_id="2000500" version_string="2.0.5"><![CDATA[To see this hidden content, you must react to content.]]></phrase>
+  <phrase title="xc_hide_bbcode_trophy_points" version_id="2000300" version_string="2.0.3"><![CDATA[Trophy points]]></phrase>
+  <phrase title="xc_hide_bbcode_trophy_points_explain" version_id="2000300" version_string="2.0.3"><![CDATA[Number of trophy points user must have to see your [HIDETROPHY] tag content.]]></phrase>
+  <phrase title="xc_hide_bbcode_users" version_id="2000100" version_string="2.0.1"><![CDATA[Users]]></phrase>
+  <phrase title="xc_hide_bbcode_you_must_reply_before_you_can_see_the_hidden_data_contained_here" version_id="2000000" version_string="2.0.0"><![CDATA[You must reply before you can see the hidden data contained here.]]></phrase>
+  <phrase title="xc_hide_reaction_score" version_id="2000300" version_string="2.0.3"><![CDATA[Reaction score]]></phrase>
+  <phrase title="xc_hide_reaction_score_explain" version_id="2000300" version_string="2.0.3"><![CDATA[Number of react score user must have to see your [HIDEREACTSCORE] tag content.]]></phrase>
+</phrases>

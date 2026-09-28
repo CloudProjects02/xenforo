@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<admin_navigation>
+  <admin_navigation_entry navigation_id="jace_upgrade_features" parent_navigation_id="userCustomization" display_order="600" link="upgrade-features" debug_only="0" development_only="0" hide_no_children="0"/>
+</admin_navigation>

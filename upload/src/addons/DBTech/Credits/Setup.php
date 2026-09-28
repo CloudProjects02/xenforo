@@ -6,7 +6,6 @@ use XF\AddOn\AbstractSetup;
 use XF\AddOn\StepRunnerInstallTrait;
 use XF\AddOn\StepRunnerUninstallTrait;
 use XF\AddOn\StepRunnerUpgradeTrait;
-use XF\Db\Exception as DbException;
 use XF\Db\Schema\Alter;
 use XF\Job\PermissionRebuild;
 
@@ -29,8 +28,13 @@ class Setup extends AbstractSetup
 
 	// Upgrade helpers
 	use Install\UpgradeLegacyTrait;
-	use Install\Upgrade905999970Trait;
-	use Install\Upgrade906999970Trait;
+	use Install\Upgrade905009970Trait;
+	use Install\Upgrade905019970Trait;
+	use Install\Upgrade905039970Trait;
+	use Install\Upgrade905059970Trait;
+	use Install\Upgrade905069970Trait;
+	use Install\Upgrade905089970Trait;
+	use Install\Upgrade905099970Trait;
 
 
 	// ################################ INSTALLATION ####################
@@ -52,70 +56,68 @@ class Setup extends AbstractSetup
 
 		foreach ($this->getAlterDefinitions() AS $tableName => $definitions)
 		{
-			if (!$sm->tableExists($tableName))
+			if ($sm->tableExists($tableName))
 			{
-				continue;
+				$sm->alterTable($tableName, function (Alter $table) use ($definitions)
+				{
+					foreach ($definitions['columns'] AS $columnName => $definition)
+					{
+						$column = $this->addOrChangeColumn(
+							$table,
+							$columnName,
+							$definition['type'],
+							$definition['length'] ?? null
+						);
+
+						if (isset($definition['unsigned']))
+						{
+							$column->unsigned($definition['unsigned']);
+						}
+
+						if (isset($definition['values']))
+						{
+							$column->values($definition['values']);
+						}
+
+						if (isset($definition['default']))
+						{
+							$column->setDefault($definition['default']);
+						}
+
+						if (isset($definition['nullable']))
+						{
+							$column->nullable($definition['nullable']);
+						}
+
+						if (isset($definition['after']))
+						{
+							$column->after($definition['after']);
+						}
+					}
+
+					if (isset($definitions['keys']))
+					{
+						foreach ($definitions['keys'] AS $indexName => $columns)
+						{
+							$table->addKey($columns, $indexName);
+						}
+					}
+
+					if (isset($definitions['edits']))
+					{
+						foreach ($definitions['edits'] AS $columnName => $func)
+						{
+							$column = $table->changeColumn($columnName);
+							$func($column, true);
+						}
+					}
+				});
 			}
-
-			$sm->alterTable($tableName, function (Alter $table) use ($definitions)
-			{
-				foreach ($definitions['columns'] AS $columnName => $definition)
-				{
-					$column = $this->addOrChangeColumn(
-						$table,
-						$columnName,
-						$definition['type'],
-						$definition['length'] ?? null
-					);
-
-					if (isset($definition['unsigned']))
-					{
-						$column->unsigned($definition['unsigned']);
-					}
-
-					if (isset($definition['values']))
-					{
-						$column->values($definition['values']);
-					}
-
-					if (isset($definition['default']))
-					{
-						$column->setDefault($definition['default']);
-					}
-
-					if (isset($definition['nullable']))
-					{
-						$column->nullable($definition['nullable']);
-					}
-
-					if (isset($definition['after']))
-					{
-						$column->after($definition['after']);
-					}
-				}
-
-				if (isset($definitions['keys']))
-				{
-					foreach ($definitions['keys'] AS $indexName => $columns)
-					{
-						$table->addKey($columns, $indexName);
-					}
-				}
-
-				if (isset($definitions['edits']))
-				{
-					foreach ($definitions['edits'] AS $columnName => $func)
-					{
-						$column = $table->changeColumn($columnName);
-						$func($column, true);
-					}
-				}
-			});
 		}
 	}
 
 	/**
-	 * @throws DbException
+	 * @throws \XF\Db\Exception
 	 */
 	public function installStep3(): void
 	{

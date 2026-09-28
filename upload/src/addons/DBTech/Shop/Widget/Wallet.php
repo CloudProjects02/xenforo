@@ -3,18 +3,20 @@
 namespace DBTech\Shop\Widget;
 
 use DBTech\Shop\Entity\Currency;
-use DBTech\Shop\Finder\CurrencyFinder;
-use XF\Http\Request;
 use XF\Widget\AbstractWidget;
-use XF\Widget\WidgetRenderer;
 
+/**
+ * Class Wallet
+ *
+ * @package DBTech\Shop\Widget
+ */
 class Wallet extends AbstractWidget
 {
 	/** @var array */
 	protected $defaultOptions = [
-		'currencyIds' => '',
+		'currencyIds' => ''
 	];
-
+	
 	/**
 	 * @param string $context
 	 *
@@ -25,23 +27,23 @@ class Wallet extends AbstractWidget
 		$params = parent::getDefaultTemplateParams($context);
 		if ($context == 'options')
 		{
-			$params['currencies'] = \XF::app()->finder(CurrencyFinder::class)
+			$params['currencies'] = $this->finder('DBTech\Shop:Currency')
 				->fetch()
 				->pluckNamed('title', 'currency_id')
 			;
 		}
 		return $params;
 	}
-
+	
 	/**
-	 * @return WidgetRenderer
+	 * @return \XF\Widget\WidgetRenderer
 	 */
-	public function render(): WidgetRenderer
+	public function render(): \XF\Widget\WidgetRenderer
 	{
 		$options = $this->options;
-
-		/** @var \XF\Mvc\Entity\AbstractCollection<\DBTech\Shop\Entity\Currency> $currencies */
-		$currencies = \XF::app()->finder(CurrencyFinder::class)
+		
+		/** @var \DBTech\Shop\Entity\Currency[] $currencies */
+		$currencies = $this->finder('DBTech\Shop:Currency')
 			->fetch()
 			->filterViewable()
 			->filter(function (Currency $currency) use ($options): ?Currency
@@ -50,11 +52,10 @@ class Wallet extends AbstractWidget
 					$options['currencyIds']
 					&& !in_array(0, $options['currencyIds'])
 					&& !in_array($currency->currency_id, $options['currencyIds'])
-				)
-				{
+				) {
 					return null;
 				}
-
+				
 				return $currency;
 			})
 		;
@@ -65,18 +66,18 @@ class Wallet extends AbstractWidget
 		];
 		return $this->renderer('dbtech_shop_widget_wallet', $viewParams);
 	}
-
+	
 	/**
-	 * @param Request $request
+	 * @param \XF\Http\Request $request
 	 * @param array $options
 	 * @param null $error
 	 *
 	 * @return bool
 	 */
-	public function verifyOptions(Request $request, array &$options, &$error = null): bool
+	public function verifyOptions(\XF\Http\Request $request, array &$options, &$error = null): bool
 	{
 		$options = $request->filter([
-			'currencyIds' => 'array-uint',
+			'currencyIds' => 'array-uint'
 		]);
 		if (empty($options['currencyIds']))
 		{

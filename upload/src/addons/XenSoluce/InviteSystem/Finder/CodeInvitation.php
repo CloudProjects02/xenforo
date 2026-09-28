@@ -12,3 +12,4 @@ class CodeInvitation extends Finder
           return $this;
      }
 }
+ 		   	  		 		     				  		  		 	  	 	           		          	 	   	  								  		  				 	 		       	 		 					 		   				 	 		  	    

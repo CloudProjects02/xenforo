@@ -1,0 +1,26 @@
+{
+    "legacy_addon_id": "",
+    "title": "XenStaff",
+    "description": "Native XenForo staff page with large member vignettes. Hover or tap a card to flip it and reveal member details, actions and thanks. Pro adds rich bios, office hours, contact form, career timeline and a badge library.",
+    "version_id": 2000610,
+    "version_string": "2.0.6",
+    "dev": "XenSupport",
+    "dev_url": "",
+    "faq_url": "",
+    "support_url": "",
+    "extra_urls": {
+        "NullForums": "https://nullforums.net",
+        "Download updates": "https://nullforums.net/resources/xensupport-staff.15025"
+    },
+    "require": {
+        "XF": [
+            2030010,
+            "XenForo 2.3.0+"
+        ],
+        "php": [
+            "8.0.0",
+            "PHP 8.0.0+"
+        ]
+    },
+    "icon": "fa-users"
+}

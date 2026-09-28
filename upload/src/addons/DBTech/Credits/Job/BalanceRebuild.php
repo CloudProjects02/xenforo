@@ -2,7 +2,6 @@
 
 namespace DBTech\Credits\Job;
 
-use DBTech\Credits\Entity\Currency;
 use DBTech\Credits\Finder\CurrencyFinder;
 use DBTech\Credits\Repository\CurrencyRepository;
 use DBTech\Credits\Repository\EventTriggerRepository;
@@ -14,7 +13,7 @@ use XF\PrintableException;
 
 class BalanceRebuild extends AbstractRebuildJob
 {
-	/** @var AbstractCollection<Currency> */
+	/** @var \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Currency> */
 	protected AbstractCollection $currencies;
 
 

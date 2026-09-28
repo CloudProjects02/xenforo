@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="public" title="andy_change_resource_date" version_id="14" version_string="1.4"><![CDATA[<xf:title>{{ phrase('changeresourcedate_change_resource_date') }}</xf:title>
+
+<xf:css src="andy_change_resource_date.less" />
+
+<xf:form action="{{ link('resources/change-resource-date-save', $resource) }}" class="block" ajax="true">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:hiddenval name="null" autofocus="autofocus" />
+            <xf:formrow label="{{ phrase('date') }}">
+                <div class="inputGroup">
+                    <xf:dateinput 
+						id="date" 
+						name="date" 
+						value="{{ date($resource.resource_date, 'Y-m-d') }}" />
+					&nbsp;
+                    <input class="input input--date"
+						id="time"
+						name="time"
+						type="time" 
+						value="{{ date($resource.resource_date, 'H:i')}}" />
+                </div>
+				<div class="change-resource-date-explain">
+					{{ phrase('changeresourcedate_enter_new_date_and_time') }} <a href="javascript:void(0)" id="currentDate">{{ phrase('changeresourcedate_use_current_time') }}</a>
+				</div>
+            </xf:formrow>
+		</div>
+		<xf:submitrow submit="{{ phrase('changeresourcedate_submit') }}" />
+	</div>
+</xf:form>
+
+<xf:js>
+	const link = document.getElementById('currentDate')
+
+	XF.on(link, 'click', (e) =>
+    {
+		e.stopPropagation(); 
+	
+		const today = new Date();
+		const year = today.getFullYear();
+		const month = String(today.getMonth() + 1).padStart(2, '0');
+		const day = String(today.getDate()).padStart(2, '0');
+		const dateString = year + '-' + month + '-' + day;
+
+		document.getElementById('date').value = dateString
+	
+		const now = new Date();
+		let hours = now.getHours();
+		let minutes = now.getMinutes();
+		hours = String(hours).padStart(2, '0');
+		minutes = String(minutes).padStart(2, '0');
+		const timeString = hours + ':' + minutes;
+	
+		document.getElementById('time').value = timeString
+	})
+</xf:js>]]></template>
+  <template type="public" title="andy_change_resource_date.less" version_id="12" version_string="1.2"><![CDATA[.change-resource-date-explain {
+	margin-top: 10px;
+	color: @xf-paletteNeutral2;
+	font-size: 13px;
+}]]></template>
+</templates>

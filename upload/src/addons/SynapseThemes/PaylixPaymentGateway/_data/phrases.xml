@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="paylix_api_connection_error" version_id="100" version_string="1.0.0"><![CDATA[Could not verify API connection. Please check your API key.]]></phrase>
+  <phrase title="paylix_api_connection_text_failed" version_id="100" version_string="1.0.0"><![CDATA[API connection test failed: {error}]]></phrase>
+  <phrase title="paylix_api_key_explain" version_id="100" version_string="1.0.0"><![CDATA[Your Paylix API key. You can find <a href="https://dashboard.paylix.gg/settings/security">this</a> in your Paylix dashboard under Security settings.]]></phrase>
+  <phrase title="paylix_provide_api_key" version_id="100" version_string="1.0.0"><![CDATA[You must provide an API key to set up this profile.]]></phrase>
+  <phrase title="paylix_provide_webhook_secret" version_id="100" version_string="1.0.0"><![CDATA[You must provide a webhook secret to set up this profile. ]]></phrase>
+  <phrase title="paylix_webhook_secret" version_id="100" version_string="1.0.0"><![CDATA[Webhook secret]]></phrase>
+  <phrase title="paylix_webhook_secret_explain" version_id="100" version_string="1.0.0"><![CDATA[Your Paylix webhook secret. This is used to verify webhook signatures from Paylix. You can find <a href="https://dashboard.paylix.gg/settings/shop/general">this</a> in your Paylix dashboard under Webhook settings.]]></phrase>
+</phrases>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<permissions>
+  <permission permission_group_id="forum" permission_id="createThreadCount" permission_type="integer" interface_group_id="eaeThreadCountPermissions" display_order="10"/>
+  <permission permission_group_id="forum" permission_id="replyThreadCount" permission_type="integer" interface_group_id="eaeThreadCountPermissions" display_order="20"/>
+  <permission permission_group_id="forum" permission_id="viewNodeThreadCount" permission_type="integer" interface_group_id="eaeThreadCountPermissions" display_order="5"/>
+  <permission permission_group_id="forum" permission_id="viewOthersThreadCount" permission_type="integer" interface_group_id="eaeThreadCountPermissions" display_order="15"/>
+</permissions>

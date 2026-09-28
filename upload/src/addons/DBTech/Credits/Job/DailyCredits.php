@@ -17,7 +17,7 @@ class DailyCredits extends AbstractRebuildJob
 		'cutOff' => null,
 	];
 
-	/** @var AbstractCollection<Currency> */
+	/** @var \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Currency> */
 	protected AbstractCollection $currencies;
 
 

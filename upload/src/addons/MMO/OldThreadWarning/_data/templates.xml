@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="public" title="motw_notice_warning" version_id="2030030" version_string="2.3.0 Beta"><![CDATA[<xf:set var="$thread" value="{$__globals.thread}" />
+<xf:set var="$options" value="{$xf.options}" />
+<xf:if is="{{ $thread && $options.motwEnableWarning && $thread.discussion_type != 'resource' }}">
+	<xf:set var="$age" value="{{ $thread.last_post_date + ($options.motwDaysCutoff * 86400) }}"/>
+	<xf:if is="{{ $age < $xf.time }}">
+		<xf:js src="MMO/OldThreadWarning/thread_warning.js" addon="MMO/OldThreadWarning" min="1" />
+		<div class="block" data-xf-init="motw-thread-warning">
+			<div class="block-container">
+				<div class="block-body">
+					<div class="formInfoRow">
+						<div class="block-rowMessage block-rowMessage--warning block-rowMessage--hidden">
+							<xf:set var="$shortDays" value="{$options.motwShortDays}" />
+							<xf:set var="$dateFormat" value="{$options.motwDateFormat}" />
+							{{ phrase('motw_note_x_days', {
+								'days': mcl_diff_for_human($thread.last_post_date, {
+									'short': $shortDays,
+									'options': $dateFormat
+							}) }) }}
+							<div class="block-rowMessage block-rowMessage--error">
+								<xf:checkbox>
+									<xf:option name="confirm" value="1" id="js-confirmOld">
+										<xf:label for="confirmOld">{{ phrase('motw_confirm') }}</xf:label>
+									</xf:option>
+								</xf:checkbox>
+							</div>	
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</xf:if>
+</xf:if>]]></template>
+</templates>
+ 		 				  			 					  		 	  	  	 		   	  			 		 					  		 				   		 	  	  	  		 			  		    	 	    	  				  	   		   					 				 		  		

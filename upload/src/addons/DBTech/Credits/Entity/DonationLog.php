@@ -3,6 +3,7 @@
 namespace DBTech\Credits\Entity;
 
 use XF\Entity\User;
+use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 
 /**
@@ -22,7 +23,7 @@ use XF\Mvc\Entity\Structure;
  * @property-read Event|null $Event
  * @property-read Currency|null $Currency
  */
-class DonationLog extends AbstractEntity
+class DonationLog extends Entity
 {
 	/**
 	 * @param Structure $structure
@@ -41,7 +42,7 @@ class DonationLog extends AbstractEntity
 			'donation_user_id' => ['type' => self::UINT, 'required' => true],
 			'event_id' => ['type' => self::UINT, 'required' => true],
 			'currency_id' => ['type' => self::UINT, 'required' => true],
-			'amount' => ['type' => self::FLOAT, 'required' => true, 'max' => PHP_INT_MAX, 'isDecimal' => true],
+			'amount' => ['type' => self::FLOAT, 'required' => true],
 			'message' => ['type' => self::STR, 'default' => ''],
 		];
 		$structure->getters = [];

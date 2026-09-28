@@ -1,0 +1,20 @@
+{
+    "legacy_addon_id": "siropu_easy_user_ban",
+    "title": "Easy User Ban",
+    "description": "Manage user bans easily from the member area and display moderator log and banned user list.",
+    "version_id": 2020171,
+    "version_string": "2.2.2",
+    "dev": "Siropu",
+    "dev_url": "https://www.siropu.com/",
+    "faq_url": "",
+    "support_url": "https://www.siropu.com/customer/support/open-ticket",
+    "extra_urls": [],
+    "require": {
+        "XF": [
+            2030010,
+            "XenForo 2.3.0+"
+        ]
+    },
+    "icon": "fa-user-slash"
+}
+ 		  	   				  		 	 	  	  	  		 	  	   			   	  		 			 		 				  		 				   		 				 		  	 	 	   		  			   	 		 	  		 		  	 	 	  		  	 

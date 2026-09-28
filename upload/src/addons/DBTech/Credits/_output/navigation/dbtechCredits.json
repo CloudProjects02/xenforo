@@ -1,0 +1,11 @@
+{
+    "parent_navigation_id": "",
+    "display_order": 1000,
+    "navigation_type_id": "basic",
+    "type_config": {
+        "link": "{{ link('dbtech-credits') }}",
+        "display_condition": "$xf.visitor.canViewDbtechCredits()",
+        "extra_attributes": []
+    },
+    "enabled": false
+}

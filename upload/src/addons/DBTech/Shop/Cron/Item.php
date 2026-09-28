@@ -2,37 +2,32 @@
 
 namespace DBTech\Shop\Cron;
 
-use DBTech\Shop\Repository\ItemRepository;
-use DBTech\Shop\Repository\PurchaseRepository;
-use XF\Db\Exception;
-use XF\PrintableException;
-
 class Item
 {
 	/**
-	 * @throws PrintableException
+	 * @throws \XF\PrintableException
 	 */
-	public static function duration(): void
+	public static function duration()
 	{
-		$repo = \XF::app()->repository(PurchaseRepository::class);
+		$repo = \XF::repository('DBTech\Shop:Purchase');
 		$repo->handleExpiredItems();
 	}
-
+	
 	/**
 	 *
 	 */
-	public static function autoBump(): void
+	public static function autoBump()
 	{
-		$repo = \XF::app()->repository(PurchaseRepository::class);
+		$repo = \XF::repository('DBTech\Shop:Purchase');
 		$repo->autoBumpThreads();
 	}
-
+	
 	/**
-	 * @throws Exception
+	 * @throws \XF\Db\Exception
 	 */
-	public static function refillStock(): void
+	public static function refillStock()
 	{
-		$repo = \XF::app()->repository(ItemRepository::class);
+		$repo = \XF::repository('DBTech\Shop:Item');
 		$repo->refillStock();
 	}
 }

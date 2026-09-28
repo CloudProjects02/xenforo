@@ -15,7 +15,6 @@ use XF\InputFilterer;
 use XF\Mvc\FormAction;
 use XF\Mvc\ParameterBag;
 use XF\Mvc\Reply\AbstractReply;
-use XF\Mvc\Reply\Exception as ReplyException;
 use XF\PrintableException;
 use XF\Repository\NodeRepository;
 
@@ -24,8 +23,7 @@ class EventController extends AbstractController
 	/**
 	 * @param $action
 	 * @param ParameterBag $params
-	 *
-	 * @throws ReplyException
+	 * @throws \XF\Mvc\Reply\Exception
 	 */
 	protected function preDispatchController($action, ParameterBag $params): void
 	{
@@ -34,7 +32,7 @@ class EventController extends AbstractController
 
 	/**
 	 * @return AbstractReply
-	 * @throws ReplyException
+	 * @throws \XF\Mvc\Reply\Exception
 	 * @throws \Exception
 	 */
 	public function actionIndex(): AbstractReply
@@ -99,9 +97,8 @@ class EventController extends AbstractController
 
 	/**
 	 * @param ParameterBag $params
-	 *
 	 * @return AbstractReply
-	 * @throws ReplyException
+	 * @throws \XF\Mvc\Reply\Exception
 	 */
 	public function actionEdit(ParameterBag $params): AbstractReply
 	{
@@ -216,7 +213,7 @@ class EventController extends AbstractController
 	 * @param ParameterBag $params
 	 *
 	 * @return AbstractReply
-	 * @throws ReplyException
+	 * @throws \XF\Mvc\Reply\Exception
 	 * @throws PrintableException
 	 * @throws \Exception
 	 */
@@ -243,7 +240,7 @@ class EventController extends AbstractController
 	 * @param ParameterBag $params
 	 *
 	 * @return AbstractReply
-	 * @throws ReplyException
+	 * @throws \XF\Mvc\Reply\Exception
 	 */
 	public function actionDelete(ParameterBag $params): AbstractReply
 	{
@@ -280,7 +277,7 @@ class EventController extends AbstractController
 	 * @param null|string $phraseKey
 	 *
 	 * @return Event
-	 * @throws ReplyException
+	 * @throws \XF\Mvc\Reply\Exception
 	 */
 	protected function assertEventExists(?int $id, array $with = [], ?string $phraseKey = null): Event
 	{
@@ -293,7 +290,7 @@ class EventController extends AbstractController
 	 * @param null|string $phraseKey
 	 *
 	 * @return Currency
-	 * @throws ReplyException
+	 * @throws \XF\Mvc\Reply\Exception
 	 */
 	protected function assertCurrencyExists(?int $id, array $with = [], ?string $phraseKey = null): Currency
 	{

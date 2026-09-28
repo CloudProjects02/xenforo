@@ -1,0 +1,215 @@
+<?php
+
+namespace SV\StandardLib\XF\Template;
+
+use XF\Mvc\Entity\Entity;
+use XF\Phrase;
+use function array_filter;
+use function array_key_exists;
+use function array_slice;
+use function count;
+use function explode;
+use function implode;
+use function in_array;
+use function is_array;
+use function is_string;
+use function preg_replace;
+use function strval;
+use function substr;
+
+/**
+ * @version 1.21.0
+ */
+class Templater extends XFCP_Templater
+{
+    protected $svIncludeJsMap = [
+        'SV/StandardLib' => [
+            'sv/lib/storage.js'           => [
+                ['minVersion' => 2030000, 'dev' => 'xf/structure.js', 'prod' => 'xf/structure.min.js'],
+            ],
+            'sv/lib/xf/core/structure.js' => [
+                ['minVersion' => 2030000, 'dev' => 'xf/structure.js', 'prod' => 'xf/structure.min.js'],
+            ],
+            'sv/lib/xf/filter.js' => [
+                ['src' => 'sv/lib/ajaxPageJump.js', 'addon' => 'SV/StandardLib']
+            ],
+            'sv/lib/ajaxPagination.js' => [
+                ['src' => 'sv/lib/ajaxPageJump.js', 'addon' => 'SV/StandardLib']
+            ],
+        ],
+    ];
+
+    /**
+     * HTML data attribute to class name mapping for supported prerender choices class overrides
+     * Must match https://github.com/Xon/Choices.js?tab=readme-ov-file#classnames entries
+     *
+     * @var array<string,string>
+     */
+    protected static $choicesClassOverrides = [
+        'data-class-container-outer' => 'containerOuter',
+        'data-class-container-inner' => 'containerInner',
+        'data-class-list'            => 'list',
+        'data-class-list-items'      => 'listItems',
+        'data-class-item'            => 'item',
+        'data-class-item-selectable' => 'itemSelectable',
+        'data-class-input'           => 'input',
+        'data-class-input-cloned'    => 'inputCloned',
+    ];
+
+    public function includeJs(array $options)
+    {
+        $map = $this->svIncludeJsMap;
+        $addOn = $options['addon'] ?? '';
+        $src = $options['src'] ?? '';
+        if (is_string($addOn) && is_string($src))
+        {
+            $extraIncludeJsArr = $map[$addOn][$src] ?? [];
+            if (is_array($extraIncludeJsArr))
+            {
+                foreach ($extraIncludeJsArr as $extraIncludeJs)
+                {
+                    if (array_key_exists('minVersion', $extraIncludeJs))
+                    {
+                        if (\XF::$versionId < $extraIncludeJs['minVersion'])
+                        {
+                            continue;
+                        }
+                        unset($extraIncludeJs['minVersion']);
+                    }
+
+                    parent::includeJs($extraIncludeJs);
+                }
+            }
+        }
+
+        parent::includeJs($options);
+    }
+
+    protected function isPreRenderableChoicesInit(array $init): bool
+    {
+        return in_array('sv-choices', $init, true);
+    }
+
+    public function formSelect(array $controlOptions, array $choices)
+    {
+        $value = $controlOptions['value'] ?? null;
+        if ($value instanceof Entity)
+        {
+            // XF2.3 supports pulling attributes out of entities, for now skip
+            // $this->processEntityAttributes($controlOptions, false);
+            return parent::formSelect($controlOptions, $choices);
+        }
+
+        $init = explode(' ', $controlOptions['data-xf-init'] ?? '');
+        if (!$this->isPreRenderableChoicesInit($init))
+        {
+            return parent::formSelect($controlOptions, $choices);
+        }
+
+        if ($controlOptions['skip-rendering'] ?? false)
+        {
+            unset($controlOptions['skip-rendering']);
+
+            return parent::formSelect($controlOptions, $choices);
+        }
+
+        $classList = explode(' ', $controlOptions['class'] ?? '');
+        if (count($classList) !== 0)
+        {
+            $classList = array_filter($classList, function (string $s): bool { return $s !== 'u-noJsOnly'; });
+            $controlOptions['class'] = implode(' ', $classList);
+        }
+
+        $name = $controlOptions['name'];
+        $multiple = (bool)($controlOptions['multiple'] ?? false);
+        if ($multiple)
+        {
+            if ($name && substr($name, -2) !== '[]')
+            {
+                $name .= '[]';
+            }
+        }
+        $placeholder = $controlOptions['placeholder'] ?? $controlOptions['data-placeholder'] ?? '';
+
+        $selectedChoices = [];
+        $i = 1;
+        $extractChoices = function (array $choices) use (&$i, &$extractChoices, &$selectedChoices, $value, $multiple) {
+            foreach ($choices as $choice)
+            {
+                $type = $choice['_type'] ?? 'option';
+                if ($type === 'optgroup')
+                {
+                    $extractChoices($choice['options']);
+                    continue;
+                }
+
+                if ($this->isChoiceSelected($choice, $value, $multiple))
+                {
+                    $choice['span'] = $choice['data-label-class'] ?? '';
+                    $choice['escape'] = ($choice['label'] ?? null) instanceof Phrase;
+                    $selectedChoices[$i] = $choice;
+                }
+                $i++;
+            }
+        };
+        $extractChoices($choices);
+        // in non-multi mode, the last choice wins to match HTML <select> behavior
+        if (!$multiple && count($selectedChoices) > 1)
+        {
+            $selectedChoices = array_slice($selectedChoices, -1, 1, true);
+        }
+
+        // signal to javascript about pre-rendering
+        $controlOptions['data-rendered'] = 1;
+
+        $class = $this->copyChoicesClassOverridesFromDataAttributes($controlOptions);
+
+        $selectHtml = parent::formSelect($controlOptions, $choices);
+
+        // patch hidden attribute (which doesn't take a value)
+        $selectHtml = preg_replace('#<select #', '$0hidden ', $selectHtml, 1);
+
+        return $this->callMacro('', 'public:svStandardLib_macros::choices_static_render', [
+            'name'            => $name,
+            'value'           => $value,
+            'multiple'        => $multiple,
+            'placeholder'     => $placeholder,
+            'controlOptions'  => $controlOptions,
+            'selectHtml'      => $selectHtml,
+            'choices'         => $choices,
+            'selectedChoices' => $selectedChoices,
+            'class'           => $class,
+            'search'          => (bool)($controlOptions['data-search-enabled'] ?? true),
+        ], $this->defaultParams);
+    }
+
+    protected function copyChoicesClassOverridesFromDataAttributes(array $controlOptions): array
+    {
+        $attrs = [];
+        foreach (static::$choicesClassOverrides as $attrKey => $classKey)
+        {
+            $value = $controlOptions[$attrKey] ?? null;
+            if ($value === null)
+            {
+                continue;
+            }
+
+            if ($value instanceof Phrase)
+            {
+                // strval will do escaping of the values or the whole phrase, so get the raw value and escape that here
+                $value = $value->render('raw');
+            }
+            else
+            {
+                $value = strval($value);
+            }
+
+            if ($value !== '')
+            {
+                $attrs[$classKey] = \XF::escapeString($value);
+            }
+        }
+
+        return $attrs;
+    }
+}

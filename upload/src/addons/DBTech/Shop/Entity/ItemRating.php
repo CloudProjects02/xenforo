@@ -2,16 +2,9 @@
 
 namespace DBTech\Shop\Entity;
 
-use DBTech\Shop\Repository\ItemRatingRepository;
-use XF\Entity\DeletionLog;
 use XF\Entity\LinkableInterface;
-use XF\Entity\User;
-use XF\Entity\ViewableInterface;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
-use XF\Phrase;
-use XF\PrintableException;
-use XF\Repository\UserAlertRepository;
 
 /**
  * COLUMNS
@@ -29,14 +22,14 @@ use XF\Repository\UserAlertRepository;
  * @property bool $is_anonymous
  *
  * GETTERS
- * @property-read string $item_title
+ * @property string $item_title
  *
  * RELATIONS
- * @property-read Item|null $Item
- * @property-read User|null $User
- * @property-read DeletionLog|null $DeletionLog
+ * @property \DBTech\Shop\Entity\Item $Item
+ * @property \XF\Entity\User $User
+ * @property \XF\Entity\DeletionLog $DeletionLog
  */
-class ItemRating extends Entity implements LinkableInterface, ViewableInterface
+class ItemRating extends Entity implements LinkableInterface
 {
 	/**
 	 * @param null $error
@@ -62,12 +55,12 @@ class ItemRating extends Entity implements LinkableInterface, ViewableInterface
 
 		return true;
 	}
-
+	
 	/**
 	 * @param string $type
 	 * @param null $error
 	 *
-	 * @return bool
+	 * @return bool|mixed
 	 */
 	public function canDelete(string $type = 'soft', &$error = null): bool
 	{
@@ -94,7 +87,7 @@ class ItemRating extends Entity implements LinkableInterface, ViewableInterface
 
 		return $item->hasPermission('deleteAnyReview');
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
@@ -109,8 +102,7 @@ class ItemRating extends Entity implements LinkableInterface, ViewableInterface
 			|| $visitor->user_id != $this->user_id
 			|| !$item
 			|| !$item->hasPermission('rate')
-		)
-		{
+		) {
 			return false;
 		}
 
@@ -127,11 +119,11 @@ class ItemRating extends Entity implements LinkableInterface, ViewableInterface
 
 		return true;
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
-	 * @return bool
+	 * @return bool|mixed
 	 */
 	public function canUndelete(&$error = null): bool
 	{
@@ -145,19 +137,19 @@ class ItemRating extends Entity implements LinkableInterface, ViewableInterface
 
 		return $item->hasPermission('undelete');
 	}
-
+	
 	/**
 	 * @param null $error
-	 * @param User|null $asUser
+	 * @param \XF\Entity\User|null $asUser
 	 *
 	 * @return bool
 	 */
-	public function canReport(&$error = null, ?User $asUser = null): bool
+	public function canReport(&$error = null, ?\XF\Entity\User $asUser = null): bool
 	{
 		$asUser = $asUser ?: \XF::visitor();
 		return $asUser->canReport($error);
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
@@ -173,15 +165,14 @@ class ItemRating extends Entity implements LinkableInterface, ViewableInterface
 			|| !$visitor->user_id
 			|| $this->user_id == $visitor->user_id
 			|| !$item->hasPermission('warn')
-		)
-		{
+		) {
 			return false;
 		}
 
 		$user = $this->User;
 		return ($user && $user->isWarnable());
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
@@ -202,7 +193,7 @@ class ItemRating extends Entity implements LinkableInterface, ViewableInterface
 			&& $item->hasPermission('reviewReply')
 		);
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
@@ -223,7 +214,7 @@ class ItemRating extends Entity implements LinkableInterface, ViewableInterface
 			|| $item->hasPermission('deleteAnyReview')
 		);
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -239,7 +230,7 @@ class ItemRating extends Entity implements LinkableInterface, ViewableInterface
 			)
 		);
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -253,7 +244,7 @@ class ItemRating extends Entity implements LinkableInterface, ViewableInterface
 			&& $this->rating_state == 'visible'
 		);
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -265,7 +256,7 @@ class ItemRating extends Entity implements LinkableInterface, ViewableInterface
 			&& $this->Item->isVisible()
 		);
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -292,12 +283,12 @@ class ItemRating extends Entity implements LinkableInterface, ViewableInterface
 	 * @param array $extraParams
 	 * @param null $hash
 	 *
-	 * @return string
+	 * @return mixed|string
 	 */
 	public function getContentUrl(bool $canonical = false, array $extraParams = [], $hash = null): string
 	{
 		$route = $canonical ? 'canonical:dbtech-shop/review' : 'dbtech-shop/review';
-		return \XF::app()->router('public')->buildLink($route, $this, $extraParams, $hash);
+		return $this->app()->router('public')->buildLink($route, $this, $extraParams, $hash);
 	}
 
 	/**
@@ -311,9 +302,9 @@ class ItemRating extends Entity implements LinkableInterface, ViewableInterface
 	/**
 	 * @param string $context
 	 *
-	 * @return Phrase
+	 * @return string|\XF\Phrase
 	 */
-	public function getContentTitle(string $context = ''): Phrase
+	public function getContentTitle(string $context = '')
 	{
 		if ($this->Item)
 		{
@@ -322,12 +313,12 @@ class ItemRating extends Entity implements LinkableInterface, ViewableInterface
 
 		return \XF::phrase('dbtech_shop_review_for_x', ['title' => 'N/A']);
 	}
-
+	
 	/**
 	 *
 	 * @throws \LogicException
 	 */
-	protected function _preSave(): void
+	protected function _preSave()
 	{
 		if ($this->isUpdate() && $this->isChanged(['message', 'rating', 'user_id']))
 		{
@@ -336,7 +327,7 @@ class ItemRating extends Entity implements LinkableInterface, ViewableInterface
 
 		if ($this->isChanged('message'))
 		{
-			$this->is_review = (bool) strlen($this->message);
+			$this->is_review = strlen($this->message) ? true : false;
 		}
 
 		if (!$this->user_id)
@@ -344,13 +335,13 @@ class ItemRating extends Entity implements LinkableInterface, ViewableInterface
 			throw new \LogicException('Need user ID');
 		}
 	}
-
+	
 	/**
 	 * @throws \LogicException
 	 * @throws \InvalidArgumentException
-	 * @throws PrintableException
+	 * @throws \XF\PrintableException
 	 */
-	protected function _postSave(): void
+	protected function _postSave()
 	{
 		$visibilityChange = $this->isStateChanged('rating_state', 'visible');
 		$deletionChange = $this->isStateChanged('rating_state', 'deleted');
@@ -361,7 +352,7 @@ class ItemRating extends Entity implements LinkableInterface, ViewableInterface
 			{
 				$this->ratingMadeVisible();
 			}
-			else if ($visibilityChange == 'leave')
+			elseif ($visibilityChange == 'leave')
 			{
 				$this->ratingHidden();
 			}
@@ -389,15 +380,15 @@ class ItemRating extends Entity implements LinkableInterface, ViewableInterface
 
 		if ($this->isUpdate() && $this->getOption('log_moderator'))
 		{
-			\XF::app()->logger()->logModeratorChanges('dbtech_shop_rating', $this);
+			$this->app()->logger()->logModeratorChanges('dbtech_shop_rating', $this);
 		}
 	}
-
+	
 	/**
 	 *
 	 * @throws \LogicException
 	 */
-	protected function ratingMadeVisible(): void
+	protected function ratingMadeVisible()
 	{
 		$item = $this->Item;
 
@@ -407,22 +398,22 @@ class ItemRating extends Entity implements LinkableInterface, ViewableInterface
 			{
 				$item->review_count++;
 			}
-
+	
 			if ($this->rebuildRatingCounted())
 			{
 				$item->rebuildRating();
 			}
-
+		
 			$item->saveIfChanged();
 		}
 	}
-
+	
 	/**
 	 * @param bool $hardDelete
 	 *
 	 * @throws \LogicException
 	 */
-	protected function ratingHidden(bool $hardDelete = false): void
+	protected function ratingHidden(bool $hardDelete = false)
 	{
 		$item = $this->Item;
 
@@ -432,26 +423,28 @@ class ItemRating extends Entity implements LinkableInterface, ViewableInterface
 			{
 				$item->review_count--;
 			}
-
+			
 			if ($this->count_rating)
 			{
 				$item->rebuildRating();
 			}
-
+			
 			$item->saveIfChanged();
 		}
 
-		$alertRepo = \XF::app()->repository(UserAlertRepository::class);
+		/** @var \XF\Repository\UserAlert $alertRepo */
+		$alertRepo = $this->repository('XF:UserAlert');
 		$alertRepo->fastDeleteAlertsForContent('dbtech_shop_rating', $this->item_rating_id);
 	}
-
+	
 	/**
 	 * @return bool
 	 * @throws \LogicException
 	 */
 	protected function rebuildRatingCounted(): bool
 	{
-		$ratingRepo = \XF::app()->repository(ItemRatingRepository::class);
+		/** @var \DBTech\Shop\Repository\ItemRating $ratingRepo */
+		$ratingRepo = $this->repository('DBTech\Shop:ItemRating');
 
 		$countable = $ratingRepo->getCountableRating($this->item_id, $this->user_id);
 		if ($countable && $countable->count_rating)
@@ -484,12 +477,12 @@ class ItemRating extends Entity implements LinkableInterface, ViewableInterface
 
 		return $rebuildRequired;
 	}
-
+	
 	/**
 	 * @throws \LogicException
-	 * @throws PrintableException
+	 * @throws \XF\PrintableException
 	 */
-	protected function _postDelete(): void
+	protected function _postDelete()
 	{
 		if ($this->rating_state == 'visible')
 		{
@@ -503,21 +496,21 @@ class ItemRating extends Entity implements LinkableInterface, ViewableInterface
 
 		if ($this->getOption('log_moderator'))
 		{
-			\XF::app()->logger()->logModeratorAction('dbtech_shop_rating', $this, 'delete_hard');
+			$this->app()->logger()->logModeratorAction('dbtech_shop_rating', $this, 'delete_hard');
 		}
 	}
-
+	
 	/**
 	 * @param string $reason
-	 * @param User|null $byUser
+	 * @param \XF\Entity\User|null $byUser
 	 *
 	 * @return bool
 	 * @throws \InvalidArgumentException
 	 * @throws \LogicException
 	 * @throws \Exception
-	 * @throws PrintableException
+	 * @throws \XF\PrintableException
 	 */
-	public function softDelete(string $reason = '', ?User $byUser = null): bool
+	public function softDelete(string $reason = '', ?\XF\Entity\User $byUser = null): bool
 	{
 		$byUser = $byUser ?: \XF::visitor();
 
@@ -528,7 +521,7 @@ class ItemRating extends Entity implements LinkableInterface, ViewableInterface
 
 		$this->rating_state = 'deleted';
 
-		/** @var DeletionLog $deletionLog */
+		/** @var \XF\Entity\DeletionLog $deletionLog */
 		$deletionLog = $this->getRelationOrDefault('DeletionLog');
 		$deletionLog->setFromUser($byUser);
 		$deletionLog->delete_reason = $reason;
@@ -539,9 +532,9 @@ class ItemRating extends Entity implements LinkableInterface, ViewableInterface
 	}
 
 	/**
-	 * @param Structure $structure
+	 * @param \XF\Mvc\Entity\Structure $structure
 	 *
-	 * @return Structure
+	 * @return \XF\Mvc\Entity\Structure
 	 */
 	public static function getStructure(Structure $structure): Structure
 	{
@@ -560,13 +553,13 @@ class ItemRating extends Entity implements LinkableInterface, ViewableInterface
 			'is_review' => ['type' => self::BOOL, 'default' => false],
 			'count_rating' => ['type' => self::BOOL, 'default' => false],
 			'rating_state' => ['type' => self::STR, 'default' => 'visible',
-				'allowedValues' => ['visible', 'deleted'],
+				'allowedValues' => ['visible', 'deleted']
 			],
 			'warning_id' => ['type' => self::UINT, 'default' => 0],
-			'is_anonymous' => ['type' => self::BOOL, 'default' => false],
+			'is_anonymous' => ['type' => self::BOOL, 'default' => false]
 		];
 		$structure->getters = [
-			'item_title' => true,
+			'item_title' => true
 		];
 		$structure->behaviors = [
 			'XF:NewsFeedPublishable' => [
@@ -578,41 +571,41 @@ class ItemRating extends Entity implements LinkableInterface, ViewableInterface
 				{
 					return $rating->is_anonymous ? '' : $rating->User->username;
 				},
-				'dateField' => 'rating_date',
-			],
+				'dateField' => 'rating_date'
+			]
 		];
 		$structure->relations = [
 			'Item' => [
-				'entity' => Item::class,
+				'entity' => 'DBTech\Shop:Item',
 				'type' => self::TO_ONE,
 				'conditions' => 'item_id',
-				'primary' => true,
+				'primary' => true
 			],
 			'User' => [
-				'entity' => User::class,
+				'entity' => 'XF:User',
 				'type' => self::TO_ONE,
 				'conditions' => 'user_id',
-				'primary' => true,
+				'primary' => true
 			],
 			'DeletionLog' => [
-				'entity' => DeletionLog::class,
+				'entity' => 'XF:DeletionLog',
 				'type' => self::TO_ONE,
 				'conditions' => [
 					['content_type', '=', 'dbtech_shop_rating'],
-					['content_id', '=', '$item_rating_id'],
+					['content_id', '=', '$item_rating_id']
 				],
-				'primary' => true,
-			],
+				'primary' => true
+			]
 		];
 
 		$structure->withAliases = [
 			'full' => [
 				'User',
-			],
+			]
 		];
 
 		$structure->options = [
-			'log_moderator' => true,
+			'log_moderator' => true
 		];
 		$structure->defaultWith = ['Item'];
 

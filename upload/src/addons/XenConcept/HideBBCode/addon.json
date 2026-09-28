@@ -1,0 +1,19 @@
+{
+    "legacy_addon_id": "",
+    "title": "[XenConcept] Hide BBCode",
+    "description": "This addon gives users the ability to hide their content using BBCode.",
+    "version_id": 2010070,
+    "version_string": "2.1.0",
+    "dev": "XenConcept",
+    "dev_url": "https://www.xen-concept.com/",
+    "faq_url": "https://www.xen-concept.com/forums/faqs.13/",
+    "support_url": "https://www.xen-concept.com/forums/bug-reports.111/",
+    "extra_urls": [],
+    "require": {
+        "XF": [
+            2020070,
+            "XenForo 2.2.0"
+        ]
+    },
+    "icon": "logo.png"
+}

@@ -1,0 +1,1027 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="admin_navigation.dbtechSecAcc" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Account tools]]></phrase>
+  <phrase title="admin_navigation.dbtechSecAdmStr" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Admin strikes]]></phrase>
+  <phrase title="admin_navigation.dbtechSecBadLog" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Bad Behavior log]]></phrase>
+  <phrase title="admin_navigation.dbtechSecBreachChk" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Breach checker]]></phrase>
+  <phrase title="admin_navigation.dbtechSecChgLog" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Change log]]></phrase>
+  <phrase title="admin_navigation.dbtechSecCompLog" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Compromised account log]]></phrase>
+  <phrase title="admin_navigation.dbtechSecCountry" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Country blocking]]></phrase>
+  <phrase title="admin_navigation.dbtechSecCriteria" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Recovery criteria]]></phrase>
+  <phrase title="admin_navigation.dbtechSecHtpwd" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[.htaccess password generator]]></phrase>
+  <phrase title="admin_navigation.dbtechSecLoginStr" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Login strikes]]></phrase>
+  <phrase title="admin_navigation.dbtechSecLogs" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Logs]]></phrase>
+  <phrase title="admin_navigation.dbtechSecOpt" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Settings]]></phrase>
+  <phrase title="admin_navigation.dbtechSecPwdChg" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Force password change]]></phrase>
+  <phrase title="admin_navigation.dbtechSecPwdRs" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Mass password reset]]></phrase>
+  <phrase title="admin_navigation.dbtechSecPwds" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Password tools]]></phrase>
+  <phrase title="admin_navigation.dbtechSecRecovLog" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Account recovery log]]></phrase>
+  <phrase title="admin_navigation.dbtechSecSearch" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[IP address search]]></phrase>
+  <phrase title="admin_navigation.dbtechSecSnapshot" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Settings backups]]></phrase>
+  <phrase title="admin_navigation.dbtechSecWatcherLog" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Watcher log]]></phrase>
+  <phrase title="admin_navigation.dbtechSecWatchers" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Security watchers]]></phrase>
+  <phrase title="admin_navigation.dbtechSecurity" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[DragonByte Security]]></phrase>
+  <phrase title="admin_navigation.dbtechSecurityFpLog" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Fingerprint log]]></phrase>
+  <phrase title="admin_permission.dbtechSecurity" version_id="20170223" version_string="4.0.0"><![CDATA[Manage DragonByte Security]]></phrase>
+  <phrase title="are_you_sure_want_to_delete_dbtech_security_snapshot_x" version_id="4000031" version_string="4.0.0 Beta 1"><![CDATA[Are you <b>sure</b> you want to delete the backup called '{param1}'?<br /><span class="smallfont">({param2}: {param3})</span><br /><br /> {param4} This action can not be undone.]]></phrase>
+  <phrase title="cron_entry.dbtSecCountryUpdate" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[DragonByte Security: Update country list]]></phrase>
+  <phrase title="cron_entry.dbtechSecurityCountryIp" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[DragonByte Security: Update country IP addresses]]></phrase>
+  <phrase title="cron_entry.dbtech_security" version_id="20170223" version_string="2.0.0"><![CDATA[DragonByte Tech: Security - Geolocation]]></phrase>
+  <phrase title="cron_entry.dbtech_security_backup" version_id="904010032" version_string="4.1.0 Beta 2"><![CDATA[DragonByte Security: Backup settings]]></phrase>
+  <phrase title="cron_entry.dbtech_security_logprune" version_id="904010032" version_string="4.1.0 Beta 2"><![CDATA[DragonByte Security: Prune logs]]></phrase>
+  <phrase title="cron_entry.dbtech_security_sessprune" version_id="904050370" version_string="4.5.3"><![CDATA[DragonByte Security: Prune sessions]]></phrase>
+  <phrase title="cron_entry.dbtech_security_tornodes" version_id="904010032" version_string="4.1.0 Beta 2"><![CDATA[DragonByte Security: Update TOR exit nodes]]></phrase>
+  <phrase title="dbtech_security_account" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Account]]></phrase>
+  <phrase title="dbtech_security_account_admin_lock_state" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Account lock state (admin lock)]]></phrase>
+  <phrase title="dbtech_security_account_breach_alert_body" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[DragonByte Security has detected that your account has been the subject of a breach on another site. We recommend you change your password and enable two-factor authentication to stop your account from being a target of further breaches.]]></phrase>
+  <phrase title="dbtech_security_account_breach_alert_title" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Account Breach Alert at {board}]]></phrase>
+  <phrase title="dbtech_security_account_can_only_be_admin_unlocked" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Your account can only be unlocked by an administrator.]]></phrase>
+  <phrase title="dbtech_security_account_is_admin_locked" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Your account has been locked by an administrator and you cannot unlock it yourself.]]></phrase>
+  <phrase title="dbtech_security_account_locked" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Your account is currently locked.]]></phrase>
+  <phrase title="dbtech_security_account_search_for_duplicate_ips" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Account Search for Duplicate IP Addresses]]></phrase>
+  <phrase title="dbtech_security_account_search_for_intruder_ips" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Account Search for Potential Intruder IP Addresses]]></phrase>
+  <phrase title="dbtech_security_account_search_for_new_ips_since_x" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Account Search for New IP Addresses Since: <span class="normal">{param1}</span>]]></phrase>
+  <phrase title="dbtech_security_account_search_for_suspect_ips" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Account Search for Suspect IP Addresses]]></phrase>
+  <phrase title="dbtech_security_account_unlocked" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Account unlocked successfully.]]></phrase>
+  <phrase title="dbtech_security_account_user_lock_state" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Account lock state (user lock)]]></phrase>
+  <phrase title="dbtech_security_acp_logins_viewer" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[AdminCP Logins Viewer]]></phrase>
+  <phrase title="dbtech_security_action_available_via_post_only" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This action is available via POST only. Please press the back button and try again.]]></phrase>
+  <phrase title="dbtech_security_action_completed_successfully" version_id="20170223" version_string="4.0.0"><![CDATA[Action completed successfully.]]></phrase>
+  <phrase title="dbtech_security_actions" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Action(s)]]></phrase>
+  <phrase title="dbtech_security_actions.adminLockUser" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Lock account (Admin unlock)]]></phrase>
+  <phrase title="dbtech_security_actions.banIp" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Ban IP address]]></phrase>
+  <phrase title="dbtech_security_actions.banUser" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Ban user]]></phrase>
+  <phrase title="dbtech_security_actions.closeForum" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Close board]]></phrase>
+  <phrase title="dbtech_security_actions.emailUser" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Email user]]></phrase>
+  <phrase title="dbtech_security_actions.emailWebmaster" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Email webmaster]]></phrase>
+  <phrase title="dbtech_security_actions.lockChange" version_id="904050031" version_string="4.5.0 Beta 1"><![CDATA[Lock account (User must change password)]]></phrase>
+  <phrase title="dbtech_security_actions.lockReset" version_id="904050031" version_string="4.5.0 Beta 1"><![CDATA[Lock account (User must reset password)]]></phrase>
+  <phrase title="dbtech_security_actions.lockUser" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Lock account (User unlock)]]></phrase>
+  <phrase title="dbtech_security_actions.none" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[No action]]></phrase>
+  <phrase title="dbtech_security_active" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Active]]></phrase>
+  <phrase title="dbtech_security_active_login_sessions" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Active Login Sessions]]></phrase>
+  <phrase title="dbtech_security_activity_threshold" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Inactivity Threshold (Days)
+<dfn>0 = include all users</dfn>]]></phrase>
+  <phrase title="dbtech_security_add_new_watcher" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Add security watcher]]></phrase>
+  <phrase title="dbtech_security_add_watcher" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Add security watcher]]></phrase>
+  <phrase title="dbtech_security_added" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[added]]></phrase>
+  <phrase title="dbtech_security_admin_lock_body" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Greetings,
+
+{username}'s account at {board} has been locked because DragonByte Security has detected a security alert regarding {param1}.
+
+Please click this link in order to unlock {username}'s account: {param2}
+
+
+Thanks,
+DragonByte Security - XenForo Security]]></phrase>
+  <phrase title="dbtech_security_admin_locked" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Admin locked]]></phrase>
+  <phrase title="dbtech_security_admin_locked_desc" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[The webmaster will need to unlock your account.]]></phrase>
+  <phrase title="dbtech_security_admin_locked_hint" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Unlike user locks, Admin locks can only be unlocked by administrators. If you turn this on from this page, the user will be unable to access their account until you turn it back off from this page.]]></phrase>
+  <phrase title="dbtech_security_admin_password" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Administrator Password
+<dfn>Enter the password you wish the administrator to use in addition to their account password in order to log in to the AdminCP.<br />
+<br />
+Because passwords are one-way encrypted, it is not possible to display existing passwords.<br />
+<code>&lt;password&gt;</code> will be displayed instead.<br />
+<br />
+Remove the contents of this field to not require an additional password to log in.</dfn>]]></phrase>
+  <phrase title="dbtech_security_admin_passwords" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Administrator Passwords]]></phrase>
+  <phrase title="dbtech_security_admin_strike_log" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Admin strike log]]></phrase>
+  <phrase title="dbtech_security_admin_strike_log_id_x" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Admin strike log #{logId}]]></phrase>
+  <phrase title="dbtech_security_admin_strike_log_search" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Search admin strike logs]]></phrase>
+  <phrase title="dbtech_security_admin_strikes" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Admin Strikes]]></phrase>
+  <phrase title="dbtech_security_admin_strikes_viewer" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Admin Strikes Viewer]]></phrase>
+  <phrase title="dbtech_security_admin_strikes_viewer_page_x_y_there_are_z_total_log_entries" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Admin Strikes Viewer (page {param1}/{param2}) | There are {param3} total log entries.]]></phrase>
+  <phrase title="dbtech_security_adminauth" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Admin Verification Log]]></phrase>
+  <phrase title="dbtech_security_adminauth_log" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Admin Verify Log Viewer]]></phrase>
+  <phrase title="dbtech_security_adminauth_viewer_page_x_y_there_are_z_total_log_entries" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Admin Verification Log Viewer (page {param1}/{param2}) | There are {param3} total log entries.]]></phrase>
+  <phrase title="dbtech_security_administrator_security" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Administrator Security]]></phrase>
+  <phrase title="dbtech_security_administrator_security_descr" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Using additional login credentials unique to each administrator prevents compromised accounts from being used to cause damage to your forum.]]></phrase>
+  <phrase title="dbtech_security_adminperm" version_id="905000031" version_string="5.0.0 Beta 1"><![CDATA[Security admin permission]]></phrase>
+  <phrase title="dbtech_security_advanced_settings" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Advanced Settings]]></phrase>
+  <phrase title="dbtech_security_all_log_entries" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[All Log Entries]]></phrase>
+  <phrase title="dbtech_security_all_usergroups" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[All Usergroups]]></phrase>
+  <phrase title="dbtech_security_all_x_values_must_be_unique" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[All {key} values must be unique.]]></phrase>
+  <phrase title="dbtech_security_allow" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Allow]]></phrase>
+  <phrase title="dbtech_security_also_force_change" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Also Force Password Change
+<dfn>If yes, this will force every user that has had their password changed to change it once they have logged in.</dfn>]]></phrase>
+  <phrase title="dbtech_security_amount" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Amount]]></phrase>
+  <phrase title="dbtech_security_any_ip_address" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Any IP address]]></phrase>
+  <phrase title="dbtech_security_are_you_sure_reset" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Confirm Action
+<dfn>Are you sure you wish to reset all passwords?<br />
+<strong>Warning:</strong> This action cannot be undone!</dfn>]]></phrase>
+  <phrase title="dbtech_security_are_you_sure_soft_reset" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Confirm Action
+<dfn>Are you sure you wish to force all users to reset their passwords?<br />
+<strong>Warning:</strong> This action cannot be undone!</dfn>]]></phrase>
+  <phrase title="dbtech_security_attempted_ip_addresses" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Previously Attempted IP Addresses: {ips}]]></phrase>
+  <phrase title="dbtech_security_attempted_user_name" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Attempted user name]]></phrase>
+  <phrase title="dbtech_security_attempted_usernames" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Attempted user names]]></phrase>
+  <phrase title="dbtech_security_backup_loaded" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Backup loaded]]></phrase>
+  <phrase title="dbtech_security_backup_saved" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Backup saved]]></phrase>
+  <phrase title="dbtech_security_backup_settings" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Backup Settings]]></phrase>
+  <phrase title="dbtech_security_bad_behavior_cannot_run_x_y_z" version_id="904070031" version_string="4.7.0 Beta 1"><![CDATA[Bad Behavior cannot be enabled at this time.<br />
+<br />
+Minimum PHP version: <b>{minVersion}</b><br />
+Maximum PHP version: <b>{maxVersion}</b><br />
+Your PHP version: <b>{yourVersion}</b>]]></phrase>
+  <phrase title="dbtech_security_bad_behavior_log" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Bad Behavior log]]></phrase>
+  <phrase title="dbtech_security_bad_behavior_log_id_x" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Bad Behavior log #{logId}]]></phrase>
+  <phrase title="dbtech_security_bad_behavior_log_search" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Search Bad Behavior logs]]></phrase>
+  <phrase title="dbtech_security_bad_behaviour_options" version_id="20170223" version_string="4.0.0"><![CDATA[Bad Behaviour Options]]></phrase>
+  <phrase title="dbtech_security_behavior_log" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Behavior Log]]></phrase>
+  <phrase title="dbtech_security_breach_description" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[{siteName} ({domain}) happened on {breachDate}, added to the system on {addedDate}]]></phrase>
+  <phrase title="dbtech_security_breachcheck" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Account breach checker]]></phrase>
+  <phrase title="dbtech_security_breachcheck_descr" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This will check all your members' accounts for any presence of their username / email in online database leaks. If any are found, the user in question will receive an email listing the site(s) and when the details were leaked.]]></phrase>
+  <phrase title="dbtech_security_browser" version_id="904070070" version_string="4.7.0"><![CDATA[Browser]]></phrase>
+  <phrase title="dbtech_security_cache" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Cache]]></phrase>
+  <phrase title="dbtech_security_cant_delete_last_entry" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[You cannot delete the last entry in this table.]]></phrase>
+  <phrase title="dbtech_security_change" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Change]]></phrase>
+  <phrase title="dbtech_security_change_log" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Change Log]]></phrase>
+  <phrase title="dbtech_security_change_logs" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Change logs]]></phrase>
+  <phrase title="dbtech_security_changelog_list" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Change Log]]></phrase>
+  <phrase title="dbtech_security_changelog_list_page_x_y_there_are_z_total_log_entries" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Change Log Viewer (page {param1}/{param2}) | There are {param3} total log entries.]]></phrase>
+  <phrase title="dbtech_security_changelog_viewer" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Change Log Viewer]]></phrase>
+  <phrase title="dbtech_security_check_accounts" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Check Accounts]]></phrase>
+  <phrase title="dbtech_security_click_here_change_password" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Click here to change your password.]]></phrase>
+  <phrase title="dbtech_security_click_to_see_value" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Click to see the full value]]></phrase>
+  <phrase title="dbtech_security_closed_for_posting" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Forum Is Closed For Posting]]></phrase>
+  <phrase title="dbtech_security_community" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA["Community" Menu]]></phrase>
+  <phrase title="dbtech_security_compromised_account_log_search" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Search compromised account logs]]></phrase>
+  <phrase title="dbtech_security_compromised_log" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Compromised account log]]></phrase>
+  <phrase title="dbtech_security_compromisedaccount" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[[{param1}] Potentially Compromised Account: <b>{param2}</b> - IP Address: <b>{param3}</b>]]></phrase>
+  <phrase title="dbtech_security_compromisedlog" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Compromised Account Log]]></phrase>
+  <phrase title="dbtech_security_compromisedlog_viewer_page_x_y_there_are_z_total_log_entries" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Compromised Account Log Viewer (page {param1}/{param2}) | There are {param3} total log entries.]]></phrase>
+  <phrase title="dbtech_security_confirm_action" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Confirm Action]]></phrase>
+  <phrase title="dbtech_security_confirm_deletion_x" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Confirm Deletion: {title}]]></phrase>
+  <phrase title="dbtech_security_content_allow" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Allow]]></phrase>
+  <phrase title="dbtech_security_could_not_resolve_hostname" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Could Not Resolve Hostname]]></phrase>
+  <phrase title="dbtech_security_country" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Country]]></phrase>
+  <phrase title="dbtech_security_country_block_performance_warning" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Selecting countries with large IP blocks, such as China or the United States, will cause the process of saving country blocks to take a long time.<br />
+Blocking countries one by one is advised.]]></phrase>
+  <phrase title="dbtech_security_country_blocks" version_id="904020170" version_string="4.2.1"><![CDATA[Country blocks]]></phrase>
+  <phrase title="dbtech_security_country_list" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Country List]]></phrase>
+  <phrase title="dbtech_security_countryblock" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Country Blocking]]></phrase>
+  <phrase title="dbtech_security_countryblock_descr" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[You can choose the countries that you want to block from accessing your site here. The IP addresses assigned to these countries will be banned.]]></phrase>
+  <phrase title="dbtech_security_criteria" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Criteria]]></phrase>
+  <phrase title="dbtech_security_criteria_management" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Criteria Management]]></phrase>
+  <phrase title="dbtech_security_cron_options" version_id="20170223" version_string="4.0.0"><![CDATA[Cron Options]]></phrase>
+  <phrase title="dbtech_security_current_ip" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Current IP Address]]></phrase>
+  <phrase title="dbtech_security_current_security_keys" version_id="904030031" version_string="4.3.0 Beta 1"><![CDATA[Current security keys]]></phrase>
+  <phrase title="dbtech_security_current_security_keys_explain" version_id="904030031" version_string="4.3.0 Beta 1"><![CDATA[If you wish to remove one or more security keys, tick the box next to the key to delete, then click Confirm.]]></phrase>
+  <phrase title="dbtech_security_deactivated" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[The DragonByte Security product has been deactivated by an administrator.]]></phrase>
+  <phrase title="dbtech_security_delete_x" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Delete {param1}]]></phrase>
+  <phrase title="dbtech_security_deleted" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[deleted]]></phrase>
+  <phrase title="dbtech_security_deny" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Deny]]></phrase>
+  <phrase title="dbtech_security_depth_to_search" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Depth to search]]></phrase>
+  <phrase title="dbtech_security_details_below" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Below are the details submitted to the form.]]></phrase>
+  <phrase title="dbtech_security_device_first_logged_in_x_disable_desc" version_id="904040070" version_string="4.4.0"><![CDATA[A device with user agent {device} first logged in at {start} and will remain logged in until {expires}.]]></phrase>
+  <phrase title="dbtech_security_device_trusted_until_x_disable_desc" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[A device with user agent {device} is currently trusted until {until}.]]></phrase>
+  <phrase title="dbtech_security_done" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Done]]></phrase>
+  <phrase title="dbtech_security_edit_watcher" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Edit security watcher]]></phrase>
+  <phrase title="dbtech_security_edited" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[edited]]></phrase>
+  <phrase title="dbtech_security_editing_x_y" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Editing {param1}: <em>{param2}</em>]]></phrase>
+  <phrase title="dbtech_security_email_change_request_body_html" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[A new email change request has been submitted by {username} with IP address {ipaddress}.]]></phrase>
+  <phrase title="dbtech_security_email_change_request_body_text" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Hello,
+
+A new email change request has been submitted by {username} with IP address {ipaddress}.
+
+Below are the details submitted to the form.
+
+------------------------
+Username: {filled_username}
+Existing Email: {filled_existingemail}
+New Email: {filled_newemail}
+Last Non-Admin PMed: {filled_pmuser}
+Paid Subscription Transaction ID: {filled_txnid}
+------------------------
+
+Total Score: {score}
+
+------------------------
+{breakdown}
+------------------------
+
+You can reply to this email in order to converse with the user to resolve this issue.]]></phrase>
+  <phrase title="dbtech_security_email_change_request_received" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Your email change request has been received.]]></phrase>
+  <phrase title="dbtech_security_email_change_request_received_body_html" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This email is to confirm that we have received your email change request and you should be hearing back from our staff shortly.]]></phrase>
+  <phrase title="dbtech_security_email_change_request_received_body_text" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Hello,
+
+This email is to confirm that we have received your email change request and you should be hearing back from our staff shortly.
+
+
+- {board} Staff]]></phrase>
+  <phrase title="dbtech_security_email_change_request_received_title" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Email Change Request Received]]></phrase>
+  <phrase title="dbtech_security_email_change_request_title" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[[REQUEST] Email Change [{score}] - From {username}]]></phrase>
+  <phrase title="dbtech_security_email_change_successful_body_html" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[{username} just successfully changed their email address. Their IP address was {ipaddress}.]]></phrase>
+  <phrase title="dbtech_security_email_change_successful_body_text" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Hello,
+
+{username} just successfully changed their email address. Their IP address was {ipaddress}.
+
+Below are the details submitted to the form.
+
+------------------------
+Username: {filled_username}
+Existing Email: {filled_existingemail}
+New Email: {filled_newemail}
+Last Non-Admin PMed: {filled_pmuser}
+Paid Subscription Transaction ID: {filled_txnid}
+------------------------
+
+Total Score: {score}
+
+------------------------
+{breakdown}
+------------------------
+
+You can reply to this email in order to converse with the user.]]></phrase>
+  <phrase title="dbtech_security_email_change_successful_title" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[[SUCCESS] Email Change [{score}] - From {username}]]></phrase>
+  <phrase title="dbtech_security_email_changed_successfully" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Email changed successfully!]]></phrase>
+  <phrase title="dbtech_security_email_recovery_options" version_id="20170223" version_string="4.0.0"><![CDATA[Email Recovery Options]]></phrase>
+  <phrase title="dbtech_security_enable_account_breach_check" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Enable account breach check]]></phrase>
+  <phrase title="dbtech_security_enable_account_breach_check_explain" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[If enabled, every time someone logs in to an account, a request is sent to <a href="https://haveibeenpwned.com" target="_blank">Have I Been Pwned?</a> to check if their account information has been leaked.]]></phrase>
+  <phrase title="dbtech_security_enable_fingerprinting" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Enable browser fingerprinting]]></phrase>
+  <phrase title="dbtech_security_enable_fingerprinting_explain" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[If enabled, DragonByte Security will fingerprint the user's browser to detect potential attackers. You can set up Security Watchers to look for changes in fingerprints and let the watchers take appropriate action.<br />
+<b>Warning: This feature is a privacy concern and should be declared in your site's Privacy Policy!</b>]]></phrase>
+  <phrase title="dbtech_security_enable_navbar_left_explain" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This will enable a navbar tab on the left hand side (where the "Home" and "Forums" tabs are).]]></phrase>
+  <phrase title="dbtech_security_enable_navbar_right_explain" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This will enable a navbar tab on the right hand side (where the "Alert" and "Inbox" tabs are).]]></phrase>
+  <phrase title="dbtech_security_encrypt_password" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Encrypt Password]]></phrase>
+  <phrase title="dbtech_security_enter_key_nickname" version_id="904030031" version_string="4.3.0 Beta 1"><![CDATA[Enter a nickname for this security key]]></phrase>
+  <phrase title="dbtech_security_entries_to_show_per_page" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Entries to show per page]]></phrase>
+  <phrase title="dbtech_security_error_x" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[{param1} <a href="javascript:history.go(-1);">Go Back</a>.]]></phrase>
+  <phrase title="dbtech_security_exclude_tfa_users" version_id="904070070" version_string="4.7.0"><![CDATA[Exclude users with two-factor authentication enabled]]></phrase>
+  <phrase title="dbtech_security_existing_email_address" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Existing Email Address]]></phrase>
+  <phrase title="dbtech_security_existing_username_not_found" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[An existing user matching the user name you provided was not found. Please double-check the spelling.]]></phrase>
+  <phrase title="dbtech_security_existingemail" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Existing Email]]></phrase>
+  <phrase title="dbtech_security_fail_caps" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[[FAIL]]]></phrase>
+  <phrase title="dbtech_security_failed_logins" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Failed Logins]]></phrase>
+  <phrase title="dbtech_security_failedlogon" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[[{param1}] Attempted User Name: <b>{param2}</b> - IP Address: <b>{param3}</b>]]></phrase>
+  <phrase title="dbtech_security_failedlogonadmin_guest" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[[{param1}] Guest - User ID: <b>{param2}</b> - Attempted Login Username: <b>{param3}</b> - IP Address: <b>{param4}</b>]]></phrase>
+  <phrase title="dbtech_security_failedlogonadmin_user" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[[{param1}] <b>{param2}</b> - User ID: <b>{param3}</b> - Attempted Login Username: <b>{param4}</b> - IP Address: <b>{param5}</b>]]></phrase>
+  <phrase title="dbtech_security_failedlogonbogus" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[[{param1}] Attempted User Name: <b>{param2}</b> - IP Address: <b>{param3}</b>]]></phrase>
+  <phrase title="dbtech_security_failedmasslogon" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[[{param1}] Attempted User Names: <b>{param2}</b> - IP Address: <b>{param3}</b>]]></phrase>
+  <phrase title="dbtech_security_failedmasslogonbogus" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[[{param1}] Attempted User Names: <b>{param2}</b> - IP Address: <b>{param3}</b>]]></phrase>
+  <phrase title="dbtech_security_fallback_fail" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Treat As Failure]]></phrase>
+  <phrase title="dbtech_security_fallback_long" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Fallback Action
+<dfn>You can choose what happens if this criteria cannot execute (e.g. it relies on a valid user record being found, and one is not found).<br />
+<strong>Note:</strong> If this criteria normally gives a positive score, this criteria will always be skipped.</dfn>]]></phrase>
+  <phrase title="dbtech_security_fallback_skip" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Skip Check]]></phrase>
+  <phrase title="dbtech_security_field" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Field]]></phrase>
+  <phrase title="dbtech_security_file_contents_mismatch" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[File does not contain expected contents]]></phrase>
+  <phrase title="dbtech_security_file_not_found" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[File not found]]></phrase>
+  <phrase title="dbtech_security_file_not_readable" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[File not readable]]></phrase>
+  <phrase title="dbtech_security_file_not_recognized" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[File not recognised]]></phrase>
+  <phrase title="dbtech_security_file_version_mismatch_x_expected_y" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[File version mismatch: found {param1}, expected {param2}]]></phrase>
+  <phrase title="dbtech_security_find_intruder_ips" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Find Potential Intruder IP Addresses]]></phrase>
+  <phrase title="dbtech_security_find_intruder_ips_descr" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This search lets you quickly see what IP addresses have attempted to access multiple valid accounts.]]></phrase>
+  <phrase title="dbtech_security_find_ip_addresses_for_user" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Find IP Addresses for User
+<dfn>Enter Username</dfn>]]></phrase>
+  <phrase title="dbtech_security_find_more_users_with_this_ip_address" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Find More Users with this IP Address]]></phrase>
+  <phrase title="dbtech_security_find_suspect_ips" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Find Suspect IP Ranges]]></phrase>
+  <phrase title="dbtech_security_find_suspect_ips_descr" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This tool will analyse the various logs collected by this mod to find ranges of IP addresses that perform suspicious actions.]]></phrase>
+  <phrase title="dbtech_security_find_users_by_ip_address" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Find Users by IP Address
+<dfn>You may enter a partial IP Address</dfn>]]></phrase>
+  <phrase title="dbtech_security_fingerprint" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Fingerprint]]></phrase>
+  <phrase title="dbtech_security_fingerprint_log" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Fingerprint log]]></phrase>
+  <phrase title="dbtech_security_fingerprint_log_id_x" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Fingerprint log #{logId}]]></phrase>
+  <phrase title="dbtech_security_fingerprint_log_search" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Search fingerprint log]]></phrase>
+  <phrase title="dbtech_security_fingerprinting_components" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Fingerprinting components]]></phrase>
+  <phrase title="dbtech_security_first_logged" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[First Logged]]></phrase>
+  <phrase title="dbtech_security_first_login" version_id="904070070" version_string="4.7.0"><![CDATA[First login]]></phrase>
+  <phrase title="dbtech_security_force_new_password" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Force New Password
+<dfn>If yes, this forces the user to change their password the next time they visit the forum.</dfn>]]></phrase>
+  <phrase title="dbtech_security_force_password_change" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Force password change]]></phrase>
+  <phrase title="dbtech_security_force_password_change_descr" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Search for users you wish to update with this form, then choose "Force password change" on the confirmation page.]]></phrase>
+  <phrase title="dbtech_security_force_password_change_next_login" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Force password change on next login]]></phrase>
+  <phrase title="dbtech_security_forcenewpass" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Force New Password]]></phrase>
+  <phrase title="dbtech_security_forcenewpass_descr" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Ticking this box means the user will need to change their password before they can continue to use the site.]]></phrase>
+  <phrase title="dbtech_security_forget_this_device" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Forget this device]]></phrase>
+  <phrase title="dbtech_security_forgotten_email_request_reset" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[If you have forgotten your email address or lost access to it, you can request to have your registered email reset. When you fill in the validation data, your request may be put into a manual verification queue and you may receive an email from the webmaster asking you for additional information.]]></phrase>
+  <phrase title="dbtech_security_forumperm" version_id="905000031" version_string="5.0.0 Beta 1"><![CDATA[Security forum permission]]></phrase>
+  <phrase title="dbtech_security_forumpermissions" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[[{date}] Changed Forum Permissions: <b>{diffs}</b> - IP Address: <b>{ip}</b>]]></phrase>
+  <phrase title="dbtech_security_front_end" version_id="904050770" version_string="4.5.7"><![CDATA[Front-end]]></phrase>
+  <phrase title="dbtech_security_generate_password" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Generate password]]></phrase>
+  <phrase title="dbtech_security_generated" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[generated]]></phrase>
+  <phrase title="dbtech_security_geoip_file_unreadable" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[The specified GeoIP2 database file is either not found or unreadable.]]></phrase>
+  <phrase title="dbtech_security_group" version_id="905000031" version_string="5.0.0 Beta 1"><![CDATA[Security user group]]></phrase>
+  <phrase title="dbtech_security_groupperm" version_id="905000031" version_string="5.0.0 Beta 1"><![CDATA[Security user group permission]]></phrase>
+  <phrase title="dbtech_security_hibp_api_key" version_id="904020670" version_string="4.2.6"><![CDATA[In order to use the breach check, you need to obtain an API key from <a href="https://haveibeenpwned.com/API/Key" target="_blank">HaveIBeenPwned.com</a>. ]]></phrase>
+  <phrase title="dbtech_security_host_name" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Host Name]]></phrase>
+  <phrase title="dbtech_security_http_headers" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[HTTP Headers]]></phrase>
+  <phrase title="dbtech_security_if_no_popup_click_button" version_id="904030031" version_string="4.3.0 Beta 1"><![CDATA[If you did not receive a popup requesting authentication, you can click this button to retry:]]></phrase>
+  <phrase title="dbtech_security_if_you_leave_a_field_blank_it_will_be_ignored" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[If you leave a field blank it will be ignored]]></phrase>
+  <phrase title="dbtech_security_include_lowercase" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Include Lower-Case]]></phrase>
+  <phrase title="dbtech_security_include_numbers" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Include Numbers]]></phrase>
+  <phrase title="dbtech_security_include_symbols" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Include Symbols]]></phrase>
+  <phrase title="dbtech_security_include_uppercase" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Include Upper-Case]]></phrase>
+  <phrase title="dbtech_security_include_user_name" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Include user name]]></phrase>
+  <phrase title="dbtech_security_include_user_name_explain" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[If enabled, the user's user name is also sent to the server when checking for breached information. This may produce false positives if the user name is a commonly used one.]]></phrase>
+  <phrase title="dbtech_security_incorrect_authorisation" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[The authorisation provided for the IP Address <code>{param1}</code> and the  the user {param2} was incorrect.<br />
+<br />
+Please check the email address associated with your account and click the authorisation link.]]></phrase>
+  <phrase title="dbtech_security_incorrect_unlock_hash" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[The provided unlock hash was incorrect.]]></phrase>
+  <phrase title="dbtech_security_integrate_with_password_confirm" version_id="904030051" version_string="4.3.0 Release Candidate 1"><![CDATA[Integrate with "Confirm password" screen]]></phrase>
+  <phrase title="dbtech_security_integrate_with_password_confirm_hint" version_id="904030051" version_string="4.3.0 Release Candidate 1"><![CDATA[If enabled, registered security keys will be available for use on pages that require the user to confirm their password, such as accessing two-step verification pages.]]></phrase>
+  <phrase title="dbtech_security_intrusion_action" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Rule Action]]></phrase>
+  <phrase title="dbtech_security_intrusions" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Intrusions]]></phrase>
+  <phrase title="dbtech_security_intrusions_compromised_desc" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[How many failed attempts are needed before a successful login when this watcher is checked. Setting it too low may cause false positives if a member has simply forgotten their password.]]></phrase>
+  <phrase title="dbtech_security_intrusions_desc" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Controls how many hits should be logged before this watcher is triggered.]]></phrase>
+  <phrase title="dbtech_security_invalid_action" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Invalid Action.]]></phrase>
+  <phrase title="dbtech_security_invalid_email" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Invalid Email Specified]]></phrase>
+  <phrase title="dbtech_security_invalid_existing_data" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Invalid existing data.]]></phrase>
+  <phrase title="dbtech_security_invalid_field_data" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Invalid field data.]]></phrase>
+  <phrase title="dbtech_security_invalid_new_email" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Invalid "New Email Address" specified. Please make sure you have filled it out.]]></phrase>
+  <phrase title="dbtech_security_invalid_x" version_id="20170223" version_string="4.0.0"><![CDATA[Invalid {param1}: {param2}]]></phrase>
+  <phrase title="dbtech_security_ip_address_search_for_ip_address_x" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[IP Address Search for IP Address: "<b>{param1}</b>"]]></phrase>
+  <phrase title="dbtech_security_ip_address_search_for_user_x" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[IP Address Search for User: "<b>{param1}</b>"]]></phrase>
+  <phrase title="dbtech_security_ip_addresses" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[IP Addresses]]></phrase>
+  <phrase title="dbtech_security_ip_ban_log" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[IP Ban Log Viewer]]></phrase>
+  <phrase title="dbtech_security_ip_options" version_id="20170223" version_string="4.0.0"><![CDATA[IP Options]]></phrase>
+  <phrase title="dbtech_security_ip_verifier" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[IP Address Verifier]]></phrase>
+  <phrase title="dbtech_security_ipban_log" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[IP Ban Log]]></phrase>
+  <phrase title="dbtech_security_ipbanlog_list_page_x_y_there_are_z_total_log_entries" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[IP Ban Log Viewer (page {param1}/{param2}) | There are {param3} total log entries.]]></phrase>
+  <phrase title="dbtech_security_ipcheck" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[IP Verification]]></phrase>
+  <phrase title="dbtech_security_ipcheck_enabled" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Enable IP Verification]]></phrase>
+  <phrase title="dbtech_security_ipcheck_enabled_descr" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[For added security, you can enable email verification of new IP addresses with this toggle.]]></phrase>
+  <phrase title="dbtech_security_iplog_search1" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[The start date controls how far back to search for user accounts that have been accessed by a new IP address.]]></phrase>
+  <phrase title="dbtech_security_iplog_search1_title" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Search new IPs]]></phrase>
+  <phrase title="dbtech_security_iplog_search2" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This search lets you find what IP addresses have accessed multiple accounts, if any.]]></phrase>
+  <phrase title="dbtech_security_iplog_search2_title" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Find duplicate accounts]]></phrase>
+  <phrase title="dbtech_security_iplog_search3" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This search lets you quickly see what IP addresses have attempted to access multiple valid accounts.]]></phrase>
+  <phrase title="dbtech_security_iplog_search3_title" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Find Potential Intruder IP Addresses]]></phrase>
+  <phrase title="dbtech_security_ipmatch" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Match]]></phrase>
+  <phrase title="dbtech_security_ipmismatch" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Mismatch]]></phrase>
+  <phrase title="dbtech_security_ipverify_asc" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Ascending]]></phrase>
+  <phrase title="dbtech_security_ipverify_cp_header" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[AdminCP Access Logs]]></phrase>
+  <phrase title="dbtech_security_ipverify_current" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Current IP:]]></phrase>
+  <phrase title="dbtech_security_ipverify_desc" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Descending]]></phrase>
+  <phrase title="dbtech_security_ipverify_first_page" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[First Page]]></phrase>
+  <phrase title="dbtech_security_ipverify_general" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[General Settings]]></phrase>
+  <phrase title="dbtech_security_ipverify_guest" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Guest]]></phrase>
+  <phrase title="dbtech_security_ipverify_header" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Confirm Admin IP]]></phrase>
+  <phrase title="dbtech_security_ipverify_last_page" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Last Page]]></phrase>
+  <phrase title="dbtech_security_ipverify_list_page_x_y_there_are_z_total_log_entries" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[AdminCP Logins List (page {param1}/{param2}) | There are {param3} users that have logged into the AdminCP.]]></phrase>
+  <phrase title="dbtech_security_ipverify_list_page_x_y_there_are_z_total_log_entries_mod" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[ModCP Logins List (page {param1}/{param2}) | There are {param3} users that have logged into the ModCP.]]></phrase>
+  <phrase title="dbtech_security_ipverify_log" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[AdminCP Access Log]]></phrase>
+  <phrase title="dbtech_security_ipverify_log_entries_to_show_per_page" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Entries To Show Per Page]]></phrase>
+  <phrase title="dbtech_security_ipverify_match" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[IP's Match]]></phrase>
+  <phrase title="dbtech_security_ipverify_mismatch" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[IP's MisMatch]]></phrase>
+  <phrase title="dbtech_security_ipverify_next_page" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Next Page]]></phrase>
+  <phrase title="dbtech_security_ipverify_prev_page" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Previous Page]]></phrase>
+  <phrase title="dbtech_security_ipverify_prune_log" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Prune Admin Access Log]]></phrase>
+  <phrase title="dbtech_security_ipverify_restart_search" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Restart Search]]></phrase>
+  <phrase title="dbtech_security_ipverify_show_entries" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Show Log Entries]]></phrase>
+  <phrase title="dbtech_security_ipverify_stats_menu" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[DBTech - AdminCP IP Verifier]]></phrase>
+  <phrase title="dbtech_security_ipverify_stored" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Stored IP:]]></phrase>
+  <phrase title="dbtech_security_ipverify_table_header" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Admin Access Log]]></phrase>
+  <phrase title="dbtech_security_ipwhitelist" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Your IP Address ({param1} / {param2}) are not on the Whitelist for the AdminCP.<br />
+<br />
+Are you the only Super Administrator and seeing this message? Add the following to your config.php:<br />
+<code>define('DISABLE_HOOKS', true);</code>
+<br />
+Then re-enable the "Whitelisted IP Addresses - Exclude Super Administrators" setting, or add your new IP Address to the Whitelisted IP Addresses list.]]></phrase>
+  <phrase title="dbtech_security_is_admin_locked" version_id="904030270" version_string="4.3.2"><![CDATA[Account locked (admin unlock)]]></phrase>
+  <phrase title="dbtech_security_is_user_locked" version_id="904030270" version_string="4.3.2"><![CDATA[Account locked (user unlock)]]></phrase>
+  <phrase title="dbtech_security_keep_deleted" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Keep deleted]]></phrase>
+  <phrase title="dbtech_security_key" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Key]]></phrase>
+  <phrase title="dbtech_security_last_logged" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Last Logged]]></phrase>
+  <phrase title="dbtech_security_last_non_admin_pmd" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Last Non-Administrator You Private Messaged]]></phrase>
+  <phrase title="dbtech_security_last_non_admin_pmd_short" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Last Non-Admin PMed]]></phrase>
+  <phrase title="dbtech_security_load_backup" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Load backup]]></phrase>
+  <phrase title="dbtech_security_loaded" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[loaded]]></phrase>
+  <phrase title="dbtech_security_locked_account" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Locked Account]]></phrase>
+  <phrase title="dbtech_security_locked_account_desc" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Your account has been locked due to a potential breach of security.]]></phrase>
+  <phrase title="dbtech_security_log_options" version_id="20170223" version_string="4.0.0"><![CDATA[Logging Options]]></phrase>
+  <phrase title="dbtech_security_log_pruned_successfully" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Log pruned successfully!]]></phrase>
+  <phrase title="dbtech_security_log_pruning_restricted" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Log pruning permission restricted.]]></phrase>
+  <phrase title="dbtech_security_log_type" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Log Type]]></phrase>
+  <phrase title="dbtech_security_logged_ip_addresses" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Logged IP Addresses]]></phrase>
+  <phrase title="dbtech_security_login_failed" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Login failed. Please check your username and password.]]></phrase>
+  <phrase title="dbtech_security_login_sessions" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Login sessions]]></phrase>
+  <phrase title="dbtech_security_login_sessions_desc" version_id="904040070" version_string="4.4.0"><![CDATA[All active login sessions across all devices. You can only remove sessions from devices other than your currently active device.]]></phrase>
+  <phrase title="dbtech_security_login_strike_log" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Login strike log]]></phrase>
+  <phrase title="dbtech_security_login_strike_log_id_x" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Login strike log #{logId}]]></phrase>
+  <phrase title="dbtech_security_login_strike_log_search" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Search login strike logs]]></phrase>
+  <phrase title="dbtech_security_login_strikes" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Login Strikes]]></phrase>
+  <phrase title="dbtech_security_login_strikes_viewer" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Login Strikes Viewer]]></phrase>
+  <phrase title="dbtech_security_login_strikes_viewer_page_x_y_there_are_z_total_log_entries" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Login Strikes Viewer (page {param1}/{param2}) | There are {param3} total log entries.]]></phrase>
+  <phrase title="dbtech_security_long" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[DragonByte Security]]></phrase>
+  <phrase title="dbtech_security_lost_email" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Lost access to your email account?]]></phrase>
+  <phrase title="dbtech_security_lost_email_recovery_form" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Lost Email Recovery Form]]></phrase>
+  <phrase title="dbtech_security_main_settings" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Main Settings]]></phrase>
+  <phrase title="dbtech_security_maintenance" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Maintenance]]></phrase>
+  <phrase title="dbtech_security_manage_settings_snapshots" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Manage Settings Snapshots]]></phrase>
+  <phrase title="dbtech_security_mass_password_reset" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Mass password reset]]></phrase>
+  <phrase title="dbtech_security_mass_password_reset_descr" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Search for users you wish to update with this form, then choose "Reset password" on the confirmation page.]]></phrase>
+  <phrase title="dbtech_security_member_account_not_locked" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This member's account is not locked.]]></phrase>
+  <phrase title="dbtech_security_minimum_password_length" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Minimum Password Length
+<dfn>0 = Disable this rule</dfn>]]></phrase>
+  <phrase title="dbtech_security_missing_x" version_id="20170223" version_string="4.0.0"><![CDATA[Missing Required Information: {param1}.]]></phrase>
+  <phrase title="dbtech_security_more_info" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[More Info]]></phrase>
+  <phrase title="dbtech_security_must_change_password" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[You need to change your password in order to continue to use this site.]]></phrase>
+  <phrase title="dbtech_security_n_a" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[N/A]]></phrase>
+  <phrase title="dbtech_security_navbar_left_end" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[After "Members" Tab]]></phrase>
+  <phrase title="dbtech_security_navbar_left_home" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[After "Home" Tab]]></phrase>
+  <phrase title="dbtech_security_navbar_left_middle" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[After "Forums" Tab]]></phrase>
+  <phrase title="dbtech_security_navbar_right_end" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[After "Alerts" Tab]]></phrase>
+  <phrase title="dbtech_security_navbar_right_middle" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Before "Alerts" Tab]]></phrase>
+  <phrase title="dbtech_security_navbar_right_start" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Before "Account" Tab]]></phrase>
+  <phrase title="dbtech_security_need_password_change" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[You need to change your password.]]></phrase>
+  <phrase title="dbtech_security_new_device_fingerprint_detected" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[New device fingerprint detected]]></phrase>
+  <phrase title="dbtech_security_new_email_address" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[New Email Address]]></phrase>
+  <phrase title="dbtech_security_new_security_key" version_id="904030031" version_string="4.3.0 Beta 1"><![CDATA[New security key]]></phrase>
+  <phrase title="dbtech_security_newemail" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[New Email]]></phrase>
+  <phrase title="dbtech_security_newfingerprint" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[[{param1}] User Name: <b>{param2}</b> - Fingerprint: <b>{param3}</b> - IP Address: <b>{param4}</b>]]></phrase>
+  <phrase title="dbtech_security_no_duplicate_ips_found" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[No potentially duplicate accounts have been found.]]></phrase>
+  <phrase title="dbtech_security_no_intruder_ips_found" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[No potential intruder IP addresses have been found.]]></phrase>
+  <phrase title="dbtech_security_no_matches_found" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[No Matches Found]]></phrase>
+  <phrase title="dbtech_security_no_permission" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[You do not have permission to view this page.]]></phrase>
+  <phrase title="dbtech_security_no_results_matched_your_query" version_id="20170223" version_string="4.0.0"><![CDATA[No Results Matched Your Query]]></phrase>
+  <phrase title="dbtech_security_no_snapshots" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[You currently have no Setting Snapshots saved.]]></phrase>
+  <phrase title="dbtech_security_no_suspect_ips_found" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[No potentially suspect IP addresses have been found.]]></phrase>
+  <phrase title="dbtech_security_nopermission_cp" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Sorry, you don't have permission to access the administrative controls on this page.<br />
+<br />
+If you need to access this page, ask your lead administrator to enable your permissions for this page.]]></phrase>
+  <phrase title="dbtech_security_not_admin_locked" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Not admin locked]]></phrase>
+  <phrase title="dbtech_security_not_locked" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Your account is not locked.]]></phrase>
+  <phrase title="dbtech_security_not_user_locked" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Not user locked]]></phrase>
+  <phrase title="dbtech_security_not_valid_user" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Invalid user]]></phrase>
+  <phrase title="dbtech_security_nothing_to_do" version_id="20170223" version_string="4.0.0"><![CDATA[Nothing to do.]]></phrase>
+  <phrase title="dbtech_security_only_users_without_2fa" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Exclude Users With Two-Factor Authentication
+<dfn>If yes, this will skip all users who have enabled Two-Factor Authentication for their account.</dfn>]]></phrase>
+  <phrase title="dbtech_security_option" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Option]]></phrase>
+  <phrase title="dbtech_security_options" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[[{param1}] Changed Option: <b>{param2}</b> - Value Change: <b>{param3}</b> - IP Address: <b>{param4}</b>]]></phrase>
+  <phrase title="dbtech_security_order_by" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Order By]]></phrase>
+  <phrase title="dbtech_security_os" version_id="904070070" version_string="4.7.0"><![CDATA[OS]]></phrase>
+  <phrase title="dbtech_security_paid_sub_transaction_id" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Paid Subscription Transaction ID]]></phrase>
+  <phrase title="dbtech_security_password_expired" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Your password has expired, and you must change it.]]></phrase>
+  <phrase title="dbtech_security_password_requires_lowercase" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Password Requires Lower-case Characters]]></phrase>
+  <phrase title="dbtech_security_password_requires_numbers" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Password Requires Numbers]]></phrase>
+  <phrase title="dbtech_security_password_requires_symbols" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Password Requires Symbols]]></phrase>
+  <phrase title="dbtech_security_password_requires_uppercase" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Password Requires Upper-case Characters]]></phrase>
+  <phrase title="dbtech_security_password_security" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Password Security]]></phrase>
+  <phrase title="dbtech_security_password_security_descr" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Setting stricter password rules increases the security of members' forum accounts.<br />
+Note that this does not force people with insecure passwords to change them, it is impossible to determine the strength of a user's password until they decide to change it.]]></phrase>
+  <phrase title="dbtech_security_passwordchange" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Force Password Change]]></phrase>
+  <phrase title="dbtech_security_passwordexpired" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Your password has expired.<br />
+<br />
+Please change your password using <a href="{param1}">this page</a>.]]></phrase>
+  <phrase title="dbtech_security_passwordgenerator" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Password generator]]></phrase>
+  <phrase title="dbtech_security_passwordgenerator_descr" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This page lets you generate a random password, or use an existing one, and encrypt it for use with a server's "Basic Authentication" method (e.g. .htaccess protection).]]></phrase>
+  <phrase title="dbtech_security_passwordreset" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Password Reset]]></phrase>
+  <phrase title="dbtech_security_passwordreset_descr" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This will reset the password of every user (other than yourself). You can use this in the event of a security breach where malicious users have got a hold of your forum's database or files.]]></phrase>
+  <phrase title="dbtech_security_passwordreset_succeeded" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[All passwords (except your own) have been reset successfully.]]></phrase>
+  <phrase title="dbtech_security_passwordrule_lowercase" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Must contain lower-case characters]]></phrase>
+  <phrase title="dbtech_security_passwordrule_numbers" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Must contain numbers]]></phrase>
+  <phrase title="dbtech_security_passwordrule_passwordlength" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Must be at least {param1} characters]]></phrase>
+  <phrase title="dbtech_security_passwordrule_symbols" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Must contain symbols]]></phrase>
+  <phrase title="dbtech_security_passwordrule_uppercase" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Must contain upper-case characters]]></phrase>
+  <phrase title="dbtech_security_passwordsoftreset" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Force Password Change]]></phrase>
+  <phrase title="dbtech_security_passwordsoftreset_descr" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This will force all users (other than yourself) to reset their password the next time they visit the forum. Upon their next visit, they will be redirected to the Account Security page in their UserCP.]]></phrase>
+  <phrase title="dbtech_security_passwordsoftreset_succeeded" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[All passwords have been successfully flagged as expired.]]></phrase>
+  <phrase title="dbtech_security_pending_upgrade" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<b>Pending upgrade: DragonByte Security</b> - <code>{file}</code>]]></phrase>
+  <phrase title="dbtech_security_pending_upgrade_frontend" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This page is temporarily unavailable due to a pending upgrade. If this notice persists for long periods of time, please contact an administrator.]]></phrase>
+  <phrase title="dbtech_security_permissions" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[[{param1}] Changed Permissions: <b>{param2}</b> - Value Change: <b>{param3}</b> - IP Address: <b>{param4}</b>]]></phrase>
+  <phrase title="dbtech_security_please_confirm_that_you_want_to_load_following_backup" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Please confirm that you want to load the following backup]]></phrase>
+  <phrase title="dbtech_security_please_enter_number_that_is_at_least_x" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Please enter a number that is at least {min}.]]></phrase>
+  <phrase title="dbtech_security_please_enter_number_that_is_no_more_than_x" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Please enter a number that is no more than {max}.]]></phrase>
+  <phrase title="dbtech_security_please_enter_positive_whole_number" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Please enter a positive whole number.]]></phrase>
+  <phrase title="dbtech_security_please_enter_user_or_ip" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Please enter a valid user name or an IP address.]]></phrase>
+  <phrase title="dbtech_security_please_enter_valid_email" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Please enter a valid email.]]></phrase>
+  <phrase title="dbtech_security_please_enter_valid_value" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Please enter a valid value.]]></phrase>
+  <phrase title="dbtech_security_please_enter_value_for_required_field_x" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Please enter a value for the required field '{field}'.]]></phrase>
+  <phrase title="dbtech_security_please_enter_value_using_x_characters_or_fewer" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Please enter a value using {count} characters or fewer.]]></phrase>
+  <phrase title="dbtech_security_pmuser" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[PM User]]></phrase>
+  <phrase title="dbtech_security_pmuser_username_not_found" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[A user record matching the user name you provided in the "Last Non-Administrator you PMed" was not found. Please double-check the spelling or leave this field blank if you're unsure.]]></phrase>
+  <phrase title="dbtech_security_processing_x" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Processing: {param1}]]></phrase>
+  <phrase title="dbtech_security_prune_log_entries" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Prune AdminCP Access Log]]></phrase>
+  <phrase title="dbtech_security_prune_log_entries_verify" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Are you sure you want to prune {param1} log entries?]]></phrase>
+  <phrase title="dbtech_security_quicklinks" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA["Quick Links" Menu]]></phrase>
+  <phrase title="dbtech_security_random_password" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Random Password]]></phrase>
+  <phrase title="dbtech_security_random_password_descr" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[You can use this tool to generate a pseudo-random password for use with the above tool if you do not have a preferred password already.]]></phrase>
+  <phrase title="dbtech_security_recommendation_admincpdir" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Rename AdminCP Directory
+<dfn>Renaming the AdminCP directory can increase security for exploits that target files in this directory.</dfn>]]></phrase>
+  <phrase title="dbtech_security_recommendation_admincpdir_bad" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[The AdminCP directory should be renamed via the <em>PATH TO ADMIN & MODERATOR CONTROL PANELS</em> section of the <i>includes/config.php</i> file like this:<br /> <br /> <code>$config['Misc']['admincpdir'] = 'notadmincp';</code><br /> <br />
+<span class="smallfont" style="font-weight:bold;">Note: If you perform this tweak, you need to manually ensure that modifications (such as other DBTech mods) that place files in the <em>./admincp</em> folder have those files placed in your new folder when installing the modifications.<br />
+Do not perform this tweak if you do not feel confident you can keep modifications from breaking in this manner.</span>]]></phrase>
+  <phrase title="dbtech_security_recommendation_admincpdir_good" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[The AdminCP directory has been changed from its default value.]]></phrase>
+  <phrase title="dbtech_security_recommendation_configfile_good" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[The config.php file has been renamed.]]></phrase>
+  <phrase title="dbtech_security_recommendation_configsetting_good" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[DragonByte Security's "Configuration File" setting appears to have the correct value.]]></phrase>
+  <phrase title="dbtech_security_recommendation_installdir" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Clean Up Installation Directory
+<dfn>Leaving unneeded files in the <em>./install</em> folder can result in compromised administrator accounts being used to permanently damage your forum.</dfn>]]></phrase>
+  <phrase title="dbtech_security_recommendation_installdir_bad" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[The following folders and/or files should be deleted from your <em>./install</em> directory:
+<ul class="smallfont">{param1}</ul>]]></phrase>
+  <phrase title="dbtech_security_recommendation_installdir_good" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[The installation directory is either deleted or contains only safe files.]]></phrase>
+  <phrase title="dbtech_security_recommendation_modcpdir" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Rename ModCP Directory
+<dfn>Renaming the ModCP directory can increase security for exploits that target files in this directory.</dfn>]]></phrase>
+  <phrase title="dbtech_security_recommendation_modcpdir_bad" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[The ModCP directory should be renamed via the <em>PATH TO ADMIN & MODERATOR CONTROL PANELS</em> section of the <i>includes/config.php</i> file like this:<br /> <br /> <code>$config['Misc']['modcpdir'] = 'notmodcp';</code><br /> <br />
+<span class="smallfont" style="font-weight:bold;">Note: If you perform this tweak, you need to manually ensure that modifications (such as other DBTech mods) that place files in the <em>./modcp</em> folder have those files placed in your new folder when installing the modifications.<br />
+Do not perform this tweak if you do not feel confident you can keep modifications from breaking in this manner.</span>]]></phrase>
+  <phrase title="dbtech_security_recommendation_modcpdir_good" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[The ModCP directory has been changed from its default value.]]></phrase>
+  <phrase title="dbtech_security_recommendations" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Recommendations]]></phrase>
+  <phrase title="dbtech_security_recoverylog" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Recovery Log]]></phrase>
+  <phrase title="dbtech_security_redirecting" version_id="20170223" version_string="4.0.0"><![CDATA[Redirecting...]]></phrase>
+  <phrase title="dbtech_security_register_key" version_id="904030031" version_string="4.3.0 Beta 1"><![CDATA[Register key]]></phrase>
+  <phrase title="dbtech_security_registration_ip_address" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Registration IP Address]]></phrase>
+  <phrase title="dbtech_security_registration_ip_addresses" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Registration IP Addresses]]></phrase>
+  <phrase title="dbtech_security_remove_entries_days" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Remove Entries Older Than (Days)]]></phrase>
+  <phrase title="dbtech_security_remove_entries_user" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Remove Entries Logged by User]]></phrase>
+  <phrase title="dbtech_security_remove_entries_watcher" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Remove Entries From Watcher]]></phrase>
+  <phrase title="dbtech_security_repair_cache" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Repair Cache]]></phrase>
+  <phrase title="dbtech_security_repaired" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[repaired]]></phrase>
+  <phrase title="dbtech_security_reply_to_converse" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[You can reply to this email in order to converse with the user to resolve this issue.]]></phrase>
+  <phrase title="dbtech_security_request_email_reset_now" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Request Email Reset Now]]></phrase>
+  <phrase title="dbtech_security_request_entity" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Request Entity]]></phrase>
+  <phrase title="dbtech_security_request_method" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Request method]]></phrase>
+  <phrase title="dbtech_security_request_uri" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Request URI]]></phrase>
+  <phrase title="dbtech_security_requested_user_not_found" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[The requested user could not be found.]]></phrase>
+  <phrase title="dbtech_security_require_security_key_pin" version_id="904030031" version_string="4.3.0 Beta 1"><![CDATA[Require security key PIN]]></phrase>
+  <phrase title="dbtech_security_require_security_key_pin_hint" version_id="904030031" version_string="4.3.0 Beta 1"><![CDATA[If enabled, this will force the users to enter their security key's PIN code before registering or authenticating. This adds two extra steps to the user, but protects against authenticating with stolen keys.]]></phrase>
+  <phrase title="dbtech_security_requires_superadmin" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<b>Sorry, you are not allowed to edit security related options.</b><br /> <br /> If you think you <i>should</i> have permission to access this page, you will need to edit the <i>$config['SpecialUsers']['superadministrators']</i> variable in the <i>includes/config.php</i> file.<br /> <br /> To allow the administrators to access this page, edit the variable to include the user IDs of those administrators should have access, separating each user ID with a comma, like this:<br /> <br /> <code>$config['SpecialUsers']['superadministrators'] = '1,25,57';</code><br /> <br /> To allow only a single administrator to access this page, simply add that user's ID with no commas, like this:<br /> <br /> <code>$config['SpecialUsers']['superadministrators'] = '1';</code>]]></phrase>
+  <phrase title="dbtech_security_reset" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Reset]]></phrase>
+  <phrase title="dbtech_security_reset_all_passwords" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Reset All Passwords]]></phrase>
+  <phrase title="dbtech_security_reset_password" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Reset password]]></phrase>
+  <phrase title="dbtech_security_reset_watcher_alerts" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Reset Watcher Alerts]]></phrase>
+  <phrase title="dbtech_security_resetpw_message" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Dear $userinfo[username],
+
+Your password has been reset by an administrator. Your new details are as follows:
+
+Username: $userinfo[username]
+Password: $newpassword
+
+To change your password, please visit this page: $info[editpassword]
+
+If you suspect this email is a scam, you can confirm the legitimacy of this email by manually navigating to the forum URL yourself and use your new password to log in.
+
+All the best,
+$info[bbtitle]]]></phrase>
+  <phrase title="dbtech_security_resetpw_title" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Your new password for $info[bbtitle]]]></phrase>
+  <phrase title="dbtech_security_resolve_address" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Resolve Address]]></phrase>
+  <phrase title="dbtech_security_response" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Response]]></phrase>
+  <phrase title="dbtech_security_retry" version_id="904030031" version_string="4.3.0 Beta 1"><![CDATA[Retry]]></phrase>
+  <phrase title="dbtech_security_rule" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Rule]]></phrase>
+  <phrase title="dbtech_security_same_ip_address" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[The same IP address]]></phrase>
+  <phrase title="dbtech_security_saved" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[saved]]></phrase>
+  <phrase title="dbtech_security_score" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Score]]></phrase>
+  <phrase title="dbtech_security_score_breakdown" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Score Breakdown]]></phrase>
+  <phrase title="dbtech_security_search_ip_addresses" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Search IP addresses]]></phrase>
+  <phrase title="dbtech_security_security" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[DragonByte Security]]></phrase>
+  <phrase title="dbtech_security_security_admin_lock_body_html" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[{username}'s account at {board} has been locked because DragonByte Security has detected a security alert regarding {param1}.]]></phrase>
+  <phrase title="dbtech_security_security_admin_lock_title" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[User account locked at {board} ({username})]]></phrase>
+  <phrase title="dbtech_security_security_alert_actions_taken" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[The actions you have configured in the Security Center have been taken.]]></phrase>
+  <phrase title="dbtech_security_security_alert_body" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Greetings,
+
+DragonByte Security has detected a security alert regarding {param1}:
+{param2}
+
+The actions you have configured in the Security Center have been taken.
+
+DragonByte Security - XenForo Security]]></phrase>
+  <phrase title="dbtech_security_security_alert_body_html" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[DragonByte Security has detected a security alert regarding {watcher}]]></phrase>
+  <phrase title="dbtech_security_security_alert_failedlogonadmin_body" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Greetings,
+
+DragonByte Security has detected a security breach regarding AdminCP access attempts.
+
+The actions you have configured in the Security Center have been taken.
+
+Please log in to your AdminCP and the Security Center for guidelines on how to correct the issue.
+
+
+DragonByte Security - XenForo Security]]></phrase>
+  <phrase title="dbtech_security_security_alert_failedlogonadmin_title" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Security Alert: AdminCP Access Attempt]]></phrase>
+  <phrase title="dbtech_security_security_alert_lite_body" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Greetings,
+
+DragonByte Security has detected a security alert regarding {param1}:
+{param2}
+
+
+DragonByte Security - XenForo Security]]></phrase>
+  <phrase title="dbtech_security_security_alert_nodiff_body" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Greetings,
+
+DragonByte Security has detected a security alert regarding {param1}
+
+DragonByte Security - XenForo Security]]></phrase>
+  <phrase title="dbtech_security_security_alert_title" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Security alert: {watcher} detected!]]></phrase>
+  <phrase title="dbtech_security_security_alert_user_body" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Greetings,
+
+DragonByte Security has detected a security alert regarding {param1}.
+
+The actions you have configured in the Security Center have been taken.
+
+DragonByte Security - XenForo Security]]></phrase>
+  <phrase title="dbtech_security_security_center" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Security Center]]></phrase>
+  <phrase title="dbtech_security_security_key_not_registered_please_use_password" version_id="904030051" version_string="4.3.0 Release Candidate 1"><![CDATA[A security key has not been registered. Please use your password instead.]]></phrase>
+  <phrase title="dbtech_security_security_lock_admin_body" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Greetings,
+
+Your account at {board} has been locked because DragonByte Security has detected a security alert regarding {param1}.
+
+An administrator will need to unlock your account.
+
+
+Thanks,
+DragonByte Security - XenForo Security]]></phrase>
+  <phrase title="dbtech_security_security_lock_admin_body_html" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[An administrator will need to unlock your account.]]></phrase>
+  <phrase title="dbtech_security_security_lock_body_html" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Your account at {board} has been locked because DragonByte Security has detected a potential security breach.]]></phrase>
+  <phrase title="dbtech_security_security_lock_title" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Account locked at {board}]]></phrase>
+  <phrase title="dbtech_security_security_lock_user_body" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Greetings,
+
+Your account at {board} has been locked because DragonByte Security has detected a security alert regarding {param1}.
+
+Please click this link in order to unlock your account: {param2}
+
+Thanks,
+DragonByte Security - XenForo Security]]></phrase>
+  <phrase title="dbtech_security_security_long" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[DragonByte Security]]></phrase>
+  <phrase title="dbtech_security_security_may_be_admin_locked" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[If this unlock link does not work for you, it's possible your account has been admin locked.]]></phrase>
+  <phrase title="dbtech_security_security_recommendations" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Security Recommendations]]></phrase>
+  <phrase title="dbtech_security_security_settings_admins" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Security Settings: Admins]]></phrase>
+  <phrase title="dbtech_security_security_settings_options" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Security Settings: Options]]></phrase>
+  <phrase title="dbtech_security_security_settings_passwords" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Security Settings: Passwords]]></phrase>
+  <phrase title="dbtech_security_security_settings_usergroups" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Security Settings: Usergroups]]></phrase>
+  <phrase title="dbtech_security_security_watcher_general" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Security Watchers: General]]></phrase>
+  <phrase title="dbtech_security_security_watcher_logins" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Security Watchers: Logins]]></phrase>
+  <phrase title="dbtech_security_security_watcher_options" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Security Watchers: Options]]></phrase>
+  <phrase title="dbtech_security_security_watcher_permissions" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Security Watchers: Permissions]]></phrase>
+  <phrase title="dbtech_security_security_watcher_type" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Security watcher type]]></phrase>
+  <phrase title="dbtech_security_security_watcher_userdata" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Security Watchers: User Data]]></phrase>
+  <phrase title="dbtech_security_security_watcher_usergroup" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Security Watchers: Usergroup]]></phrase>
+  <phrase title="dbtech_security_security_watchers" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Security Watchers]]></phrase>
+  <phrase title="dbtech_security_see_watcher_log" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[See the watcher log for more information.]]></phrase>
+  <phrase title="dbtech_security_select_forum" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Select Forum]]></phrase>
+  <phrase title="dbtech_security_server_configuration" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Server Configuration]]></phrase>
+  <phrase title="dbtech_security_server_protocol" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Server protocol]]></phrase>
+  <phrase title="dbtech_security_session" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Session]]></phrase>
+  <phrase title="dbtech_security_sessions" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Login Sessions]]></phrase>
+  <phrase title="dbtech_security_settings" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Settings]]></phrase>
+  <phrase title="dbtech_security_settings_backups" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Settings backups]]></phrase>
+  <phrase title="dbtech_security_showing_x_of_y_items" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Showing {param1} of {param2} items]]></phrase>
+  <phrase title="dbtech_security_site_icon" version_id="904030031" version_string="4.3.0 Beta 1"><![CDATA[Site icon]]></phrase>
+  <phrase title="dbtech_security_site_icon_explain" version_id="904030031" version_string="4.3.0 Beta 1"><![CDATA[This will be displayed in the browser pop-up that asks users to authenticate. If this is left blank, no icon will be displayed.<br />
+Enter the full URL to the icon.]]></phrase>
+  <phrase title="dbtech_security_site_name" version_id="904030031" version_string="4.3.0 Beta 1"><![CDATA[Site name]]></phrase>
+  <phrase title="dbtech_security_site_name_explain" version_id="904030031" version_string="4.3.0 Beta 1"><![CDATA[This will be displayed in the browser pop-up that asks users to authenticate. If this is left blank, your "Board title" setting is used instead.]]></phrase>
+  <phrase title="dbtech_security_snapshot" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Snapshot]]></phrase>
+  <phrase title="dbtech_security_snapshot_management" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Snapshot Management]]></phrase>
+  <phrase title="dbtech_security_snapshot_management_descr" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Below, you can view a list of the snapshots saved.]]></phrase>
+  <phrase title="dbtech_security_snapshot_saved" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Snapshot saved]]></phrase>
+  <phrase title="dbtech_security_sorting_options" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Sorting Options]]></phrase>
+  <phrase title="dbtech_security_source" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Source]]></phrase>
+  <phrase title="dbtech_security_specified_watcher_rule_set_already_exists" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[The specified security watcher rule set already exists.]]></phrase>
+  <phrase title="dbtech_security_stored_ip" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Stored IP Address]]></phrase>
+  <phrase title="dbtech_security_successful_logins" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Successful Logins]]></phrase>
+  <phrase title="dbtech_security_take_backup" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Take backup]]></phrase>
+  <phrase title="dbtech_security_time_frame" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Time frame]]></phrase>
+  <phrase title="dbtech_security_total_score_x" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Total Score: {score}]]></phrase>
+  <phrase title="dbtech_security_touch_authenticator_to_login" version_id="904030031" version_string="4.3.0 Beta 1"><![CDATA[Insert your security key, then tap your key if it has a button or gold disk.]]></phrase>
+  <phrase title="dbtech_security_trust_device_permanent" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Trust this device permanently]]></phrase>
+  <phrase title="dbtech_security_trust_device_permanent_desc" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[If selected, you will not need to complete two-step verification from this device again.]]></phrase>
+  <phrase title="dbtech_security_txn_not_found" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[The transaction ID you provided was not found in the system. Please double-check the transaction ID, or leave this field blank.]]></phrase>
+  <phrase title="dbtech_security_txt" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[DragonByte Security]]></phrase>
+  <phrase title="dbtech_security_unlock_code_sent" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[The unlock code has been re-sent to your email address.]]></phrase>
+  <phrase title="dbtech_security_unlock_x_account_at_y" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Unlock {username}'s account at {param1}]]></phrase>
+  <phrase title="dbtech_security_unlock_your_account_at_x" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Unlock your account at {param1}]]></phrase>
+  <phrase title="dbtech_security_unlocked" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[unlocked]]></phrase>
+  <phrase title="dbtech_security_unrecognised_admincp_login_body" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Hello,
+
+An account has accessed the AdminCP with a new IP address.
+
+Username: {param1}
+Current IP: {param2}
+Stored IP: {param3}
+
+If this email is unexpected, you should take steps to ensure this login attempt was legitimate.]]></phrase>
+  <phrase title="dbtech_security_unrecognised_admincp_login_subject" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Unrecognised AdminCP Login From {param1}]]></phrase>
+  <phrase title="dbtech_security_unset" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Unset]]></phrase>
+  <phrase title="dbtech_security_uploaderr_directory_not_writable" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[The destination directory is not writeable.]]></phrase>
+  <phrase title="dbtech_security_uploaderr_file_too_big" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[The uploaded file is too large for the server to process.]]></phrase>
+  <phrase title="dbtech_security_uploaderr_file_too_large" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[The uploaded file is too large.]]></phrase>
+  <phrase title="dbtech_security_uploaderr_image_context_extension_mismatch" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[The contents of the uploaded image do not match the file's extension.]]></phrase>
+  <phrase title="dbtech_security_uploaderr_invalid_extension" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[The uploaded file does not have an allowed extension.]]></phrase>
+  <phrase title="dbtech_security_uploaderr_invalid_image" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[The uploaded file is not a valid image.]]></phrase>
+  <phrase title="dbtech_security_uploaderr_invalid_image_content" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[The uploaded image contains invalid content. Please upload a different image.]]></phrase>
+  <phrase title="dbtech_security_uploaderr_uploaded_file_not_img_expected" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[The uploaded file was not an image as expected.]]></phrase>
+  <phrase title="dbtech_security_use_ip_verification" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Use IP Verification
+<dfn>If yes, users will need to click a link sent to their email to confirm their IP address every time their IP address changes.</dfn>]]></phrase>
+  <phrase title="dbtech_security_use_security_key" version_id="904030051" version_string="4.3.0 Release Candidate 1"><![CDATA[Use a registered security key]]></phrase>
+  <phrase title="dbtech_security_user_group_added" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Added user group]]></phrase>
+  <phrase title="dbtech_security_user_group_deleted" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Deleted user group]]></phrase>
+  <phrase title="dbtech_security_user_locked" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[User locked]]></phrase>
+  <phrase title="dbtech_security_user_locked_desc" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Please check your email address for instructions for how to unlock your account.<br />
+<br />
+{resend}]]></phrase>
+  <phrase title="dbtech_security_user_locked_hint" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Locking a user will require them to click a link in their email in order to re-activate their account. If you turn this on from this page, the user will have to manually request a new unlock email before they can access their account.]]></phrase>
+  <phrase title="dbtech_security_useragent" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[User agent]]></phrase>
+  <phrase title="dbtech_security_userauth" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[User Verification Log]]></phrase>
+  <phrase title="dbtech_security_userauth_log" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[User Verify Log Viewer]]></phrase>
+  <phrase title="dbtech_security_userauth_viewer_page_x_y_there_are_z_total_log_entries" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[User Verification Log Viewer (page {param1}/{param2}) | There are {param3} total log entries.]]></phrase>
+  <phrase title="dbtech_security_userdata" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[[{param1}] Changed User Field: <b>{param2}</b> - Value Change: <b>{param3}</b> - IP Address: <b>{param4}</b>]]></phrase>
+  <phrase title="dbtech_security_usergroup" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[[{param1}] Changed Usergroup Field: <b>{param2}</b> - Value Change: <b>{param3}</b> - IP Address: <b>{param4}</b>]]></phrase>
+  <phrase title="dbtech_security_usergroup_security" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Usergroup Security]]></phrase>
+  <phrase title="dbtech_security_usergroup_security_descr" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Using the password expiration and password history feature for your staff usergroups reduces the risk of compromised accounts.]]></phrase>
+  <phrase title="dbtech_security_usergroup_settings" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Usergroup Settings]]></phrase>
+  <phrase title="dbtech_security_usergrouppermissions" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[[{date}] Changed User Group Permissions: <b>{diffs}</b> - IP Address: <b>{ip}</b>]]></phrase>
+  <phrase title="dbtech_security_userperm" version_id="905000031" version_string="5.0.0 Beta 1"><![CDATA[Security user permission]]></phrase>
+  <phrase title="dbtech_security_userpermissions" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[[{date}] Changed User Permissions: Value Change: <b>{diffs}</b> - IP Address: <b>{ip}</b>]]></phrase>
+  <phrase title="dbtech_security_users_per_page" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Users per page]]></phrase>
+  <phrase title="dbtech_security_valid_user" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Valid user]]></phrase>
+  <phrase title="dbtech_security_validate_input" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Validate Input
+<dfn>If this criteria takes input from the user (e.g. User Name), this setting controls whether an error will be returned if the data does not match any valid record.</dfn>]]></phrase>
+  <phrase title="dbtech_security_verified" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Verified]]></phrase>
+  <phrase title="dbtech_security_view_other_ip_addresses_for_this_user" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[View Other IP Addresses for this User]]></phrase>
+  <phrase title="dbtech_security_visit_x" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Visit {param1}]]></phrase>
+  <phrase title="dbtech_security_watcher" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Watcher]]></phrase>
+  <phrase title="dbtech_security_watcher_action.admin_lock_user" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Locked user account (admin unlock)]]></phrase>
+  <phrase title="dbtech_security_watcher_action.ban_ip" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Banned IP address]]></phrase>
+  <phrase title="dbtech_security_watcher_action.ban_user" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Banned user]]></phrase>
+  <phrase title="dbtech_security_watcher_action.close_forum" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Closed forum]]></phrase>
+  <phrase title="dbtech_security_watcher_action.email_user" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Emailed user]]></phrase>
+  <phrase title="dbtech_security_watcher_action.email_webmaster" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Emailed webmaster]]></phrase>
+  <phrase title="dbtech_security_watcher_action.forced_password_change" version_id="904050031" version_string="4.5.0 Beta 1"><![CDATA[Locked user account (forced password change)]]></phrase>
+  <phrase title="dbtech_security_watcher_action.forced_password_reset" version_id="904050031" version_string="4.5.0 Beta 1"><![CDATA[Locked user account (forced password reset)]]></phrase>
+  <phrase title="dbtech_security_watcher_action.lock_user" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Locked user account (user unlock)]]></phrase>
+  <phrase title="dbtech_security_watcher_actions_desc" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[These actions will be taken when this watcher is triggered.]]></phrase>
+  <phrase title="dbtech_security_watcher_adminemail" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Receive Admin Emails]]></phrase>
+  <phrase title="dbtech_security_watcher_adminpermissions_bad" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[The following administrators have altered the administrator permissions of users too many times recently:
+<ul>{param1}</ul>]]></phrase>
+  <phrase title="dbtech_security_watcher_adminpermissions_good" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[No administrator has altered the administrator permissions of users too many times recently.]]></phrase>
+  <phrase title="dbtech_security_watcher_banemail" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Banned Email Addresses]]></phrase>
+  <phrase title="dbtech_security_watcher_banip" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Banned IP Addresses]]></phrase>
+  <phrase title="dbtech_security_watcher_boardActive" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Board is Active]]></phrase>
+  <phrase title="dbtech_security_watcher_boardInactiveMessage" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Inactive Board Message]]></phrase>
+  <phrase title="dbtech_security_watcher_compromisedaccount" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Potential Compromised Account]]></phrase>
+  <phrase title="dbtech_security_watcher_configtamper_bad" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[The following variables have been altered from their default values:
+<ul>{param1}</ul>]]></phrase>
+  <phrase title="dbtech_security_watcher_configtamper_good" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[There are currently no detected intrusions for the config.php file.]]></phrase>
+  <phrase title="dbtech_security_watcher_dbtech_security_allowip" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Whitelisted IP Addresses]]></phrase>
+  <phrase title="dbtech_security_watcher_dbtech_security_allowip_exclude" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Whitelisted IP Addresses - Exclude Super Administrators]]></phrase>
+  <phrase title="dbtech_security_watcher_deletedusergroup_bad" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[The following administrators have deleted too many usergroups recently:
+<ul>{param1}</ul>]]></phrase>
+  <phrase title="dbtech_security_watcher_deletedusergroup_good" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[No administrator has deleted too many usergroups recently.]]></phrase>
+  <phrase title="dbtech_security_watcher_description.adminpermissions" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This watcher detects whether any user's administrator permissions have been changed too often in the time period of your choosing.]]></phrase>
+  <phrase title="dbtech_security_watcher_description.compromisedlogon" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This watcher detects if someone attempted to log in multiple times, before finally succeeding logging in to a member's account.<br />
+<br />
+The "Intrusions" setting for this watcher controls how many different attempts are needed to trigger this watcher. Setting it too low may cause false positives if a member has simply forgotten their password.]]></phrase>
+  <phrase title="dbtech_security_watcher_description.compromisedstafflogon" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This watcher detects if someone attempted to log in multiple times, before finally succeeding logging in to a staff member's account.<br />
+<br />
+The "Intrusions" setting for this watcher controls how many different attempts are needed to trigger this watcher. Setting it too low may cause false positives if a staff member has simply forgotten their password.]]></phrase>
+  <phrase title="dbtech_security_watcher_description.configtamper" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This watcher detects whether the config.php variables have been tampered with via a plugin or injected code into your XenForo files.<br />
+<br />
+If an intrusion is detected, you should disable all plugins and download all files in your forum directory, and search the plugins / files for any mention of <code>$config</code> as those are the most common override methods.<br />
+<br />
+Note that DragonByte Tech cannot locate the intrusion for you and cannot advise how to find the intrusion beyond these instructions.]]></phrase>
+  <phrase title="dbtech_security_watcher_description.deletedusergroup" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This watcher detects whether usergroups have been deleted too often in the time period of your choosing.]]></phrase>
+  <phrase title="dbtech_security_watcher_description.failedbreachedlogon" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This watcher detects if someone is attempting to log in to a specific user name multiple times and failing to do so.<br />
+<br />
+This watcher will only trigger if the username or email is found in a any public database of leaked/breached accounts.]]></phrase>
+  <phrase title="dbtech_security_watcher_description.failedbreachedstafflogon" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This watcher detects if someone is attempting to log in to a specific staff member's user name multiple times and failing to do so.<br />
+<br />
+This watcher will only trigger if the staff member's username or email is found in a any public database of leaked/breached accounts.]]></phrase>
+  <phrase title="dbtech_security_watcher_description.failedlogon" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This watcher detects if someone is attempting to log in to a specific user name multiple times and failing to do so.]]></phrase>
+  <phrase title="dbtech_security_watcher_description.failedlogonadmin" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This watcher detects any attempts to access the AdminCP by users with no Admin permissions.]]></phrase>
+  <phrase title="dbtech_security_watcher_description.failedlogonbogus" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This watcher detects if someone is attempting to log in to a specific non-existent user name multiple times.]]></phrase>
+  <phrase title="dbtech_security_watcher_description.failedmasslogon" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This watcher detects if someone is attempting to log in with a large number of different user names and failing to do so.]]></phrase>
+  <phrase title="dbtech_security_watcher_description.failedmasslogonbogus" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This watcher detects if someone is attempting to log in with a large number of different non-existent user names.]]></phrase>
+  <phrase title="dbtech_security_watcher_description.failedstafflogon" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This watcher detects if someone is attempting to log in to a specific staff member's user name multiple times and failing to do so.]]></phrase>
+  <phrase title="dbtech_security_watcher_description.forumpermissions" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This watcher detects whether any usergroup's forum permissions have been changed too often in the time period(s) of your choosing.]]></phrase>
+  <phrase title="dbtech_security_watcher_description.newfingerprint" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This watcher detects whether new devices have been used to access member accounts.]]></phrase>
+  <phrase title="dbtech_security_watcher_description.newstafffingerprint" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This watcher detects whether new devices have been used to access staff accounts.]]></phrase>
+  <phrase title="dbtech_security_watcher_description.newusergroup" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This watcher detects whether new usergroups have been created too often in the time period of your choosing.]]></phrase>
+  <phrase title="dbtech_security_watcher_description.option" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This watcher detects whether the setting in question has been altered too often in the time period of your choosing]]></phrase>
+  <phrase title="dbtech_security_watcher_description.user" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This watcher detects whether the user data field in question has been altered too often in the time period of your choosing.]]></phrase>
+  <phrase title="dbtech_security_watcher_description.usergrouppermissions" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This watcher detects whether any usergroup's permissions have been changed too often in the time period(s) of your choosing.]]></phrase>
+  <phrase title="dbtech_security_watcher_description.userpermissions" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This watcher detects whether any user's permissions have been changed too often in the time period(s) of your choosing.]]></phrase>
+  <phrase title="dbtech_security_watcher_email" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Email]]></phrase>
+  <phrase title="dbtech_security_watcher_failedbreachedlogon_bad" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This is a list of potential brute force attempts currently detected:
+<ul>{param1}</ul>]]></phrase>
+  <phrase title="dbtech_security_watcher_failedbreachedlogon_good" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[There are currently no records of brute force attempts.]]></phrase>
+  <phrase title="dbtech_security_watcher_failedbreachedstafflogon_bad" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This is a list of potential brute force attempts currently detected:
+<ul>{param1}</ul>]]></phrase>
+  <phrase title="dbtech_security_watcher_failedbreachedstafflogon_good" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[There are currently no records of brute force attempts against staff member accounts.]]></phrase>
+  <phrase title="dbtech_security_watcher_failedlogon_bad" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This is a list of potential brute force attempts currently detected:
+<ul>{param1}</ul>]]></phrase>
+  <phrase title="dbtech_security_watcher_failedlogon_good" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[There are currently no records of brute force attempts.]]></phrase>
+  <phrase title="dbtech_security_watcher_failedlogonadmin_bad" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This is a list of potential brute force attempts on the AdminCP currently detected:
+<ul>{param1}</ul>]]></phrase>
+  <phrase title="dbtech_security_watcher_failedlogonadmin_good" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[There are currently no records of brute force attempts on the AdminCP.]]></phrase>
+  <phrase title="dbtech_security_watcher_failedlogonbogus_bad" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This is a list of potential brute force attempts against non-existent accounts currently detected:
+<ul>{param1}</ul>]]></phrase>
+  <phrase title="dbtech_security_watcher_failedlogonbogus_good" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[There are currently no records of brute force attempts against non-existent accounts.]]></phrase>
+  <phrase title="dbtech_security_watcher_failedmasslogon_bad" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This is a list of potential brute force attempts currently detected:
+<ul>{param1}</ul>]]></phrase>
+  <phrase title="dbtech_security_watcher_failedmasslogon_good" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[There are currently no records of brute force attempts.]]></phrase>
+  <phrase title="dbtech_security_watcher_failedmasslogonbogus_bad" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This is a list of potential brute force attempts against non-existent currently detected:
+<ul>{param1}</ul>]]></phrase>
+  <phrase title="dbtech_security_watcher_failedmasslogonbogus_good" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[There are currently no records of brute force attempts against non-existent accounts.]]></phrase>
+  <phrase title="dbtech_security_watcher_failedstafflogon_bad" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This is a list of potential brute force attempts currently detected:
+<ul>{param1}</ul>]]></phrase>
+  <phrase title="dbtech_security_watcher_failedstafflogon_good" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[There are currently no records of brute force attempts against staff member accounts.]]></phrase>
+  <phrase title="dbtech_security_watcher_field.boardActive" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Board is active]]></phrase>
+  <phrase title="dbtech_security_watcher_field.boardInactiveMessage" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Inactive board message]]></phrase>
+  <phrase title="dbtech_security_watcher_field.dbtech_security_allowip" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Whitelisted IP addresses]]></phrase>
+  <phrase title="dbtech_security_watcher_field.dbtech_security_allowip_exclude" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Whitelisted IP Addresses - Exclude "Super Administrators"]]></phrase>
+  <phrase title="dbtech_security_watcher_field.dbtech_security_globalallowip" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Globally whitelisted IP addresses]]></phrase>
+  <phrase title="dbtech_security_watcher_field.email" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Email address]]></phrase>
+  <phrase title="dbtech_security_watcher_field.password" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Password]]></phrase>
+  <phrase title="dbtech_security_watcher_field.secondary_group_ids" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Secondary user groups]]></phrase>
+  <phrase title="dbtech_security_watcher_field.user_group_id" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[User group]]></phrase>
+  <phrase title="dbtech_security_watcher_field.username" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[User name]]></phrase>
+  <phrase title="dbtech_security_watcher_filehealth" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[File Tampering]]></phrase>
+  <phrase title="dbtech_security_watcher_forumpermissions_bad" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[The following administrators have altered the forum permissions of usergroups too many times recently:
+<ul>{param1}</ul>]]></phrase>
+  <phrase title="dbtech_security_watcher_forumpermissions_good" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[No administrator has altered the forum permissions of usergroups too many times recently.]]></phrase>
+  <phrase title="dbtech_security_watcher_infractions" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Infractions]]></phrase>
+  <phrase title="dbtech_security_watcher_ipoints" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Infraction Points]]></phrase>
+  <phrase title="dbtech_security_watcher_is_active" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Security watcher is active]]></phrase>
+  <phrase title="dbtech_security_watcher_log" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Watcher log]]></phrase>
+  <phrase title="dbtech_security_watcher_log_id_x" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Watcher log #{logId}]]></phrase>
+  <phrase title="dbtech_security_watcher_log_search" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Search watcher logs]]></phrase>
+  <phrase title="dbtech_security_watcher_membergroupids" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Additional Usergroups]]></phrase>
+  <phrase title="dbtech_security_watcher_newfingerprint_bad" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Some accounts have been accessed by new devices. See the watcher log for more information.]]></phrase>
+  <phrase title="dbtech_security_watcher_newfingerprint_good" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[No accounts have been accessed by new devices.]]></phrase>
+  <phrase title="dbtech_security_watcher_newstafffingerprint_bad" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Some staff accounts have been accessed by new devices. See the watcher log for more information.]]></phrase>
+  <phrase title="dbtech_security_watcher_newstafffingerprint_good" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[No staff accounts have been accessed by new devices.]]></phrase>
+  <phrase title="dbtech_security_watcher_newusergroup_bad" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[The following administrators have created too many new usergroups recently:
+<ul>{param1}</ul>]]></phrase>
+  <phrase title="dbtech_security_watcher_newusergroup_good" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[No administrator has created too many new usergroups recently.]]></phrase>
+  <phrase title="dbtech_security_watcher_options" version_id="20170223" version_string="4.0.0"><![CDATA[Watcher Options]]></phrase>
+  <phrase title="dbtech_security_watcher_options_bad" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This is a list of administrators that have made frequent changes to this setting:
+<ul>{param1}</ul>]]></phrase>
+  <phrase title="dbtech_security_watcher_options_good" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[No administrator has changed this setting too many times recently.]]></phrase>
+  <phrase title="dbtech_security_watcher_password" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Password]]></phrase>
+  <phrase title="dbtech_security_watcher_passwordexpires" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Password Expiry]]></phrase>
+  <phrase title="dbtech_security_watcher_passwordhistory" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Password History]]></phrase>
+  <phrase title="dbtech_security_watcher_priority" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Priority]]></phrase>
+  <phrase title="dbtech_security_watcher_priority_desc" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Higher priority will run first.]]></phrase>
+  <phrase title="dbtech_security_watcher_reputation" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Reputation Level]]></phrase>
+  <phrase title="dbtech_security_watcher_rule" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Security watcher rule]]></phrase>
+  <phrase title="dbtech_security_watcher_templatemod" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Template Modifications]]></phrase>
+  <phrase title="dbtech_security_watcher_title.adminpermissions" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Administrator Permissions]]></phrase>
+  <phrase title="dbtech_security_watcher_title.compromisedlogon" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Compromised Accounts]]></phrase>
+  <phrase title="dbtech_security_watcher_title.compromisedstafflogon" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Compromised Staff Accounts]]></phrase>
+  <phrase title="dbtech_security_watcher_title.configtamper" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[config.php Variable Tampering]]></phrase>
+  <phrase title="dbtech_security_watcher_title.deletedusergroup" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Deleted Usergroup]]></phrase>
+  <phrase title="dbtech_security_watcher_title.failedbreachedlogon" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Failed Breached Logins]]></phrase>
+  <phrase title="dbtech_security_watcher_title.failedbreachedstafflogon" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Failed Breached Staff Account Logins]]></phrase>
+  <phrase title="dbtech_security_watcher_title.failedlogon" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Failed Logins]]></phrase>
+  <phrase title="dbtech_security_watcher_title.failedlogonadmin" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[AdminCP Access Attempts]]></phrase>
+  <phrase title="dbtech_security_watcher_title.failedlogonbogus" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Failed Non-Existent Logins]]></phrase>
+  <phrase title="dbtech_security_watcher_title.failedmasslogon" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Failed Mass Logins]]></phrase>
+  <phrase title="dbtech_security_watcher_title.failedmasslogonbogus" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Failed Mass Non-Existent Logins]]></phrase>
+  <phrase title="dbtech_security_watcher_title.failedstafflogon" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Failed Staff Account Logins]]></phrase>
+  <phrase title="dbtech_security_watcher_title.forumpermissions" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Forum Permissions]]></phrase>
+  <phrase title="dbtech_security_watcher_title.newfingerprint" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[New device fingerprints (User)]]></phrase>
+  <phrase title="dbtech_security_watcher_title.newstafffingerprint" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[New device fingerprints (Staff)]]></phrase>
+  <phrase title="dbtech_security_watcher_title.newusergroup" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[New Usergroup]]></phrase>
+  <phrase title="dbtech_security_watcher_title.option" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Options]]></phrase>
+  <phrase title="dbtech_security_watcher_title.user" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[User Information]]></phrase>
+  <phrase title="dbtech_security_watcher_title.usergrouppermissions" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[User Group Permissions]]></phrase>
+  <phrase title="dbtech_security_watcher_title.userpermissions" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Per-User Permissions]]></phrase>
+  <phrase title="dbtech_security_watcher_type" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Security watcher type]]></phrase>
+  <phrase title="dbtech_security_watcher_userdata_bad" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This is a list of administrators that have made frequent changes to this user data field:
+<ul>{param1}</ul>]]></phrase>
+  <phrase title="dbtech_security_watcher_userdata_good" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[No administrator has changed this user data field too many times recently.]]></phrase>
+  <phrase title="dbtech_security_watcher_usergroup_bad" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This is a list of administrators that have made frequent changes to this usergroup field:
+<ul>{param1}</ul>]]></phrase>
+  <phrase title="dbtech_security_watcher_usergroup_descr" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This watcher detects whether the usergroup field in question has been altered too often in the time period of your choosing.]]></phrase>
+  <phrase title="dbtech_security_watcher_usergroup_good" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[No administrator has changed this usergroup field too many times recently.]]></phrase>
+  <phrase title="dbtech_security_watcher_usergroupid" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Primary Usergroup]]></phrase>
+  <phrase title="dbtech_security_watcher_username" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[User Name]]></phrase>
+  <phrase title="dbtech_security_watcher_usestrikesystem" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Use Login "Strikes" System]]></phrase>
+  <phrase title="dbtech_security_watcher_warnings" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Warnings]]></phrase>
+  <phrase title="dbtech_security_watcherlog_list" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Watcher Log]]></phrase>
+  <phrase title="dbtech_security_watcherlog_viewer_page_x_y_there_are_z_total_log_entries" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Watcher Log Viewer (page {param1}/{param2}) | There are {param3} total log entries.]]></phrase>
+  <phrase title="dbtech_security_watchers" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Security watchers]]></phrase>
+  <phrase title="dbtech_security_watchers_fingerprint" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Fingerprints]]></phrase>
+  <phrase title="dbtech_security_watchers_fingerprint_descr" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[These watchers deal with detecting new devices used to access member and staff accounts.]]></phrase>
+  <phrase title="dbtech_security_watchers_general" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[General]]></phrase>
+  <phrase title="dbtech_security_watchers_general_descr" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[These Watchers deal with general areas of forum operation.]]></phrase>
+  <phrase title="dbtech_security_watchers_logins" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Logins]]></phrase>
+  <phrase title="dbtech_security_watchers_logins_descr" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[These Watchers deal with login attempts for the front-end.]]></phrase>
+  <phrase title="dbtech_security_watchers_options" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[XenForo Options]]></phrase>
+  <phrase title="dbtech_security_watchers_options_descr" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[These Watchers deal with changes to XenForo Options.]]></phrase>
+  <phrase title="dbtech_security_watchers_permissions" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Permissions]]></phrase>
+  <phrase title="dbtech_security_watchers_permissions_descr" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[These watchers deal with general items that affect permissions like new / deleted usergroups, and forum / admin permissions.]]></phrase>
+  <phrase title="dbtech_security_watchers_userdata" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[User Data]]></phrase>
+  <phrase title="dbtech_security_watchers_userdata_descr" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[These Watchers deal with admins editing members.]]></phrase>
+  <phrase title="dbtech_security_watchers_usergroup" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Usergroup]]></phrase>
+  <phrase title="dbtech_security_watchers_usergroup_descr" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[These Watchers deal with admins editing usergroups and their permissions.]]></phrase>
+  <phrase title="dbtech_security_weight" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Weight]]></phrase>
+  <phrase title="dbtech_security_weight_long" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Weight
+<dfn>You can enter the weight of this criteria here. Negative weight counts against the user's total score.</dfn>]]></phrase>
+  <phrase title="dbtech_security_whm_csf_descr" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[If you are running a WHM/cPanel-based server (VPS or Dedicated), you should log in to WHM and enable CSF (ConfigServer Security&Firewall).<br />
+<br />
+By default, the firewall is active, but in "TEST MODE" - follow the instructions on-screen to disable test mode.<br />
+<br />
+In addition, you should click "Check Server Security" and follow as many of the recommendations there as you can without negatively impacting your server.<br />
+<br />
+Enabling the Firewall helps prevent people attempting to exploit your server, and blocks people who attempts to access your FTP accounts with invalid logins (also known as "Brute Force Attempts").<br />
+<br />
+When following the server security recommendations, you may wish to leave "Check php for ini_set disabled" and "Check max emails per hour is set" without following those recommendations, as disabling those may negatively impact the functionality of your XenForo software.]]></phrase>
+  <phrase title="dbtech_security_whm_csf_title" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[WHM: ConfigServer Security&Firewall]]></phrase>
+  <phrase title="dbtech_security_whm_cxs_title" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[WHM: ConfigServer eXploit Scanner]]></phrase>
+  <phrase title="dbtech_security_x_admincp_attempts_y_ips_x_hours" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[{param1} AdminCP access attempts from {param2} in the past {param3} hours]]></phrase>
+  <phrase title="dbtech_security_x_already_exists_y" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[The {param1}: '<span class="smallfont">{param2}</span>' already exists.]]></phrase>
+  <phrase title="dbtech_security_x_changes_same_user_y_hours" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[{changes} changes made by the same user in {hours} hours]]></phrase>
+  <phrase title="dbtech_security_x_config_tampering_detected" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Configuration tampering detected]]></phrase>
+  <phrase title="dbtech_security_x_failed_logons_y_ips_x_hours" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[{param1} failed login attempts from {param2} in the past {param3} hours]]></phrase>
+  <phrase title="dbtech_security_x_hits" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[{param1} Hit(s)]]></phrase>
+  <phrase title="dbtech_security_x_hits_any_ip_y_hours" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[{hits} hits from any IP in {hours} hours]]></phrase>
+  <phrase title="dbtech_security_x_hits_same_ip_y_hours" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[{hits} hits from the same IP in {hours} hours]]></phrase>
+  <phrase title="dbtech_security_x_intrusions_in_the_past_x_hours" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[{param1} intrusions in the past {param2} hours: {param3}]]></phrase>
+  <phrase title="dbtech_security_x_tries" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[{param1} attempts]]></phrase>
+  <phrase title="dbtech_security_x_usernames_tried_in_y_hours" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[{usernames} usernames tried in {hours} hours]]></phrase>
+  <phrase title="dbtech_security_x_y" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[{param1} {param2} successfully!]]></phrase>
+  <phrase title="dbtech_security_x_y_changed" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<strong>$config['{param1}']</strong> changed from <strong>{param2}</strong> to <strong>{param3}</strong>]]></phrase>
+  <phrase title="dbtech_security_x_y_new" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<strong>$config['{param1}']['{param2}']</strong> is new: <strong>{param3}</strong>]]></phrase>
+  <phrase title="option.dbtechSecurityAccountLockForceWhitelist" version_id="904010032" version_string="4.1.0 Beta 2"><![CDATA[Account lock route whitelist]]></phrase>
+  <phrase title="option.dbtechSecurityBreachCheck" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Account breach check]]></phrase>
+  <phrase title="option.dbtechSecurityFingerprinting" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Fingerprinting]]></phrase>
+  <phrase title="option.dbtechSecurityLoginCaptcha" version_id="904050770" version_string="4.5.7"><![CDATA[Always show CAPTCHA when logging in to]]></phrase>
+  <phrase title="option.dbtechSecurityPasswordChangeForceWhitelist" version_id="904010032" version_string="4.1.0 Beta 2"><![CDATA[Force password change route whitelist]]></phrase>
+  <phrase title="option.dbtech_security_adminstrikes_prune" version_id="20160525" version_string="3.0.0"><![CDATA[Prune "Admin Strikes Log" (Days)]]></phrase>
+  <phrase title="option.dbtech_security_allowip" version_id="20160525" version_string="3.0.0"><![CDATA[Whitelisted IP Addresses]]></phrase>
+  <phrase title="option.dbtech_security_allowip_exclude" version_id="20160525" version_string="3.0.0"><![CDATA[Whitelisted IP Addresses - Exclude Super Administrators]]></phrase>
+  <phrase title="option.dbtech_security_badbehavior_bypass_user" version_id="20161010" version_string="3.1.0"><![CDATA[Exempt Registered Members]]></phrase>
+  <phrase title="option.dbtech_security_badbehavior_enabled" version_id="20161010" version_string="3.1.0"><![CDATA[Enable Bad Behaviour Detection]]></phrase>
+  <phrase title="option.dbtech_security_badbehavior_eucookie" version_id="20161010" version_string="3.1.0"><![CDATA[Disable EU Cookie Exemption]]></phrase>
+  <phrase title="option.dbtech_security_badbehavior_httpbl_key" version_id="20161010" version_string="3.1.0"><![CDATA[http:BL API Key]]></phrase>
+  <phrase title="option.dbtech_security_badbehavior_httpbl_maxage" version_id="20161010" version_string="3.1.0"><![CDATA[http:BL Maximum Age]]></phrase>
+  <phrase title="option.dbtech_security_badbehavior_httpbl_threat" version_id="20161010" version_string="3.1.0"><![CDATA[http:BL Threat Level]]></phrase>
+  <phrase title="option.dbtech_security_badbehavior_logging" version_id="20161010" version_string="3.1.0"><![CDATA[Enable Logging]]></phrase>
+  <phrase title="option.dbtech_security_badbehavior_reverse_proxy" version_id="20161010" version_string="3.1.0"><![CDATA[Reverse Proxy]]></phrase>
+  <phrase title="option.dbtech_security_badbehavior_strict" version_id="20161010" version_string="3.1.0"><![CDATA[Enable Strict Mode]]></phrase>
+  <phrase title="option.dbtech_security_badbehavior_verbose" version_id="20161010" version_string="3.1.0"><![CDATA[Enable Verbose Logging]]></phrase>
+  <phrase title="option.dbtech_security_breach_bannedreason" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Security breach: Banned reason]]></phrase>
+  <phrase title="option.dbtech_security_breach_closedreason" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Security breach closed reason]]></phrase>
+  <phrase title="option.dbtech_security_emailrecovery_includemods" version_id="20160704" version_string="3.0.0"><![CDATA[Include Moderators]]></phrase>
+  <phrase title="option.dbtech_security_emailrecovery_supportemail" version_id="20160704" version_string="3.0.0"><![CDATA[Support Email]]></phrase>
+  <phrase title="option.dbtech_security_emailrecovery_threshold" version_id="20160704" version_string="3.0.0"><![CDATA[Threshold]]></phrase>
+  <phrase title="option.dbtech_security_globalallowip" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Globally whitelisted IP addresses]]></phrase>
+  <phrase title="option.dbtech_security_ipverify_prune" version_id="20160525" version_string="3.0.0"><![CDATA[Prune "IP Matcher Log" (Days)]]></phrase>
+  <phrase title="option.dbtech_security_licensekey" version_id="20161010" version_string="3.1.0"><![CDATA[DragonByte Security License Key]]></phrase>
+  <phrase title="option.dbtech_security_loginstrikes_prune" version_id="20160525" version_string="3.0.0"><![CDATA[Prune "Login Strikes Log" (Days)]]></phrase>
+  <phrase title="option.dbtech_security_spiders" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Extended spider identification]]></phrase>
+  <phrase title="option.dbtech_security_templatehealth" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Send webmaster alert on template edits]]></phrase>
+  <phrase title="option.dbtech_security_tornodes" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Block TOR exit nodes]]></phrase>
+  <phrase title="option_explain.dbtechSecurityAccountLockForceWhitelist" version_id="904010032" version_string="4.1.0 Beta 2"><![CDATA[If a user's account is locked then the routes listed here will bypass being redirected to the account unlock page. The route path is the section of the URL to a page after your main forum directory URL, such as forums/ or pages/page-name/. Do not reference a route filter here.]]></phrase>
+  <phrase title="option_explain.dbtechSecurityBreachCheck" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[]]></phrase>
+  <phrase title="option_explain.dbtechSecurityFingerprinting" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[]]></phrase>
+  <phrase title="option_explain.dbtechSecurityLoginCaptcha" version_id="904050770" version_string="4.5.7"><![CDATA[]]></phrase>
+  <phrase title="option_explain.dbtechSecurityPasswordChangeForceWhitelist" version_id="904010032" version_string="4.1.0 Beta 2"><![CDATA[If you decide to <a href="admin.php?dbtech-security/passwords/force-change/" target="_blank">Force password change</a> then the routes listed here will bypass being redirected to the password change form. The route path is the section of the URL to a page after your main forum directory URL, such as forums/ or pages/page-name/. Do not reference a route filter here.]]></phrase>
+  <phrase title="option_explain.dbtech_security_adminstrikes_prune" version_id="20160525" version_string="3.0.0"><![CDATA[This setting lets you control the automatic pruning of the "Admin Strikes Log". Removing old entries can cut down on your database usage size and improve performance.<br />
+0 = No automatic prune]]></phrase>
+  <phrase title="option_explain.dbtech_security_allowip" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Use this option to allow only certain IP addresses to access the AdminCP of your board.<br />
+<br />
+You may enter a partial IP address (v4 or v6 format). Partial IPv4 addresses can be entered in the form of 192.168.* or 192.168.1.1/16. Partial IPv6 addresses may be entered in the form of 2001:db8::/32.<br />
+<br />
+<strong>Warning: Disabling the option below will render you unable to access the AdminCP if your IP address changes!</strong>]]></phrase>
+  <phrase title="option_explain.dbtech_security_allowip_exclude" version_id="20160525" version_string="3.0.0"><![CDATA[Disabling this setting will cause even Super Administrators to be subject to IP Address Whitelists.<br />
+<br />
+<strong>Warning: Disabling this option will render you unable to access the AdminCP if your IP address changes!</strong>]]></phrase>
+  <phrase title="option_explain.dbtech_security_badbehavior_bypass_user" version_id="20161010" version_string="3.1.0"><![CDATA[Enabling this setting will stop checking the block list when a member has been registered the specified amount of days.]]></phrase>
+  <phrase title="option_explain.dbtech_security_badbehavior_enabled" version_id="20161010" version_string="3.1.0"><![CDATA[This setting controls whether the Bad Behaviour protection is enabled.]]></phrase>
+  <phrase title="option_explain.dbtech_security_badbehavior_eucookie" version_id="20161010" version_string="3.1.0"><![CDATA[If you believe cookies set by Bad Behaviour is <b>not</b> exempt from EU's "Cookie Law", enable this setting.<br />
+<a href="http://bad-behavior.ioerror.us/support/configuration/">Click here for more information.</a>]]></phrase>
+  <phrase title="option_explain.dbtech_security_badbehavior_httpbl_key" version_id="20161010" version_string="3.1.0"><![CDATA[DragonByte Security can integrate with the <a href="http://www.projecthoneypot.org/faq.php#g" target="_blank">http:BL</a> service provided by <a href="http://www.projecthoneypot.org/" target="_blank">Project Honey Pot</a> to provide more accurate results.<br />
+To use this service, <a href="http://www.projecthoneypot.org/httpbl_configure.php" target="_blank">sign up for the service</a> and obtain an API key.]]></phrase>
+  <phrase title="option_explain.dbtech_security_badbehavior_httpbl_maxage" version_id="20161010" version_string="3.1.0"><![CDATA[When Project Honey Pot records suspicious activity, it also stores when the last incident was recorded. This setting controls how far back Project Honey Pot should scan its records.]]></phrase>
+  <phrase title="option_explain.dbtech_security_badbehavior_httpbl_threat" version_id="20161010" version_string="3.1.0"><![CDATA[Project Honey Pot analyses each HTTP request and gives it a score, indicating how likely this request is to originate from a spammer. DragonByte Security will block requests with a threat level score equal or higher to this setting.<br />
+<a href="http://www.projecthoneypot.org/threat_info.php" target="_blank">Click here for more information.</a>]]></phrase>
+  <phrase title="option_explain.dbtech_security_badbehavior_logging" version_id="20161010" version_string="3.1.0"><![CDATA[It is recommended to leave logging enabled, but you can disable it with this setting.]]></phrase>
+  <phrase title="option_explain.dbtech_security_badbehavior_reverse_proxy" version_id="20161010" version_string="3.1.0"><![CDATA[If you are using a proxy service like CloudFlare on your site, you may need to enable this setting to obtain the "real IP" of your users.<br />
+Enter the header to look for in the text box.]]></phrase>
+  <phrase title="option_explain.dbtech_security_badbehavior_strict" version_id="20161010" version_string="3.1.0"><![CDATA[If you enable Strict Mode, more aggressive spam checks are enabled, however it also increases the chance of false positives.]]></phrase>
+  <phrase title="option_explain.dbtech_security_badbehavior_verbose" version_id="20161010" version_string="3.1.0"><![CDATA[Enabling verbose logging causes DragonByte Security to log every single HTTP request, which depending on the size of your forum may cause <b>significant</b> performance loss.<br />
+Only enable this if you are sure you need it!]]></phrase>
+  <phrase title="option_explain.dbtech_security_breach_bannedreason" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This is the notice that will be used as the ban reason if a user or an IP address is banned due to a watcher triggering.]]></phrase>
+  <phrase title="option_explain.dbtech_security_breach_closedreason" version_id="20160525" version_string="3.0.0"><![CDATA[This is the notice that will be put up in place for when the forum is closed due to a watcher triggering.]]></phrase>
+  <phrase title="option_explain.dbtech_security_emailrecovery_includemods" version_id="20160704" version_string="3.0.0"><![CDATA[This setting controls whether Moderators are included in the "non-administrator" part of the recovery criteria.]]></phrase>
+  <phrase title="option_explain.dbtech_security_emailrecovery_supportemail" version_id="20160704" version_string="3.0.0"><![CDATA[If you wish to use the Email Recovery feature in DragonByte Security, please enter the email you want to use for unhandled recovery requests. This mail account will receive a report of all unhandled recovery requests along with the scores from the defined criteria.]]></phrase>
+  <phrase title="option_explain.dbtech_security_emailrecovery_threshold" version_id="20160704" version_string="3.0.0"><![CDATA[Any email recovery requests whose score is below this threshold will be forwarded to the support email listed above.]]></phrase>
+  <phrase title="option_explain.dbtech_security_globalallowip" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Use this option to exclude certain IP addresses from being banned by DragonByte Security, regardless of their actions.<br />
+<br />
+You may enter a partial IP address (v4 or v6 format). Partial IPv4 addresses can be entered in the form of 192.168.* or 192.168.1.1/16. Partial IPv6 addresses may be entered in the form of 2001:db8::/32.]]></phrase>
+  <phrase title="option_explain.dbtech_security_ipverify_prune" version_id="20160525" version_string="3.0.0"><![CDATA[This setting lets you control the automatic pruning of the "IP Matcher" log entries. This log contains the latest IP addresses administrators used to login to the AdminCP. Removing old entries can cut down on your database usage size and improve performance.<br />
+0 = No automatic prune]]></phrase>
+  <phrase title="option_explain.dbtech_security_licensekey" version_id="20161010" version_string="3.1.0"><![CDATA[This is the license key associated with your product. Removing this will affect your ability to use the free "Product Manager" product to check for updates.]]></phrase>
+  <phrase title="option_explain.dbtech_security_loginstrikes_prune" version_id="20160525" version_string="3.0.0"><![CDATA[This setting lets you control the automatic pruning of the "Login Strikes Log". Removing old entries can cut down on your database usage size and improve performance.<br />
+0 = No automatic prune]]></phrase>
+  <phrase title="option_explain.dbtech_security_spiders" version_id="20170213" version_string="3.3.0"><![CDATA[Enabling this setting will add an additional 1000+ spiders to the identification list, which will help you track visiting spiders but may increase memory usage.]]></phrase>
+  <phrase title="option_explain.dbtech_security_templatehealth" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[This setting controls whether the webmaster will receive an alert whenever someone edits a template.]]></phrase>
+  <phrase title="option_explain.dbtech_security_tornodes" version_id="20160606" version_string="3.0.0"><![CDATA[If you would like to block Tor users from accessing your forum, you can block their exit nodes with this setting.]]></phrase>
+  <phrase title="option_group.dbtech_security" version_id="20170223" version_string="2.0.0"><![CDATA[DragonByte Tech: Security]]></phrase>
+  <phrase title="option_group_description.dbtech_security" version_id="20170223" version_string="2.0.0"><![CDATA[Settings pertaining to DragonByte Security.]]></phrase>
+  <phrase title="permission.dbtech_security_pwdrule_expiry" version_id="20170223" version_string="4.0.0"><![CDATA[Password Expiry (Days)]]></phrase>
+  <phrase title="permission.dbtech_security_pwdrule_lc" version_id="20170223" version_string="4.0.0"><![CDATA[Password Requires Lower-case Characters]]></phrase>
+  <phrase title="permission.dbtech_security_pwdrule_length" version_id="20170223" version_string="4.0.0"><![CDATA[Minimum Password Length]]></phrase>
+  <phrase title="permission.dbtech_security_pwdrule_num" version_id="20170223" version_string="4.0.0"><![CDATA[Password Requires Numbers]]></phrase>
+  <phrase title="permission.dbtech_security_pwdrule_sym" version_id="20170223" version_string="4.0.0"><![CDATA[Password Requires Symbols]]></phrase>
+  <phrase title="permission.dbtech_security_pwdrule_uc" version_id="20170223" version_string="4.0.0"><![CDATA[Password Requires Upper-case Characters]]></phrase>
+  <phrase title="permission_interface.dbtech_securitypermissions" version_id="20170223" version_string="2.0.0"><![CDATA[DragonByte Tech: Security Permissions]]></phrase>
+  <phrase title="style_prop.dbtechSecurityPasswordRuleBad" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Password Rule: Bad]]></phrase>
+  <phrase title="style_prop.dbtechSecurityPasswordRuleGood" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Password Rule: Good]]></phrase>
+  <phrase title="style_prop_desc.dbtechSecurityPasswordRuleBad" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[What's displayed when a password rule does not match the requirement.]]></phrase>
+  <phrase title="style_prop_desc.dbtechSecurityPasswordRuleGood" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[What's displayed when a password rule matches the requirement.]]></phrase>
+  <phrase title="style_prop_group.dbtechSecurity" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[DragonByte Security]]></phrase>
+  <phrase title="style_prop_group_desc.dbtechSecurity" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[Various style properties for DragonByte Security]]></phrase>
+  <phrase title="tfa.dbtech_security_authn" version_id="904030031" version_string="4.3.0 Beta 1"><![CDATA[Verification via security key]]></phrase>
+  <phrase title="tfa_desc.dbtech_security_authn" version_id="904030031" version_string="4.3.0 Beta 1"><![CDATA[This allows you to use a FIDO U2F compatible security device to authenticate your login request.]]></phrase>
+</phrases>

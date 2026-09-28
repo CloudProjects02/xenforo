@@ -2,11 +2,13 @@
 
 namespace DBTech\Shop\Searcher;
 
-use DBTech\Shop\Repository\CurrencyRepository;
-use XF\Mvc\Entity\Finder;
 use XF\Searcher\AbstractSearcher;
-use XF\Util\Ip;
+use XF\Mvc\Entity\Finder;
 
+/**
+ * Class TransactionLog
+ * @package DBTech\Shop\Searcher
+ */
 class TransactionLog extends AbstractSearcher
 {
 	/** @var array */
@@ -45,7 +47,7 @@ class TransactionLog extends AbstractSearcher
 
 		return $orders;
 	}
-
+	
 	/**
 	 * @param Finder $finder
 	 * @param $key
@@ -59,13 +61,13 @@ class TransactionLog extends AbstractSearcher
 	{
 		if ($key == 'ip')
 		{
-			$parsed = Ip::parseIpRangeString($value);
-
+			$parsed = \XF\Util\Ip::parseIpRangeString($value);
+			
 			if (!$parsed)
 			{
 				return true;
 			}
-
+			
 			if ($parsed['isRange'])
 			{
 				$finder->where('Ip.ip', '>=', $parsed['startRange']);
@@ -75,24 +77,24 @@ class TransactionLog extends AbstractSearcher
 			{
 				$finder->where('Ip.ip', $parsed['startRange']);
 			}
-
+			
 			return true;
 		}
-
+		
 		return false;
 	}
-
+	
 	/**
 	 * @return array
 	 */
 	public function getFormData(): array
 	{
 		return [
-			'currencies' => \XF::app()->repository(CurrencyRepository::class)
+			'currencies' => $this->em->getRepository('DBTech\Shop:Currency')
 				->getCurrencyTitlePairs(),
 		];
 	}
-
+	
 	/**
 	 * @return array
 	 */
@@ -118,7 +120,7 @@ class TransactionLog extends AbstractSearcher
 				'pointsadjust',
 				'trade',
 				'transfer',
-			],
+			]
 		];
 	}
 }

@@ -50,7 +50,7 @@ trait InstallDataTrait
 			$this->addOrChangeColumn($table, 'content_type', 'varbinary', 25);
 			$this->addOrChangeColumn($table, 'content_id', 'int');
 			$this->addOrChangeColumn($table, 'content_hash', 'char', 32);
-			$this->addOrChangeColumn($table, 'cost', 'decimal', '65,8')->unsigned(false)->setDefault(0);
+			$this->addOrChangeColumn($table, 'cost', 'double')->unsigned(false)->setDefault(0);
 			$table->addPrimaryKey(['content_type', 'content_id', 'content_hash']);
 		};
 
@@ -93,8 +93,8 @@ trait InstallDataTrait
 			$this->addOrChangeColumn($table, 'suffix', 'varchar', 50)->setDefault('');
 			$this->addOrChangeColumn($table, 'negative', 'tinyint')->setDefault(0);
 			$this->addOrChangeColumn($table, 'maxtime', 'int')->setDefault(0);
-			$this->addOrChangeColumn($table, 'earnmax', 'decimal', '65,8')->setDefault(0);
-			$this->addOrChangeColumn($table, 'value', 'decimal', '65,8')->unsigned(false)->setDefault(1);
+			$this->addOrChangeColumn($table, 'earnmax', 'double')->setDefault(0);
+			$this->addOrChangeColumn($table, 'value', 'double')->unsigned(false)->setDefault(1);
 			$this->addOrChangeColumn($table, 'inbound', 'tinyint')->setDefault(1);
 			$this->addOrChangeColumn($table, 'outbound', 'tinyint')->setDefault(1);
 			$this->addOrChangeColumn($table, 'is_display_currency', 'tinyint')->setDefault(0);
@@ -133,18 +133,18 @@ trait InstallDataTrait
 			$this->addOrChangeColumn($table, 'node_ids', 'blob')->nullable(true);
 			$this->addOrChangeColumn($table, 'moderate', 'tinyint')->setDefault(0);
 			$this->addOrChangeColumn($table, 'charge', 'tinyint')->setDefault(0);
-			$this->addOrChangeColumn($table, 'main_add', 'decimal', '65,8')->unsigned(false)->setDefault(0);
-			$this->addOrChangeColumn($table, 'main_sub', 'decimal', '65,8')->unsigned(false)->setDefault(0);
-			$this->addOrChangeColumn($table, 'mult_add', 'decimal', '65,8')->unsigned(false)->setDefault(0);
-			$this->addOrChangeColumn($table, 'mult_sub', 'decimal', '65,8')->unsigned(false)->setDefault(0);
+			$this->addOrChangeColumn($table, 'main_add', 'double')->unsigned(false)->setDefault(0);
+			$this->addOrChangeColumn($table, 'main_sub', 'double')->unsigned(false)->setDefault(0);
+			$this->addOrChangeColumn($table, 'mult_add', 'double')->unsigned(false)->setDefault(0);
+			$this->addOrChangeColumn($table, 'mult_sub', 'double')->unsigned(false)->setDefault(0);
 			$this->addOrChangeColumn($table, 'delay', 'int')->setDefault(0);
 			$this->addOrChangeColumn($table, 'frequency', 'int')->setDefault('1');
 			$this->addOrChangeColumn($table, 'maxtime', 'int')->setDefault(0);
 			$this->addOrChangeColumn($table, 'applymax', 'int')->setDefault(0);
 			$this->addOrChangeColumn($table, 'applymax_peruser', 'tinyint', 1)->setDefault(0);
-			$this->addOrChangeColumn($table, 'upperrand', 'decimal', '65,8')->unsigned(false)->setDefault(0);
-			$this->addOrChangeColumn($table, 'multmin', 'decimal', '65,8')->unsigned(false)->setDefault(0);
-			$this->addOrChangeColumn($table, 'multmax', 'decimal', '65,8')->unsigned(false)->setDefault(0);
+			$this->addOrChangeColumn($table, 'upperrand', 'double')->unsigned(false)->setDefault(0);
+			$this->addOrChangeColumn($table, 'multmin', 'double')->unsigned(false)->setDefault(0);
+			$this->addOrChangeColumn($table, 'multmax', 'double')->unsigned(false)->setDefault(0);
 			$this->addOrChangeColumn($table, 'minaction', 'tinyint')->setDefault(0);
 			$this->addOrChangeColumn($table, 'owner', 'tinyint')->setDefault(0);
 			$this->addOrChangeColumn($table, 'curtarget', 'tinyint')->setDefault(0);
@@ -177,7 +177,7 @@ trait InstallDataTrait
 			$this->addOrChangeColumn($table, 'referformat', 'varchar', 255)->setDefault('');
 			$this->addOrChangeColumn($table, 'outbound', 'tinyint')->setDefault(1);
 			$this->addOrChangeColumn($table, 'inbound', 'tinyint')->setDefault(1);
-			$this->addOrChangeColumn($table, 'value', 'decimal', '65,8')->unsigned(false)->setDefault(1);
+			$this->addOrChangeColumn($table, 'value', 'double')->unsigned(false)->setDefault(1);
 			$this->addOrChangeColumn($table, 'settings', 'mediumblob')->nullable(true);
 			$table->addPrimaryKey('event_trigger_id');
 		};
@@ -189,8 +189,8 @@ trait InstallDataTrait
 			$this->addOrChangeColumn($table, 'user_id', 'int')->setDefault(0);
 			$this->addOrChangeColumn($table, 'from_user_id', 'int')->setDefault(0);
 			$this->addOrChangeColumn($table, 'transaction_date', 'int', 10)->setDefault(0);
-			$this->addOrChangeColumn($table, 'amount', 'decimal', '65,8')->setDefault('0.00');
-			$this->addOrChangeColumn($table, 'cost', 'decimal', '65,8')->setDefault('0.00');
+			$this->addOrChangeColumn($table, 'amount', 'double', '10,2')->setDefault('0.00');
+			$this->addOrChangeColumn($table, 'cost', 'double', '10,2')->setDefault('0.00');
 			$this->addOrChangeColumn($table, 'event_id', 'int')->setDefault(0);
 			$this->addOrChangeColumn($table, 'currency_id', 'char', 3)->setDefault('');
 			$this->addOrChangeColumn($table, 'message', 'blob')->nullable(true);
@@ -231,7 +231,7 @@ trait InstallDataTrait
 			$this->addOrChangeColumn($table, 'content_id', 'int');
 			$this->addOrChangeColumn($table, 'node_id', 'int')->setDefault(0);
 			$this->addOrChangeColumn($table, 'owner_id', 'int')->setDefault(0);
-			$this->addOrChangeColumn($table, 'multiplier', 'decimal', '65,8')->unsigned(false)->setDefault(0);
+			$this->addOrChangeColumn($table, 'multiplier', 'double')->unsigned(false)->setDefault(0);
 			$this->addOrChangeColumn($table, 'currency_id', 'int')->setDefault(0);
 			$this->addOrChangeColumn($table, 'negate', 'tinyint')->setDefault(0);
 			$this->addOrChangeColumn($table, 'message', 'blob')->nullable(true);

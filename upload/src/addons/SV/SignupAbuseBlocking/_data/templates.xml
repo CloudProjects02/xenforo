@@ -1,0 +1,1863 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="option_template_signup_basic_score" version_id="1715586734" version_string="1.16.0 Beta 6"><![CDATA[<xf:macro name="svSignupAbuseBlocking_option_macros::option_scoring_row"
+          arg-label="{$option.title}"
+          arg-name="{$inputName}"
+          arg-value="{$option.option_value}"
+          arg-hint="{$hintHtml}"
+          arg-explain="{$explainHtml}"
+          arg-html="{$listedHtml}"
+/>]]></template>
+  <template type="admin" title="option_template_signup_blocking_asn" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[<xf:formrow
+	label="{$option.title}"
+	hint="{$hintHtml}"
+	explain="{$explainHtml}"
+	html="{$listedHtml}">
+</xf:formrow>
+<xf:checkboxrow>
+	<xf:option label="{{ phrase('svSignupBlocking_cymru') }}" 
+				name="{$inputName}[cymru]" value="1" selected="{{ $option.option_value.cymru }}"/>
+	<xf:option label="{{ phrase('svSignupBlocking_ipapi') }}" 
+			   hint="{{ phrase('svSignupBlocking_ipapi_explain') }}"
+			   name="{$inputName}[ipApi]" value="1" selected="{{ $option.option_value.ipApi }}">
+		<xf:dependent>
+			<xf:textbox name="{$inputName}[ipApiKey]" value="{{ $option.option_value.ipApiKey }}"/>
+		</xf:dependent>
+	</xf:option>
+	<xf:option label="{{ phrase('svSignupBlocking_ipregistry') }}" 
+			   hint="{{ phrase('svSignupBlocking_ipregistry_explain') }}"
+			   name="{$inputName}[ipregistry]" value="1" selected="{{ $option.option_value.ipregistry }}">
+		<xf:dependent>
+			<xf:textbox name="{$inputName}[ipregistryKey]" value="{{ $option.option_value.ipregistryKey }}"/>
+		</xf:dependent>
+	</xf:option>
+	<xf:option label="{{ phrase('svSignupBlocking_ipstack') }}" 
+			   hint="{{ phrase('svSignupBlocking_ipstack_explain') }}"
+			   name="{$inputName}[ipStack]" value="1" selected="{{ $option.option_value.ipStack }}">
+		<xf:dependent>
+			<xf:checkbox>
+				<xf:option label="{{ phrase('svSignupBlocking_paid_plan') }}" 
+						   name="{$inputName}[ipStackPaid]" value="1" 
+						   selected="{{ $option.option_value.ipStackPaid }}"/>
+			</xf:checkbox>
+			<xf:textbox name="{$inputName}[ipstackKey]" value="{{ $option.option_value.ipstackKey }}"/>
+		</xf:dependent>
+	</xf:option>
+	<xf:option label="{{ phrase('svSignupBlocking_maxMind_asn') }}" 
+			   hint="{{ phrase('svSignupBlocking_maxMind_asn_explain') }}"
+			   name="{$inputName}[maxMind]" value="1" selected="{{ $option.option_value.maxMind }}">
+	</xf:option>
+	<xf:option label="{{ phrase('svSignupBlocking_asn_ripe') }}" 
+					name="{$inputName}[ripe]" value="1" selected="{{ $option.option_value.ripe }}"/>
+</xf:checkboxrow>]]></template>
+  <template type="admin" title="option_template_signup_blocking_default_link_block" version_id="1090800" version_string="1.9.8"><![CDATA[<xf:checkboxrow label="{$option.title}"
+			hint="{$hintHtml}"
+			explain="{$explainHtml}"
+			html="{$listedHtml}">
+	<xf:foreach loop="$choices" value="$choice">
+		<xf:option checked="{{ $choice.selected }}" name="{$inputName}[{$choice.contentType}][checked]" label="{$choice.phraseName}" value="1" data-hide="true">
+			<xf:dependent>
+				<xf:radio name="{$inputName}[{$choice.contentType}][value]"
+						  value="{$choice.value}">
+					<xf:option value="allowed" 
+							   label="{{ phrase('sv_reg_status.allowed') }}" />
+					<xf:option value="moderated"
+							   label="{{ phrase('sv_reg_status.moderated') }}" />
+					<xf:option value="denied"
+							   label="{{ phrase('sv_reg_status.denied') }}" />
+				</xf:radio>
+			</xf:dependent>
+		</xf:option>
+	</xf:foreach>
+</xf:checkboxrow>]]></template>
+  <template type="admin" title="option_template_signup_blocking_geoip" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[<xf:formrow
+	label="{$option.title}"
+	hint="{$hintHtml}"
+	explain="{$explainHtml}"
+	html="{$listedHtml}">
+</xf:formrow>
+<xf:checkboxrow>
+	<xf:option label="{{ phrase('svSignupBlocking_cloudflare_geoip') }}" 
+			   hint="{{ phrase('svSignupBlocking_cloudflare_geoip_explain') }}"
+			   name="{$inputName}[cloudflare]" value="1" selected="{{ $option.option_value.cloudflare }}"/>
+	<xf:option label="{{ phrase('svSignupBlocking_ipapi') }}" 
+			   hint="{{ phrase('svSignupBlocking_ipapi_explain') }}"
+			   name="{$inputName}[ipApi]" value="1" selected="{{ $option.option_value.ipApi }}">
+		<xf:dependent>
+			<xf:textbox name="{$inputName}[ipApiKey]" value="{{ $option.option_value.ipApiKey }}"/>
+		</xf:dependent>
+	</xf:option>
+	<xf:option label="{{ phrase('svSignupBlocking_ipregistry') }}" 
+			   hint="{{ phrase('svSignupBlocking_ipregistry_explain') }}"
+			   name="{$inputName}[ipregistry]" value="1" selected="{{ $option.option_value.ipregistry }}">
+		<xf:dependent>
+			<xf:textbox name="{$inputName}[ipregistryKey]" value="{{ $option.option_value.ipregistryKey }}"/>
+		</xf:dependent>
+	</xf:option>
+	<xf:option label="{{ phrase('svSignupBlocking_ipstack') }}" 
+			   hint="{{ phrase('svSignupBlocking_ipstack_explain') }}"
+			   name="{$inputName}[ipStack]" value="1" selected="{{ $option.option_value.ipStack }}">
+		<xf:dependent>
+			<xf:checkbox>
+				<xf:option label="{{ phrase('svSignupBlocking_paid_plan') }}" 
+						   name="{$inputName}[ipStackPaid]" value="1" 
+						   selected="{{ $option.option_value.ipStackPaid }}"/>
+			</xf:checkbox>
+			<xf:textbox name="{$inputName}[ipstackKey]" value="{{ $option.option_value.ipstackKey }}"/>
+		</xf:dependent>
+	</xf:option>
+	<xf:option label="{{ phrase('svSignupBlocking_maxMind_geoip') }}" 
+			   hint="{{ phrase('svSignupBlocking_maxMind_geoip_explain') }}"
+			   name="{$inputName}[maxMind]" value="1" selected="{{ $option.option_value.maxMind }}">
+	</xf:option>
+</xf:checkboxrow>]]></template>
+  <template type="admin" title="option_template_signup_blocking_getipintel" version_id="1715586734" version_string="1.16.0 Beta 6"><![CDATA[<xf:formrow
+	label="{$option.title}"
+	hint="{$hintHtml}"
+	explain="{$explainHtml}"
+	html="{$listedHtml}">
+	<xf:checkbox>
+		<xf:option
+				   label="{{ phrase('enabled') }}"
+				   name="{$inputName}[enable]"
+				   value="1"
+				   selected="{{ $option.option_value.enable }}"
+				   />
+	</xf:checkbox>
+</xf:formrow>
+<xf:textboxrow label="{{ phrase('svSignupBlocking_getipintel_email') }}" explain="{{ phrase('svSignupBlocking_getipintel_email_explain') }}" name="{$inputName}[email]" value="{{ $option.option_value.email }}" />
+<xf:textboxrow label="{{ phrase('svSignupBlocking_getipintel_url') }}" explain="{{ phrase('svSignupBlocking_getipintel_url_explain') }}" name="{$inputName}[url]" value="{{ $option.option_value.url }}" />
+<xf:textboxrow label="{{ phrase('svSignupBlocking_getipintel_service_flags') }}" explain="{{ phrase('svSignupBlocking_getipintel_service_flags_explain') }}" name="{$inputName}[flags]" value="{{ $option.option_value.flags }}" />
+
+<xf:textboxrow label="{{ phrase('svSignupBlocking_getipintel_low_confidence_score_threshold') }}" explain="{{ phrase('svSignupBlocking_getipintel_low_confidence_score_threshold_explain') }}" name="{$inputName}[lowScoreThreshold]" value="{{ $option.option_value.lowScoreThreshold }}" />
+<xf:macro name="svSignupAbuseBlocking_option_macros::option_scoring_row"
+          arg-label="{{ phrase('svSignupBlocking_getipintel_low_confidence_score') }}"
+          arg-name="{$inputName}[lowScore]"
+          arg-value="{$option.option_value.lowScore}"
+/>
+
+<xf:textboxrow label="{{ phrase('svSignupBlocking_getipintel_high_confidence_score_threshold') }}" explain="{{ phrase('svSignupBlocking_getipintel_high_confidence_score_threshold_explain') }}" name="{$inputName}[highScoreThreshold]" value="{{ $option.option_value.highScoreThreshold }}" />
+<xf:macro name="svSignupAbuseBlocking_option_macros::option_scoring_row"
+          arg-label="{{ phrase('svSignupBlocking_getipintel_high_confidence_score') }}"
+          arg-name="{$inputName}[highScore]"
+          arg-value="{$option.option_value.highScore}"
+/>]]></template>
+  <template type="admin" title="option_template_signup_blocking_honeypot" version_id="1000019" version_string="1.0.0 Beta 5"><![CDATA[<xf:formrow
+	label="{$option.title}"
+	hint="{$hintHtml}"
+	explain="{$explainHtml}"
+	html="{$listedHtml}">
+</xf:formrow>
+	<xf:numberboxrow label="{{ phrase('svSignupBlocking_honeypot_cutOff') }}" name="{$inputName}[cutOff]" value="{{ $option.option_value.cutOff }}" min="0" units="{{ phrase('days') }}" />
+	<xf:numberboxrow label="{{ phrase('svSignupBlocking_honeypot_score10to20') }}" name="{$inputName}[score10to20]" value="{{ $option.option_value.score10to20 }}" min="0" />
+	<xf:numberboxrow label="{{ phrase('svSignupBlocking_honeypot_score80to100') }}" name="{$inputName}[score80to100]" value="{{ $option.option_value.score80to100 }}" min="0" />]]></template>
+  <template type="admin" title="option_template_signup_blocking_sfs" version_id="1000020" version_string="1.0.0"><![CDATA[<xf:formrow
+	label="{$option.title}"
+	hint="{$hintHtml}"
+	explain="{$explainHtml}"
+	html="{$listedHtml}">
+</xf:formrow>
+
+<xf:numberboxrow label="{{ phrase('svSignupBlocking_sfs_score_username') }}" name="{$inputName}[username]" value="{{ $option.option_value.username }}" min="0" />
+<xf:numberboxrow label="{{ phrase('svSignupBlocking_sfs_score_email') }}" name="{$inputName}[email]" value="{{ $option.option_value.email }}" min="0" />
+<xf:numberboxrow label="{{ phrase('svSignupBlocking_sfs_score_ip') }}" name="{$inputName}[ip]" value="{{ $option.option_value.ip }}" min="0" />]]></template>
+  <template type="admin" title="option_template_signup_blocking_tor" version_id="1715586734" version_string="1.16.0 Beta 6"><![CDATA[<xf:formrow
+	label="{$option.title}"
+	hint="{$hintHtml}"
+	explain="{$explainHtml}"
+	html="{$listedHtml}">
+</xf:formrow>
+<xf:macro name="svSignupAbuseBlocking_option_macros::option_scoring_row"
+          arg-label="{{ phrase('svSignupBlocking_tor_score') }}"
+          arg-name="{$inputName}[score]"
+          arg-value="{$option.option_value.score}"
+/>
+<xf:textboxrow label="{{ phrase('svSignupBlocking_tor_serverIp') }}" explain="{{ phrase('svSignupBlocking_tor_serverIp_explain') }}" name="{$inputName}[serverIp]" value="{{ $option.option_value.serverIp }}" />
+<xf:checkboxrow >
+	<xf:option
+			   label="{{ phrase('svSignupBlocking_cloudflare_geoip') }}"
+			   hint="{{ phrase('svSignupBlocking_cloudflare_geoip_explain') }}"
+			   name="{$inputName}[cloudflare]" value="1"
+			   selected="{{ $option.option_value.cloudflare }}"/>
+</xf:checkboxrow>]]></template>
+  <template type="admin" title="option_template_signup_sock_dedupe_filter" version_id="1000020" version_string="1.0.0"><![CDATA[<xf:checkboxrow
+	label="{$option.title}"
+	hint="{$hintHtml}"
+	explain="{$explainHtml}"
+	html="{$listedHtml}">
+
+	<xf:option name="{$inputName}[seenFilter]" value="1" selected="{$option.option_value.seenFilter}">
+		<xf:label>{{ phrase('svRecentSeenSockEvent') }}</xf:label>
+		<xf:dependent>
+			<xf:numberbox name="{$inputName}[cutOff]" value="{{ $option.option_value.cutOff }}" min="0" units="{{ phrase('days') }}" />
+		</xf:dependent>
+	</xf:option>
+</xf:checkboxrow>]]></template>
+  <template type="admin" title="option_template_signup_throttling_cutoff" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[<xf:radiorow name="{$inputName}[type]"
+			 value="{$option.option_value.type}"
+			 label="{$option.title}"
+			 hint="{$hintHtml}"
+			 explain="{$explainHtml}"
+			 html="{$listedHtml}">
+	<xf:option label="{{ phrase('svSignupThrottling_cut_off_type.fixed') }}"			   
+			   hint="{{ phrase('svSignupThrottling_cut_off_type.fixed_explain') }}"
+			   value="fixed">
+		<xf:dependent>
+			<xf:numberbox name="{$inputName}[fixedValue]" value="{{ $option.option_value.fixedValue }}" min="0" />
+			<xf:hiddenval name="{$inputName}[dynamicMin]" value="{{ $option.option_value.dynamicMin }}" />
+			<xf:hiddenval name="{$inputName}[dynamicMax]" value="{{ $option.option_value.dynamicMax }}" />			
+		</xf:dependent>
+	</xf:option>
+	<xf:option label="{{ phrase('svSignupThrottling_cut_off_type.dynamic') }}"			   
+			   hint="{{ phrase('svSignupThrottling_cut_off_type.dynamic_explain') }}"
+			   value="dynamic">
+		<xf:dependent>
+			<xf:hiddenval name="{$inputName}[fixedValue]" value="{{ $option.option_value.fixedValue }}" />
+			<xf:numberboxrow name="{$inputName}[dynamicMin]" value="{{ $option.option_value.dynamicMin }}"
+							 min="0"
+							 rowtype="fullWidth"
+							 label="{{ phrase('svSignupThrottling_cut_off_dynamic_min_value') }}" />
+			<xf:numberboxrow name="{$inputName}[dynamicMax]" value="{{ $option.option_value.dynamicMax }}"
+							 min="0"
+							 rowtype="fullWidth mergePrev"
+							 label="{{ phrase('svSignupThrottling_cut_off_dynamic_max_value') }}" />
+		</xf:dependent>
+	</xf:option>
+</xf:radiorow>]]></template>
+  <template type="admin" title="option_template_signup_throttling_types" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[<xf:checkboxrow
+				name="{$inputName}"
+				value="{$option.option_value}"
+				label="{$option.title}"
+				hint="{$hintHtml}"
+				explain="{$explainHtml}"
+				html="{$listedHtml}">
+	<xf:options source="{{ $xf.app.em.getRepository('SV\SignupAbuseBlocking:UserRegistrationLog').getThrottlingTypePhrases() }}" />
+</xf:checkboxrow>]]></template>
+  <template type="admin" title="option_template_signup_throttling_window" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[<xf:formrow
+	label="{$option.title}"
+	hint="{$hintHtml}"
+	explain="{$explainHtml}"
+	html="{$listedHtml}">
+	<div class="inputGroup inputGroup--inline">
+		<xf:numberbox name="{$inputName}[value]" value="{{ $option.option_value.value }}" min="0" />
+		<xf:select name="{$inputName}[unit]" value="{$option.option_value.unit}">
+			<xf:option value="1">{{ phrase('units_seconds') }}</xf:option>
+			<xf:option value="60">{{ phrase('units_minutes') }}</xf:option>
+			<xf:option value="3600">{{ phrase('units_hours') }}</xf:option>
+			<xf:option value="86400">{{ phrase('units_days') }}</xf:option>
+			<xf:option value="604800">{{ phrase('units_weeks') }}</xf:option>
+			<xf:option value="2628000">{{ phrase('units_months') }}</xf:option>
+		</xf:select>
+	</div>
+</xf:formrow>]]></template>
+  <template type="admin" title="svSignupAbuseBlocking_allow_email_domain_list" version_id="1090000" version_string="1.9.0"><![CDATA[<xf:include template="svSignupAbuseBlocking_allow_or_ban_item_list">
+	<xf:set var="$title" value="{{ phrase('svSignupAbuseBlocking_allowed_email_domains') }}" />
+	<xf:set var="$itemTitlePhrase" value="{{ phrase('svSignupAbuseBlocking_email_domain') }}" />
+	<xf:set var="$noItemsResultPhrase" value="{{ $filters is empty ? phrase('svSignupAbuseBlocking_no_email_domains_have_been_allowed') : phrase('svSignupAbuseBlocking_no_email_domains_matching_your_filter_have_been_allowed') }}" />
+	<xf:set var="$addItemBlockHeaderPhrase" value="{{ phrase('svSignupAbuseBlocking_allow_email_domain') }}" />
+	<xf:set var="$addItemRowLabelPhrase" value="{{ phrase('svSignupAbuseBlocking_email_domain_to_allow') }}" />
+	
+	<xf:set var="$customFiltersHtml">
+		<li><xf:textbox name="email_domain" value="{$filters.email_domain}"
+						class="filterBlock-input filterBlock-input--small"
+						placeholder="{{ phrase('email...') }}" />
+		</li>
+	</xf:set>
+</xf:include>]]></template>
+  <template type="admin" title="svSignupAbuseBlocking_allow_or_ban_item_list" version_id="1715586734" version_string="1.16.0 Beta 6"><![CDATA[<xf:macro name="svSignupAbuseBlocking_allow_or_ban_item_macros::list"
+		  arg-title="{$title}"
+		  arg-items="{$items}" arg-page="{$page}" arg-perPage="{$perPage}" arg-total="{$total}"
+		  arg-order="{$order}" arg-direction="{$direction}"
+		  arg-itemTitlePhrase="{$itemTitlePhrase}"
+		  arg-primaryKey="{$primaryKey}" arg-routeInfix="{$routeInfix}"
+		  arg-noItemsResultPhrase="{$noItemsResultPhrase}"
+		  arg-addItemBlockHeaderPhrase="{$addItemBlockHeaderPhrase}"
+		  arg-addItemRowLabelPhrase="{$addItemRowLabelPhrase}"
+		  arg-newItem="{$newItem}"
+		  arg-filters="{$filters}"
+		  arg-creatorsFilter="{$creatorsFilter}"
+		  arg-customFiltersHtml="{$customFiltersHtml}" />]]></template>
+  <template type="admin" title="svSignupAbuseBlocking_allow_or_ban_item_macros" version_id="1090000" version_string="1.9.0"><![CDATA[<xf:macro name="list"
+		  arg-title="!"
+		  arg-items="!" arg-page="!" arg-perPage="!" arg-total="!"
+		  arg-order="!" arg-direction="!"
+		  arg-itemTitlePhrase="!"
+		  arg-primaryKey="!" arg-routeInfix="!"
+		  arg-noItemsResultPhrase="!"
+		  arg-addItemBlockHeaderPhrase="!" arg-addItemRowLabelPhrase="!" arg-newItem="!"
+		  arg-filters="{{ [] }}"
+		  arg-creatorsFilter=""
+		  arg-customFiltersHtml="">
+	<xf:title>{$title}</xf:title>
+	
+	<xf:css src="svSignupAbuseBlocking_allow_or_ban_item_macros.less" />
+
+	<xf:pageaction>
+		<div class="buttonGroup">
+			<xf:button class="menuTrigger" data-xf-click="menu" aria-expanded="false" aria-haspopup="true" title="{{ phrase('import...')|for_attr }}" icon="import">{{ phrase('button.import...') }}</xf:button>
+			<div class="menu" data-menu="menu" aria-hidden="true">
+				<div class="menu-content">
+					<a href="{{ link('banning/' . $routeInfix . '/import', null, {'type': 'xml'}) }}" class="menu-linkRow" data-xf-click="overlay">{{ phrase('svSignupAbuseBlocking_data_type.xml') }}</a>
+					<a href="{{ link('banning/' . $routeInfix . '/import', null, {'type': 'csv'}) }}" class="menu-linkRow" data-xf-click="overlay">{{ phrase('svSignupAbuseBlocking_data_type.csv') }}</a>
+				</div>
+			</div>
+			
+			<xf:if is="$items is not empty">
+				<xf:button class="menuTrigger" data-xf-click="menu" aria-expanded="false" aria-haspopup="true" title="{{ phrase('expport...')|for_attr }}" icon="export">{{ phrase('button.export...') }}</xf:button>
+				<div class="menu" data-menu="menu" aria-hidden="true">
+					<div class="menu-content">
+						<a href="{{ link('banning/' . $routeInfix . '/export', null, {'type': 'xml', 't': csrf_token()}) }}" class="menu-linkRow">{{ phrase('svSignupAbuseBlocking_data_type.xml') }}</a>
+						<a href="{{ link('banning/' . $routeInfix . '/export', null, {'type': 'csv', 't': csrf_token()}) }}" class="menu-linkRow">{{ phrase('svSignupAbuseBlocking_data_type.csv') }}</a>
+					</div>
+				</div>
+			</xf:if>
+		</div>
+	</xf:pageaction>
+	
+	<xf:form action="{{ link('banning/' . $routeInfix) }}" class="block">
+		<div class="block-outer">
+			<div class="filterBlock filterBlock--noFloat">
+				<ul class="listInline">
+					{{ $customFiltersHtml|raw }}
+					
+					<li><xf:textbox name="creators" value="{{ $creatorsFilter ?: '' }}"
+									class="filterBlock-input filterBlock-input--small"
+									placeholder="{{ phrase('svSignupAbuseBlocking_creator...') }}"
+									data-xf-init="auto-complete" />
+					</li>
+
+					<li><xf:textbox name="reason" value="{$filters.reason}"
+									class="filterBlock-input filterBlock-input--small"
+									placeholder="{{ phrase('reason...') }}" />
+					</li>
+
+					<li style="display: inline-block; vertical-align: bottom">
+						<xf:dateinput name="create_date_start"
+									  class="filterBlock-input filterBlock-input--small"
+									  value="{{ $filters.create_date_start ? date($filters.create_date_start, 'Y-m-d') : '' }}"
+									  placeholder="{{ phrase('svSignupAbuseBlocking_create_date') }}" />
+					</li>
+					<li>
+						<xf:button type="submit" name="apply" value="1">{{ phrase('filter') }}</xf:button>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</xf:form>
+
+	<xf:if is="$items is not empty">
+		<xf:form action="{{ link('banning/' . $routeInfix . '/delete') }}" ajax="true" class="block">
+			<div class="block-container">
+				<div class="block-body">
+					<xf:datalist data-xf-init="responsive-data-list">
+						<colgroup>
+							<col style="width: 1%">
+							<col style="width: 15%">
+							<col style="width: 15%">
+							<col style="width: 15%">
+							<col style="width: 15%">
+							<col>
+						</colgroup>
+						<xf:datarow rowtype="header">
+							<xf:cell><xf:checkbox standalone="true"><xf:option check-all="< .block-container" data-xf-init="tooltip" title="{{ phrase('select_all') }}" /></xf:checkbox></xf:cell>
+							<xf:cell href="{{ link('banning/' . $routeInfix, '', {'order': $primaryKey, 'direction': ($direction == 'desc' || !$direction)  ? 'asc' : ''}) }}">
+								{$itemTitlePhrase}
+							</xf:cell>
+							<xf:cell href="{{ link('banning/' . $routeInfix, '', {'order': '', 'direction': ($direction == 'desc' || !$direction)  ? 'asc' : ''}) }}">
+								{{ phrase('date') }}
+							</xf:cell>
+							<xf:cell href="{{ link('banning/' . $routeInfix, '', {'order': 'last_triggered_date', 'direction': ($direction == 'desc' || !$direction)  ? 'asc' : ''}) }}">
+								{{ phrase('last_triggered') }}
+							</xf:cell>
+							<xf:cell>{{ phrase('by') }}</xf:cell>
+							<xf:cell>{{ phrase('reason') }}</xf:cell>
+						</xf:datarow>
+						<xf:foreach loop="$items" value="$item">
+							<xf:datarow>
+								<xf:toggle name="delete[]" value="{{ $item.{$primaryKey} }}" />
+								<xf:cell>{{ $item.{$primaryKey} }}</xf:cell>
+								<xf:cell>{{ $item.create_date ? date($item.create_date) : phrase('n_a') }}</xf:cell>
+								<xf:cell>
+									{{ $item.last_triggered_date ? date_dynamic($item.last_triggered_date) : phrase('never') }}
+								</xf:cell>
+								<xf:cell>{{ $item.User ? $item.User.username : phrase('n_a') }}</xf:cell>
+								<xf:cell>{{ $item.reason ? $item.reason : phrase('n_a') }}</xf:cell>
+							</xf:datarow>
+						</xf:foreach>
+					</xf:datalist>
+				</div>
+				<div class="block-footer block-footer--split">
+					<span class="block-footer-counter">{{ display_totals($items, $total) }}</span>
+					<span class="block-footer-select"><xf:checkbox standalone="true"><xf:option check-all="< .block-container" label="{{ phrase('select_all') }}" /></xf:checkbox></span>
+					<span class="block-footer-controls"><xf:button type="submit" icon="delete" /></span>
+				</div>
+			</div>
+			<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}" link="banning/{$routeInfix}"
+						params="{{ {
+								'order': ($order != 'create_date' ? $order : ''),
+								'direction': ($direction != 'desc' ? $direction : '')
+								} }}"
+						wrapperclass="block-outer block-outer--after" />
+		</xf:form>
+	<xf:else />
+		<div class="blockMessage">{$noItemsResultPhrase}</div>
+	</xf:if>
+
+	<xf:form action="{{ link('banning/' . $routeInfix . '/add') }}" ajax="true" class="block">
+		<div class="block-container">
+			<h3 class="block-header">{$addItemBlockHeaderPhrase}</h3>
+			<div class="block-body">
+				<xf:textboxrow name="{$primaryKey}"
+							   maxlength="{{ max_length($newItem, $primaryKey) }}"
+							   label="{$addItemRowLabelPhrase}"
+							   explain="{{ phrase('you_may_use_star_to_represent_wildcards_automatically_added') }}" />
+				<xf:textboxrow name="reason" maxlength="{{ max_length($newItem, 'reason') }}"
+							   label="{{ phrase('reason') }}"
+							   hint="{{ phrase('optional') }}" />
+			</div>
+			<xf:submitrow icon="save" />
+		</div>
+	</xf:form>
+</xf:macro>]]></template>
+  <template type="admin" title="svSignupAbuseBlocking_allow_or_ban_item_macros.less" version_id="1081301" version_string="1.8.13"><![CDATA[<xf:comment>taken from admin log filtering add-on</xf:comment>
+.filterBlock--noFloat
+{
+	float: none;
+	
+	.filterBlock--noFloatClearBg
+	{
+		background: transparent;
+		border: none;
+		border-radius: 0px;
+	}
+}]]></template>
+  <template type="admin" title="svSignupAbuseBlocking_csv_import" version_id="1711438455" version_string="1.16.0 Beta 2"><![CDATA[<xf:title>{{ phrase('svSignupAbuseBlocking_import_from_csv') }}</xf:title>
+
+<xf:form action="{{ link($urlPrefix . '/import', null, {'type': $type}) }}" upload="true" ajax="true" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:uploadrow name="upload" accept=".csv"
+						  label="{{ phrase('svSignupAbuseBlocking_import_from_uploaded_csv_file') }}" />
+		</div>
+		<xf:submitrow icon="import" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="svSignupAbuseBlocking_log_user_registration_list" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[<xf:title>{{ phrase('svSignupAbuseBlocking_user_registration_log') }}</xf:title>
+
+<xf:css src="svSignupAbuseBlocking_log_user_registration_list.less" />
+
+<xf:if is="!$hideFilters">
+	<xf:form action="{{ link('logs/user-registration') }}" class="block">
+		<div class="block-outer">
+			<div class="filterBlock filterBlock--noFloat">
+				<ul class="listInline">
+					<li><xf:textbox name="usernames" value="{$usernames}"
+									class="filterBlock-input filterBlock-input--small"
+									placeholder="{{ phrase('users...') }}"
+									data-xf-init="auto-complete" />
+					</li>
+					<li><xf:textbox name="details" value="{$linkParams.details}"
+									class="filterBlock-input filterBlock-input--small"
+									placeholder="{{ phrase('details...') }}" />
+					</li>
+					<li style="display: inline-block; vertical-align: bottom">
+						<!-- inline style is to workaround Safari alignment issue -->
+						<div class="inputGroup inputGroup--auto">
+							<xf:dateinput name="log_date_start" value="{{ $linkParams.log_date_start ? date($linkParams.log_date_start, 'Y-m-d') : '' }}"
+										  class="filterBlock-input filterBlock-input--small" />
+							<span class="inputGroup-text">-</span>
+							<xf:dateinput name="log_date_end" value="{{ $linkParams.log_date_end ? date($linkParams.log_date_end, 'Y-m-d') : '' }}"
+										  class="filterBlock-input filterBlock-input--small" />
+							<span class="inputGroup-splitter"></span>
+						</div>
+					</li>
+					<li>
+						<xf:button type="submit" name="apply" value="1">{{ phrase('filter') }}</xf:button>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</xf:form>
+</xf:if>
+
+<xf:if is="$entries is not empty">
+	<div class="block">
+		<div class="block-container">
+			<div class="block-body">
+				<xf:datalist>
+					<xf:datarow rowtype="header">
+						<xf:cell class="dataList-cell--min">{{ phrase('user_name') }}</xf:cell>
+						<xf:cell class="dataList-cell--min">{{ phrase('action') }}</xf:cell>						
+						<xf:cell class="dataList-cell--min">{{ phrase('date') }}</xf:cell>
+						<xf:cell>{{ phrase('details') }}</xf:cell>
+					</xf:datarow>
+					<xf:foreach loop="$entries" value="$entry">
+						<xf:datarow>
+							<xf:cell href="{{ link('logs/user-registration', $entry) }}" overlay="true">
+								{{ $entry.User ? $entry.User.username : ($entry.username ? $entry.username : phrase('unknown_account')) }}
+							</xf:cell>
+							<xf:cell href="{{ link('logs/user-registration', $entry) }}" overlay="true">
+								{$entry.status}
+							</xf:cell>
+							<xf:cell href="{{ link('logs/user-registration', $entry) }}" overlay="true">
+								<xf:date time="$entry.log_date" />
+							</xf:cell>
+							<xf:cell>
+								<ul class="listPlain">
+									<xf:foreach loop="$entry.details" value="$row">
+										<li>{$row}</li>
+									</xf:foreach>
+								</ul>
+							</xf:cell>
+						</xf:datarow>
+					</xf:foreach>
+				</xf:datalist>
+			</div>
+			<div class="block-footer">
+				<span class="block-footer-counter">{{ display_totals($entries, $total) }}</span>
+			</div>
+		</div>
+		<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+					params="{$linkParams}"
+					link="logs/user-registration"
+					wrapperclass="block-outer block-outer--after" />
+	</div>
+<xf:else />
+	<div class="blockMessage">{{ phrase('no_entries_have_been_logged') }}</div>
+</xf:if>]]></template>
+  <template type="admin" title="svSignupAbuseBlocking_log_user_registration_list.less" version_id="1080900" version_string="1.8.9"><![CDATA[.dataList-subRow
+{
+	max-height: 100%;
+}
+
+.filterBlock--noFloat
+{
+	float: none;
+}]]></template>
+  <template type="admin" title="svSignupAbuseBlocking_log_user_registration_view" version_id="1000008" version_string="1.0.0 Alpha 8"><![CDATA[<xf:title>{{ phrase('svSignupAbuseBlocking_user_registration_log') }}</xf:title>
+
+<div class="block">
+	<div class="block-container">
+		<div class="block-body block-row">
+			<ul class="listInline listInline--bullet">
+				<li><span class="u-dimmed">{{ phrase('action:') }}</span> {$entry.status}</li>
+			</ul>
+
+			<ul class="listInline listInline--bullet u-muted">
+				<li class="u-muted">{{ phrase('generated_by:') }} {{ $entry.User ? '<a href="' . link('users/edit', $entry.User) . '">' . $entry.User.username . '</a>' : ($entry.username ? $entry.username : phrase('unknown_account')) }}</li>
+				<li><xf:date time="$entry.log_date" /></li>
+			</ul>
+
+			<ul class="listPlain">
+				<xf:foreach loop="$entry.details" value="$row">
+					<li>{$row}</li>
+				</xf:foreach>
+			</ul>
+		</div>
+
+		<h3 class="block-minorHeader">{{ phrase('request_state') }}</h3>
+		<div class="block-body block-body--contained block-row" dir="ltr">
+			{{ dump_simple($entry.request_state) }}
+		</div>
+	</div>
+</div>]]></template>
+  <template type="admin" title="svSignupAbuseBlocking_login_list" version_id="1720578341" version_string="1.16.1"><![CDATA[<xf:title>{{ phrase('svSignupAbuseBlocking_user_logins') }}</xf:title>
+
+<xf:if is="$user">
+	<xf:breadcrumb href="{{ link('users/edit', $user) }}">{$user.username}</xf:breadcrumb>
+</xf:if>
+
+<xf:if is="!$hideFilters">
+	<xf:form action="{{ link('logs/sv-user-logins') }}" class="block">
+		<div class="block-outer">
+			<div class="filterBlock filterBlock--noFloat">
+				<ul class="listInline">
+					<li><xf:textbox name="usernames" value="{$usernames}"
+									class="filterBlock-input filterBlock-input--small"
+									placeholder="{{ phrase('users...') }}"
+									data-xf-init="auto-complete" />
+					</li>
+					<li>
+						<xf:select name="action" class="filterBlock-input" value="{$linkParams.action}">
+							<xf:option value="">{{ phrase('(any)') }}</xf:option>
+							<xf:options source="{$loginTypes}" />
+						</xf:select>
+					</li>
+					<li><xf:textbox name="ip_address" value="{$linkParams.ip_address}"
+									class="filterBlock-input filterBlock-input--small"
+									placeholder="{{ phrase('svSignupThrottling_type.ip_address...') }}" />
+					</li>
+					<li><xf:textbox name="asn" value="{$linkParams.asn}"
+									class="filterBlock-input filterBlock-input--small"
+									placeholder="{{ phrase('svSignupThrottling_type.asn...') }}" />
+					</li>
+					<li><xf:textbox name="country" value="{$linkParams.country}"
+									class="filterBlock-input filterBlock-input--small"
+									placeholder="{{ phrase('svSignupThrottling_type.country...') }}" />
+					</li>
+					<li><xf:textbox name="user_agent" value="{$linkParams.user_agent}"
+									class="filterBlock-input filterBlock-input--small"
+									placeholder="{{ phrase('svSignupAbuseBlocking_browser...') }}" />
+					</li>
+					<li style="display: inline-block; vertical-align: bottom">
+						<!-- inline style is to workaround Safari alignment issue -->
+						<div class="inputGroup inputGroup--auto">
+							<xf:dateinput name="log_date_start" value="{{ $linkParams.log_date_start ? date($linkParams.log_date_start, 'Y-m-d') : '' }}"
+										  class="filterBlock-input filterBlock-input--small" />
+							<span class="inputGroup-text">-</span>
+							<xf:dateinput name="log_date_end" value="{{ $linkParams.log_date_end ? date($linkParams.log_date_end, 'Y-m-d') : '' }}"
+										  class="filterBlock-input filterBlock-input--small" />
+							<span class="inputGroup-splitter"></span>
+						</div>
+					</li>
+					<li>
+						<xf:button type="submit" name="apply" value="1">{{ phrase('filter') }}</xf:button>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</xf:form>
+</xf:if>
+
+<xf:if is="$entries is not empty">
+	<div class="block">
+		<div class="block-container">
+			<div class="block-body">
+				<xf:datalist>
+					<xf:datarow rowtype="header">
+						<xf:if is="!$user">
+						<xf:cell>{{ phrase('user_name') }}</xf:cell>
+						</xf:if>
+						<xf:cell>{{ phrase('svSignupAbuseBlocking_login_type') }}</xf:cell>
+						<xf:cell>{{ phrase('svSignupThrottling_type.ip_address') }}</xf:cell>						
+						<xf:cell>{{ phrase('svSignupAbuseBlocking_browser') }}</xf:cell>
+						<xf:cell class="dataList-cell--number">{{ phrase('svSignupThrottling_type.asn') }}</xf:cell>
+						<xf:cell class="dataList-cell--min">{{ phrase('svSignupThrottling_type.country') }}</xf:cell>						
+						<xf:cell class="dataList-cell--min">{{ phrase('date') }}</xf:cell>
+					</xf:datarow>
+					<xf:foreach loop="$entries" value="$entry">
+						<xf:datarow>
+							<xf:if is="!$user">
+							<xf:cell href="{{ $entry.User ? link('users/edit', $entry.User) : '' }}">
+								{{ $entry.User ? $entry.User.username : phrase('unknown_account') }}
+							</xf:cell>
+							</xf:if>
+							<xf:cell>
+								{{ phrase_dynamic('svSignupAbuseBlocking_login_type.'. $entry.action) }}
+							</xf:cell>
+							<xf:cell>
+								{$entry.ip_address|ip}
+							</xf:cell>
+							<xf:cell>
+								<xf:if is="$entry.user_agent">
+									{$entry.user_agent}
+								</xf:if>
+							</xf:cell>
+							<xf:cell class="dataList-cell--number">
+								<xf:if is="$entry.asn">
+									<xf:if is="$entry.asn_link">
+										<a href="{$entry.asn_link}" target="_blank">{$entry.asn}</a>
+									<xf:else />
+										{$entry.asn}
+									</xf:if>
+								</xf:if>
+							</xf:cell>
+							<xf:cell class="dataList-cell--min">
+								{$entry.country}
+							</xf:cell>
+							<xf:cell class="dataList-cell--min">
+								<xf:date time="$entry.log_date" />
+							</xf:cell>
+						</xf:datarow>
+					</xf:foreach>
+				</xf:datalist>
+			</div>
+			<div class="block-footer">
+				<span class="block-footer-counter">{{ display_totals($entries, $total) }}</span>
+			</div>
+		</div>
+		<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+					params="{$linkParams}"
+					link="logs/sv-user-logins"
+					wrapperclass="block-outer block-outer--after" />
+	</div>
+<xf:else />
+	<div class="blockMessage">{{ phrase('no_entries_have_been_logged') }}</div>
+</xf:if>]]></template>
+  <template type="admin" title="svSignupAbuseBlocking_multi_account_list" version_id="1711438455" version_string="1.16.0 Beta 2"><![CDATA[<xf:title>{{ phrase('sv_multiple_accounts') }}{{ $user ? ' - '.$user.username : ''}}</xf:title>
+
+<xf:if is="$user === null">
+	<xf:form action="{{ link('anti-spam/multi-accounts') }}" class="block">
+		<div class="block-container">
+			<div class="block-body block-row">
+				<xf:textbox name="users" value="{$linkParams.users}" class="input--inline" placeholder="{{ phrase('svSADB_filter_by_users...') }}" data-xf-init="auto-complete" />
+				<xf:textbox name="emails" value="{$linkParams.emails}" class="input--inline" placeholder="{{ phrase('svSADB_filter_by_emails...') }}" />
+				<xf:checkbox standalone="true">
+					<xf:option name="exact_match" selected="{$linkParams.exact_match}" label="{{ phrase('exact_match') }}" />
+				</xf:checkbox>
+				<xf:select name="order" value="$linkParams.order ?: 'last_seen'"
+						   class="input--inline">
+					<xf:option value="last_seen" label="{{ phrase('last_seen') }}" />
+					<xf:option value="register" label="{{ phrase('register_date') }}"/>
+				</xf:select>
+				<xf:button type="submit">{{ phrase('filter') }}</xf:button>
+			</div>
+		</div>
+	</xf:form>
+</xf:if>
+
+<xf:pageaction>	
+	<xf:if is="$user !== null">
+		<div class="buttonGroup">
+			<div class="buttonGroup-buttonWrapper">
+				<xf:button class="menuTrigger" data-xf-click="menu">
+					{{ phrase('manage...') }}
+				</xf:button>
+				<div class="menu" data-menu="menu" aria-hidden="true">
+					<div class="menu-content">
+						<h3 class="menu-header">{{ phrase('manage...') }}</h3>
+						<xf:if is="$withFilter">
+							<a href="{{ link('anti-spam/multi-accounts', null, {'user_id': $user.user_id}) }}" class="menu-linkRow">{{ phrase('svSignupAbuseBlocking_view_other_user') }}</a>
+						</xf:if>
+
+						<xf:if is="$userEventsRoute">
+							<a href="{{ link($userEventsRoute, null, {'user_id': $user.user_id}) }}" class="menu-linkRow">{{ phrase('svSignupAbuseBlocking_detection_events') }}</a>
+						</xf:if>
+
+						<xf:if is="$xf.visitor.hasAdminPermission('user')">
+							<xf:if is="$user.is_banned">
+								<a href="{{ link_type('admin', 'banning/users/lift', $user) }}" class="menu-linkRow" data-xf-click="overlay">{{ phrase('lift_ban') }}</a>
+								<xf:elseif is="!$user.is_moderator AND !$user.is_admin" />
+								<a href="{{ link_type('admin', 'banning/users/add', $user) }}" class="menu-linkRow" data-xf-click="overlay">{{ phrase('ban_user') }}</a>
+							</xf:if>
+
+							<xf:if is="$xf.visitor.canCleanSpam()">
+								<a href="{{ link_type('public', 'spam-cleaner', $user, {'no_redirect': 1}) }}" class="menu-linkRow" data-xf-click="overlay">{{ phrase('spam') }}</a>
+							</xf:if>
+
+							<xf:if is="$user.canChangeUserMultiAccountAlerting()">
+								<a href="{{ link_type('public','members/multiaccount-toggle-user-alerting', $user) }}"
+								   class="menu-linkRow"
+								   data-xf-click="switch"
+								   data-sk-enable="{{ phrase('sv_multiple_account_alerting.user_disable') }}"
+								   data-sk-disable="{{ phrase('sv_multiple_account_alerting.user_enable') }}"
+								   data-menu-closer="true">
+									{{ $user.Profile.multiple_account_detection_alertable ? phrase('sv_multiple_account_alerting.user_disable') : phrase('sv_multiple_account_alerting.user_enable') }}
+								</a>
+							</xf:if>
+						</xf:if>
+					</div>
+				</div>
+			</div>
+		</div>
+	</xf:if>
+</xf:pageaction>
+
+<xf:if is="$multiAccountHits is not empty">
+	<div class="block">
+		<div class="block-container">
+            <xf:css src="public:sv_multiple_account_list.less" />
+			<xf:datalist data-xf-init="responsive-data-list"  class="multi-account-list">
+				<xf:if is="$user === null">
+					<xf:datarow rowtype="header">
+						<xf:cell>{{ phrase('user') }}</xf:cell>
+						<xf:cell class="dataList-cell--min">{{ phrase('svSignupAbuseBlocking_last_login') }}</xf:cell>
+						<xf:cell>{{ phrase('svSignupAbuseBlocking_multi_account_seen_header') }}</xf:cell>
+						<xf:cell>{{ phrase('svSignupAbuseBlocking_matches') }}</xf:cell>
+					</xf:datarow>
+					<xf:foreach loop="$multiAccountHits" value="$hit">
+						<xf:macro name="public:sv_multiple_account_list_macros::display"
+								  arg-hit="{$hit}"
+								  arg-withFilter="{{ true }}"
+								  arg-showOtherUsers="{{ true }}"
+								  />
+					</xf:foreach>
+				<xf:else />
+					<xf:datarow rowtype="header">
+						<xf:cell>{{ phrase('user') }}</xf:cell>
+						<xf:cell class="dataList-cell--min">{{ phrase('svSignupAbuseBlocking_last_login') }}</xf:cell>
+						<xf:cell>{{ phrase('svSignupAbuseBlocking_multi_account_seen_header') }}</xf:cell>
+					</xf:datarow>
+					<xf:set var="$hit" value="{{ $multiAccountHits.first() }}" />
+					<xf:foreach loop="$hit.OtherUsers" value="$otherUser">
+						<xf:macro name="public:sv_multiple_account_list_macros::display"
+								  arg-hit="{$otherUser}"
+								  arg-withFilter="{{ true }}"
+								  arg-showOtherUsers="{{ false }}"
+								  />
+					</xf:foreach>
+				</xf:if>
+			</xf:datalist>
+			<div class="block-footer">
+				<span class="block-footer-counter">{{ phrase('matched_x_users', {'count': count($multiAccountHits)}) }}</span>
+			</div>
+		</div>
+
+		<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+			link="anti-spam/multi-accounts" params="{$linkParams}"
+			wrapperclass="block-outer block-outer--after" />
+	</div>
+<xf:else />
+	<div class="blockMessage">{{ phrase('sv_no_multiple_accounts_logged') }}</div>
+</xf:if>]]></template>
+  <template type="admin" title="svSignupAbuseBlocking_option_macros" version_id="1715586734" version_string="1.16.0 Beta 6"><![CDATA[<xf:macro name="option_scoring_row"
+		  arg-label="!"
+		  arg-name="!"
+		  arg-value="!"
+		  arg-hint=""
+		  arg-explain=""
+		  arg-html="">
+    <xf:radiorow
+        name="{$name}"
+        label="{$label}"
+        hint="{$hint}"
+        explain="{$explain}"
+        html="{$html}">
+
+        <xf:option label="{{ phrase('svSignupBlocking_score.none') }}" value="0"
+                   selected="{{ !$value }}"/>
+        <xf:comment>
+            <xf:option label="{{ phrase('svSignupBlocking_score.moderatePosts') }}" value="moderatePosts"
+                       selected="{{ $value === 'moderatePosts' }}"/>
+        </xf:comment>
+        <xf:option label="{{ phrase('svSignupBlocking_score.addToGroup') }}" value="addToGroup"
+                   selected="{{ $value === 'addToGroup' }}"/>
+        <xf:option label="{{ phrase('svSignupBlocking_score.moderate') }}" value="moderate"
+                   selected="{{ $value === 'moderate' }}"/>
+        <xf:option label="{{ phrase('svSignupBlocking_score.reject') }}" value="reject"
+                   selected="{{ $value === 'reject' }}"/>
+        <xf:option label="{{ phrase('svSignupBlocking_score') }}" selected="{{ $value &&
+																		   $value !== 'addToGroup' &&
+																		   $value !== 'moderate' &&
+																		   $value !== 'reject' }}">
+            <xf:dependent>
+                <xf:textbox name="{$name}" value="{$value}"/>
+            </xf:dependent>
+        </xf:option>
+    </xf:radiorow>
+</xf:macro>
+
+<xf:macro name="option_form_block" arg-group="" arg-options="!" arg-containerBeforeHtml="">
+    <xf:if is="$options is not empty">
+		<xf:set var="$optionGroups" value="{{[
+{'min':0,'id':'generalOptions', 'phrase' : phrase('general_options')},
+{'min':1000,'id':'multiAccountDetection', 'phrase' : phrase('sv_multiple_account_detection_options')},
+{'min':2000,'id':'multiAccountReporting', 'phrase' : phrase('sv_multiple_account_report_options')},
+{'min':3000,'id':'connectionProfiling_dbl', 'phrase' : phrase('sv_connection_profiling_dbl_options')},
+{'min':4000,'id':'connectionProfiling_asn', 'phrase' : phrase('sv_connection_profiling_asn_options')},
+{'min':5000,'id':'connectionProfiling_passive', 'phrase' : phrase('sv_connection_profiling_passive_options')},
+{'min':6000,'id':'connectionProfiling_active', 'phrase' : phrase('sv_connection_profiling_active_options'), 'phraseDesc' : phrase('sv_connection_profiling_active_options_explain')},
+{'min':7000,'id':'contentSpamChecking', 'phrase' : phrase('sv_content_spam_checking')}
+ ] }}"
+				/>
+        <xf:form action="{{ link('options/update') }}" ajax="true" class="block">
+            {$containerBeforeHtml|raw}
+            <div class="block-container">
+				<xf:foreach loop="$optionGroups" value="$optionGroup" i="$i">
+					<xf:set var="$collapseKey" value="collapse_env_option_{$optionGroup.id}"/>
+					<xf:set var="$isActive" value="{{ !is_toggled($collapseKey) ? 1 : 0 }}"/>
+					<xf:if contentcheck="true">
+						<h3 class="block-formSectionHeader">
+							<span class="collapseTrigger collapseTrigger--block {{ $isActive ? 'is-active' : '' }}"
+								  data-xf-click="toggle"
+								  data-xf-init="toggle-storage" data-storage-type="cookie" data-storage-key="{$collapseKey}"
+								  data-target="< :up:next">
+								<a href="#{$optionGroup.id}">{$optionGroup.phrase}</a>
+							</span>
+							<xf:if is="$optionGroup.phraseDesc">
+								<span class="block-desc">
+									{$optionGroup.phraseDesc}
+								</span>
+							</xf:if>
+						</h3>
+
+						<xf:contentcheck>
+							<xf:macro name="option_form_block_section"
+									  arg-options="{$options}"
+									  arg-group="{$group}"
+									  arg-id="{$optionGroup.id}"
+									  arg-min="{$optionGroup.min}"
+									  arg-isActive="{{ $isActive }}"
+									  />
+						</xf:contentcheck>
+					</xf:if>
+				</xf:foreach>
+
+				<xf:submitrow sticky="true" icon="save" />
+            </div>
+        </xf:form>
+    </xf:if>
+</xf:macro>
+
+<xf:macro name="option_form_block_section" arg-options="!" arg-group="!" arg-id="!" arg-min="!" arg-isActive="" arg-size="1000">
+	<xf:set var="$html">
+		<xf:set var="$max" value="{{ $min + $size}}" />
+		<xf:foreach loop="$options" value="$option">
+			<xf:if is="{$option.Relations.{$group.group_id}.display_order} >= $min AND {$option.Relations.{$group.group_id}.display_order} < $max">
+				<xf:if is="$group">
+					<xf:set var="$curHundred" value="{{ floor($option.Relations.{$group.group_id}.display_order / 100) }}" />
+					<xf:if is="{{ $curHundred > $hundred }}">
+						<xf:set var="$hundred" value="{$curHundred}" />
+						<hr class="formRowSep" />
+					</xf:if>
+				</xf:if>
+
+				<xf:macro name="option_macros::option_row" arg-group="{$group}" arg-option="{$option}" />
+			</xf:if>
+		</xf:foreach>
+	</xf:set>
+	<xf:if is="trim($html)">
+		<div class="block-body block-body--collapsible {{ $isActive ? 'is-active' : ''}}">
+			{$html}
+		</div>
+	</xf:if>
+</xf:macro>]]></template>
+  <template type="admin" title="svSignupAbuseBlocking_test_asn" version_id="1721375746" version_string="1.16.5"><![CDATA[<xf:title>{{ phrase('admin_navigation.svTestAsn') }}</xf:title>
+
+<xf:if is="$errors">
+	<div class="blockMessage blockMessage--error">
+		{{ phrase('svSignupAbuseBlocking_an_error_occurred_resolving_the_ip', {'ip': $ip}) }}<br />
+		<xf:foreach loop="$errors" value="$error">
+		<pre class="u-preWrap">{$error}</pre>
+		</xf:foreach>
+	</div>
+</xf:if>
+
+<xf:foreach loop="$checks" key="$type" value="$checksByType">
+	<xf:formrow label="{{ phrase_dynamic('svSignupAbuseBlocking_test_checks.'.$type) }}">
+		<div class="pairWrapper pairWrapper--spaced">
+			<xf:foreach loop="$checksByType" key="$key" value="$phrase">
+				<dl class="pairs pairs--columns">
+					<dt>{$key}</dt>
+					<dd>{$phrase}</dd>
+				</dl>
+			</xf:foreach>
+		</div>
+	</xf:formrow>
+</xf:foreach>
+
+<xf:form action="{{ link('tools/test-asn') }}" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:textboxrow name="ip" type="text" label="{{ phrase('ip_address') }}" value="{$ip}" />
+		</div>
+		<xf:submitrow submit="{{ phrase('run_test') }}" />
+	</div>
+</xf:form>
+
+<xf:foreach loop="$results" key="$type" value="$resultsByType">
+	<xf:formrow label="{{ phrase_dynamic('svSignupAbuseBlocking_test_results.'.$type) }}">
+		<div class="pairWrapper pairWrapper--spaced">
+			<xf:foreach loop="$resultsByType" key="$key" value="$phrase">
+				<dl class="pairs pairs--columns">
+					<dt>{$key}</dt>
+					<dd>
+						<xf:if is="is_array($phrase)">
+							{{ dump($phrase) }}
+						<xf:else />
+							{$phrase}
+						</xf:if>
+					</dd>
+				</dl>
+			</xf:foreach>
+		</div>
+	</xf:formrow>
+</xf:foreach>]]></template>
+  <template type="admin" title="svSignupAbuseBlocking_test_geoip" version_id="1721375746" version_string="1.16.5"><![CDATA[<xf:title>{{ phrase('admin_navigation.svTestGeoIp') }}</xf:title>
+
+<xf:if is="$errors">
+	<div class="blockMessage blockMessage--error">
+		{{ phrase('svSignupAbuseBlocking_an_error_occurred_resolving_the_ip', {'ip': $ip}) }}<br />
+		<xf:foreach loop="$errors" value="$error">
+		<pre class="u-preWrap">{$error}</pre>
+		</xf:foreach>
+	</div>
+</xf:if>
+
+<xf:foreach loop="$checks" key="$type" value="$checksByType">
+	<xf:formrow label="{{ phrase_dynamic('svSignupAbuseBlocking_test_checks.'.$type) }}">
+		<div class="pairWrapper pairWrapper--spaced">
+			<xf:foreach loop="$checksByType" key="$key" value="$phrase">
+				<dl class="pairs pairs--columns">
+					<dt>{$key}</dt>
+					<dd>{$phrase}</dd>
+				</dl>
+			</xf:foreach>
+		</div>
+	</xf:formrow>
+</xf:foreach>
+
+<xf:form action="{{ link('tools/test-geoip') }}" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:textboxrow name="ip" type="text" label="{{ phrase('ip_address') }}" value="{$ip}" />
+		</div>
+		<xf:submitrow submit="{{ phrase('run_test') }}" />
+	</div>
+</xf:form>
+
+<xf:foreach loop="$results" key="$type" value="$resultsByType">
+	<xf:formrow label="{{ phrase_dynamic('svSignupAbuseBlocking_test_results.'.$type) }}">
+		<div class="pairWrapper pairWrapper--spaced">
+			<xf:foreach loop="$resultsByType" key="$key" value="$phrase">
+				<dl class="pairs pairs--columns">
+					<dt>{$key}</dt>
+					<dd>
+						<xf:if is="is_array($phrase)">
+							{{ dump($phrase) }}
+						<xf:else />
+							{$phrase}
+						</xf:if>
+					</dd>
+				</dl>
+			</xf:foreach>
+		</div>
+	</xf:formrow>
+</xf:foreach>]]></template>
+  <template type="admin" title="svSignupAbuseBlocking_user_batch_update_confirm" version_id="1702623682" version_string="1.14.2"><![CDATA[<xf:macro name="ban_user">
+	<xf:radiorow name="actions[ban_expiry_type]"
+				 rowtype="fullWidth"
+				 value="permanent"
+				 label="{{ phrase('ban_length') }}">
+
+		<xf:option label="{{ phrase('permanent') }}" value="permanent" />
+		<xf:option label="{{ phrase('until:') }}" value="temporary">
+			<xf:dateinput name="actions[ban_end_date]" value="" />
+		</xf:option>
+	</xf:radiorow>
+
+	<xf:textboxrow name="actions[ban_reason]"
+				   rowtype="fullWidth"
+				   maxlength="{{ max_length('XF:UserBan', 'user_reason') }}"
+				   label="{{ phrase('reason_for_banning') }}"
+				   explain="{{ phrase('this_will_be_shown_to_user_if_provided') }}" />
+</xf:macro>]]></template>
+  <template type="admin" title="svSignupBlocking_option_list" version_id="1728723583" version_string="1.16.10"><![CDATA[<xf:title>{$group.title}</xf:title>
+<xf:description>{$group.description}</xf:description>
+
+<xf:macro name="option_form_block"
+	arg-group="{$group}"
+	arg-options="{$options}"
+	arg-forceShowAdvanced="{{ false }}" />
+
+<xf:macro name="option_form_block" arg-group="" arg-options="!" arg-containerBeforeHtml="" arg-forceShowAdvanced="{{ true }}">
+
+	<xf:set var="$hundred" value="0" />
+
+	<xf:if is="$options is not empty">
+		<xf:form action="{{ link('anti-spam/options/update') }}" ajax="true" class="block">
+			<div class="block-container">
+				{$containerBeforeHtml|raw}
+				<div class="block-body">
+					<xf:foreach loop="$options" value="$option">
+
+						<xf:if is="$group">
+							<xf:set var="$curHundred" value="{{ floor($option.Relations.{$group.group_id}.display_order / 100) }}" />
+							<xf:if is="{{ $curHundred > $hundred }}">
+								<xf:set var="$hundred" value="{$curHundred}" />
+								<hr class="formRowSep" />
+							</xf:if>
+						</xf:if>
+
+						<xf:macro name="option_macros::option_row" arg-group="{$group}" arg-option="{$option}" arg-forceShowAdvanced="{$forceShowAdvanced}" />
+					</xf:foreach>
+				</div>
+				<xf:submitrow sticky="true" icon="save" />
+			</div>
+
+			<xf:if is="!$forceShowAdvanced">
+				<xf:set var="$advancedCount" value="{{ 0 }}" />
+				<xf:foreach loop="$options" value="$option" if="$option.advanced"><xf:set var="$advancedCount" value="{{ $advancedCount + 1 }}" /></xf:foreach>
+				<xf:if is="$advancedCount > 0">
+					<div class="block-outer block-outer--after acp--simple">
+						<div class="block-outer-middle block-outer-hint">
+							{{ phrase('list_contains_advanced_options_hidden') }}
+							<a tabindex="0" role="button" data-xf-init="admin-toggle-advanced" data-value="1" data-url="{{ link('account/toggle-advanced') }}">{{ phrase('enable_advanced_mode') }}</a>
+						</div>
+					</div>
+				</xf:if>
+			</xf:if>
+		</xf:form>
+	</xf:if>
+</xf:macro>]]></template>
+  <template type="admin" title="svSignupThrottlingMacros" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[<xf:macro name="dashboard">
+	<xf:if is="$hasSvSignupThrottling">
+		<div class="block">
+			<div class="block-container">
+				<h2 class="block-header">
+					<span class="collapseTrigger collapseTrigger--block {{ !is_toggled('collapse_svSignupThrottling') ? 'is-active' : '' }}" data-xf-click="toggle" data-xf-init="toggle-storage" data-storage-key="collapse_svSignupThrottling" data-storage-type="cookie" data-target="#js-svSignupThrottling">
+						{{ phrase('svSignupThrottling_recent_signup_throttling') }}
+					</span>
+				</h2>
+				<xf:set var="$withDomain" value="{{ is_addon_active('XenCentral/MultiSite') }}" />
+				<div class="block-body block-body--collapsible {{ !is_toggled('collapse_svSignupThrottling') ? 'is-active' : '' }}" id="js-svSignupThrottling">
+					<xf:datalist data-xf-init="responsive-data-list">
+						<xf:if is="$svSignupThrottling is not empty">
+							<xf:datarow rowtype="header">
+								<xf:if is="$withDomain">
+									<xf:cell>{{ phrase('svSignupThrottling_domain') }}</xf:cell>
+								</xf:if>
+								<xf:cell>{{ phrase('date') }}</xf:cell>
+								<xf:cell>{{ phrase('expiry') }}</xf:cell>
+								<xf:cell>{{ phrase('svSignupThrottling_type') }}</xf:cell>
+								<xf:cell>{{ phrase('svSignupThrottling_data') }}</xf:cell>
+							</xf:datarow>
+							<xf:foreach loop="$svSignupThrottling" value="$log">
+								<xf:datarow>
+									<xf:if is="$withDomain">
+										<xf:cell>{$log.domain}</xf:cell>
+									</xf:if>
+									<xf:cell><xf:date time="{$log.log_date}"/></xf:cell>
+									<xf:cell><xf:date time="{$log.expiry_date}"/></xf:cell>
+									<xf:cell>{{ phrase_dynamic('svSignupThrottling_type.'. $log.throttling_type) }}</xf:cell>
+									<xf:cell>{{ $log.throttling_value }}</xf:cell>
+								</xf:datarow>
+							</xf:foreach>
+						<xf:else />
+							<xf:datarow>
+								<xf:cell>{{ phrase('svSignupThrottling_no_signup_throttling_applied_recently') }}</xf:cell>
+							</xf:datarow>
+						</xf:if>
+					</xf:datalist>
+				</div>
+			</div>
+		</div>
+	</xf:if>
+</xf:macro>]]></template>
+  <template type="admin" title="sv_multiple_account_list" version_id="1715586734" version_string="1.16.0 Beta 6"><![CDATA[<xf:title>{{ $user ? phrase('sv_multiple_accounts_detection_events:') . ' '. {$user.username} : phrase('sv_multiple_accounts_detection_events') }}</xf:title>
+
+<xf:if is="!$noFilterContainer">
+	<xf:macro name="filter_container" arg-noFilterContainer="{{ $noFilterContainer }}" arg-filterUrl="{$filterUrl}" arg-users="{$users}" arg-emails="{$emails}" arg-linkParams="{$linkParams}" />
+</xf:if>
+
+<xf:if is="$events is not empty">
+	<div class="block">
+		<div class="block-container">
+			<ol class="block-body">
+				<xf:if is="$noFilterContainer">
+					<li class="block-row block-row--separated">
+						<xf:macro name="filter_container" arg-noFilterContainer="{{ $noFilterContainer }}" arg-filterUrl="{$filterUrl}" arg-users="{$users}" arg-emails="{$emails}" arg-linkParams="{$linkParams}" />
+					</li>
+				</xf:if>
+
+				<xf:css src="bb_code.less" />
+				<xf:css src="message.less" />
+
+				<xf:foreach loop="$events" value="$event">
+					<li class="block-row block-row--separated">
+					<article class="message message--simple">
+						<div class="message-inner">
+							<div class="message-cell message-cell--main">
+								<article class="message-body">
+									<div class="bbWrapper">
+										<xf:macro name="public:sv_multiple_account_macros::renderHtml"
+												  arg-event="{$event}"
+												  arg-primaryUser="{$event.User}"
+												  arg-primaryUserId="{$event.triggering_user_id}"
+												  arg-showDate="{true}"
+												  />
+									</div>
+								</article>
+							</div>
+						</div>
+					</article>
+					</li>
+				</xf:foreach>
+			</ol>
+			<div class="block-footer">
+				<span class="block-footer-counter">{{ phrase('matched_x_users', {'count': count($events)}) }}</span>
+			</div>
+		</div>
+
+		<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+			link="{$paginationUrl}" params="{$linkParams}" data="{$user}"
+			wrapperclass="block-outer block-outer--after" />
+	</div>
+<xf:else />
+	<div class="blockMessage">{{ phrase('sv_no_multiple_accounts_logged') }}</div>
+</xf:if>
+
+<xf:macro name="filter_container" arg-noFilterContainer="{{ false }}" arg-filterUrl="!" arg-users="" arg-emails="" arg-linkParams="{{ [] }}">
+	<xf:form action="{$filterUrl}" class="{{ !$noFilterContainer ? 'block' : '' }}">
+		<xf:if is="!$noFilterContainer">
+			<div class="block-container">
+				<div class="block-body block-row">
+		</xf:if>
+				<xf:textbox name="users" value="{$users}" class="input--inline" placeholder="{{ phrase('svSADB_filter_by_users...') }}" data-xf-init="auto-complete" />
+
+				<xf:textbox name="emails" value="{$emails}" class="input--inline" placeholder="{{ phrase('svSADB_filter_by_emails...') }}" />
+
+				<xf:if is="$linkParams.report_data_id">
+					<xf:hiddenval name="report_data_id">{$linkParams.report_data_id}</xf:hiddenval>
+				</xf:if>
+
+				<xf:button type="submit">{{ phrase('filter') }}</xf:button>
+
+		<xf:if is="!$noFilterContainer">
+				</div>
+			</div>
+		</xf:if>
+	</xf:form>
+</xf:macro>]]></template>
+  <template type="admin" title="sv_multiple_account_option_ipcheck" version_id="1000020" version_string="1.0.0"><![CDATA[<xf:checkboxrow
+	hint="{$hintHtml}"
+	explain="{$explainHtml}"
+	html="{$listedHtml}">
+
+	<xf:option name="{$inputName}[checkIp]" selected="$option.option_value.checkIp" label="{$option.title}">
+		<xf:dependent>
+			<dl class="inputLabelPair">
+				<dt><label for="{$inputName}_h">{{ phrase('sv_ip_match_date_range') }}</label></dt>
+				<dd><xf:numberbox name="{$inputName}[minTime]" id="{$inputName}_h" value="{{ $option.option_value.minTime }}" min="0" /></dd>
+			</dl>
+		</xf:dependent>
+	</xf:option>
+</xf:checkboxrow>]]></template>
+  <template type="public" title="report_content_multiple_account" version_id="1715586734" version_string="1.16.0 Beta 6"><![CDATA[<xf:macro name="sv_multiple_account_list_macros::multiple_account_block"
+		  arg-multipleAccountLogs="{$report.MultipleAccountLogs}"
+		  arg-inline="{{ true }}" />]]></template>
+  <template type="public" title="svSADB_approval_item_user_last_activity" version_id="1000007" version_string="1.0.0 Alpha 7"><![CDATA[<xf:if contentcheck="true">
+	<dl class="formRow">
+		<dt><div class="formRow-labelWrapper"><label class="formRow-label">{{ phrase('last_seen') }}</label></div></dt>
+		<dd>
+			<xf:contentcheck><xf:trim><xf:if contentcheck="true">
+					<xf:contentcheck><xf:trim><xf:useractivity user="$user" /></xf:trim></xf:contentcheck>
+				<xf:else is="$xf.visitor.canBypassUserPrivacy()" />
+					<xf:date time="$user.last_activity" />
+				</xf:if></xf:trim></xf:contentcheck>
+		</dd>
+	</dl>
+</xf:if>]]></template>
+  <template type="public" title="svSADB_approval_item_user_registration_logs" version_id="1040500" version_string="1.4.5"><![CDATA[<xf:if is="$user.UserRegistrationLogs is not empty">
+	<xf:datalist data-xf-init="responsive-data-list" class="dataList--separated">
+		<thead>
+		<xf:datarow rowtype="subSection">
+			<xf:cell colspan="4">{{ phrase('svSADB_registration_logs') }}</xf:cell>
+		</xf:datarow>
+		<xf:datarow rowtype="header">
+			<xf:cell>{{ phrase('action') }}</xf:cell>
+			<xf:cell>{{ phrase('date') }}</xf:cell>
+			<xf:cell>{{ phrase('details') }}</xf:cell>
+		</xf:datarow>
+		</thead>
+		<xf:foreach loop="$user.UserRegistrationLogs" value="$entry">
+			<tbody class="dataList-rowGroup">
+				<xf:datarow>
+					<xf:cell>{$entry.status}</xf:cell>
+					<xf:cell><xf:date time="$entry.log_date" /></xf:cell>
+					<xf:cell>
+						<ul class="listPlain">
+							<xf:if is="$entry.username && (!$entry.User || ($entry.User.username !== $entry.username))">
+								<li class="u-muted">{{ phrase('generated_by:') }} {{ $entry.User ? '<a href="' . link('users/edit', $entry.User) . '">' . $entry.User.username . '</a>' : ($entry.username ? $entry.username : phrase('unknown_account')) }}</li>
+							</xf:if>
+							<xf:foreach loop="$entry.details" value="$row">
+								<li>{$row}</li>
+							</xf:foreach>
+						</ul>
+					</xf:cell>
+				</xf:datarow>
+			</tbody>
+		</xf:foreach>
+	</xf:datalist>
+<xf:else />
+	{$originalSpamRecord|raw}
+</xf:if>]]></template>
+  <template type="public" title="svSADB_filtered_multi_account_list" version_id="1715586734" version_string="1.16.0 Beta 6"><![CDATA[<xf:foreach loop="$logs.users" key="$userId" value="$user">
+	<xf:macro name="sv_multiple_account_list_macros::user_record_li" arg-userId="{{ $userId }}" arg-multipleAccountLogs="{{ $logs }}" />
+</xf:foreach>]]></template>
+  <template type="public" title="svSignupAbuseBlocking_approval_queue.less" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[.block
+{
+	&[data-content-type="user"]
+	{
+		.message-cell--extra
+		{
+			.m-fixedWidthFlex(240 + 2 * (@xf-messagePadding));
+		}
+	}
+}]]></template>
+  <template type="public" title="svSignupAbuseBlocking_error_is_banned" version_id="1090400" version_string="1.9.4"><![CDATA[<xf:if is="$svShowLogoutLink">
+	<br/>
+	<a href="{{ link('login/logout', null, {'t': csrf_token()}) }}">{{ phrase('log_out') }}</a>
+</xf:if>]]></template>
+  <template type="public" title="svSignupBlocking_member_view_tab_panes" version_id="1010600" version_string="1.1.6"><![CDATA[<xf:if is="$xf.options.svSignupLogsOnProfileTab && $user.hasOption('svMultiAccountLogEvent') && $xf.visitor.canViewMultiAccountReport() && $user.HasMultiAccounts">
+	<li data-href="{{ link('members/multiple-account-list', $user) }}" role="tabpanel" aria-labelledby="multipleAccounts">
+		<div class="blockMessage">{{ phrase('loading...') }}</div>
+	</li>
+</xf:if>]]></template>
+  <template type="public" title="svSignupBlocking_member_view_tabs" version_id="1010600" version_string="1.1.6"><![CDATA[<xf:if is="$xf.options.svSignupLogsOnProfileTab && $user.hasOption('svMultiAccountLogEvent') && $xf.visitor.canViewMultiAccountReport() && $user.HasMultiAccounts">
+	<a href="{{ link('members/multiple-account-list', $user) }}"
+	   class="tabs-tab"
+	   id="multipleAccounts"
+	   role="tab">{{ phrase('sv_multiple_accounts') }}</a>
+</xf:if>]]></template>
+  <template type="public" title="svSignupBlocking_signup_code" version_id="1720391743" version_string="1.16.0"><![CDATA[<xf:if is="$xf.versionId >= 2030000">
+<xf:js>
+(function(document) {
+    const start = new Date().getTime();
+    let form = document.getElementById('js-signUpButton').closest('form');
+    let el = XF.createElementFromString('<input type="hidden" name="timetaken" value="0" />');
+    form.append(el);
+    XF.on(form, 'submit', () => {
+		document.querySelector('input[name="timetaken"]').value = (new Date().getTime() - start) / 1000;
+	});
+}) (document);
+</xf:js>
+<xf:else />
+<xf:js>
+(function($){
+	$(function() { var start = new Date().getTime();
+		var form = $('#js-signUpButton').closest('form');
+		form.append($("<input>").attr("type", "hidden").attr("name", "timetaken").val(0));
+		form.submit(function() {
+			$("[name=timetaken]").val((new Date().getTime() - start)/1000);
+		});
+	});
+}) (jQuery);
+</xf:js>
+</xf:if>]]></template>
+  <template type="public" title="sv_multiple_account_list" version_id="1739509407" version_string="1.16.10"><![CDATA[<xf:title>{{ $user ? phrase('sv_multiple_accounts:') . ' '. {$user.username} : phrase('sv_multiple_accounts') }}</xf:title>
+
+<xf:if is="!$noFilterContainer">
+	<xf:macro name="filter_container" arg-noFilterContainer="{{ $noFilterContainer }}" arg-filterUrl="{$filterUrl}" arg-users="{$users}" arg-emails="{$emails}" arg-linkParams="{$linkParams}" />
+</xf:if>
+
+<xf:if is="$events is not empty">
+	<div class="block">
+		<div class="block-container">
+			<ol class="block-body">
+				<xf:if is="$noFilterContainer">
+					<li class="block-row block-row--separated">
+						<xf:macro name="filter_container" arg-noFilterContainer="{{ $noFilterContainer }}" arg-filterUrl="{$filterUrl}" arg-users="{$users}" arg-emails="{$emails}" arg-linkParams="{$linkParams}" />
+					</li>
+				</xf:if>
+
+				<xf:css src="bb_code.less" />
+				<xf:css src="message.less" />
+
+				<xf:foreach loop="$events" value="$event">
+					<li class="block-row block-row--separated">
+					<article class="message message--simple">
+						<div class="message-inner">
+							<div class="message-cell message-cell--main">
+								<article class="message-body">
+									<div class="bbWrapper">
+										<xf:macro name="sv_multiple_account_macros::renderHtml"
+												  arg-event="{$event}"
+												  arg-primaryUser="{$event.User}"
+												  arg-primaryUserId="{$event.triggering_user_id}"
+												  arg-showDate="{true}"
+												  />
+									</div>
+								</article>
+							</div>
+						</div>
+					</article>
+					</li>
+				</xf:foreach>
+			</ol>
+			<div class="block-footer">
+				<span class="block-footer-counter">{{ phrase('matched_x_users', {'count': count($events)}) }}</span>
+			</div>
+		</div>
+
+		<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+			link="{$paginationUrl}" params="{$linkParams}" data="{$user}"
+			wrapperclass="block-outer block-outer--after" />
+	</div>
+<xf:else />
+	<div class="blockMessage">{{ phrase('sv_no_multiple_accounts_logged') }}</div>
+</xf:if>
+
+<xf:macro name="filter_container" arg-noFilterContainer="{{ false }}" arg-filterUrl="!" arg-users="" arg-emails="" arg-linkParams="{{ [] }}">
+	<xf:form action="{$filterUrl}" class="{{ !$noFilterContainer ? 'block' : '' }}">
+		<xf:if is="!$noFilterContainer">
+			<div class="block-container">
+				<div class="block-body block-row">
+		</xf:if>
+				<xf:textbox name="users" value="{$users}" class="input--inline" placeholder="{{ phrase('svSADB_filter_by_users...') }}" data-xf-init="auto-complete" />
+
+				<xf:textbox name="emails" value="{$emails}" class="input--inline" placeholder="{{ phrase('svSADB_filter_by_emails...') }}" />
+
+				<xf:if is="$linkParams.report_data_id">
+					<xf:hiddenval name="report_data_id">{$linkParams.report_data_id}</xf:hiddenval>
+				</xf:if>
+
+				<xf:button type="submit">{{ phrase('filter') }}</xf:button>
+
+		<xf:if is="!$noFilterContainer">
+				</div>
+			</div>
+		</xf:if>
+	</xf:form>
+</xf:macro>]]></template>
+  <template type="public" title="sv_multiple_account_list.less" version_id="1711438455" version_string="1.16.0 Beta 2"><![CDATA[.multi-account-list
+{
+	&.dataList
+	{
+		font-size:90%;
+	}
+
+	& .dataList-cell
+	{
+		vertical-align:top;
+	}
+}]]></template>
+  <template type="public" title="sv_multiple_account_list_macros" version_id="1721820637" version_string="1.16.6"><![CDATA[<xf:macro name="multiple_account_block" arg-multipleAccountLogs="!" arg-inline="{{ false }}">
+	<xf:if is="$multipleAccountLogs && $multipleAccountLogs.users">
+		<xf:if is="$inline">
+			<xf:css src="sv_multiple_account_list_macros_inline.less" />
+		</xf:if>
+
+		<div class="block">
+			<div class="block-container">
+				<ul class="block-body multiple-account-list {{ $inline ? 'multiple-account-block-body-inline' : '' }}">
+					<xf:foreach loop="$multipleAccountLogs.users" key="$userId" value="$user">
+						<xf:macro name="user_record_li" arg-userId="{{ $userId }}" arg-inline="{{ $inline }}" arg-multipleAccountLogs="{{ $multipleAccountLogs }}" />
+					</xf:foreach>
+				</ul>
+			</div>
+		</div>
+	</xf:if>
+</xf:macro>
+
+<xf:macro name="user_record_li"
+		  arg-userId="!"
+		  arg-multipleAccountLogs="!"
+		  arg-inline="{{ true }}">
+	<xf:set var="$isMainAccount" value="{{ $multipleAccountLogs.primaryUserId === $userId }}" />
+	<li class="block-row {{ $inline ? 'multiple-account-block-row-inline' : 'block-row--separated' }} {{ $isMainAccount ? '' : 'block-row--alt' }}">
+		<xf:macro name="user_record"
+				  arg-user="{{ $multipleAccountLogs.users.{$userId} }}"
+				  arg-userLogs="{{ $multipleAccountLogs.logsByUser.{$userId} }}"
+				  arg-reportDataId="{{ $multipleAccountLogs.reportDataId }}" />
+	</li>
+</xf:macro>
+
+<xf:macro name="user_record"
+		  arg-user="!"
+		  arg-reportDataId="!"
+		  arg-userLogs="!"
+		  arg-isMainAccount="{{ false }}">
+	<xf:if is="$user">
+	<div class="contentRow">
+		<div class="contentRow-figure">
+			<xf:avatar user="$user" size="s" notooltip="true" />
+		</div>
+
+		<div class="contentRow-main">
+			<xf:if contentcheck="true">
+				<div class="contentRow-extra">
+					<div class="buttonGroup">
+						<xf:contentcheck>
+							<xf:if contentcheck="true">
+								<div class="buttonGroup-buttonWrapper">
+									<xf:button class="button--link menuTrigger" data-xf-click="menu" aria-expanded="false" aria-haspopup="true" title="{{ phrase('more_options')|for_attr }}"><xf:fa icon="fa-cog" /></xf:button>
+									<div class="menu" data-menu="menu" aria-hidden="true">
+										<div class="menu-content">
+											<h4 class="menu-header">{{ phrase('more_options') }}</h4>
+											<!--[XF:SV\SignupAbuseBlocking:log_tools_menu:top]-->
+											<xf:contentcheck>
+												<xf:if is="$user.canChangeUserMultiAccountAlerting()">
+													<a href="{{ link('members/multiaccount-toggle-user-alerting', $user) }}"
+														class="menu-linkRow"
+														data-xf-click="switch"
+														data-sk-enable="{{ phrase('sv_multiple_account_alerting.user_disable') }}"
+														data-sk-disable="{{ phrase('sv_multiple_account_alerting.user_enable') }}"
+														data-menu-closer="true">
+														{{ $user.Profile.multiple_account_detection_alertable ? phrase('sv_multiple_account_alerting.user_disable') : phrase('sv_multiple_account_alerting.user_enable') }}
+													</a>
+												</xf:if>
+
+												<xf:if is="$xf.visitor.canCleanSpam() && $user.isPossibleSpammer()">
+													<a href="{{ link('spam-cleaner', $user, {'no_redirect': 1}) }}" class="menu-linkRow" data-xf-click="overlay">{{ phrase('spam') }}</a>
+												</xf:if>
+
+												<xf:if is="$xf.visitor.canStartConversationWith($user)">
+													<a href="{{ link('conversations/add', null, {'to': $user.username, 'title': $xf.options.svSockSignupCheckDefaultConvTitle, 'message': $xf.options.svSockSignupCheckDefaultConvMsg}) }}" class="menu-linkRow" data-xf-click="overlay">{{ phrase('svSignupBlocking_start_sock_conversation') }}</a>
+												</xf:if>
+
+												<xf:if is="$user.user_id && $user.canWarn()">
+													<a href="{{ link('members/warn', $user) }}" class="menu-linkRow">{{ phrase('warn') }}</a>
+												</xf:if>
+
+												<xf:if is="$user.user_id && $xf.visitor.canViewIps()">
+													<a href="{{ link('members/user-ips', $user) }}" class="menu-linkRow" data-xf-click="overlay">{{ phrase('ip_addresses') }}</a>
+													<a href="{{ link('members/shared-ips', $user) }}" class="menu-linkRow" data-xf-click="overlay">{{ phrase('shared_ips') }}</a>
+												</xf:if>
+
+												<xf:if is="$user.canBan()">
+													<a href="{{ link('members/ban', $user) }}" class="menu-linkRow" data-xf-click="overlay">
+														<xf:if is="$user.is_banned">
+															{{ phrase('edit_ban') }}
+														<xf:else />
+															{{ phrase('ban_member') }}
+														</xf:if>
+													</a>
+												</xf:if>
+
+												<xf:if is="$user.user_id && $user.canEdit()">
+													<a href="{{ link('members/edit', $user) }}" class="menu-linkRow">{{ phrase('edit') }}</a>
+												</xf:if>
+											</xf:contentcheck>
+											<!--[XF:SignupAbuseBlocking:log_tools_menu:bottom]-->
+										</div>
+									</div>
+								</div>
+							</xf:if>
+						</xf:contentcheck>
+					</div>
+				</div>
+			</xf:if>
+
+			<h3 class="contentRow-header"><xf:username user="$user" rich="true" notooltip="true" /></h3>
+
+			<xf:userblurb user="$user" class="contentRow-lesser" />
+
+			<div class="contentRow-minor">
+				<xf:if is="$isMainAccount">
+					<span class="label label--primary">{{ phrase('sv_multiple_account_main_account') }}</span>
+				</xf:if>
+
+				<xf:if is="count($userLogs.Event)">
+					<span class="label label--gray">
+						<a href="{{ link('members/multiple-account-list', $user, {'report_data_id': $reportDataId }) }}" data-xf-click="overlay" class="u-concealed">
+							{{ phrase('sv_multiple_account_event_count', {'count': count($userLogs.Event)}) }}
+						</a>
+					</span>
+				</xf:if>
+
+				<xf:if is="!$user.Profile.multiple_account_detection_alertable">
+					<span class="label label--gray">{{ phrase('sv_multiple_account_not_alerting') }}</span>
+				</xf:if>
+
+				<ul class="listInline listInline--bullet">
+					<!--[SV\SignupAbuseBlocking:details:start]-->
+					<li>
+						<dl class="pairs pairs--inline">
+							<dt>{{ phrase('messages') }}</dt>
+							<dd>{$user.message_count|number}</dd>
+						</dl>
+					</li>
+
+					<!--[SV\SignupAbuseBlocking:details:after_messages]-->
+
+					<xf:if is="{{$xf.addOns.{{'SV/ContentRatings'}} }}">
+						<xf:include template="sv_contentratings_member_list_macros_item" />
+					<xf:else />
+						<li>
+							<dl class="pairs pairs--justified">
+								<dt>{{ phrase('reaction_score') }}</dt>
+								<dd>{$user.reaction_score|number}</dd>
+							</dl>
+						</li>
+					</xf:if>
+
+					<!--[SV\SignupAbuseBlocking:stats:after_likes]-->
+					<xf:if is="$xf.options.enableTrophies">
+						<li>
+							<dl class="pairs pairs--inline">
+								<dt>{{ phrase('points') }}</dt>
+								<dd>{$user.trophy_points|number}</dd>
+							</dl>
+						</li>
+					</xf:if>
+				</ul>
+			</div>
+		</div>
+	</div>
+	</xf:if>
+</xf:macro>
+
+<xf:macro name="display"
+		  arg-hit="!"
+		  arg-withFilter="{{ false }}"
+		  arg-showOtherUsers="!"
+		  arg-userEventsRoute="anti-spam/multi-accounts/events"
+		  >
+    <style>
+    .click-to-copy {
+        cursor: copy;
+    }
+    </style>
+	<xf:datarow>
+		<xf:cell class="">
+			<xf:macro name="user_state" arg-user="{$hit.User}" />
+		</xf:cell>
+		<xf:cell class="dataList-cell--min">
+			<xf:if is="$hit.User.svLastLogin">
+				<xf:set var="$ip" value="{$hit.User.svLastLogin.ip_address|ip}" data-xf-click="sv-click-to-copy" />
+				<div class="ip click-to-copy"
+                     data-xf-init="copy-to-clipboard"
+                     data-copy-text="{$ip|for_attr}">{$hit.User.svLastLogin.ip_address_display}</div>
+				<xf:if is="$xf.visitor.hasAdminPermission('log')">
+					<a href="{{ link_type('admin','logs/sv-user-logins', null, {'ip_address': $ip} ) }}" target="_blank">{{ phrase('svSignupAbuseBlocking_user_logins') }}</a>
+				</xf:if>
+			<xf:else />
+				{{ phrase('n_a') }}
+			</xf:if>
+		</xf:cell>
+		<xf:cell class="">
+			<div><span>{{ phrase('last_seen:') }}</span> <xf:date time="$hit.last_seen_date" /></div>
+			<div><span>{{ phrase('first_seen:') }}</span> <xf:date time="$hit.first_seen_date" /></div>
+		</xf:cell>
+		<xf:if is="$showOtherUsers">
+			<xf:cell class="">
+				<xf:foreach loop="$hit.OtherUsers" value="$otherUser">
+					<div class="multi-account-match">
+						<xf:macro name="user_state" arg-user="{$otherUser.User}" />
+						- <span>(<a href="{{ link_type('admin', 'anti-spam/multi-accounts/events', null, {'user_id': $otherUser.user_id}) }}"
+							   target="_blank">{{ 
+						phrase('svSignupAbuseBlocking_multi_account_log_events')
+						}}</a>)</span>
+					</div>
+				</xf:foreach>
+			</xf:cell>
+		</xf:if>
+	</xf:datarow>
+</xf:macro>
+
+<xf:macro name="user_state" arg-user="!">
+	<xf:username user="$user" />	
+	<xf:set var="$html">		
+		<ul class="listInline listInline--selfInline listInline--bullet">
+			<xf:if is="$user.is_banned">
+				<xf:set var="$hasState" value="{{ true }}" />
+				<li>{{ phrase('banned') }}</li>
+			</xf:if>
+			<xf:if is="$user.user_state !== 'valid'">
+				<xf:set var="$hasState" value="{{ true }}" />
+				<li>{{ $user.getUserStatePhrase() }}</li>
+			</xf:if>
+			<xf:if is="$xf.options.svKnownSockUserGroupId && $user.isMemberOf($xf.options.svKnownSockUserGroupId)">
+				<xf:set var="$hasState" value="{{ true }}" />
+				<li>{{ phrase('svSignupAbuseBlocking_multi_account_group_member') }}</li>
+			</xf:if>
+		</ul>
+	</xf:set>
+	<span class="u-muted">		
+		<xf:if is="$hasState"> - {$html|raw}</xf:if>
+		<span class="post-count"> - <span>{{ phrase('posts:') }} {$user.message_count|number}</span></span>
+	</span>
+</xf:macro>
+
+<xf:macro name="ticket" arg-ticket="!">
+	<xf:if is="$ticket.user_id && $ticket.MultiAccountUser !== null && $ticket.MultiAccountUser.OtherUsers is not empty">
+		<div class="block">
+			<div class="block-container">
+				<h3 class="block-header">{{ phrase('sv_multiple_accounts') }} - {{ $ticket.username }}</h3>
+				<xf:css src="sv_multiple_account_list.less" />
+				<xf:datalist data-xf-init="responsive-data-list"  class="multi-account-list">
+					<xf:datarow rowtype="header">
+						<xf:cell>{{ phrase('user') }}</xf:cell>
+						<xf:cell class="dataList-cell--min">{{ phrase('svSignupAbuseBlocking_last_login') }}</xf:cell>
+						<xf:cell>{{ phrase('svSignupAbuseBlocking_multi_account_seen_header') }}</xf:cell>
+					</xf:datarow>
+					<xf:foreach loop="$ticket.MultiAccountUser.OtherUsers" value="$otherUser">
+						<xf:macro name="display"
+								  arg-hit="{$otherUser}"
+								  arg-withFilter="{{ false }}"
+								  arg-showOtherUsers="{{ false }}"
+								  arg-userEventsRoute="members/multiple-account-list"
+								  />
+					</xf:foreach>
+				</xf:datalist>
+			</div>
+		</div>
+	</xf:if>
+</xf:macro>]]></template>
+  <template type="public" title="sv_multiple_account_list_macros_inline.less" version_id="1000014" version_string="1.0.0 Alpha 14"><![CDATA[.multiple-account-block-body-inline
+{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: stretch;
+}
+
+.multiple-account-block-row-inline
+{
+	border-right: @xf-borderSize solid @xf-borderColor;
+	border-bottom: @xf-borderSize solid @xf-borderColor;
+	display: inline-block;
+	width: 33.3%;
+	min-width: 320px;
+	margin: 0;
+	.m-clearFix();
+	
+	&.block-row--alt
+	{
+		.xf-contentAltBase();
+	}
+
+	&.block-row--minor
+	{
+		font-size: @xf-fontSizeSmall;
+	}
+
+	&.block-row--separated
+	{
+		padding-top: (@xf-blockPaddingV) * 2;
+		padding-bottom: (@xf-blockPaddingV) * 2;
+
+		+ .block-row
+		{
+			border-top: @xf-borderSize solid @xf-borderColorLight;
+		}
+	}
+}
+
+.multiple-account-block-filter
+{
+	display: inline-block;
+	vertical-align: top;
+}]]></template>
+  <template type="public" title="sv_multiple_account_log_confirm" version_id="1000014" version_string="1.0.0 Alpha 14"><![CDATA[<xf:title>{{ $is_alertable ? phrase('sv_multiple_account_alerting.log_disable') : phrase('sv_multiple_account_alerting.log_enable') }}: <a href="{{ link('users/edit', $user) }}">{$user.username}</a></xf:title>
+
+<xf:form action="{{ link('members/multi-account-toggle-log-alerting', $user, { 'log_id': $log.log_id }) }}" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:inforow rowtype="confirm">
+				<xf:if is="$is_alertable">
+					{{ phrase('sv_multiple_account_alerting.log_disable:') }}
+					<strong><a href="{{ link('members', $user) }}">{$user.username}</a></strong>
+				<xf:else />
+					{{ phrase('sv_multiple_account_alerting.log_enable:') }}
+					<strong><a href="{{ link('members', $user) }}">{$user.username}</a></strong>
+				</xf:if>
+			</xf:inforow>
+		</div>
+		<xf:submitrow icon="confirm" rowtype="simple" />
+	</div>
+</xf:form>]]></template>
+  <template type="public" title="sv_multiple_account_macros" version_id="1040200" version_string="1.4.2"><![CDATA[<xf:macro name="renderSimpleHtml"
+		  arg-event="!"
+		  arg-primaryUser="!"
+		  arg-primaryUserId="!"
+		  arg-showDetection="{{ $xf.options.svSockSignupCheckShowMethods }}"
+		  arg-showDate="{{ false }}"
+		  >
+	<xf:macro name="renderHtml"
+			  arg-event="{$event}"
+			  arg-primaryUser="{$primaryUser}"
+			  arg-primaryUserId="{$primaryUserId}"
+			  arg-showDetection="{$showDetection}"
+			  arg-showDate="{$showDate}"
+			  />
+</xf:macro>
+
+<xf:macro name="renderHtml"
+		  arg-event="!"
+		  arg-primaryUser="!"
+		  arg-primaryUserId="!"
+		  arg-showDetection="{{ $xf.options.svSockSignupCheckShowMethods }}"
+		  arg-showDate="{{ false }}"
+		  >
+	<xf:set var="$userState"> (<xf:macro name="userStatePhrase" arg-user="{$primaryUser}" />)</xf:set>
+	{{ phrase('sv_sock_report_message', {
+		'userState' : $primaryUser.user_state !== 'valid' ? $userState : '',
+		'action' : $event.DetectionAction,
+		'primaryUser' : username_link($primaryUser, false, {'defaultname': $primaryUser.username})
+	}) }}
+	<ul>
+	<xf:foreach loop="$event.Logs" value="$log">
+		<xf:if is="{{ $primaryUserId !== $log.user_id }}">
+			<li>
+				{{ username_link($log.User, false, {'defaultname': $log.username}) }}
+				<xf:if is="$log.User.user_state !== 'valid'">
+					(<xf:macro name="userStatePhrase" arg-user="{$log.User}" />)
+				</xf:if>
+				<xf:if is="$log.canChangeAlerting()">
+					<xf:button href="{{ link('members/multiaccount-toggle-log-alerting', $log.User, {'log_id': $log.log_id}) }}"
+						class="button--link"
+						data-xf-click="switch"
+						data-sk-enable="{{ phrase('sv_multiple_account_alerting.log_disable') }}"
+						data-sk-disable="{{ phrase('sv_multiple_account_alerting.log_enable') }}"
+						>
+						{{ $log.is_alertable ? phrase('sv_multiple_account_alerting.log_disable') : phrase('sv_multiple_account_alerting.log_enable') }}
+					</xf:button>
+				</xf:if>
+				<xf:if is="$showDetection && $log.DetectionMethods">
+					<br/><ul class="listInline listInline--bullet">
+						<li>{{ phrase('sv_sock_report_user_detection:') }}</li>
+						<xf:foreach loop="$log.DetectionMethods" value="$phrase">
+							<li>{{ $phrase }}</li>
+						</xf:foreach>
+					</ul>
+				</xf:if>
+			</li>
+		</xf:if>
+	</xf:foreach>
+	</ul>
+	<xf:if is="$showDate && $event.detection_date">
+		{{ phrase('svSignupBlocking_detection_date:') }} <xf:date time="$event.detection_date" />			
+	</xf:if>
+</xf:macro>
+
+<xf:macro name="userStatePhrase" arg-user="!"><xf:trim>
+	<xf:set var="$userState" value="{{ $user.user_state }}" />
+		
+	<xf:if is="$userState === 'valid'">{{ phrase('valid') }}
+	<xf:elseif is="$userState === 'email_confirm'" />{{ phrase('awaiting_email_confirmation') }}
+	<xf:elseif is="$userState === 'email_confirm_edit'" />{{ phrase('awaiting_email_confirmation_from_edit') }}
+	<xf:elseif is="$userState === 'email_bounce'" />{{ phrase('email_invalid_bounced') }}
+	<xf:elseif is="$userState === 'moderated'" />{{ phrase('awaiting_approval') }}
+	<xf:elseif is="$userState === 'rejected'" />{{ phrase('rejected') }}
+	<xf:elseif is="$userState === 'disabled'" />{{ phrase('disabled') }}
+	</xf:if>
+</xf:trim></xf:macro>
+
+<xf:macro name="renderBbCode"
+		  arg-event="!"
+		  arg-primaryUser="!"
+		  arg-primaryUserId="!"
+		  arg-showDetection="{{ $xf.options.svSockSignupCheckShowMethods }}"
+		  arg-showDate="{{ false }}"
+		  >
+<xf:set var="$userState"> (<xf:macro name="userStatePhrase" arg-user="{$primaryUser}" />)</xf:set>
+<xf:set var="$prefix" value="{{ $xf.options.userMentionKeepAt ? '@' : '' }}" />
+[spoiler={{ phrase('raw') }}]
+{{ phrase('sv_sock_report_message', {
+	'userState' : $primaryUser.user_state !== 'valid' ? $userState : '',
+	'action' : $event.DetectionAction,
+	'primaryUser' : '[user=' . $primaryUser.user_id . ']' . $prefix . $primaryUser.username . '[/user]'
+})|raw }}
+[list]<xf:trim>
+	<xf:foreach loop="$event.Logs" value="$log">
+		<xf:if is="{{ $primaryUserId !== $log.user_id }}">
+[*][user={$log.user_id}]{$prefix}{$log.username|raw}[/user]<xf:if is="$log.User.user_state !== 'valid'"> (<xf:macro name="userStatePhrase" arg-user="{$log.User}" />)</xf:if>
+<xf:trim>
+		<xf:if is="$showDetection && $log.DetectionMethods">
+[list]
+[*]{{ phrase('sv_sock_report_user_detection:')|raw }}
+					<xf:foreach loop="$log.DetectionMethods" value="$phrase">
+[*]{{ $phrase|raw }}
+					</xf:foreach>
+[/list]
+		</xf:if>
+</xf:trim></xf:if>
+	</xf:foreach>
+<xf:if is="$showDate && $event.detection_date">
+{{ phrase('svSignupBlocking_detection_date:') . ' '. date($event.detection_date)}}
+</xf:if>
+</xf:trim>[/list]
+[/spoiler]
+</xf:macro>]]></template>
+  <template type="public" title="sv_multiple_account_user_confirm" version_id="1000014" version_string="1.0.0 Alpha 14"><![CDATA[<xf:title>{{ $is_alertable ? phrase('sv_multiple_account_alerting.user_disable') : phrase('sv_multiple_account_alerting.user_enable') }}: <a href="{{ link('users/edit', $user) }}">{$user.username}</a></xf:title>
+
+<xf:form action="{{ link('members/multi-account-toggle-user-alerting', $user) }}" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:inforow rowtype="confirm">
+				<xf:if is="$is_alertable">
+					{{ phrase('sv_multiple_account_alerting.user_disable:') }}
+					<strong><a href="{{ link('members', $user) }}">{$user.username}</a></strong>
+				<xf:else />
+					{{ phrase('sv_multiple_account_alerting.user_enable:') }}
+					<strong><a href="{{ link('members', $user) }}">{$user.username}</a></strong>
+				</xf:if>
+			</xf:inforow>
+		</div>
+		<xf:submitrow icon="confirm" rowtype="simple" />
+	</div>
+</xf:form>]]></template>
+</templates>
+ 		 		 	   	 	  		  				  	 	 		 	 	   	    	 	  	 	  	 	 	 			    	 				 		    			 	 	  		  		  	 	 			 	   		  	 	 	  	 	   	 	 	 

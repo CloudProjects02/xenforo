@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="add_token_package" version_id="1000020" version_string="1.0.2"><![CDATA[Add Token Package]]></phrase>
+  <phrase title="admin_navigation.jace_token_downloads_list" version_id="1000020" version_string="1.0.2"><![CDATA[Token Packages]]></phrase>
+  <phrase title="edit_token_package" version_id="1000020" version_string="1.0.2"><![CDATA[Edit Token Package]]></phrase>
+  <phrase title="jace_token_downloads_confirm_download_with_token" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Confirm Download with Token]]></phrase>
+  <phrase title="jace_token_downloads_confirm_use_token" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Confirm Use Token]]></phrase>
+  <phrase title="jace_token_downloads_download_history" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Download History]]></phrase>
+  <phrase title="jace_token_downloads_download_limit" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Download Limit]]></phrase>
+  <phrase title="jace_token_downloads_download_now" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Download Now]]></phrase>
+  <phrase title="jace_token_downloads_downloads_remaining" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Downloads Remaining]]></phrase>
+  <phrase title="jace_token_downloads_no_active_packages" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[There are no active token packages available.]]></phrase>
+  <phrase title="jace_token_downloads_no_download_history" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[You haven't used any tokens for downloads yet.]]></phrase>
+  <phrase title="jace_token_downloads_no_packages" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[No token packages have been configured.]]></phrase>
+  <phrase title="jace_token_downloads_no_purchases" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[You haven't purchased any token packages yet.]]></phrase>
+  <phrase title="jace_token_downloads_package_cost" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Package Cost]]></phrase>
+  <phrase title="jace_token_downloads_package_not_available_for_purchase" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[This token package is not available for purchase.]]></phrase>
+  <phrase title="jace_token_downloads_packages" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Token Packages]]></phrase>
+  <phrase title="jace_token_downloads_payment_profile" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Payment Profile]]></phrase>
+  <phrase title="jace_token_downloads_purchase" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Purchase]]></phrase>
+  <phrase title="jace_token_downloads_purchase_date" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Purchase Date]]></phrase>
+  <phrase title="jace_token_downloads_purchase_tokens" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Purchase Tokens]]></phrase>
+  <phrase title="jace_token_downloads_purchased_packages" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Purchased Packages]]></phrase>
+  <phrase title="jace_token_downloads_requested_package_not_found" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[The requested token package could not be found.]]></phrase>
+  <phrase title="jace_token_downloads_resource" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Resource]]></phrase>
+  <phrase title="jace_token_downloads_resource_version" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Version]]></phrase>
+  <phrase title="jace_token_downloads_this_download_will_use_token" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[This download will use 1 token from your account. You currently have {totalTokens} token(s) remaining.]]></phrase>
+  <phrase title="jace_token_downloads_token_package" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Token Package]]></phrase>
+  <phrase title="jace_token_downloads_token_packages" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Token Packages]]></phrase>
+  <phrase title="jace_token_downloads_tokens" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Download Tokens]]></phrase>
+  <phrase title="jace_token_downloads_tokens_remaining" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Tokens Remaining]]></phrase>
+  <phrase title="jace_token_downloads_total_tokens" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Total Tokens]]></phrase>
+  <phrase title="jace_token_downloads_used_on" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Used On]]></phrase>
+  <phrase title="jace_token_downloads_view_history" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[View History]]></phrase>
+  <phrase title="jace_token_downloads_you_have_x_tokens_remaining" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[You have {count} token(s) remaining.]]></phrase>
+  <phrase title="number_of_tokens_included_in_this_package" version_id="1000020" version_string="1.0.2"><![CDATA[Number of Tokens included in this package]]></phrase>
+  <phrase title="permission.tokenDownloads" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Manage token downloads]]></phrase>
+</phrases>

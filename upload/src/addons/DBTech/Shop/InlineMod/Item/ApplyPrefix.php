@@ -2,27 +2,26 @@
 
 namespace DBTech\Shop\InlineMod\Item;
 
-use DBTech\Shop\Entity\Item;
-use DBTech\Shop\Finder\ItemPrefixFinder;
-use DBTech\Shop\Service\Item\EditService;
 use XF\Http\Request;
 use XF\InlineMod\AbstractAction;
-use XF\Mvc\Controller;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
-use XF\Mvc\Reply\AbstractReply;
-use XF\Phrase;
 
+/**
+ * Class ApplyPrefix
+ *
+ * @package DBTech\Shop\InlineMod\Item
+ */
 class ApplyPrefix extends AbstractAction
 {
 	/**
-	 * @return Phrase
+	 * @return \XF\Phrase
 	 */
-	public function getTitle(): Phrase
+	public function getTitle(): \XF\Phrase
 	{
 		return \XF::phrase('apply_prefix...');
 	}
-
+	
 	/**
 	 * @param Entity $entity
 	 * @param array $options
@@ -32,25 +31,26 @@ class ApplyPrefix extends AbstractAction
 	 */
 	protected function canApplyToEntity(Entity $entity, array $options, &$error = null): bool
 	{
-		/** @var Item $entity */
+		/** @var \DBTech\Shop\Entity\Item $entity */
 		return $entity->canEdit($error);
 	}
-
+	
 	/**
 	 * @param Entity $entity
 	 * @param array $options
 	 *
 	 * @throws \LogicException
 	 */
-	protected function applyToEntity(Entity $entity, array $options): void
+	protected function applyToEntity(Entity $entity, array $options)
 	{
-		/** @var Item $entity */
+		/** @var \DBTech\Shop\Entity\Item $entity */
 		if (!$entity->Category->isPrefixValid($options['prefix_id']))
 		{
 			return;
 		}
 
-		$editor = \XF::app()->service(EditService::class, $entity);
+		/** @var \DBTech\Shop\Service\Item\Edit $editor */
+		$editor = $this->app()->service('DBTech\Shop:Item\Edit', $entity);
 		$editor->setPerformValidations(false);
 		$editor->setPrefix($options['prefix_id']);
 		if ($editor->validate($errors))
@@ -58,24 +58,24 @@ class ApplyPrefix extends AbstractAction
 			$editor->save();
 		}
 	}
-
+	
 	/**
 	 * @return array
 	 */
 	public function getBaseOptions(): array
 	{
 		return [
-			'prefix_id' => null,
+			'prefix_id' => null
 		];
 	}
-
+	
 	/**
 	 * @param AbstractCollection $entities
-	 * @param Controller $controller
+	 * @param \XF\Mvc\Controller $controller
 	 *
-	 * @return AbstractReply
+	 * @return \XF\Mvc\Reply\Error|\XF\Mvc\Reply\View
 	 */
-	public function renderForm(AbstractCollection $entities, Controller $controller): AbstractReply
+	public function renderForm(AbstractCollection $entities, \XF\Mvc\Controller $controller): \XF\Mvc\Reply\AbstractReply
 	{
 		$categories = $entities->pluckNamed('Category', 'category_id');
 		$prefixIds = [];
@@ -85,7 +85,7 @@ class ApplyPrefix extends AbstractAction
 			$prefixIds = array_merge($prefixIds, array_keys($category->prefix_cache));
 		}
 
-		$prefixes = \XF::app()->finder(ItemPrefixFinder::class)
+		$prefixes = $this->app()->finder('DBTech\Shop:ItemPrefix')
 			->where('prefix_id', array_unique($prefixIds))
 			->order('materialized_order')
 			->fetch();
@@ -99,7 +99,7 @@ class ApplyPrefix extends AbstractAction
 		$prefixCounts = [0 => 0];
 		foreach ($entities AS $item)
 		{
-			/** @var Item $item */
+			/** @var \DBTech\Shop\Entity\Item $item */
 			$prefixId = $item->prefix_id;
 
 			if (!isset($prefixCounts[$prefixId]))
@@ -122,11 +122,11 @@ class ApplyPrefix extends AbstractAction
 			'prefixes' => $prefixes->groupBy('prefix_group_id'),
 			'categoryCount' => count($categories->keys()),
 			'selectedPrefix' => $selectedPrefix,
-			'total' => count($entities),
+			'total' => count($entities)
 		];
 		return $controller->view('DBTech\Shop:Public:InlineMod\Item\ApplyPrefix', 'inline_mod_dbtech_shop_item_apply_prefix', $viewParams);
 	}
-
+	
 	/**
 	 * @param AbstractCollection $entities
 	 * @param Request $request
@@ -136,7 +136,7 @@ class ApplyPrefix extends AbstractAction
 	public function getFormOptions(AbstractCollection $entities, Request $request): array
 	{
 		return [
-			'prefix_id' => $request->filter('prefix_id', 'uint'),
+			'prefix_id' => $request->filter('prefix_id', 'uint')
 		];
 	}
 }

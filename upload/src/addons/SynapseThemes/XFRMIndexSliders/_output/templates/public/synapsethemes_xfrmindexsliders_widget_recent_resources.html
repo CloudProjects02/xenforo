@@ -1,0 +1,127 @@
+<link rel="stylesheet" href="https://unpkg.com/swiper@11/swiper-bundle.min.css" />
+<script src="https://unpkg.com/swiper@11/swiper-bundle.min.js"></script>
+<xf:js>
+    // Initialize Swiper for Recent Resources
+    const recentSwiper = new Swiper('#recentSlider', {
+        slidesPerView: 'auto',
+        spaceBetween: 24,
+        navigation: {
+            nextEl: '#recentSlider .swiper-button-next',
+            prevEl: '#recentSlider .swiper-button-prev',
+        },
+        breakpoints: {
+            640: {
+                slidesPerView: 2,
+            },
+            768: {
+                slidesPerView: 3,
+            },
+            1024: {
+                slidesPerView: 3,
+            }
+        }
+    });
+</xf:js>
+<xf:css src="synapsethemes_resource_card.css" />
+<!-- Recent Uploads Slider -->
+
+<section class="xfdevs__resource__slider_section" data-xf-init="st-resource-slider">
+    <h2 class="xfdevs__resource__section_title">Recent Uploads</h2>
+    <div class="xfdevs__resource__slider swiper" id="recentSlider">
+        <div class="swiper-wrapper">
+            <xf:foreach loop="$resources" value="$resource">
+            <div class="swiper-slide">
+                <div class="xfdevs__resource__card">
+                    <div class="xfdevs__resource__card_padding">
+                        <div class="xfdevs__resource__image_container">
+                            <div class="xfdevs__resource__image_wrapper">
+                                <xf:if is="$resource.icon_date">
+                                    <img src="{{ $resource.getIconUrl('xl') }}" 
+                                         alt="{{ $resource.title }}" 
+                                         class="xfdevs__resource__image">
+                                <xf:else />
+                                    <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?w=300&h=200&fit=crop&crop=center" 
+                                         alt="{{ $resource.title }}" 
+                                         class="xfdevs__resource__image">
+                                </xf:if>
+                            </div>
+
+                            <!-- Overlay content -->
+                            <div class="xfdevs__resource__overlay">
+                                <div class="xfdevs__resource__location">
+                                    <div class="xfdevs__resource__category">
+                                        <svg class="xfdevs__resource__location_icon" width="20" height="20" viewBox="0 0 640 512"><path fill="currentColor" d="M425.7 256c-16.9 0-32.8-9-41.4-23.4L320 126l-64.2 106.6c-8.7 14.5-24.6 23.5-41.5 23.5c-4.5 0-9-.6-13.3-1.9L64 215v178c0 14.7 10 27.5 24.2 31l216.2 54.1c10.2 2.5 20.9 2.5 31 0L551.8 424c14.2-3.6 24.2-16.4 24.2-31V215l-137 39.1c-4.3 1.3-8.8 1.9-13.3 1.9m212.6-112.2L586.8 41c-3.1-6.2-9.8-9.8-16.7-8.9L320 64l91.7 152.1c3.8 6.3 11.4 9.3 18.5 7.3l197.9-56.5c9.9-2.9 14.7-13.9 10.2-23.1M53.2 41L1.7 143.8c-4.6 9.2.3 20.2 10.1 23l197.9 56.5c7.1 2 14.7-1 18.5-7.3L320 64L69.8 32.1c-6.9-.8-13.5 2.7-16.6 8.9"/></svg>
+                                        <span>{{ $resource.Category.title }}</span>	
+                                    </div>
+
+                                    <!-- Download button -->
+                                    <div class="xfdevs__resource__download_container">
+                                        <a href="{{ link('resources', $resource) }}" class="xfdevs__resource__download_btn">
+                                            Download
+                                        </a>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom section with details -->
+                    <div class="xfdevs__resource__details">
+                        <div class="xfdevs__resource__header">
+                            <div class="xfdevs__resource__info">
+                                <h3 class="xfdevs__resource__difficulty">{{ $resource.title }}</h3>
+                                <p class="xfdevs__resource__creator">
+                                    <xf:if is="$resource.last_update > $resource.resource_date">
+                                        Updated by <xf:username user="$resource.User" />
+                                    <xf:else />
+                                        Uploaded by <xf:username user="$resource.User" />
+                                    </xf:if>
+                                </p>
+                            </div>
+                            <div class="xfdevs__resource__chart">
+                                <div class="xfdevs__resource__rating">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="m12 17.275l-4.15 2.5q-.275.175-.575.15t-.525-.2t-.35-.437t-.05-.588l1.1-4.725L3.775 10.8q-.25-.225-.312-.513t.037-.562t.3-.45t.55-.225l4.85-.425l1.875-4.45q.125-.3.388-.45t.537-.15t.537.15t.388.45l1.875 4.45l4.85.425q.35.05.55.225t.3.45t.038.563t-.313.512l-3.675 3.175l1.1 4.725q.075.325-.05.588t-.35.437t-.525.2t-.575-.15z"/></svg>
+                                    <span>{{ number($resource.rating_avg, 1) }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="xfdevs__resource__stats">
+                            <div class="xfdevs__resource__stat">
+                                <span class="xfdevs__resource__stat_value">{{ $resource.download_count|number_short }}</span>
+                                <span class="xfdevs__resource__stat_label">Downloads</span>
+                            </div>
+                            <div class="xfdevs__resource__stat">
+                                <span class="xfdevs__resource__stat_value">{$resource.CurrentVersion.version_string}</span>
+                                <span class="xfdevs__resource__stat_label">Version</span>
+                            </div>
+                            <div class="xfdevs__resource__stat">
+                                <span class="xfdevs__resource__stat_value">
+                                    <xf:if is="$resource.last_update > $resource.resource_date">
+                                        <xf:date time="$resource.last_update" />
+                                    <xf:else />
+                                        <xf:date time="$resource.resource_date" />
+                                    </xf:if>
+                                </span>
+                                <span class="xfdevs__resource__stat_label">
+                                    <xf:if is="$resource.last_update > $resource.resource_date">
+                                        Updated
+                                    <xf:else />
+                                        Uploaded
+                                    </xf:if>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </xf:foreach>
+
+
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+</section>

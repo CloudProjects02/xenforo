@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="public" title="synapseYearsOfService.less" version_id="1000014" version_string="1.0.4"><![CDATA[/* Service Badge Component */
+.service-badge {
+    border-radius: 8px;
+    overflow: hidden;
+    background-image: url('https://i.imgur.com/QLwLv8p.png'), url('https://i.imgur.com/Av9bFAk.png');
+    background-size: cover, cover;
+    background-position: center, center;
+    background-blend-mode: normal, multiply;
+    transform: scaleX(-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .5rem;
+    position: relative;
+    min-height: 48px;
+    transition: filter 0.2s ease;
+}
+
+.service-badge:hover {
+    filter: brightness(1.5);
+}
+
+/* Background with hue rotation */
+.service-badge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('https://i.imgur.com/QLwLv8p.png'), url('https://i.imgur.com/Av9bFAk.png');
+    background-size: cover, cover;
+    background-position: center, center;
+    background-blend-mode: normal, multiply;
+    z-index: 0;
+}
+
+/* Dynamic hue rotation based on years of service */
+.service-badge[data-years="1"]::before {
+    filter: hue-rotate(30deg);
+}
+
+.service-badge[data-years="2"]::before {
+    filter: hue-rotate(60deg);
+}
+
+.service-badge[data-years="3"]::before {
+    filter: hue-rotate(90deg);
+}
+
+.service-badge[data-years="4"]::before {
+    filter: hue-rotate(120deg);
+}
+
+.service-badge[data-years="5"]::before {
+    filter: hue-rotate(150deg);
+}
+
+.service-badge[data-years="6"]::before {
+    filter: hue-rotate(180deg);
+}
+
+.service-badge[data-years="7"]::before {
+    filter: hue-rotate(210deg);
+}
+
+.service-badge[data-years="8"]::before {
+    filter: hue-rotate(240deg);
+}
+
+.service-badge[data-years="9"]::before {
+    filter: hue-rotate(270deg);
+}
+
+.service-badge[data-years="10"]::before {
+    filter: hue-rotate(300deg);
+}
+
+/* For years 11+, cycle through hues */
+.service-badge[data-years="11"]::before {
+    filter: hue-rotate(330deg);
+}
+
+.service-badge[data-years="12"]::before {
+    filter: hue-rotate(360deg);
+}
+
+.service-badge[data-years="13"]::before {
+    filter: hue-rotate(30deg);
+}
+
+.service-badge[data-years="14"]::before {
+    filter: hue-rotate(60deg);
+}
+
+.service-badge[data-years="15"]::before {
+    filter: hue-rotate(90deg);
+}
+
+/* For years 16+, use a default cycling pattern */
+.service-badge[data-years]::before {
+    /* This will be overridden by more specific selectors above */
+    filter: hue-rotate(180deg);
+}
+
+/* Month-based hue rotation for users with less than 1 year */
+.service-badge[data-months="1"]::before {
+    filter: hue-rotate(15deg);
+}
+
+.service-badge[data-months="2"]::before {
+    filter: hue-rotate(30deg);
+}
+
+.service-badge[data-months="3"]::before {
+    filter: hue-rotate(45deg);
+}
+
+.service-badge[data-months="4"]::before {
+    filter: hue-rotate(60deg);
+}
+
+.service-badge[data-months="5"]::before {
+    filter: hue-rotate(75deg);
+}
+
+.service-badge[data-months="6"]::before {
+    filter: hue-rotate(90deg);
+}
+
+.service-badge[data-months="7"]::before {
+    filter: hue-rotate(105deg);
+}
+
+.service-badge[data-months="8"]::before {
+    filter: hue-rotate(120deg);
+}
+
+.service-badge[data-months="9"]::before {
+    filter: hue-rotate(135deg);
+}
+
+.service-badge[data-months="10"]::before {
+    filter: hue-rotate(150deg);
+}
+
+.service-badge[data-months="11"]::before {
+    filter: hue-rotate(165deg);
+}
+
+/* Background number */
+.service-badge__background-number {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%) scaleX(-1);
+    font-size: 48px;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.1);
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Text content */
+.service-badge__text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transform: scaleX(-1);
+}
+
+.service-badge__label {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: #FFFFFF;
+    letter-spacing: -0.01em;
+	text-align: center;
+	white-space: nowrap;
+	pointer-events: none;
+}
+]]></template>
+</templates>

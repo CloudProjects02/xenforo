@@ -6,7 +6,6 @@ use DBTech\Credits\Entity\Event as EventEntity;
 use DBTech\Credits\Entity\Transaction as TransactionEntity;
 use DBTech\Credits\Finder\EventFinder;
 use XF\Entity\PurchaseRequest;
-use XF\Mvc\Entity\AbstractCollection;
 use XF\PrintableException;
 
 class PaymentHandler extends AbstractHandler
@@ -110,7 +109,7 @@ class PaymentHandler extends AbstractHandler
 			return;
 		}
 
-		/** @var AbstractCollection<EventEntity> $events */
+		/** @var \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Event> $events */
 		$events = \XF::app()->finder(EventFinder::class)
 			->where('currency_id', $currencyId)
 			->where('event_trigger_id', $this->getContentType())

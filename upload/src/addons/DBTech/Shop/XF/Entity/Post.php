@@ -1,20 +1,15 @@
-<?php
-
-/** @noinspection PhpMissingReturnTypeInspection */
+<?php /** @noinspection PhpMissingReturnTypeInspection */
 
 namespace DBTech\Shop\XF\Entity;
 
 use XF\Mvc\Entity\Structure;
 
-/**
- * @extends \XF\Entity\Post
- */
 class Post extends XFCP_Post
 {
 	/**
-	 * @param Structure $structure
+	 * @param \XF\Mvc\Entity\Structure $structure
 	 *
-	 * @return Structure
+	 * @return \XF\Mvc\Entity\Structure
 	 */
 	public static function getStructure(Structure $structure)
 	{
@@ -25,7 +20,7 @@ class Post extends XFCP_Post
 		{
 			$structure->relations['Thread']['with'][] = 'DBTechShopThreadBans|' . $visitor->user_id;
 		}
-
+		
 		return $structure;
 	}
 }

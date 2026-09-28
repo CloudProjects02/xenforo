@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="public" title="mubi_user_ban_macros" version_id="2030030" version_string="2.3.0 Beta"><![CDATA[<xf:macro id="banInfo" arg-user="!">
+	<div class="blockMessage blockMessage--error">
+		<p class="formRow-explain">
+			<strong><xf:fa icon="fa-user-times fa-fw" title="{{ phrase('mubi_baninfo_header', {'user': $user.username})|for_attr }}"/> {{ phrase('mubi_baninfo_header', {'user': $user.username}) }}</strong>
+		</p>	
+		<p class="block-rowMessage block-rowMessage--warning block-rowMessage--iconic">
+			{{ phrase('mubi_baninfo_explain') }} 
+		</p>
+		<p class="formRow-explain">
+			<strong><xf:fa icon="fa-user-circle fa-fw" title="{{ phrase('banned_by')|for_attr }}" /> {{ phrase('banned_by:') }}</strong> <xf:username user="{$user.Ban.BanUser}" defaultname="{{ phrase('n_a') }}" rich="true" notooltip="true" /> <br />
+			<strong><xf:fa icon="fa-calendar fa-fw" title="{{ phrase('ban_started')|for_attr }}" /> {{ phrase('ban_started:') }}</strong> {{ date($user.Ban.ban_date) }}<br />
+			<strong><xf:fa icon="fa-flag fa-fw" title="{{ phrase('ban_ends')|for_attr }}"/> {{ phrase('ban_ends:') }}</strong> {{ $user.Ban.end_date ? date($user.Ban.end_date) : phrase('never') }} <br>
+			<strong><xf:fa icon="fa-comment fa-fw" title="{{ phrase('reason_for_ban')|for_attr }}"/> {{ phrase('reason_for_ban:') }}</strong> {{ structured_text($user.Ban.user_reason) ?: phrase('n_a') }} <br />
+			<strong><xf:fa icon="fa-fire fa-fw" title="{{ phrase('mubi_automatically_triggered')|for_attr }}" /> {{ phrase('mubi_automatically_triggered:') }}</strong> {{ $user.Ban.triggered ? phrase('yes') : phrase('no') }}
+		</p>
+	</div>
+	<hr class="memberHeader-separator" />
+</xf:macro>
+
+<xf:macro id="messageInfo">
+	<div class="blockMessage blockMessage--error blockMessage--iconic">
+		{{ phrase('mubi_ban_info_message') }}
+	</div>
+</xf:macro>]]></template>
+</templates>

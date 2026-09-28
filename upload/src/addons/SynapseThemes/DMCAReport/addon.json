@@ -1,0 +1,14 @@
+{
+    "legacy_addon_id": "",
+    "title": "[SynapseThemes] DMCA Report",
+    "description": "Allows users, visitors, and guests to submit DMCA takedown reports through a dedicated form. Includes admin management interface.",
+    "version_id": 103,
+    "version_string": "1.0.3",
+    "dev": "Synapse-Themes",
+    "dev_url": "https://synapse-themes.cc",
+    "faq_url": "",
+    "support_url": "",
+    "extra_urls": [],
+    "require": [],
+    "icon": "fa-copyright"
+}

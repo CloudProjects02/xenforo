@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="synapse_thread_read_time_options" version_id="100" version_string="1.0.0"><![CDATA[<xf:title>{{ phrase('thread_read_time_options') }}</xf:title>
+
+<xf:form action="{{ link('options/update') }}" ajax="true" class="block">
+    <xf:checkboxrow>
+        <xf:option name="options[synapseThreadReadTimeInPosts]"
+            selected="$xf.options.synapseThreadReadTimeInPosts"
+            label="{{ phrase('option.synapseThreadReadTimeInPosts') }}"
+            hint="{{ phrase('option_explain.synapseThreadReadTimeInPosts') }}" />
+    </xf:checkboxrow>
+
+    <xf:checkboxrow>
+        <xf:option name="options[synapseThreadReadTimeInList]"
+            selected="$xf.options.synapseThreadReadTimeInList"
+            label="{{ phrase('option.synapseThreadReadTimeInList') }}"
+            hint="{{ phrase('option_explain.synapseThreadReadTimeInList') }}" />
+    </xf:checkboxrow>
+
+    <xf:submitrow sticky="true" icon="save" />
+</xf:form> ]]></template>
+</templates>

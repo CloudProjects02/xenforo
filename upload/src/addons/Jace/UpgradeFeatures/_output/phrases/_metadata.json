@@ -1,0 +1,32 @@
+{
+    "upgrade_features_cat_desc.1.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.2 Alpha",
+        "hash": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "upgrade_features_cat_desc.2.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.2 Alpha",
+        "hash": "d41d8cd98f00b204e9800998ecf8427e"
+    },
+    "upgrade_features_cat_title.1.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.2 Alpha",
+        "hash": "13fbeb4712feb813d344b2674d97d243"
+    },
+    "upgrade_features_cat_title.2.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.2 Alpha",
+        "hash": "f840ecadd2414c9435c6ca9f65d8943a"
+    },
+    "upgrade_features_cat_title.uncategorized.txt": {
+        "global_cache": false,
+        "version_id": 1000010,
+        "version_string": "1.0.2 Alpha",
+        "hash": "0d015d96f63a8c12d96b8399482b593f"
+    }
+}

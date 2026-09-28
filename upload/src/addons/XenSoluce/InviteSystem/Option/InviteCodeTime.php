@@ -23,3 +23,4 @@ class InviteCodeTime extends AbstractOption
 		return self::getTemplate('admin:option_template_xs_is_invitation_code_time', $option, $htmlParams);
     }
 }
+ 		   	  		 		     				  		  		 	  	 	           		          	 	   	  								  		  				 	 		       	 		 					 		   				 	 		  	    

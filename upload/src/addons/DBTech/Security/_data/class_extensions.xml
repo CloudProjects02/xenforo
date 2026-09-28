@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<class_extensions>
+  <extension from_class="XF\Admin\Controller\LoginController" to_class="DBTech\Security\XF\Admin\Controller\LoginController" execute_order="10" active="1"/>
+  <extension from_class="XF\Admin\Controller\UserController" to_class="DBTech\Security\XF\Admin\Controller\UserController" execute_order="10" active="1"/>
+  <extension from_class="XF\Admin\View\Login\Form" to_class="DBTech\Security\XF\Admin\View\Login\Form" execute_order="10" active="1"/>
+  <extension from_class="XF\Admin\View\Login\PasswordConfirm" to_class="DBTech\Security\XF\Admin\View\Login\PasswordConfirm" execute_order="10" active="1"/>
+  <extension from_class="XF\ChangeLog\UserHandler" to_class="DBTech\Security\XF\ChangeLog\UserHandler" execute_order="10" active="1"/>
+  <extension from_class="XF\ControllerPlugin\LoginPlugin" to_class="DBTech\Security\XF\ControllerPlugin\LoginPlugin" execute_order="10" active="1"/>
+  <extension from_class="XF\Data\Robot" to_class="DBTech\Security\XF\Data\Robot" execute_order="10" active="1"/>
+  <extension from_class="XF\Entity\Admin" to_class="DBTech\Security\XF\Entity\Admin" execute_order="10" active="1"/>
+  <extension from_class="XF\Entity\IpMatch" to_class="DBTech\Security\XF\Entity\IpMatch" execute_order="10" active="1"/>
+  <extension from_class="XF\Entity\Template" to_class="DBTech\Security\XF\Entity\Template" execute_order="10" active="1"/>
+  <extension from_class="XF\Entity\User" to_class="DBTech\Security\XF\Entity\User" execute_order="10" active="1"/>
+  <extension from_class="XF\Entity\UserAuth" to_class="DBTech\Security\XF\Entity\UserAuth" execute_order="10" active="1"/>
+  <extension from_class="XF\Entity\UserGroup" to_class="DBTech\Security\XF\Entity\UserGroup" execute_order="10" active="1"/>
+  <extension from_class="XF\Entity\UserOption" to_class="DBTech\Security\XF\Entity\UserOption" execute_order="10" active="1"/>
+  <extension from_class="XF\Entity\UserRemember" to_class="DBTech\Security\XF\Entity\UserRemember" execute_order="10" active="1"/>
+  <extension from_class="XF\Entity\UserTfaTrusted" to_class="DBTech\Security\XF\Entity\UserTfaTrusted" execute_order="10" active="1"/>
+  <extension from_class="XF\Job\UserAction" to_class="DBTech\Security\XF\Job\UserAction" execute_order="10" active="1"/>
+  <extension from_class="XF\Logger" to_class="DBTech\Security\XF\Logger" execute_order="10" active="1"/>
+  <extension from_class="XF\Pub\Controller\AccountController" to_class="DBTech\Security\XF\Pub\Controller\AccountController" execute_order="10" active="1"/>
+  <extension from_class="XF\Pub\View\Account\TwoStep" to_class="DBTech\Security\XF\Pub\View\Account\TwoStep" execute_order="10" active="1"/>
+  <extension from_class="XF\Pub\View\Error\RegistrationRequired" to_class="DBTech\Security\XF\Pub\View\Error\RegistrationRequired" execute_order="10" active="1"/>
+  <extension from_class="XF\Pub\View\Login\Form" to_class="DBTech\Security\XF\Pub\View\Login\Form" execute_order="10" active="1"/>
+  <extension from_class="XF\Pub\View\Login\PasswordConfirm" to_class="DBTech\Security\XF\Pub\View\Login\PasswordConfirm" execute_order="10" active="1"/>
+  <extension from_class="XF\Repository\OptionRepository" to_class="DBTech\Security\XF\Repository\OptionRepository" execute_order="10" active="1"/>
+  <extension from_class="XF\Repository\UserTfaTrustedRepository" to_class="DBTech\Security\XF\Repository\UserTfaTrustedRepository" execute_order="10" active="1"/>
+  <extension from_class="XF\Searcher\User" to_class="DBTech\Security\XF\Searcher\User" execute_order="10" active="1"/>
+  <extension from_class="XF\Service\UpdatePermissionsService" to_class="DBTech\Security\XF\Service\UpdatePermissionsService" execute_order="10" active="1"/>
+  <extension from_class="XF\Service\User\LoginService" to_class="DBTech\Security\XF\Service\User\LoginService" execute_order="10" active="1"/>
+  <extension from_class="XF\Service\User\PasswordChangeService" to_class="DBTech\Security\XF\Service\User\PasswordChangeService" execute_order="10" active="1"/>
+  <extension from_class="XF\Session\Session" to_class="DBTech\Security\XF\Session\Session" execute_order="10" active="1"/>
+</class_extensions>

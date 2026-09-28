@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget_definitions>
+  <widget_definition definition_id="xs_staff" definition_class="XenSupport\Staff\Widget\Staff"/>
+</widget_definitions>

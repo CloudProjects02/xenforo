@@ -1,37 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <template_modifications>
-  <modification type="public" template="PAGE_CONTAINER" modification_key="dbtech_shop_copyright_footer_display" description="Copyright Footer" execution_order="10" enabled="1" action="str_replace">
-    <find><![CDATA[<xf:copyright />]]></find>
-    <replace><![CDATA[$0
-				<xf:callback class="DBTech\Shop\Template\Callback\Copyright" method="getCopyrightText"></xf:callback>]]></replace>
+  <modification type="public" template="PAGE_CONTAINER" modification_key="dbtech_shop_avatar_frame_css" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[</head>]]></find>
+    <replace><![CDATA[<xf:include template="dbtech_shop_avatar_frame_css" />
+</head>]]></replace>
   </modification>
   <modification type="public" template="PAGE_CONTAINER" modification_key="dbtech_shop_navbar_loop" description="Remove the navbar entry from the main loop if needed" execution_order="10" enabled="1" action="preg_replace">
-    <find><![CDATA[#(<xf:macro\s+id="nav_entry"\s+arg-[^/]+>)(.*)(<\/xf:macro>)#siU]]></find>
+    <find><![CDATA[#(<xf:macro\s+name="nav_entry"\s+arg-[^/]+>)(.*)(<\/xf:macro>)#siU]]></find>
     <replace><![CDATA[$1
 <xf:if is="$navId != 'dbtechShop' OR $xf.options.dbtech_shop_navbar.enabled == 1">$2</xf:if>
 $3]]></replace>
   </modification>
   <modification type="public" template="PAGE_CONTAINER" modification_key="dbtech_shop_navbar_right_end" description="Add Navbar (Right Side - End)" execution_order="10" enabled="1" action="preg_replace">
     <find><![CDATA[#(<a href="{{ link\('account/alerts'\) }}"\s+class="[\w\-\s]+p-navgroup-link--alerts.*</div>.+)(</xf:if>)#siU]]></find>
-    <replace><![CDATA[$1	<xf:macro id="dbtech_shop_navbar_macro::navbar" arg-section="end" arg-nav="{$navTree.dbtechShop}" />
+    <replace><![CDATA[$1	<xf:macro template="dbtech_shop_navbar_macro" name="navbar" arg-section="end" arg-nav="{$navTree.dbtechShop}" />
 						$2]]></replace>
   </modification>
   <modification type="public" template="PAGE_CONTAINER" modification_key="dbtech_shop_navbar_right_middle" description="Add Navbar (Right Side - Middle)" execution_order="10" enabled="1" action="preg_replace">
     <find><![CDATA[#<a href="{{ link\('account/alerts'\) }}"\s+class="[\w\-\s]+p-navgroup-link--alerts#siU]]></find>
-    <replace><![CDATA[<xf:macro id="dbtech_shop_navbar_macro::navbar" arg-section="middle" arg-nav="{$navTree.dbtechShop}" />
+    <replace><![CDATA[<xf:macro template="dbtech_shop_navbar_macro" name="navbar" arg-section="middle" arg-nav="{$navTree.dbtechShop}" />
 							$0]]></replace>
   </modification>
   <modification type="public" template="PAGE_CONTAINER" modification_key="dbtech_shop_navbar_right_start" description="Add Navbar (Right Side - Start)" execution_order="10" enabled="1" action="preg_replace">
     <find><![CDATA[#<a href="{{ link\('account'\) }}"\s+class="[\w\-\s]+p-navgroup-link--user"\s+data-xf-click="menu"#siU]]></find>
-    <replace><![CDATA[<xf:macro id="dbtech_shop_navbar_macro::navbar" arg-section="start" arg-nav="{$navTree.dbtechShop}" />
+    <replace><![CDATA[<xf:macro template="dbtech_shop_navbar_macro" name="navbar" arg-section="start" arg-nav="{$navTree.dbtechShop}" />
 							$0]]></replace>
   </modification>
   <modification type="public" template="app.less" modification_key="dbtech_shop_app_less" description="Add Shop username styles to app.less" execution_order="10" enabled="1" action="str_replace">
     <find><![CDATA[{{ include('app_user_banners.less') }}]]></find>
     <replace><![CDATA[$0
 {{ include('dbtech_shop_app_username_styles.less') }}
-{{ include('dbtech_shop_app_user_title_styles.less') }}
-{{ include('dbtech_shop_app_avatar_styles.less') }}]]></replace>
+{{ include('dbtech_shop_app_user_title_styles.less') }}]]></replace>
   </modification>
   <modification type="public" template="app_nav.less" modification_key="dbtech_shop_app_nav_less_append" description="Append dbtech_shop_app_nav.less to app_nav.less" execution_order="10" enabled="1" action="preg_replace">
     <find><![CDATA[/$/]]></find>

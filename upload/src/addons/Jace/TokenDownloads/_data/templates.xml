@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="jace_token_downloads_package_edit" version_id="1000020" version_string="1.0.2"><![CDATA[<xf:title>
+	<xf:if is="$package.package_id">
+		{{ phrase('edit_token_package:') }} {$package.title}
+	<xf:else />
+		{{ phrase('add_token_package') }}
+	</xf:if>
+</xf:title>
+
+<xf:form action="{{ link('token-downloads/packages/save', $package) }}" ajax="true" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:textboxrow name="title" value="{$package.title}"
+				label="{{ phrase('title') }}" />
+			
+			<xf:checkboxrow>
+				<xf:option name="active" checked="{$package.active}"
+					label="Active" />
+			</xf:checkboxrow>
+
+			<xf:textarearow name="description" value="{$package.description}"
+				label="{{ phrase('description') }}" />
+			
+			<xf:formrow rowtype="input"
+				label="{{ phrase('cost') }}">
+
+				<div class="inputGroup">
+					<xf:textbox name="cost_amount" value="{{ $package.cost_amount ?: 5 }}" style="width: 120px" />
+					<span class="inputGroup-splitter"></span>
+					<xf:macro template="public:currency_macros" name="currency_list"
+						arg-value="{{ $package.cost_currency ?: 'USD' }}"
+						arg-class="input--autoSize" />
+				</div>
+
+				<div class="formRow-explain">{{ phrase('cost_currency_explain') }}</div>
+			</xf:formrow>
+
+			<xf:numberboxrow name="download_limit" value="{$package.download_limit}"
+				min="0" step="1"
+				label="{{ phrase('jace_token_downloads_download_limit') }}" 
+				explain="{{ phrase('number_of_tokens_included_in_this_package') }}" />
+
+			<xf:numberboxrow name="display_order" value="{$package.display_order}"
+				min="0" step="1"
+				label="{{ phrase('display_order') }}" />
+			
+			<xf:uploadrow  name="package_icon"
+                        label="{{ phrase('upload_image') }}"
+                        accept="image/*"
+                        explain="{{ phrase('it_is_recommended_that_you_use_image_that_is_at_least_x_pixels', {'height': 125, 'width': 125}) }}"/>
+
+                    <xf:if is="$package.icon_url">
+                        <xf:formrow label="Existing Image">
+                            <div style="max-width:100px;">
+                                <img src="{$package.icon_url}" style="max-width: 150px; max-height: 150px;" />
+                            </div>
+                        </xf:formrow>
+                    </xf:if>
+
+			<xf:checkboxrow name="payment_profile_ids" value="{$package.payment_profile_ids}"
+				label="{{ phrase('jace_token_downloads_payment_profile') }}">
+				<xf:foreach loop="$paymentProfiles" value="$profile">
+					<xf:option value="{$profile.payment_profile_id}">
+						{$profile.title}
+					</xf:option>
+				</xf:foreach>
+			</xf:checkboxrow>
+		</div>
+		<xf:submitrow sticky="true" icon="save" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="jace_token_downloads_package_list" version_id="1000010" version_string="1.0.0"><![CDATA[<xf:title>{{ phrase('jace_token_downloads_token_packages') }}</xf:title>
+
+<xf:if is="$packages is not empty">
+	<xf:pageaction>
+		<xf:button href="{{ link('token-downloads/packages/add') }}" icon="add">{{ phrase('add_token_package') }}</xf:button>
+	</xf:pageaction>
+	
+	<div class="block">
+		<div class="block-outer">
+			<xf:macro template="filter_macros" name="quick_filter" arg-key="token-packages" arg-class="block-outer-opposite" />
+		</div>
+		<div class="block-container">
+			<div class="block-body">
+				<xf:datalist>
+					<xf:foreach loop="$packages" value="$package">
+						<xf:datarow>
+							<xf:cell class="dataList-cell--link dataList-cell--main">
+								<a href="{{ link('token-downloads/packages/edit', $package) }}">
+									<div class="dataList-mainRow">{$package.title}</div>
+									<div class="dataList-subRow">{$package.description}</div>
+								</a>
+							</xf:cell>
+							<xf:cell>
+								{$package.cost_amount} {$package.cost_currency}
+							</xf:cell>
+							<xf:cell>
+								{$package.download_limit}
+							</xf:cell>
+							<xf:cell class="dataList-cell--action">
+								<xf:if is="$package.active">
+									<a href="{{ link('token-downloads/packages/toggle', $package) }}"
+										data-xf-click="overlay"
+										title="{{ phrase('active') }}">
+										<i class="structItem-status structItem-status--visible"></i>
+									</a>
+								<xf:else />
+									<a href="{{ link('token-downloads/packages/toggle', $package) }}"
+										data-xf-click="overlay"
+										title="{{ phrase('inactive') }}">
+										<i class="structItem-status structItem-status--ignored"></i>
+									</a>
+								</xf:if>
+							</xf:cell>
+							<xf:cell class="dataList-cell--action">
+								<a href="{{ link('token-downloads/packages/delete', $package) }}"
+									data-xf-click="overlay">
+									{{ phrase('delete') }}
+								</a>
+							</xf:cell>
+						</xf:datarow>
+					</xf:foreach>
+				</xf:datalist>
+			</div>
+		</div>
+	</div>
+<xf:else />
+	<div class="blockMessage">
+		{{ phrase('jace_token_downloads_no_packages') }}
+		<div>
+			<xf:button href="{{ link('token-downloads/packages/add') }}" icon="add">{{ phrase('add_token_package') }}</xf:button>
+		</div>
+	</div>
+</xf:if>]]></template>
+  <template type="public" title="jace_token_downloads_confirm_download" version_id="1000010" version_string="1.0.0"><![CDATA[<xf:title>{{ phrase('jace_token_downloads_confirm_download_with_token') }}</xf:title>
+
+<xf:breadcrumb source="$resource.getBreadcrumbs()" />
+
+<div class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<div class="block-row">
+				<div class="block-rowMessage block-rowMessage--important">
+					{{ phrase('jace_token_downloads_this_download_will_use_token', {'totalTokens': $totalTokens}) }}
+				</div>
+			</div>
+		</div>
+		<xf:form action="{{ link('resources/download', $resource) }}" class="block-footer">
+			<xf:button type="submit" class="button--primary">
+				{{ phrase('jace_token_downloads_confirm_use_token') }}
+			</xf:button>
+		</xf:form>
+	</div>
+</div>]]></template>
+  <template type="public" title="jace_token_downloads_history" version_id="1000010" version_string="1.0.0"><![CDATA[<xf:title>{{ phrase('jace_token_downloads_download_history') }}</xf:title>
+
+<xf:breadcrumb href="{{ link('account') }}">{{ phrase('your_account') }}</xf:breadcrumb>
+<xf:breadcrumb href="{{ link('account/token-downloads') }}">{{ phrase('jace_token_downloads_tokens') }}</xf:breadcrumb>
+
+<xf:if is="$logs is not empty">
+	<div class="block">
+		<div class="block-container">
+			<div class="block-body">
+				<xf:datalist>
+					<xf:datarow>
+						<xf:cell>{{ phrase('jace_token_downloads_resource') }}</xf:cell>
+						<xf:cell>{{ phrase('jace_token_downloads_resource_version') }}</xf:cell>
+						<xf:cell>{{ phrase('jace_token_downloads_used_on') }}</xf:cell>
+					</xf:datarow>
+					<xf:foreach loop="$logs" value="$log">
+						<xf:datarow>
+							<xf:cell>
+								<a href="{{ link('resources', $log.Resource) }}">{$log.Resource.title}</a>
+							</xf:cell>
+							<xf:cell>
+								{$log.ResourceVersion.version_string}
+							</xf:cell>
+							<xf:cell>
+								<xf:date time="{$log.log_date}" />
+							</xf:cell>
+						</xf:datarow>
+					</xf:foreach>
+				</xf:datalist>
+			</div>
+		</div>
+	</div>
+<xf:else />
+	<div class="blockMessage">
+		{{ phrase('jace_token_downloads_no_download_history') }}
+	</div>
+</xf:if>
+
+<div class="block-outer block-outer--after">
+	<div class="block-outer-middle">
+		<xf:button href="{{ link('account/token-downloads') }}" class="button--link">
+			{{ phrase('back') }}
+		</xf:button>
+	</div>
+</div>]]></template>
+  <template type="public" title="jace_token_downloads_purchase" version_id="1000020" version_string="1.0.2"><![CDATA[<xf:title>{{ phrase('jace_token_downloads_purchase_tokens') }}</xf:title>
+
+<xf:breadcrumb href="{{ link('account') }}">{{ phrase('your_account') }}</xf:breadcrumb>
+<xf:breadcrumb href="{{ link('account/token-downloads') }}">{{ phrase('jace_token_downloads_tokens') }}</xf:breadcrumb>
+
+<div class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<div class="block-row">
+				<h3>{$package.title}</h3>
+				<div>{$package.description}</div>
+				<dl class="pairs pairs--columns pairs--fixedSmall">
+					<dt>{{ phrase('jace_token_downloads_package_cost') }}</dt>
+					<dd>{$package.cost_amount} {$package.cost_currency}</dd>
+				</dl>
+				<dl class="pairs pairs--columns pairs--fixedSmall">
+					<dt>{{ phrase('jace_token_downloads_download_limit') }}</dt>
+					<dd>{$package.download_limit}</dd>
+				</dl>
+			</div>
+		</div>
+
+		<xf:form action="{{ link('purchase', {'purchasable_type_id': 'jace_token_downloads'}) }}" ajax="true" data-xf-init="payment-provider-container">
+			<xf:hiddenval name="package_id">{$package.package_id}</xf:hiddenval>
+			
+			<xf:radiorow name="payment_profile_id" 
+				label="{{ phrase('jace_token_downloads_payment_profile') }}">
+				<xf:foreach loop="$paymentProfiles" value="$profile">
+					<xf:option value="{$profile.payment_profile_id}">
+						{$profile.title}
+					</xf:option>
+				</xf:foreach>
+			</xf:radiorow>
+
+			<xf:submitrow icon="purchase" submit="{{ phrase('purchase') }}" />
+		</xf:form>
+	</div>
+</div>]]></template>
+  <template type="public" title="jace_token_downloads_tokens" version_id="1000020" version_string="1.0.2"><![CDATA[<xf:title>{{ phrase('jace_token_downloads_tokens') }}</xf:title>
+
+<xf:breadcrumb href="{{ link('account') }}">{{ phrase('your_account') }}</xf:breadcrumb>
+
+<xf:if is="$packages is not empty">
+	<div class="block">
+		<div class="block-container">
+			<h2 class="block-header">{{ phrase('jace_token_downloads_you_have_x_tokens_remaining', {'count': $totalRemaining}) }}</h2>
+			<div class="block-body">
+				<div class="block-row">
+					{{ phrase('jace_token_downloads_tokens_explanation') }}
+				</div>
+				<div class="block-row">
+					<xf:button href="{{ link('token-downloads/history') }}" class="button--link">
+						{{ phrase('jace_token_downloads_view_history') }}
+					</xf:button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="block">
+		<div class="block-container">
+			<h2 class="block-header">{{ phrase('jace_token_downloads_packages') }}</h2>
+			<div class="block-body">
+				<xf:foreach loop="$packages" value="$package">
+					<div class="block-row">
+						<div class="contentRow">
+							<div class="contentRow-main">
+								<div class="package-icon">
+									{{ package_image($package) }}
+								</div>
+								<h3 class="contentRow-header">{$package.title}</h3>
+								<div class="contentRow-lesser">{$package.description}</div>
+								<div class="contentRow-minor">
+									<dl class="pairs pairs--inline">
+										<dt>{{ phrase('jace_token_downloads_package_cost') }}</dt>
+										<dd>{$package.cost_amount} {$package.cost_currency}</dd>
+									</dl>
+									<dl class="pairs pairs--inline">
+										<dt>{{ phrase('jace_token_downloads_download_limit') }}</dt>
+										<dd>{$package.download_limit}</dd>
+									</dl>
+								</div>
+							</div>
+							<div class="contentRow-extra">
+								<xf:button href="{{ link('token-downloads/purchase', $package) }}" class="button--primary">
+									{{ phrase('jace_token_downloads_purchase') }}
+								</xf:button>
+							</div>
+						</div>
+					</div>
+				</xf:foreach>
+			</div>
+		</div>
+	</div>
+
+	<xf:if is="$purchases is not empty">
+		<div class="block">
+			<div class="block-container">
+				<h2 class="block-header">{{ phrase('jace_token_downloads_purchased_packages') }}</h2>
+				<div class="block-body">
+					<xf:foreach loop="$purchases" value="$purchase">
+						<div class="block-row">
+							<div class="contentRow">
+								<div class="contentRow-main">
+									<h3 class="contentRow-header">{$purchase.Package.title}</h3>
+									<div class="contentRow-minor">
+										<dl class="pairs pairs--inline">
+											<dt>{{ phrase('jace_token_downloads_purchase_date') }}</dt>
+											<dd><xf:date time="{$purchase.purchase_date}" /></dd>
+										</dl>
+										<dl class="pairs pairs--inline">
+											<dt>{{ phrase('jace_token_downloads_total_tokens') }}</dt>
+											<dd>{$purchase.tokens_total}</dd>
+										</dl>
+										<dl class="pairs pairs--inline">
+											<dt>{{ phrase('jace_token_downloads_tokens_remaining') }}</dt>
+											<dd>{$purchase.tokens_remaining}</dd>
+										</dl>
+									</div>
+								</div>
+							</div>
+						</div>
+					</xf:foreach>
+				</div>
+			</div>
+		</div>
+	<xf:else />
+		<div class="block">
+			<div class="block-container">
+				<h2 class="block-header">{{ phrase('jace_token_downloads_purchased_packages') }}</h2>
+				<div class="block-body">
+					<div class="block-row">{{ phrase('jace_token_downloads_no_purchases') }}</div>
+				</div>
+			</div>
+		</div>
+	</xf:if>
+<xf:else />
+	<div class="blockMessage">
+		{{ phrase('jace_token_downloads_no_active_packages') }}
+	</div>
+</xf:if>]]></template>
+</templates>

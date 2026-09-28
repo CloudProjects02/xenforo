@@ -5,10 +5,8 @@ namespace DBTech\Credits\EventTrigger\XFRM;
 use DBTech\Credits\Entity\Event as EventEntity;
 use DBTech\Credits\Entity\Transaction as TransactionEntity;
 use DBTech\Credits\EventTrigger\AbstractHandler;
-use XF\Entity\Attachment;
 use XF\Entity\User;
 use XF\InputFilterer;
-use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\PrintableException;
 use XF\Repository\AttachmentRepository;
@@ -166,7 +164,7 @@ class UploadHandler extends AbstractHandler
 		{
 			$attachRepo = \XF::app()->repository(AttachmentRepository::class);
 
-			/** @var AbstractCollection<Attachment> $attachments */
+			/** @var \XF\Mvc\Entity\AbstractCollection<\XF\Entity\Attachment> $attachments */
 			$attachments = $attachRepo->findAttachmentsByContent('resource_version', $entity->current_version_id)
 				->with('Data')
 				->fetch()

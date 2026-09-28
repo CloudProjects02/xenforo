@@ -9,7 +9,7 @@ use DBTech\Credits\Job\EventDeleteCleanUp;
 use DBTech\Credits\Repository\EventTriggerRepository;
 use XF\Entity\User;
 use XF\Entity\ViewableInterface;
-use XF\Mvc\Entity\AbstractCollection;
+use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XF\Phrase;
 use XF\PrintableException;
@@ -51,10 +51,10 @@ use XF\PrintableException;
  *
  * RELATIONS
  * @property-read Currency|null $Currency
- * @property-read AbstractCollection<Event> $Transfers
- * @property-read AbstractCollection<Transaction> $Transactions
+ * @property-read \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Event> $Transfers
+ * @property-read \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Transaction> $Transactions
  */
-class Event extends AbstractEntity implements ViewableInterface
+class Event extends Entity implements ViewableInterface
 {
 	/**
 	 * @return bool
@@ -482,18 +482,18 @@ class Event extends AbstractEntity implements ViewableInterface
 			'active'           => ['type' => self::BOOL, 'default' => true],
 			'moderate'         => ['type' => self::BOOL, 'default' => false],
 			'charge'           => ['type' => self::BOOL, 'default' => false],
-			'main_add'         => ['type' => self::FLOAT, 'default' => 0, 'max' => PHP_INT_MAX, 'isDecimal' => true],
-			'main_sub'         => ['type' => self::FLOAT, 'default' => 0, 'max' => PHP_INT_MAX, 'isDecimal' => true],
-			'mult_add'         => ['type' => self::FLOAT, 'default' => 0, 'max' => PHP_INT_MAX, 'isDecimal' => true],
-			'mult_sub'         => ['type' => self::FLOAT, 'default' => 0, 'max' => PHP_INT_MAX, 'isDecimal' => true],
+			'main_add'         => ['type' => self::FLOAT, 'default' => 0],
+			'main_sub'         => ['type' => self::FLOAT, 'default' => 0],
+			'mult_add'         => ['type' => self::FLOAT, 'default' => 0],
+			'mult_sub'         => ['type' => self::FLOAT, 'default' => 0],
 			'delay'            => ['type' => self::UINT, 'default' => 0],
 			'frequency'        => ['type' => self::UINT, 'default' => 1],
 			'maxtime'          => ['type' => self::UINT, 'default' => 0],
 			'applymax'         => ['type' => self::UINT, 'default' => 0],
 			'applymax_peruser' => ['type' => self::BOOL, 'default' => false],
-			'upperrand'        => ['type' => self::FLOAT, 'default' => 0, 'max' => PHP_INT_MAX, 'isDecimal' => true],
-			'multmin'          => ['type' => self::FLOAT, 'default' => 0, 'max' => PHP_INT_MAX, 'isDecimal' => true],
-			'multmax'          => ['type' => self::FLOAT, 'default' => 0, 'max' => PHP_INT_MAX, 'isDecimal' => true],
+			'upperrand'        => ['type' => self::FLOAT, 'default' => 0],
+			'multmin'          => ['type' => self::FLOAT, 'default' => 0],
+			'multmax'          => ['type' => self::FLOAT, 'default' => 0],
 			'minaction'        => ['type' => self::UINT, 'default' => 0, 'max' => 2],
 			'owner'            => ['type' => self::UINT, 'default' => 0, 'max' => 2],
 			'curtarget'        => ['type' => self::UINT, 'default' => 0],

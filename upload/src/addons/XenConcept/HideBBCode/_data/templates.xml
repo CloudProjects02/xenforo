@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="xc_hide_bbcode_helper_reaction_edit" version_id="2000800" version_string="2.0.8"><![CDATA[<xf:macro name="checkboxes"
+          arg-label="{{ phrase('reactions') }}"
+          arg-id="reaction_ids"
+          arg-reactions=""
+          arg-selectedReactions="!"
+          arg-withRow="1">
+
+    <xf:if is="!$reactions">
+        <xf:set var="$hideBbCodeRepo" value="{$xf.app.em.getRepository('XenConcept\HideBBCode:HideBbCode')}" />
+        <xf:set var="$reactions" value="{$hideBbCodeRepo.getReactionTitlePairs()}" />
+    </xf:if>
+
+    <xf:set var="$inner">
+        <xf:checkbox name="{$id}" listclass="listColumns">
+            <xf:foreach loop="$reactions" key="$reactionId" value="$reactionTitle">
+				<xf:set var="{$title}"><xf:reaction id="{$reactionId}" showtitle="true" class="reaction--inline" /></xf:set>
+                <xf:option value="{$reactionId}" selected="{{ in_array($reactionId, $selectedReactions) }}">
+                    {$title}
+                </xf:option>
+            </xf:foreach>
+        </xf:checkbox>
+    </xf:set>
+
+    <xf:if is="$withRow">
+        <xf:formrow label="{$label}" name="{$id}" id="{$id}">
+            {$inner|raw}
+        </xf:formrow>
+        <xf:else />
+        {$inner|raw}
+    </xf:if>
+</xf:macro>]]></template>
+  <template type="admin" title="xc_hide_bbcode_option_tabbed_macros" version_id="2000800" version_string="2.0.8 Beta 1"><![CDATA[<xf:macro name="simple_option_form_block" arg-group="" arg-options="!" arg-containerBeforeHtml="">
+    <xf:if is="$options is not empty">
+
+        <xf:form action="{{ link('options/update') }}" ajax="true" class="block">
+            {$containerBeforeHtml|raw}
+            <div class="block-container">
+                <h2 class="block-tabHeader tabs" data-xf-init="tabs" role="tablist">
+					
+                    <a class="tabs-tab is-active" role="tab" tabindex="0" aria-controls="generalOptions">{{ phrase('xc_hide_bbcode_general_options') }}</a>
+					<a class="tabs-tab is-active" role="tab" tabindex="0" aria-controls="threadOptions">{{ phrase('xc_hide_bbcode_thread_options') }}</a>
+				</h2>
+                <ul class="tabPanes">
+                    <li class="is-active" role="tabpanel" id="generalOptions">
+                        <div class="block-body">
+                            <xf:foreach loop="$options" value="$option">
+								<xf:if is="$option.Relations.xc_hide_bbcode.display_order < 100">
+									<xf:macro template="option_macros" name="option_row" arg-group="{$group}" arg-option="{$option}" />
+								</xf:if>
+								<xf:if is="$option.Relations.xc_hide_bbcode.display_order == '12' || $option.Relations.xc_hide_bbcode.display_order == '20'">
+									<hr class="formRowSep" />
+								</xf:if>
+                            </xf:foreach>
+                        </div>
+                    </li>
+                    <li role="tabpanel" id="threadOptions">
+                        <div class="block-body">
+                            <xf:foreach loop="$options" value="$option">
+                            <xf:if is="$option.Relations.xc_hide_bbcode.display_order >= 100 AND $option.Relations.xc_hide_bbcode.display_order < 200">
+                                <xf:macro template="option_macros" name="option_row" arg-group="{$group}" arg-option="{$option}" />
+                            </xf:if>
+                            </xf:foreach>
+                        </div>
+                    </li>
+                </ul>
+                <xf:submitrow sticky="true" icon="save" />
+            </div>
+        </xf:form>
+    </xf:if>
+</xf:macro>]]></template>
+  <template type="admin" title="xc_hide_bbcode_option_template_usableReactions" version_id="2000800" version_string="2.0.8"><![CDATA[<xf:formrow
+	label="{$option.title}"
+	hint="{$hintHtml}"
+	explain="{$explainHtml}"
+	html="{$listedHtml}"
+	rowclass="{$rowClass}">
+	
+	<xf:macro template="xc_hide_bbcode_helper_reaction_edit" name="checkboxes"
+		arg-id="{$inputName}"
+		arg-selectedReactions="{$option.option_value}" 
+		arg-withRow="0" />
+
+</xf:formrow>]]></template>
+  <template type="email" title="xc_hide_bbcode_bb_code_tag_hide" version_id="2000833" version_string="2.0.8 Beta 3"><![CDATA[<div class="hide">
+	{$content}
+</div>]]></template>
+  <template type="email" title="xc_hide_bbcode_core.less" version_id="2000500" version_string="2.0.5"><![CDATA[div.hide
+{
+	border-left: @xf-borderSizeFeature solid @xf-borderColorAttention;
+	border-top: @xf-borderSize solid @xf-emailBorderColor;
+	border-bottom: @xf-borderSize solid @xf-emailBorderColor;
+	border-right: @xf-borderSize solid @xf-emailBorderColor;
+	background: @xf-emailContentAltBg;
+	margin: @xf-paddingLarge 0;
+	padding: @xf-paddingLarge;
+}]]></template>
+  <template type="public" title="_help_page_hide_bb_codes" version_id="2000800" version_string="2.0.8"><![CDATA[<xf:css src="help_bb_codes.less" />
+
+<div class="block">
+	<div class="block-container">
+		<ul class="listPlain block-body">
+			<xf:foreach loop="$hideBbCodes" key="$tag" value="$hideBbCode">
+				<li class="bbCodeHelpItem block-row block-row--separated">
+					<span class="u-anchorTarget" id="{$tag}"></span>
+					<h3 class="block-textHeader">
+						<xf:if is="$hideBbCode.hasOption == 'no'">[{$tag|to_upper}]</xf:if>
+						<xf:if is="$hideBbCode.hasOption == 'yes'">[{$tag|to_upper}=<span class="block-textHeader-highlight">option</span>]</xf:if>
+						- {$hideBbCode.title}
+					</h3>
+					<xf:if contentcheck="true">
+						<div><xf:contentcheck>{$hideBbCode.description}</xf:contentcheck></div>
+					</xf:if>
+					<div class="bbCodeDemoBlock">
+						<dl class="bbCodeDemoBlock-item">
+							<dt>{{ phrase('example:') }}</dt>
+							<dd>{{ $hideBbCode.example|nl2br }}</dd>
+						</dl>
+						<dl class="bbCodeDemoBlock-item">
+							<dt>{{ phrase('output:') }}</dt>
+							<dd>{{ $hideBbCode.output is not empty ? bb_code($hideBbCode.output, 'help', null) : bb_code($hideBbCode.example, 'help', null) }}</dd>
+						</dl>
+					</div>
+				</li>
+			</xf:foreach>
+		</ul>
+	</div>
+</div>]]></template>
+  <template type="public" title="xc_hide_bb_code_help_bb_codes" version_id="2000600" version_string="2.0.6"><![CDATA[]]></template>
+  <template type="public" title="xc_hide_bbcode_bb_code_hide.less" version_id="2000000" version_string="2.0.0"><![CDATA[.hideBlock--visible {
+	border-left-color: @xf-xc_hide_bbcode_unhidden_border_color !important;
+}
+
+.hideBlock--hidden {
+	border-left-color: @xf-xc_hide_bbcode_hidden_border_color !important;
+}]]></template>
+  <template type="public" title="xc_hide_bbcode_bb_code_tag_hide" version_id="2000800" version_string="2.0.8"><![CDATA[<xf:css src="bb_code.less" />
+<xf:css src="xc_hide_bbcode_bb_code_hide.less" />
+
+<div class="bbCodeBlock bbCodeBlock--hide hideBlock--hide-{$hideTag} hideBlock--{$visibility} bbCodeBlock--{$visibility} ">
+    <div class="bbCodeBlock-content">
+        <div class="bbCodeBlock-expandContent">
+			{$content|raw}
+        </div>
+    </div>
+</div>]]></template>
+  <template type="public" title="xc_hide_bbcode_editor_dialog_hide" version_id="2000837" version_string="2.0.8 Beta 7"><![CDATA[<xf:title>{{ phrase('insert:') }} {$title}</xf:title>
+
+<form class="block" id="editor_{$tag}_form">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:if is="!in_array($tag, ['hidereply', 'hidethanks', 'hidereplythanks', 'hideguest'])">
+				<xf:macro template="xc_hide_bbcode_editor_dialog_hide_macros" name="{$macroName}" 
+					arg-tag="{$tag}"
+					arg-options="{$options}" />
+			</xf:if>
+
+			<xf:editorrow
+				id="editor_{$tag}_content"
+				autofocus="autofocus"
+				rowtype="fullWidth noLabel" />
+		</div>
+		<xf:submitrow submit="{{ phrase('continue') }}" id="editor_{$name}_submit" />
+	</div>
+</form>]]></template>
+  <template type="public" title="xc_hide_bbcode_editor_dialog_hide_macros" version_id="2000970" version_string="2.0.9"><![CDATA[<xf:macro name="hide" arg-tag="!" arg-options="!">
+	<xf:if is="in_array($options.hideMappedTo, ['hidereact', 'hidereplyreact', 'hidereplyorreact'])">
+		<xf:macro name="react" arg-tag="{$tag}" arg-options="{$options}" />
+	<xf:elseif is="!in_array($options.hideMappedTo, ['hidereply', 'hidethanks', 'hidereplythanks', 'hideguest'])" />
+		<xf:macro name="{$options.hideMappedTo}" arg-tag="{$tag}" arg-options="{$options}" />
+	</xf:if>
+	
+	<xf:hiddenval name="hide_mapped_to" class="js-hideMappedTo">{$options.hideMappedTo}</xf:hiddenval>
+</xf:macro>
+
+<xf:macro name="react" arg-tag="!" arg-options="!">
+    <xf:checkboxrow listclass="listColumns">
+        <xf:foreach loop="$options.reactions" key="$reactionId" value="$reaction">
+            <xf:set var="{$title}"><xf:reaction id="{$reactionId}" showtitle="true" class="reaction--inline" /></xf:set>
+            <xf:option value="{$reactionId}" id="editor_input_{$tag}_val" selected="{{ $reactionId === 1 ? true : false }}">
+                {$title}
+            </xf:option>
+        </xf:foreach>
+    </xf:checkboxrow>
+</xf:macro>
+
+<xf:macro name="hideusergroups" arg-tag="!" arg-options="!">
+    <xf:checkboxrow listclass="listColumns">
+        <xf:foreach loop="$options.usergroups" key="$userGroupId" value="$userGroup">
+
+            <xf:set var="{$title}">{$userGroup}</xf:set>
+
+            <xf:option value="{$userGroupId}" id="editor_input_{$tag}_val">
+                {$title}
+
+            </xf:option>
+        </xf:foreach>
+    </xf:checkboxrow>
+</xf:macro>
+
+
+<xf:macro name="hideshowtogroups" arg-tag="!" arg-options="!">
+    <xf:checkboxrow listclass="listColumns">
+        <xf:foreach loop="$options.usergroups" key="$userGroupId" value="$userGroup">
+
+            <xf:set var="{$title}">{$userGroup}</xf:set>
+
+            <xf:option value="{$userGroupId}" id="editor_input_{$tag}_val">
+                {$title}
+
+            </xf:option>
+        </xf:foreach>
+    </xf:checkboxrow>
+</xf:macro>
+
+<xf:macro name="hideuser" arg-tag="!">
+	<xf:tokeninputrow name="editor_hide" href="{{ link('members/find') }}"
+		inputclass="js-editor_input_{$tag}_val"
+		rowtype="fullWidth"
+		label="{{ phrase('xc_hide_bbcode_users') }}"
+		explain="{{ phrase('separate_names_with_comma') }}" />
+</xf:macro>
+
+<xf:macro name="hideposts" arg-tag="!">
+	<xf:numberboxrow id="editor_input_{$tag}_val" label="{{ phrase('xc_hide_bbcode_post_count') }}" explain="{{ phrase('xc_hide_bbcode_post_count_explain') }}"
+		min="0" step="1" max="1000" />
+</xf:macro>
+
+<xf:macro name="hideage" arg-tag="!">
+	<xf:numberboxrow id="editor_input_{$tag}_val" label="{{ phrase('xc_hide_bbcode_age_required') }}" explain="{{ phrase('xc_hide_bbcode_age_required_explain') }}"
+		min="0" step="1" max="100" />
+</xf:macro>
+
+<xf:macro name="hidetrophy" arg-tag="!">
+	<xf:numberboxrow id="editor_input_{$tag}_val" label="{{ phrase('xc_hide_bbcode_trophy_points') }}" explain="{{ phrase('xc_hide_bbcode_trophy_points_explain') }}"
+		min="1" step="1" max="1000" />
+</xf:macro>
+
+<xf:macro name="hidereactscore" arg-tag="!">
+	<xf:numberboxrow id="editor_input_{$tag}_val" label="{{ phrase('xc_hide_reaction_score') }}" explain="{{ phrase('xc_hide_reaction_score_explain') }}"
+		min="1" step="1" max="1000" />
+</xf:macro>]]></template>
+  <template type="public" title="xc_hide_bbcode_post_check_hide" version_id="2000792" version_string="2.0.7 Patch Level 2"><![CDATA[<xf:title>{{ prefix('thread', $thread, 'escaped') }}{$thread.title}</xf:title>
+<xf:h1>{{ prefix('thread', $thread) }}{$thread.title}</xf:h1>
+
+<xf:macro name="thread_view::thread_custom_fields_status"
+	arg-thread="{$thread}"
+	arg-forum="{$thread.Forum}"
+	arg-wrapperClass="block-outer" />
+
+<xf:if is="is_addon_active('UW/FCS')">
+    <xf:if is="$isPinnedFirstPost">
+        <xf:macro name="{{ $templateOverrides.pinned_first_post_macro ?: 'post_macros::post' }}"
+                  arg-post="{$post}"
+                  arg-thread="{$thread}"
+                  args="{$templateOverrides.pinned_first_post_macro_args}" />
+        <xf:else />
+        <xf:macro name="{{ $templateOverrides.post_macro ?: 'post_macros::post' }}"
+                  arg-post="{$post}"
+                  arg-thread="{$thread}"
+                  arg-comments="{$comments}"
+                  arg-commentsCount="{$commentsCount}"
+                  args="{$templateOverrides.post_macro_args}" />
+    </xf:if>
+<xf:else />
+    <xf:if is="$isPinnedFirstPost">
+        <xf:macro name="{{ $templateOverrides.pinned_first_post_macro ?: 'post_macros::post' }}"
+                  arg-post="{$post}"
+                  arg-thread="{$thread}"
+                  args="{$templateOverrides.pinned_first_post_macro_args}" />
+        <xf:else />
+        <xf:macro name="{{ $templateOverrides.post_macro ?: 'post_macros::post' }}"
+                  arg-post="{$post}"
+                  arg-thread="{$thread}"
+                  args="{$templateOverrides.post_macro_args}" />
+    </xf:if>
+</xf:if>]]></template>
+</templates>

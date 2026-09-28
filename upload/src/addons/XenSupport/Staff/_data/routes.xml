@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<routes>
+  <route route_type="admin" route_prefix="staff-badges" format=":int&lt;badge_id&gt;/" controller="XenSupport\Staff:Badge"/>
+  <route route_type="admin" route_prefix="xen-staff" controller="XenSupport\Staff:Staff"/>
+  <route route_type="public" route_prefix="account" sub_name="xs-staff-profile" format="xs-staff-profile" controller="XenSupport\Staff:Account"/>
+  <route route_type="public" route_prefix="staff" controller="XenSupport\Staff:Staff"/>
+  <route route_type="public" route_prefix="staff" sub_name="bio" format="bio/" controller="XenSupport\Staff:Pro" action_prefix="Bio"/>
+  <route route_type="public" route_prefix="staff" sub_name="contact" format="contact/:int&lt;user_id&gt;/" controller="XenSupport\Staff:Pro" action_prefix="Contact"/>
+  <route route_type="public" route_prefix="staff" sub_name="hours" format="hours/" controller="XenSupport\Staff:Pro" action_prefix="Hours"/>
+  <route route_type="public" route_prefix="staff" sub_name="inbox" format="inbox/" controller="XenSupport\Staff:Pro" action_prefix="Inbox"/>
+  <route route_type="public" route_prefix="staff" sub_name="message" format="message/:int&lt;contact_id&gt;/" controller="XenSupport\Staff:Pro" action_prefix="Message"/>
+  <route route_type="public" route_prefix="staff" sub_name="stats" format="stats/:int&lt;user_id&gt;/" controller="XenSupport\Staff:Pro" action_prefix="Stats"/>
+  <route route_type="public" route_prefix="staff" sub_name="thanks" format="thanks/:int&lt;user_id&gt;" controller="XenSupport\Staff:Staff" action_prefix="Thanks"/>
+</routes>

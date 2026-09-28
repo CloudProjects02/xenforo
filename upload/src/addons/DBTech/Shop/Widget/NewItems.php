@@ -2,25 +2,22 @@
 
 namespace DBTech\Shop\Widget;
 
-use DBTech\Shop\Entity\Category;
-use DBTech\Shop\Entity\Item;
-use DBTech\Shop\Finder\ItemFinder;
-use DBTech\Shop\Repository\CategoryRepository;
-use DBTech\Shop\Repository\ItemRepository;
-use DBTech\Shop\XF\Entity\User;
-use XF\Http\Request;
 use XF\Widget\AbstractWidget;
-use XF\Widget\WidgetRenderer;
 
+/**
+ * Class NewItems
+ *
+ * @package DBTech\Shop\Widget
+ */
 class NewItems extends AbstractWidget
 {
 	/** @var array */
 	protected $defaultOptions = [
 		'limit' => 5,
 		'style' => 'simple',
-		'category_ids' => [],
+		'category_ids' => []
 	];
-
+	
 	/**
 	 * @param string $context
 	 *
@@ -31,18 +28,19 @@ class NewItems extends AbstractWidget
 		$params = parent::getDefaultTemplateParams($context);
 		if ($context == 'options')
 		{
-			$categoryRepo = \XF::app()->repository(CategoryRepository::class);
+			/** @var \DBTech\Shop\Repository\Category $categoryRepo */
+			$categoryRepo = $this->app->repository('DBTech\Shop:Category');
 			$params['categoryTree'] = $categoryRepo->createCategoryTree($categoryRepo->findCategoryList()->fetch());
 		}
 		return $params;
 	}
-
+	
 	/**
-	 * @return string|WidgetRenderer
+	 * @return string|\XF\Widget\WidgetRenderer
 	 */
-	public function render(): string|WidgetRenderer
+	public function render()
 	{
-		/** @var User $visitor */
+		/** @var \DBTech\Shop\XF\Entity\User $visitor */
 		$visitor = \XF::visitor();
 		if (!method_exists($visitor, 'canViewDbtechShopItems') || !$visitor->canViewDbtechShopItems())
 		{
@@ -52,25 +50,25 @@ class NewItems extends AbstractWidget
 		$options = $this->options;
 		$limit = $options['limit'];
 		$categoryIds = $options['category_ids'];
-
+		
 		$hasCategoryIds = ($categoryIds && !in_array(0, $categoryIds));
 		$hasCategoryContext = (
 			isset($this->contextParams['category'])
-			&& $this->contextParams['category'] instanceof Category
+			&& $this->contextParams['category'] instanceof \DBTech\Shop\Entity\Category
 		);
 		$useContext = false;
-
+		
 		if (!$hasCategoryIds && $hasCategoryContext)
 		{
-			/** @var Category $category */
+			/** @var \DBTech\Shop\Entity\Category $category */
 			$category = $this->contextParams['category'];
 			$viewableDescendents = $category->getViewableDescendants();
 			$sourceCategoryIds = array_keys($viewableDescendents);
 			$sourceCategoryIds[] = $category->category_id;
-
+			
 			$useContext = true;
 		}
-		else if ($hasCategoryIds)
+		elseif ($hasCategoryIds)
 		{
 			$sourceCategoryIds = $categoryIds;
 		}
@@ -78,12 +76,13 @@ class NewItems extends AbstractWidget
 		{
 			$sourceCategoryIds = null;
 		}
-
-		$itemRepo = \XF::app()->repository(ItemRepository::class);
-
-		/** @var ItemFinder $finder */
+		
+		/** @var \DBTech\Shop\Repository\Item $itemRepo */
+		$itemRepo = $this->repository('DBTech\Shop:Item');
+		
+		/** @var \DBTech\Shop\Finder\Item $finder */
 		$finder = $itemRepo->findNewItems($sourceCategoryIds);
-
+		
 		if (!$useContext)
 		{
 			// with the context, we already fetched the category and permissions
@@ -97,7 +96,7 @@ class NewItems extends AbstractWidget
 
 		$items = $finder->fetch(max($limit * 2, 10));
 
-		/** @var Item $item */
+		/** @var \DBTech\Shop\Entity\Item $item */
 		foreach ($items AS $itemId => $item)
 		{
 			if (!$item->canView() || $visitor->isIgnoring($item->user_id))
@@ -109,7 +108,7 @@ class NewItems extends AbstractWidget
 		$total = $items->count();
 		$items = $items->slice(0, $limit);
 
-		$router = \XF::app()->router('public');
+		$router = $this->app->router('public');
 		$link = $router->buildLink('whats-new/shop-items', null, ['skip' => 1]);
 
 		$viewParams = [
@@ -117,24 +116,24 @@ class NewItems extends AbstractWidget
 			'link' => $link,
 			'items' => $items,
 			'style' => $options['style'],
-			'hasMore' => $total > $items->count(),
+			'hasMore' => $total > $items->count()
 		];
 		return $this->renderer('dbtech_shop_widget_new_items', $viewParams);
 	}
-
+	
 	/**
-	 * @param Request $request
+	 * @param \XF\Http\Request $request
 	 * @param array $options
 	 * @param null $error
 	 *
 	 * @return bool
 	 */
-	public function verifyOptions(Request $request, array &$options, &$error = null): bool
+	public function verifyOptions(\XF\Http\Request $request, array &$options, &$error = null): bool
 	{
 		$options = $request->filter([
 			'limit' => 'uint',
 			'style' => 'str',
-			'category_ids' => 'array-uint',
+			'category_ids' => 'array-uint'
 		]);
 		if ($options['limit'] < 1)
 		{

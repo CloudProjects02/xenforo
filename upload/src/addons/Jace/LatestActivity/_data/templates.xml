@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="public" title="jace_userlatestactivity" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[<xf:css src="jace_userlatestactivity.less" />
+<xf:if is="count($latestactivity)">
+ <div class="block">
+		<div class="block-container">
+			<h2 class="block-minorHeader">{{ phrase('xc_title_profilethread') }}</h2>
+			<ol class="block-body">
+			<xf:foreach loop="$profileThreads"  value="$thread" i="$i">
+				<div class="main-profile-thread">
+						<div class="thread-profile"><a href="{{ link('threads', $thread) }}" class="profile-thread-title"><span class="profile-thread-prefix">{{ prefix('thread', $thread, 'html', '') }}</span>&nbsp;{{$thread.title}}</a></div>
+						<div class="thread-forum"><a href="{{ link('forums', $thread.Forum) }}" class="forum-title">{{$thread.Forum.title}}</a></div>
+				</div>
+				</xf:foreach>
+			</ol>
+		</div>
+	</div>
+</xf:if>]]></template>
+  <template type="public" title="jace_userlatestactivity.less" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[.main-profile-thread {
+    display: flex;
+    flex-wrap: wrap;
+	padding: 10px;
+}
+
+.thread-profile {
+    flex-grow: 1;
+	font-weight:600;
+}
+
+.profile-thread-prefix {
+	
+	padding:2px 5px;
+	margin-right:3px;
+}
+
+.thread-forum {
+	font-size:12px;
+	
+}
+
+.forum-title {
+	text-decoration:none !important;
+}
+
+.profile-thread-title {
+	text-decoration:none !important;
+}]]></template>
+</templates>

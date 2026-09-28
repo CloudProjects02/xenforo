@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget_definitions>
+  <widget_definition definition_id="siropu_eub_expiring_bans" definition_class="Siropu\EasyUserBan\Widget\ExpiringBans"/>
+  <widget_definition definition_id="siropu_eub_recent_bans" definition_class="Siropu\EasyUserBan\Widget\RecentBans"/>
+</widget_definitions>
+ 		  	   				  		 	 	  	  	  		 	  	   			   	  		 			 		 				  		 				   		 				 		  	 	 	   		  			   	 		 	  		 		  	 	 	  		  	 

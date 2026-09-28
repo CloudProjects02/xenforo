@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="account_visitor_menu" modification_key="eae_tc_visitor_panel_row" description="Inserts the user thread count above the message count." execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:stats_pairs:above_messages]-->]]></find>
+    <replace><![CDATA[$0
+<xf:include template="eae_tc_visitor_panel_insert" />]]></replace>
+  </modification>
+  <modification type="public" template="forum_view" modification_key="eae_tc_forum_view_warning" description="Informs members of the amount of threads required to create a topic, or view others content." execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:if is="$pendingApproval">]]></find>
+    <replace><![CDATA[<xf:include template="eae_tc_forum_view_mod" />
+$0]]></replace>
+  </modification>
+  <modification type="admin" template="helper_criteria" modification_key="eae_tc_helper_criteria_thread_count" description="Adds the thread counts criteria." execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:user:content_after_messages]-->]]></find>
+    <replace><![CDATA[$0
+<xf:option name="user_criteria[thread_count][rule]" value="thread_count" selected="{$criteria.thread_count}"
+	label="{{ phrase('eae_tc_user_has_created_at_least_x_threads:') }}">
+	<xf:numberbox name="user_criteria[thread_count][data][threads]" value="{$criteria.thread_count.threads}"
+		size="5" min="0" step="1" />
+</xf:option>
+<xf:option name="user_criteria[thread_maximum][rule]" value="thread_maximum" selected="{$criteria.thread_maximum}"
+	label="{{ phrase('eae_tc_user_has_created_no_more_than_x_threads:') }}">
+	<xf:numberbox name="user_criteria[thread_maximum][data][threads]" value="{$criteria.thread_maximum.threads}"
+		size="5" min="0" step="1" />
+</xf:option>]]></replace>
+  </modification>
+  <modification type="admin" template="helper_user_search_criteria" modification_key="eae_tc_helper_user_search_criteria_thread" description="Inserts a template for thread count selection." execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[#<xf:formrow rowtype="input".*.message_count_between.*<\/xf:formrow>#sU
+
+]]></find>
+    <replace><![CDATA[$0
+<xf:include template="eae_tc_thread_search_options" />]]></replace>
+  </modification>
+  <modification type="public" template="member_list_macros" modification_key="eae_tc_member_list_macros_thread_count" description="Adds the thread count to the member list page." execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:stats:start]-->]]></find>
+    <replace><![CDATA[$0
+<xf:include template="eae_tc_member_list_macros_insert" />]]></replace>
+  </modification>
+  <modification type="public" template="member_macros" modification_key="eae_tc_member_macros_thread_count" description="Inserts the thread count into the member macros." execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:stat_pairs:above_messages]-->]]></find>
+    <replace><![CDATA[$0
+<xf:include template="eae_tc_member_macros_insert" />]]></replace>
+  </modification>
+  <modification type="public" template="message_macros" modification_key="eae_tc_message_macros_thread_count" description="Adds the thread count to the message user elements if selected in the style properties." execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:if is="$extras.message_count">]]></find>
+    <replace><![CDATA[<xf:if is="$extras.thread_count">
+	<xf:include template="eae_tc_message_macros_insert" />
+</xf:if>
+$0]]></replace>
+  </modification>
+  <modification type="admin" template="style_property_template_messageUserElements" modification_key="eae_tc_style_property_thread_count" description="Adds the thread count to the style properties message user elements." execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[#<xf:option name="{\$formBaseKey}\[register_date\]".*.\'registration_date\'.*<\/xf:option>#sU]]></find>
+    <replace><![CDATA[$0
+<xf:option name="{$formBaseKey}[thread_count]" selected="{$property.property_value.thread_count}">
+	{{ phrase('eae_tc_total_threads') }}
+</xf:option>]]></replace>
+  </modification>
+  <modification type="public" template="thread_view" modification_key="eae_tc_thread_view_warning" description="Informs members of the amount of threads required to reply." execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:content_top]-->]]></find>
+    <replace><![CDATA[<xf:set var="$replyCount" value="{{ $xf.visitor.hasNodePermission($forum.node_id, 'replyThreadCount') }}" />
+<xf:if is="$replyCount AND $xf.visitor.eaetc_thread_count < $replyCount">
+	<div class="blockMessage blockMessage--important">{{ phrase('eae_tc_you_need_x_threads_to_reply', {'count': $replyCount - $xf.visitor.eaetc_thread_count}) }}</div>
+</xf:if>
+$0]]></replace>
+  </modification>
+  <modification type="admin" template="tools_rebuild" modification_key="eae_tc_tools_rebuild" description="Append thread count rebuilds to the end of the tools_rebuild template." execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:rebuild_bottom]-->]]></find>
+    <replace><![CDATA[$0
+<xf:include template="eae_tc_tools_rebuild" />]]></replace>
+  </modification>
+  <modification type="admin" template="user_edit" modification_key="eae_tc_user_edit_thread_count" description="Adds in the thread count edit field to the user edit form." execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:numberboxrow name="user[message_count]"]]></find>
+    <replace><![CDATA[<xf:numberboxrow name="user[eaetc_thread_count]" value="{$user.eaetc_thread_count}" min="0"
+	label="{{ phrase('threads') }}" />
+$0]]></replace>
+  </modification>
+</template_modifications>

@@ -2,40 +2,39 @@
 
 namespace DBTech\Shop\InlineMod\Item;
 
-use DBTech\Shop\Entity\Item;
-use DBTech\Shop\Service\Item\DeleteService;
 use XF\Http\Request;
 use XF\InlineMod\AbstractAction;
-use XF\Mvc\Controller;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
-use XF\Mvc\Reply\AbstractReply;
-use XF\Phrase;
-use XF\PrintableException;
 
+/**
+ * Class Delete
+ *
+ * @package DBTech\Shop\InlineMod\Item
+ */
 class Delete extends AbstractAction
 {
 	/**
-	 * @return Phrase
+	 * @return \XF\Phrase
 	 */
-	public function getTitle(): Phrase
+	public function getTitle(): \XF\Phrase
 	{
 		return \XF::phrase('dbtech_shop_delete_items...');
 	}
-
+	
 	/**
 	 * @param Entity $entity
 	 * @param array $options
 	 * @param null $error
 	 *
-	 * @return bool
+	 * @return bool|mixed
 	 */
 	protected function canApplyToEntity(Entity $entity, array $options, &$error = null): bool
 	{
-		/** @var Item $entity */
+		/** @var \DBTech\Shop\Entity\Item $entity */
 		return $entity->canDelete($options['type'], $error);
 	}
-
+	
 	/**
 	 * @param Entity $entity
 	 * @param array $options
@@ -43,13 +42,14 @@ class Delete extends AbstractAction
 	 * @throws \InvalidArgumentException
 	 * @throws \LogicException
 	 * @throws \Exception
-	 * @throws PrintableException
+	 * @throws \XF\PrintableException
 	 */
-	protected function applyToEntity(Entity $entity, array $options): void
+	protected function applyToEntity(Entity $entity, array $options)
 	{
-		/** @var Item $entity */
-
-		$deleter = \XF::app()->service(DeleteService::class, $entity);
+		/** @var \DBTech\Shop\Entity\Item $entity */
+		
+		/** @var \DBTech\Shop\Service\Item\Delete $deleter */
+		$deleter = $this->app()->service('DBTech\Shop:Item\Delete', $entity);
 
 		if ($options['alert'])
 		{
@@ -60,10 +60,10 @@ class Delete extends AbstractAction
 
 		if ($options['type'] == 'hard')
 		{
-			$this->returnUrl = \XF::app()->router()->buildLink('dbtech-shop/categories', $entity->Category);
+			$this->returnUrl = $this->app()->router()->buildLink('dbtech-shop/categories', $entity->Category);
 		}
 	}
-
+	
 	/**
 	 * @return array
 	 */
@@ -73,26 +73,26 @@ class Delete extends AbstractAction
 			'type' => 'soft',
 			'reason' => '',
 			'alert' => false,
-			'alert_reason' => '',
+			'alert_reason' => ''
 		];
 	}
-
+	
 	/**
 	 * @param AbstractCollection $entities
-	 * @param Controller $controller
+	 * @param \XF\Mvc\Controller $controller
 	 *
-	 * @return AbstractReply
+	 * @return \XF\Mvc\Reply\AbstractReply
 	 */
-	public function renderForm(AbstractCollection $entities, Controller $controller): AbstractReply
+	public function renderForm(AbstractCollection $entities, \XF\Mvc\Controller $controller): \XF\Mvc\Reply\AbstractReply
 	{
 		$viewParams = [
 			'items' => $entities,
 			'total' => count($entities),
-			'canHardDelete' => $this->canApply($entities, ['type' => 'hard']),
+			'canHardDelete' => $this->canApply($entities, ['type' => 'hard'])
 		];
 		return $controller->view('DBTech\Shop:Public:InlineMod\Item\Delete', 'inline_mod_dbtech_shop_item_delete', $viewParams);
 	}
-
+	
 	/**
 	 * @param AbstractCollection $entities
 	 * @param Request $request
@@ -105,7 +105,7 @@ class Delete extends AbstractAction
 			'type' => $request->filter('hard_delete', 'bool') ? 'hard' : 'soft',
 			'reason' => $request->filter('reason', 'str'),
 			'alert' => $request->filter('author_alert', 'bool'),
-			'alert_reason' => $request->filter('author_alert_reason', 'str'),
+			'alert_reason' => $request->filter('author_alert_reason', 'str')
 		];
 	}
 }

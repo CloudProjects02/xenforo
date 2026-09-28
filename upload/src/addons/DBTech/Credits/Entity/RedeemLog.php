@@ -3,6 +3,7 @@
 namespace DBTech\Credits\Entity;
 
 use XF\Entity\User;
+use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 
 /**
@@ -21,7 +22,7 @@ use XF\Mvc\Entity\Structure;
  * @property-read Event|null $Event
  * @property-read Currency|null $Currency
  */
-class RedeemLog extends AbstractEntity
+class RedeemLog extends Entity
 {
 	/**
 	 * @param Structure $structure
@@ -40,7 +41,7 @@ class RedeemLog extends AbstractEntity
 			'redeem_code' => ['type' => self::STR, 'maxLength' => 255, 'required' => true],
 			'event_id' => ['type' => self::UINT, 'required' => true],
 			'currency_id' => ['type' => self::UINT, 'required' => true],
-			'amount' => ['type' => self::FLOAT, 'required' => true, 'isDecimal' => true],
+			'amount' => ['type' => self::FLOAT, 'required' => true],
 			'message' => ['type' => self::STR, 'default' => ''],
 		];
 		$structure->getters = [];

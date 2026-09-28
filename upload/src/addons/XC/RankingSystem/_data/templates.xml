@@ -1,0 +1,938 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="badge_edit" version_id="1040010" version_string="1.4.0 Alpha"><![CDATA[<xf:if is="$Badge.isInsert()">
+	<xf:title>{{ phrase('xc_add_bade') }}</xf:title>
+<xf:else />
+	<xf:title>{{ phrase('xc_edit_bade:') }} {$awardBadge.title}</xf:title>
+</xf:if>
+
+<xf:pageaction if="$Badge.isUpdate()">
+	<xf:button href="{{ link('badge/delete',$Badge) }}" icon="delete" overlay="true" />
+</xf:pageaction>
+ 
+<xf:form action="{{ link('badge/save',$Badge) }}" ajax="true" class="block">
+
+	 <xf:include template="helper_criteria_badge" />
+</xf:form>]]></template>
+  <template type="admin" title="badge_list" version_id="2020420" version_string="2.2.4 Alpha"><![CDATA[<xf:title>{{ phrase('xc_badges') }}</xf:title>
+<xf:pageaction>
+     <xf:button href="{{ link('award-badge') }}" icon="user">{{ phrase('xc_award_badge') }}</xf:button>
+    <xf:button href="{{ link('badge/add') }}" icon="add">{{ phrase('add_award') }}</xf:button>
+</xf:pageaction>
+
+<xf:if is="$badges is not empty">
+	<div class="block">
+		<div class="block-outer">
+			<xf:macro template="filter_macros" name="quick_filter" arg-key="awardlist" arg-class="block-outer-opposite" />
+		</div>
+		<div class="block-container">
+			<div class="block-body">
+				<xf:datalist>
+					<xf:foreach loop="$badges" value="$badge">
+						<xf:datarow
+							label="{$badge.title}"
+							href="{{ link('badge/edit', $badge) }}"
+							delete="{{ link('badge/delete', $badge) }}" />
+					</xf:foreach>
+				</xf:datalist>
+			</div>
+			<div class="block-footer">
+				<span class="block-footer-counter">{{ display_totals($badges) }}</span>
+			</div>
+		</div>
+	</div>
+<xf:else />
+	<div class="blockMessage">{{ phrase('no_badge_have_been_created_yet') }}</div>
+</xf:if>
+<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+		link="badge" params="{$filters}"
+		wrapperclass="block-outer block-outer--after" />]]></template>
+  <template type="admin" title="experience_point_edit" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[<xf:if is="$expPoint.isInsert()">
+	<xf:title>{{ phrase('xc_add_xp') }}</xf:title>
+<xf:else />
+	<xf:title>{{ phrase('xc_edit_xp:') }} {$expPoint.title}</xf:title>
+</xf:if>
+
+<xf:pageaction if="$expPoint.isUpdate()">
+	<xf:button href="{{ link('trophies/delete', $expPoint) }}" icon="delete" overlay="true" />
+</xf:pageaction>
+
+ <xf:form action="{{ link('exp-point/save',$expPoint) }}" ajax="true" class="block">
+	<xf:include template="helper_criteria_exp_point"/>
+</xf:form>]]></template>
+  <template type="admin" title="experience_point_list" version_id="2020420" version_string="2.2.4 Alpha"><![CDATA[<xf:pageaction>
+    <xf:button href="{{ link('award-xp') }}" icon="user">{{ phrase('xc_award_points') }}</xf:button>
+    <xf:button href="{{ link('exp-point/add') }}" icon="add">{{ phrase('xc_add_exp_point') }}</xf:button>
+</xf:pageaction>
+
+<xf:if is="$expPoints is not empty">
+	<div class="block">
+		<div class="block-outer">
+			<xf:macro template="filter_macros" name="quick_filter" arg-key="exppoints" arg-class="block-outer-opposite" />
+		</div>
+		<div class="block-container">
+			<div class="block-body">
+				<xf:datalist>
+					<xf:foreach loop="$expPoints" value="$expPoint">
+						<xf:datarow
+							label="{$expPoint.title}"
+						    hint="{{ phrase('points:') }} {$expPoint.points}"
+							href="{{ link('exp-point/edit', $expPoint) }}"
+							delete="{{ link('exp-point/delete', $expPoint) }}" />
+					</xf:foreach>
+				</xf:datalist>
+			</div>
+			<div class="block-footer">
+				<span class="block-footer-counter">{{ display_totals($expPoints) }}</span>
+			</div>
+		</div>
+	</div>
+<xf:else />
+	<div class="blockMessage">{{ phrase('no_points_have_been_created_yet') }}</div>
+</xf:if>
+<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+		link="exp-point" params="{$filters}"
+		wrapperclass="block-outer block-outer--after" />]]></template>
+  <template type="admin" title="helper_criteria_badge" version_id="2020520" version_string="2.2.5 Alpha"><![CDATA[<xf:css src="rs_tabs.less" />
+            
+<div class="block-container">
+                    <h2 class="block-tabHeader tabs" data-xf-init="tabs" role="tablist">
+                        <a class="tabs-tab is-active" role="tab" tabindex="0" aria-controls="options1">{{ phrase('xc_award_badge') }}</a>
+                        <a class="tabs-tab" role="tab" tabindex="0" aria-controls="options2">{{ phrase('xc_badge_criteria') }}</a>
+                    </h2>
+                    <ul class="tabPanes">
+                        <li class="is-active" role="tabpanel" id="options1">
+							<xf:include template="xc_badge"/>
+                           
+                        </li>
+                        <li role="tabpanel" id="options2">
+                            <div class="block-body">
+									<xf:macro template="xc_badge_critera" name="badge_panes"
+										arg-Badge="{{ $userCriteria.getCriteriaForTemplate() }}"
+										arg-data="{{ $userCriteria.getExtraTemplateData() }}"
+										arg-nodeTree="{$nodeTree}"	  
+											  />
+                            </div>
+                        </li>
+                       
+                      
+                    </ul>
+                    <xf:submitrow sticky="true" icon="save" />
+ </div>]]></template>
+  <template type="admin" title="helper_criteria_exp_point" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[<xf:css src="rs_tabs.less" />
+           
+                <div class="block-container">
+                    <h2 class="block-tabHeader tabs" data-xf-init="tabs" role="tablist">
+                        <a class="tabs-tab is-active" role="tab" tabindex="0" aria-controls="options1">{{ phrase('xc_experience_points') }}</a>
+                        <a class="tabs-tab" role="tab" tabindex="0" aria-controls="options2">{{ phrase('xc_award_points') }}</a>
+                    </h2>
+                    <ul class="tabPanes">
+                        <li class="is-active" role="tabpanel" id="options1">
+							<xf:include template="xc_experience_point"/>
+                           
+                        </li>
+                        <li role="tabpanel" id="options2">
+                            <div class="block-body">
+								<xf:include template="xc_award_this_experience_point"/>
+                            </div>
+                        </li>
+                        
+                      
+                    </ul>
+                    <xf:submitrow sticky="true" icon="save" />
+                </div>]]></template>
+  <template type="admin" title="import_level" version_id="1010010" version_string="1.1.0 Alpha"><![CDATA[<xf:title>{{ phrase('xc_upload_file') }}</xf:title>
+
+<xf:form action="{{ link('levels/doimport',null) }}" ajax="true" class="block" >	
+	
+	<div class="block-container">
+			<div class="block-body">
+				
+				<div class="contentRow">
+					<div class="contentRow-main">
+ 		
+			
+					<xf:uploadrow name="csv_file" accept=".xlsx,.xls" required="true"
+				label="{{ phrase('xc_upload_csv_file') }}"  />
+						
+				
+
+					</div>
+				</div>
+			</div>
+			<xf:submitrow icon="save" rowtype="simple" />
+		</div>
+	</xf:form>]]></template>
+  <template type="admin" title="level_edit" version_id="2040520" version_string="2.4.5 Alpha"><![CDATA[<xf:if is="$level.isInsert()">
+	<xf:title>{{ phrase('xc_level_add') }}</xf:title>
+<xf:else />
+	<xf:title>{{ phrase('xc_level_edit:') }} {$level.level}</xf:title>
+</xf:if>
+
+<xf:form action="{{ link('levels/save', $level) }}" ajax="true" class="block" enctype="multipart/form-data">	
+	
+	<div class="block-container">
+			<div class="block-body">
+				<xf:formrow label="{{ phrase('xc_level') }}">
+					<xf:numberbox name="level" value="{$level.level}"
+						size="5" min="0" step="1" />
+				</xf:formrow>
+				<xf:formrow label="{{ phrase('xc_exp_points') }}">
+						<xf:numberbox name="exp_points" value="{$level.exp_points}"
+						size="5" min="0" step="1" />
+				</xf:formrow>
+				
+				<xf:formrow label="{{ phrase('level_badge_image') }}" explain="{{ phrase('level_badge_image_explain') }}">
+					<xf:upload name="badge_image" accept=".svg,.png,.jpg,.jpeg,.gif" />
+					<xf:if is="!$level.isInsert() AND $level.LevelBadge AND $level.LevelBadge.getImageExists()">
+						<div class="formRow-explain">
+							<img src="{$level.LevelBadge.getImgPath()}" alt="Current badge" style="max-width: 100px; max-height: 100px;" />
+						</div>
+					</xf:if>
+				</xf:formrow>
+				
+			</div>
+			<xf:submitrow icon="save" rowtype="simple" />
+		</div>
+	</xf:form>]]></template>
+  <template type="admin" title="level_list" version_id="1040010" version_string="1.4.0 Alpha"><![CDATA[<xf:title>{{ phrase('xc_levels') }}</xf:title>
+
+<xf:pageaction>
+	<xf:button href="{{ link('levels/add') }}" overlay="true" icon="add">{{ phrase('xc_add_level') }}</xf:button>
+	<xf:button href="{{ link('levels/import') }}" overlay="true" icon="add">{{ phrase('xc_import_level') }}</xf:button>
+</xf:pageaction>
+<xf:if is="$doc">
+<xf:inforow>
+	<div class="blockMessage blockMessage--important blockMessage--iconic">{{ phrase('xc_file_is_impmorting', {'doc': $doc.doc_title}) }}</div>
+</xf:inforow>
+</xf:if>
+<div class="block-container">
+		<xf:if is="$levellist is not empty">
+			<div class="block-body">
+				
+				<xf:datalist data-xf-init="responsive-data-list">
+					<xf:datarow rowtype="header">
+						<xf:cell>{{ phrase('xc_level') }}</xf:cell>
+						<xf:cell>{{ phrase('xc_experience_point') }}</xf:cell>
+						<xf:cell class="dataList-cell--min">&nbsp;</xf:cell>
+						<xf:cell class="dataList-cell--min">&nbsp;</xf:cell>
+					</xf:datarow>
+					<xf:foreach loop="$levellist" value="$levelone">
+						<xf:datarow>
+							<xf:cell>{$levelone.level}</xf:cell>
+							<xf:cell>{$levelone.exp_points}</xf:cell>
+							<xf:action href="{{ link('levels/edit', $levelone) }}" overlay="true">{{ phrase('edit') }}</xf:action>
+							<xf:delete href="{{ link('levels/delete', $levelone) }}" />
+						</xf:datarow>
+					</xf:foreach>
+				</xf:datalist>
+			</div>
+			<div class="block-footer">
+				<span class="block-footer-counter">{{ display_totals($levellist, $total) }}</span>
+			</div>
+		<xf:else />
+			<div class="block-body block-row">{{ phrase('no_results_found') }}</div>
+		</xf:if>
+	</div>
+
+	<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+		link="levels" params="{$filters}"
+		wrapperclass="block-outer block-outer--after" />]]></template>
+  <template type="admin" title="rs_tabs.less" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[@media (max-width: 900px) {
+            h2.tabs {
+            display:inline-block !important;
+            }
+            }]]></template>
+  <template type="admin" title="xc_award_badge_user" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[<xf:title>{{ phrase('xc_award_badge') }}</xf:title>
+
+<xf:form action="{{ link('award-badge') }}" class="block" ajax="true">
+    <div class="block-container">
+        <div class="block-body">
+			
+            <xf:if is="$awardBadge && $awardBadge.isUpdate()">
+				<xf:textboxrow name="usernames" value="{$username}" label="{{ phrase('user') }}" readonly="true"/>
+				<xf:radiorow name="update_badge" label="{{phrase('xc_badges')}}" >
+
+						<xf:foreach loop="$badges" value="$badge">
+
+
+										<xf:option value="{$badge.badge_id}" selected="{{$badge.badge_id==$awardBadge.badge_id}}">{$badge.title}</xf:option>
+
+
+
+						</xf:foreach>
+				</xf:radiorow>
+			<xf:else/>
+				<xf:textboxrow name="usernames" ac="true" value="{$username}" label="{{ phrase('users') }}"/>
+			
+			
+					<xf:checkboxrow name="badges" label="{$category.title}" >
+
+					<xf:foreach loop="$badges" value="$badge">
+
+
+									<xf:option value="{$badge.badge_id}" selected="{{$badge.badge_id==$awardBadge.badge_id}}">{$badge.title}</xf:option>
+
+
+
+					</xf:foreach>
+				</xf:checkboxrow>
+            </xf:if>
+          <input type="hidden" name ="past_award_badge_id" value={{$awardBadge.award_badge_id}} />
+        </div>
+        <xf:submitrow  icon="apply"/>
+    </div>
+</xf:form>]]></template>
+  <template type="admin" title="xc_award_experience_point" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[<xf:title>{{ phrase('xc_award_xp') }}</xf:title>
+
+<xf:form action="{{ link('award-xp') }}" class="block" ajax="true">
+    <div class="block-container">
+        <div class="block-body">
+			
+			<xf:if is="$awardXp && $awardXp.isUpdate()">
+				<xf:textboxrow name="usernames" value="{$username}" label="{{ phrase('users') }}" readonly="true"/>
+			
+				
+			<xf:else/>
+				<xf:textboxrow name="usernames" ac="true" value="{$username}" label="{{ phrase('users') }}"/>
+			</xf:if>
+            
+			
+		
+			<input type="hidden" name ="past_award_xp_id" value={{$awardXp.award_xp_id}} />
+			<xf:checkboxrow name="exppoints" label="{$category.title}" >
+                      
+            <xf:foreach loop="$expPoints" value="$expPoint">
+                
+                    
+                            <xf:option value="{$expPoint.xp_id}" selected="{{$expPoint.xp_id==$awardXp.xp_id}}">{$expPoint.title}</xf:option>
+                        
+                   
+                
+            </xf:foreach>
+ 		</xf:checkboxrow>
+            
+
+        </div>
+        <xf:submitrow  icon="apply"/>
+    </div>
+</xf:form>]]></template>
+  <template type="admin" title="xc_award_this_experience_point" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[<xf:radiorow name="point_type" label="{{ phrase('xc_achievements_base') }}">
+			
+	           <xf:option name="point_type" value="create_thread" selected="{{$expPoint.point_type=='create_thread'}}"
+					label="{{ phrase('xc_user_has_create_thread') }}">
+				
+				</xf:option>
+	         
+	           <xf:option name="point_type" value="create_post" selected="{{$expPoint.point_type=='create_post'}}"
+					label="{{ phrase('xc_user_has_create_post') }}">
+					
+				</xf:option>
+	
+				<xf:option name="point_type" value="x_thread_replies" selected="{{$expPoint.point_type=='x_thread_replies'}}"
+					label="{{ phrase('xc_user_has_posted_at_least_x_messages:') }}" data-hide="true">
+					<xf:dependent>
+					<xf:numberbox name="point_depend" value="{$expPoint.point_depend}"
+						size="5" min="0" step="1" />
+					</xf:dependent>
+				</xf:option>
+
+				
+
+				<xf:option name="point_type" value="positive_feedback" selected="{{$expPoint.point_type=='positive_feedback'}}"
+					label="{{ phrase('xc_receving_positive_feedback') }}">
+					
+				</xf:option>
+
+			
+				<xf:option name="point_type" value="positive_reputation" selected="{{$expPoint.point_type=='positive_reputation'}}"
+					label="{{ phrase('xc_receving_positive_reputation') }}">
+				
+				</xf:option>
+
+				<xf:option name="point_type" value="like_post" selected="{{$expPoint.point_type=='like_post'}}"
+					label="{{ phrase('xc_receving_like_on_post') }}">
+					
+				</xf:option>
+
+				
+				<xf:option name="point_type" value="visit_site" selected="{{$expPoint.point_type=='visit_site'}}"
+					label="{{ phrase('xc_visiting_site_per_day') }}">
+				
+				</xf:option>
+
+				<xf:option name="point_type" value="solve_answer" selected="{{$expPoint.point_type=='solve_answer'}}"
+					label="{{ phrase('xc_post_mark_as_solved_answer') }}">
+					
+				</xf:option>
+
+				
+
+</xf:radiorow>]]></template>
+  <template type="admin" title="xc_award_xp_delete" version_id="1030010" version_string="1.3.0 Alpha"><![CDATA[<xf:title>{{ phrase('confirm_action') }}</xf:title>
+
+<xf:form action="{{ link('exp-point/award-delete') }}" ajax="true" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:inforow rowtype="confirm">
+				{{ phrase('are_your_sure_to_unaward_point:') }}
+				<strong><a href="{{ link('exp-point/awardedit', null,{'user_id': $user_id,'xp_id': $xp_id}) }}">{$user}</a></strong>
+			</xf:inforow>
+		</div>
+		<xf:submitrow rowtype="simple" icon="delete" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="xc_badge" version_id="1060010" version_string="1.6.0 Alpha"><![CDATA[<div class="block-body">
+	
+		<xf:textboxrow name="title"  value ="{{$Badge.title ?: ''}}"label="{{ phrase('xc_award_title') }}"/>
+        <xf:numberboxrow name="display_order" min="0" value ="{{$Badge.display_order ?: 0}}" label="{{ phrase('display_order') }}"  />
+	    
+	    <xf:textarearow name="description" value ="{{$Badge.description ?: ''}}" autosize="true" label="{{ phrase('xc_award_des') }}"
+						 />
+	
+	<xf:if is="$Badge.isUpdate()">
+		<xf:if is="$Badge.getimageExit()">
+							<xf:inforow rowtype="confirm">
+								<img src="{$Badge.getImgPath()}" style="width:80px;height:60px" >
+							</xf:inforow>
+		</xf:if>
+	</xf:if>
+	<xf:formrow label="{{ phrase('xc_badge_upload_svg') }}">
+       <xf:upload name="badge_svg"  accept=".gif,.jpeg,.jpg,.jpe,.png,.svg" />
+	</xf:formrow>
+</div>]]></template>
+  <template type="admin" title="xc_badge_categories" version_id="2020520" version_string="2.2.5 Alpha"><![CDATA[<xf:macro name="select_forums"
+	arg-nodeIds="!"
+	arg-nodeTree="!"
+	arg-withRow="1"
+	arg-selectName="">
+
+	<xf:set var="$inner">
+		<ul class="inputList">
+			<li><xf:select name="{$selectName}" value="{$nodeIds}" size="7" multiple="multiple" id="js-applicableForums">
+
+				<xf:option value="" selected="!{$nodeIds}">{{ phrase('(none)') }}</xf:option>
+
+				<xf:foreach loop="$nodeTree.getFlattened(0)" value="$treeEntry">
+					<xf:option value="{$treeEntry.record.node_id}"
+						disabled="{{ $treeEntry.record.node_type_id != 'Forum' }}"
+						label="{{ repeat('&nbsp;&nbsp;', $treeEntry.depth)|raw }} {$treeEntry.record.title}" />
+				</xf:foreach>
+
+			</xf:select></li>
+
+		</ul>
+	</xf:set>
+
+	<xf:if is="$withRow">
+		<xf:formrow rowtype="input" label="{{ phrase('applicable_forums') }}">
+			{$inner|raw}
+		</xf:formrow>
+	<xf:else />
+		{$inner|raw}
+	</xf:if>
+
+
+</xf:macro>]]></template>
+  <template type="admin" title="xc_badge_critera" version_id="2030120" version_string="2.3.1 Alpha"><![CDATA[<xf:macro name="badge_panes"  arg-Badge="!" arg-data="!" arg-nodeTree="">
+
+<xf:checkboxrow label="{{ phrase('xc_award_badge_criteria') }}">	
+  <xf:option name="user_criteria[reach_xp][rule]" value="reach_xp" 
+			   selected="{$Badge.reach_xp}"
+			   label="{{ phrase('xc_reach_experience_points:') }}" data-hide="true">
+	  <xf:dependent>
+			<xf:numberbox name="user_criteria[reach_xp][data][num]" 
+						  value="{$Badge.reach_xp.num}"
+						  size="5" min="0" step="1" />
+	  </xf:dependent>
+	</xf:option>
+	
+	<xf:option name="user_criteria[thread_categories][rule]" value="thread_categories" 
+			   selected="{$Badge.thread_categories}"
+			   label="{{ phrase('xc_x_make_thread_categories:') }}" data-hide="true">
+		<xf:dependent>
+				<xf:numberbox name="user_criteria[thread_categories][data][num]" 
+							  value="{$Badge.thread_categories.num}"
+							  size="5" min="0" step="1" /><br>
+				<xf:macro template="xc_badge_categories" name="select_forums" arg-selectName="user_criteria[thread_categories][data][categories]"
+					arg-nodeIds="{$Badge.thread_categories.categories}"
+					arg-nodeTree="{$nodeTree}" />
+		</xf:dependent>
+	</xf:option>
+	
+	<xf:option name="user_criteria[positive_feedback][rule]" value="positive_feedback" 
+			   selected="{$Badge.positive_feedback}"
+			   label="{{ phrase('xc_x_receving_positive_feedback:') }}" data-hide="true">
+		  <xf:dependent>
+				<xf:numberbox name="user_criteria[positive_feedback][data][num]" 
+							  value="{$Badge.positive_feedback.num}"
+							  size="5" min="0" step="1" />
+		</xf:dependent>
+	</xf:option>
+	
+	<xf:option name="user_criteria[positive_reputation][rule]" value="positive_reputation" 
+			   selected="{$Badge.positive_reputation}"
+			   label="{{ phrase('xc_x_receving_positive_reputation:') }}" data-hide="true">
+		<xf:dependent>
+				<xf:numberbox name="user_criteria[positive_reputation][data][num]" 
+							  value="{$Badge.positive_reputation.num}"
+							  size="5" min="0" step="1" />
+		</xf:dependent>
+	</xf:option>
+	
+	<xf:option name="user_criteria[thread_replies_categories][rule]" value="thread_replies_categories" 
+			   selected="{$Badge.thread_replies_categories}"
+			   label="{{ phrase('xc_x_make_replies_thread_categories:') }}" data-hide="true">
+		<xf:dependent>
+				<xf:numberbox name="user_criteria[thread_replies_categories][data][num]" 
+							  value="{$Badge.thread_replies_categories.num}"
+							  size="5" min="0" step="1" /><br>
+				<xf:macro template="xc_badge_categories" name="select_forums" arg-selectName="user_criteria[thread_replies_categories][data][categories]"
+							arg-nodeIds="{$Badge.thread_replies_categories.categories}"
+							arg-nodeTree="{$nodeTree}" />
+		</xf:dependent>
+	</xf:option>
+	
+	<xf:option name="user_criteria[reach_level][rule]" value="reach_level" 
+			   selected="{$Badge.reach_level}"
+			   label="{{ phrase('xc_reach_level:') }}" data-hide="true">
+		<xf:dependent>
+			<xf:numberbox name="user_criteria[reach_level][data][num]" 
+						  value="{$Badge.reach_level.num}"
+						  size="5" min="0" step="1" />
+		</xf:dependent>
+	</xf:option>
+	
+
+
+	<xf:option name="user_criteria[solve_best_answer][rule]" value="solve_best_answer" 
+			   selected="{$Badge.solve_best_answer}"
+			   label="{{ phrase('xc_x_make_solve_best_answer:') }}" data-hide="true">
+		<xf:dependent>
+				<xf:numberbox name="user_criteria[solve_best_answer][data][num]" 
+							  value="{$Badge.solve_best_answer.num}"
+							  size="5" min="0" step="1" />
+		</xf:dependent>
+	</xf:option>
+	<xf:option name="user_criteria[refer_member][rule]" value="refer_member" 
+			   selected="{$Badge.refer_member}"
+			   label="{{ phrase('xc_refer_memberr:') }}" data-hide="true">
+	   <xf:dependent>
+			<xf:numberbox name="user_criteria[refer_member][data][num]" 
+						  value="{$Badge.refer_member.num}"
+						  size="5" min="0" step="1" />
+		</xf:dependent>
+	</xf:option>
+	
+	<xf:option name="user_criteria[reach_posts][rule]" value="reach_posts" 
+			   selected="{$Badge.reach_posts}"
+			   label="{{ phrase('xc_x_reach_post:') }}" data-hide="true">
+		<xf:dependent>
+			<xf:numberbox name="user_criteria[reach_posts][data][num]" 
+						  value="{$Badge.reach_posts.num}"
+						  size="5" min="0" step="1" />
+		</xf:dependent>
+	</xf:option>
+	
+	<xf:option name="user_criteria[reach_total_post_like][rule]" value="reach_total_post_like" 
+			   selected="{$Badge.reach_total_post_like}"
+			   label="{{ phrase('xc_x_reach_post_like:') }}" data-hide="true">
+		<xf:dependent>
+			<xf:numberbox name="user_criteria[reach_total_post_like][data][num]" 
+						  value="{$Badge.reach_total_post_like.num}"
+						  size="5" min="0" step="1" />
+		</xf:dependent>
+	</xf:option>
+	
+	<xf:option name="user_criteria[x_thread_x_replies][rule]" value="x_thread_x_replies" 
+			   selected="{$Badge.x_thread_x_replies}"
+			   label="{{ phrase('x_thread_x_replies:') }}" hint="{{ phrase('xc_thread_replies') }}" data-hide="true">
+		<xf:dependent>
+			<xf:numberbox name="user_criteria[x_thread_x_replies][data][thread]" 
+						  value="{$Badge.x_thread_x_replies.thread}"
+						  size="5" min="0" step="1"  /><br>
+			<xf:numberbox name="user_criteria[x_thread_x_replies][data][replies]" 
+						  value="{$Badge.x_thread_x_replies.replies}"
+						  size="5" min="0" step="1"  /><br>
+			<xf:macro template="xc_badge_categories"  name="select_forums"
+			arg-nodeIds="{$Badge.x_thread_x_replies.categories}"
+			arg-nodeTree="{$nodeTree}"
+		    arg-selectName="user_criteria[x_thread_x_replies][data][categories]"
+					  />
+		</xf:dependent>
+	</xf:option>
+	
+	<xf:option name="user_criteria[login_daily_streak][rule]" value="login_daily_streak" 
+			   selected="{$Badge.login_daily_streak}"
+			   label="{{ phrase('xc_login_daily_streak:') }}" data-hide="true">
+		<xf:dependent>
+			<xf:numberbox name="user_criteria[login_daily_streak][data][num]" 
+						  value="{$Badge.login_daily_streak.num}"
+						  size="5" min="0" step="1" />
+		</xf:dependent>
+	</xf:option>
+	
+	
+</xf:checkboxrow>
+</xf:macro>]]></template>
+  <template type="admin" title="xc_experience_point" version_id="1060010" version_string="1.6.0 Alpha"><![CDATA[<div class="block-body">
+		<xf:textboxrow name="title" value ="{{$expPoint.title ?: ''}}" label="{{ phrase('xc_exp_title') }}"/>
+        
+	    <xf:numberboxrow name="points" min="0"  value ="{{$expPoint.points ?: 0}}" label="{{ phrase('xc_experience_points') }}" />
+	     <xf:numberboxrow name="display_order" min="0"  value ="{{$expPoint.display_order ?: 0}}" label="{{ phrase('display_order') }}"  />
+	   
+	    <xf:textarearow name="description"  value ="{{$expPoint.description ?: ''}}"  value ="{{$expPoint.description ?: ''}}" autosize="true" label="{{ phrase('xc_description') }}"
+						 />
+</div>]]></template>
+  <template type="admin" title="xc_user_badge_award_list" version_id="2020620" version_string="2.2.6 Alpha"><![CDATA[<xf:title>{{ phrase('xc_manual_badge_list') }}</xf:title>
+
+<xf:pageaction>
+<xf:button href="{{ link('award-badge') }}" icon="user">{{ phrase('xc_award_badge') }}</xf:button>
+</xf:pageaction>
+	
+<xf:if is="$awardlist is not empty">
+			<xf:form action="{{ link('exp-point/awardlist/toggle') }}" class="block" ajax="true">
+				<div class="block-outer">
+					<xf:macro template="filter_macros" name="quick_filter" arg-key="badgeawardlist" arg-class="block-outer-opposite" />
+			    </div>
+		<div class="block-container">
+			<div class="block-body">
+				<xf:datalist data-xf-init="responsive-data-list">
+					<xf:datarow rowtype="header">
+						<xf:cell>{{ phrase('xc_username') }}</xf:cell>
+						<xf:cell>{{ phrase('xc_badge') }}</xf:cell>
+						<xf:cell>{{ phrase('xc_manually_badge_award') }}</xf:cell>
+						<xf:cell>{{ phrase('xc_date') }}</xf:cell>
+						<xf:cell class="dataList-cell--min">&nbsp;</xf:cell>
+						<xf:cell class="dataList-cell--min">&nbsp;</xf:cell>
+					</xf:datarow>
+					<xf:foreach loop="$awardlist" value="$award">
+						<xf:datarow>
+							<xf:cell>{$award.User.username}</xf:cell>
+							<xf:cell>{$award.Badge.title}</xf:cell>
+							<xf:cell>{{$award.manual ? 'yes' : 'No'}}</xf:cell>
+							<xf:cell><xf:date time="$award.award_date" /></xf:cell>
+							<xf:action href="{{ link('award-badge/edit', $award) }}"  overlay="true">{{ phrase('edit') }}</xf:action>
+							<xf:delete href="{{ link('award-badge/delete', $award) }}" />
+						</xf:datarow>
+					</xf:foreach>
+				</xf:datalist>
+			</div>
+			<div class="block-footer">
+				<span class="block-footer-counter">{{ display_totals($awardlist, $total) }}</span>
+			</div>
+		</div>
+	</xf:form>
+		<xf:else />
+			<div class="blockMessage">{{ phrase('no_results_found') }}</div>
+		</xf:if>
+	
+
+	<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+		link="award-badge/list" params="{$filters}"
+		wrapperclass="block-outer block-outer--after" />]]></template>
+  <template type="admin" title="xc_user_xp_award_list" version_id="2020620" version_string="2.2.6 Alpha"><![CDATA[<xf:title>{{ phrase('xc_manual_award_xp_list') }}</xf:title>
+
+<xf:pageaction>
+	<xf:button href="{{ link('award-xp') }}" icon="user">{{ phrase('xc_award_point') }}</xf:button>
+</xf:pageaction>
+	<xf:if is="$awardlist is not empty">
+	        <xf:form action="{{ link('award-xp/list/toggle') }}" class="block" ajax="true">
+				<div class="block-outer">
+					<xf:macro template="filter_macros" name="quick_filter" arg-key="awardlist" arg-class="block-outer-opposite" />
+			</div>
+				<div class="block-container">
+			          <div class="block-body">
+			
+				<xf:datalist data-xf-init="responsive-data-list">
+					<xf:datarow rowtype="header">
+						<xf:cell>{{ phrase('xc_username') }}</xf:cell>
+						<xf:cell>{{ phrase('xc_xp') }}</xf:cell>
+						<xf:cell>{{ phrase('xc_expoints') }}</xf:cell>
+						<xf:cell>{{ phrase('xc_manually_xp_award') }}</xf:cell>
+						<xf:cell>{{ phrase('xc_date') }}</xf:cell>
+						<xf:cell class="dataList-cell--min">&nbsp;</xf:cell>
+						<xf:cell class="dataList-cell--min">&nbsp;</xf:cell>
+					</xf:datarow>
+					<xf:foreach loop="$awardlist" value="$award">
+						<xf:datarow>
+							<xf:cell>{$award.User.username}</xf:cell>
+							<xf:cell>{$award.Xp.title}</xf:cell>
+							<xf:cell>{$award.spot_ex_point}</xf:cell>
+							<xf:cell>{{$award.manual ? 'yes' : 'No'}}</xf:cell>
+							<xf:cell><xf:date time="$award.award_date" /></xf:cell>
+							<xf:action href="{{ link('award-xp/edit', $award) }}"  overlay="true">{{ phrase('edit') }}</xf:action>
+							<xf:delete href="{{ link('award-xp/delete', $award) }}" />
+						</xf:datarow>
+					</xf:foreach>
+				</xf:datalist>
+			</div>
+			<div class="block-footer">
+				<span class="block-footer-counter">{{ display_totals($awardlist, $total) }}</span>
+			</div>
+		</div>
+	</xf:form>
+		<xf:else />
+			<div class="blockMessage">{{ phrase('no_results_found') }}</div>
+		</xf:if>
+	
+
+	<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+		link="award-xp/list" params="{$filters}"
+		wrapperclass="block-outer block-outer--after" />]]></template>
+  <template type="public" title="alert_award_badge_award" version_id="2020720" version_string="2.2.7 Alpha"><![CDATA[{{ phrase('xc_award_badge_point', {'title': '<a style="text-decoration:none;">' . $content.title . '</a>'}) }}]]></template>
+  <template type="public" title="alert_award_xp_remove" version_id="2010110" version_string="2.1.1 Alpha"><![CDATA[{{$extra.message}}]]></template>
+  <template type="public" title="alert_experience_point_back_level" version_id="2010110" version_string="2.1.1 Alpha"><![CDATA[{{ phrase('xc_reach_back_level', {'message': $extra.message,'level': $extra.level}) }}]]></template>
+  <template type="public" title="alert_experience_point_double_point" version_id="2020620" version_string="2.2.6 Alpha"><![CDATA[{{ phrase('xc_award_point_alert_double', {'title': '<a style="text-decoration:none;">' . $content.title . '</a>','points': ($content.points*2)}) }}]]></template>
+  <template type="public" title="alert_experience_point_level" version_id="2020620" version_string="2.2.6 Alpha"><![CDATA[{{ phrase('xc_reach_next_level', {'message': $extra.message,'level': '<a style="text-decoration:none;">' . $extra.level . '</a>'}) }}]]></template>
+  <template type="public" title="alert_experience_point_manual" version_id="2020720" version_string="2.2.7 Alpha"><![CDATA[{{ phrase('xc_manuall_award_xp', {'message': $extra.message,'point': $extra.point}) }}]]></template>
+  <template type="public" title="alert_experience_point_mention" version_id="2020620" version_string="2.2.6 Alpha"><![CDATA[{{ phrase('xc_award_point_alert', {'title': '<a style="text-decoration:none;">' . $content.title . '</a>','points': $content.points}) }}]]></template>
+  <template type="public" title="alert_experience_point_remove" version_id="2020620" version_string="2.2.6 Alpha"><![CDATA[{{ phrase('xc_remove_award', {'message':'<a style="text-decoration:none;">' . $extra.message . '</a>','minuspoint': $extra.minuspoint}) }}]]></template>
+  <template type="public" title="push_experience_point_mention" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[{{ phrase('xc_award_point_alert', {'title': $content.title,'points': $content.points}) }}]]></template>
+  <template type="public" title="xc_member_view_badages" version_id="2040220" version_string="2.4.2 Alpha"><![CDATA[<xf:css src="xc_member_view_badages.less" />
+<xf:css src="xc_xp_progress_bar.less" />
+	
+	  <div class="block">
+					<div class="block-container">
+						<div class="block-header">{{ phrase('xc_award_badges') }}</div>
+						<xf:if is="$badges is not empty">
+									
+									<ol class="continer-badge">
+
+								<xf:foreach loop="$badges" value="$badge">
+									
+										 <li>
+											<div id="main-badge" class="badge-item  {{ in_array($badge.badge_id,$userbadges) ? 'has-badge' : 'not-has-badge'}}">
+												<xf:if is="$badge.getimageExit()">
+													<span class="tooltip-badge" id="tooltip-badge">
+														<span class="tooltip-title"><strong>{{$badge.title}}</strong></span><br>
+														<span class="tooltip-description">{{$badge.description}}</span>
+													</span>
+													<span class="contentRow-figure contentRow-figure--text contentRow-figure--fixedSmall">	<img src={{$badge.getImgPath()}} width="42" height="45"/></span>
+												</xf:if>
+											</div>
+										</li>
+								 </xf:foreach>			
+									</ol>
+						</xf:if>
+						
+<xf:if is="is_array(xc_user_point_data($user))">
+	
+				<xf:set var="$data" value="{{xc_user_point_data($user)}}" />
+      
+	            
+				<div class="ladder-level-container member_view_progress" data-xf-init="tooltip" title="{{phrase('xc_level_progress_bar_member_view',{'leftpoint':$data.next_level_points})}}">
+
+							<div class="ladder-level"   style="width: {{$data.perc}}%" >{{$data.perc}}%</div>
+
+				</div>
+	
+				<div class="level_main">
+					
+						<span class="level member_level">
+						{{ phrase('xc_next_level_progress', {'nextlevel': $data.next_level}) }}
+						</span>
+						<span class="level member_level">{{ phrase('xc_next_level_points', {'nextlevelPoints': $user.getcommaFormatPoints()}) }}</span>
+					
+				</div>
+				
+</xf:if>
+						
+						
+	</div>
+</div>]]></template>
+  <template type="public" title="xc_member_view_badages.less" version_id="2030120" version_string="2.3.1 Alpha"><![CDATA[.not-has-badge{
+	filter: grayscale(1);
+	color: @xf-textColorMuted;
+}
+
+.badge-item:hover > .tooltip-badge{
+	display: block;
+  transform-origin: 100% 0%;
+  -webkit-animation: fadeIn 0.3s ease-in-out;
+  animation: fadeIn 0.3s ease-in-out;
+   cursor: pointer;
+   filter: grayscale(0);        
+}
+#main-badge:hover{
+	
+	cursor: pointer;
+     filter: grayscale(0); 
+	
+}
+
+.continer-badge{
+	
+	display:flex;
+	 padding-left: 0px;
+    list-style: none;
+
+}
+.badge-item{
+	
+	margin-left:5px;
+	position: relative;
+}
+
+
+
+
+.badge-item .tooltip-badge {
+  display: none;
+  text-align: left;
+  background-color: #1E2021;
+  padding: 5px;
+  width: 200px;
+  position: absolute;
+  border-radius: 3px;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+     bottom: 46px;
+  color: #FFF;
+  font-size: 13px;
+  line-height: 1.4;
+}]]></template>
+  <template type="public" title="xc_member_view_experience_point_info" version_id="2040220" version_string="2.4.2 Alpha"><![CDATA[<xf:css src="xc_member_view_experience_point_info.less" />
+<xf:if is="$user.total_points">
+	<span class="main_info">
+		<span class="total_points">{{phrase('xc_total_experience_user')}} <span class="color_bold">{{$user.getcommaFormatPoints()}}</span></span>
+		<div class="heading_detail">
+			{{phrase('xc_heading_detail')}}
+		</div>
+
+		<div class="exp_points">
+			<xf:if is="$userpoint && !$lastLevel">
+				<span class="secondheading">
+
+					<span class="color_bold ">{{$userpoint.exp_points-$user.total_points}}</span> {{phrase('requires_to_reach_next_level')}} <span class="color_bold">{{$userpoint.level}}</span>
+				</span>
+			</xf:if>
+			
+			<xf:if is="!$userpoint && $lastLevel">
+				<span class="secondheading">
+
+					 {{phrase('xc_reach_max_level')}}
+				</span>
+			</xf:if>
+
+			<xf:if is="$expoints">
+				<ul>	
+			  <xf:foreach loop="$expoints" value="$expoint">
+				  <li>{{$expoint.title}} - <span class="color_bold">{{$expoint.points}}{{phrase('xc_pts')}}</span></li>
+			  </xf:foreach>
+				</ul>
+			</xf:if>
+
+		</div>
+	</span>
+</xf:if>]]></template>
+  <template type="public" title="xc_member_view_experience_point_info.less" version_id="2020210" version_string="2.2.2 Alpha"><![CDATA[.main_info{
+	display: block;
+    float: right;
+    width: 50%;
+}
+.total_points{
+	display: block;
+    text-align: center;
+}
+.heading_detail{
+	    margin-top: 4px;
+    margin-bottom: 4px;
+
+    text-align: center;
+}
+.color_bold{
+	
+	color: fade(@xf-blockHeader--color, 70);
+	font-weight: 600;
+}
+.exp_points{
+	 background: @xf-contentBg;
+    margin-bottom: 9px;
+    .xf-blockBorder();
+    border-radius: @xf-blockBorderRadius;
+}
+.secondheading{
+	padding: 21px;
+}]]></template>
+  <template type="public" title="xc_xp_progress_bar" version_id="2030720" version_string="2.3.7 Alpha"><![CDATA[<xf:css src="xc_xp_progress_bar.less" />
+<xf:if is="$__globals.allow_to_progressbar">
+	<xf:if is="is_array(xc_user_point_data($user))">
+	
+				<xf:set var="$data" value="{{xc_user_point_data($user)}}" />
+
+				<div class="ladder-level-container" data-xf-init="tooltip" title="{{phrase('xc_level_progress_bar_post_macro',{'leftpoint':$data.next_level_points})}}">
+
+							<div class="ladder-level"   style="width: {{$data.perc}}%" >{{$data.perc}}%</div>
+
+				</div>
+				<div class="level_main">
+					<xf:if is="$data.next_level_points">
+						<span class="level">
+						{{ phrase('xc_next_level_progress', {'nextlevel': $data.next_level}) }}
+						</span>
+						<span class="level">{{ phrase('xc_next_level_points', {'nextlevelPoints': $data.next_level_points}) }}</span>
+					</xf:if>
+				</div>
+		</xf:if>
+	
+</xf:if>]]></template>
+  <template type="public" title="xc_xp_progress_bar.less" version_id="2030120" version_string="2.3.1 Alpha"><![CDATA[.ladder-level-container {
+	.xf-xc_progressbarcontainer();
+	text-align: center;
+	margin-top:5px;
+}
+
+.ladder-level {
+	.xf-xc_progressbar();
+	content: "";
+	display: table;
+	clear: both
+}
+.level_main{
+	
+	  display: flex;
+    justify-content: space-between;
+		font-size: 75%;
+	margin-top:2px;
+}
+.member_level{
+
+	margin-left:10px;
+}
+
+.member_view_progress{
+    
+	 margin-top:8px;
+	 margin-left: 8px;
+     margin-right: 8px;
+	 margin-bottom:8px;
+	
+}
+.member_level{
+	
+	margin-left: 8px;
+     margin-right: 8px;
+	margin-bottom:8px;
+	font-weight:600;
+}]]></template>
+  <template type="public" title="xc_xp_progress_bar_account" version_id="2040420" version_string="2.4.4 Alpha"><![CDATA[<xf:css src="xc_xp_progress_bar.less" />
+
+	<xf:if is="is_array(xc_user_point_data($user))">
+	
+			<xf:set var="$data" value="{{xc_user_point_data($user)}}" />
+		
+			<div class="kz-userlevel dp-userlevel-section">
+			<div class="kz-userlevel-bar" data-xf-init="tooltip" title="{{$data.perc}}%" id="js-XFUniqueId6">
+			<div class="kz-userlevel-bar-perc" style="width: {{$data.perc}}%"></div>
+			</div>
+			<div class="kz-userlevel-data">
+			<div class="kz-userlevel-badge">
+			{{ phrase('xc_next_level_progress', {'nextlevel': $data.next_level}) }}
+			</div>
+			<div class="kz-userlevel-current-xp">
+			{{ phrase('xc_next_level_points', {'nextlevelPoints': $data.next_level_points}) }}
+			</div>
+			</div>
+			</div>
+</xf:if>]]></template>
+</templates>

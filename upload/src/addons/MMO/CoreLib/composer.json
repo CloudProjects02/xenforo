@@ -1,0 +1,18 @@
+{
+    "config": {
+        "vendor-dir": "_vendor",
+        "sort-packages": true,
+        "preferred-install": "dist"
+    },
+    "require": {
+        "illuminate/macroable": "^8.61",
+        "nesbot/carbon": "^2.48",
+        "symfony/expression-language": "^5.4"
+    },
+    "autoload": {
+        "files": [
+            "helpers.php"
+        ]
+    },
+    "prefer-stable": true
+}

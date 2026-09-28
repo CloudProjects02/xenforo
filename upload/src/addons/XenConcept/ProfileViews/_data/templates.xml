@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="xc_profile_views_widget_def_options_most_profile_viewed" version_id="2000491" version_string="2.0.4 Patch Level 1"><![CDATA[<hr class="formRowSep" />
+
+<xf:numberboxrow name="options[limit]" value="{$options.limit}" min="1"
+	label="{{ phrase('maximum_entries') }}" />
+
+<xf:checkboxrow>
+	<xf:option name="options[display_avatar]" checked="{$options.display_avatar}"
+		label="{{ phrase('xc_profile_views_display_avatar') }}" hint="{{ phrase('xc_profile_views_display_avatar_hint') }}" />
+</xf:checkboxrow>]]></template>
+  <template type="admin" title="xc_profile_views_widget_def_options_recent_viewers" version_id="2000491" version_string="2.0.4 Patch Level 1"><![CDATA[<hr class="formRowSep" />
+
+<xf:numberboxrow name="options[limit]" value="{$options.limit}" min="1"
+	label="{{ phrase('maximum_entries') }}" />
+
+<xf:radiorow name="options[display_user]" value="{$options.display_user}"
+	label="{{ phrase('xc_profile_views_how_to_display_the_users') }}" explain="{{ phrase('xc_profile_views_display_users_name_or_avatar_for_users') }}">
+	<xf:option value="username" label="{{ phrase('xc_profile_views_username_only') }}" />
+	<xf:option value="avatar" label="{{ phrase('xc_profile_views_avatar_only') }}" />
+	<xf:option value="avataruser" label="{{ phrase('xc_profile_views_avatar_and_username') }}" />
+</xf:radiorow>
+
+<xf:checkboxrow>
+	<xf:option name="options[display_number]" checked="{$options.display_number}"
+		label="{{ phrase('xc_profile_views_display_the_number_of_profile_views') }}" hint="{{ phrase('xc_profile_views_allow_displays_the_number_of_profile_views') }}" />
+</xf:checkboxrow>]]></template>
+  <template type="public" title="xc_profile_views.less" version_id="2000400" version_string="2.0.4"><![CDATA[.view-count {
+	
+	line-height: 42px;
+	
+	&.center  {
+	
+		text-align: center;
+	}
+	
+	.viewCount {
+		
+		font-size: 30px;
+		font-style: italic;
+		
+	}
+}
+
+.profile-views-count
+{
+	font-style: italic;
+	color: @xf-textColorMuted;
+}]]></template>
+  <template type="public" title="xc_profile_views_account_privacy" version_id="2000300" version_string="2.0.3"><![CDATA[<xf:macro template="account_privacy"
+	name="privacy_option"
+	arg-user="{$xf.visitor}"
+	arg-name="allow_view_users_who_viewed_profile"
+	arg-label="{{ phrase('xc_profile_views_view_the_users_who_viewed_your_profile:') }}" />]]></template>
+  <template type="public" title="xc_profile_views_most_profiles_viewed_widget" version_id="2000590" version_string="2.0.5"><![CDATA[<div class="block" {{ widget_data($widget) }}>
+    <div class="block-container">
+        <h3 class="block-minorHeader">{{ phrase('xc_profile_views_most_profiles_viewed') }}</h3>
+        <ul class="block-body">
+            <xf:foreach loop="$mostProfilesViewed" value="$user">
+                <li class="block-row">
+                    <div class="contentRow contentRow--alignMiddle">
+                        <div class="contentRow-figure">
+								<xf:if is="$displayAvatar">
+								<xf:avatar user="$user" size="xs" />
+							</xf:if>
+                        </div>
+                        <div class="contentRow-main {{ $displayAvatar ? 'contentRow-main--close' : '' }}" style="{{ $displayAvatar ? '' : 'padding-left: 0px;' }}">
+							<div class="contentRow-extra contentRow-extra--large">
+								{$user.xc_pv_profile_view_count}
+							</div>
+                            <div class="contentRow-minor">
+								<h3 class="contentRow-title"><xf:username user="$user" rich="true" /></h3>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </xf:foreach>
+        </ul>
+    </div>
+</div>]]></template>
+  <template type="public" title="xc_profile_views_recent_viewers_widget" version_id="2000491" version_string="2.0.4 Patch Level 1"><![CDATA[<xf:css src="xc_profile_views.less" />
+
+<xf:if is="$xf.options.xc_profile_views_enable_block_profile_views && $user.xc_pv_profile_view_count">
+
+	<div class="block" data-widget-section="userWhoSaw"{{ widget_data($widget) }}>
+		<div class="block-container">
+			<h3 class="block-minorHeader">{{ phrase('xc_profile_views') }}</h3>
+			<div class="block-body">
+				<div class="view-count center">
+					
+					<span class="viewCount">{$user.xc_pv_profile_view_count}</span>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</xf:if>
+
+<xf:if is="$xf.options.xc_profile_views_enable_widget_recent_viewers && $userViewers is not empty">
+    <div class="block" data-widget-section="userWhoSaw"{{ widget_data($widget) }}>
+        <div class="block-container">
+            <h3 class="block-minorHeader">{{ phrase('xc_profile_views_recent_viewers') }}</h3>
+			
+			<xf:set var="{$profileViewsCount}">
+				<xf:if is="$displayNumber">
+					<li class="block-row block-row--minor">
+						<span class="profile-views-count">
+							{$user.xc_pv_profile_view_count|number} {{ phrase('xc_profile_views_profile_views') }}
+						</span>
+					</li>
+				</xf:if>
+			</xf:set>
+			
+			<xf:set var="{$templateShowAll}">
+				<xf:if is="$showAll">
+					<li class="block-row">
+						<a href="{{ link('members/show-viewers', $user) }}" data-xf-click="overlay">{{ phrase('xc_profile_views_show_all') }}</a>
+					</li>
+				</xf:if>
+			</xf:set>
+			
+			<xf:if is="$displayUser == 'avataruser'">
+				<ol class="block-body">
+					{$profileViewsCount|raw}
+					
+					<xf:macro name="avataruser"
+						arg-users="{$userViewers}" />
+					
+					{$templateShowAll|raw}
+				</ol>
+			<xf:else />
+				<div class="block-body">
+					<div class="block-row block-row--minor">
+						{$profileViewsCount|raw}
+						
+						<xf:macro name="{$displayUser}" 
+							arg-users="{$userViewers}" />
+
+						{$templateShowAll|raw}
+					</div>
+				</div>
+			</xf:if>
+        </div>
+    </div>
+</xf:if>
+
+<xf:macro name="username" arg-users="!">
+	<ul class="listInline listInline--comma" style="margin-bottom: 5px;">
+        <xf:foreach loop="$users" value="$user"><xf:trim>
+            <li><xf:username user="$user.Visitor" rich="true" class="{{ !$user.Visitor.visible ? 'username--invisible' : '' }}" /></li>
+        </xf:trim></xf:foreach>
+    </ul>
+</xf:macro>
+
+<xf:macro name="avatar" arg-users="!">
+	 <ul class="listHeap" style="margin-bottom: 5px;">
+        <xf:foreach loop="$users" value="$user">
+            <li>
+                <xf:avatar user="$user.Visitor" size="xs" img="true" />
+            </li>
+        </xf:foreach>
+    </ul>
+</xf:macro>
+
+<xf:macro name="avataruser" arg-users="!">
+    <xf:foreach loop="$users" value="$user">
+        <li class="block-row">
+            <div class="contentRow">
+                <div class="contentRow-figure">
+                    <xf:avatar user="$user.Visitor" size="xs" />
+                </div>
+                <div class="contentRow-main">
+                    <xf:username user="$user.Visitor" rich="true" />
+                    <div class="contentRow-minor"><xf:date time="$user.view_date" /></div>
+                </div>
+            </div>
+        </li>
+    </xf:foreach>
+</xf:macro>]]></template>
+  <template type="public" title="xc_profile_views_show_viewers" version_id="2000300" version_string="2.0.3"><![CDATA[<xf:title>{{ phrase('xc_profile_views_users_who_viewed_your_profile') }}</xf:title>
+
+<xf:head option="metaNoindex"><meta name="robots" content="noindex" /></xf:head>
+
+<div class="block">
+    <div class="block-container">
+		<xf:if is="$userViewers is not empty">
+			<ul class="block-body js-viewersTarget">
+				<xf:foreach loop="$userViewers" value="$viewer">
+					<li class="block-row block-row--separated">
+						<xf:set var="{$extraData}"><xf:date time="{$viewer.view_date}" /></xf:set>
+
+						<xf:macro template="member_list_macros" name="item"
+                              arg-user="{$viewer.Visitor}"
+                              arg-extraData="{$extraData}" />
+					</li>
+				</xf:foreach>
+			</ul>
+			<div class="block-footer js-viewersLoadMore">
+				<span class="block-footer-controls"><xf:button href="{{ link('members/show-viewers', $user, {'before_id': $oldestItemId}) }}"
+					data-xf-click="inserter"
+					data-append=".js-viewersTarget"
+					data-replace=".js-viewersLoadMore">
+					{{ phrase('show_older_items') }}
+					</xf:button></span>
+			</div>
+		<xf:elseif is="$beforeId" />
+			<div class="block-body js-viewersTarget">
+				<div class="block-row block-row--separated">{{ phrase('there_no_more_items_to_show') }}</div>
+			</div>
+		<xf:else />
+			<div class="block-body block-row">
+				<div class="block-row js-viewersTarget">
+					{{ phrase('xc_profile_views_no_one_has_viewed_your_profile') }}
+				</div>
+			</div>
+		</xf:if>
+    </div>
+</div>]]></template>
+</templates>

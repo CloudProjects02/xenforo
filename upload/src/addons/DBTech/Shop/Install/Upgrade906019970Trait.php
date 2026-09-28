@@ -2,38 +2,23 @@
 
 namespace DBTech\Shop\Install;
 
-use DBTech\Shop\Entity\Category;
-use DBTech\Shop\Entity\Item;
-use DBTech\Shop\Entity\Lottery;
-use DBTech\Shop\Entity\LotteryPrize;
-use DBTech\Shop\Entity\Purchase;
-use DBTech\Shop\Entity\TransactionLog;
-use DBTech\Shop\Service\Item\IconService;
-use XF\AddOn\AddOn;
-use XF\App;
-use XF\Db\AbstractAdapter;
-use XF\Db\Exception;
 use XF\Db\Schema\Alter;
-use XF\Db\Schema\Column;
 use XF\Db\Schema\Create;
-use XF\Db\SchemaManager;
-use XF\PrintableException;
-use XF\Service\RebuildNestedSetService;
 
 /**
- * @property AddOn addOn
- * @property App app
+ * @property \XF\AddOn\AddOn addOn
+ * @property \XF\App app
  *
- * @method AbstractAdapter db()
- * @method SchemaManager schemaManager()
- * @method Column addOrChangeColumn($table, $name, $type = null, $length = null)
+ * @method \XF\Db\AbstractAdapter db()
+ * @method \XF\Db\SchemaManager schemaManager()
+ * @method \XF\Db\Schema\Column addOrChangeColumn($table, $name, $type = null, $length = null)
  */
 trait Upgrade906019970Trait
 {
 	/**
 	 *
 	 */
-	public function upgrade906010030Step1(): void
+	public function upgrade906010030Step1()
 	{
 		// Purge the cache
 		\XF::registry()->delete([
@@ -58,7 +43,7 @@ trait Upgrade906019970Trait
 	/**
 	 *
 	 */
-	public function upgrade906010011Step1(): void
+	public function upgrade906010011Step1()
 	{
 		$sm = $this->schemaManager();
 
@@ -125,7 +110,7 @@ trait Upgrade906019970Trait
 	/**
 	 *
 	 */
-	public function upgrade906010011Step2(): void
+	public function upgrade906010011Step2()
 	{
 		$sm = $this->schemaManager();
 
@@ -173,7 +158,7 @@ trait Upgrade906019970Trait
 	/**
 	 *
 	 */
-	public function upgrade906010011Step3(): void
+	public function upgrade906010011Step3()
 	{
 		$db = $this->db();
 
@@ -183,19 +168,18 @@ trait Upgrade906019970Trait
 			SELECT lotteryid, prizes
 			FROM xf_dbtech_shop_lottery
 		');
-		foreach ($lotteries AS $lottery)
+		foreach ($lotteries as $lottery)
 		{
 			$prizes = @unserialize($lottery['prizes']);
 			$prizes = is_array($prizes) ? $prizes : [];
 
 			$newPrizes = [];
-			foreach ($prizes AS $prize)
+			foreach ($prizes as $prize)
 			{
 				if (empty($prize['prizeid'])
 					|| empty($prize['currencyid'])
 					|| empty($prize['prize'])
-				)
-				{
+				) {
 					continue;
 				}
 
@@ -203,7 +187,7 @@ trait Upgrade906019970Trait
 					'lottery_id' => $lottery['lotteryid'],
 					'lottery_prize_id' => $prize['prizeid'],
 					'currency_id' => $prize['currencyid'],
-					'prize_amount' => $prize['prize'],
+					'prize_amount' => $prize['prize']
 				];
 
 				$newPrizes[] = $prizeData;
@@ -212,7 +196,7 @@ trait Upgrade906019970Trait
 			}
 
 			$db->update('xf_dbtech_shop_lottery', [
-				'prizes' => json_encode($newPrizes),
+				'prizes' => json_encode($newPrizes)
 			], null);
 		}
 
@@ -222,7 +206,7 @@ trait Upgrade906019970Trait
 	/**
 	 *
 	 */
-	public function upgrade906010011Step4(): void
+	public function upgrade906010011Step4()
 	{
 		$sm = $this->schemaManager();
 
@@ -239,7 +223,7 @@ trait Upgrade906019970Trait
 				'permissions',
 				'bitfield',
 				'active',
-				'customshops',
+				'customshops'
 			]);
 			$table->addColumn('parent_category_id', 'int')->setDefault(0)->after('description');
 			$table->addColumn('lft', 'int')->setDefault(0);
@@ -356,7 +340,7 @@ trait Upgrade906019970Trait
 		{
 			$table->dropColumns([
 				'permissions',
-				'bitfield',
+				'bitfield'
 			]);
 		});
 
@@ -369,7 +353,7 @@ trait Upgrade906019970Trait
 	/**
 	 *
 	 */
-	public function upgrade906010011Step5(): void
+	public function upgrade906010011Step5()
 	{
 		$sm = $this->schemaManager();
 
@@ -387,7 +371,7 @@ trait Upgrade906019970Trait
 	/**
 	 *
 	 */
-	public function upgrade906010011Step6(): void
+	public function upgrade906010011Step6()
 	{
 		$sm = $this->schemaManager();
 
@@ -403,7 +387,7 @@ trait Upgrade906019970Trait
 	/**
 	 *
 	 */
-	public function upgrade906010011Step7(): void
+	public function upgrade906010011Step7()
 	{
 		$sm = $this->schemaManager();
 
@@ -416,7 +400,7 @@ trait Upgrade906019970Trait
 	/**
 	 *
 	 */
-	public function upgrade906010011Step8(): void
+	public function upgrade906010011Step8()
 	{
 		$sm = $this->schemaManager();
 
@@ -448,7 +432,7 @@ trait Upgrade906019970Trait
 	/**
 	 *
 	 */
-	public function upgrade906010011Step9(): void
+	public function upgrade906010011Step9()
 	{
 		$sm = $this->schemaManager();
 
@@ -504,7 +488,7 @@ trait Upgrade906019970Trait
 	/**
 	 *
 	 */
-	public function upgrade906010011Step10(): void
+	public function upgrade906010011Step10()
 	{
 		$sm = $this->schemaManager();
 
@@ -539,7 +523,7 @@ trait Upgrade906019970Trait
 	/**
 	 *
 	 */
-	public function upgrade906010011Step11(): void
+	public function upgrade906010011Step11()
 	{
 		$sm = $this->schemaManager();
 
@@ -568,7 +552,7 @@ trait Upgrade906019970Trait
 	/**
 	 *
 	 */
-	public function upgrade906010011Step12(): void
+	public function upgrade906010011Step12()
 	{
 		$sm = $this->schemaManager();
 
@@ -593,7 +577,7 @@ trait Upgrade906019970Trait
 	/**
 	 *
 	 */
-	public function upgrade906010011Step13(): void
+	public function upgrade906010011Step13()
 	{
 		$sm = $this->schemaManager();
 
@@ -606,14 +590,8 @@ trait Upgrade906019970Trait
 	}
 
 	/**
-	 * @throws Exception
-	 * @throws Exception
-	 * @throws Exception
-	 * @throws Exception
-	 * @throws Exception
-	 * @throws Exception
 	 */
-	public function upgrade906010011Step14(): void
+	public function upgrade906010011Step14()
 	{
 		$db = $this->db();
 
@@ -630,9 +608,9 @@ trait Upgrade906019970Trait
 	}
 
 	/**
-	 * @throws Exception
+	 * @throws \XF\Db\Exception
 	 */
-	public function upgrade906010011Step15(): void
+	public function upgrade906010011Step15()
 	{
 		$db = $this->db();
 
@@ -693,7 +671,7 @@ trait Upgrade906019970Trait
 	/**
 	 *
 	 */
-	public function upgrade906010011Step16(): void
+	public function upgrade906010011Step16()
 	{
 		$db = $this->db();
 
@@ -705,7 +683,7 @@ trait Upgrade906019970Trait
 			LEFT JOIN xf_dbtech_shop_item AS item USING(item_id)
 			WHERE purchase.expiry_date = 1
 		');
-		foreach ($purchases AS $purchase)
+		foreach ($purchases as $purchase)
 		{
 			$db->update(
 				'xf_dbtech_shop_purchase',
@@ -721,7 +699,7 @@ trait Upgrade906019970Trait
 	/**
 	 *
 	 */
-	public function upgrade906010011Step17(): void
+	public function upgrade906010011Step17()
 	{
 		$db = $this->db();
 
@@ -738,9 +716,9 @@ trait Upgrade906019970Trait
 
 	/**
 	 *
-	 * @throws Exception
+	 * @throws \XF\Db\Exception
 	 */
-	public function upgrade906010011Step18(): void
+	public function upgrade906010011Step18()
 	{
 		$db = $this->db();
 
@@ -749,7 +727,7 @@ trait Upgrade906019970Trait
 		$shops = $db->fetchAll('
 			SELECT * FROM xf_dbtech_shop_shop
 		');
-		foreach ($shops AS $shop)
+		foreach ($shops as $shop)
 		{
 			$salesAmounts = @unserialize($shop['salesamounts']);
 			$salesAmounts = is_array($salesAmounts) ? $salesAmounts : [];
@@ -773,18 +751,18 @@ trait Upgrade906019970Trait
 				'positive_percent' => $shop['positivepercent'],
 				'negative_percent' => $shop['negativepercent'],
 				'neutral_percent' => $shop['neutralpercent'],
-				'can_have_feedback' => $shop['canhavefeedback'],
+				'can_have_feedback' => $shop['canhavefeedback']
 			];
 
 			$db->insert('xf_dbtech_shop_category', $category);
 			$categoryId = $db->lastInsertId();
 
 			$db->update('xf_dbtech_shop_purchase', [
-				'category_id' => $categoryId,
+				'category_id' => $categoryId
 			], 'shopid = ?', $shop['shopid']);
 
 			$db->update('xf_dbtech_shop_shopinventory', [
-				'category_id' => $categoryId,
+				'category_id' => $categoryId
 			], 'shopid = ?', $shop['shopid']);
 		}
 
@@ -798,9 +776,9 @@ trait Upgrade906019970Trait
 	}
 
 	/**
-	 * @throws Exception
+	 * @throws \XF\Db\Exception
 	 */
-	public function upgrade906010011Step19(): void
+	public function upgrade906010011Step19()
 	{
 		$db = $this->db();
 
@@ -813,7 +791,7 @@ trait Upgrade906019970Trait
 		');
 
 		$seenItemIds = [];
-		foreach ($entries AS $entry)
+		foreach ($entries as $entry)
 		{
 			$data = [
 				'category_id'  => $entry['category_id'],
@@ -828,7 +806,7 @@ trait Upgrade906019970Trait
 				'stock' => $entry['stock'],
 				'maxstock' => $entry['maxstock'],
 				'refill_time' => $entry['refilltime'],
-				'last_refill_date' => $entry['lastrefill'],
+				'last_refill_date' => $entry['lastrefill']
 			];
 
 			if (!isset($seenItemIds[$entry['itemid']]))
@@ -842,7 +820,7 @@ trait Upgrade906019970Trait
 				// Get old item and add new data
 				$item = $db->fetchRow('SELECT * FROM xf_dbtech_shop_item WHERE item_id = ?', $entry['itemid']);
 				$item = array_merge($item, $data, [
-					'_old_item_id' => $entry['itemid'],
+					'_old_item_id' => $entry['itemid']
 				]);
 				unset($item['item_id']);
 
@@ -852,10 +830,10 @@ trait Upgrade906019970Trait
 
 				// Update the record
 				$db->update('xf_dbtech_shop_purchase', [
-					'item_id' => $itemId,
+					'item_id' => $itemId
 				], 'item_id = ? AND category_id = ?', [
 					$entry['itemid'],
-					$entry['category_id'],
+					$entry['category_id']
 				]);
 
 				$seenItemIds[$itemId] = true;
@@ -875,7 +853,7 @@ trait Upgrade906019970Trait
 	/**
 	 *
 	 */
-	public function upgrade906010011Step20(): void
+	public function upgrade906010011Step20()
 	{
 		$sm = $this->schemaManager();
 
@@ -888,7 +866,7 @@ trait Upgrade906019970Trait
 	/**
 	 *
 	 */
-	public function upgrade906010011Step21(): void
+	public function upgrade906010011Step21()
 	{
 		$sm = $this->schemaManager();
 
@@ -902,7 +880,7 @@ trait Upgrade906019970Trait
 	/**
 	 *
 	 */
-	public function upgrade906010011Step22(): void
+	public function upgrade906010011Step22()
 	{
 		$sm = $this->schemaManager();
 
@@ -913,7 +891,7 @@ trait Upgrade906019970Trait
 	/**
 	 *
 	 */
-	public function upgrade906010011Step23(): void
+	public function upgrade906010011Step23()
 	{
 		$db = $this->db();
 
@@ -924,7 +902,7 @@ trait Upgrade906019970Trait
 			FROM xf_dbtech_shop_item
 			WHERE duration > 0
 		');
-		foreach ($items AS $item)
+		foreach ($items as $item)
 		{
 			$amount = $item['duration'];
 			$unit = 'day';
@@ -937,7 +915,7 @@ trait Upgrade906019970Trait
 					$amount = $item['duration'] / 365;
 					$unit = 'year';
 				}
-				else if (($item['duration'] % 30) == 0)
+				elseif (($item['duration'] % 30) == 0)
 				{
 					// Divided cleanly by month
 					$amount = $item['duration'] / 30;
@@ -963,22 +941,23 @@ trait Upgrade906019970Trait
 	}
 
 	/**
-	 * @throws PrintableException
+	 * @throws \XF\PrintableException
 	 */
-	public function upgrade906010011Step24(): void
+	public function upgrade906010011Step24()
 	{
 		$items = $this->db()->fetchAll('
 			SELECT *
 			FROM xf_dbtech_shop_item
 			WHERE shop_icon <> \'\'
 		');
-		foreach ($items AS $item)
+		foreach ($items as $item)
 		{
-			$itemEntity = \XF::app()->em()
-				->instantiateEntity(Item::class, $item)
+			$itemEntity = $this->app->em()
+				->instantiateEntity('DBTech\Shop:Item', $item)
 			;
 
-			$iconService = \XF::app()->service(IconService::class, $itemEntity);
+			/** @var \DBTech\Shop\Service\Item\Icon $iconService */
+			$iconService = $this->app->service('DBTech\Shop:Item\Icon', $itemEntity);
 			$iconService->logIp(false);
 
 			if (!$iconService->setImage($item['shop_icon']))
@@ -993,7 +972,7 @@ trait Upgrade906019970Trait
 	/**
 	 *
 	 */
-	public function upgrade906010011Step25(): void
+	public function upgrade906010011Step25()
 	{
 		$sm = $this->schemaManager();
 
@@ -1002,7 +981,7 @@ trait Upgrade906019970Trait
 			$table->dropColumns([
 				'duration',
 				'shop_icon',
-				'icon',
+				'icon'
 			]);
 		});
 	}
@@ -1010,7 +989,7 @@ trait Upgrade906019970Trait
 	/**
 	 *
 	 */
-	public function upgrade906010011Step26(): void
+	public function upgrade906010011Step26()
 	{
 		$this->deleteWidget('dbtech_shop_wallet');
 		$this->deleteWidget('dbtech_shop_cart');
@@ -1027,12 +1006,12 @@ trait Upgrade906019970Trait
 	/**
 	 *
 	 */
-	public function upgrade906010012Step1(): void
+	public function upgrade906010012Step1()
 	{
 		$sm = $this->schemaManager();
 
 		$this->db()->update('xf_dbtech_shop_currency', [
-			'steal_protect' => '100.00',
+			'steal_protect' => '100.00'
 		], 'steal_protect = -1');
 
 		$sm->alterTable('xf_dbtech_shop_currency', function (Alter $table)
@@ -1051,7 +1030,7 @@ trait Upgrade906019970Trait
 	/**
 	 *
 	 */
-	public function upgrade906010012Step2(): void
+	public function upgrade906010012Step2()
 	{
 		$sm = $this->schemaManager();
 
@@ -1065,7 +1044,7 @@ trait Upgrade906019970Trait
 	/**
 	 *
 	 */
-	public function upgrade906010012Step3(): void
+	public function upgrade906010012Step3()
 	{
 		$this->deleteWidget('dbtech_shop_wallet');
 		$this->insertNamedWidget('dbtech_shop_wallet');
@@ -1076,11 +1055,11 @@ trait Upgrade906019970Trait
 	 *
 	 * @return array|bool
 	 */
-	public function upgrade906010014Step1(array $stepParams): bool|array
+	public function upgrade906010014Step1(array $stepParams)
 	{
 		$position = empty($stepParams[0]) ? 0 : $stepParams[0];
 
-		return $this->entityColumnsToJson(Item::class, ['code', 'item_fields', 'user_criteria'], $position, $stepParams);
+		return $this->entityColumnsToJson('DBTech\Shop:Item', ['code', 'item_fields', 'user_criteria'], $position, $stepParams);
 	}
 
 	/**
@@ -1088,11 +1067,11 @@ trait Upgrade906019970Trait
 	 *
 	 * @return array|bool
 	 */
-	public function upgrade906010014Step2(array $stepParams): bool|array
+	public function upgrade906010014Step2(array $stepParams)
 	{
 		$position = empty($stepParams[0]) ? 0 : $stepParams[0];
 
-		return $this->entityColumnsToJson(TransactionLog::class, ['info'], $position, $stepParams);
+		return $this->entityColumnsToJson('DBTech\Shop:TransactionLog', ['info'], $position, $stepParams);
 	}
 
 	/**
@@ -1100,11 +1079,11 @@ trait Upgrade906019970Trait
 	 *
 	 * @return array|bool
 	 */
-	public function upgrade906010014Step3(array $stepParams): bool|array
+	public function upgrade906010014Step3(array $stepParams)
 	{
 		$position = empty($stepParams[0]) ? 0 : $stepParams[0];
 
-		return $this->entityColumnsToJson(Purchase::class, ['configuration'], $position, $stepParams);
+		return $this->entityColumnsToJson('DBTech\Shop:Purchase', ['configuration'], $position, $stepParams);
 	}
 
 	/**
@@ -1112,11 +1091,11 @@ trait Upgrade906019970Trait
 	 *
 	 * @return array|bool
 	 */
-	public function upgrade906010014Step4(array $stepParams): bool|array
+	public function upgrade906010014Step4(array $stepParams)
 	{
 		$position = empty($stepParams[0]) ? 0 : $stepParams[0];
 
-		return $this->entityColumnsToJson(LotteryPrize::class, ['numbers'], $position, $stepParams);
+		return $this->entityColumnsToJson('DBTech\Shop:LotteryPrize', ['numbers'], $position, $stepParams);
 	}
 
 	/**
@@ -1124,11 +1103,11 @@ trait Upgrade906019970Trait
 	 *
 	 * @return array|bool
 	 */
-	public function upgrade906010014Step5(array $stepParams): bool|array
+	public function upgrade906010014Step5(array $stepParams)
 	{
 		$position = empty($stepParams[0]) ? 0 : $stepParams[0];
 
-		return $this->entityColumnsToJson(Category::class, ['prefix_cache', 'field_cache'], $position, $stepParams);
+		return $this->entityColumnsToJson('DBTech\Shop:Category', ['prefix_cache', 'field_cache'], $position, $stepParams);
 	}
 
 	/**
@@ -1136,17 +1115,17 @@ trait Upgrade906019970Trait
 	 *
 	 * @return array|bool
 	 */
-	public function upgrade906010014Step6(array $stepParams): bool|array
+	public function upgrade906010014Step6(array $stepParams)
 	{
 		$position = empty($stepParams[0]) ? 0 : $stepParams[0];
 
-		return $this->entityColumnsToJson(Lottery::class, ['drawn_numbers'], $position, $stepParams);
+		return $this->entityColumnsToJson('DBTech\Shop:Lottery', ['drawn_numbers'], $position, $stepParams);
 	}
 
 	/**
 	 *
 	 */
-	public function upgrade906010014Step7(): void
+	public function upgrade906010014Step7()
 	{
 		$db = $this->db();
 
@@ -1156,17 +1135,17 @@ trait Upgrade906019970Trait
 			SELECT lottery_id, drawn_numbers
 			FROM xf_dbtech_shop_lottery
 		');
-		foreach ($lotteries AS $lottery)
+		foreach ($lotteries as $lottery)
 		{
 			$drawnNumbers = json_decode($lottery['drawn_numbers'], true);
 
-			foreach ($drawnNumbers AS $dateline => $numbers)
+			foreach ($drawnNumbers as $dateline => $numbers)
 			{
 				$db->insert('xf_dbtech_shop_lottery_history', [
 					'lottery_id' => $lottery['lottery_id'],
 					'drawn_numbers' => json_encode($numbers),
 					'draw_date' => $dateline,
-					'tickets_sold' => 0,
+					'tickets_sold' => 0
 				]);
 			}
 		}
@@ -1177,7 +1156,7 @@ trait Upgrade906019970Trait
 	/**
 	 *
 	 */
-	public function upgrade906010015Step1(): void
+	public function upgrade906010015Step1()
 	{
 		$sm = $this->schemaManager();
 
@@ -1219,9 +1198,9 @@ trait Upgrade906019970Trait
 	}
 
 	/**
-	 * @throws Exception
+	 * @throws \XF\Db\Exception
 	 */
-	public function upgrade906010015Step2(): void
+	public function upgrade906010015Step2()
 	{
 		$db = $this->db();
 
@@ -1236,9 +1215,9 @@ trait Upgrade906019970Trait
 	}
 
 	/**
-	 * @throws Exception
+	 * @throws \XF\Db\Exception
 	 */
-	public function upgrade906010015Step3(): void
+	public function upgrade906010015Step3()
 	{
 		$db = $this->db();
 
@@ -1261,7 +1240,7 @@ trait Upgrade906019970Trait
 	/**
 	 *
 	 */
-	public function upgrade906010015Step4(): void
+	public function upgrade906010015Step4()
 	{
 		$db = $this->db();
 
@@ -1276,7 +1255,7 @@ trait Upgrade906019970Trait
 	/**
 	 *
 	 */
-	public function upgrade906010015Step5(): void
+	public function upgrade906010015Step5()
 	{
 		$sm = $this->schemaManager();
 
@@ -1290,10 +1269,8 @@ trait Upgrade906019970Trait
 	}
 
 	/**
-	 * @throws Exception
-	 * @throws Exception
 	 */
-	public function upgrade906010015Step6(): void
+	public function upgrade906010015Step6()
 	{
 		$this->executeUpgradeQuery("
 			DELETE FROM xf_user_alert
@@ -1313,7 +1290,7 @@ trait Upgrade906019970Trait
 	/**
 	 *
 	 */
-	public function upgrade906010033Step1(): void
+	public function upgrade906010033Step1()
 	{
 		$sm = $this->schemaManager();
 
@@ -1324,9 +1301,8 @@ trait Upgrade906019970Trait
 	}
 
 	/**
-	 * @throws Exception
 	 */
-	public function upgrade906010033Step2(): void
+	public function upgrade906010033Step2()
 	{
 		$this->executeUpgradeQuery("
 			UPDATE xf_dbtech_shop_item
@@ -1335,15 +1311,13 @@ trait Upgrade906019970Trait
 	}
 
 	/**
-	 * @throws Exception
-	 * @throws Exception
 	 */
-	public function upgrade906010035Step1(): void
+	public function upgrade906010035Step1()
 	{
 		$defaultValue = [
 			'enabled' => 1,
 			'right_position' => false,
-			'right_text' => true,
+			'right_text' => true
 		];
 
 		$this->query("
@@ -1378,15 +1352,12 @@ trait Upgrade906019970Trait
 		}
 	}
 
-	/**
-	 * @throws Exception
-	 */
-	public function upgrade906010036Step1(): void
+	public function upgrade906010036Step1()
 	{
 		$defaultValue = [
 			'width' => '',
 			'height' => '',
-			'disableScaling' => false,
+			'disableScaling' => false
 		];
 
 		$this->query("
@@ -1424,7 +1395,7 @@ trait Upgrade906019970Trait
 	/**
 	 *
 	 */
-	public function upgrade906010037Step1(): void
+	public function upgrade906010037Step1()
 	{
 		$db = $this->db();
 
@@ -1436,17 +1407,17 @@ trait Upgrade906019970Trait
 			SELECT lottery_id, drawn_numbers
 			FROM xf_dbtech_shop_lottery
 		');
-		foreach ($lotteries AS $lottery)
+		foreach ($lotteries as $lottery)
 		{
 			$drawnNumbers = json_decode($lottery['drawn_numbers'], true);
 
-			foreach ($drawnNumbers AS $dateline => $numbers)
+			foreach ($drawnNumbers as $dateline => $numbers)
 			{
 				$db->insert('xf_dbtech_shop_lottery_history', [
 					'lottery_id' => $lottery['lottery_id'],
 					'drawn_numbers' => json_encode($numbers),
 					'draw_date' => $dateline,
-					'tickets_sold' => 0,
+					'tickets_sold' => 0
 				]);
 			}
 		}
@@ -1457,7 +1428,7 @@ trait Upgrade906019970Trait
 	/**
 	 *
 	 */
-	public function upgrade906010053Step1(): void
+	public function upgrade906010053Step1()
 	{
 		$sm = $this->schemaManager();
 
@@ -1546,14 +1517,15 @@ trait Upgrade906019970Trait
 	 * @param $previousVersion
 	 * @param array $stateChanges
 	 */
-	protected function postUpgrade906010011($previousVersion, array &$stateChanges): void
+	protected function postUpgrade906010011($previousVersion, array &$stateChanges)
 	{
-		$service = \XF::service(RebuildNestedSetService::class, 'DBTech\Shop:Category', [
-			'parentField' => 'parent_category_id',
+		/** @var \XF\Service\RebuildNestedSet $service */
+		$service = \XF::service('XF:RebuildNestedSet', 'DBTech\Shop:Category', [
+			'parentField' => 'parent_category_id'
 		]);
 		$service->rebuildNestedSetInfo();
 
-		\XF::app()->jobManager()->enqueueUnique(
+		$this->app->jobManager()->enqueueUnique(
 			'dbtechShopCategoryRebuild',
 			'DBTech\Shop:Category',
 			[],

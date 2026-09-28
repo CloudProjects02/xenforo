@@ -14,7 +14,6 @@ use XF\InputFilterer;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\ParameterBag;
 use XF\Mvc\Reply\AbstractReply;
-use XF\Mvc\Reply\Exception as ReplyException;
 use XF\PrintableException;
 use XF\Pub\Controller\AbstractController;
 
@@ -85,6 +84,7 @@ class ContentAccessController extends AbstractController
 				'alwaysCheck' => true,
 			];
 
+			/** @var \DBTech\Credits\Entity\Transaction[] $pendingTransactions */
 			$pendingTransactions = $contentAccessEvent->testUndo($extraParams, $visitor);
 
 			if (!count($pendingTransactions))
@@ -162,7 +162,7 @@ class ContentAccessController extends AbstractController
 	 * @param ParameterBag $params
 	 *
 	 * @return AbstractReply
-	 * @throws ReplyException
+	 * @throws \XF\Mvc\Reply\Exception
 	 * @throws \Exception
 	 */
 	public function actionUnlocked(ParameterBag $params): AbstractReply

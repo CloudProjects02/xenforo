@@ -3,7 +3,6 @@
 namespace DBTech\Credits\Repository;
 
 use DBTech\Credits\Entity\Currency;
-use DBTech\Credits\Entity\Event;
 use DBTech\Credits\Entity\Transaction;
 use DBTech\Credits\Finder\CurrencyFinder;
 use DBTech\Credits\Finder\TransactionFinder;
@@ -22,7 +21,7 @@ class CurrencyRepository extends Repository
 	{
 		$cache = [];
 
-		/** @var AbstractCollection<Currency> $entities */
+		/** @var \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Currency> $entities */
 		$entities = \XF::app()->finder(CurrencyFinder::class)->fetch();
 		foreach ($entities AS $entity)
 		{
@@ -53,14 +52,14 @@ class CurrencyRepository extends Repository
 	}
 
 	/**
-	 * @return AbstractCollection<Currency>
+	 * @return \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Currency>
 	 */
 	public function getCurrenciesFromContainer(): AbstractCollection
 	{
 		$container = \XF::app()->container();
 		if (isset($container['dbtechCredits.currencies']) && $currencies = $container['dbtechCredits.currencies'])
 		{
-			/** @var AbstractCollection<Currency> $currencies */
+			/** @var \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Currency> $currencies */
 			return $currencies;
 		}
 
@@ -68,9 +67,9 @@ class CurrencyRepository extends Repository
 	}
 
 	/**
-	 * @param AbstractCollection<Event> $events
+	 * @param \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Event> $events
 	 *
-	 * @return AbstractCollection<Currency>
+	 * @return \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Currency>
 	 */
 	public function getCurrenciesFromEvents(
 		AbstractCollection $events
@@ -86,7 +85,7 @@ class CurrencyRepository extends Repository
 	}
 
 	/**
-	 * @param AbstractCollection<Event> $events
+	 * @param \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Event> $events
 	 * @param bool $onlyActive
 	 *
 	 * @return array
@@ -107,7 +106,7 @@ class CurrencyRepository extends Repository
 
 	/**
 	 * @param bool $onlyActive
-	 * @param AbstractCollection<Currency>|null $currencies
+	 * @param \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Currency>|null $currencies
 	 *
 	 * @return array
 	 */
@@ -169,14 +168,14 @@ class CurrencyRepository extends Repository
 	/**
 	 * @param bool $filterViewable
 	 *
-	 * @return AbstractCollection<Currency>
+	 * @return \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Currency>
 	 */
 	public function getCurrencies(bool $filterViewable = false): AbstractCollection
 	{
 		$container = \XF::app()->container();
 		if (isset($container['dbtechCredits.currencies']) && $currencies = $container['dbtechCredits.currencies'])
 		{
-			/** @var AbstractCollection<Currency> $currencies */
+			/** @var \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Currency> $currencies */
 			if ($filterViewable)
 			{
 				$currencies = $currencies->filterViewable();
@@ -189,7 +188,7 @@ class CurrencyRepository extends Repository
 	}
 
 	/**
-	 * @return AbstractCollection<Currency>
+	 * @return \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Currency>
 	 */
 	public function getViewableCurrencies(): AbstractCollection
 	{
@@ -247,7 +246,7 @@ class CurrencyRepository extends Repository
 	}
 
 	/**
-	 * @param AbstractCollection<Currency>|null $currencies
+	 * @param \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Currency>|null $currencies
 	 */
 	public function resetCurrencies(?AbstractCollection $currencies = null): void
 	{

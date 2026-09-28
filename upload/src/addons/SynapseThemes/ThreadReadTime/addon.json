@@ -1,0 +1,16 @@
+{
+    "legacy_addon_id": "",
+    "title": "[SynapseThemes] Thread Read Time",
+    "description": "Calculates and displays estimated reading time for threads",
+    "version_id": 100,
+    "version_string": "1.0.0",
+    "dev": "Synapse-Themes",
+    "dev_url": "https://synapsethemes.cc",
+    "faq_url": "",
+    "support_url": "",
+    "extra_urls": [],
+    "require": {
+        "XF": [2000010, "XenForo 2.0.0+"]
+    },
+    "icon": "fa-clock"
+}

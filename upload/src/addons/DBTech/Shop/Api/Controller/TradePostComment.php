@@ -2,23 +2,16 @@
 
 namespace DBTech\Shop\Api\Controller;
 
-use DBTech\Shop\Service\TradePostComment\DeleterService;
-use DBTech\Shop\Service\TradePostComment\EditorService;
 use XF\Api\Controller\AbstractController;
-use XF\Api\ControllerPlugin\ReactionPlugin;
-use XF\Api\Mvc\Reply\ApiResult;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\ParameterBag;
-use XF\Mvc\Reply\AbstractReply;
-use XF\Mvc\Reply\Exception;
-use XF\PrintableException;
 
 /**
  * @api-group Trade posts
  */
 class TradePostComment extends AbstractController
 {
-	protected function preDispatchController($action, ParameterBag $params): void
+	protected function preDispatchController($action, ParameterBag $params)
 	{
 		$this->assertApiScopeByRequestMethod('dbtech_shop_trade_post');
 	}
@@ -28,17 +21,17 @@ class TradePostComment extends AbstractController
 	 *
 	 * @api-out TradePostComment $comment
 	 *
-	 * @param ParameterBag $params
+	 * @param \XF\Mvc\ParameterBag $params
 	 *
-	 * @return ApiResult
-	 * @throws Exception
+	 * @return \XF\Api\Mvc\Reply\ApiResult
+	 * @throws \XF\Mvc\Reply\Exception
 	 */
-	public function actionGet(ParameterBag $params): ApiResult
+	public function actionGet(ParameterBag $params): \XF\Api\Mvc\Reply\ApiResult
 	{
-		$comment = $this->assertViewableTradePostComment($params->trade_post_comment_id, ['api|post']);
+		$comment = $this->assertViewableTradePostComment($params->trade_post_comment_id, 'api|post');
 
 		$result = $comment->toApiResult(Entity::VERBOSITY_VERBOSE, [
-			'with_post' => true,
+			'with_post' => true
 		]);
 
 		return $this->apiResult(['comment' => $result]);
@@ -54,12 +47,12 @@ class TradePostComment extends AbstractController
 	 * @api-out true $success
 	 * @api-out TradePostComment $comment
 	 *
-	 * @param ParameterBag $params
+	 * @param \XF\Mvc\ParameterBag $params
 	 *
-	 * @return AbstractReply
-	 * @throws Exception
+	 * @return \XF\Api\Mvc\Reply\ApiResult|\XF\Mvc\Reply\AbstractReply|\XF\Mvc\Reply\Error|\XF\Mvc\Reply\View
+	 * @throws \XF\Mvc\Reply\Exception
 	 */
-	public function actionPost(ParameterBag $params): AbstractReply
+	public function actionPost(ParameterBag $params)
 	{
 		$comment = $this->assertViewableTradePostComment($params->trade_post_comment_id);
 
@@ -83,24 +76,25 @@ class TradePostComment extends AbstractController
 		$editor->save();
 
 		return $this->apiSuccess([
-			'comment' => $comment->toApiResult(),
+			'comment' => $comment->toApiResult()
 		]);
 	}
 
 	/**
 	 * @param \DBTech\Shop\Entity\TradePostComment $comment
 	 *
-	 * @return EditorService
+	 * @return \DBTech\Shop\Service\TradePostComment\Editor
 	 */
-	protected function setupTradePostCommentEdit(\DBTech\Shop\Entity\TradePostComment $comment): EditorService
+	protected function setupTradePostCommentEdit(\DBTech\Shop\Entity\TradePostComment $comment): \DBTech\Shop\Service\TradePostComment\Editor
 	{
 		$input = $this->filter([
 			'message' => '?str',
 			'author_alert' => 'bool',
-			'author_alert_reason' => 'str',
+			'author_alert_reason' => 'str'
 		]);
 
-		$editor = \XF::app()->service(EditorService::class, $comment);
+		/** @var \DBTech\Shop\Service\TradePostComment\Editor $editor */
+		$editor = $this->service('DBTech\Shop:TradePostComment\Editor', $comment);
 
 		if ($input['message'] !== null)
 		{
@@ -125,13 +119,13 @@ class TradePostComment extends AbstractController
 	 *
 	 * @api-out true $success
 	 *
-	 * @param ParameterBag $params
+	 * @param \XF\Mvc\ParameterBag $params
 	 *
-	 * @return AbstractReply
-	 * @throws Exception
-	 * @throws PrintableException
+	 * @return \XF\Api\Mvc\Reply\ApiResult|\XF\Mvc\Reply\AbstractReply|\XF\Mvc\Reply\Error|\XF\Mvc\Reply\View
+	 * @throws \XF\Mvc\Reply\Exception
+	 * @throws \XF\PrintableException
 	 */
-	public function actionDelete(ParameterBag $params): AbstractReply
+	public function actionDelete(ParameterBag $params)
 	{
 		$comment = $this->assertViewableTradePostComment($params->trade_post_comment_id);
 
@@ -155,7 +149,8 @@ class TradePostComment extends AbstractController
 			$type = 'hard';
 		}
 
-		$deleter = \XF::app()->service(DeleterService::class, $comment);
+		/** @var \DBTech\Shop\Service\TradePostComment\Deleter $deleter */
+		$deleter = $this->service('DBTech\Shop:TradePostComment\Deleter', $comment);
 
 		if ($this->filter('author_alert', 'bool') && $comment->canSendModeratorActionAlert())
 		{
@@ -171,31 +166,30 @@ class TradePostComment extends AbstractController
 	 * @api-desc Reacts to the specified trade post comment
 	 *
 	 * @api-see \XF\Api\ControllerPlugin\Reaction::actionReact()
-	 * @param ParameterBag $params
+	 * @param \XF\Mvc\ParameterBag $params
 	 *
-	 * @return ApiResult
-	 * @throws Exception
+	 * @return \XF\Api\Mvc\Reply\ApiResult
+	 * @throws \XF\Mvc\Reply\Exception
 	 */
-	public function actionPostReact(ParameterBag $params): ApiResult
+	public function actionPostReact(ParameterBag $params): \XF\Api\Mvc\Reply\ApiResult
 	{
 		$comment = $this->assertViewableTradePostComment($params->trade_post_comment_id);
-
-		$reactPlugin = $this->plugin(ReactionPlugin::class);
+		
+		/** @var \XF\Api\ControllerPlugin\Reaction $reactPlugin */
+		$reactPlugin = $this->plugin('XF:Api:Reaction');
 		return $reactPlugin->actionReact($comment);
 	}
 
 	/**
 	 * @param int $id
-	 * @param array $with
+	 * @param string|array $with
 	 *
-	 * @return \DBTech\Shop\Entity\TradePostComment
+	 * @return \DBTech\Shop\Entity\TradePostComment|\XF\Mvc\Entity\Entity
 	 *
-	 * @throws Exception
-	 * @noinspection PhpReturnDocTypeMismatchInspection
-	 * @noinspection PhpIncompatibleReturnTypeInspection
+	 * @throws \XF\Mvc\Reply\Exception
 	 */
-	protected function assertViewableTradePostComment(int $id, array $with = ['api']): \DBTech\Shop\Entity\TradePostComment
+	protected function assertViewableTradePostComment(int $id, $with = 'api')
 	{
-		return $this->assertViewableApiRecord(\DBTech\Shop\Entity\TradePostComment::class, $id, $with);
+		return $this->assertViewableApiRecord('DBTech\Shop:TradePostComment', $id, $with);
 	}
 }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<routes>
+  <route route_type="public" route_prefix="members" sub_name="banned" format="banned/:page" controller="XF:Member" context="members" action_prefix="banned"/>
+  <route route_type="public" route_prefix="members" sub_name="moderator-log" format="moderator-log/:page" controller="XF:Member" context="members" action_prefix="moderatorLog"/>
+  <route route_type="public" route_prefix="members" sub_name="moderator-log/delete" format="moderator-log/:int&lt;log_id&gt;/delete" controller="XF:Member" context="members" action_prefix="moderatorLogDelete"/>
+</routes>
+ 		  	   				  		 	 	  	  	  		 	  	   			   	  		 			 		 				  		 				   		 				 		  	 	 	   		  			   	 		 	  		 		  	 	 	  		  	 

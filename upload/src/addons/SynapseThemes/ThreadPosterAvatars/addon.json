@@ -1,0 +1,16 @@
+{
+    "legacy_addon_id": "",
+    "title": "[SynapseThemes] Thread Poster Avatars",
+    "description": "Displays avatars of the thread owner and top posters in the thread list.",
+    "version_id": 100,
+    "version_string": "1.0.0",
+    "dev": "SynapseThemes",
+    "dev_url": "https://xenforo.com",
+    "faq_url": "",
+    "support_url": "",
+    "extra_urls": [],
+    "require": {
+        "XF": [2000010, "XenForo 2.0.0+"]
+    },
+    "icon": "fa-users"
+}

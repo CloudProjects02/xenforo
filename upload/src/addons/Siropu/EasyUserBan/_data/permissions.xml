@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<permissions>
+  <permission permission_group_id="siropuEasyUserBan" permission_id="viewBanCount" permission_type="flag" interface_group_id="siropuEasyUserBan" display_order="3"/>
+  <permission permission_group_id="siropuEasyUserBan" permission_id="viewBanReason" permission_type="flag" interface_group_id="siropuEasyUserBan" display_order="2"/>
+  <permission permission_group_id="siropuEasyUserBan" permission_id="viewBanned" permission_type="flag" interface_group_id="siropuEasyUserBan" display_order="1"/>
+  <permission permission_group_id="siropuEasyUserBan" permission_id="viewForumBans" permission_type="flag" interface_group_id="siropuEasyUserBan" display_order="5"/>
+  <permission permission_group_id="siropuEasyUserBan" permission_id="viewPostContent" permission_type="flag" interface_group_id="siropuEasyUserBan" display_order="6"/>
+  <permission permission_group_id="siropuEasyUserBan" permission_id="viewThreadBans" permission_type="flag" interface_group_id="siropuEasyUserBan" display_order="4"/>
+  <permission permission_group_id="siropuEasyUserBanMod" permission_id="ban" permission_type="flag" interface_group_id="siropuEasyUserBanModerator" display_order="2"/>
+  <permission permission_group_id="siropuEasyUserBanMod" permission_id="banIps" permission_type="flag" interface_group_id="siropuEasyUserBanModerator" display_order="5"/>
+  <permission permission_group_id="siropuEasyUserBanMod" permission_id="deleteLogs" permission_type="flag" interface_group_id="siropuEasyUserBanModerator" display_order="4"/>
+  <permission permission_group_id="siropuEasyUserBanMod" permission_id="unban" permission_type="flag" interface_group_id="siropuEasyUserBanModerator" display_order="2"/>
+  <permission permission_group_id="siropuEasyUserBanMod" permission_id="viewLog" permission_type="flag" interface_group_id="siropuEasyUserBanModerator" display_order="3"/>
+</permissions>
+ 		  	   				  		 	 	  	  	  		 	  	   			   	  		 			 		 				  		 				   		 				 		  	 	 	   		  			   	 		 	  		 		  	 	 	  		  	 

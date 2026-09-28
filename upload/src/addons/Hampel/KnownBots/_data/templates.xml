@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="hampel_knownbots_detect" version_id="5000034" version_string="5.0.0 Beta 4"><![CDATA[<xf:title>{{ phrase('hampel_knownbots_detection_test') }}</xf:title>
+
+<xf:if is="$status">
+	
+	<xf:if is="$status == 'bot'">
+		<div class="blockMessage blockMessage--success blockMessage--iconic">
+			{{ phrase('hampel_knownbots_bot_detected:') }} 
+			<xf:if is="$botInfo.link">
+				<a href="{{ $botInfo.link }}" target="_blank">{{ $botInfo.title }}</a>
+			<xf:else />
+				{{ $botInfo.title }}
+			</xf:if>
+		</div>
+	<xf:elseif is="$status == 'browser'" />
+		<div class="blockMessage blockMessage--success blockMessage--iconic">
+			{{ phrase('hampel_knownbots_browser_detected') }} 
+		</div>
+	<xf:elseif is="$status == 'ignored'" />
+		<div class="blockMessage blockMessage--success blockMessage--iconic">
+			{{ phrase('hampel_knownbots_ignored') }} 
+		</div>		
+	<xf:else />
+		<div class="blockMessage blockMessage--important blockMessage--iconic">
+			{{ phrase('hampel_knownbots_none_detected') }}
+		</div>
+	</xf:if>
+
+
+</xf:if>
+
+<xf:form action="{{ link('tools/hampel-knownbots-detect') }}" class="block">
+	<div class="block-container">
+		<h2 class="block-header">{{ phrase('hampel_knownbots_is_this_a_bot') }}</h2>
+		<div class="block-body">
+			<xf:textboxrow label="{{ phrase('hampel_knownbots_useragent') }}" 
+				name="useragent" 
+				value="{$useragent}" 
+				explain="{{ phrase('hampel_knownbots_useragent_explain') }}" />			
+		</div>		
+		<xf:submitrow submit="{{ phrase('hampel_knownbots_detect') }}" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="hampel_knownbots_list" version_id="5000034" version_string="5.0.0 Beta 4"><![CDATA[<xf:title>{{ phrase('hampel_knownbots_list') }}</xf:title>
+
+<xf:pageaction>
+	<xf:if is="$xf.options.knownbotsFetchNewBots">
+		<xf:button href="{{ link('tools/hampel-knownbots-fetch') }}">
+			{{ phrase('hampel_knownbots_fetch') }}
+		</xf:button>
+	</xf:if>		
+</xf:pageaction>
+
+<xf:if is="$knownBots">
+	<div class="block">	
+		<div class="block-container">
+			<h2 class="block-header">
+				{{ phrase('hampel_knownbots_last_updated', {'date': date($updated, 'r')}) }}
+			</h2>				
+			<div class="block-body block-row">
+				<ul>
+					<xf:foreach loop="$knownBots" value="$bot">
+						<xf:if is="$bot.link">
+							<li><a href="{{ $bot.link }}" target="_blank">{{ $bot.title }}</a></li>
+						<xf:else />
+							<li>{{ $bot.title }}</li>
+						</xf:if>
+					</xf:foreach>
+				</ul>
+			</div>
+		</div>
+	</div>
+</xf:if>]]></template>
+  <template type="admin" title="hampel_knownbots_md" version_id="4000031" version_string="4.0.0 Beta 1"><![CDATA[<xf:title>{{ phrase('hampel_knownbots_list') }}</xf:title>
+
+<xf:if is="$bots">
+	<div class="block-container">
+<textarea rows="100" cols="120">
+# List of Known Bots as of {{ date($updated, 'r') }}
+<xf:foreach loop="$bots" key="$key" value="$bot">
+ * {{ $key }}: [{{ $bot.title }}]({{ $bot.link }})</xf:foreach>
+</textarea>
+	</div>
+</xf:if>]]></template>
+  <template type="admin" title="hampel_knownbots_new" version_id="6000070" version_string="6.0.0"><![CDATA[<xf:title>{{ phrase('hampel_knownbots_new') }}</xf:title>
+
+<xf:pageaction>
+	<xf:if is="$xf.options.knownbotsStoreUserAgents.enabled && $xf.options.knownbotsSendUserAgents.api_token">
+		<xf:button href="{{ link('tools/hampel-knownbots-send') }}">
+			{{ phrase('hampel_knownbots_send_agents') }}
+		</xf:button>
+	</xf:if>
+	<xf:button href="{{ link('tools/hampel-knownbots-purge') }}">
+		{{ phrase('hampel_knownbots_purge') }}
+	</xf:button>
+	<xf:button href="{{ link('tools/hampel-knownbots-clear') }}">
+		{{ phrase('hampel_knownbots_clear') }}
+	</xf:button>		
+</xf:pageaction>
+
+<div class="block">
+	<div class="block-container">
+		<h2 class="block-header">
+			{{ phrase('hampel_knownbots_recently_seen_bots') }}
+		</h2>	
+		<div class="block-body block-row">
+			<xf:if is="$bots">		
+				<ul>
+					<xf:foreach loop="$bots" value="$bot">
+						<li>
+							<xf:if is="$bot.link">
+								<a target="_blank" href="{{ $bot.link }}">{{ $bot.title }}:</a>
+								<xf:else />
+								{{ $bot.title }}
+							</xf:if>
+							[{{ $bot.user_agent }}]
+						</li>
+					</xf:foreach>
+				</ul>
+				<xf:else />
+				<div class="blockMessage">{{ phrase('hampel_knownbots_email_none_found') }}</div>
+			</xf:if>
+		</div>
+	</div>
+</div>
+<div class="block">
+	<div class="block-container">
+		<h2 class="block-header">
+			{{ phrase('hampel_knownbots_unidentified_user_agents') }}
+		</h2>			
+		<div class="block-body block-row">
+			<xf:if is="$unidentified">		
+				<ul>
+					<xf:foreach loop="$unidentified" value="$bot">
+						<li>
+							{{ $bot }}
+						</li>
+					</xf:foreach>
+				</ul>
+			<xf:else />
+				<div class="blockMessage"></div>
+			</xf:if>			
+		</div>
+	</div>
+</div>]]></template>
+  <template type="admin" title="option_knownbots_api_configure" version_id="5010070" version_string="5.1.0"><![CDATA[<xf:title>{$option.title}</xf:title>
+
+<xf:form action="{{ link('options/knownbots-api-configure', $option) }}" ajax="true" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:set var="$values" value="{{ $type == $option.option_value.type ? $option.option_value : [] }}" />
+
+			<xf:formrow label="{{ phrase('hampel_knownbots_license_validation_token') }}" rowtype="input">
+				<xf:textbox name="validation_token" value="" placeholder="{{ phrase('hampel_knownbots_validation_token') }}" size="40" required="required" />
+			</xf:formrow>
+					
+			<xf:inforow rowtype="simple">
+				{{ phrase('hampel_knownbots_about_license_validation') }}
+			</xf:inforow>
+
+		</div>
+		<xf:submitrow sticky="true" icon="save" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="option_knownbots_api_setup" version_id="5010070" version_string="5.1.0"><![CDATA[<xf:title>{{ phrase('hampel_knownbots_api_setup') }}</xf:title>
+
+<xf:form action="{{ link('options/knownbots-api-setup', $option) }}" ajax="true" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:radiorow label="{$option.title}" name="action"
+				value="{{ $option.option_value.enabled ? 'unchanged' : 'disabled' }}">
+
+				<xf:option value="disabled">{{ phrase('disabled') }}</xf:option>
+				<xf:if is="$option.option_value.enabled">
+					<xf:set var="$unchangedHint">
+						<ul class="listInline listInline--bullet listInline--selfInline">
+							<li>{{ phrase('hampel_knownbots_api_token') }}: {{ $option.option_value.api_token|substr(0, 8)|pad('*', 16, true) }}</li>
+						</ul>
+					</xf:set>
+					<xf:option value="unchanged" label="{{ phrase('do_not_change') }}" hint="{$unchangedHint}" />
+					<xf:option value="update">{{ phrase('update') }}</xf:option>
+				<xf:else />
+					<xf:option value="enabled">{{ phrase('enabled') }}</xf:option>
+				</xf:if>
+			</xf:radiorow>
+		</div>
+		<xf:submitrow submit="{{ phrase('continue') }}" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="option_template_knownBotsApiToken" version_id="5010070" version_string="5.1.0"><![CDATA[<xf:formrow
+	label="{$option.title}"
+	hint="{$hintHtml}"
+	explain="{$explainHtml}"
+	rowclass="{$rowClass}">
+
+	<xf:if is="$option.option_value.enabled">
+		<dl class="pairs pairs--columns pairs--fixedSmall">
+			<dt>{{ phrase('hampel_knownbots_api_token') }}</dt>
+			<dd>{{ $option.option_value.api_token|substr(0, 8)|pad('*', 16, true) }}</dd>
+		</dl>		
+	</xf:if>
+
+	<div class="u-inputSpacer">
+		<xf:button href="{{ link('options/knownbots-api-setup', $option) }}" data-xf-click="overlay">
+			{{ $option.option_value.enabled ? phrase('change') : phrase('enable') }}
+		</xf:button>
+	</div>
+</xf:formrow>]]></template>
+</templates>
+ 		 		   			      	 			   					  					 	 				    	 			   	   	   		 	 		    	  					       		  	 						 				  			 		    	 	   		 	 	

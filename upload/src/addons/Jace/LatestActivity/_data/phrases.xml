@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="option.jace_no_of_latestactivtiydisplay" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Latest Activity Display]]></phrase>
+  <phrase title="option.jace_userlatestactivity_allow" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[User Fetch Latest Activity]]></phrase>
+  <phrase title="option_explain.jace_no_of_latestactivtiydisplay" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[]]></phrase>
+  <phrase title="option_explain.jace_userlatestactivity_allow" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[]]></phrase>
+  <phrase title="option_group.jace_latestactivity" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[[Jace] Latest Activity]]></phrase>
+  <phrase title="option_group_description.jace_latestactivity" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[]]></phrase>
+</phrases>

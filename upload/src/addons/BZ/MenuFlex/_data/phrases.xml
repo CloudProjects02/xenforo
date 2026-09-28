@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="option.bzmf_above_color_assignment_removed" version_id="2000051" version_string="2.0.0 Release Candidate 1"><![CDATA[Above color assignment removed:]]></phrase>
+  <phrase title="option.bzmf_above_icon_assignment_removed" version_id="2000051" version_string="2.0.0 Release Candidate 1"><![CDATA[Above icon assignment removed:]]></phrase>
+  <phrase title="option.bzmf_above_style_assignment_removed" version_id="2000051" version_string="2.0.0 Release Candidate 1"><![CDATA[Above style assignment removed:]]></phrase>
+  <phrase title="option.bzmf_compilewithoutcomments" version_id="2000051" version_string="2.0.0 Release Candidate 1"><![CDATA[Compile Without Comments]]></phrase>
+  <phrase title="option.bzmf_custom_less" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[custom LESS is being injected]]></phrase>
+  <phrase title="option.bzmf_custom_less_js" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[custom LESS and JavaScript are being injected]]></phrase>
+  <phrase title="option.bzmf_custom_urlstrings" version_id="2000051" version_string="2.0.0 Release Candidate 1"><![CDATA[Custom URL String Assignments]]></phrase>
+  <phrase title="option.bzmf_defined_invalid" version_id="2000051" version_string="2.0.0 Release Candidate 1"><![CDATA[(defined but invalid)]]></phrase>
+  <phrase title="option.bzmf_fa_assignments" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[Icon Assignments]]></phrase>
+  <phrase title="option.bzmf_fa_assignments_accountvisitorsmenu" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[Account Visitors Menu]]></phrase>
+  <phrase title="option.bzmf_fa_assignments_mainmenu" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[Main Menu]]></phrase>
+  <phrase title="option.bzmf_fa_assignments_moreoptionsmenu" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[More Options Menu]]></phrase>
+  <phrase title="option.bzmf_fa_assignments_navids" version_id="2000051" version_string="2.0.0 Release Candidate 1"><![CDATA[Navigation IDs]]></phrase>
+  <phrase title="option.bzmf_fa_assignments_othermenus" version_id="2000051" version_string="2.0.0 Release Candidate 1"><![CDATA[Other Menus]]></phrase>
+  <phrase title="option.bzmf_fa_assignments_searchtabs" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[Search Tabs]]></phrase>
+  <phrase title="option.bzmf_fa_assignments_staffbar" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[Staff Bar]]></phrase>
+  <phrase title="option.bzmf_fa_assignments_standardicons" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[Standard Icon Assignments]]></phrase>
+  <phrase title="option.bzmf_fa_assignments_standardicons_explain" version_id="2000051" version_string="2.0.0 Release Candidate 1"><![CDATA[Enable to assign preselected icons for XenForo, XenForo Media Gallery <i>(if installed)</i>, and XenForo Resource Manager <i>(if installed)</i> menu options. When enabled, choose standard icon assignment subsets below for more granular control. Disabling 'Standard Icon Assignments' disables all subsets, and only menu icons assigned in the 'Font Awesome Custom Icons' option below will display.]]></phrase>
+  <phrase title="option.bzmf_fa_assignments_submenus" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[Submenus]]></phrase>
+  <phrase title="option.bzmf_fa_assignments_whatsnewtabs" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[What's New Tabs]]></phrase>
+  <phrase title="option.bzmf_facolor_custom" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[Custom]]></phrase>
+  <phrase title="option.bzmf_facolor_custom_explain" version_id="2000052" version_string="2.0.0 Release Candidate 2"><![CDATA[<br><span style="font-size: 13px; color: hsla(var(--xf-textColorMuted))">The custom color inputs accept the following color formats: Named color, Hexadecimal, RGB(a), HSL(a), and XenForo Color ID. You can use either one or both custom inputs. A blank input reverts to 'Default' color for those icons.<br><br><b>Examples:</b> red, #ff0000, rgb(255, 0, 0), hsl(0, 100%, 50%), or @xf-paletteColor3<br><br></span>]]></phrase>
+  <phrase title="option.bzmf_facolor_default" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[Default]]></phrase>
+  <phrase title="option.bzmf_facolor_default_hint" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[Default icon color is based off of the menu option's text color.]]></phrase>
+  <phrase title="option.bzmf_facolor_primarycolor_explain" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[<span style="font-size: 13px; color: hsla(var(--xf-textColorMuted))">This custom color will change the Font Awesome icon colors for the Main Menu (desktop & mobile), Submenus (mobile),  Search Tabs, and What's New Tabs. The default menu option's text color for these areas is <span style="color:hsla(var(--xf-paletteColor2));">Primary: Color 2</span>.</span>]]></phrase>
+  <phrase title="option.bzmf_facolor_primarycolor_input" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[Primary icons custom color:]]></phrase>
+  <phrase title="option.bzmf_facolor_secondarycolor_explain" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[<span style="font-size: 13px; color: hsla(var(--xf-textColorMuted))">This custom color will change the Font Awesome icon colors for Submenus (desktop), Account Visitors Menu, and More Options Menu. The default menu option's text color for these areas is <span style="color:hsla(var(--xf-paletteNeutral3));">Neutral: Neutral 3</span>.</span>]]></phrase>
+  <phrase title="option.bzmf_facolor_secondarycolor_input" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[Secondary icons custom color:]]></phrase>
+  <phrase title="option.bzmf_final_less_closing" version_id="2000051" version_string="2.0.0 Release Candidate 1"><![CDATA[[BZ] MenuFlex Final Compiled Styles & Assignments - END]]></phrase>
+  <phrase title="option.bzmf_final_less_opening" version_id="2000051" version_string="2.0.0 Release Candidate 1"><![CDATA[[BZ] MenuFlex Final Compiled Styles & Assignments - Last Updated:]]></phrase>
+  <phrase title="option.bzmf_final_less_warning" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[Do not make changes within this template, they will be overwritten next time you save MenuFlex settings.]]></phrase>
+  <phrase title="option.bzmf_fontawesome" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[Font Awesome Menu Icons]]></phrase>
+  <phrase title="option.bzmf_fontawesomecolor" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[Font Awesome Menu Icons Color]]></phrase>
+  <phrase title="option.bzmf_fontawesomecustom" version_id="2000052" version_string="2.0.0 Release Candidate 2"><![CDATA[Font Awesome Custom Menu Icons]]></phrase>
+  <phrase title="option.bzmf_fontawesomeicons" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[Enable Font Awesome Menu Icons]]></phrase>
+  <phrase title="option.bzmf_fontawesomeicons_explain" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[Enable to add Font Awesome icons to menu options for visual enhancement.]]></phrase>
+  <phrase title="option.bzmf_fontawesomestyle" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[Font Awesome Menu Icon Styling]]></phrase>
+  <phrase title="option.bzmf_icon_assignments_custom" version_id="2000051" version_string="2.0.0 Release Candidate 1"><![CDATA[Custom Icon Assignments]]></phrase>
+  <phrase title="option.bzmf_icon_assignments_standard" version_id="2000051" version_string="2.0.0 Release Candidate 1"><![CDATA[Standard Icon Assignments]]></phrase>
+  <phrase title="option.bzmf_icon_color_overrides_global" version_id="2000051" version_string="2.0.0 Release Candidate 1"><![CDATA[Global Menu Icon Color Overrides]]></phrase>
+  <phrase title="option.bzmf_icon_color_overrides_primary_main" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[ Main & Staff Bar Nav Icon Color Change - Desktop; Main, Submenu & Staff Bar Nav Icon Color Change - Mobile]]></phrase>
+  <phrase title="option.bzmf_icon_color_overrides_primary_searchtabs" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[Search Form Tabs Icon Color Change]]></phrase>
+  <phrase title="option.bzmf_icon_color_overrides_primary_whatsnewtabs" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[What's New Tabs Icon Color Change]]></phrase>
+  <phrase title="option.bzmf_icon_color_overrides_secondary_othermenus" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[Account Visitors Menu & More Options Menu Icon Color Change]]></phrase>
+  <phrase title="option.bzmf_icon_color_overrides_secondary_submenus" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[Sub Nav Icon Color Change - Desktop]]></phrase>
+  <phrase title="option.bzmf_omitted_color" version_id="2000051" version_string="2.0.0 Release Candidate 1"><![CDATA[Color omitted, using global color setting]]></phrase>
+  <phrase title="option.bzmf_omitted_icon_no_assignment" version_id="2000051" version_string="2.0.0 Release Candidate 1"><![CDATA[Icon name omitted, no existing assignment, assigning 'question-circle' ]]></phrase>
+  <phrase title="option.bzmf_omitted_icon_using_existing" version_id="2000051" version_string="2.0.0 Release Candidate 1"><![CDATA[Icon name omitted, using existing assignment]]></phrase>
+  <phrase title="option.bzmf_openmenusonhover" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[Open Menus On Hover]]></phrase>
+  <phrase title="option.bzmf_overridden" version_id="2000051" version_string="2.0.0 Release Candidate 1"><![CDATA[Overridden]]></phrase>
+  <phrase title="option.bzmf_override" version_id="2000051" version_string="2.0.0 Release Candidate 1"><![CDATA[Override]]></phrase>
+  <phrase title="option.bzmf_quads" version_id="2000051" version_string="2.0.0 Release Candidate 1"><![CDATA[Quads]]></phrase>
+  <phrase title="option.bzmf_singles_pairs_trios" version_id="2000051" version_string="2.0.0 Release Candidate 1"><![CDATA[Singles, Pairs, & Trios]]></phrase>
+  <phrase title="option.bzmf_tieredmenus" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[Tiered Menus]]></phrase>
+  <phrase title="option.bzmf_undefined" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[Undefined]]></phrase>
+  <phrase title="option.bzmf_using_global_style" version_id="2000051" version_string="2.0.0 Release Candidate 1"><![CDATA[Style omitted, using global style: {style}]]></phrase>
+  <phrase title="option_explain.bzmf_compilewithoutcomments" version_id="2000052" version_string="2.0.0 Release Candidate 2"><![CDATA[Enable to compile styles and assignments with only opening, warning, and closing comments. This does not affect add-on operation or performance. By default, MenuFlex uses detailed comments in bzmf_final.less to help troubleshoot icon and setting issues. Once resolved, some admins prefer a cleaner output; this option removes most descriptive comments. The bzmf_final.less template is recompiled each time you save settings below.]]></phrase>
+  <phrase title="option_explain.bzmf_fontawesome" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[<br><b>Note:</b> When standard icon assignments are used, individual icon assignments can be removed by entering a <b>navid:</b> single (e.g. forum:), or overridden by entering a <b>navid:iconname</b> pair (e.g. forums:comments) in the 'Font Awesome Custom Icons' option below.]]></phrase>
+  <phrase title="option_explain.bzmf_fontawesomecolor" version_id="2000052" version_string="2.0.0 Release Candidate 2"><![CDATA[<b>Note:</b> The above icon color options can be overridden per-icon by entering a <b>navid:iconname:style:color</b> quad (e.g. forums:comments:solid:red) in the 'Font Awesome Custom Icons' option below.]]></phrase>
+  <phrase title="option_explain.bzmf_fontawesomecustom" version_id="2000054" version_string="2.0.0 Release Candidate 4"><![CDATA[Use any combination of singles, pairs, trios and quads, one per line, to add custom Font Awesome icons to menu options.
+
+<ul>
+<li><b>Singles</b>: Use <b>navid:</b> singles (e.g., forum:) to remove standard icon assignments if you are using 'Standard Icon Assignments' above.</li>
+<li><b>Pairs</b>: Use <b>navid:iconname</b> pairs (e.g., forums:comments) to add new icon assignments or override 'Standard Icon Assignments'.</li>
+<li><b>Trios</b>: Use <b>navid:iconname:style</b> trios (e.g., forums:comments:solid) to set a specific per-icon style. Trios override the 'Font Awesome Menu Icon Styling' option above.</li>
+<li><b>Quads</b>: Use <b>navid:iconname:style:color</b> quads (e.g., forums:comments:solid:red) to set a specific per-icon color. Quads override the 'Font Awesome Menu Icons Color' options above.</li>
+<li><b>Valid style names</b>: light, regular, solid, duotone, and brands.</li>
+<li><b>Valid color formats</b>: Named color, Hexadecimal, RGB(a), HSL(a), and XenForo Color ID.</li>
+<li>Comment lines (starting with #) and blank lines can be used to help organize your custom menu icons.</li>
+</ul>
+<b>Note:</b> 'Enable Font Awesome Menu Icons' option above must be selected to display custom menu icons.]]></phrase>
+  <phrase title="option_explain.bzmf_fontawesomestyle" version_id="2000052" version_string="2.0.0 Release Candidate 2"><![CDATA[Choose the default Font Awesome icon style for your menu options. This style will be applied to all enabled icons (standard and custom) by default.<br><br><b>Note:</b> The above default icon style selection can be overridden per-icon by entering a <b>navid:iconname:style</b> trio (e.g. forums:comments:solid) in the 'Font Awesome Custom Icons' option below.]]></phrase>
+  <phrase title="option_explain.bzmf_openmenusonhover" version_id="2000054" version_string="2.0.0 Release Candidate 4"><![CDATA[Enable to allow main menu and section links to expand on hover. Works with all 'hover' capable devices.
+<br>
+<br>
+<hr>]]></phrase>
+  <phrase title="option_explain.bzmf_tieredmenus" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[Enable to use multi-level, nested submenus with responsive positioning.
+<br>
+<br>
+<hr>]]></phrase>
+  <phrase title="option_group.bzmf_options" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[[BZ] MenuFlex]]></phrase>
+  <phrase title="option_group_description.bzmf_options" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[Enhance your XenForo menus with customizable flair and function.]]></phrase>
+</phrases>

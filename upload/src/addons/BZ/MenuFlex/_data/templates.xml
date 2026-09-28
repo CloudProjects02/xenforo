@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="bzmf_option_template_fontawesome" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[<xf:checkboxrow
+    label="{$option.title}"
+    hint="{$hintHtml}"
+    explain="{$explainHtml}"
+    html="{$listedHtml}"
+    rowclass="{$rowClass}">
+
+    <xf:option name="{$inputName}[fontawesomeicons]" checked="{$option.option_value.fontawesomeicons}"
+        label="{{ phrase('option.bzmf_fontawesomeicons') }}" hint="{{ phrase('option.bzmf_fontawesomeicons_explain') }}">
+				
+        <xf:checkbox>
+            <xf:option name="{$inputName}[standardiconassignments]" checked="{$option.option_value.standardiconassignments}"
+                label="{{ phrase('option.bzmf_fa_assignments_standardicons') }}" hint="{{ phrase('option.bzmf_fa_assignments_standardicons_explain') }}">
+                <xf:checkbox>
+                    <xf:option name="{$inputName}[mainmenu]" checked="{$option.option_value.mainmenu}"
+                        label="{{ phrase('option.bzmf_fa_assignments_mainmenu') }}" />
+                    <xf:option name="{$inputName}[submenus]" checked="{$option.option_value.submenus}"
+                        label="{{ phrase('option.bzmf_fa_assignments_submenus') }}" />
+                    <xf:option name="{$inputName}[accountvisitorsmenu]" checked="{$option.option_value.accountvisitorsmenu}"
+                        label="{{ phrase('option.bzmf_fa_assignments_accountvisitorsmenu') }}" />
+                    <xf:option name="{$inputName}[moreoptionsmenu]" checked="{$option.option_value.moreoptionsmenu}"
+                        label="{{ phrase('option.bzmf_fa_assignments_moreoptionsmenu') }}" />
+                    <xf:option name="{$inputName}[searchtabs]" checked="{$option.option_value.searchtabs}"
+                        label="{{ phrase('option.bzmf_fa_assignments_searchtabs') }}" />
+                    <xf:option name="{$inputName}[whatsnewtabs]" checked="{$option.option_value.whatsnewtabs}"
+                        label="{{ phrase('option.bzmf_fa_assignments_whatsnewtabs') }}" />
+					<xf:option name="{$inputName}[staffbar]" checked="{$option.option_value.staffbar}"
+                        label="{{ phrase('option.bzmf_fa_assignments_staffbar') }}" />
+                </xf:checkbox>
+            </xf:option>
+        </xf:checkbox>
+    </xf:option>
+</xf:checkboxrow>]]></template>
+  <template type="admin" title="bzmf_option_template_fontawesomecolor" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[<xf:radiorow name="{$inputName}[faColorMode]" value="{$option.option_value.faColorMode}"
+			 label="{$option.title}"
+			 hint="{$hintHtml}"
+			 explain="{$explainHtml}"
+			 html="{$listedHtml}"
+			 rowclass="{$rowClass}">
+
+	<xf:option value="default">
+		<xf:label>{{ phrase('option.bzmf_facolor_default') }}</xf:label>
+		<xf:hint>{{ phrase('option.bzmf_facolor_default_hint') }}</xf:hint>
+	</xf:option>
+
+	<xf:option value="custom">
+		<xf:label>{{ phrase('option.bzmf_facolor_custom') }}</xf:label>
+		<xf:dependent>
+			<div>{{ phrase('option.bzmf_facolor_primarycolor_input') }}</div>
+			<xf:textbox name="{$inputName}[faPrimaryColor]" value="{$option.option_value.faPrimaryColor}" />
+			<div>{{ phrase('option.bzmf_facolor_primarycolor_explain') }}</div>
+		</xf:dependent>
+		<xf:dependent>
+			<div>{{ phrase('option.bzmf_facolor_secondarycolor_input') }}</div>
+			<xf:textbox name="{$inputName}[faSecondaryColor]" value="{$option.option_value.faSecondaryColor}" />
+			<div>{{ phrase('option.bzmf_facolor_secondarycolor_explain') }}</div>
+			<div>{{ phrase('option.bzmf_facolor_custom_explain') }}</div>
+		</xf:dependent>
+	</xf:option>
+</xf:radiorow>]]></template>
+  <template type="public" title="bzmf_fa_assignments_accountvisitorsmenu" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[SELECTOR:.menu .menu-content
+/account/:users
+/account/avatar:none
+/account/bookmarks:star
+/news-feed:users
+/member?user_:user
+/reactions:heart
+/account-details:id-card
+/security:shield-alt
+/privacy:lock
+/preferences:sliders-h
+/signature:signature
+/connected-accounts:link
+/following:user-friends
+/ignored:user-slash
+/logout/:sign-out-alt]]></template>
+  <template type="public" title="bzmf_fa_assignments_mainmenu" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[SELECTOR:.p-navEl a, .p-nav-opposite a, .p-staffBar a, .menu .menu-content a, .offCanvasMenu-linkHolder a, .offCanvasMenu-subList a
+home:home
+forums:comments
+whatsNew:bolt
+members:user
+search:search
+xfmg:photo-video
+xfrm:folder-open]]></template>
+  <template type="public" title="bzmf_fa_assignments_moreoptionsmenu" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[SELECTOR:.menu .menu-content
+/edit:pen-square
+/change-type:exchange
+/quick-close:lock
+/quick-stick:thumbtack
+/feature:star
+/poll/create:poll-h
+/delete:trash
+/move:arrows-alt
+/reply-bans:comment-slash
+/moderator-actions:user-shield]]></template>
+  <template type="public" title="bzmf_fa_assignments_searchtabs" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[SELECTOR:[data-template='search_form']
+# Friendly URL Strings
+/search/:search
+/search/?type=post:comment-alt
+/search/?type=xfmg_media:photo-video
+/search/?type=xfmg_album:images
+/search/?type=xfmg_comment:comment
+/search/?type=resource:folder-open
+/search/?type=conversation_message:envelope
+
+# Unfriendly URL Strings
+/index.php?search/:search
+/index.php?search/&type=post:comment-alt
+/index.php?search/&type=xfmg_media:photo-video
+/index.php?search/&type=xfmg_album:images
+/index.php?search/&type=xfmg_comment:comment
+/index.php?search/&type=resource:folder-open
+/index.php?search/&type=conversation_message:envelope]]></template>
+  <template type="public" title="bzmf_fa_assignments_staffbar" version_id="2000054" version_string="2.0.0 Release Candidate 4"><![CDATA[SELECTOR:.p-staffBar a
+staffmod:user-shield
+staffadmin:user-cog]]></template>
+  <template type="public" title="bzmf_fa_assignments_submenus" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[SELECTOR:.p-navEl a, .menu .menu-content a, .offCanvasMenu-linkHolder a, .offCanvasMenu-subList a
+
+# XF Forums Submenu Items
+newPosts:comment
+findThreads:search
+yourThreads:user
+contributedThreads:pen
+unansweredThreads:question
+watched:eye
+watchedThreads:comments
+watchedForums:folder-open
+searchForums:search-plus
+markForumsRead:check
+members:users
+currentVisitors:user-clock
+
+# XF What's New Submenu Items
+featured:star
+whatsNewPosts:comment
+xfmgWhatsNewNewMedia:image
+xfmgWhatsNewMediaComments:comments
+whatsNewProfilePosts:user
+whatsNewNewsFeed:users
+xfrmNewResources:plus-circle
+latestActivity:bolt
+
+# Moderator Tools
+staffmodqueue:list-ol
+staffmodreports:clipboard-list
+
+# XF Search Submenu Items
+searchConversations:search
+defaultLatestActivity:bolt
+defaultNewsFeed:users
+defaultYourProfile:user
+defaultYourAccount:user
+defaultLogOut:sign-out-alt
+
+# XFMG Submenu Items
+xfmgNewMedia:image
+xfmgNewComments:comment-alt
+xfmgAddMedia:plus
+xfmgYourContent:user
+xfmgYourMedia:images
+xfmgYourAlbums:folder
+xfmgWatchedContent:eye
+xfmgWatchedMedia:photo-video
+xfmgWatchedAlbums:folder-open
+xfmgWatchedCategories:th-large
+xfmgSearchMedia:search
+xfmgMarkViewed:check
+
+# XFRM Submenu Items
+xfrmViewResources:file-download
+xfrmLatestReviews:star
+xfrmYourResources:user
+xfrmWatched:eye
+xfrmWatchedResources:file-download
+xfrmWatchedCategories:folder-open
+xfrmSearchResources:search]]></template>
+  <template type="public" title="bzmf_fa_assignments_whatsnewtabs" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[SELECTOR:.tabs.tabs--standalone
+# Friendly URL Strings
+/whats-new/:bolt
+/featured:star
+/whats-new/posts/:comment
+/whats-new/media/:image
+/whats-new/media-comments/:comments
+/whats-new/downloads/:download
+/whats-new/resources/:folder-open
+/whats-new/news-feed:users
+/whats-new/latest-activity:bolt
+
+# Unfriendly URL Strings
+/index.php?whats-new/:plus-circle
+/index.php?featured/:star
+/index.php?whats-new/posts/:comment
+/index.php?whats-new/media/:image
+/index.php?whats-new/media-comments/:comments
+/index.php?whats-new/downloads/:download
+/index.php?whats-new/resources/:folder-open
+/index.php?whats-new/news-feed:users
+/index.php?whats-new/latest-activity:bolt]]></template>
+  <template type="public" title="bzmf_fa_base.less" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[/* [BZ] MenuFlex Font Awesome Menu Icons Base Styles BEGIN */
+.p-nav-list .p-navEl-link, .p-nav-list .p-navEl.is-selected .p-navEl-link {
+	// Padding between Main Menu options; XenForo default is 15px
+	padding-left: 12px;
+    padding-right: 12px;
+}
+
+.menu-content a.menu-linkRow, .p-sectionLinks-list a.p-navEl-link, .p-staffBar a.p-staffBar-link, .block-tabHeader .tabs-tab, .tabs.tabs--standalone .tabs-tab {
+    &:before {
+		// Padding between Icon and Menu Item Text for Submenus and Tabs
+        padding-right: 3px;
+	}
+}
+/* [BZ] MenuFlex Font Awesome Menu Icons Base Styles END */]]></template>
+  <template type="public" title="bzmf_final.less" version_id="2000054" version_string="2.0.0 Release Candidate 4"><![CDATA[// [BZ] MenuFlex Final Compiled Styles - Last Updated: Never
+// Do not make changes within this template, they will be overwritten next time you save MenuFlex settings.
+
+// Open Menus On Hover Disabled
+// Tiered Menus Disabled
+// Font Awesome Menu Icons Disabled
+
+// [BZ] MenuFlex Final Compiled Styles - END]]></template>
+  <template type="public" title="bzmf_openmenusonhover.less" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[@media (any-hover: hover) {
+    .menu {
+        opacity: 0;
+        transition: opacity 0s linear 0.1s; // match bzmf_openmenusonhover.js hoverDelay
+    }
+	
+    .is-menuOpen .menu {
+        opacity: 1;
+    }
+	
+    li:not(.is-menuOpen) .menu {
+        display: none;
+    }
+	
+	<xf:if is="!{$xf.options.bzmf_tieredmenus}">
+        .menu--structural .menu-content .nav-popout .menu-separator:last-child {
+            display: block !important;
+        }
+    </xf:if>
+}]]></template>
+  <template type="public" title="bzmf_tieredmenus.less" version_id="2000033" version_string="2.0.0 Beta 3"><![CDATA[/* [BZ] MenuFlex Tiered Menu BEGIN */
+@media all and (min-width: 651px) {
+    .menu--structural .menu-content {
+        overflow: visible;
+
+        > .nav-popout {
+            position: relative;
+
+            &:hover > .nav-popout--menu,
+            &:focus-within > .nav-popout--menu {
+                display: block !important;
+                opacity: 1 !important;
+                transition: opacity .25s ease, box-shadow .25s ease, transform .25s ease;
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+                transform: translateY(-2px);
+            }
+
+            .nav-popout--menu .nav-popout:hover > .nav-popout--menu,
+            .nav-popout--menu .nav-popout:focus-within > .nav-popout--menu {
+                display: block !important;
+                opacity: 1 !important;
+                transition: opacity .25s ease, box-shadow .25s ease, transform .25s ease;
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+                transform: translateY(-2px);
+            }
+
+            .nav-container {
+                position: relative;
+                display: flex;
+                align-items: center;
+                transition: background-color .2s ease;
+
+                .menu-linkRow {
+                    flex: 1;
+                    word-wrap: break-word;
+                    overflow-wrap: break-word;
+                    white-space: normal;
+                    line-height: 1.4;
+                    padding: 5px;
+                    transition: background-color .2s ease, color .2s ease;
+                }
+
+                a.offCanvasMenu-link {
+                    padding: 0 10px;
+                }
+
+                a.offCanvasMenu-link--splitToggle {
+                    &:before {
+                        top: 2px;
+                        bottom: 2px;
+                    }
+
+                    &:after {
+                        .m-faContent(@fa-var-solid-caret-right, 1.2em);
+                        height: 1.2em;
+                        display: block;
+        				transform-origin: 47% 50%;
+        				transition: transform .2s ease;
+                    }
+
+                    &.is-active:after,
+                    &.is-hovered:after {
+                        transform: rotate(90deg);
+                    }
+                }
+
+                &:hover {
+                    background: @xf-contentHighlightBg;
+
+                    & a.offCanvasMenu-link.offCanvasMenu-link--splitToggle:after {
+                        transform: rotate(90deg);
+                    }
+
+                    & a.menu-linkRow[data-nav-id]:before {
+                        transition: color .2s ease, transform .2s ease;
+                        transform: scale(1.2);
+                        color: xf-darken(@xf-linkColor, 10%);
+                    }
+                }
+
+                & .menu-linkRow:hover ~ a.offCanvasMenu-link.offCanvasMenu-link--splitToggle:after {
+                    transform: rotate(90deg);
+                }
+            }
+
+            .nav-popout--menu {
+                display: none;
+                position: absolute;
+                width: 250px;
+                background: #FFFFFF !important;
+                border: none;
+                border-top: 2px solid @xf-paletteColor1;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+                border-radius: 3px;
+                right: -250px;
+                top: 0;
+                z-index: 10;
+                opacity: 0;
+                transition: opacity .25s ease, box-shadow .25s ease, transform .25s ease;
+            }
+
+            & .nav-container:has(a.offCanvasMenu-link.offCanvasMenu-link--splitToggle.is-active) ~ .nav-popout--menu,
+            .nav-popout--menu .nav-popout .nav-container:has(a.offCanvasMenu-link.offCanvasMenu-link--splitToggle.is-active) ~ .nav-popout--menu {
+                display: block !important;
+                opacity: 1 !important;
+            }
+        }
+    }
+}
+
+@media all and (min-width: 651px) and (max-width: 899px) {
+    .menu--structural .menu-content {
+        overflow-x: auto;
+
+        .nav-popout {
+            .menu-separator:last-child {
+                display: block !important;
+            }
+        }
+
+        > .nav-popout > .nav-popout--menu {
+            display: block !important;
+            position: static !important;
+            width: auto !important;
+            border: none !important;
+            box-shadow: none !important;
+            opacity: 1 !important;
+            transform: none !important;
+            z-index: 0 !important;
+
+            .nav-popout--menu {
+                display: block !important;
+                position: static !important;
+                width: auto !important;
+                border: none !important;
+                box-shadow: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+            }
+        }
+
+        .nav-container a.offCanvasMenu-link.offCanvasMenu-link--splitToggle {
+            display: none !important;
+        }
+    }
+}
+
+@media all and (min-width: 900px) and (max-width: 1199px) {
+    .menu--structural .menu-content {
+        .nav-container > a.u-indentDepth1 { text-indent: 0em; }
+        .nav-container > a.u-indentDepth2 { text-indent: 1em; }
+        .nav-container > a.u-indentDepth3 { text-indent: 2em; }
+        .nav-container > a.u-indentDepth4 { text-indent: 3em; }
+
+        > .nav-popout > .nav-popout--menu {
+            right: -250px;
+            max-height: 80vh;
+            overflow-y: auto;
+
+            .nav-popout {
+                .menu-separator:last-child {
+                    display: block !important;
+                }
+            }
+
+            .nav-popout:hover > .nav-popout--menu {
+                right: -250px;
+                top: 100%;
+                z-index: 20;
+            }
+
+            .nav-popout--menu {
+                display: block !important;
+                position: static !important;
+                width: auto !important;
+                border: none !important;
+                box-shadow: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+                max-height: inherit;
+                overflow-y: inherit;
+            }
+
+            .nav-container a.offCanvasMenu-link.offCanvasMenu-link--splitToggle {
+                display: none !important;
+            }
+        }
+    }
+}
+
+@media all and (min-width: 1200px) and (max-width: 1499px) {
+    .menu--structural .menu-content {
+        .nav-container > a.u-indentDepth1 { text-indent: 0em; }
+        .nav-container > a.u-indentDepth2 { text-indent: 0em; }
+        .nav-container > a.u-indentDepth3 { text-indent: 1em; }
+        .nav-container > a.u-indentDepth4 { text-indent: 2em; }
+
+        > .nav-popout .nav-popout--menu > .nav-popout .nav-popout--menu {
+            right: -250px;
+            max-height: 80vh;
+            overflow-y: auto;
+
+            .nav-popout {
+                .menu-separator:last-child {
+                    display: block !important;
+                }
+            }
+
+            .nav-popout:hover > .nav-popout--menu {
+                right: -250px;
+                top: 100%;
+                z-index: 20;
+            }
+
+            .nav-popout--menu {
+                display: block !important;
+                position: static !important;
+                width: auto !important;
+                border: none !important;
+                box-shadow: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+                max-height: inherit;
+                overflow-y: inherit;
+            }
+
+            .nav-container a.offCanvasMenu-link.offCanvasMenu-link--splitToggle {
+                display: none !important;
+            }
+        }
+    }
+}
+
+@media all and (min-width: 1500px) {
+    .menu--structural .menu-content {
+        .nav-container > a.u-indentDepth1 { text-indent: 0em; }
+        .nav-container > a.u-indentDepth2 { text-indent: 0em; }
+        .nav-container > a.u-indentDepth3 { text-indent: 0em; }
+        .nav-container > a.u-indentDepth4 { text-indent: 1em; }
+
+        > .nav-popout .nav-popout--menu > .nav-popout .nav-popout--menu > .nav-popout .nav-popout--menu {
+            right: -250px;
+
+            .nav-popout {
+                .menu-separator:last-child {
+                    display: block !important;
+                }
+            }
+
+            .nav-popout:hover > .nav-popout--menu {
+                right: -250px;
+                top: 100%;
+                z-index: 20;
+            }
+
+            .nav-popout--menu {
+                display: block !important;
+                position: static !important;
+                width: auto !important;
+                border: none !important;
+                box-shadow: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+            }
+
+            .nav-container a.offCanvasMenu-link.offCanvasMenu-link--splitToggle {
+                display: none !important;
+            }
+        }
+    }
+}
+
+/* [BZ] MenuFlex Tiered Menu END */]]></template>
+</templates>

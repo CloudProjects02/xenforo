@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<class_extensions>
+  <extension from_class="XF\Admin\Controller\User" to_class="EAEAddons\ThreadCount\XF\Admin\Controller\User" execute_order="10" active="1"/>
+  <extension from_class="XF\Entity\Forum" to_class="EAEAddons\ThreadCount\XF\Entity\Forum" execute_order="12" active="1"/>
+  <extension from_class="XF\Entity\Node" to_class="EAEAddons\ThreadCount\XF\Entity\Node" execute_order="12" active="1"/>
+  <extension from_class="XF\Entity\Thread" to_class="EAEAddons\ThreadCount\XF\Entity\Thread" execute_order="12" active="1"/>
+  <extension from_class="XF\Entity\User" to_class="EAEAddons\ThreadCount\XF\Entity\User" execute_order="10" active="1"/>
+  <extension from_class="XF\Finder\Thread" to_class="EAEAddons\ThreadCount\XF\Finder\Thread" execute_order="12" active="1"/>
+  <extension from_class="XF\Pub\Controller\Forum" to_class="EAEAddons\ThreadCount\XF\Pub\Controller\Forum" execute_order="10" active="1"/>
+  <extension from_class="XF\Pub\Controller\Thread" to_class="EAEAddons\ThreadCount\XF\Pub\Controller\Thread" execute_order="10" active="1"/>
+  <extension from_class="XF\Searcher\User" to_class="EAEAddons\ThreadCount\XF\Searcher\User" execute_order="10" active="1"/>
+</class_extensions>

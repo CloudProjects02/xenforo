@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="forum_view" modification_key="synapsethemes_tagsfilter_forum_view_add_tags" description="Adds a list of tags above the thread list in forum_view." execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<div class="block-body">]]></find>
+    <replace><![CDATA[$0
+<xf:if is="$synapseThreadTags">
+    <xf:include template="_synapsethemes_tags_thread_filter_tags_list" public="true" params="{{ {'tags': $synapseThreadTags, 'forum': $forum} }}" />
+</xf:if>]]></replace>
+  </modification>
+  <modification type="public" template="thread_view" modification_key="synapsethemes_tagsfilter_thread_view_add_tags" description="Adds a list of tags above the post list in thread_view." execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:breadcrumb source="$thread.getBreadcrumbs()" />]]></find>
+    <replace><![CDATA[$0
+<xf:if is="$synapseThreadTags">
+    <xf:include template="_synapsethemes_tags_thread_filter_tags_list" public="true" params="{{ {'tags': $synapseThreadTags, 'thread': $thread} }}" />
+</xf:if>]]></replace>
+  </modification>
+</template_modifications>

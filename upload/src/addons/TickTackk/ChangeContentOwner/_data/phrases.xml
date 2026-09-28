@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="inline_moderation_post_change_author" version_id="2001670" version_string="2.0.16"><![CDATA[Inline moderation - Change post author]]></phrase>
+  <phrase title="inline_moderation_profile_post_change_author" version_id="2001670" version_string="2.0.16"><![CDATA[Inline moderation - Change profile post author]]></phrase>
+  <phrase title="inline_moderation_thread_change_author" version_id="2001670" version_string="2.0.16"><![CDATA[Inline moderation - Change thread author]]></phrase>
+  <phrase title="inline_moderation_xfmg_album_change_owner" version_id="2001670" version_string="2.0.16"><![CDATA[Inline moderation - Change album owner]]></phrase>
+  <phrase title="inline_moderation_xfmg_comment_change_author" version_id="2001670" version_string="2.0.16"><![CDATA[Inline moderation - Change comment author]]></phrase>
+  <phrase title="inline_moderation_xfmg_media_change_author" version_id="2001670" version_string="2.0.16"><![CDATA[Inline moderation - Change media author]]></phrase>
+  <phrase title="mod_log.graph_change_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Datalog time bumped]]></phrase>
+  <phrase title="mod_log.graph_change_date" version_id="2001670" version_string="2.0.16"><![CDATA[Datalog date changed]]></phrase>
+  <phrase title="mod_log.graph_change_date_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Datalog date changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.graph_change_date_time" version_id="2001670" version_string="2.0.16"><![CDATA[Datalog date and time changed]]></phrase>
+  <phrase title="mod_log.graph_change_date_time_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Datalog date and time changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.graph_change_ownr" version_id="2001670" version_string="2.0.16"><![CDATA[Datalog owner changed]]></phrase>
+  <phrase title="mod_log.graph_change_ownr_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Datalog owner changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.graph_change_ownr_date" version_id="2001670" version_string="2.0.16"><![CDATA[Datalog owner and date changed]]></phrase>
+  <phrase title="mod_log.graph_change_ownr_date_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Datalog owner and date changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.graph_change_ownr_date_time" version_id="2001670" version_string="2.0.16"><![CDATA[Datalog owner, date and time changed]]></phrase>
+  <phrase title="mod_log.graph_change_ownr_date_time_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Datalog owner, date and time changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.graph_change_ownr_time_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Datalog owner and time changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.graph_change_time" version_id="2001670" version_string="2.0.16"><![CDATA[Datalog time changed]]></phrase>
+  <phrase title="mod_log.graph_change_time_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Datalog time changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.post_change_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Post time bumped]]></phrase>
+  <phrase title="mod_log.post_change_date" version_id="2001670" version_string="2.0.16"><![CDATA[Post date changed]]></phrase>
+  <phrase title="mod_log.post_change_date_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Post date changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.post_change_date_time" version_id="2001670" version_string="2.0.16"><![CDATA[Post date and time changed]]></phrase>
+  <phrase title="mod_log.post_change_date_time_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Post date and time changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.post_change_ownr" version_id="2001670" version_string="2.0.16"><![CDATA[Post owner changed]]></phrase>
+  <phrase title="mod_log.post_change_ownr_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Post owner changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.post_change_ownr_date" version_id="2001670" version_string="2.0.16"><![CDATA[Post owner and date changed]]></phrase>
+  <phrase title="mod_log.post_change_ownr_date_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Post owner and date changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.post_change_ownr_date_time" version_id="2001670" version_string="2.0.16"><![CDATA[Post owner, date and time changed]]></phrase>
+  <phrase title="mod_log.post_change_ownr_date_time_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Post owner, date and time changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.post_change_ownr_time_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Post owner and time changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.post_change_time" version_id="2001670" version_string="2.0.16"><![CDATA[Post time changed]]></phrase>
+  <phrase title="mod_log.post_change_time_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Post time changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.thread_change_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Thread time bumped]]></phrase>
+  <phrase title="mod_log.thread_change_date" version_id="2001670" version_string="2.0.16"><![CDATA[Thread date changed]]></phrase>
+  <phrase title="mod_log.thread_change_date_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Thread date changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.thread_change_date_time" version_id="2001670" version_string="2.0.16"><![CDATA[Thread date and time changed]]></phrase>
+  <phrase title="mod_log.thread_change_date_time_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Thread date and time changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.thread_change_ownr" version_id="2001670" version_string="2.0.16"><![CDATA[Thread owner changed]]></phrase>
+  <phrase title="mod_log.thread_change_ownr_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Thread owner changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.thread_change_ownr_date" version_id="2001670" version_string="2.0.16"><![CDATA[Thread owner and date changed]]></phrase>
+  <phrase title="mod_log.thread_change_ownr_date_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Thread owner and date changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.thread_change_ownr_date_time" version_id="2001670" version_string="2.0.16"><![CDATA[Thread owner, date and time changed]]></phrase>
+  <phrase title="mod_log.thread_change_ownr_date_time_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Thread owner, date and time changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.thread_change_ownr_time_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Thread owner and time changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.thread_change_time" version_id="2001670" version_string="2.0.16"><![CDATA[Thread time changed]]></phrase>
+  <phrase title="mod_log.thread_change_time_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Thread time changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.xfmg_album_change_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Album time bumped]]></phrase>
+  <phrase title="mod_log.xfmg_album_change_date" version_id="2001670" version_string="2.0.16"><![CDATA[Album date changed]]></phrase>
+  <phrase title="mod_log.xfmg_album_change_date_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Album date changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.xfmg_album_change_date_time" version_id="2001670" version_string="2.0.16"><![CDATA[Album date and time changed]]></phrase>
+  <phrase title="mod_log.xfmg_album_change_date_time_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Album date and time changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.xfmg_album_change_ownr" version_id="2001670" version_string="2.0.16"><![CDATA[Album owner changed]]></phrase>
+  <phrase title="mod_log.xfmg_album_change_ownr_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Album owner changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.xfmg_album_change_ownr_date" version_id="2001670" version_string="2.0.16"><![CDATA[Album owner and date changed]]></phrase>
+  <phrase title="mod_log.xfmg_album_change_ownr_date_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Album owner and date changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.xfmg_album_change_ownr_date_time" version_id="2001670" version_string="2.0.16"><![CDATA[Album owner, date and time changed]]></phrase>
+  <phrase title="mod_log.xfmg_album_change_ownr_date_time_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Album owner, date and time changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.xfmg_album_change_ownr_time_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Album owner and time changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.xfmg_album_change_time" version_id="2001670" version_string="2.0.16"><![CDATA[Album time changed]]></phrase>
+  <phrase title="mod_log.xfmg_album_change_time_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Album time changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.xfmg_comment_change_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Comment time bumped]]></phrase>
+  <phrase title="mod_log.xfmg_comment_change_date" version_id="2001670" version_string="2.0.16"><![CDATA[Comment date changed]]></phrase>
+  <phrase title="mod_log.xfmg_comment_change_date_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Comment date changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.xfmg_comment_change_date_time" version_id="2001670" version_string="2.0.16"><![CDATA[Comment date and time changed]]></phrase>
+  <phrase title="mod_log.xfmg_comment_change_date_time_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Comment date and time changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.xfmg_comment_change_ownr" version_id="2001670" version_string="2.0.16"><![CDATA[Comment owner changed]]></phrase>
+  <phrase title="mod_log.xfmg_comment_change_ownr_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Comment owner changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.xfmg_comment_change_ownr_date" version_id="2001670" version_string="2.0.16"><![CDATA[Comment owner and date changed]]></phrase>
+  <phrase title="mod_log.xfmg_comment_change_ownr_date_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Comment owner and date changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.xfmg_comment_change_ownr_date_time" version_id="2001670" version_string="2.0.16"><![CDATA[Comment owner, date and time changed]]></phrase>
+  <phrase title="mod_log.xfmg_comment_change_ownr_date_time_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Comment owner, date and time changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.xfmg_comment_change_ownr_time_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Comment owner and time changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.xfmg_comment_change_time" version_id="2001670" version_string="2.0.16"><![CDATA[Comment time changed]]></phrase>
+  <phrase title="mod_log.xfmg_comment_change_time_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Comment time changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.xfmg_media_change_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Media item time bumped]]></phrase>
+  <phrase title="mod_log.xfmg_media_change_date" version_id="2001670" version_string="2.0.16"><![CDATA[Media item date changed]]></phrase>
+  <phrase title="mod_log.xfmg_media_change_date_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Media item date changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.xfmg_media_change_date_time" version_id="2001670" version_string="2.0.16"><![CDATA[Media item date and time changed]]></phrase>
+  <phrase title="mod_log.xfmg_media_change_date_time_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Media item date and time changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.xfmg_media_change_ownr" version_id="2001670" version_string="2.0.16"><![CDATA[Media item owner changed]]></phrase>
+  <phrase title="mod_log.xfmg_media_change_ownr_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Media item owner changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.xfmg_media_change_ownr_date" version_id="2001670" version_string="2.0.16"><![CDATA[Media item owner and date changed]]></phrase>
+  <phrase title="mod_log.xfmg_media_change_ownr_date_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Media item owner and date changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.xfmg_media_change_ownr_date_time" version_id="2001670" version_string="2.0.16"><![CDATA[Media item owner, date and time changed]]></phrase>
+  <phrase title="mod_log.xfmg_media_change_ownr_date_time_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Media item owner, date and time changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.xfmg_media_change_ownr_time_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Media item owner and time changed. Time was also bumped.]]></phrase>
+  <phrase title="mod_log.xfmg_media_change_time" version_id="2001670" version_string="2.0.16"><![CDATA[Media item time changed]]></phrase>
+  <phrase title="mod_log.xfmg_media_change_time_bmp" version_id="2001670" version_string="2.0.16"><![CDATA[Media item time changed. Time was also bumped.]]></phrase>
+  <phrase title="option.tckChangeContentOwner_defaultTimeInterval" version_id="2001670" version_string="2.0.16"><![CDATA[Default time interval]]></phrase>
+  <phrase title="option_explain.tckChangeContentOwner_defaultTimeInterval" version_id="2001670" version_string="2.0.16"><![CDATA[]]></phrase>
+  <phrase title="option_group.tckChangeContentOwner" version_id="2001670" version_string="2.0.16"><![CDATA[Change content owner]]></phrase>
+  <phrase title="option_group_description.tckChangeContentOwner" version_id="2001670" version_string="2.0.16"><![CDATA[Options that control the change content owner add-on.]]></phrase>
+  <phrase title="permission.forum_changePostDate" version_id="2001670" version_string="2.0.16"><![CDATA[Change post date]]></phrase>
+  <phrase title="permission.forum_changePostOwner" version_id="2001670" version_string="2.0.16"><![CDATA[Change post owner]]></phrase>
+  <phrase title="permission.forum_changeThreadDate" version_id="2001670" version_string="2.0.16"><![CDATA[Change thread date]]></phrase>
+  <phrase title="permission.forum_changeThreadOwner" version_id="2001670" version_string="2.0.16"><![CDATA[Change thread owner]]></phrase>
+  <phrase title="permission.profilePost_changeCommentDate" version_id="2001670" version_string="2.0.16"><![CDATA[Change profile post comment date]]></phrase>
+  <phrase title="permission.profilePost_changeCommentOwner" version_id="2001670" version_string="2.0.16"><![CDATA[Change profile post comment owner]]></phrase>
+  <phrase title="permission.profilePost_changeProfilePostDate" version_id="2001670" version_string="2.0.16"><![CDATA[Change profile post date]]></phrase>
+  <phrase title="permission.profilePost_changeProfilePostOwner" version_id="2001670" version_string="2.0.16"><![CDATA[Change profile post owner]]></phrase>
+  <phrase title="permission.xfa_csvg_changeGraphDate" version_id="2001670" version_string="2.0.16"><![CDATA[Can change graph date]]></phrase>
+  <phrase title="permission.xfa_csvg_changeGraphOwner" version_id="2001670" version_string="2.0.16"><![CDATA[Can change graph owner]]></phrase>
+  <phrase title="permission.xfmg_changeAlbumDate" version_id="2001670" version_string="2.0.16"><![CDATA[Change album date]]></phrase>
+  <phrase title="permission.xfmg_changeAlbumOwner" version_id="2001670" version_string="2.0.16"><![CDATA[Change album owner]]></phrase>
+  <phrase title="permission.xfmg_changeCommentDate" version_id="2001670" version_string="2.0.16"><![CDATA[Change comment date]]></phrase>
+  <phrase title="permission.xfmg_changeCommentOwner" version_id="2001670" version_string="2.0.16"><![CDATA[Change comment owner]]></phrase>
+  <phrase title="permission.xfmg_changeMediaDate" version_id="2001670" version_string="2.0.16"><![CDATA[Change media date]]></phrase>
+  <phrase title="permission.xfmg_changeMediaOwner" version_id="2001670" version_string="2.0.16"><![CDATA[Change media owner]]></phrase>
+  <phrase title="tckChangeContentOwner_bump_time" version_id="2001670" version_string="2.0.16"><![CDATA[Bump time]]></phrase>
+  <phrase title="tckChangeContentOwner_bump_time_explain" version_id="2001670" version_string="2.0.16"><![CDATA[Bump content time by specific hours, minutes or seconds.]]></phrase>
+  <phrase title="tckChangeContentOwner_change_date" version_id="2001670" version_string="2.0.16"><![CDATA[Change date]]></phrase>
+  <phrase title="tckChangeContentOwner_change_owner" version_id="2001670" version_string="2.0.16"><![CDATA[Change owner]]></phrase>
+  <phrase title="tckChangeContentOwner_change_owner_of_x" version_id="2001670" version_string="2.0.16"><![CDATA[Change owner of {content_title}]]></phrase>
+  <phrase title="tckChangeContentOwner_change_owner_or_date" version_id="2001670" version_string="2.0.16"><![CDATA[Change owner or date]]></phrase>
+  <phrase title="tckChangeContentOwner_change_x_owner_or_date" version_id="2001670" version_string="2.0.16"><![CDATA[Change {content_type_plural} owner or date]]></phrase>
+  <phrase title="tckChangeContentOwner_inline_moderation_change_date" version_id="2001670" version_string="2.0.16"><![CDATA[Inline moderation - Change date]]></phrase>
+  <phrase title="tckChangeContentOwner_inline_moderation_change_owner" version_id="2001670" version_string="2.0.16"><![CDATA[Inline moderation - Change owner]]></phrase>
+  <phrase title="tckChangeContentOwner_inline_moderation_change_owner_or_date" version_id="2001670" version_string="2.0.16"><![CDATA[Inline moderation - Change owner or date]]></phrase>
+  <phrase title="tckChangeContentOwner_new_date" version_id="2001670" version_string="2.0.16"><![CDATA[New date]]></phrase>
+  <phrase title="tckChangeContentOwner_new_date_explain" version_id="2001670" version_string="2.0.16"><![CDATA[Enter the new date of the content.]]></phrase>
+  <phrase title="tckChangeContentOwner_new_date_must_be_older_than_thread_date" version_id="2001670" version_string="2.0.16"><![CDATA[New date must be older than thread date.]]></phrase>
+  <phrase title="tckChangeContentOwner_new_owner" version_id="2001670" version_string="2.0.16"><![CDATA[New owner]]></phrase>
+  <phrase title="tckChangeContentOwner_new_owner_must_be_able_to_view_this_content" version_id="2001670" version_string="2.0.16"><![CDATA[The new owner must be able to view this content.]]></phrase>
+  <phrase title="tckChangeContentOwner_new_owner_name_explain" version_id="2001670" version_string="2.0.16"><![CDATA[Enter the name of the new content owner.]]></phrase>
+  <phrase title="tckChangeContentOwner_new_time" version_id="2001670" version_string="2.0.16"><![CDATA[New time]]></phrase>
+  <phrase title="tckChangeContentOwner_please_select_valid_change_date_type" version_id="2001670" version_string="2.0.16"><![CDATA[Please select a valid change date type.]]></phrase>
+  <phrase title="tckChangeContentOwner_post_in_thread_x_page_title" version_id="2001670" version_string="2.0.16"><![CDATA[post in thread '{title}']]></phrase>
+  <phrase title="tckChangeContentOwner_time_interval" version_id="2001670" version_string="2.0.16"><![CDATA[Time interval]]></phrase>
+  <phrase title="tckChangeContentOwner_time_interval_explain" version_id="2001670" version_string="2.0.16"><![CDATA[When changing date of multiple contents, this time interval be added to the final date for more unique timestamps.]]></phrase>
+  <phrase title="tckChangeContentOwner_units_hour" version_id="2001670" version_string="2.0.16"><![CDATA[Hour]]></phrase>
+  <phrase title="tckChangeContentOwner_units_minute" version_id="2001670" version_string="2.0.16"><![CDATA[Minute]]></phrase>
+  <phrase title="tckChangeContentOwner_units_second" version_id="2001670" version_string="2.0.16"><![CDATA[Second]]></phrase>
+  <phrase title="tckChangeContentOwner_you_do_not_have_permission_to_change_selected_contents_date" version_id="2001670" version_string="2.0.16"><![CDATA[You do not have permission to change selected contents date.]]></phrase>
+  <phrase title="tckChangeContentOwner_you_do_not_have_permission_to_change_selected_contents_owner" version_id="2001670" version_string="2.0.16"><![CDATA[You do not have permission to change selected contents owner.]]></phrase>
+  <phrase title="tckChangeContentOwner_you_do_not_have_permission_to_change_this_content_date" version_id="2001670" version_string="2.0.16"><![CDATA[You do not have permission to change this content date.]]></phrase>
+  <phrase title="tckChangeContentOwner_you_do_not_have_permission_to_change_this_content_owner" version_id="2001670" version_string="2.0.16"><![CDATA[You do not have permission to change this content owner.]]></phrase>
+  <phrase title="tckChangeContentOwner_you_must_either_change_owner_or_date_of_this_x" version_id="2001670" version_string="2.0.16"><![CDATA[You must change the content owner or the date of this {content_type_phrase}.]]></phrase>
+  <phrase title="tckChangeContentOwner_you_sure_you_want_to_change_date_x_contents" version_id="2001670" version_string="2.0.16"><![CDATA[Are you sure you want to change the date specified below to the {count} selected {content_type_singular}(s)?]]></phrase>
+  <phrase title="tckChangeContentOwner_you_sure_you_want_to_change_owner_or_date_x_contents" version_id="2001670" version_string="2.0.16"><![CDATA[Are you sure you want to change the owner or date specified below to the {count} selected {content_type_singular}(s)?]]></phrase>
+  <phrase title="tckChangeContentOwner_you_sure_you_want_to_change_owner_x_contents" version_id="2001670" version_string="2.0.16"><![CDATA[Are you sure you want to change the owner specified below to the {count} selected {content_type_singular}(s)?]]></phrase>
+  <phrase title="you_sure_you_want_to_change_author_x_posts" version_id="2001670" version_string="2.0.16"><![CDATA[Are you sure you want to change the author specified below to the {count} selected posts?]]></phrase>
+  <phrase title="you_sure_you_want_to_change_author_x_profile_posts" version_id="2001670" version_string="2.0.16"><![CDATA[Are you sure you want to change the author specified below to the {count} selected profile posts?]]></phrase>
+  <phrase title="you_sure_you_want_to_change_author_x_threads" version_id="2001670" version_string="2.0.16"><![CDATA[Are you sure you want to change the author specified below to the {count} selected threads?]]></phrase>
+  <phrase title="you_sure_you_want_to_change_author_x_xfmg_comments" version_id="2001670" version_string="2.0.16"><![CDATA[Are you sure you want to change the author specified below to the {count} selected comments?]]></phrase>
+  <phrase title="you_sure_you_want_to_change_author_x_xfmg_media_items" version_id="2001670" version_string="2.0.16"><![CDATA[Are you sure you want to change the author specified below to the {count} selected media items?]]></phrase>
+  <phrase title="you_sure_you_want_to_change_owner_x_xfmg_albums" version_id="2001670" version_string="2.0.16"><![CDATA[Are you sure you want to change the owner specified below to the {count} selected profile posts?]]></phrase>
+</phrases>

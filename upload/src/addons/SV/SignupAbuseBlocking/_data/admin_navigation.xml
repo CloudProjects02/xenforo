@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<admin_navigation>
+  <admin_navigation_entry navigation_id="svAntiSpam" parent_navigation_id="users" display_order="4000" icon="fa-shield" admin_permission_id="svUserSpam" debug_only="0" development_only="0" hide_no_children="1"/>
+  <admin_navigation_entry navigation_id="svAntiSpamMultiAccount" parent_navigation_id="svAntiSpam" display_order="100" link="anti-spam/multi-accounts" admin_permission_id="user" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="svAntiSpamOptions" parent_navigation_id="svAntiSpam" display_order="100000" link="anti-spam/options" admin_permission_id="svAntiSpam" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="svMultiAccountEvents" parent_navigation_id="svAntiSpam" display_order="200" link="anti-spam/multi-accounts/events" admin_permission_id="user" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="svSignupAbuseBlocking_allowedEmailDomains" parent_navigation_id="svAntiSpam" display_order="550" link="banning/allowed-email-domains" admin_permission_id="svAntiSpam" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="svTestAsn" parent_navigation_id="checksAndTests" display_order="210" link="tools/test-asn" admin_permission_id="svAntiSpam" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="svTestGeoIp" parent_navigation_id="checksAndTests" display_order="210" link="tools/test-geoip" admin_permission_id="svAntiSpam" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="svUserLoginLogs" parent_navigation_id="logsUser" display_order="90" link="logs/sv-user-logins" admin_permission_id="viewLogs" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="userRegistrationLog" parent_navigation_id="logsUser" display_order="100" link="logs/user-registration" admin_permission_id="viewLogs" debug_only="0" development_only="0" hide_no_children="0"/>
+</admin_navigation>
+ 		 		 	   	 	  		  				  	 	 		 	 	   	    	 	  	 	  	 	 	 			    	 				 		    			 	 	  		  		  	 	 			 	   		  	 	 	  	 	   	 	 	 

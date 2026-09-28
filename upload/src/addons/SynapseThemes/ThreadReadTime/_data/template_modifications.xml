@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="post_macros" modification_key="post_macros_read_time" description="Add read time to posts" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<li class="u-concealed">
+				<a href="{{ link('threads/post', $thread, {'post_id': $post.post_id}) }}" rel="nofollow" {{ $includeMicrodata ? 'itemprop="url"' : '' }}>
+					<xf:date time="{$post.post_date}" itemprop="{{ $includeMicrodata ? 'datePublished' : '' }}" />
+				</a>
+			</li>]]></find>
+    <replace><![CDATA[<li class="u-concealed">
+				<a href="{{ link('threads/post', $thread, {'post_id': $post.post_id}) }}" rel="nofollow" {{ $includeMicrodata ? 'itemprop="url"' : '' }}>
+					<xf:date time="{$post.post_date}" itemprop="{{ $includeMicrodata ? 'datePublished' : '' }}" />
+				</a>
+			</li>
+			<xf:if is="$xf.options.synapseThreadReadTimeInPosts && $post.isFirstPost()">
+				<li class="u-concealed" data-xf-init="tooltip" title="{{ phrase('synapse_thread_read_time_tooltip') }}">
+					{{ phrase('synapse_thread_read_time', {'minutes': $post.Thread.synapse_read_time_formatted}) }}
+				</li>
+			</xf:if>]]></replace>
+  </modification>
+  <modification type="public" template="thread_list_macros" modification_key="thread_list_read_time" description="Add read time to thread lists" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<li class="structItem-startDate"><a href="{{ link('threads', $thread) }}" rel="nofollow"><xf:date time="{$thread.post_date}" /></a></li>]]></find>
+    <replace><![CDATA[<li class="structItem-startDate"><a href="{{ link('threads', $thread) }}" rel="nofollow"><xf:date time="{$thread.post_date}" /></a></li>
+						<xf:if is="$xf.options.synapseThreadReadTimeInList">
+							<li class="structItem-startDate">
+								{{ phrase('synapse_thread_read_time', {'minutes': $thread.synapse_read_time_formatted}) }}
+							</li>
+						</xf:if>]]></replace>
+  </modification>
+</template_modifications>

@@ -1,19 +1,26 @@
 {
     "legacy_addon_id": "",
-    "title": "CloudCheats Invite System",
-    "description": "Sistema de convites privado da comunidade CloudCheats.",
-    "version_id": 2030472,
-    "version_string": "2.3.4.2 CloudCheats",
-    "dev": "CloudCheats",
-    "dev_url": "",
+    "title": "[Xen-Soluce] Invite System",
+    "description": "This add-on allows you to generate invitation codes to join your forum and more.",
+    "version_id": 2040193,
+    "version_string": "2.5.1 Fix 2",
+    "dev": "Xen-Soluce",
+    "dev_url": "https://xen-soluce.com/",
     "faq_url": "",
-    "support_url": "",
-    "extra_urls": {},
+    "support_url": "https://xen-soluce.com/forums/supports.67/",
+    "extra_urls": {
+        "Suggestions": "https://xen-soluce.com/forums/suggestions.68/"
+    },
     "require": {
         "XF": [
-            2030470,
-            "XenForo 2.3.4+"
+            2030031,
+            "XenForo 2.3.0 Beta 1+"
+        ],
+        "php": [
+            "8.0",
+            "PHP 8.0+"
         ]
     },
     "icon": "fa-user-friends"
 }
+ 		   	  		 		     				  		  		 	  	 	           		          	 	   	  								  		  				 	 		       	 		 					 		   				 	 		  	    

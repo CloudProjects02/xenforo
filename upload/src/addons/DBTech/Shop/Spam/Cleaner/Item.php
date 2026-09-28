@@ -2,10 +2,13 @@
 
 namespace DBTech\Shop\Spam\Cleaner;
 
-use DBTech\Shop\Finder\ItemFinder;
-use XF\PrintableException;
 use XF\Spam\Cleaner\AbstractHandler;
 
+/**
+ * Class Item
+ *
+ * @package DBTech\Shop\Spam\Cleaner
+ */
 class Item extends AbstractHandler
 {
 	/**
@@ -17,7 +20,7 @@ class Item extends AbstractHandler
 	{
 		return !empty($options['action_threads']);
 	}
-
+	
 	/**
 	 * @param array $log
 	 * @param null $error
@@ -26,13 +29,13 @@ class Item extends AbstractHandler
 	 * @throws \InvalidArgumentException
 	 * @throws \LogicException
 	 * @throws \Exception
-	 * @throws PrintableException
+	 * @throws \XF\PrintableException
 	 */
 	public function cleanUp(array &$log, &$error = null): bool
 	{
 		$app = \XF::app();
 
-		$items = \XF::app()->finder(ItemFinder::class)
+		$items = $app->finder('DBTech\Shop:Item')
 			->where('user_id', $this->user->user_id)
 			->fetch();
 
@@ -45,7 +48,7 @@ class Item extends AbstractHandler
 
 			$log['dbtech_shop_item'] = [
 				'deleteType' => $deleteType,
-				'itemIds' => [],
+				'itemIds' => []
 			];
 
 			foreach ($items AS $itemId => $item)
@@ -67,7 +70,7 @@ class Item extends AbstractHandler
 
 		return true;
 	}
-
+	
 	/**
 	 * @param array $log
 	 * @param null $error
@@ -76,13 +79,13 @@ class Item extends AbstractHandler
 	 * @throws \InvalidArgumentException
 	 * @throws \LogicException
 	 * @throws \Exception
-	 * @throws PrintableException
+	 * @throws \XF\PrintableException
 	 */
 	public function restore(array $log, &$error = null): bool
 	{
 		if ($log['deleteType'] == 'soft')
 		{
-			$items = \XF::app()->finder(ItemFinder::class)
+			$items = \XF::app()->finder('DBTech\Shop:Item')
 				->where('item_id', $log['itemIds'])
 				->fetch();
 

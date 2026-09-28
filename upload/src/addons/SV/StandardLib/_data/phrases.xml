@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="option.svDefaultChoicesJs" version_id="2001230000" version_string="1.23.0"><![CDATA[Default Choices.js bundle]]></phrase>
+  <phrase title="option.svLogLessFunc" version_id="1110001" version_string="1.11.0"><![CDATA[Standard Lib: Log parse_less_func debug info]]></phrase>
+  <phrase title="option_explain.svDefaultChoicesJs" version_id="2001230000" version_string="1.23.0"><![CDATA[Different bundles implement different methods of search-as-you-type, which influences the js bundle size and has varying degree of fuzzy support]]></phrase>
+  <phrase title="option_explain.svLogLessFunc" version_id="1110001" version_string="1.11.0"><![CDATA[]]></phrase>
+  <phrase title="svChoices.addItemText" version_id="2001210006" version_string="1.21.0 RC6"><![CDATA[Press Enter to add <b>{value}</b>]]></phrase>
+  <phrase title="svChoices.customAddItemText" version_id="2001210006" version_string="1.21.0 RC6"><![CDATA[Only values matching specific conditions can be added]]></phrase>
+  <phrase title="svChoices.itemSelectText" version_id="2001210012" version_string="1.21.0 RC12"><![CDATA[]]></phrase>
+  <phrase title="svChoices.maxItemText" version_id="2001210006" version_string="1.21.0 RC6"><![CDATA[Only {maxItemCount} values can be added]]></phrase>
+  <phrase title="svChoices.removeItemLabel" version_id="2001210006" version_string="1.21.0 RC6"><![CDATA[Remove item: {value}]]></phrase>
+  <phrase title="svChoices.uniqueItemText" version_id="2001210006" version_string="1.21.0 RC6"><![CDATA[Only unique values can be added]]></phrase>
+  <phrase title="svStandardLib_add_to_filters" version_id="1070300" version_string="1.7.3"><![CDATA[Add to filters]]></phrase>
+  <phrase title="svStandardLib_at" version_id="1020101" version_string="1.2.1"><![CDATA[at]]></phrase>
+  <phrase title="svStandardLib_choices_search.fusejs_basic" version_id="2001230000" version_string="1.23.0"><![CDATA[<a href="https://www.fusejs.io/getting-started/different-builds.html">Fuse.js basic</a> search]]></phrase>
+  <phrase title="svStandardLib_choices_search.fusejs_full" version_id="2001230000" version_string="1.23.0"><![CDATA[<a href="https://www.fusejs.io/getting-started/different-builds.html">Fuse.js full</a> search]]></phrase>
+  <phrase title="svStandardLib_choices_search.kmp" version_id="2001230000" version_string="1.23.0"><![CDATA[<a href="https://en.wikipedia.org/wiki/Knuth-Morris-Pratt_algorithm">KMP</a> search]]></phrase>
+  <phrase title="svStandardLib_choices_search.prefix" version_id="2001230000" version_string="1.23.0"><![CDATA[Prefix search]]></phrase>
+  <phrase title="svStandardLib_compiled_template_code" version_id="1040100" version_string="1.4.1"><![CDATA[Compiled template code]]></phrase>
+  <phrase title="svStandardLib_compiler_errors" version_id="1050000" version_string="1.5.0"><![CDATA[Compiler errors]]></phrase>
+  <phrase title="svStandardLib_match_count_x" version_id="1040100" version_string="1.4.1"><![CDATA[Match count: {count}]]></phrase>
+  <phrase title="svStandardLib_redirect_interstitial" version_id="2001230900" version_string="1.23.9"><![CDATA[Redirecting]]></phrase>
+  <phrase title="svStandardLib_reload" version_id="1040100" version_string="1.4.1"><![CDATA[Reload]]></phrase>
+  <phrase title="svStandardLib_remove_from_filters" version_id="1070300" version_string="1.7.3"><![CDATA[Remove from filters]]></phrase>
+  <phrase title="svStandardLib_requested_style_not_found" version_id="1040100" version_string="1.4.1"><![CDATA[The requested style could not be found.]]></phrase>
+  <phrase title="svStandardLib_template_contents" version_id="1040100" version_string="1.4.1"><![CDATA[Template contents]]></phrase>
+  <phrase title="svStandardLib_timezone" version_id="1020101" version_string="1.2.1"><![CDATA[Timezone]]></phrase>
+  <phrase title="svStandardLib_view_x_template_modifications" version_id="1040100" version_string="1.4.1"><![CDATA[View {count} template modifications]]></phrase>
+  <phrase title="time.day" version_id="1030100" version_string="1.3.1"><![CDATA[{count} day]]></phrase>
+  <phrase title="time.hour" version_id="1030100" version_string="1.3.1"><![CDATA[{count} hour]]></phrase>
+  <phrase title="time.minute" version_id="1030100" version_string="1.3.1"><![CDATA[{count} minute]]></phrase>
+  <phrase title="time.month" version_id="1030100" version_string="1.3.1"><![CDATA[{count} month]]></phrase>
+  <phrase title="time.second" version_id="1030100" version_string="1.3.1"><![CDATA[{count} second]]></phrase>
+  <phrase title="time.year" version_id="1030100" version_string="1.3.1"><![CDATA[{count} year]]></phrase>
+</phrases>

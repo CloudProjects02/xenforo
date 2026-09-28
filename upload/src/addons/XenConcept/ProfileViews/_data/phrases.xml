@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="cron_entry.xc_profile_views_clear" version_id="2000000" version_string="2.0.0"><![CDATA[Clear profile views]]></phrase>
+  <phrase title="member_stat.most_profiles_viewed" version_id="2000590" version_string="2.0.5"><![CDATA[Most profiles viewed]]></phrase>
+  <phrase title="option.xc_profile_views_block_positions" version_id="2000491" version_string="2.0.4 Patch Level 1"><![CDATA[Recent viewers widget position]]></phrase>
+  <phrase title="option.xc_profile_views_clear_view_logs_after_x_days" version_id="2000000" version_string="2.0.0"><![CDATA[Days to keep view records]]></phrase>
+  <phrase title="option.xc_profile_views_cooldown_period" version_id="2000000" version_string="2.0.0"><![CDATA[Cooldown Period]]></phrase>
+  <phrase title="option.xc_profile_views_enable_block_profile_views" version_id="2000491" version_string="2.0.4 Patch Level 1"><![CDATA[Enable "Profile Views" widget]]></phrase>
+  <phrase title="option.xc_profile_views_enable_most_profile_viewed" version_id="2000491" version_string="2.0.4 Patch Level 1"><![CDATA[Enable  "Most Profile Viewed" widget]]></phrase>
+  <phrase title="option.xc_profile_views_enable_widget_recent_viewers" version_id="2000491" version_string="2.0.4 Patch Level 1"><![CDATA[Enable "Recent Viewers" widget]]></phrase>
+  <phrase title="option.xc_profile_views_user_exclude_most_viewer" version_id="2000491" version_string="2.0.4 Patch Level 1"><![CDATA[Users to be excluded from the widget]]></phrase>
+  <phrase title="option_explain.xc_profile_views_block_positions" version_id="2000000" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.xc_profile_views_clear_view_logs_after_x_days" version_id="2000000" version_string="2.0.0"><![CDATA[The number of days to keep view records for. Note that this does not reset the number of times a users' profile has been viewed, just removes the record of who viewed it, and when. Set to 0 to keep forever.]]></phrase>
+  <phrase title="option_explain.xc_profile_views_cooldown_period" version_id="2000000" version_string="2.0.0"><![CDATA[The amount of time (in hours) to wait before adding another view from the same User ID. Set to 0 to add views on every page load.]]></phrase>
+  <phrase title="option_explain.xc_profile_views_enable_block_profile_views" version_id="2000000" version_string="2.0.0"><![CDATA[If you activate this option, a block will be displayed with the total number of views.]]></phrase>
+  <phrase title="option_explain.xc_profile_views_enable_most_profile_viewed" version_id="2000000" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.xc_profile_views_enable_widget_recent_viewers" version_id="2000491" version_string="2.0.4 Patch Level 1"><![CDATA[If you activate this option, a widget will be displayed with the recent viewer on profiles.]]></phrase>
+  <phrase title="option_explain.xc_profile_views_user_exclude_most_viewer" version_id="2000000" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_group.xc_profile_views" version_id="2000000" version_string="2.0.0"><![CDATA[[XenConcept] Profile Views]]></phrase>
+  <phrase title="option_group_description.xc_profile_views" version_id="2000000" version_string="2.0.0"><![CDATA[Options that control the profile views add-on.]]></phrase>
+  <phrase title="permission.xc_profile_views_viewMostProfilesViewed" version_id="2000000" version_string="2.0.0"><![CDATA[Can view "Most Profile Viewed" block]]></phrase>
+  <phrase title="permission_interface.xc_profile_views" version_id="2000000" version_string="2.0.0"><![CDATA[[XenConcept] Profile views]]></phrase>
+  <phrase title="widget_def.xc_profile_views" version_id="2000491" version_string="2.0.4 Patch Level 1"><![CDATA[Recent viewers]]></phrase>
+  <phrase title="widget_def.xc_profile_views_most" version_id="2000000" version_string="2.0.0"><![CDATA[Most Profile Viewed]]></phrase>
+  <phrase title="widget_def_desc.xc_profile_views" version_id="2000000" version_string="2.0.0"><![CDATA[Display a block with users who saw the profile]]></phrase>
+  <phrase title="widget_def_desc.xc_profile_views_most" version_id="2000000" version_string="2.0.0"><![CDATA[Shows users with the most views on their profile]]></phrase>
+  <phrase title="xc_profile_views" version_id="2000000" version_string="2.0.0"><![CDATA[Profile views]]></phrase>
+  <phrase title="xc_profile_views_allow_displays_the_number_of_profile_views" version_id="2000491" version_string="2.0.4 Patch Level 1"><![CDATA[Allow displays the number of profile views.]]></phrase>
+  <phrase title="xc_profile_views_avatar_and_username" version_id="2000400" version_string="2.0.4"><![CDATA[Avatar and username]]></phrase>
+  <phrase title="xc_profile_views_avatar_only" version_id="2000000" version_string="2.0.0"><![CDATA[Avatar only]]></phrase>
+  <phrase title="xc_profile_views_display_avatar" version_id="2000491" version_string="2.0.4 Patch Level 1"><![CDATA[Display avatar]]></phrase>
+  <phrase title="xc_profile_views_display_avatar_hint" version_id="2000491" version_string="2.0.4 Patch Level 1"><![CDATA[When you have a lot of members displaying, it's esthetic to hidden the avatar.]]></phrase>
+  <phrase title="xc_profile_views_display_the_number_of_profile_views" version_id="2000491" version_string="2.0.4 Patch Level 1"><![CDATA[Display the number of profile views]]></phrase>
+  <phrase title="xc_profile_views_display_users_name_or_avatar_for_users" version_id="2000590" version_string="2.0.5"><![CDATA[Display users name or avatar for users.]]></phrase>
+  <phrase title="xc_profile_views_how_to_display_the_users" version_id="2000491" version_string="2.0.4 Patch Level 1"><![CDATA[How to display the users]]></phrase>
+  <phrase title="xc_profile_views_most_profiles_viewed" version_id="2000000" version_string="2.0.0"><![CDATA[Most Profiles Viewed ]]></phrase>
+  <phrase title="xc_profile_views_no_one_has_viewed_your_profile" version_id="2000300" version_string="2.0.3"><![CDATA[No one has viewed your profile.]]></phrase>
+  <phrase title="xc_profile_views_profile_view_count" version_id="2000200" version_string="2.0.2"><![CDATA[Profile view count]]></phrase>
+  <phrase title="xc_profile_views_profile_views" version_id="2000400" version_string="2.0.4"><![CDATA[Profile views]]></phrase>
+  <phrase title="xc_profile_views_recent_viewers" version_id="2000000" version_string="2.0.0"><![CDATA[Recent viewers]]></phrase>
+  <phrase title="xc_profile_views_show_all" version_id="2000000" version_string="2.0.0"><![CDATA[Show all]]></phrase>
+  <phrase title="xc_profile_views_sidebar" version_id="2000000" version_string="2.0.0"><![CDATA[Sidebar]]></phrase>
+  <phrase title="xc_profile_views_sidenav" version_id="2000000" version_string="2.0.0"><![CDATA[Sidenav]]></phrase>
+  <phrase title="xc_profile_views_the_user_to_them_x_views_on_his_profile" version_id="2000100" version_string="2.0.1"><![CDATA[The user to them x views on his profile]]></phrase>
+  <phrase title="xc_profile_views_username_only" version_id="2000000" version_string="2.0.0"><![CDATA[Username only]]></phrase>
+  <phrase title="xc_profile_views_users_who_viewed_your_profile" version_id="2000000" version_string="2.0.0"><![CDATA[Users who viewed your profile]]></phrase>
+  <phrase title="xc_profile_views_view_the_users_who_viewed_your_profile" version_id="2000300" version_string="2.0.3"><![CDATA[View the users who viewed your profile.]]></phrase>
+  <phrase title="xc_profile_views_widget_options" version_id="2000491" version_string="2.0.4 Patch Level 1"><![CDATA[Widget options]]></phrase>
+</phrases>

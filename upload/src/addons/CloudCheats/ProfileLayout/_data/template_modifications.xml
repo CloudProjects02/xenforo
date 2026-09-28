@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <template_modifications>
-  <modification type="public" template="member_view" modification_key="cc_profile_layout" description="Restructures member profile page into two-column sidebar+content layout" execution_order="10" enabled="1" action="str_replace">
+  <modification type="public" template="member_view" modification_key="cc_profile_layout" description="CloudCheats Profile Layout - two-column sidebar" execution_order="10" enabled="1" action="str_replace">
     <find><![CDATA[<div class="block">
 	<div class="block-container">
 		<div class="block-body">
@@ -311,56 +311,6 @@
 </ul>]]></find>
     <replace><![CDATA[<xf:css src="cc_profile.less" />
 
-<script>
-(function(){
-    function initVbTabs(){
-        document.querySelectorAll('[data-profile-tabs]').forEach(function(block){
-            if(block.dataset.ptInit) return;
-            block.dataset.ptInit = '1';
-            var tabs   = block.querySelectorAll('.profile-tab');
-            var panels = block.querySelectorAll('.profile-tab-panel');
-            tabs.forEach(function(tab, i){
-                tab.addEventListener('click', function(){
-                    tabs.forEach(function(t){ t.classList.remove('is-active'); });
-                    panels.forEach(function(p){ p.classList.remove('is-active','is-entering'); });
-                    tab.classList.add('is-active');
-                    if(panels[i]){ panels[i].classList.add('is-active','is-entering'); }
-                });
-            });
-        });
-    }
-    if(document.readyState === 'loading'){
-        document.addEventListener('DOMContentLoaded', initVbTabs);
-    } else {
-        initVbTabs();
-    }
-})();
-
-    // CC: Mark/Unmark as Scammer — submit as hidden form so CSRF + redirect work natively
-    document.addEventListener('click', function(e) {
-        var btn = e.target.closest('.js-ccScammerToggle');
-        if (!btn) return;
-        e.preventDefault();
-        var label    = btn.querySelector('.cc-scammer-link');
-        var isMarked = label && label.textContent.indexOf('Unmark') >= 0;
-        var form = document.createElement('form');
-        form.method = 'post';
-        form.action = btn.href;
-        var fields = {
-            user_id:  btn.dataset.userId,
-            action:   isMarked ? 'unmark' : 'mark',
-            _xfToken: btn.dataset.xfToken
-        };
-        Object.keys(fields).forEach(function(k) {
-            var inp = document.createElement('input');
-            inp.type = 'hidden'; inp.name = k; inp.value = fields[k];
-            form.appendChild(inp);
-        });
-        document.body.appendChild(form);
-        form.submit();
-    });
-</script>
-
 <div class="cc-profile-wrap">
 
     <!-- ── Header cover ── -->
@@ -368,7 +318,7 @@
         <xf:profilebanner user="$user" size="l" class="cc-banner-bg" toggle="cc-profile-cover--hasBanner">
             <div class="cc-profile-header">
 
-                <div class="cc-avatar-ring{{ $user.is_banned ? ' cc-avatar-ring--banned' : '' }}">
+                <div class="cc-avatar-ring">
                     <span class="avatarWrapper">
                         <xf:avatar user="{$user}" size="l" href="{{ $user.getAvatarUrl('o') ?: '' }}" />
                         <xf:if is="$user.user_id == $xf.visitor.user_id && $xf.visitor.canUploadAvatar()">
@@ -413,24 +363,13 @@
                                 </xf:if>
                                 <xf:if contentcheck="true">
                                     <div class="buttonGroup-buttonWrapper">
-                                        <a class="button cc-staff-tools-btn menuTrigger" data-xf-click="menu" aria-expanded="false" aria-haspopup="true">Staff Tools</a>
+                                        <a class="button button--link menuTrigger" data-xf-click="menu" aria-expanded="false" aria-haspopup="true">{{ phrase('moderator_tools') }}</a>
                                         <div class="menu" data-menu="menu" aria-hidden="true">
                                             <div class="menu-content">
                                                 <h3 class="menu-header">{{ phrase('moderator_tools') }}</h3>
                                                 <xf:contentcheck>
                                                     <xf:macro id="member_macros::moderator_menu_actions" arg-user="{$user}" arg-context="profile" />
                                                 </xf:contentcheck>
-                                                <xf:if is="($xf.visitor.hasPermission('general', 'manageAnyUser') || $xf.visitor.hasPermission('general', 'warn')) && $user.user_id != $xf.visitor.user_id">
-                                                    <hr class="menu-separator" />
-                                                    <a class="menu-linkRow js-ccScammerToggle"
-                                                        href="{{ link('cc-scammer/mark') }}"
-                                                        data-user-id="{{ $user.user_id }}"
-                                                        data-xf-token="{{ $xf.visitor.csrf_token_page|for_attr }}">
-                                                        <span class="menu-linkRow-main cc-scammer-link">
-                                                            &#9888; Mark / Unmark Scammer
-                                                        </span>
-                                                    </a>
-                                                </xf:if>
                                             </div>
                                         </div>
                                     </div>
@@ -464,7 +403,7 @@
                 </xf:if>
             </div>
 
-            <!-- Rep / Points blocks (vacban statusblock style) -->
+            <!-- Reputation / Points blocks (vacban style) -->
             <div class="cc-rep-grid">
                 <div class="cc-rep-block">
                     <div class="cc-rep-num">{{ $user.reaction_score }}</div>
@@ -490,7 +429,7 @@
                 </div>
                 <xf:if contentcheck="true">
                     <div class="cc-info-row">
-                        <span class="cc-info-label"><i class="fas fa-clock"></i> Last Seen</span>
+                        <span class="cc-info-label"><i class="fas fa-clock"></i> Last Visited</span>
                         <span class="cc-info-val">
                             <xf:contentcheck><xf:useractivity user="$user" /></xf:contentcheck>
                         </span>
@@ -498,9 +437,9 @@
                 </xf:if>
                 <xf:if is="$user.hasViewableUsernameHistory()">
                     <div class="cc-info-row">
-                        <span class="cc-info-label"><i class="fas fa-history"></i> Username</span>
+                        <span class="cc-info-label"><i class="fas fa-history"></i> Username History</span>
                         <span class="cc-info-val">
-                            <a data-xf-click="menu" role="button" tabindex="0" aria-expanded="false" aria-haspopup="true" style="cursor:pointer;">View history</a>
+                            <a style="color:@xf-textColorMuted;" data-xf-click="menu" role="button" tabindex="0" aria-expanded="false" aria-haspopup="true">View</a>
                             <div class="menu" data-menu="menu" aria-hidden="true"
                                  data-href="{{ link('members/username-history', $user, {'menu': 1}) }}"
                                  data-load-target=".js-usernameHistoryBody2">
@@ -530,39 +469,35 @@
                 </div>
             </div>
 
-            <!-- Decorative banners strip -->
+            <!-- Decorative banners strip (horizontal) -->
             <xf:if contentcheck="true">
                 <div class="cc-banners-strip">
                     <xf:contentcheck><xf:userbanners user="$user" /></xf:contentcheck>
                 </div>
             </xf:if>
 
-            <!-- About / Signature — vacban .profile-tabs-block with JS tabs -->
-            <div class="profile-tabs-block" data-profile-tabs="">
-                <div class="profile-tabs-bar">
-                    <button class="profile-tab is-active" type="button">About</button>
-                    <button class="profile-tab" type="button">Signature</button>
+            <!-- About / Signature inline card -->
+            <div class="cc-about-card" data-xf-init="tabs" data-panes=".cc-about-panes">
+                <div class="cc-about-tabs tabs" role="tablist">
+                    <a class="tabs-tab is-active" role="tab" aria-controls="cc-about-about">About</a>
+                    <a class="tabs-tab" role="tab" aria-controls="cc-about-sig">Signature</a>
                 </div>
-                <div class="profile-tabs-content">
-                    <div class="profile-tab-panel is-active">
-                        <div class="profile-tab-panel-inner">
-                            <xf:if is="$user.Profile.about">
-                                {{ bb_code($user.Profile.about, 'user:about', $user) }}
-                            <xf:else />
-                                <span class="profile-tab-empty">This user hasn't written anything yet.</span>
-                            </xf:if>
-                        </div>
-                    </div>
-                    <div class="profile-tab-panel">
-                        <div class="profile-tab-panel-inner">
-                            <xf:if is="$user.Profile.signature">
-                                {{ bb_code($user.Profile.signature, 'user:signature', $user) }}
-                            <xf:else />
-                                <span class="profile-tab-empty">No signature.</span>
-                            </xf:if>
-                        </div>
-                    </div>
-                </div>
+                <ul class="cc-about-panes">
+                    <li class="is-active cc-about-pane" id="cc-about-about" role="tabpanel">
+                        <xf:if is="$user.Profile.about">
+                            {{ bb_code($user.Profile.about, 'user:about', $user) }}
+                        <xf:else />
+                            <span class="cc-about-empty">This user hasn't written anything yet.</span>
+                        </xf:if>
+                    </li>
+                    <li class="cc-about-pane" id="cc-about-sig" role="tabpanel">
+                        <xf:if is="$user.Profile.signature">
+                            {{ bb_code($user.Profile.signature, 'user:signature', $user) }}
+                        <xf:else />
+                            <span class="cc-about-empty">No signature.</span>
+                        </xf:if>
+                    </li>
+                </ul>
             </div>
 
             <xf:ad position="member_view_below_tabs" arg-user="{$user}" />

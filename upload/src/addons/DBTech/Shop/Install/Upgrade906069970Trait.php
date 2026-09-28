@@ -2,27 +2,22 @@
 
 namespace DBTech\Shop\Install;
 
-use XF\AddOn\AddOn;
-use XF\App;
-use XF\Db\AbstractAdapter;
-use XF\Db\Exception;
-use XF\Db\Schema\Column;
-use XF\Db\SchemaManager;
+use mikehaertl\wkhtmlto\Command;
 
 /**
- * @property AddOn addOn
- * @property App app
+ * @property \XF\AddOn\AddOn addOn
+ * @property \XF\App app
  *
- * @method AbstractAdapter db()
- * @method SchemaManager schemaManager()
- * @method Column addOrChangeColumn($table, $name, $type = null, $length = null)
+ * @method \XF\Db\AbstractAdapter db()
+ * @method \XF\Db\SchemaManager schemaManager()
+ * @method \XF\Db\Schema\Column addOrChangeColumn($table, $name, $type = null, $length = null)
  */
 trait Upgrade906069970Trait
 {
 	/**
 	 *
 	 */
-	public function upgrade906060070Step1(): void
+	public function upgrade906060070Step1()
 	{
 		$this->applyTables();
 	}
@@ -31,9 +26,9 @@ trait Upgrade906069970Trait
 	 * @param array $stepParams
 	 *
 	 * @return array|bool
-	 * @throws Exception
+	 * @throws \XF\Db\Exception
 	 */
-	public function upgrade906060070Step2(array $stepParams): bool|array
+	public function upgrade906060070Step2(array $stepParams)
 	{
 		$position = empty($stepParams[0]) ? 0 : $stepParams[0];
 		$perPage = 250;
@@ -83,11 +78,11 @@ trait Upgrade906069970Trait
 				'is_always_hidden'     => $result['is_always_hidden'],
 				'can_reconfigure'      => $result['can_reconfigure'],
 				'auto_discard'         => $result['auto_discard'],
-				'enabled_custom_shops' => $result['enabled_custom_shops'],
+				'enabled_custom_shops' => $result['enabled_custom_shops']
 			];
 
 			$db->update('xf_dbtech_shop_item', [
-				'item_flags' => \json_encode($flags),
+				'item_flags' => \json_encode($flags)
 			], 'item_id = ?', [$result['item_id']]);
 		}
 
@@ -97,8 +92,8 @@ trait Upgrade906069970Trait
 
 		return [
 			$next,
-			"$next / {$stepParams['max']}",
-			$stepParams,
+			"{$next} / {$stepParams['max']}",
+			$stepParams
 		];
 	}
 }

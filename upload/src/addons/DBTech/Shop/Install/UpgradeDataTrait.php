@@ -2,21 +2,13 @@
 
 namespace DBTech\Shop\Install;
 
-use DBTech\Shop\Repository\ItemFieldRepository;
-use DBTech\Shop\Repository\ItemPrefixRepository;
-use XF\AddOn\AddOn;
-use XF\App;
-use XF\Db\AbstractAdapter;
-use XF\Db\Schema\Column;
-use XF\Db\SchemaManager;
-
 /**
- * @property AddOn addOn
- * @property App app
+ * @property \XF\AddOn\AddOn addOn
+ * @property \XF\App app
  *
- * @method AbstractAdapter db()
- * @method SchemaManager schemaManager()
- * @method Column addOrChangeColumn($table, $name, $type = null, $length = null)
+ * @method \XF\Db\AbstractAdapter db()
+ * @method \XF\Db\SchemaManager schemaManager()
+ * @method \XF\Db\Schema\Column addOrChangeColumn($table, $name, $type = null, $length = null)
  */
 trait UpgradeDataTrait
 {
@@ -26,10 +18,12 @@ trait UpgradeDataTrait
 	 */
 	protected function runPostUpgradeActions(?int $previousVersion, array &$stateChanges): void
 	{
-		$itemPrefixRepo = \XF::repository(ItemPrefixRepository::class);
+		/** @var \DBTech\Shop\Repository\ItemPrefix $itemPrefixRepo */
+		$itemPrefixRepo = \XF::repository('DBTech\Shop:ItemPrefix');
 		$itemPrefixRepo->rebuildPrefixCache();
 
-		$itemFieldRepo = \XF::repository(ItemFieldRepository::class);
+		/** @var \DBTech\Shop\Repository\ItemField $itemFieldRepo */
+		$itemFieldRepo = \XF::repository('DBTech\Shop:ItemField');
 		$itemFieldRepo->rebuildFieldCache();
 
 
@@ -47,7 +41,7 @@ trait UpgradeDataTrait
 
 				$fnPattern = 'postUpgrade%d';
 				$func = sprintf($fnPattern, $versionId);
-
+				
 				$this->$func($previousVersion, $stateChanges);
 			}
 		}

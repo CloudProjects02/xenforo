@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<routes>
+  <route route_type="admin" route_prefix="staff-blocks" format=":int&lt;block_id&gt;/" controller="XenDev\StaffManager:StaffBlock"/>
+</routes>
+ 		  					 	  		   	  			   	  			  	    	 				     		 			 		 		 	  			     	  	 		 			  	   	   	 		  	    		  			      	      		  

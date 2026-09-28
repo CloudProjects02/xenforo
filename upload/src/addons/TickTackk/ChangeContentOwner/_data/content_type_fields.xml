@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<content_type_fields>
+  <field content_type="graph" field_name="change_owner_handler_class">TickTackk\ChangeContentOwner\XFA\CSVGrapher\ChangeOwner\Graph</field>
+  <field content_type="post" field_name="change_owner_handler_class">TickTackk\ChangeContentOwner\XF\ChangeOwner\Post</field>
+  <field content_type="profile_post" field_name="change_owner_handler_class">TickTackk\ChangeContentOwner\XF\ChangeOwner\ProfilePost</field>
+  <field content_type="profile_post_comment" field_name="change_owner_handler_class">TickTackk\ChangeContentOwner\XF\ChangeOwner\ProfilePostComment</field>
+  <field content_type="thread" field_name="change_owner_handler_class">TickTackk\ChangeContentOwner\XF\ChangeOwner\Thread</field>
+  <field content_type="xfmg_album" field_name="change_owner_handler_class">TickTackk\ChangeContentOwner\XFMG\ChangeOwner\Album</field>
+  <field content_type="xfmg_comment" field_name="change_owner_handler_class">TickTackk\ChangeContentOwner\XFMG\ChangeOwner\Comment</field>
+  <field content_type="xfmg_media" field_name="change_owner_handler_class">TickTackk\ChangeContentOwner\XFMG\ChangeOwner\MediaItem</field>
+</content_type_fields>

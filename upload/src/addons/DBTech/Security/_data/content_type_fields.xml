@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<content_type_fields>
+  <field content_type="adminpermissions" field_name="dbtech_security_watcher_handler_class">DBTech\Security\Watcher\AdminPermissionsHandler</field>
+  <field content_type="compromisedlogon" field_name="dbtech_security_watcher_handler_class">DBTech\Security\Watcher\CompromisedLogonHandler</field>
+  <field content_type="compromisedstafflogon" field_name="dbtech_security_watcher_handler_class">DBTech\Security\Watcher\CompromisedStaffLogonHandler</field>
+  <field content_type="configtamper" field_name="dbtech_security_watcher_handler_class">DBTech\Security\Watcher\ConfigTamperHandler</field>
+  <field content_type="dbtech_security_adminperm" field_name="change_log_handler_class">DBTech\Security\ChangeLog\AdminPermissionHandler</field>
+  <field content_type="dbtech_security_adminperm" field_name="entity">XF:User</field>
+  <field content_type="dbtech_security_forumperm" field_name="change_log_handler_class">DBTech\Security\ChangeLog\ForumPermissionHandler</field>
+  <field content_type="dbtech_security_forumperm" field_name="entity">XF:Forum</field>
+  <field content_type="dbtech_security_group" field_name="change_log_handler_class">DBTech\Security\ChangeLog\UserGroupHandler</field>
+  <field content_type="dbtech_security_group" field_name="entity">XF:UserGroup</field>
+  <field content_type="dbtech_security_groupperm" field_name="change_log_handler_class">DBTech\Security\ChangeLog\UserGroupPermissionHandler</field>
+  <field content_type="dbtech_security_groupperm" field_name="entity">XF:UserGroup</field>
+  <field content_type="dbtech_security_option" field_name="change_log_handler_class">DBTech\Security\ChangeLog\OptionHandler</field>
+  <field content_type="dbtech_security_option" field_name="entity">XF:Option</field>
+  <field content_type="dbtech_security_userperm" field_name="change_log_handler_class">DBTech\Security\ChangeLog\UserPermissionHandler</field>
+  <field content_type="dbtech_security_userperm" field_name="entity">XF:User</field>
+  <field content_type="deletedusergroup" field_name="dbtech_security_watcher_handler_class">DBTech\Security\Watcher\DeletedUserGroupHandler</field>
+  <field content_type="failedbreachedlogon" field_name="dbtech_security_watcher_handler_class">DBTech\Security\Watcher\FailedBreachedLogonHandler</field>
+  <field content_type="failedbreachedstafflogon" field_name="dbtech_security_watcher_handler_class">DBTech\Security\Watcher\FailedBreachedStaffLogonHandler</field>
+  <field content_type="failedlogon" field_name="dbtech_security_watcher_handler_class">DBTech\Security\Watcher\FailedLogonHandler</field>
+  <field content_type="failedlogonadmin" field_name="dbtech_security_watcher_handler_class">DBTech\Security\Watcher\FailedLogonAdminHandler</field>
+  <field content_type="failedlogonbogus" field_name="dbtech_security_watcher_handler_class">DBTech\Security\Watcher\FailedLogonBogusHandler</field>
+  <field content_type="failedmasslogon" field_name="dbtech_security_watcher_handler_class">DBTech\Security\Watcher\FailedMassLogonHandler</field>
+  <field content_type="failedmasslogonbogus" field_name="dbtech_security_watcher_handler_class">DBTech\Security\Watcher\FailedMassLogonBogusHandler</field>
+  <field content_type="failedstafflogon" field_name="dbtech_security_watcher_handler_class">DBTech\Security\Watcher\FailedStaffLogonHandler</field>
+  <field content_type="forumpermissions" field_name="dbtech_security_watcher_handler_class">DBTech\Security\Watcher\ForumPermissionsHandler</field>
+  <field content_type="newfingerprint" field_name="dbtech_security_watcher_handler_class">DBTech\Security\Watcher\NewFingerprintHandler</field>
+  <field content_type="newstafffingerprint" field_name="dbtech_security_watcher_handler_class">DBTech\Security\Watcher\NewStaffFingerprintHandler</field>
+  <field content_type="newusergroup" field_name="dbtech_security_watcher_handler_class">DBTech\Security\Watcher\NewUserGroupHandler</field>
+  <field content_type="option" field_name="dbtech_security_watcher_handler_class">DBTech\Security\Watcher\OptionHandler</field>
+  <field content_type="user" field_name="dbtech_security_watcher_handler_class">DBTech\Security\Watcher\UserHandler</field>
+  <field content_type="usergrouppermissions" field_name="dbtech_security_watcher_handler_class">DBTech\Security\Watcher\UserGroupPermissionsHandler</field>
+  <field content_type="userpermissions" field_name="dbtech_security_watcher_handler_class">DBTech\Security\Watcher\UserPermissionsHandler</field>
+</content_type_fields>

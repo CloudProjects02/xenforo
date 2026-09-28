@@ -6,18 +6,18 @@ use XF\Mvc\Entity\Behavior;
 
 class Cacheable extends Behavior
 {
-	public function postSave(): void
+	public function postSave()
 	{
 		$this->rebuildCache();
 	}
 
-	public function postDelete(): void
+	public function postDelete()
 	{
 		$this->rebuildCache();
 	}
-
-	public function rebuildCache(): void
+	
+	public function rebuildCache()
 	{
-		\XF::app()->repository($this->entity->structure()->shortName)->rebuildCache();
+		$this->repository($this->entity->structure()->shortName)->rebuildCache();
 	}
 }

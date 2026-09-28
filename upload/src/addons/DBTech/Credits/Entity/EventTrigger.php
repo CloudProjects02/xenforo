@@ -4,7 +4,7 @@ namespace DBTech\Credits\Entity;
 
 use DBTech\Credits\EventTrigger\AbstractHandler;
 use DBTech\Credits\Repository\EventTriggerRepository;
-use XF\Mvc\Entity\AbstractCollection;
+use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 
 /**
@@ -33,10 +33,10 @@ use XF\Mvc\Entity\Structure;
  * @property array $settings
  *
  * RELATIONS
- * @property-read AbstractCollection<Event> $Events
- * @property-read AbstractCollection<Transaction> $Transactions
+ * @property-read \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Event> $Events
+ * @property-read \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Transaction> $Transactions
  */
-class EventTrigger extends AbstractEntity
+class EventTrigger extends Entity
 {
 	/**
 	 * @param bool $throw
@@ -235,7 +235,7 @@ class EventTrigger extends AbstractEntity
 			'referformat' 		=> ['type' => self::STR, 'default' => ''],
 			'outbound' 			=> ['type' => self::BOOL, 'default' => true],
 			'inbound' 			=> ['type' => self::BOOL, 'default' => true],
-			'value' 			=> ['type' => self::FLOAT, 'default' => 1.0, 'max' => PHP_INT_MAX, 'isDecimal' => true],
+			'value' 			=> ['type' => self::FLOAT, 'default' => 1.0],
 			'settings' 			=> ['type' => self::JSON_ARRAY, 'default' => []],
 		];
 		$structure->relations = [

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<content_type_fields>
+  <field content_type="st_dmca_report" field_name="alert_handler_class">SynapseThemes\DMCAReport\Alert\Report</field>
+  <field content_type="st_dmca_report" field_name="entity">SynapseThemes\DMCAReport:Report</field>
+</content_type_fields>

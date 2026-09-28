@@ -5,7 +5,6 @@ namespace DBTech\Credits\Widget;
 use DBTech\Credits\Entity\Currency;
 use DBTech\Credits\Finder\CurrencyFinder;
 use XF\Http\Request;
-use XF\Mvc\Entity\AbstractCollection;
 use XF\Widget\AbstractWidget;
 use XF\Widget\WidgetRenderer;
 
@@ -43,7 +42,7 @@ class Wallet extends AbstractWidget
 	{
 		$options = $this->options;
 
-		/** @var AbstractCollection<Currency> $currencies */
+		/** @var \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Currency> $currencies */
 		$currencies = \XF::app()->finder(CurrencyFinder::class)
 			->fetch()
 			->filterViewable()

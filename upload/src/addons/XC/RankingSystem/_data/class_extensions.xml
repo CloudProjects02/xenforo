@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<class_extensions>
+  <extension from_class="XenCentral\Feedback\Pub\Controller\Feedback" to_class="XC\RankingSystem\Feedback\Pub\Controller\Feedback" execute_order="10" active="1"/>
+  <extension from_class="XenCentral\Feedback\Pub\Controller\Main" to_class="XC\RankingSystem\Feedback\Pub\Controller\Main" execute_order="10" active="1"/>
+  <extension from_class="XFA\ReputationSystem\Entity\Reputation" to_class="XC\RankingSystem\ReputationSystem\Entity\Reputation" execute_order="12" active="1"/>
+  <extension from_class="XF\Criteria\User" to_class="XC\RankingSystem\XF\Criteria\User" execute_order="10" active="1"/>
+  <extension from_class="XF\Entity\ReactionContent" to_class="XC\RankingSystem\XF\Entity\ReactionContent" execute_order="10" active="1"/>
+  <extension from_class="XF\Entity\Thread" to_class="XC\RankingSystem\XF\Entity\Thread" execute_order="10" active="1"/>
+  <extension from_class="XF\Entity\User" to_class="XC\RankingSystem\XF\Entity\User" execute_order="10" active="1"/>
+  <extension from_class="XF\Pub\Controller\Account" to_class="XC\RankingSystem\XF\Pub\Controller\Account" execute_order="10" active="1"/>
+  <extension from_class="XF\Pub\Controller\Conversation" to_class="XC\RankingSystem\XF\Pub\Controller\Conversation" execute_order="10" active="1"/>
+  <extension from_class="XF\Pub\Controller\Forum" to_class="XC\RankingSystem\XF\Pub\Controller\Forum" execute_order="10" active="1"/>
+  <extension from_class="XF\Pub\Controller\Login" to_class="XC\RankingSystem\XF\Pub\Controller\Login" execute_order="10" active="1"/>
+  <extension from_class="XF\Pub\Controller\Member" to_class="XC\RankingSystem\XF\Pub\Controller\Member" execute_order="10" active="1"/>
+  <extension from_class="XF\Pub\Controller\Post" to_class="XC\RankingSystem\XF\Pub\Controller\Post" execute_order="10" active="1"/>
+  <extension from_class="XF\Pub\Controller\Thread" to_class="XC\RankingSystem\XF\Pub\Controller\Thread" execute_order="10" active="1"/>
+  <extension from_class="XF\Repository\UserAlert" to_class="XC\RankingSystem\XF\Repository\UserAlert" execute_order="10" active="1"/>
+</class_extensions>

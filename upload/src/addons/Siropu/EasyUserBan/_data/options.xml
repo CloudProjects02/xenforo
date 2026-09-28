@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<options>
+  <option option_id="siropuEasyUserBanBannedAvatar" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="siropuEasyUserBan" display_order="300"/>
+  </option>
+  <option option_id="siropuEasyUserBanCloseThreads" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="siropuEasyUserBan" display_order="103"/>
+  </option>
+  <option option_id="siropuEasyUserBanConversationLink" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="siropuEasyUserBan" display_order="201"/>
+  </option>
+  <option option_id="siropuEasyUserBanDisplayBanDetails" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="siropuEasyUserBan" display_order="4"/>
+  </option>
+  <option option_id="siropuEasyUserBanForum" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="siropuEasyUserBan" display_order="6"/>
+  </option>
+  <option option_id="siropuEasyUserBanForumId" edit_format="callback" data_type="unsigned_integer" advanced="0">
+    <default_value>0</default_value>
+    <edit_format_params>XF\Option\Forum::renderSelect</edit_format_params>
+    <relation group_id="siropuEasyUserBan" display_order="100"/>
+  </option>
+  <option option_id="siropuEasyUserBanHideBannedContent" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="siropuEasyUserBan" display_order="7"/>
+  </option>
+  <option option_id="siropuEasyUserBanLargeAvatar" edit_format="textbox" data_type="string" advanced="0">
+    <default_value>avatars/siropu/eub/l.png</default_value>
+    <relation group_id="siropuEasyUserBan" display_order="303"/>
+  </option>
+  <option option_id="siropuEasyUserBanMediumAvatar" edit_format="textbox" data_type="string" advanced="0">
+    <default_value>avatars/siropu/eub/m.png</default_value>
+    <relation group_id="siropuEasyUserBan" display_order="302"/>
+  </option>
+  <option option_id="siropuEasyUserBanMemberLink" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="siropuEasyUserBan" display_order="203"/>
+  </option>
+  <option option_id="siropuEasyUserBanNotice" edit_format="textbox" data_type="string" advanced="0">
+    <default_value></default_value>
+    <edit_format_params>rows=5</edit_format_params>
+    <relation group_id="siropuEasyUserBan" display_order="500"/>
+  </option>
+  <option option_id="siropuEasyUserBanProfileBanReason" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="siropuEasyUserBan" display_order="3"/>
+  </option>
+  <option option_id="siropuEasyUserBanProfileLink" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="siropuEasyUserBan" display_order="202"/>
+  </option>
+  <option option_id="siropuEasyUserBanReasonOptions" edit_format="template" data_type="array" validation_class="Siropu\EasyUserBan\Option\ReasonOptions" validation_method="verifyOption" advanced="0">
+    <default_value>["SPAM","Harassment","Trolling","Multiple accounts"]</default_value>
+    <edit_format_params>siropu_easy_user_ban_option_template_reasonOptions</edit_format_params>
+    <sub_options>*</sub_options>
+    <relation group_id="siropuEasyUserBan" display_order="2"/>
+  </option>
+  <option option_id="siropuEasyUserBanRequireReason" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="siropuEasyUserBan" display_order="1"/>
+  </option>
+  <option option_id="siropuEasyUserBanSmallAvatar" edit_format="textbox" data_type="string" advanced="0">
+    <default_value>avatars/siropu/eub/s.png</default_value>
+    <relation group_id="siropuEasyUserBan" display_order="301"/>
+  </option>
+  <option option_id="siropuEasyUserBanTempBanGroup" edit_format="callback" data_type="integer" advanced="0">
+    <default_value>0</default_value>
+    <edit_format_params>XF\Option\UserGroup::renderSelect</edit_format_params>
+    <relation group_id="siropuEasyUserBan" display_order="600"/>
+  </option>
+  <option option_id="siropuEasyUserBanThread" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="siropuEasyUserBan" display_order="5"/>
+  </option>
+  <option option_id="siropuEasyUserBanThreadId" edit_format="textbox" data_type="unsigned_integer" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="siropuEasyUserBan" display_order="102"/>
+  </option>
+  <option option_id="siropuEasyUserBanThreadLink" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="siropuEasyUserBan" display_order="200"/>
+  </option>
+  <option option_id="siropuEasyUserBanThreadPrefix" edit_format="callback" data_type="unsigned_integer" advanced="0">
+    <default_value>0</default_value>
+    <edit_format_params>Siropu\EasyUserBan\Option\ThreadPrefix::renderSelect</edit_format_params>
+    <relation group_id="siropuEasyUserBan" display_order="101"/>
+  </option>
+  <option option_id="siropuEasyUserBanUserId" edit_format="textbox" data_type="unsigned_integer" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="siropuEasyUserBan" display_order="103"/>
+  </option>
+</options>
+ 		  	   				  		 	 	  	  	  		 	  	   			   	  		 			 		 				  		 				   		 				 		  	 	 	   		  			   	 		 	  		 		  	 	 	  		  	 

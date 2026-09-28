@@ -1,0 +1,8 @@
+{
+    "config": {
+        "vendor-dir": "_vendor"
+    },
+    "require": {
+        "flowjs/flow-php-server": "^2.0"
+    }
+}

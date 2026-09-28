@@ -2,6 +2,7 @@
 
 namespace XenSoluce\InviteSystem\Admin\Controller;
 
+use XenSoluce\InviteSystem\Service\InvitationEmail;
 use XF\Admin\Controller\AbstractController;
 use XF\Mvc\ParameterBag;
 use XF\Mvc\FormAction;
@@ -49,9 +50,11 @@ class Invitation  extends AbstractController
 
     protected function tokenAddEdit(Token $Token)
     {
+        $userGroupRepo = \XF::repository('XF:UserGroup');
         $viewParams = [
             'token' => $Token,
-            'userGroups' => $this->em()->getRepository('XF:UserGroup')->getUserGroupTitlePairs()
+            'userGroups' => $this->em()->getRepository('XF:UserGroup')->getUserGroupTitlePairs(),
+            'UserGroups' => $userGroupRepo->findUserGroupsForList()->fetch()
         ];
 
         return $this->view('XenSoluce\InviteSystem:Invitation\Tokens\Edit', 'xs_is_token_edit', $viewParams);
@@ -78,6 +81,7 @@ class Invitation  extends AbstractController
             'number_use' => 'int'
         ]);
         $Token->set('type_token', '1');
+        $entityInput += $this->saveUserGroup();
         $form->basicEntitySave($Token, $entityInput);
 
         return $form;
@@ -193,7 +197,7 @@ class Invitation  extends AbstractController
     public function actionTokensFilters(ParameterBag $params)
     {
         $Token = $this->assertTokenExists($params['token_id']);
-        if($Token->type_token == '1')
+        if($Token->type_token == '2')
         {
             return $this->redirect($this->buildLink('invitation/tokens',$Token));
         }
@@ -244,6 +248,11 @@ class Invitation  extends AbstractController
 
         return $this->view('XenSoluce\InviteSystem:Invitation\TokensUser\Listing', 'xs_is_token_user_list', $viewParams);
     }
+
+    /**
+     * @param Token $Token
+     * @return \XF\Mvc\Reply\View
+     */
     protected function tokensUserAddEdit(Token $Token)
     {
         $page = $this->filterPage();
@@ -281,26 +290,34 @@ class Invitation  extends AbstractController
                 $CodeUser[$user]['count']  = count($codes);
             }
         }
+        $userGroupRepo = \XF::repository('XF:UserGroup');
         $viewParams = [
             'token' => $Token,
             'users' => $users->fetch(),
             'total' => $users->total(),
             'page' => $page,
             'perPage' => $perPage,
-            'CodeUser' => $CodeUser
+            'CodeUser' => $CodeUser,
+            'UserGroups' => $userGroupRepo->findUserGroupsForList()->fetch()
         ];
 
         return $this->view('XenSoluce\InviteSystem:Invitation\TokensUser\Edit', 'xs_is_token_user_edit', $viewParams);
     }
 
+    /**
+     * @param ParameterBag $params
+     * @return \XF\Mvc\Reply\View
+     */
     public function actionTokensUserEdit(ParameterBag $params)
     {
+        /** @var Token $Token */
         $Token = $this->assertTokenExists($params['token_id']);
         return $this->tokensUserAddEdit($Token);
     }
 
     public function actionTokensUserAdd()
     {
+        /** @var Token $Token */
         $Token = $this->em()->create('XenSoluce\InviteSystem:Token');
         return $this->tokensUserAddEdit($Token);
     }
@@ -335,8 +352,43 @@ class Invitation  extends AbstractController
                 'number_use' => $input['number_use']
             ];
         }
+        $entity += $this->saveUserGroup();
         $form->basicEntitySave($Token, $entity);
         return $form;
+    }
+    protected function saveUserGroup()
+    {
+        $userGroupCode = $this->filter([
+            'enable_add_user_group' => 'int',
+            'type_user_group' => [
+                'first_group' => 'int',
+                'secondary_group' => 'int',
+            ],
+            'user_group' => [
+                'first_user_group_id' => 'int',
+                'secondary_user_group_id' => 'array-uint'
+            ]
+        ]);
+        $entity = [];
+        if($userGroupCode['enable_add_user_group'])
+        {
+            if($userGroupCode['type_user_group']['first_group'] && $userGroupCode['type_user_group']['secondary_group'])
+            {
+                $entity['type_user_group'] = 'all';
+            }
+            elseif ($userGroupCode['type_user_group']['first_group'])
+            {
+                $entity['type_user_group'] = 'first';
+            }
+            elseif ($userGroupCode['type_user_group']['secondary_group'])
+            {
+                $entity['type_user_group'] = 'secondary';
+            }
+            $entity['user_group'] = $userGroupCode['user_group']['first_user_group_id'];
+            $entity['secondary_user_group'] = $userGroupCode['user_group']['secondary_user_group_id'];
+        }
+        $entity['enable_add_user_group'] = $userGroupCode['enable_add_user_group'];
+        return $entity;
     }
     public function actionTokensUserSave(ParameterBag $params)
     {
@@ -413,6 +465,7 @@ class Invitation  extends AbstractController
                 $Token->save();
                 return $this->redirect($this->buildLink('invitation/tokens-user', $Token));
             }
+
         }
         else
         {
@@ -520,7 +573,8 @@ class Invitation  extends AbstractController
         ];
         return $this->view('XenSoluce\InviteSystem:Invitation\ListCode\Filters', 'xs_is_token_user_filters', $viewParams);
     }
-    /**Personalized invitation code*/
+
+    /** Personalized invitation code */
 
     public function actionPersonalizedInvitationCode(ParameterBag $params)
     {
@@ -554,33 +608,48 @@ class Invitation  extends AbstractController
         ];
         return $this->view('XenSoluce\InviteSystem:Invitation\PersonalizedInvitationCode\Listing', 'xs_is_personalized_invitation_code', $viewParams);
     }
-    protected function PersonalizedInvitationCodeAddEdit(PersonalizedInvitationCode $code)
+    protected function PersonalizedInvitationCodeAddEdit(PersonalizedInvitationCode $code, $UserGroupCode)
     {
         $page = $this->filterPage();
         $perPage = 20;
         $users = $this->finder('XF:User')
             ->where('user_id', $code->registered_user_id)
             ->limitByPage($page, $perPage);
+        $userGroupRepo = \XF::repository('XF:UserGroup');
         $viewParams = [
             'users' => $users->fetch(),
             'total' => $users->total(),
             'page' => $page,
             'perPage' => $perPage,
             'code' => $code,
+            'UserGroups' => $userGroupRepo->findUserGroupsForList()->fetch(),
+            'UserGroupCode' => $UserGroupCode
         ];
 
         return $this->view('XenSoluce\InviteSystem:Invitation\PersonalizedInvitationCode\Edit', 'xs_is_personalized_invitation_code_edit', $viewParams);
     }
     public function actionPersonalizedInvitationCodeEdit(ParameterBag $params)
     {
+        /** @var PersonalizedInvitationCode $code */
         $code = $this->assertPersonalizedInvitationCodeExists($params->ic_personalize_id);
-        return $this->PersonalizedInvitationCodeAddEdit($code);
+        $UserGroupCode = $this->finder('XenSoluce\InviteSystem:UserGroupCode')
+            ->where('entity_id', '=', $code->ic_personalize_id)->fetchOne();
+        return $this->PersonalizedInvitationCodeAddEdit($code, $UserGroupCode);
     }
     public function actionPersonalizedInvitationCodeAdd()
     {
+        /** @var PersonalizedInvitationCode $code */
         $code = $this->em()->create('XenSoluce\InviteSystem:PersonalizedInvitationCode');
-        return $this->PersonalizedInvitationCodeAddEdit($code);
+        $UserGroupCode = $this->em()->create('XenSoluce\InviteSystem:UserGroupCode');
+        return $this->PersonalizedInvitationCodeAddEdit($code, $UserGroupCode);
     }
+
+    /**
+     * @param PersonalizedInvitationCode $code
+     * @param $Type
+     * @param $UserGroupCode
+     * @return FormAction
+     */
     protected function PersonalizedInvitationCodeSaveProcess(PersonalizedInvitationCode $code, $Type)
     {
         $form = $this->formAction();
@@ -592,7 +661,7 @@ class Invitation  extends AbstractController
             'limit_use' => 'str',
             'limit_use_number' => 'int',
             'limit_time' => 'str',
-            'limit_time_number' => 'datetime'
+            'limit_time_number' => 'datetime',
         ]);
         if($Type == 'Add')
         {
@@ -628,10 +697,42 @@ class Invitation  extends AbstractController
             $entityInput['limit_time'] = $LimitInput['limit_time_number'];
         }
 
-
         $form->basicEntitySave($code, $entityInput);
 
         return $form;
+    }
+    protected function finalizePersonalizedInvitationCode(PersonalizedInvitationCode $code, $UserGroupCode)
+    {
+        $UserGroupCode->code = $code->code;
+        $UserGroupCode->entity_id = $code->ic_personalize_id;
+        $userGroupCode = $this->filter([
+            'type_user_group' => [
+                'first_group' => 'int',
+                'secondary_group' => 'int',
+            ],
+            'user_group' => [
+                'first_user_group_id' => 'int',
+                'secondary_user_group_id' => 'array-uint'
+            ]
+        ]);
+
+
+        $UserGroupCode->max_invite = $code->limit_use;
+        if($userGroupCode['type_user_group']['first_group'] && $userGroupCode['type_user_group']['secondary_group'])
+        {
+            $UserGroupCode->type_user_group = 'all';
+        }
+        elseif ($userGroupCode['type_user_group']['first_group'])
+        {
+            $UserGroupCode->type_user_group = 'first';
+        }
+        elseif ($userGroupCode['type_user_group']['secondary_group'])
+        {
+            $UserGroupCode->type_user_group = 'secondary';
+        }
+        $UserGroupCode->user_group = $userGroupCode['user_group']['first_user_group_id'];
+        $UserGroupCode->secondary_user_group = $userGroupCode['user_group']['secondary_user_group_id'] ;
+        $UserGroupCode->save();
     }
 
     public function actionPersonalizedInvitationCodeSave(ParameterBag $params)
@@ -641,14 +742,25 @@ class Invitation  extends AbstractController
         {
             $code = $this->assertPersonalizedInvitationCodeExists($params->ic_personalize_id);
             $Type = 'Edit';
+            $UserGroupCode = $this->finder('XenSoluce\InviteSystem:UserGroupCode')
+                ->where('entity_id', '=', $code->ic_personalize_id)->fetchOne();
+            if(empty($UserGroupCode))
+            {
+                $UserGroupCode = $this->em()->create('XenSoluce\InviteSystem:UserGroupCode');
+            }
         }
         else
         {
             $code = $this->em()->create('XenSoluce\InviteSystem:PersonalizedInvitationCode');
             $Type = 'Add';
+            $UserGroupCode = $this->em()->create('XenSoluce\InviteSystem:UserGroupCode');
         }
-        $this->PersonalizedInvitationCodeSaveProcess($code, $Type)->run();
 
+        $this->PersonalizedInvitationCodeSaveProcess($code, $Type)->run();
+        if($this->filter('enable_add_user_group', 'int'))
+        {
+            $this->finalizePersonalizedInvitationCode($code, $UserGroupCode);
+        }
         return $this->redirect($this->buildLink('invitation/personalized-invitation-code') . $this->buildLinkHash($code->ic_personalize_id));
     }
     public function actionPersonalizedInvitationCodeDelete(ParameterBag $params)
@@ -674,6 +786,7 @@ class Invitation  extends AbstractController
 
         return $plugin->actionToggle('XenSoluce\InviteSystem:PersonalizedInvitationCode', 'enable');
     }
+
     /**Banned users*/
     public function actionBanning(ParameterBag $params)
     {
@@ -906,9 +1019,7 @@ class Invitation  extends AbstractController
 
     public function actionListCodeFilters()
     {
-
         $filters = $this->getListCodeFilterInput();
-
         if ($this->filter('apply', 'bool'))
         {
             return $this->redirect($this->buildLink('invitation/list-code', '', $filters));
@@ -920,11 +1031,38 @@ class Invitation  extends AbstractController
 
         $viewParams = [
             'filters' => $filters,
-             'user' => $user
+            'user' => $user
         ];
         return $this->view('XenSoluce\InviteSystem:Invitation\ListCode\Filters', 'xs_is_list_code_filters', $viewParams);
     }
 
+    /**
+     * @return \XF\Mvc\Reply\Redirect|\XF\Mvc\Reply\View
+     * @throws \XF\PrintableException|\XF\Mvc\Reply\Exception
+     */
+    public function actionSendEmail()
+    {
+        $this->setSectionContext('xsISSendEmail');
+        if($this->isPost())
+        {
+            /** @var InvitationEmail $invitationEmailService */
+            $invitationEmailService = $this->service('XenSoluce\InviteSystem:InvitationEmail', true);
+            $invitationEmailService->setEmail($this->filter('emails', 'array'));
+            $invitationEmailService->setVerifyEmail($this->filter('verify_email', 'bool'));
+            $invitationEmailService->setSubject($this->filter('subject', 'str'));
+            $invitationEmailService->setVerifySubject(true);
+
+            if(!$invitationEmailService->validate($errors)) {
+                throw $this->exception($this->error($errors));
+            }
+
+            $invitationEmailService->sendEmail();
+
+            return $this->redirect($this->buildLink('invitation/send-email'));
+        }
+        return $this->view('', 'xs_is_send_email');
+
+    }
     protected function assertTokenExists($id, $with = null, $phraseKey = null)
     {
         return $this->assertRecordExists('XenSoluce\InviteSystem:Token', $id, $with, $phraseKey);
@@ -941,4 +1079,9 @@ class Invitation  extends AbstractController
     {
         return $this->assertRecordExists('XenSoluce\InviteSystem:CodeInvitation', $id, $with, $phraseKey);
     }
+    protected function assertCodeUserGroupExists($id, $with = null, $phraseKey = null)
+    {
+        return $this->assertRecordExists('XenSoluce\InviteSystem:UserGroupCode', $id, $with, $phraseKey);
+    }
 }
+ 		   	  		 		     				  		  		 	  	 	           		          	 	   	  								  		  				 	 		       	 		 					 		   				 	 		  	    

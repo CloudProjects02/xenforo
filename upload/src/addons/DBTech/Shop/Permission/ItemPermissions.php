@@ -2,16 +2,14 @@
 
 namespace DBTech\Shop\Permission;
 
-use DBTech\Shop\Entity\Item;
-use DBTech\Shop\Repository\ItemRepository;
-use XF\Entity\Permission;
-use XF\Entity\PermissionCombination;
-use XF\Mvc\Entity\AbstractCollection;
-use XF\Permission\AnalysisIntermediate;
 use XF\Permission\FlatContentPermissions;
-use XF\Phrase;
-use XF\Repository\PermissionEntryRepository;
+use XF\Permission\AnalysisIntermediate;
 
+/**
+ * Class ItemPermissions
+ *
+ * @package DBTech\Shop\Permission
+ */
 class ItemPermissions extends FlatContentPermissions
 {
 	/**
@@ -23,37 +21,38 @@ class ItemPermissions extends FlatContentPermissions
 	}
 
 	/**
-	 * @return Phrase
+	 * @return \XF\Phrase
 	 */
-	public function getAnalysisTypeTitle(): Phrase
+	public function getAnalysisTypeTitle(): \XF\Phrase
 	{
 		return \XF::phrase('dbtech_shop_item_permissions');
 	}
-
+	
 	/**
-	 * @return AbstractCollection
+	 * @return \XF\Mvc\Entity\AbstractCollection
 	 */
-	public function getContentList(): AbstractCollection
+	public function getContentList(): \XF\Mvc\Entity\AbstractCollection
 	{
-		$entryRepo = $this->builder->em()->getRepository(ItemRepository::class);
+		/** @var \DBTech\Shop\Repository\Item $entryRepo */
+		$entryRepo = $this->builder->em()->getRepository('DBTech\Shop:Item');
 		return $entryRepo->findEntriesForPermissionList()->fetch();
 	}
 
 	/**
-	 * @param Permission $permission
+	 * @param \XF\Entity\Permission $permission
 	 *
 	 * @return bool
 	 */
-	public function isValidPermission(Permission $permission): bool
+	public function isValidPermission(\XF\Entity\Permission $permission): bool
 	{
 		return ($permission->permission_group_id == 'dbtech_shop' && in_array($permission->permission_id, [
-			'view',
-			'purchase',
-			'react',
-			'rate',
-		]));
+				'view',
+				'purchase',
+				'react',
+				'rate',
+			]));
 	}
-
+	
 	/**
 	 * @param $contentId
 	 * @param array $calculated
@@ -67,17 +66,17 @@ class ItemPermissions extends FlatContentPermissions
 		{
 			$calculated['dbtech_shop'] = [];
 		}
-
+		
 		$final = $this->builder->finalizePermissionValues($calculated['dbtech_shop']);
-
+		
 		if (empty($final['view']))
 		{
 			$childPerms['dbtech_shop']['view'] = 'deny';
 		}
-
+		
 		return $final;
 	}
-
+	
 	/**
 	 * @param $contentId
 	 * @param array $calculated
@@ -95,15 +94,15 @@ class ItemPermissions extends FlatContentPermissions
 	protected function getFinalAnalysisPerms($contentId, array $calculated, array &$childPerms): array
 	{
 		$final = $this->builder->finalizePermissionValues($calculated);
-
+		
 		if (empty($final['dbtech_shop']['view']))
 		{
 			$childPerms['dbtech_shop']['view'] = 'deny';
 		}
-
+		
 		return $final;
 	}
-
+	
 	/**
 	 * @param $contentId
 	 * @param array $userGroupIds
@@ -113,16 +112,18 @@ class ItemPermissions extends FlatContentPermissions
 	 */
 	public function getApplicablePermissionSets($contentId, array $userGroupIds, $userId = 0): array
 	{
-		$entryRepo = $this->builder->em()->getRepository(PermissionEntryRepository::class);
-
+		/** @var \XF\Repository\PermissionEntry $entryRepo */
+		$entryRepo = $this->builder->em()->getRepository('XF:PermissionEntry');
+		
 		$entries = $entryRepo->getContentPermissionEntriesGrouped('dbtech_shop_category');
-
-		$item = \XF::app()->em()->find(Item::class, $contentId);
-
+		
+		/** @var \DBTech\Shop\Entity\Item $item */
+		$item = $this->builder->em()->find('DBTech\Shop:Item', $contentId);
+		
 		$userEntries = $entries['users'];
 		$groupEntries = $entries['groups'];
 		$systemEntries = $entries['system'];
-
+		
 		$sets = [];
 		foreach ($userGroupIds AS $userGroupId)
 		{
@@ -135,7 +136,7 @@ class ItemPermissions extends FlatContentPermissions
 				$sets["group-$userGroupId"] = $this->groupEntries[$contentId][$userGroupId];
 			}
 		}
-
+		
 		if ($userId && isset($userEntries[$item->category_id][$userId]))
 		{
 			$sets["shop-category-user-$userId"] = $userEntries[$item->category_id][$userId];
@@ -144,7 +145,7 @@ class ItemPermissions extends FlatContentPermissions
 		{
 			$sets["user-$userId"] = $this->userEntries[$contentId][$userId];
 		}
-
+		
 		if (isset($systemEntries[$item->category_id]))
 		{
 			$sets['shop-category-system'] = $systemEntries[$item->category_id];
@@ -153,12 +154,12 @@ class ItemPermissions extends FlatContentPermissions
 		{
 			$sets['system'] = $this->systemEntries[$contentId];
 		}
-
+		
 		return $sets;
 	}
-
+	
 	/**
-	 * @param PermissionCombination $combination
+	 * @param \XF\Entity\PermissionCombination $combination
 	 * @param $contentId
 	 * @param array $basePerms
 	 * @param array $baseIntermediates
@@ -166,33 +167,32 @@ class ItemPermissions extends FlatContentPermissions
 	 * @return array
 	 */
 	public function analyzeCombination(
-		PermissionCombination $combination,
+		\XF\Entity\PermissionCombination $combination,
 		$contentId,
 		array $basePerms,
 		array $baseIntermediates
-	): array
-	{
+	): array {
 		$groupIds = $combination->user_group_list;
 		$userId = $combination->user_id;
-
+		
 		$intermediates = $baseIntermediates;
 		$permissions = $basePerms;
 		$dependChanges = [];
-
+		
 		$titles = $this->getAnalysisContentPairs();
-
+		
 		$permissions = $this->adjustBasePermissionAllows($permissions);
-
+		
 		$sets = $this->getApplicablePermissionSets($contentId, $groupIds, $userId);
 		$permissions = $this->builder->calculatePermissions($sets, $this->permissionsGrouped, $permissions);
-
+		
 		$calculated = $this->builder->applyPermissionDependencies(
 			$permissions,
 			$this->permissionsGrouped,
 			$dependChanges
 		);
 		$finalPerms = $this->getFinalAnalysisPerms($contentId, $calculated, $permissions);
-
+		
 		$thisIntermediates = $this->builder->collectIntermediates(
 			$combination,
 			$permissions,
@@ -208,29 +208,28 @@ class ItemPermissions extends FlatContentPermissions
 			$titles[$contentId]
 		));
 		$intermediates = $this->builder->pushIntermediates($intermediates, $thisIntermediates);
-
+		
 		return $this->builder->getFinalAnalysis($finalPerms, $intermediates, $dependChanges);
 	}
-
+	
 	protected function collectCategoryIntermediates(
-		PermissionCombination $combination,
+		\XF\Entity\PermissionCombination $combination,
 		array $groupedPermissions,
 		array $sets,
 		$contentId = null,
 		$contentTitle = null
-	): array
-	{
+	): array {
 		$groupIds = $combination->user_group_list;
 		$userId = $combination->user_id;
-
+		
 		$intermediates = [];
-
+		
 		foreach ($groupedPermissions AS $permissionGroupId => $permissions)
 		{
 			foreach ($permissions AS $permissionId => $null)
 			{
 				$localIntermediates = [];
-
+				
 				if (isset($sets['shop-category-system'][$permissionGroupId][$permissionId]))
 				{
 					$localIntermediates[] = new AnalysisIntermediate(
@@ -241,7 +240,7 @@ class ItemPermissions extends FlatContentPermissions
 						$contentTitle
 					);
 				}
-
+				
 				foreach ($groupIds AS $groupId)
 				{
 					if (isset($sets["shop-category-group-$groupId"][$permissionGroupId][$permissionId]))
@@ -253,7 +252,7 @@ class ItemPermissions extends FlatContentPermissions
 						$permission = $this->permissionsGrouped[$permissionGroupId][$permissionId];
 						$intermediateValue = $permission->permission_type == 'integer' ? 0 : 'unset';
 					}
-
+					
 					$skipDefault = ($contentId && ($intermediateValue === 'unset' || $intermediateValue === 0));
 					if (!$skipDefault)
 					{
@@ -266,7 +265,7 @@ class ItemPermissions extends FlatContentPermissions
 						);
 					}
 				}
-
+				
 				if ($userId && isset($sets["shop-category-user-$userId"][$permissionGroupId][$permissionId]))
 				{
 					$localIntermediates[] = new AnalysisIntermediate(
@@ -277,11 +276,11 @@ class ItemPermissions extends FlatContentPermissions
 						$contentTitle
 					);
 				}
-
+				
 				$intermediates[$permissionGroupId][$permissionId] = $localIntermediates;
 			}
 		}
-
+		
 		return $intermediates;
 	}
 }

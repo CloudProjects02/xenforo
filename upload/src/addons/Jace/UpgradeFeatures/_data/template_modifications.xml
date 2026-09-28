@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="admin" template="user_upgrade_edit" modification_key="upgrade_features_edit" description="Add feature selection to user upgrade edit form" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:submitrow icon="save" sticky="true" />]]></find>
+    <replace><![CDATA[<xf:if is="$availableFeatures">
+    <hr class="formRowSep" />
+    
+	<xf:checkboxrow>
+        <xf:option name="is_featured" 
+            value="1" 
+            selected="{$upgrade.is_featured}" 
+            label="{{ phrase('upgrade_features.featured_upgrade') }}" 
+            explain="{{ phrase('upgrade_features.featured_upgrade_explain') }}" />
+    </xf:checkboxrow>
+
+    <xf:foreach loop="$availableFeatures" value="$feature">
+        <xf:set var="$featureValue" value="{$upgradeFeatures.{$feature.feature_id}}" />
+        <xf:set var="$currentValue" value="{$featureValue.feature_value|default('')}" />
+        <xf:set var="$isEnabled" value="{$upgradeFeatures.{$feature.feature_id}|default(false)}" />
+        
+        <xf:if is="$feature.feature_type == 'boolean'">
+            <xf:checkboxrow label="{$feature.title}"
+                explain="{$feature.description}">
+                <xf:option name="features[{$feature.feature_id}][enabled]" 
+                    value="1" 
+                    selected="{$isEnabled}" 
+                    label="{{ phrase('upgrade_features.enabled') }}" />
+            </xf:checkboxrow>
+        <xf:elseif is="$feature.feature_type == 'numeric'" />
+            <xf:numberboxrow name="features[{$feature.feature_id}][value]" 
+                value="{$currentValue}" 
+                label="{$feature.title}"
+                explain="{$feature.description}"
+                min="0" />
+        <xf:elseif is="$feature.feature_type == 'icon'" />
+            <xf:formrow label="{$feature.title}"
+                explain="{$feature.description}">
+                <xf:if is="$featureIcons">
+                    <div class="formRow-child">
+                        <div class="contentRow">
+                            <div class="contentRow-figure">
+                                <img src="{$featureIcons.{$feature.feature_id}.getIconUrl()}" 
+                                    alt="{{ phrase('upgrade_features.icon_alt') }}" 
+                                    style="max-width: 32px; max-height: 32px; border-radius: 3px;" />
+                            </div>
+                            <div class="contentRow-main">
+                                <div class="contentRow-title">{{ phrase('upgrade_features.current_icon') }}</div>
+                                <div class="contentRow-snippet">{{ phrase('upgrade_features.icon_replace_hint') }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </xf:if>
+                <xf:upload name="feature_icon_{$feature.feature_id}" 
+                    accept="image/*" />
+                <xf:if is="!$feature.description">
+                    <div class="formRow-explain">{{ phrase('upgrade_features.icon_upload_hint') }}</div>
+                </xf:if>
+            </xf:formrow>
+        <xf:elseif is="$feature.feature_type == 'userbar'" />
+            <xf:formrow label="{$feature.title}"
+                explain="{$feature.description}">
+                <xf:if is="$featureUserbars">
+                    <div class="formRow-child">
+                        <div class="contentRow">
+                            <div class="contentRow-figure">
+                                <img src="{$featureUserbars.{$feature.feature_id}.getIconUrl()}" 
+                                    alt="{{ phrase('upgrade_features.icon_alt') }}" />
+                            </div>
+                        </div>
+                    </div>
+                </xf:if>
+                <xf:upload name="feature_userbar_{$feature.feature_id}" 
+                    accept="image/*" />
+                <xf:if is="!$feature.description">
+                    <div class="formRow-explain">{{ phrase('upgrade_features.icon_upload_hint') }}</div>
+                </xf:if>
+            </xf:formrow>
+        </xf:if>
+    </xf:foreach>
+</xf:if>
+
+<xf:submitrow sticky="true" icon="save" />]]></replace>
+  </modification>
+</template_modifications>

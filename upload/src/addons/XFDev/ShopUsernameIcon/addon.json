@@ -1,0 +1,19 @@
+{
+    "legacy_addon_id": "",
+    "title": "[XFDev] DBTech Shop Username Icon",
+    "description": "Adds Username Icon Item Functionality for Shop",
+    "version_id": 1011570,
+    "version_string": "1.1.15",
+    "dev": "XFDev",
+    "dev_url": "",
+    "faq_url": "",
+    "support_url": "",
+    "extra_urls": [],
+    "require": {
+        "DBTech/Shop": [
+            906040770,
+            "DBTech Shop Version 6.4.7"
+        ]
+    },
+    "icon": "fa-store"
+}

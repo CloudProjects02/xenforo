@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="admin_navigation.svAntiSpam" version_id="1702623682" version_string="1.14.2"><![CDATA[Anti-spam]]></phrase>
+  <phrase title="admin_navigation.svAntiSpamMultiAccount" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Users with multiple accounts]]></phrase>
+  <phrase title="admin_navigation.svAntiSpamOptions" version_id="1702623682" version_string="1.14.2"><![CDATA[Anti-spam options]]></phrase>
+  <phrase title="admin_navigation.svMultiAccountEvents" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Multiple account detection events]]></phrase>
+  <phrase title="admin_navigation.svSignupAbuseBlocking_allowedEmailDomains" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[Allowed email domains]]></phrase>
+  <phrase title="admin_navigation.svTestAsn" version_id="1721375746" version_string="1.16.5"><![CDATA[Test resolving ASN]]></phrase>
+  <phrase title="admin_navigation.svTestGeoIp" version_id="1721375746" version_string="1.16.5"><![CDATA[Test resolving GeoIp]]></phrase>
+  <phrase title="admin_navigation.svUserLoginLogs" version_id="1710448788" version_string="1.16.0 Alpha 11"><![CDATA[Logins by ip]]></phrase>
+  <phrase title="admin_navigation.userRegistrationLog" version_id="1000007" version_string="1.0.0 Alpha 7"><![CDATA[User registration log]]></phrase>
+  <phrase title="admin_permission.svAntiSpam" version_id="1702623682" version_string="1.14.2"><![CDATA[Manage anti-spam]]></phrase>
+  <phrase title="cron_entry.svSAB_Asn" version_id="1714862723" version_string="1.16.0 Beta 5"><![CDATA[Signup Abuse blocking and detection - maxmind asn update]]></phrase>
+  <phrase title="cron_entry.svSAB_GeoIP" version_id="1714862723" version_string="1.16.0 Beta 5"><![CDATA[Signup Abuse blocking and detection - maxmind geoip update]]></phrase>
+  <phrase title="cron_entry.svSignupCleanup" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Signup throttling cleanup]]></phrase>
+  <phrase title="mod_log.user_sv_allowed_email_domain" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA["{domain}" has been added to explicit allow email domain list]]></phrase>
+  <phrase title="mod_log.user_sv_banned_asn" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[ASN "{asn}" has been banned]]></phrase>
+  <phrase title="mod_log.user_sv_banned_email_domain" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[Email domain "{domain}" has been banned]]></phrase>
+  <phrase title="mod_log.user_sv_email_confirm" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[User asked for email confirmation]]></phrase>
+  <phrase title="multiple_account" version_id="1000800" version_string="1.0.8"><![CDATA[Multiple account]]></phrase>
+  <phrase title="multiple_account_detection_alertable" version_id="1030500" version_string="1.3.5"><![CDATA[Multi-account event reporting]]></phrase>
+  <phrase title="option.svAllowBannedLogout" version_id="1000020" version_string="1.0.0"><![CDATA[Allow banned logout]]></phrase>
+  <phrase title="option.svAllowRejectedLogout" version_id="1090400" version_string="1.9.4"><![CDATA[Allow rejected user logout]]></phrase>
+  <phrase title="option.svAlwaysSockCheckBanned" version_id="1000020" version_string="1.0.0"><![CDATA[Always check banned users for multiple accounts]]></phrase>
+  <phrase title="option.svAsnCheckActionOnNotMatch" version_id="1708698834" version_string="1.15.5"><![CDATA[ASN content spam check action]]></phrase>
+  <phrase title="option.svAsnInfoUrl" version_id="1090800" version_string="1.9.8"><![CDATA[ASN information URL]]></phrase>
+  <phrase title="option.svGeoIpCheckActionOnNotMatch" version_id="1110000" version_string="1.11.0 RC0"><![CDATA[GeoIp content spam check action]]></phrase>
+  <phrase title="option.svKnownSockUserGroupId" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Known multi-account user-group]]></phrase>
+  <phrase title="option.svLanguageCheckActionOnNotMatch" version_id="1110000" version_string="1.11.0 RC0"><![CDATA[Language content spam check action]]></phrase>
+  <phrase title="option.svLinkSpamCheckerAllowedList" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[Link Spam checker: Accept]]></phrase>
+  <phrase title="option.svLinkSpamCheckerDefaultAction" version_id="1020600" version_string="1.2.6"><![CDATA[Link Spam checker: Default action]]></phrase>
+  <phrase title="option.svLinkSpamCheckerDefaultActionByContentType" version_id="1090800" version_string="1.9.8"><![CDATA[Link Spam checker: Default action (by content type)]]></phrase>
+  <phrase title="option.svLinkSpamCheckerModerateList" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[Link Spam checker: Moderate]]></phrase>
+  <phrase title="option.svLinkSpamCheckerRegistrationDefaultAction" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[Link Spam checker: Registration default action]]></phrase>
+  <phrase title="option.svLinkSpamCheckerRejectList" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[Link Spam checker: Reject]]></phrase>
+  <phrase title="option.svLinkSpamCheckerStructuredTextTypes" version_id="1120100" version_string="1.12.1"><![CDATA[Link checker known structured text content types]]></phrase>
+  <phrase title="option.svLogReportReopenReason" version_id="1060601" version_string="1.6.6"><![CDATA[Log report re-open reason]]></phrase>
+  <phrase title="option.svLoginFloodLimit" version_id="1000020" version_string="1.0.0"><![CDATA[Login flood timer]]></phrase>
+  <phrase title="option.svMaxMultiAccountGraphExpansions" version_id="1713965194" version_string="1.16.0 Beta 2"><![CDATA[Maximum number of queries to fetch all multi-account of multi-accounts]]></phrase>
+  <phrase title="option.svProjectHoneyPotExtendedConfig" version_id="1000009" version_string="1.0.0 Alpha 9"><![CDATA[Project Honey Pot extended configuration]]></phrase>
+  <phrase title="option.svRegSpamPhrases" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[Registration spam phrases]]></phrase>
+  <phrase title="option.svSADAB_requestWebsiteOnSignup" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[Request website on signup]]></phrase>
+  <phrase title="option.svSFSExtendedConfig" version_id="1000020" version_string="1.0.0"><![CDATA[StopForumSpam extended configuration]]></phrase>
+  <phrase title="option.svShowDateOfBirthInApprovalQueue" version_id="1110008" version_string="1.11.0 RC8"><![CDATA[Show date of birth in approval queue]]></phrase>
+  <phrase title="option.svSignupAbuseBlockingDnsQueryCacheTime" version_id="1090800" version_string="1.9.8"><![CDATA[External DNS API query cache time]]></phrase>
+  <phrase title="option.svSignupAbuseBlockingFullDeleteForGDPR" version_id="1030500" version_string="1.3.5"><![CDATA[Full delete for GDPR]]></phrase>
+  <phrase title="option.svSignupAbuseBlockingMaxMindApiKey" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[MaxMind GeoIP License Key]]></phrase>
+  <phrase title="option.svSignupAbuseBlockingMaxMindUpdate" version_id="1711096245" version_string="1.16.0 Beta 1"><![CDATA[Update MaxMind databases]]></phrase>
+  <phrase title="option.svSignupAbuseBlockingQueryCacheTime" version_id="1090800" version_string="1.9.8"><![CDATA[External HTTP API query cache time]]></phrase>
+  <phrase title="option.svSignupAbuseBlocking_nonAllowedEmailAction" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[Non-allowed email action]]></phrase>
+  <phrase title="option.svSignupAbuseBlocking_preregaction_moderate" version_id="1120300" version_string="1.12.3"><![CDATA[Writing before registering spam-moderate score]]></phrase>
+  <phrase title="option.svSignupAbuseBlocking_preregaction_reject" version_id="1120300" version_string="1.12.3"><![CDATA[Writing before registering spam-reject score]]></phrase>
+  <phrase title="option.svSignupAbuseSearchUrl" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[Domain search url]]></phrase>
+  <phrase title="option.svSignupAddToGroup" version_id="1710660669" version_string="1.16.0 Alpha 13"><![CDATA[Registration - add to group]]></phrase>
+  <phrase title="option.svSignupAddToGroupThreshold" version_id="1710660669" version_string="1.16.0 Alpha 13"><![CDATA[Add to group registration threshold]]></phrase>
+  <phrase title="option.svSignupApprovalQueueSkipAutoShrink" version_id="1090500" version_string="1.9.5"><![CDATA[Approval queue - skip click-to-shrink]]></phrase>
+  <phrase title="option.svSignupAsnBlockingConfig" version_id="1708898659" version_string="1.16.0 Alpha 10"><![CDATA[ASN blocking configuration]]></phrase>
+  <phrase title="option.svSignupAsnBlockingRule" version_id="1708698834" version_string="1.15.5"><![CDATA[ISP or ASN rules]]></phrase>
+  <phrase title="option.svSignupCountryBlockingRule" version_id="1708898659" version_string="1.16.0 Alpha 10"><![CDATA[Country rules]]></phrase>
+  <phrase title="option.svSignupEmailBlockingRule" version_id="1708898659" version_string="1.16.0 Alpha 10"><![CDATA[Email rules]]></phrase>
+  <phrase title="option.svSignupFastRegFill" version_id="1000020" version_string="1.0.0"><![CDATA[Minimum time for registration]]></phrase>
+  <phrase title="option.svSignupFastRegFillScore" version_id="1000020" version_string="1.0.0"><![CDATA[Minimum time for registration score]]></phrase>
+  <phrase title="option.svSignupGeoIPConfig" version_id="1000020" version_string="1.0.0"><![CDATA[Geo IP Configuration]]></phrase>
+  <phrase title="option.svSignupGetIpIntelRule" version_id="1050001" version_string="1.5.0"><![CDATA[Get IP Intel DBL]]></phrase>
+  <phrase title="option.svSignupHostnameBlockingRule" version_id="1708898659" version_string="1.16.0 Alpha 10"><![CDATA[Hostname rules]]></phrase>
+  <phrase title="option.svSignupLanguageBlockingRule" version_id="1708898659" version_string="1.16.0 Alpha 10"><![CDATA[Country language rules]]></phrase>
+  <phrase title="option.svSignupLogsOnProfileTab" version_id="1020100" version_string="1.2.1"><![CDATA[Show user multiple account records on user profile tab]]></phrase>
+  <phrase title="option.svSignupModerateScoreThreshold" version_id="1000020" version_string="1.0.0"><![CDATA[Moderate registration score threshold]]></phrase>
+  <phrase title="option.svSignupNoJsScore" version_id="1000020" version_string="1.0.0"><![CDATA[Javascript disabled score]]></phrase>
+  <phrase title="option.svSignupOpenPortBlockingRule" version_id="1708898659" version_string="1.16.0 Alpha 10"><![CDATA[Open TCP port scan rules]]></phrase>
+  <phrase title="option.svSignupOpenPortScanEnable" version_id="1706784791" version_string="1.15.0 RC2"><![CDATA[Enable open port scan feature]]></phrase>
+  <phrase title="option.svSignupOpenPortScanProxy" version_id="1050000" version_string="1.5.0"><![CDATA[Open TCP port scan proxy]]></phrase>
+  <phrase title="option.svSignupRejectScoreThreshold" version_id="1000020" version_string="1.0.0"><![CDATA[Reject registration score threshold]]></phrase>
+  <phrase title="option.svSignupThrottleTypes" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Signup throttling types]]></phrase>
+  <phrase title="option.svSignupThrottling" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Enable signup throttling]]></phrase>
+  <phrase title="option.svSignupThrottlingCutOff" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Signup throttling cut-off behavior]]></phrase>
+  <phrase title="option.svSignupThrottlingWindow" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Signup throttling window]]></phrase>
+  <phrase title="option.svSignupTimezoneBlockingRule" version_id="1708898659" version_string="1.16.0 Alpha 10"><![CDATA[Country timezone rules]]></phrase>
+  <phrase title="option.svSignupTorBlockingConfig" version_id="1000020" version_string="1.0.0"><![CDATA[Tor Detection config]]></phrase>
+  <phrase title="option.svSignupUnknownLanguageRule" version_id="1110000" version_string="1.11.0 RC0"><![CDATA[Country language - Unknown]]></phrase>
+  <phrase title="option.svSignupUnknownLanguageScoreOnce" version_id="1110200" version_string="1.11.2"><![CDATA[Only score unknown language once]]></phrase>
+  <phrase title="option.svSignupUnknownTimezoneRule" version_id="1110000" version_string="1.11.0 RC0"><![CDATA[Country timezone - Unknown]]></phrase>
+  <phrase title="option.svSignupUsernameBlockingRule" version_id="1708898659" version_string="1.16.0 Alpha 10"><![CDATA[Username rules]]></phrase>
+  <phrase title="option.svSkipSavingRejectedUsersOnSignup" version_id="1030100" version_string="1.3.1"><![CDATA[Do not save users rejected on signup]]></phrase>
+  <phrase title="option.svSockDedupeFilter" version_id="1710660669" version_string="1.16.0 Alpha 13"><![CDATA[Multi-account dedupe filter]]></phrase>
+  <phrase title="option.svSockSignupAccountCookie" version_id="1000020" version_string="1.0.0"><![CDATA[Cookie Name]]></phrase>
+  <phrase title="option.svSockSignupAccountCookieLifeSpan" version_id="1000020" version_string="1.0.0"><![CDATA[Cookie Lifespan]]></phrase>
+  <phrase title="option.svSockSignupCheckCookie" version_id="1000020" version_string="1.0.0"><![CDATA[Check cookie]]></phrase>
+  <phrase title="option.svSockSignupCheckDefaultConvMsg" version_id="1710660669" version_string="1.16.0 Alpha 13"><![CDATA[Default multi-account conversation message]]></phrase>
+  <phrase title="option.svSockSignupCheckDefaultConvTitle" version_id="1710660669" version_string="1.16.0 Alpha 13"><![CDATA[Default multi-account conversation title]]></phrase>
+  <phrase title="option.svSockSignupCheckDupeReports" version_id="1710660669" version_string="1.16.0 Alpha 13"><![CDATA[Permit duplicate multi-account report]]></phrase>
+  <phrase title="option.svSockSignupCheckIpAllowedList" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[IP allowed-list]]></phrase>
+  <phrase title="option.svSockSignupCheckMatchingIps" version_id="1000020" version_string="1.0.0"><![CDATA[IP Checking]]></phrase>
+  <phrase title="option.svSockSignupCheckRegMode" version_id="1130700" version_string="1.13.7"><![CDATA[Multi-account registration mode - general]]></phrase>
+  <phrase title="option.svSockSignupCheckRegModeGroup" version_id="1130700" version_string="1.13.7"><![CDATA[Multi-account registration mode - specific]]></phrase>
+  <phrase title="option.svSockSignupCheckRegModeGroupIds" version_id="1130700" version_string="1.13.7"><![CDATA[Multi-account registration mode - specific groups]]></phrase>
+  <phrase title="option.svSockSignupCheckRegModePerms" version_id="1130700" version_string="1.13.7"><![CDATA[Multi-account registration mode - specific permissions]]></phrase>
+  <phrase title="option.svSockSignupCheckReport" version_id="1000020" version_string="1.0.0"><![CDATA[Start report]]></phrase>
+  <phrase title="option.svSockSignupCheckReportConv" version_id="1710660669" version_string="1.16.0 Alpha 13"><![CDATA[Create multi-account notification conversation]]></phrase>
+  <phrase title="option.svSockSignupCheckReportConvTo" version_id="1710660669" version_string="1.16.0 Alpha 13"><![CDATA[Recipients for multi-account notifications]]></phrase>
+  <phrase title="option.svSockSignupCheckReportForum" version_id="1710660669" version_string="1.16.0 Alpha 13"><![CDATA[Forum for multi-account notifications]]></phrase>
+  <phrase title="option.svSockSignupCheckReportThread" version_id="1710660669" version_string="1.16.0 Alpha 13"><![CDATA[Create multi-account notification thread]]></phrase>
+  <phrase title="option.svSockSignupCheckReportingUser" version_id="1708698834" version_string="1.15.5"><![CDATA[Multi-account report user]]></phrase>
+  <phrase title="option.svSockSignupCheckShowMethods" version_id="1710660669" version_string="1.16.0 Alpha 13"><![CDATA[Show multi-account detection methods]]></phrase>
+  <phrase title="option.svSockSignupCookieFormat" version_id="1000020" version_string="1.0.0"><![CDATA[Legacy Cookie format]]></phrase>
+  <phrase title="option.svSockSignupIncludeRawInfo" version_id="1001100" version_string="1.0.11"><![CDATA[Include raw information into reported content]]></phrase>
+  <phrase title="option.svSpamCheckModeratedPosts" version_id="1030100" version_string="1.3.1"><![CDATA[Spam check moderated posts]]></phrase>
+  <phrase title="option.svTimezoneCheckActionOnNotMatch" version_id="1110000" version_string="1.11.0 RC0"><![CDATA[Timezone content spam check action]]></phrase>
+  <phrase title="option_explain.svAllowBannedLogout" version_id="1000020" version_string="1.0.0"><![CDATA[Allow banned users to logout to preserve the tracking cookie]]></phrase>
+  <phrase title="option_explain.svAllowRejectedLogout" version_id="1090400" version_string="1.9.4"><![CDATA[Allow rejected users to logout to preserve the tracking cookie]]></phrase>
+  <phrase title="option_explain.svAlwaysSockCheckBanned" version_id="1000020" version_string="1.0.0"><![CDATA[If enabled, skips the bypass permission check for banned users (recommended)]]></phrase>
+  <phrase title="option_explain.svAsnCheckActionOnNotMatch" version_id="1721375746" version_string="1.16.5"><![CDATA[On spam checking content, the action if the ASN (aka ISP) is not identical between the registration and the spam checked context.<br/>
+If ASN resolving fails, then content will not be moderated or rejected by the ASN check.]]></phrase>
+  <phrase title="option_explain.svAsnInfoUrl" version_id="1090800" version_string="1.9.8"><![CDATA[Specify a URL to be used for requesting more information about an <a href="https://en.wikipedia.org/wiki/Autonomous_system_%28Internet%29">AS Number</a>. The URL must include <strong>{asn}</strong>, which will be replaced with the actual ASN.]]></phrase>
+  <phrase title="option_explain.svGeoIpCheckActionOnNotMatch" version_id="1721375746" version_string="1.16.5"><![CDATA[On spam checking content, the action if the GeoIp (aka Country) is not identical between the registration and the spam checked context.<br/>
+If GeoIp resolving fails, then content will not be moderated or rejected by the GeoIp check.]]></phrase>
+  <phrase title="option_explain.svKnownSockUserGroupId" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Members of this group are marked as known multi-accounts in the multi-account list]]></phrase>
+  <phrase title="option_explain.svLanguageCheckActionOnNotMatch" version_id="1110000" version_string="1.11.0 RC0"><![CDATA[On spam checking content, the action if the browser reported language is a strict subset between the registration and the spam checked context]]></phrase>
+  <phrase title="option_explain.svLinkSpamCheckerAllowedList" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[Domains that can be accepted. This is not a URL!<br/>
+Enter one phrase per line. Each line should be a valid domain fragment ie <i>com</i>, <i>example.com</i>]]></phrase>
+  <phrase title="option_explain.svLinkSpamCheckerDefaultAction" version_id="1070003" version_string="1.7.0 Alpha 2"><![CDATA[Action to take if content contains urls, images or emails (normal posting)]]></phrase>
+  <phrase title="option_explain.svLinkSpamCheckerDefaultActionByContentType" version_id="1090800" version_string="1.9.8"><![CDATA[Action to take if content contains urls, images or emails (normal posting), by content-type.<br>
+Not all content types are spam-checked!]]></phrase>
+  <phrase title="option_explain.svLinkSpamCheckerModerateList" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[Domains that should be sent to the approval queue. This is not a URL!<br/>
+Enter one phrase per line. Each line should be a valid domain fragment ie <i>com</i>, <i>example.com</i>]]></phrase>
+  <phrase title="option_explain.svLinkSpamCheckerRegistrationDefaultAction" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[Action to take if user profile fields (including custom fields) contain urls, images or email addresses at registration]]></phrase>
+  <phrase title="option_explain.svLinkSpamCheckerRejectList" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[Domains that should be rejected as spam. This is not a URL!<br/>
+Enter one phrase per line. Each line should be a valid domain fragment ie <i>com</i>, <i>example.com</i>]]></phrase>
+  <phrase title="option_explain.svLinkSpamCheckerStructuredTextTypes" version_id="1120100" version_string="1.12.1"><![CDATA[A number of content types are "structured text" instead of bb-code, which requires additional processing to detect URL usage<br/>
+Content types can be discovered from the 'spam trigger log' and require the raw string.<br/>
+Enter one content type per line.]]></phrase>
+  <phrase title="option_explain.svLogReportReopenReason" version_id="1060601" version_string="1.6.6"><![CDATA[]]></phrase>
+  <phrase title="option_explain.svLoginFloodLimit" version_id="1000020" version_string="1.0.0"><![CDATA[Helps rate limit how quickly users can switch account. 0 to disable]]></phrase>
+  <phrase title="option_explain.svMaxMultiAccountGraphExpansions" version_id="1713965194" version_string="1.16.0 Beta 2"><![CDATA[The multiple account data is stored in a graph, but when displaying a list it is projected into a linear list. <br/>Due to not requiring MySQL 8+ or Mariadb 10.2.1+, this requires multiple queries<br/>
+0 to disbale.]]></phrase>
+  <phrase title="option_explain.svProjectHoneyPotExtendedConfig" version_id="1000009" version_string="1.0.0 Alpha 9"><![CDATA[Extra rules to inject into how XenForo handles Project Honey Pot responses]]></phrase>
+  <phrase title="option_explain.svRegSpamPhrases" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[When any of these phrases are detected during user registration, the action below will be taken. Enter one phrase per line. You may use a * as a wild card to match any words. If you start the line with /, the line will be treated as a regular expression (example: /test/i).]]></phrase>
+  <phrase title="option_explain.svSADAB_requestWebsiteOnSignup" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[When checked, guests will be shown an optional field to enter website.]]></phrase>
+  <phrase title="option_explain.svSFSExtendedConfig" version_id="1000020" version_string="1.0.0"><![CDATA[Extra rules to inject into how XenForo handles StopForumSpam responses]]></phrase>
+  <phrase title="option_explain.svShowDateOfBirthInApprovalQueue" version_id="1110008" version_string="1.11.0 RC8"><![CDATA[]]></phrase>
+  <phrase title="option_explain.svSignupAbuseBlockingDnsQueryCacheTime" version_id="1090800" version_string="1.9.8"><![CDATA[Time in minutes to cache responses for external queries for DNS lookups<br/>
+0 to disable, <b>not recommended</b>]]></phrase>
+  <phrase title="option_explain.svSignupAbuseBlockingFullDeleteForGDPR" version_id="1030500" version_string="1.3.5"><![CDATA[When a user is deleted, this will purge all multiple-account records instead of leaving tracking records to detect possible multiple accounts]]></phrase>
+  <phrase title="option_explain.svSignupAbuseBlockingMaxMindApiKey" version_id="1710648294" version_string="1.16.0 Alpha 13"><![CDATA[In order to keep your geolocation database up to date, you need to <a href="https://www.maxmind.com/en/geolite2/signup" target="_blank">sign up for an account</a> and set a password, then <a href="https://www.maxmind.com/en/accounts/current/license-key" target="_blank">generate a license key</a> and fill that out here.<br/>
+<p>If <a href="https://www.dragonbyte-tech.com/store/dragonbyte-ecommerce.371/">DragonByte eCommerce</a> is installed and has a MaxMind key, that will be used if this option is not set</p>]]></phrase>
+  <phrase title="option_explain.svSignupAbuseBlockingMaxMindUpdate" version_id="1711096245" version_string="1.16.0 Beta 1"><![CDATA[Even if disabled, the following MaxMind database files will still be read:
+<ul>
+<li>internal_data/code_cache/svSignupAbuseBlocking/GeoLite2-Country.mmdb</li>
+<li>internal_data/code_cache/svSignupAbuseBlocking/GeoLite2-ASN.mmdb</li>
+</ul>]]></phrase>
+  <phrase title="option_explain.svSignupAbuseBlockingQueryCacheTime" version_id="1080300" version_string="1.8.3"><![CDATA[Time in minutes to cache responses for external queries for ASN/GeoIP lookups<br/>
+0 to disable, <b>not recommended</b>]]></phrase>
+  <phrase title="option_explain.svSignupAbuseBlocking_nonAllowedEmailAction" version_id="1721820637" version_string="1.16.6"><![CDATA[aka "unknown email domain"]]></phrase>
+  <phrase title="option_explain.svSignupAbuseBlocking_preregaction_moderate" version_id="1120300" version_string="1.12.3"><![CDATA[]]></phrase>
+  <phrase title="option_explain.svSignupAbuseBlocking_preregaction_reject" version_id="1120300" version_string="1.12.3"><![CDATA[]]></phrase>
+  <phrase title="option_explain.svSignupAbuseSearchUrl" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[Specify a URL to be used for requesting more information about a domain. The URL must include {url}, which will be replaced with the actual domain]]></phrase>
+  <phrase title="option_explain.svSignupAddToGroup" version_id="1050001" version_string="1.5.0"><![CDATA[The group to add to accounts for the "Add to group threshold" option]]></phrase>
+  <phrase title="option_explain.svSignupAddToGroupThreshold" version_id="1060000" version_string="1.6.0"><![CDATA[On signup, if the total score is above this, add the given usergroup to the account
+0 to disable.<br/>
+Stacks with moderate or reject thresholds]]></phrase>
+  <phrase title="option_explain.svSignupApprovalQueueSkipAutoShrink" version_id="1754653656" version_string="1.17.0"><![CDATA[For XF2.2+]]></phrase>
+  <phrase title="option_explain.svSignupAsnBlockingConfig" version_id="1708698834" version_string="1.15.5"><![CDATA[Rather than blocking by IP, this implements blocking/scoring by <a href="https://en.wikipedia.org/wiki/Autonomous_system_(Internet)">ASN</a>. This allows all IPv4 or IPv6 addresses for a give ISP to be affected.<br/>ISPs will often have multiple ASNs.<br/>
+<br/>
+ASN-to-IP is not a reliable Geo location service!]]></phrase>
+  <phrase title="option_explain.svSignupAsnBlockingRule" version_id="1708898659" version_string="1.16.0 Alpha 10"><![CDATA[One entry per line. Format: <i>score|ASN</I> or <i>score|ORG NAME</I><br />
+Wildcards * and ? are supported<br />
+<i>score</i> can be; numerical, reject, moderate, addToGroup<br />
+Example:  <I>+3|OVH</I> or <I>+3|16276</I><br/>
+Stops on the first  match]]></phrase>
+  <phrase title="option_explain.svSignupCountryBlockingRule" version_id="1050001" version_string="1.5.0"><![CDATA[One entry per line. Format: score|two-letter country code.<br />
+Wildcards * and ? are supported<br />
+<i>score</i> can be; numerical, reject, moderate, addToGroup<br />
+Example: +1|CN]]></phrase>
+  <phrase title="option_explain.svSignupEmailBlockingRule" version_id="1050001" version_string="1.5.0"><![CDATA[One entry per line. Format: score|matchtext.<br />
+Wildcards * and ? are supported<br />
+<i>score</i> can be; numerical, reject, moderate, addToGroup<br />
+Example: +1|*@outlook.com]]></phrase>
+  <phrase title="option_explain.svSignupFastRegFill" version_id="1000020" version_string="1.0.0"><![CDATA[Value in seconds. Requires JavaScript enabled in user's browser.]]></phrase>
+  <phrase title="option_explain.svSignupFastRegFillScore" version_id="1000020" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.svSignupGeoIPConfig" version_id="1000020" version_string="1.0.0"><![CDATA[The GeoIP service to resolve the IP to a country.]]></phrase>
+  <phrase title="option_explain.svSignupGetIpIntelRule" version_id="1050001" version_string="1.5.0"><![CDATA[Support for <a href="https://getipintel.net/">getipintel.net</a> VPN/proxy detection service]]></phrase>
+  <phrase title="option_explain.svSignupHostnameBlockingRule" version_id="1050001" version_string="1.5.0"><![CDATA[One entry per line. Format: <i>score|matchtext</I>.<br />
+Wildcards * and ? are supported<br />
+<i>score</i> can be; numerical, reject, moderate, addToGroup<br />
+<b>Warning:</b> This queries servers which may be end-user controlled, and can revel the server IP]]></phrase>
+  <phrase title="option_explain.svSignupLanguageBlockingRule" version_id="1754653656" version_string="1.17.0"><![CDATA[One entry per line. Format: <i>score|country-languageCode</I><br />
+Wildcards * and ? are supported<br />
+<i>score</i> can be; numerical, reject, moderate, addToGroup<br />
+Example: <I>0|GB-en-US</I> or <I>reject|*-ru</I><br/>
+<b>Warning:</b> This depends on the browser presented language, and may not be accurate.]]></phrase>
+  <phrase title="option_explain.svSignupLogsOnProfileTab" version_id="1010600" version_string="1.1.6"><![CDATA[]]></phrase>
+  <phrase title="option_explain.svSignupModerateScoreThreshold" version_id="1000020" version_string="1.0.0"><![CDATA[On signup, if the total score is above this, the account is put into the approval queue.<br />
+0 to disable.]]></phrase>
+  <phrase title="option_explain.svSignupNoJsScore" version_id="1000020" version_string="1.0.0"><![CDATA[0 to disable]]></phrase>
+  <phrase title="option_explain.svSignupOpenPortBlockingRule" version_id="1050001" version_string="1.5.0"><![CDATA[One entry per line. Format: <i>score|port name or number</I><br />
+<i>score</i> can be; numerical, reject, moderate, addToGroup<br />
+Example: <I>+1|http</I> or <I>+1|1080</I><br/>
+Can use well known port names.<br/>
+<b>Warning:</b> This directly queries the end-user, and can revel the server IP]]></phrase>
+  <phrase title="option_explain.svSignupOpenPortScanEnable" version_id="1706784791" version_string="1.15.0 RC2"><![CDATA[Allow disabling the entire port-scan feature]]></phrase>
+  <phrase title="option_explain.svSignupOpenPortScanProxy" version_id="1050000" version_string="1.5.0"><![CDATA[An absolute URL to a script which accepts via get/post arguments an ip & port set to scan. An php implementation is provided with the add-on<br/>
+<br/>
+Example URL;<br/>
+<i>http://example.com/port_scanner.php?ip=127.0.0.1&ports=22,80,443&timeout=1.5</i><br/>
+Example return results (json list);<br/>
+<i>[80,443]</i>]]></phrase>
+  <phrase title="option_explain.svSignupRejectScoreThreshold" version_id="1000018" version_string="1.0.0 Beta 4"><![CDATA[On signup, if the total score is above this, the account is rejected.<br/>
+0 to disable.]]></phrase>
+  <phrase title="option_explain.svSignupThrottleTypes" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[]]></phrase>
+  <phrase title="option_explain.svSignupThrottling" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[]]></phrase>
+  <phrase title="option_explain.svSignupThrottlingCutOff" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[]]></phrase>
+  <phrase title="option_explain.svSignupThrottlingWindow" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[The interval to check for signup attempts to determine if throttling should be applied]]></phrase>
+  <phrase title="option_explain.svSignupTimezoneBlockingRule" version_id="1754653656" version_string="1.17.0"><![CDATA[One entry per line. Format: <i>score|country-timezone</I><br />
+Wildcards * and ? are supported<br />
+<i>score</i> can be; numerical, reject, moderate, addToGroup<br />
+Example: <I>0|US-America/Los_Angeles</I> or <I>reject|US-africa/*</I><br/>
+<b>Warning:</b> This depends on the browser presented timezone, and may not be accurate.]]></phrase>
+  <phrase title="option_explain.svSignupTorBlockingConfig" version_id="1000020" version_string="1.0.0"><![CDATA[Queries either the Tor network or CloudFlare to determine if a connection is from a Tor exit node]]></phrase>
+  <phrase title="option_explain.svSignupUnknownLanguageRule" version_id="1101000" version_string="1.10.10"><![CDATA[Helpful for detecting VPNs based on browser's reported language-set to match the IP's geo-located country.<br/>
+It is not recommend to reject based on this value.]]></phrase>
+  <phrase title="option_explain.svSignupUnknownLanguageScoreOnce" version_id="1110200" version_string="1.11.2"><![CDATA[When enabled, only one unknown score is added. The other unknown languages are given a score of zero.]]></phrase>
+  <phrase title="option_explain.svSignupUnknownTimezoneRule" version_id="1101000" version_string="1.10.10"><![CDATA[Helpful for detecting VPNs based on browser's reported timezone to match the IP's geo-located country.<br/>
+It is not recommend to reject based on this value.]]></phrase>
+  <phrase title="option_explain.svSignupUsernameBlockingRule" version_id="1050001" version_string="1.5.0"><![CDATA[One entry per line. Format: score|matchtext.<br />
+Wildcards * and ? are supported<br />
+<i>score</i> can be; numerical, reject, moderate, addToGroup<br />
+Example: +1|*free*]]></phrase>
+  <phrase title="option_explain.svSkipSavingRejectedUsersOnSignup" version_id="1030100" version_string="1.3.1"><![CDATA[]]></phrase>
+  <phrase title="option_explain.svSockDedupeFilter" version_id="1000020" version_string="1.0.0"><![CDATA[Strategies to avoid superfluous bumping of reports]]></phrase>
+  <phrase title="option_explain.svSockSignupAccountCookie" version_id="1000020" version_string="1.0.0"><![CDATA[Cookie used to detect multiple accounts from the same browser and device
+<i>This will not change existing cookies!</i>]]></phrase>
+  <phrase title="option_explain.svSockSignupAccountCookieLifeSpan" version_id="1000020" version_string="1.0.0"><![CDATA[The Lifespan of the cookie in months.]]></phrase>
+  <phrase title="option_explain.svSockSignupCheckCookie" version_id="1000020" version_string="1.0.0"><![CDATA[Use a long lasting cookie to catch low-hanging fruit for multiple account users]]></phrase>
+  <phrase title="option_explain.svSockSignupCheckDefaultConvMsg" version_id="1000020" version_string="1.0.0"><![CDATA[Warning passed via URL, must be < 800 characters!]]></phrase>
+  <phrase title="option_explain.svSockSignupCheckDefaultConvTitle" version_id="1710660669" version_string="1.16.0 Alpha 13"><![CDATA[In a multi-account detection notification, a quick link on the profile is added to to start a conversation with the user.]]></phrase>
+  <phrase title="option_explain.svSockSignupCheckDupeReports" version_id="1000020" version_string="1.0.0"><![CDATA[A list of states which are acceptable for duplicate reports to be raised.]]></phrase>
+  <phrase title="option_explain.svSockSignupCheckIpAllowedList" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[IP's to exclude from IP detection.<br/><br/>
+You may enter a partial IP address (v4 or v6 format). Partial IPv4 addresses can be entered in the form of 192.168.* or 192.168.1.1/16. Partial IPv6 addresses may be entered in the form of 2001:db8::/32.]]></phrase>
+  <phrase title="option_explain.svSockSignupCheckMatchingIps" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Check IP's upto this many minutes old.<br/>
+IP matches are considered a low quality signal and will not trigger a multiple account match by themselves.]]></phrase>
+  <phrase title="option_explain.svSockSignupCheckRegMode" version_id="1000020" version_string="1.0.0"><![CDATA[The action to take if an alternative account has multiple accounts, that are not banned or a member of a specific group.]]></phrase>
+  <phrase title="option_explain.svSockSignupCheckRegModeGroup" version_id="1130700" version_string="1.13.7"><![CDATA[The action to take if an alternative account has multiple accounts that are banned or a member of a specific group, or has specific permissions]]></phrase>
+  <phrase title="option_explain.svSockSignupCheckRegModeGroupIds" version_id="1130700" version_string="1.13.7"><![CDATA[On registration, group membership checks will trigger the "Multi-account registration mode - specific" action.<br/>
+Comma separated list of group ids]]></phrase>
+  <phrase title="option_explain.svSockSignupCheckRegModePerms" version_id="1130700" version_string="1.13.7"><![CDATA[On registration, having the specific permissions will trigger the "Multi-account registration mode - specific" action.<br/><br/>
+One entry per line. Format: <i>"Permission group":"Permission ID:Allow/Deny/*"</i><br/>
+Permission group/id are defined under "Development =>permissions"<br/>
+Special case: <i>*</i>, for any specific permissions granted to a user<br/>
+Example <i>general:view:deny</i>]]></phrase>
+  <phrase title="option_explain.svSockSignupCheckReport" version_id="1000020" version_string="1.0.0"><![CDATA[If checked, a report will be created in the reported items list.]]></phrase>
+  <phrase title="option_explain.svSockSignupCheckReportConv" version_id="1710660669" version_string="1.16.0 Alpha 13"><![CDATA[If enabled, a conversation will be sent if an multiple account is detected<br/>
+<br/>
+This requires the free <a href="https://atelieraphelion.com/products/multiple-account-to-conversation.69/">Multiple Account To Conversation</a> add-on.]]></phrase>
+  <phrase title="option_explain.svSockSignupCheckReportConvTo" version_id="1000020" version_string="1.0.0"><![CDATA[A list of users to receive a multiple account report conversation.]]></phrase>
+  <phrase title="option_explain.svSockSignupCheckReportForum" version_id="1000020" version_string="1.0.0"><![CDATA[The forum to create multiple account thread reports in.]]></phrase>
+  <phrase title="option_explain.svSockSignupCheckReportThread" version_id="1010600" version_string="1.1.6"><![CDATA[If enabled, a thread will be created when multiple accounts are detected.<br/>
+<br/>
+This requires the free <a href="https://atelieraphelion.com/products/multiple-account-to-thread.68/">Multiple Account To Thread</a> add-on.]]></phrase>
+  <phrase title="option_explain.svSockSignupCheckReportingUser" version_id="1000020" version_string="1.0.0"><![CDATA[The user(and language) to create notifications with. This is required.]]></phrase>
+  <phrase title="option_explain.svSockSignupCheckShowMethods" version_id="1000020" version_string="1.0.0"><![CDATA[Enable reporting of the exact detection method used to the front-end. Changing this is not retroactive.]]></phrase>
+  <phrase title="option_explain.svSockSignupCookieFormat" version_id="1000020" version_string="1.0.0"><![CDATA[Backwards compatibility support for older XF1 add-ons]]></phrase>
+  <phrase title="option_explain.svSockSignupIncludeRawInfo" version_id="1001100" version_string="1.0.11"><![CDATA[Warning; raw information is not permission checked! And is reliant on the thread not being readable by users.<br/>
+Used to expose the information to search]]></phrase>
+  <phrase title="option_explain.svSpamCheckModeratedPosts" version_id="1030100" version_string="1.3.1"><![CDATA[By default, XF does not spam-check posts which are moderated by the "Moderate replies posted in this forum" or "Moderate new threads posted in this forum" option.]]></phrase>
+  <phrase title="option_explain.svTimezoneCheckActionOnNotMatch" version_id="1110000" version_string="1.11.0 RC0"><![CDATA[On spam checking content, the action if the browser reported timezone is not identical between the registration and the spam checked context]]></phrase>
+  <phrase title="option_group.svSignupAbuseBlocking" version_id="1000700" version_string="1.0.7"><![CDATA[Signup abuse detection and blocking (aka spam)]]></phrase>
+  <phrase title="option_group.svSignupThrottling" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Signup throttling]]></phrase>
+  <phrase title="option_group_description.svSignupAbuseBlocking" version_id="1000020" version_string="1.0.0"><![CDATA[Options to control how signup abuse is detected and blocked]]></phrase>
+  <phrase title="option_group_description.svSignupThrottling" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[]]></phrase>
+  <phrase title="permission.forum_svSignup_limitRepliesDay" version_id="1130001" version_string="1.13.0"><![CDATA[[SignupAbuse] Limit user to replies per day]]></phrase>
+  <phrase title="permission.general_svSignup_approve_email" version_id="1070006" version_string="1.7.0 Beta 1"><![CDATA[[SignupAbuse] Approving email domains]]></phrase>
+  <phrase title="permission.general_svSignup_ban_asn" version_id="1070006" version_string="1.7.0 Beta 1"><![CDATA[[SignupAbuse] Banning ASN]]></phrase>
+  <phrase title="permission.general_svSignup_ban_email" version_id="1070006" version_string="1.7.0 Beta 1"><![CDATA[[SignupAbuse] Banning email domains]]></phrase>
+  <phrase title="permission.multipleAccountHandling_bypass" version_id="1000020" version_string="1.0.0"><![CDATA[Bypass multiple account checking]]></phrase>
+  <phrase title="permission.multipleAccountHandling_logAlerting" version_id="1000020" version_string="1.0.0"><![CDATA[Can enable / disable alerting for log]]></phrase>
+  <phrase title="permission.multipleAccountHandling_userAlerting" version_id="1000020" version_string="1.0.0"><![CDATA[Can enable / disable alerting for user]]></phrase>
+  <phrase title="permission.multipleAccountHandling_viewreport" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[View multiple account reports]]></phrase>
+  <phrase title="permission_interface.multipleAccountHandling" version_id="1000020" version_string="1.0.0"><![CDATA[Multiple account handling permissions]]></phrase>
+  <phrase title="svAntiSpamOption" version_id="1706754225" version_string="1.15.0 RC0"><![CDATA[Anti-spam option]]></phrase>
+  <phrase title="svAntiSpamOptions" version_id="1706754225" version_string="1.15.0 RC0"><![CDATA[Anti-spam options]]></phrase>
+  <phrase title="svRecentSeenSockEvent" version_id="1000020" version_string="1.0.0"><![CDATA[Skip bumping recently seen events]]></phrase>
+  <phrase title="svReportEss_legacy_cookie.legacy1" version_id="1707411129" version_string="1.16.0 Alpha 2"><![CDATA[Legacy format 1 (single user id)]]></phrase>
+  <phrase title="svReportEss_legacy_cookie.legacy2" version_id="1707411129" version_string="1.16.0 Alpha 2"><![CDATA[Legacy format 2 (comma separated list of user ids)]]></phrase>
+  <phrase title="svSADB_filter_by_details" version_id="1000007" version_string="1.0.0 Alpha 7"><![CDATA[Filter by details]]></phrase>
+  <phrase title="svSADB_filter_by_emails" version_id="1000008" version_string="1.0.0 Alpha 8"><![CDATA[Filter by emails]]></phrase>
+  <phrase title="svSADB_filter_by_users" version_id="1000007" version_string="1.0.0 Alpha 7"><![CDATA[Filter by users]]></phrase>
+  <phrase title="svSADB_registration_logs" version_id="1000007" version_string="1.0.0 Alpha 7"><![CDATA[Registration logs]]></phrase>
+  <phrase title="svSignupAbuseBlocking_allow_email_domain" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[Allow email domain]]></phrase>
+  <phrase title="svSignupAbuseBlocking_allowed_country_languages" version_id="1110000" version_string="1.11.0 RC0"><![CDATA[Country languages]]></phrase>
+  <phrase title="svSignupAbuseBlocking_allowed_country_timezones" version_id="1110000" version_string="1.11.0 RC0"><![CDATA[Country timezones]]></phrase>
+  <phrase title="svSignupAbuseBlocking_allowed_email_domains" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[Allowed email domains]]></phrase>
+  <phrase title="svSignupAbuseBlocking_an_error_occurred_resolving_the_ip" version_id="1721375746" version_string="1.16.5"><![CDATA[An error occured when resolving the ip: {ip}]]></phrase>
+  <phrase title="svSignupAbuseBlocking_ban_asn" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[Ban ASN]]></phrase>
+  <phrase title="svSignupAbuseBlocking_ban_email_domain" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[Ban email domain]]></phrase>
+  <phrase title="svSignupAbuseBlocking_ban_users" version_id="1702623682" version_string="1.14.2"><![CDATA[Ban users]]></phrase>
+  <phrase title="svSignupAbuseBlocking_browser" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Browser]]></phrase>
+  <phrase title="svSignupAbuseBlocking_class_x_must_extend_abstract_csv_export_class" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[Class '{exportService}' must extend \SV\SignupAbuseBlocking\Service\AbstractCsvExport]]></phrase>
+  <phrase title="svSignupAbuseBlocking_create_date" version_id="1081300" version_string="1.8.13"><![CDATA[Create date]]></phrase>
+  <phrase title="svSignupAbuseBlocking_creator" version_id="1081300" version_string="1.8.13"><![CDATA[Creator]]></phrase>
+  <phrase title="svSignupAbuseBlocking_data_type.csv" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[CSV]]></phrase>
+  <phrase title="svSignupAbuseBlocking_data_type.xml" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[XML]]></phrase>
+  <phrase title="svSignupAbuseBlocking_detection_events" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Detection events]]></phrase>
+  <phrase title="svSignupAbuseBlocking_email_domain" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[Email domain]]></phrase>
+  <phrase title="svSignupAbuseBlocking_email_domain_to_allow" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[Email domain to allow]]></phrase>
+  <phrase title="svSignupAbuseBlocking_import_from_csv" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[Import from CSV]]></phrase>
+  <phrase title="svSignupAbuseBlocking_import_from_uploaded_csv_file" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[Import from uploaded CSV file]]></phrase>
+  <phrase title="svSignupAbuseBlocking_invalid_import_export_type_selected" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[Invalid import/export type selected.]]></phrase>
+  <phrase title="svSignupAbuseBlocking_invalid_ip" version_id="1721375746" version_string="1.16.5"><![CDATA[Invalid IP]]></phrase>
+  <phrase title="svSignupAbuseBlocking_last_login" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Last login]]></phrase>
+  <phrase title="svSignupAbuseBlocking_limited.limitRepliesDay" version_id="1130400" version_string="1.13.4"><![CDATA[Maximum number of posts ({perDayLimit}) in the last 24 hours has been reached.]]></phrase>
+  <phrase title="svSignupAbuseBlocking_local_ip" version_id="1721660452" version_string="1.16.5"><![CDATA[Non-public IPs can not be resolved]]></phrase>
+  <phrase title="svSignupAbuseBlocking_login_type" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Login type]]></phrase>
+  <phrase title="svSignupAbuseBlocking_login_type.login" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Login]]></phrase>
+  <phrase title="svSignupAbuseBlocking_login_type.login_admin" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Admin login]]></phrase>
+  <phrase title="svSignupAbuseBlocking_login_type.login_tfa" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Login (tfa required)]]></phrase>
+  <phrase title="svSignupAbuseBlocking_login_type.login_tfa_complete" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Login (tfa completed)]]></phrase>
+  <phrase title="svSignupAbuseBlocking_login_type.login_upgrade" version_id="1710448788" version_string="1.16.0 Alpha 11"><![CDATA[XF Upgrade]]></phrase>
+  <phrase title="svSignupAbuseBlocking_login_type.register" version_id="1710448788" version_string="1.16.0 Alpha 11"><![CDATA[Register]]></phrase>
+  <phrase title="svSignupAbuseBlocking_login_type.validate_password" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Validate password]]></phrase>
+  <phrase title="svSignupAbuseBlocking_matches" version_id="1711438455" version_string="1.16.0 Beta 2"><![CDATA[Matches]]></phrase>
+  <phrase title="svSignupAbuseBlocking_multi_account_group_member" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Known sock]]></phrase>
+  <phrase title="svSignupAbuseBlocking_multi_account_log_events" version_id="1713965194" version_string="1.16.0 Beta 2"><![CDATA[Events]]></phrase>
+  <phrase title="svSignupAbuseBlocking_multi_account_seen_header" version_id="1711438455" version_string="1.16.0 Beta 2"><![CDATA[Seen]]></phrase>
+  <phrase title="svSignupAbuseBlocking_no_asn_providers" version_id="1721375746" version_string="1.16.5"><![CDATA[No ASN providers configured]]></phrase>
+  <phrase title="svSignupAbuseBlocking_no_email_domains_have_been_allowed" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[No email domains have been allowed]]></phrase>
+  <phrase title="svSignupAbuseBlocking_no_email_domains_matching_your_filter_have_been_allowed" version_id="1090000" version_string="1.9.0"><![CDATA[No email domains matching your filter have been allowed.]]></phrase>
+  <phrase title="svSignupAbuseBlocking_no_geoip_providers" version_id="1721375746" version_string="1.16.5"><![CDATA[No GeoIp providers configured]]></phrase>
+  <phrase title="svSignupAbuseBlocking_please_provide_valid_csv_file" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[Please provide a valid CSV file.]]></phrase>
+  <phrase title="svSignupAbuseBlocking_rebuild_job_user_login" version_id="1710650486" version_string="1.16.0 Alpha 13"><![CDATA[User login]]></phrase>
+  <phrase title="svSignupAbuseBlocking_rejected_users_will_not_be_deleted_but_rejected" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[Rejected users will not be deleted but will be set to 'rejected'.]]></phrase>
+  <phrase title="svSignupAbuseBlocking_requireEmailConfirm" version_id="1070009" version_string="1.7.0"><![CDATA[User email is not confirmed]]></phrase>
+  <phrase title="svSignupAbuseBlocking_resolve_failed" version_id="1721375746" version_string="1.16.5"><![CDATA[Resolving failed]]></phrase>
+  <phrase title="svSignupAbuseBlocking_resolve_tor" version_id="1721660452" version_string="1.16.5"><![CDATA[tor]]></phrase>
+  <phrase title="svSignupAbuseBlocking_resolve_unknown" version_id="1721660452" version_string="1.16.5"><![CDATA[Unknown country]]></phrase>
+  <phrase title="svSignupAbuseBlocking_site_header_found" version_id="1721375746" version_string="1.16.5"><![CDATA[OK]]></phrase>
+  <phrase title="svSignupAbuseBlocking_site_header_not_found" version_id="1721375746" version_string="1.16.5"><![CDATA[Not found]]></phrase>
+  <phrase title="svSignupAbuseBlocking_test_checks.cloudflare" version_id="1721375746" version_string="1.16.5"><![CDATA[CloudFlare]]></phrase>
+  <phrase title="svSignupAbuseBlocking_test_checks.server" version_id="1721375746" version_string="1.16.5"><![CDATA[General site headers]]></phrase>
+  <phrase title="svSignupAbuseBlocking_test_results.asn" version_id="1721375746" version_string="1.16.5"><![CDATA[ASN]]></phrase>
+  <phrase title="svSignupAbuseBlocking_test_results.geoip" version_id="1721375746" version_string="1.16.5"><![CDATA[GeoIP]]></phrase>
+  <phrase title="svSignupAbuseBlocking_the_reason_for_reject_if_entered_will_be_displayed_when_they_next_log_in" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[The reason for rejection, if entered here, will be displayed when they next log in.]]></phrase>
+  <phrase title="svSignupAbuseBlocking_user_logins" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Logins by ip]]></phrase>
+  <phrase title="svSignupAbuseBlocking_user_registration_log" version_id="1000007" version_string="1.0.0 Alpha 7"><![CDATA[User registration log ]]></phrase>
+  <phrase title="svSignupAbuseBlocking_view_other_user" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Filter by]]></phrase>
+  <phrase title="svSignupBlocking_asn_ripe" version_id="1000020" version_string="1.0.0"><![CDATA[Use <a href="https://www.ripe.net/manage-ips-and-asns/db/support/documentation/ripe-database-documentation/updating-objects-in-the-ripe-database/6-1-restful-api">RIPE HTTP API</a> for ASN lookup]]></phrase>
+  <phrase title="svSignupBlocking_asn_ripe_explain" version_id="1000020" version_string="1.0.0"><![CDATA[Can be very slow]]></phrase>
+  <phrase title="svSignupBlocking_cloudflare_geoip" version_id="1000020" version_string="1.0.0"><![CDATA[Use <a href="https://support.cloudflare.com/hc/en-us/articles/200168236-What-does-Cloudflare-IP-Geolocation-do-">Cloudflare GeoIP</a>]]></phrase>
+  <phrase title="svSignupBlocking_cloudflare_geoip_explain" version_id="1000020" version_string="1.0.0"><![CDATA[Instead of querying the Tor network for exit nodes, Cloudflare is used instead.<br/> This <b>requires</b> the "IP Geolocation" feature to be turned on.<br/>This will parse the "HTTP_CF_IPCOUNTRY" header, and expects the host to secure this header so non-cloudflare connections can not set it.]]></phrase>
+  <phrase title="svSignupBlocking_cymru" version_id="1000020" version_string="1.0.0"><![CDATA[Use <a href="https://www.team-cymru.com/ip-asn-mapping#dns">Team Cymru DSN API</a> for ASN lookup]]></phrase>
+  <phrase title="svSignupBlocking_detection_date" version_id="1010600" version_string="1.1.6"><![CDATA[Detection date]]></phrase>
+  <phrase title="svSignupBlocking_getipintel_email" version_id="1050001" version_string="1.5.0"><![CDATA[Contact Email]]></phrase>
+  <phrase title="svSignupBlocking_getipintel_email_explain" version_id="1050001" version_string="1.5.0"><![CDATA[This <b>must</b> be a monitored email box for GetIPIntel to notify for issues or abuse.]]></phrase>
+  <phrase title="svSignupBlocking_getipintel_high_confidence_score" version_id="1050001" version_string="1.5.0"><![CDATA[High confidence score]]></phrase>
+  <phrase title="svSignupBlocking_getipintel_high_confidence_score_threshold" version_id="1050001" version_string="1.5.0"><![CDATA[High confidence threshold]]></phrase>
+  <phrase title="svSignupBlocking_getipintel_high_confidence_score_threshold_explain" version_id="1050001" version_string="1.5.0"><![CDATA[<a href="https://getipintel.net/free-proxy-vpn-tor-detection-api/#int_results">The confidence threshold</a> to take action, must be a value beteen 0.0 and 1.0 inclusive.]]></phrase>
+  <phrase title="svSignupBlocking_getipintel_low_confidence_score" version_id="1050001" version_string="1.5.0"><![CDATA[Low confidence score]]></phrase>
+  <phrase title="svSignupBlocking_getipintel_low_confidence_score_threshold" version_id="1050001" version_string="1.5.0"><![CDATA[Low confidence threshold]]></phrase>
+  <phrase title="svSignupBlocking_getipintel_low_confidence_score_threshold_explain" version_id="1050001" version_string="1.5.0"><![CDATA[<a href="https://getipintel.net/free-proxy-vpn-tor-detection-api/#int_results">The confidence threshold</a> to take action, must be a value beteen 0.0 and 1.0 inclusive.]]></phrase>
+  <phrase title="svSignupBlocking_getipintel_service_flags" version_id="1050001" version_string="1.5.0"><![CDATA[Service flags]]></phrase>
+  <phrase title="svSignupBlocking_getipintel_service_flags_explain" version_id="1050001" version_string="1.5.0"><![CDATA[Extra <a href="https://getipintel.net/free-proxy-vpn-tor-detection-api/#optional_settings">service level flags</a> when query for IP reputation]]></phrase>
+  <phrase title="svSignupBlocking_getipintel_url" version_id="1050001" version_string="1.5.0"><![CDATA[Service URL]]></phrase>
+  <phrase title="svSignupBlocking_getipintel_url_explain" version_id="1050001" version_string="1.5.0"><![CDATA[By default, the free service is a shared service with limits of 500 queries per day and 15 queries per minute. For a paid service; <a href="mailto:contact@getipintel.net">contact the provider</a>]]></phrase>
+  <phrase title="svSignupBlocking_honeypot_cutOff" version_id="1000020" version_string="1.0.0"><![CDATA[Report age cut-off]]></phrase>
+  <phrase title="svSignupBlocking_honeypot_score10to20" version_id="1000020" version_string="1.0.0"><![CDATA[Threat level 10% to 20% score]]></phrase>
+  <phrase title="svSignupBlocking_honeypot_score80to100" version_id="1000020" version_string="1.0.0"><![CDATA[Threat level 80% to 100% score]]></phrase>
+  <phrase title="svSignupBlocking_ipapi" version_id="1090800" version_string="1.9.8"><![CDATA[Use <a href="https://ip-api.com">ip-api.com</a>]]></phrase>
+  <phrase title="svSignupBlocking_ipapi_explain" version_id="1090800" version_string="1.9.8"><![CDATA[<a href="https://ip-api.com">ip-api.com</a> provides free geoip, over clear-text HTTP. But requires  a paid account  for HTTPS support and to access the IP to ASN feature.]]></phrase>
+  <phrase title="svSignupBlocking_ipregistry" version_id="1090800" version_string="1.9.8"><![CDATA[Use <a href="https://ipregistry.co">ipregistry.co</a>]]></phrase>
+  <phrase title="svSignupBlocking_ipregistry_explain" version_id="1090800" version_string="1.9.8"><![CDATA[<a href="https://ipregistry.co">ipregistry.co</a> requires an account, with a free tier and then requiring payment]]></phrase>
+  <phrase title="svSignupBlocking_ipstack" version_id="1090800" version_string="1.9.8"><![CDATA[Use <a href="https://ipstack.com">ipstack.com</a>]]></phrase>
+  <phrase title="svSignupBlocking_ipstack_explain" version_id="1090800" version_string="1.9.8"><![CDATA[<a href="https://ipstack.com">ipstack.com</a> requires an account (free or paid) for the geo-ip service and requires a paid service to access the IP to ASN feature.]]></phrase>
+  <phrase title="svSignupBlocking_maxMind_asn" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Use <a href="https://dev.maxmind.com/geoip/geolite2-free-geolocation-data">MaxMind GeoLite2 - ASN</a>]]></phrase>
+  <phrase title="svSignupBlocking_maxMind_asn_explain" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Requires a license key to be added to the "MaxMind GeoIP License Key" option]]></phrase>
+  <phrase title="svSignupBlocking_maxMind_geoip" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Use <a href="https://dev.maxmind.com/geoip/geolite2-free-geolocation-data">MaxMind GeoLite2 - GeoIP</a>]]></phrase>
+  <phrase title="svSignupBlocking_maxMind_geoip_explain" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Requires a license key to be added to the "MaxMind GeoIP License Key" option]]></phrase>
+  <phrase title="svSignupBlocking_paid_plan" version_id="1090800" version_string="1.9.8"><![CDATA[Paid plan]]></phrase>
+  <phrase title="svSignupBlocking_registration_spam_phrase_matched_x" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[Spam phrase matched ({phrase})]]></phrase>
+  <phrase title="svSignupBlocking_score" version_id="1000020" version_string="1.0.0"><![CDATA[Score]]></phrase>
+  <phrase title="svSignupBlocking_score.accept" version_id="1120200" version_string="1.12.2"><![CDATA[+0]]></phrase>
+  <phrase title="svSignupBlocking_score.addToGroup" version_id="1120200" version_string="1.12.2"><![CDATA[Add to group]]></phrase>
+  <phrase title="svSignupBlocking_score.moderate" version_id="1120200" version_string="1.12.2"><![CDATA[Moderated]]></phrase>
+  <phrase title="svSignupBlocking_score.none" version_id="1120200" version_string="1.12.2"><![CDATA[None]]></phrase>
+  <phrase title="svSignupBlocking_score.reject" version_id="1120200" version_string="1.12.2"><![CDATA[Rejected]]></phrase>
+  <phrase title="svSignupBlocking_sfs_score_email" version_id="1050000" version_string="1.5.0"><![CDATA[StopForumSpam Score; Email]]></phrase>
+  <phrase title="svSignupBlocking_sfs_score_ip" version_id="1050000" version_string="1.5.0"><![CDATA[StopForumSpam Score; IP]]></phrase>
+  <phrase title="svSignupBlocking_sfs_score_username" version_id="1050000" version_string="1.5.0"><![CDATA[StopForumSpam Score; Username]]></phrase>
+  <phrase title="svSignupBlocking_start_sock_conversation" version_id="1721820637" version_string="1.16.6"><![CDATA[Start conversation about multi-accounts]]></phrase>
+  <phrase title="svSignupBlocking_tor_score" version_id="1000020" version_string="1.0.0"><![CDATA[Tor exit node score]]></phrase>
+  <phrase title="svSignupBlocking_tor_serverIp" version_id="1000020" version_string="1.0.0"><![CDATA[Server IP]]></phrase>
+  <phrase title="svSignupBlocking_tor_serverIp_explain" version_id="1000020" version_string="1.0.0"><![CDATA[A comma seperated list of DNS/IP adddresses to use when checking for tor connections. If not set, the hostname of the site and the hostname of the request is used to automatically to lookup DNS/IPs.]]></phrase>
+  <phrase title="svSignupThrottling_cut_off_dynamic_max_value" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Max]]></phrase>
+  <phrase title="svSignupThrottling_cut_off_dynamic_min_value" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Min]]></phrase>
+  <phrase title="svSignupThrottling_cut_off_type.dynamic" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Dynamic rate]]></phrase>
+  <phrase title="svSignupThrottling_cut_off_type.dynamic_explain" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Based on previous (successful) signup history for the previous day averaged to the throttling window]]></phrase>
+  <phrase title="svSignupThrottling_cut_off_type.fixed" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Fixed rate]]></phrase>
+  <phrase title="svSignupThrottling_cut_off_type.fixed_explain" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[]]></phrase>
+  <phrase title="svSignupThrottling_data" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Data]]></phrase>
+  <phrase title="svSignupThrottling_domain" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Domain]]></phrase>
+  <phrase title="svSignupThrottling_no_signup_throttling_applied_recently" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Signup throttling has not been applied recently]]></phrase>
+  <phrase title="svSignupThrottling_recent_signup_throttling" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Recent signup throttling]]></phrase>
+  <phrase title="svSignupThrottling_type" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Throttling type]]></phrase>
+  <phrase title="svSignupThrottling_type.asn" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[ASN]]></phrase>
+  <phrase title="svSignupThrottling_type.country" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Country]]></phrase>
+  <phrase title="svSignupThrottling_type.ip_address" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Ip address]]></phrase>
+  <phrase title="svSockSignupCheckReportingUser_invalid_user" version_id="1711096245" version_string="1.16.0 Beta 1"><![CDATA[Multi-account report user requires a valid user]]></phrase>
+  <phrase title="sv_connection_profiling_active_options" version_id="1000020" version_string="1.0.0"><![CDATA[Connection Profiling - Active]]></phrase>
+  <phrase title="sv_connection_profiling_active_options_explain" version_id="1000020" version_string="1.0.0"><![CDATA[These are methods which interegate data that is potentially user controlled]]></phrase>
+  <phrase title="sv_connection_profiling_asn_options" version_id="1000020" version_string="1.0.0"><![CDATA[Connection profiling - ASN]]></phrase>
+  <phrase title="sv_connection_profiling_dbl_options" version_id="1000020" version_string="1.0.0"><![CDATA[Connection profiling - DBL]]></phrase>
+  <phrase title="sv_connection_profiling_passive_options" version_id="1000020" version_string="1.0.0"><![CDATA[Connection Profiling - Passive]]></phrase>
+  <phrase title="sv_content_spam_checking" version_id="1020600" version_string="1.2.6"><![CDATA[Content spam checking]]></phrase>
+  <phrase title="sv_ip_match_date_range" version_id="1000020" version_string="1.0.0"><![CDATA[Date range (minutes)]]></phrase>
+  <phrase title="sv_multi_account_report_reopen.report_state" version_id="1060601" version_string="1.6.6"><![CDATA[Report state "{state}" is permitted to re-open the report]]></phrase>
+  <phrase title="sv_multi_account_report_reopen.report_state_last" version_id="1060601" version_string="1.6.6"><![CDATA[Last report state transition "{state}" is permitted to re-open the report]]></phrase>
+  <phrase title="sv_multi_account_report_reopen.unknown_user" version_id="1070002" version_string="1.7.0"><![CDATA[Unknown user {userId} detected, re-opening report]]></phrase>
+  <phrase title="sv_multiple_account_action.emailLink" version_id="1110007" version_string="1.11.0 RC7"><![CDATA[Email link]]></phrase>
+  <phrase title="sv_multiple_account_action.legacy" version_id="1000020" version_string="1.0.0"><![CDATA[Legacy import]]></phrase>
+  <phrase title="sv_multiple_account_action.login" version_id="1000020" version_string="1.0.0"><![CDATA[Login]]></phrase>
+  <phrase title="sv_multiple_account_action.register" version_id="1000020" version_string="1.0.0"><![CDATA[Registration]]></phrase>
+  <phrase title="sv_multiple_account_alerting.log_disable" version_id="1000020" version_string="1.0.0"><![CDATA[Ignore for future events]]></phrase>
+  <phrase title="sv_multiple_account_alerting.log_enable" version_id="1000020" version_string="1.0.0"><![CDATA[Use for future events]]></phrase>
+  <phrase title="sv_multiple_account_alerting.user_disable" version_id="1000020" version_string="1.0.0"><![CDATA[Disable multi-account event reporting]]></phrase>
+  <phrase title="sv_multiple_account_alerting.user_enable" version_id="1000020" version_string="1.0.0"><![CDATA[Enable multi-account event reporting]]></phrase>
+  <phrase title="sv_multiple_account_detection_options" version_id="1000020" version_string="1.0.0"><![CDATA[Multi-account Detection]]></phrase>
+  <phrase title="sv_multiple_account_event_count" version_id="1000020" version_string="1.0.0"><![CDATA[{count} multiple account detection events]]></phrase>
+  <phrase title="sv_multiple_account_main_account" version_id="1000020" version_string="1.0.0"><![CDATA[Main account]]></phrase>
+  <phrase title="sv_multiple_account_method.apiToken" version_id="1706784791" version_string="1.15.0 RC2"><![CDATA[Api token]]></phrase>
+  <phrase title="sv_multiple_account_method.cookie" version_id="1000020" version_string="1.0.0"><![CDATA[Cookie]]></phrase>
+  <phrase title="sv_multiple_account_method.emailLink" version_id="1110007" version_string="1.11.0 RC7"><![CDATA[Shared email link]]></phrase>
+  <phrase title="sv_multiple_account_method.ip" version_id="1000020" version_string="1.0.0"><![CDATA[IP address: {ip}]]></phrase>
+  <phrase title="sv_multiple_account_method.legacy" version_id="1100500" version_string="1.10.5"><![CDATA[XF1 legacy cookie]]></phrase>
+  <phrase title="sv_multiple_account_method.userSwitch" version_id="1706784791" version_string="1.15.0 RC2"><![CDATA[User login switch]]></phrase>
+  <phrase title="sv_multiple_account_not_alerting" version_id="1000020" version_string="1.0.0"><![CDATA[Not alerting]]></phrase>
+  <phrase title="sv_multiple_account_report_options" version_id="1000020" version_string="1.0.0"><![CDATA[Multi-account Reporting]]></phrase>
+  <phrase title="sv_multiple_accounts" version_id="1000020" version_string="1.0.0"><![CDATA[Multiple accounts]]></phrase>
+  <phrase title="sv_multiple_accounts.report_subject" version_id="1000020" version_string="1.0.0"><![CDATA[{username} has {count} multiple accounts]]></phrase>
+  <phrase title="sv_multiple_accounts_detection_events" version_id="1709608633" version_string="1.16.0 Alpha 11"><![CDATA[Multiple account detection events]]></phrase>
+  <phrase title="sv_must_wait_x_seconds_before_attempting_to_login" version_id="1000020" version_string="1.0.0"><![CDATA[You must wait at least {count} seconds before attempting to login again.]]></phrase>
+  <phrase title="sv_no_multiple_accounts_logged" version_id="1000020" version_string="1.0.0"><![CDATA[No multiple accounts have been logged.]]></phrase>
+  <phrase title="sv_reg_log.add_to_group" version_id="1050001" version_string="1.5.0"><![CDATA[Added to group: {groupName}]]></phrase>
+  <phrase title="sv_reg_log.as_fail" version_id="1708898659" version_string="1.16.0 Alpha 10"><![CDATA[{score}. ASN matched: ASN {number}, {name}]]></phrase>
+  <phrase title="sv_reg_log.as_ok" version_id="1000020" version_string="1.0.0"><![CDATA[ASN {number}, {name}]]></phrase>
+  <phrase title="sv_reg_log.checking" version_id="1000020" version_string="1.0.0"><![CDATA[Checking: {username}, {email}, {ip}]]></phrase>
+  <phrase title="sv_reg_log.content_asn_not_match" version_id="1708698834" version_string="1.15.5"><![CDATA[Content ASN {contentAsn} does not match registration ASN {regAsn}]]></phrase>
+  <phrase title="sv_reg_log.content_geoip_not_match" version_id="1110000" version_string="1.11.0 RC0"><![CDATA[Content country {contentGeoIP} does not match registration country {regGeoIP}]]></phrase>
+  <phrase title="sv_reg_log.content_language_not_match" version_id="1110000" version_string="1.11.0 RC0"><![CDATA[Content language {contentLanguage} does not match registration language {regLanguage}]]></phrase>
+  <phrase title="sv_reg_log.content_timezone_not_match" version_id="1110000" version_string="1.11.0 RC0"><![CDATA[Content timezone {contentTimezone} does not match registration timezone {regTimezone}]]></phrase>
+  <phrase title="sv_reg_log.country_fail" version_id="1000020" version_string="1.0.0"><![CDATA[{score}. Country matched: {country}]]></phrase>
+  <phrase title="sv_reg_log.country_ok" version_id="1000020" version_string="1.0.0"><![CDATA[Country detected: {country}]]></phrase>
+  <phrase title="sv_reg_log.direct_rule_moderated" version_id="1000020" version_string="1.0.0"><![CDATA[Moderated. Direct rule selection]]></phrase>
+  <phrase title="sv_reg_log.direct_rule_posts_moderated" version_id="1000020" version_string="1.0.0"><![CDATA[New posts moderated. Direct rule selection]]></phrase>
+  <phrase title="sv_reg_log.direct_rule_reject" version_id="1000020" version_string="1.0.0"><![CDATA[Rejected. Direct rule selection]]></phrase>
+  <phrase title="sv_reg_log.email_domain_whitelist_accept" version_id="1070008" version_string="1.7.0"><![CDATA[{score}. Known email domain matched: <a href="{search}" target="_blank">{domain}</a>]]></phrase>
+  <phrase title="sv_reg_log.email_domain_whitelist_fail" version_id="1070008" version_string="1.7.0"><![CDATA[{score}. Unknown email domain failed: <a href="{search}" target="_blank">{domain}</a>]]></phrase>
+  <phrase title="sv_reg_log.email_domain_whitelist_ok" version_id="1070008" version_string="1.7.0"><![CDATA[{score}. Unknown email domain: <a href="{search}" target="_blank">{domain}</a>]]></phrase>
+  <phrase title="sv_reg_log.email_fail" version_id="1000020" version_string="1.0.0"><![CDATA[{score}. Email matched: {email}]]></phrase>
+  <phrase title="sv_reg_log.email_length_fail" version_id="1000020" version_string="1.0.0"><![CDATA[{score}. Email local part exceeds {length} chars: {email}]]></phrase>
+  <phrase title="sv_reg_log.fail_score_moderated" version_id="1000020" version_string="1.0.0"><![CDATA[Moderated. Score exceeded ({score} >= {required})]]></phrase>
+  <phrase title="sv_reg_log.fail_score_posts_moderated" version_id="1000020" version_string="1.0.0"><![CDATA[New posts moderated. Score exceeded ({score} >= {required})]]></phrase>
+  <phrase title="sv_reg_log.fail_score_rejected" version_id="1000020" version_string="1.0.0"><![CDATA[Rejected. Score exceeded ({score} >= {required})]]></phrase>
+  <phrase title="sv_reg_log.getipintel_fail" version_id="1050001" version_string="1.5.0"><![CDATA[{score}. IP threat score: {threatLevel}]]></phrase>
+  <phrase title="sv_reg_log.getipintel_private" version_id="1090800" version_string="1.9.8"><![CDATA[Moderate, No IP threat score for private IPs (possible BGP hijackings?)]]></phrase>
+  <phrase title="sv_reg_log.honeypot_fail" version_id="1000010" version_string="1.0.0 Alpha 10"><![CDATA[{score}. Project Honeypot hit: {threatlevel}%, {lastseen} days]]></phrase>
+  <phrase title="sv_reg_log.honeypot_ok" version_id="1000010" version_string="1.0.0 Alpha 10"><![CDATA[Project Honeypot, no hit]]></phrase>
+  <phrase title="sv_reg_log.honeypot_pass" version_id="1000010" version_string="1.0.0 Alpha 10"><![CDATA[Project Honeypot, no hit: {threatlevel}%, {lastseen} days]]></phrase>
+  <phrase title="sv_reg_log.hostname_fail" version_id="1000020" version_string="1.0.0"><![CDATA[{score}. Hostname matched: {hostname}]]></phrase>
+  <phrase title="sv_reg_log.hostname_ok" version_id="1000020" version_string="1.0.0"><![CDATA[Hostname detected: {hostname}]]></phrase>
+  <phrase title="sv_reg_log.js_fail" version_id="1000020" version_string="1.0.0"><![CDATA[{score}. Javascript disabled]]></phrase>
+  <phrase title="sv_reg_log.js_timer_fail" version_id="1000007" version_string="1.0.0 Alpha 7"><![CDATA[{score}. Registration form completed too fast: {timetaken} sec]]></phrase>
+  <phrase title="sv_reg_log.js_timer_ok" version_id="1000020" version_string="1.0.0"><![CDATA[Registration form completed: {timetaken} sec]]></phrase>
+  <phrase title="sv_reg_log.multi_account_accept" version_id="1000020" version_string="1.0.0"><![CDATA[Accepting, Multiple account - {method} - Username: {username}, UserId: {user_id}]]></phrase>
+  <phrase title="sv_reg_log.multi_account_accept_score" version_id="1060400" version_string="1.6.4"><![CDATA[{score}, Multiple account - {method} - Username: {username}, UserId: {user_id}]]></phrase>
+  <phrase title="sv_reg_log.multi_account_group" version_id="1000020" version_string="1.0.0"><![CDATA[Multiple account is a member of the following groups: {groups}]]></phrase>
+  <phrase title="sv_reg_log.multi_account_is_banned" version_id="1000020" version_string="1.0.0"><![CDATA[Multiple account {username} is banned.]]></phrase>
+  <phrase title="sv_reg_log.multi_account_moderate" version_id="1000020" version_string="1.0.0"><![CDATA[Moderating, Multiple account - {method} - Username: {username}, UserId: {user_id}]]></phrase>
+  <phrase title="sv_reg_log.multi_account_perm" version_id="1130700" version_string="1.13.7"><![CDATA[Multiple account has the explicit permission: {perm}]]></phrase>
+  <phrase title="sv_reg_log.multi_account_perm_content" version_id="1130700" version_string="1.13.7"><![CDATA[Multiple account has the explicit permission: "{perm}" for "{title}"]]></phrase>
+  <phrase title="sv_reg_log.multi_account_perm_content_url" version_id="1130700" version_string="1.13.7"><![CDATA[Multiple account has the explicit permission: "{perm}" for <a href="{url}">"{title}"</a>]]></phrase>
+  <phrase title="sv_reg_log.multi_account_reject" version_id="1000020" version_string="1.0.0"><![CDATA[Rejecting, Multiple account - {method} - Username: {username}], UserId: {user_id}]]></phrase>
+  <phrase title="sv_reg_log.port_scan_fail" version_id="1000020" version_string="1.0.0"><![CDATA[{score}. Port open: {port}]]></phrase>
+  <phrase title="sv_reg_log.preregaction_fail" version_id="1120300" version_string="1.12.3"><![CDATA[{score}. Pre-registration action content matched ({details})]]></phrase>
+  <phrase title="sv_reg_log.sfs_fail" version_id="1050000" version_string="1.5.0"><![CDATA[{score}. StopForumSpam hit: {flag}]]></phrase>
+  <phrase title="sv_reg_log.sfs_ok" version_id="1050000" version_string="1.5.0"><![CDATA[StopForumSpam ok: {flag}]]></phrase>
+  <phrase title="sv_reg_log.tor_fail" version_id="1000020" version_string="1.0.0"><![CDATA[{score}. Tor exit node]]></phrase>
+  <phrase title="sv_reg_log.total_score" version_id="1000020" version_string="1.0.0"><![CDATA[Total score: {score}]]></phrase>
+  <phrase title="sv_reg_log.url_block" version_id="1030000" version_string="1.3.0"><![CDATA[url]]></phrase>
+  <phrase title="sv_reg_log.user_language" version_id="1081300" version_string="1.8.13"><![CDATA[Browser language: {language}]]></phrase>
+  <phrase title="sv_reg_log.user_language_fail" version_id="1110004" version_string="1.11.0 RC4"><![CDATA[{score}. Browser language: {language} in {country}]]></phrase>
+  <phrase title="sv_reg_log.user_language_unknown" version_id="1110100" version_string="1.11.1"><![CDATA[{score}. Unknown browser language: {language} in {country}]]></phrase>
+  <phrase title="sv_reg_log.user_timezone" version_id="1081300" version_string="1.8.13"><![CDATA[Browser timezone: {timezone}]]></phrase>
+  <phrase title="sv_reg_log.user_timezone_fail" version_id="1110004" version_string="1.11.0 RC4"><![CDATA[{score}. Browser timezone: {timezone} in {country}]]></phrase>
+  <phrase title="sv_reg_log.user_timezone_unknown" version_id="1110100" version_string="1.11.1"><![CDATA[{score}. Unknown browser timezone: {timezone} in {country}]]></phrase>
+  <phrase title="sv_reg_log.username_fail" version_id="1000020" version_string="1.0.0"><![CDATA[{score}. Username matched {username}]]></phrase>
+  <phrase title="sv_reg_status.allowed" version_id="1000007" version_string="1.0.0 Alpha 7"><![CDATA[Allowed]]></phrase>
+  <phrase title="sv_reg_status.denied" version_id="1000007" version_string="1.0.0 Alpha 7"><![CDATA[Rejected]]></phrase>
+  <phrase title="sv_reg_status.moderated" version_id="1000007" version_string="1.0.0 Alpha 7"><![CDATA[Moderated]]></phrase>
+  <phrase title="sv_registration_log" version_id="1000020" version_string="1.0.0"><![CDATA[Registration log]]></phrase>
+  <phrase title="sv_require_email_confirmation" version_id="1000020" version_string="1.0.0"><![CDATA[Require email confirmation (always notifies)]]></phrase>
+  <phrase title="sv_sock_report_message" version_id="1030500" version_string="1.3.5"><![CDATA[On {action}, {primaryUser}{userState} has the following potential multiple account(s):]]></phrase>
+  <phrase title="sv_sock_report_user_detection" version_id="1000020" version_string="1.0.0"><![CDATA[Triggered detection methods]]></phrase>
+  <phrase title="sv_ue_status" version_id="1070004" version_string="1.7.0 Alpha 3"><![CDATA[Status]]></phrase>
+</phrases>
+ 		 		 	   	 	  		  				  	 	 		 	 	   	    	 	  	 	  	 	 	 			    	 				 		    			 	 	  		  		  	 	 			 	   		  	 	 	  	 	   	 	 	 

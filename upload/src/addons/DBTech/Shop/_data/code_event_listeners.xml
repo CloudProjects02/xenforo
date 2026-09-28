@@ -2,12 +2,13 @@
 <code_event_listeners>
   <listener event_id="app_pub_render_page" execute_order="10" callback_class="DBTech\Shop\Listener" callback_method="appPubRenderPage" active="1" description="Fix DB Credits menu-footer class"/>
   <listener event_id="app_pub_setup" execute_order="10" callback_class="DBTech\Shop\Listener" callback_method="appPubSetup" active="1" description="App setup"/>
-  <listener event_id="app_registry_preload" execute_order="10" callback_class="DBTech\Shop\Listener" callback_method="appRegistryPreload" active="1" description="Pre-load registry"/>
   <listener event_id="app_setup" execute_order="10" callback_class="DBTech\Shop\Listener" callback_method="appSetup" active="1" description="Global app setup"/>
   <listener event_id="criteria_user" execute_order="10" callback_class="DBTech\Shop\Listener" callback_method="criteriaUser" active="1" description="Check Trophy Criteria"/>
   <listener event_id="navigation_setup" execute_order="10" callback_class="DBTech\Shop\Listener" callback_method="navigationSetup" active="1" description="Programmatically add to the navbar menu."/>
   <listener event_id="templater_macro_pre_render" execute_order="10" callback_class="DBTech\Shop\Listener" callback_method="templaterMacroPreRender" active="1" hint="admin:option_macros:option_form_block" description="Modify the option macro to allow tabbed options."/>
   <listener event_id="templater_setup" execute_order="10" callback_class="DBTech\Shop\Listener" callback_method="templaterSetup" active="1" description="Add template functions"/>
+  <listener event_id="templater_setup" execute_order="10" callback_class="DBTech\Shop\Listener" callback_method="templaterSetupAvatarFrame" active="1" description="Add avatar frame data to page params"/>
+  <listener event_id="templater_setup" execute_order="10" callback_class="DBTech\Shop\Listener" callback_method="templaterSetupProfileEffects" active="1" description="Add profile effects data to page params"/>
   <listener event_id="user_content_change_init" execute_order="10" callback_class="DBTech\Shop\Listener" callback_method="userContentChangeInit" active="1" description="Register the updates that need to happen when a user is renamed, deleted, etc."/>
   <listener event_id="user_delete_clean_init" execute_order="10" callback_class="DBTech\Shop\Listener" callback_method="userDeleteCleanInit" active="1" description="Register the clean up queries that need to run when a user is deleted."/>
   <listener event_id="user_merge_combine" execute_order="10" callback_class="DBTech\Shop\Listener" callback_method="userMergeCombine" active="1" description="Allow the item count to be updated when merging users."/>

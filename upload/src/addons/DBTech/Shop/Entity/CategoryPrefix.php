@@ -11,8 +11,8 @@ use XF\Mvc\Entity\Structure;
  * @property int $prefix_id
  *
  * RELATIONS
- * @property-read ItemPrefix|null $Prefix
- * @property-read Category|null $Category
+ * @property \DBTech\Shop\Entity\ItemPrefix $Prefix
+ * @property \DBTech\Shop\Entity\Category $Category
  */
 class CategoryPrefix extends AbstractPrefixMap
 {
@@ -25,19 +25,19 @@ class CategoryPrefix extends AbstractPrefixMap
 	}
 
 	/**
-	 * @param Structure $structure
+	 * @param \XF\Mvc\Entity\Structure $structure
 	 *
-	 * @return Structure
+	 * @return \XF\Mvc\Entity\Structure
 	 */
 	public static function getStructure(Structure $structure): Structure
 	{
 		self::setupDefaultStructure($structure, 'xf_dbtech_shop_category_prefix', 'DBTech\Shop:CategoryPrefix', 'DBTech\Shop:ItemPrefix');
 
 		$structure->relations['Category'] = [
-			'entity' => Category::class,
+			'entity' => 'DBTech\Shop:Category',
 			'type' => self::TO_ONE,
 			'conditions' => 'category_id',
-			'primary' => true,
+			'primary' => true
 		];
 
 		return $structure;

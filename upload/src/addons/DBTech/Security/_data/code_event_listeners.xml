@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<code_event_listeners>
+  <listener event_id="app_pub_setup" execute_order="10" callback_class="DBTech\Security\Listener" callback_method="appPubSetup" active="1" description="App setup"/>
+  <listener event_id="app_pub_start_end" execute_order="10" callback_class="DBTech\Security\Listener" callback_method="appPubStartEnd" active="1" description="Handle our own session-related stuff"/>
+  <listener event_id="app_registry_preload" execute_order="10" callback_class="DBTech\Security\Listener" callback_method="appRegistryPreload" active="1" description="Pre-load registry"/>
+  <listener event_id="app_setup" execute_order="10" callback_class="DBTech\Security\Listener" callback_method="appSetup" active="1" description="App setup"/>
+  <listener event_id="controller_pre_dispatch" execute_order="10" callback_class="DBTech\Security\Listener" callback_method="controllerPreDispatch" active="1" description="Log Member IP"/>
+  <listener event_id="dispatcher_post_render" execute_order="10" callback_class="DBTech\Security\Listener" callback_method="dispatcherPostRender" active="1" description="Final config.php inspection"/>
+  <listener event_id="icon_usage_analyzer_extra" execute_order="10" callback_class="DBTech\Security\Listener" callback_method="iconUsageAnalyzerExtra" active="1" description="Add required FontAwesome icons"/>
+  <listener event_id="templater_macro_pre_render" execute_order="10" callback_class="DBTech\Security\Listener" callback_method="templaterMacroPreRender" active="1" hint="admin:option_macros:option_form_block" description="Modify the option macro to allow tabbed options."/>
+</code_event_listeners>

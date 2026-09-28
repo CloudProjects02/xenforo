@@ -16,13 +16,10 @@ use DBTech\Credits\Pub\View;
 use DBTech\Credits\Repository\EventTriggerRepository;
 use XF\Db\DuplicateKeyException;
 use XF\Entity\LinkableInterface;
-use XF\Entity\PaymentProfile;
 use XF\Entity\User;
 use XF\InputFilterer;
-use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\ParameterBag;
 use XF\Mvc\Reply\AbstractReply;
-use XF\Mvc\Reply\Exception as ExceptionAlias;
 use XF\PrintableException;
 use XF\Pub\Controller\AbstractController;
 use XF\Repository\PaymentRepository;
@@ -34,7 +31,7 @@ class CurrencyController extends AbstractController
 	 * @param $action
 	 * @param ParameterBag $params
 	 *
-	 * @throws ExceptionAlias
+	 * @throws \XF\Mvc\Reply\Exception
 	 */
 	protected function preDispatchController($action, ParameterBag $params): void
 	{
@@ -56,7 +53,7 @@ class CurrencyController extends AbstractController
 	 * @param ParameterBag $params
 	 *
 	 * @return AbstractReply
-	 * @throws ExceptionAlias
+	 * @throws \XF\Mvc\Reply\Exception
 	 */
 	public function actionIndex(ParameterBag $params): AbstractReply
 	{
@@ -79,7 +76,7 @@ class CurrencyController extends AbstractController
 				])
 			;
 
-			/** @var AbstractCollection<Event> $events */
+			/** @var \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Event> $events */
 			$events = $eventFinder
 				->fetch()
 				->filter(function (Event $event) use ($currency, $visitor): bool
@@ -141,7 +138,7 @@ class CurrencyController extends AbstractController
 		}
 
 		$paymentRepo = \XF::app()->repository(PaymentRepository::class);
-		/** @var AbstractCollection<PaymentProfile> $profiles */
+		/** @var \XF\Mvc\Entity\AbstractCollection<\XF\Entity\PaymentProfile> $profiles */
 		$profiles = $paymentRepo->findPaymentProfilesForList()->fetch();
 
 		$profileThirdParties = [];
@@ -189,7 +186,7 @@ class CurrencyController extends AbstractController
 	 * @param ParameterBag $params
 	 *
 	 * @return AbstractReply
-	 * @throws ExceptionAlias
+	 * @throws \XF\Mvc\Reply\Exception
 	 */
 	public function actionPurchaseCompleted(ParameterBag $params): AbstractReply
 	{
@@ -203,7 +200,7 @@ class CurrencyController extends AbstractController
 	 * @param ParameterBag $params
 	 *
 	 * @return AbstractReply
-	 * @throws ExceptionAlias
+	 * @throws \XF\Mvc\Reply\Exception
 	 * @throws PrintableException
 	 * @throws \Exception
 	 */
@@ -255,7 +252,7 @@ class CurrencyController extends AbstractController
 			->where('event_trigger_id', 'donate')
 		;
 
-		/** @var AbstractCollection<Event> $events */
+		/** @var \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Event> $events */
 		$events = $eventFinder
 			->fetch()
 			->filter(function (Event $event) use ($currency, $visitor): bool
@@ -326,7 +323,7 @@ class CurrencyController extends AbstractController
 	 * @param ParameterBag $params
 	 *
 	 * @return AbstractReply
-	 * @throws ExceptionAlias
+	 * @throws \XF\Mvc\Reply\Exception
 	 * @throws PrintableException
 	 * @throws \Exception
 	 */
@@ -374,7 +371,7 @@ class CurrencyController extends AbstractController
 			->where('event_trigger_id', 'adjust')
 		;
 
-		/** @var AbstractCollection<Event> $events */
+		/** @var \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Event> $events */
 		$events = $eventFinder
 			->fetch()
 			->filter(function (Event $event) use ($currency, $visitor): bool
@@ -424,7 +421,7 @@ class CurrencyController extends AbstractController
 	 * @param ParameterBag $params
 	 *
 	 * @return AbstractReply
-	 * @throws ExceptionAlias
+	 * @throws \XF\Mvc\Reply\Exception
 	 * @throws PrintableException
 	 * @throws \Exception
 	 */
@@ -458,7 +455,7 @@ class CurrencyController extends AbstractController
 			->where('event_trigger_id', 'redeem')
 		;
 
-		/** @var AbstractCollection<Event> $events */
+		/** @var \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Event> $events */
 		$events = $eventFinder
 			->fetch()
 			->filter(function (Event $event) use ($currency, $visitor): bool
@@ -483,6 +480,7 @@ class CurrencyController extends AbstractController
 			'code' => $input['code'],
 		]);
 
+		/** @var \DBTech\Credits\Entity\Transaction[] $pendingTransactions */
 		$pendingTransactions = $redeemEvent->testApply([
 			'currency_id' => $currency->currency_id,
 			'owner_id' => $visitor->user_id,
@@ -512,7 +510,7 @@ class CurrencyController extends AbstractController
 	 * @param ParameterBag $params
 	 *
 	 * @return AbstractReply
-	 * @throws ExceptionAlias
+	 * @throws \XF\Mvc\Reply\Exception
 	 * @throws PrintableException
 	 * @throws \Exception
 	 */
@@ -557,7 +555,7 @@ class CurrencyController extends AbstractController
 			->where('event_trigger_id', 'transfer')
 		;
 
-		/** @var AbstractCollection<Event> $events */
+		/** @var \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Event> $events */
 		$events = $eventFinder
 			->fetch()
 			->filter(function (Event $event) use ($currency, $visitor): bool
@@ -634,7 +632,7 @@ class CurrencyController extends AbstractController
 	 * @param ParameterBag $params
 	 *
 	 * @return AbstractReply
-	 * @throws ExceptionAlias
+	 * @throws \XF\Mvc\Reply\Exception
 	 * @throws \Exception
 	 */
 	public function actionGiftPurchase(ParameterBag $params): AbstractReply
@@ -672,7 +670,7 @@ class CurrencyController extends AbstractController
 		$profileIds = $event->getSetting('payment_profile_ids');
 		$paymentRepo = \XF::app()->repository(PaymentRepository::class);
 
-		/** @var AbstractCollection<PaymentProfile> $profiles */
+		/** @var \XF\Mvc\Entity\AbstractCollection<\XF\Entity\PaymentProfile> $profiles */
 		$profiles = $paymentRepo->findPaymentProfilesForList()->fetch();
 
 		$profileThirdParties = [];
@@ -765,6 +763,7 @@ class CurrencyController extends AbstractController
 				'alwaysCheck' => true,
 			];
 
+			/** @var \DBTech\Credits\Entity\Transaction[] $pendingTransactions */
 			$pendingTransactions = $contentEvent->testUndo($extraParams, $visitor);
 
 			if (!count($pendingTransactions))
@@ -829,7 +828,7 @@ class CurrencyController extends AbstractController
 	 * @param null|string $phraseKey
 	 *
 	 * @return Currency
-	 * @throws ExceptionAlias
+	 * @throws \XF\Mvc\Reply\Exception
 	 */
 	protected function assertCurrencyExists(?int $id, array $with = [], ?string $phraseKey = null): Currency
 	{
@@ -842,7 +841,7 @@ class CurrencyController extends AbstractController
 	 * @param null|string $phraseKey
 	 *
 	 * @return User
-	 * @throws ExceptionAlias
+	 * @throws \XF\Mvc\Reply\Exception
 	 */
 	protected function assertUserExists(?int $id, array $with = [], ?string $phraseKey = null): User
 	{

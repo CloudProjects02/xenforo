@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="changeuserregisterdate_change_user_register_date" version_id="10" version_string="1.0"><![CDATA[Change user register date]]></phrase>
+  <phrase title="changeuserregisterdate_register_date_successfully_updated" version_id="10" version_string="1.0"><![CDATA[Register date successfully updated.]]></phrase>
+  <phrase title="changeuserregisterdate_submit" version_id="10" version_string="1.0"><![CDATA[Submit]]></phrase>
+  <phrase title="changeuserregisterdate_username" version_id="10" version_string="1.0"><![CDATA[Username]]></phrase>
+  <phrase title="changeuserregisteredate_php_date_not_set" version_id="10" version_string="1.0"><![CDATA[Date not set.]]></phrase>
+  <phrase title="changeuserregisteredate_php_time_not_set" version_id="10" version_string="1.0"><![CDATA[Time not set.]]></phrase>
+  <phrase title="changeuserregisteredate_php_username_not_found" version_id="10" version_string="1.0"><![CDATA[Username not found.]]></phrase>
+</phrases>

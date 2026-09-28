@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<options>
+  <option option_id="knownbotsEmailUserAgents" edit_format="onofftextbox" data_type="array" advanced="0">
+    <default_value>{"enabled":"0","email":""}</default_value>
+    <edit_format_params>onoff=enabled
+value=email
+type=textbox
+default=</edit_format_params>
+    <sub_options>enabled
+email</sub_options>
+    <relation group_id="knownbots" display_order="210"/>
+  </option>
+  <option option_id="knownbotsFetchNewBots" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="knownbots" display_order="100"/>
+  </option>
+  <option option_id="knownbotsSendUserAgents" edit_format="template" data_type="array" advanced="0">
+    <default_value>{"enabled":false,"validation_token":false,"api_token":false}</default_value>
+    <edit_format_params>option_template_knownBotsApiToken</edit_format_params>
+    <sub_options>enabled
+validation_token
+api_token</sub_options>
+    <relation group_id="knownbots" display_order="205"/>
+  </option>
+  <option option_id="knownbotsShowBotStats" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="knownbots" display_order="1"/>
+  </option>
+  <option option_id="knownbotsStoreUserAgents" edit_format="onofftextbox" data_type="array" advanced="0">
+    <default_value>{"enabled":"1","days":"90"}</default_value>
+    <edit_format_params>onoff=enabled
+value=days
+type=spinbox
+min=0
+step=5
+default=90
+units={{ phrase('units_days') }}</edit_format_params>
+    <sub_options>enabled
+days</sub_options>
+    <relation group_id="knownbots" display_order="200"/>
+  </option>
+</options>
+ 		 		   			      	 			   					  					 	 				    	 			   	   	   		 	 		    	  					       		  	 						 				  			 		    	 	   		 	 	

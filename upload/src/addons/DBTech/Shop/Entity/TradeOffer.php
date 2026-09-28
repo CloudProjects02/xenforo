@@ -2,9 +2,6 @@
 
 namespace DBTech\Shop\Entity;
 
-use DBTech\Shop\Repository\TradeRepository;
-use DBTech\Shop\TradeOffer\AbstractHandler;
-use XF\Entity\User;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 
@@ -18,12 +15,12 @@ use XF\Mvc\Entity\Structure;
  * @property bool $finalized
  *
  * GETTERS
- * @property-read Entity|null $Content
- * @property-read AbstractHandler|null $Handler
+ * @property Entity|null $Content
+ * @property \DBTech\Shop\TradeOffer\AbstractHandler|null $Handler
  *
  * RELATIONS
- * @property-read Trade|null $Trade
- * @property-read User|null $User
+ * @property \DBTech\Shop\Entity\Trade $Trade
+ * @property \XF\Entity\User $User
  */
 class TradeOffer extends Entity
 {
@@ -32,13 +29,13 @@ class TradeOffer extends Entity
 	 *
 	 * @return bool
 	 */
-	public function isValid(array &$errors = []): bool
+	public function isValid(&$errors = []): bool
 	{
 		$handler = $this->Handler;
-
+		
 		return ($handler && $handler->isValid($this, $errors));
 	}
-
+	
 	/**
 	 * @throws \LogicException
 	 */
@@ -49,54 +46,52 @@ class TradeOffer extends Entity
 			// Ensure this doesn't happen multiple times
 			return false;
 		}
-
+		
 		$handler = $this->Handler;
 		if (!$handler)
 		{
-			throw new \LogicException("Handler for content type $this->content_type could not be loaded.");
+			throw new \LogicException("Handler for content type {$this->content_type} could not be loaded.");
 		}
-
+		
 		if ($handler->finalize($this))
 		{
 			$this->finalized = true;
 			return true;
 		}
-
+		
 		return false;
 	}
-
+	
 	/**
 	 * @return Entity|null
 	 */
 	public function getContent(): ?Entity
 	{
 		$handler = $this->Handler;
-		return $handler?->getContent($this->content_id);
+		return $handler ? $handler->getContent($this->content_id) : null;
 	}
-
+	
 	/**
 	 * @param Entity|null $content
 	 */
-	public function setContent(?Entity $content = null): void
+	public function setContent(Entity $content = null)
 	{
 		$this->_getterCache['Content'] = $content;
 	}
-
+	
 	/**
-	 * @return AbstractHandler|null
+	 * @return \DBTech\Shop\TradeOffer\AbstractHandler|null
 	 * @throws \Exception
 	 */
-	public function getHandler(): ?AbstractHandler
+	public function getHandler(): ?\DBTech\Shop\TradeOffer\AbstractHandler
 	{
-		return \XF::app()->repository(TradeRepository::class)
-			->getTradeOfferHandler($this->content_type)
-		;
+		return $this->getTradeRepo()->getTradeOfferHandler($this->content_type);
 	}
 
 	/**
-	 * @param Structure $structure
+	 * @param \XF\Mvc\Entity\Structure $structure
 	 *
-	 * @return Structure
+	 * @return \XF\Mvc\Entity\Structure
 	 */
 	public static function getStructure(Structure $structure): Structure
 	{
@@ -117,19 +112,27 @@ class TradeOffer extends Entity
 		];
 		$structure->relations = [
 			'Trade' => [
-				'entity' => Trade::class,
+				'entity' => 'DBTech\Shop:Trade',
 				'type' => self::TO_ONE,
 				'conditions' => 'trade_id',
 				'primary' => true,
 			],
 			'User' => [
-				'entity' => User::class,
+				'entity' => 'XF:User',
 				'type' => self::TO_ONE,
 				'conditions' => 'user_id',
-				'primary' => true,
-			],
+				'primary' => true
+			]
 		];
 
 		return $structure;
+	}
+	
+	/**
+	 * @return \DBTech\Shop\Repository\Trade
+	 */
+	protected function getTradeRepo(): \DBTech\Shop\Repository\Trade
+	{
+		return $this->repository('DBTech\Shop:Trade');
 	}
 }

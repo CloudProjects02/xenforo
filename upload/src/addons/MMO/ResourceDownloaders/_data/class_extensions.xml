@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<class_extensions>
+  <extension from_class="XFRM\Admin\Controller\ResourceItem" to_class="MMO\ResourceDownloaders\XFRM\Admin\Controller\ResourceItem" execute_order="10" active="1"/>
+  <extension from_class="XFRM\Pub\Controller\ResourceItem" to_class="MMO\ResourceDownloaders\XFRM\Pub\Controller\ResourceItem" execute_order="10" active="1"/>
+  <extension from_class="XFRM\Pub\Controller\ResourceVersion" to_class="MMO\ResourceDownloaders\XFRM\Pub\Controller\ResourceVersion" execute_order="10" active="1"/>
+  <extension from_class="XFRM\Repository\ResourceItem" to_class="MMO\ResourceDownloaders\XFRM\Repository\ResourceItem" execute_order="10" active="1"/>
+  <extension from_class="XF\Entity\User" to_class="MMO\ResourceDownloaders\XF\Entity\User" execute_order="10" active="1"/>
+</class_extensions>
+ 		    	 			 									    		 		   	 	  		 		 	    				 		 	  	 				  	 		 	  	 			 	 		    		 		    		   	 	 		   				 					 					 	

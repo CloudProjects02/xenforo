@@ -2,35 +2,29 @@
 
 namespace DBTech\Shop\Install;
 
-use XF\AddOn\AddOn;
-use XF\App;
-use XF\Db\AbstractAdapter;
-use XF\Db\Exception;
 use XF\Db\Schema\Alter;
-use XF\Db\Schema\Column;
 use XF\Db\Schema\Create;
-use XF\Db\SchemaManager;
 
 /**
- * @property AddOn addOn
- * @property App app
+ * @property \XF\AddOn\AddOn addOn
+ * @property \XF\App app
  *
- * @method AbstractAdapter db()
- * @method SchemaManager schemaManager()
- * @method Column addOrChangeColumn($table, $name, $type = null, $length = null)
+ * @method \XF\Db\AbstractAdapter db()
+ * @method \XF\Db\SchemaManager schemaManager()
+ * @method \XF\Db\Schema\Column addOrChangeColumn($table, $name, $type = null, $length = null)
  */
 trait UpgradeLegacyTrait
 {
 	/**
 	 *
 	 */
-	public function upgrade20160202Step1(): void
+	public function upgrade20160202Step1()
 	{
 		$sm = $this->schemaManager();
 
 		$this->db()->emptyTable('xf_dbtech_shop_shoppingcart');
 
-		foreach (['prepurchase', 'postpurchase', 'sellback', 'configure', 'gift', 'discard'] AS $key)
+		foreach (['prepurchase', 'postpurchase', 'sellback', 'configure', 'gift', 'discard'] as $key)
 		{
 			$sm->alterTable('xf_dbtech_shop_item', function (Alter $table) use ($key)
 			{
@@ -62,11 +56,8 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws Exception
-	 * @throws Exception
-	 * @throws Exception
 	 */
-	public function upgrade20160202Step2(): void
+	public function upgrade20160202Step2()
 	{
 		$this->query("
 			UPDATE `xf_dbtech_shop_purchase`
@@ -90,9 +81,8 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws Exception
 	 */
-	public function upgrade20160209Step1(): void
+	public function upgrade20160209Step1()
 	{
 		foreach ([
 			'threadhighlight' 	=> [
@@ -103,7 +93,7 @@ trait UpgradeLegacyTrait
 				'title' 		=> 'Postbit Highlight',
 				'description' 	=> 'Purchase the ability to highlight your postbit on show thread.',
 			],
-		] AS $filename => $info)
+		] as $filename => $info)
 		{
 			$this->query("
 				REPLACE INTO `xf_dbtech_shop_itemtype`
@@ -119,9 +109,8 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws Exception
 	 */
-	public function upgrade20160308Step1(): void
+	public function upgrade20160308Step1()
 	{
 		foreach ([
 			'threadhighlight2' 	=> [
@@ -132,7 +121,7 @@ trait UpgradeLegacyTrait
 				'title' 		=> 'Postbit Highlight (Pre-Defined)',
 				'description' 	=> 'Purchase the ability to highlight your postbit on show thread.',
 			],
-		] AS $filename => $info)
+		] as $filename => $info)
 		{
 			$this->query("
 				REPLACE INTO `xf_dbtech_shop_itemtype`
@@ -153,9 +142,8 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws Exception
 	 */
-	public function upgrade20160322Step1(): void
+	public function upgrade20160322Step1()
 	{
 		$this->query("
 			UPDATE `xf_option`
@@ -167,7 +155,7 @@ trait UpgradeLegacyTrait
 	/**
 	 *
 	 */
-	public function upgrade20160328Step1(): void
+	public function upgrade20160328Step1()
 	{
 		$sm = $this->schemaManager();
 
@@ -190,9 +178,8 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws Exception
 	 */
-	public function upgrade20160328Step2(): void
+	public function upgrade20160328Step2()
 	{
 		$this->query("
 			UPDATE `xf_dbtech_shop_currency`
@@ -208,7 +195,7 @@ trait UpgradeLegacyTrait
 	/**
 	 *
 	 */
-	public function upgrade20160329Step1(): void
+	public function upgrade20160329Step1()
 	{
 		$sm = $this->schemaManager();
 
@@ -221,7 +208,7 @@ trait UpgradeLegacyTrait
 	/**
 	 *
 	 */
-	public function upgrade20160403Step1(): void
+	public function upgrade20160403Step1()
 	{
 		$sm = $this->schemaManager();
 
@@ -235,7 +222,7 @@ trait UpgradeLegacyTrait
 	/**
 	 *
 	 */
-	public function upgrade20160408Step1(): void
+	public function upgrade20160408Step1()
 	{
 		$sm = $this->schemaManager();
 
@@ -247,9 +234,8 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws Exception
 	 */
-	public function upgrade20160408Step2(): void
+	public function upgrade20160408Step2()
 	{
 		$this->query("
 			UPDATE xf_dbtech_shop_lottery AS lottery
@@ -262,7 +248,7 @@ trait UpgradeLegacyTrait
 	/**
 	 *
 	 */
-	public function upgrade20160410Step1(): void
+	public function upgrade20160410Step1()
 	{
 		$sm = $this->schemaManager();
 
@@ -275,7 +261,7 @@ trait UpgradeLegacyTrait
 	/**
 	 *
 	 */
-	public function upgrade20160418Step1(): void
+	public function upgrade20160418Step1()
 	{
 		$sm = $this->schemaManager();
 
@@ -294,11 +280,8 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws Exception
-	 * @throws Exception
-	 * @throws Exception
 	 */
-	public function upgrade20160426Step1(): void
+	public function upgrade20160426Step1()
 	{
 		$this->query("
 			UPDATE `xf_dbtech_shop_category`
@@ -326,7 +309,7 @@ trait UpgradeLegacyTrait
 	/**
 	 *
 	 */
-	public function upgrade20160430Step1(): void
+	public function upgrade20160430Step1()
 	{
 		$sm = $this->schemaManager();
 
@@ -338,9 +321,8 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws Exception
 	 */
-	public function upgrade20160430Step2(): void
+	public function upgrade20160430Step2()
 	{
 		$this->query("
 			UPDATE `xf_dbtech_shop_lotteryticket`
@@ -350,10 +332,8 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws Exception
-	 * @throws Exception
 	 */
-	public function upgrade20160508Step1(): void
+	public function upgrade20160508Step1()
 	{
 		$this->query("
 			UPDATE `xf_dbtech_shop_item`
@@ -374,7 +354,7 @@ trait UpgradeLegacyTrait
 	/**
 	 *
 	 */
-	public function upgrade20160517Step1(): void
+	public function upgrade20160517Step1()
 	{
 		$sm = $this->schemaManager();
 
@@ -392,7 +372,7 @@ trait UpgradeLegacyTrait
 	/**
 	 *
 	 */
-	public function upgrade20160519Step1(): void
+	public function upgrade20160519Step1()
 	{
 		$sm = $this->schemaManager();
 
@@ -406,7 +386,7 @@ trait UpgradeLegacyTrait
 	/**
 	 *
 	 */
-	public function upgrade20160623Step1(): void
+	public function upgrade20160623Step1()
 	{
 		$sm = $this->schemaManager();
 
@@ -419,7 +399,7 @@ trait UpgradeLegacyTrait
 	/**
 	 *
 	 */
-	public function upgrade20160703Step1(): void
+	public function upgrade20160703Step1()
 	{
 		$sm = $this->schemaManager();
 
@@ -432,7 +412,7 @@ trait UpgradeLegacyTrait
 	/**
 	 *
 	 */
-	public function upgrade20160722Step1(): void
+	public function upgrade20160722Step1()
 	{
 		$sm = $this->schemaManager();
 
@@ -445,7 +425,7 @@ trait UpgradeLegacyTrait
 	/**
 	 *
 	 */
-	public function upgrade20160724Step1(): void
+	public function upgrade20160724Step1()
 	{
 		$sm = $this->schemaManager();
 
@@ -457,9 +437,8 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws Exception
 	 */
-	public function upgrade20160724Step2(): void
+	public function upgrade20160724Step2()
 	{
 		foreach ([
 			'autobump' 			=> 'DBTech_Shop_Item_AutoBump',
@@ -502,7 +481,7 @@ trait UpgradeLegacyTrait
 			'usertitlechange2' 	=> 'DBTech_Shop_Item_Change_UserTitle_PreDefined',
 			'usertitlestyle' 	=> 'DBTech_Shop_Item_Style_UserTitle',
 			'usertitlestyle2' 	=> 'DBTech_Shop_Item_Style_UserTitle_PreDefined',
-		] AS $itemTypeId => $itemClass)
+		] as $itemTypeId => $itemClass)
 		{
 			$this->query(
 				"
@@ -520,9 +499,8 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws Exception
 	 */
-	public function upgrade20160726Step1(): void
+	public function upgrade20160726Step1()
 	{
 		foreach ([
 			'autobump' 			=> 'DBTech_Shop_Item_AutoBump',
@@ -565,7 +543,7 @@ trait UpgradeLegacyTrait
 			'usertitlechange2' 	=> 'DBTech_Shop_Item_Change_UserTitle_PreDefined',
 			'usertitlestyle' 	=> 'DBTech_Shop_Item_Style_UserTitle',
 			'usertitlestyle2' 	=> 'DBTech_Shop_Item_Style_UserTitle_PreDefined',
-		] AS $itemTypeId => $itemClass)
+		] as $itemTypeId => $itemClass)
 		{
 			$this->query(
 				"
@@ -584,7 +562,7 @@ trait UpgradeLegacyTrait
 	/**
 	 *
 	 */
-	public function upgrade20160729Step1(): void
+	public function upgrade20160729Step1()
 	{
 		$sm = $this->schemaManager();
 
@@ -617,7 +595,7 @@ trait UpgradeLegacyTrait
 	/**
 	 *
 	 */
-	public function upgrade20160730Step1(): void
+	public function upgrade20160730Step1()
 	{
 		$sm = $this->schemaManager();
 
@@ -635,7 +613,7 @@ trait UpgradeLegacyTrait
 	/**
 	 *
 	 */
-	public function upgrade20160928Step1(): void
+	public function upgrade20160928Step1()
 	{
 		$sm = $this->schemaManager();
 
@@ -653,7 +631,7 @@ trait UpgradeLegacyTrait
 	/**
 	 *
 	 */
-	public function upgrade20161005Step1(): void
+	public function upgrade20161005Step1()
 	{
 		$sm = $this->schemaManager();
 
@@ -671,7 +649,7 @@ trait UpgradeLegacyTrait
 	/**
 	 *
 	 */
-	public function upgrade20161012Step1(): void
+	public function upgrade20161012Step1()
 	{
 		$sm = $this->schemaManager();
 
@@ -689,7 +667,7 @@ trait UpgradeLegacyTrait
 	/**
 	 *
 	 */
-	public function upgrade20161019Step1(): void
+	public function upgrade20161019Step1()
 	{
 		$sm = $this->schemaManager();
 
@@ -702,10 +680,8 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws Exception
-	 * @throws Exception
 	 */
-	public function upgrade20161019Step2(): void
+	public function upgrade20161019Step2()
 	{
 		$this->query("
 			UPDATE `xf_dbtech_shop_shopinventory`
@@ -720,10 +696,8 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws Exception
-	 * @throws Exception
 	 */
-	public function upgrade20161122Step1(): void
+	public function upgrade20161122Step1()
 	{
 		$this->query("
 			INSERT INTO `xf_dbtech_shop_itemtype`
@@ -748,7 +722,7 @@ trait UpgradeLegacyTrait
 	/**
 	 *
 	 */
-	public function upgrade20161201Step1(): void
+	public function upgrade20161201Step1()
 	{
 		$sm = $this->schemaManager();
 
@@ -766,9 +740,8 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws Exception
 	 */
-	public function upgrade20161201Step2(): void
+	public function upgrade20161201Step2()
 	{
 		$this->query("
 			UPDATE `xf_dbtech_shop_purchase`
@@ -779,11 +752,8 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws Exception
-	 * @throws Exception
-	 * @throws Exception
 	 */
-	public function upgrade20170314Step1(): void
+	public function upgrade20170314Step1()
 	{
 		$this->query("
 			UPDATE `xf_dbtech_shop_itemtype`
@@ -812,7 +782,7 @@ trait UpgradeLegacyTrait
 	/**
 	 *
 	 */
-	public function upgrade806000031Step1(): void
+	public function upgrade806000031Step1()
 	{
 		$sm = $this->schemaManager();
 

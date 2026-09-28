@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<options>
+  <option option_id="motwDateFormat" edit_format="radio" data_type="string" advanced="0">
+    <default_value>0200</default_value>
+    <edit_format_params>01={{ phrase('motw_no_zero_diff') }}
+040={{ phrase('motw_date_round') }}
+0100={{ phrase('motw_date_floor') }}
+0200={{ phrase('motw_date_ceil') }}</edit_format_params>
+    <relation group_id="motwThreadWarning" display_order="40"/>
+  </option>
+  <option option_id="motwDaysCutoff" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>90</default_value>
+    <edit_format_params>The "this is an old thread" warning will be displayed for threads that haven't been replied to for this long.</edit_format_params>
+    <relation group_id="motwThreadWarning" display_order="20"/>
+  </option>
+  <option option_id="motwEnableWarning" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="motwThreadWarning" display_order="30"/>
+  </option>
+  <option option_id="motwShortDays" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="motwThreadWarning" display_order="30"/>
+  </option>
+</options>
+ 		 				  			 					  		 	  	  	 		   	  			 		 					  		 				   		 	  	  	  		 			  		    	 	    	  				  	   		   					 				 		  		

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="PAGE_CONTAINER" modification_key="xc_profile_views_page_container" description="Copyright footer" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:copyright />]]></find>
+    <replace><![CDATA[$0
+<xf:callback class="XenConcept\ProfileViews\Template\Callback\Copyright" method="getCopyrightText"> </xf:callback>]]></replace>
+  </modification>
+  <modification type="public" template="account_privacy" modification_key="xc_profile_views_account_privacy" description="Add Privacy for users who viewed profile" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:macro name="privacy_option"
+					arg-user="{$xf.visitor}"
+					arg-name="allow_view_identities"
+					arg-label="{{ phrase('view_your_identities:') }}" />]]></find>
+    <replace><![CDATA[$0
+<xf:include template="xc_profile_views_account_privacy" />]]></replace>
+  </modification>
+  <modification type="admin" template="helper_criteria" modification_key="xc_profile_views_helper_criteria" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:user:content_bottom]-->]]></find>
+    <replace><![CDATA[
+<xf:option name="user_criteria[view_count][rule]" value="view_count" selected="{$criteria.view_count}"
+	label="{{ phrase('xc_profile_views_the_user_to_them_x_views_on_his_profile:') }}">
+	<xf:numberbox name="user_criteria[view_count][data][users]" value="{$criteria.view_count.users}"
+		size="5" min="0" step="1" />
+</xf:option>
+
+$0]]></replace>
+  </modification>
+  <modification type="public" template="member_view" modification_key="xc_profile_view_member_view" description="Add widget profile views" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:widgetpos id="member_view_sidebar" context-user="{$user}" position="sidebar" />]]></find>
+    <replace><![CDATA[$0
+
+<xf:if is="$xf.options.xc_profile_views_block_positions === 'sidebar'">
+
+	<xf:widget key="xc_profile_views" 
+		   context-user="{$user}" 
+		   position="sidebar" />
+
+<xf:else />
+	<xf:widget key="xc_profile_views" 
+		   context-user="{$user}" 
+		   position="sidenav" />
+</xf:if>
+]]></replace>
+  </modification>
+  <modification type="public" template="member_view" modification_key="xc_profile_views_member_view_tab_panes" description="Add &quot;users who are viewed your profile&quot; tab panes" execution_order="1" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:tabs:end]-->]]></find>
+    <replace><![CDATA[<xf:if is="$user.canViewUsersViewedProfile() && $user.xc_pv_profile_view_count">
+	<a href="{{ link('members/show-viewers', $user) }}"
+	   class="tabs-tab"
+	   id="showViewers"
+	   role="tab">{{ phrase('xc_profile_views_users_who_viewed_your_profile') }}</a>
+
+</xf:if>
+
+$0]]></replace>
+  </modification>
+  <modification type="public" template="member_view" modification_key="xc_profile_views_member_view_tab_panes_block" description="Add &quot;users who are viewed your profile&quot; block tab panes" execution_order="1" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:tab_panes:end]-->]]></find>
+    <replace><![CDATA[<xf:if is="$user.canViewUsersViewedProfile() && $user.xc_pv_profile_view_count">
+<li data-href="{{ link('members/show-viewers', $user) }}" role="tabpanel" aria-labelledby="showViewers">
+	<div class="blockMessage">{{ phrase('loading...') }}</div>
+</li>
+</xf:if>
+
+$0]]></replace>
+  </modification>
+</template_modifications>

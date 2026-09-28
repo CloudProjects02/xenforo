@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="cron_entry.easyUserBanDeleteBans" version_id="2010170" version_string="2.1.1"><![CDATA[Easy User Ban: Delete expired bans]]></phrase>
+  <phrase title="nav.boardUserBans" version_id="2010170" version_string="2.1.1"><![CDATA[Board bans]]></phrase>
+  <phrase title="nav.boardUserBansMainTab" version_id="2010170" version_string="2.1.1"><![CDATA[Banned users]]></phrase>
+  <phrase title="nav.forumUserBans" version_id="2010070" version_string="2.1.0"><![CDATA[Forum bans]]></phrase>
+  <phrase title="nav.siropuEasyUserBanBanList" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Banned members]]></phrase>
+  <phrase title="nav.siropuEasyUserBanManageBans" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Manage bans]]></phrase>
+  <phrase title="nav.threadUserBans" version_id="2010070" version_string="2.1.0"><![CDATA[Thread bans]]></phrase>
+  <phrase title="option.siropuEasyUserBanBannedAvatar" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Enable banned avatar]]></phrase>
+  <phrase title="option.siropuEasyUserBanCloseThreads" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Close threads]]></phrase>
+  <phrase title="option.siropuEasyUserBanConversationLink" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Enable ban/unban link in conversation messages]]></phrase>
+  <phrase title="option.siropuEasyUserBanDisplayBanDetails" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Display ban details]]></phrase>
+  <phrase title="option.siropuEasyUserBanForum" version_id="2010070" version_string="2.1.0"><![CDATA[Enable forum bans]]></phrase>
+  <phrase title="option.siropuEasyUserBanForumId" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Forum]]></phrase>
+  <phrase title="option.siropuEasyUserBanHideBannedContent" version_id="2010070" version_string="2.1.0"><![CDATA[Hide post content of banned users]]></phrase>
+  <phrase title="option.siropuEasyUserBanLargeAvatar" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Large avatar path]]></phrase>
+  <phrase title="option.siropuEasyUserBanMediumAvatar" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Medium avatar path]]></phrase>
+  <phrase title="option.siropuEasyUserBanMemberLink" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Enable ban/unban link in user profile]]></phrase>
+  <phrase title="option.siropuEasyUserBanNotice" version_id="2000031" version_string="2.0.0-Beta-2"><![CDATA[Banned user notice]]></phrase>
+  <phrase title="option.siropuEasyUserBanProfileBanReason" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Display ban reason in user profile]]></phrase>
+  <phrase title="option.siropuEasyUserBanProfileLink" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Enable ban/unban link in profile posts]]></phrase>
+  <phrase title="option.siropuEasyUserBanReasonOptions" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Ban reason options]]></phrase>
+  <phrase title="option.siropuEasyUserBanRequireReason" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Require ban reason]]></phrase>
+  <phrase title="option.siropuEasyUserBanSmallAvatar" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Small avatar path]]></phrase>
+  <phrase title="option.siropuEasyUserBanTempBanGroup" version_id="2000470" version_string="2.0.4"><![CDATA[Temporary ban user group]]></phrase>
+  <phrase title="option.siropuEasyUserBanThread" version_id="2010070" version_string="2.1.0"><![CDATA[Enable thread bans]]></phrase>
+  <phrase title="option.siropuEasyUserBanThreadId" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Thread ID]]></phrase>
+  <phrase title="option.siropuEasyUserBanThreadLink" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Enable ban/unban link in thread posts]]></phrase>
+  <phrase title="option.siropuEasyUserBanThreadPrefix" version_id="2010070" version_string="2.1.0"><![CDATA[Thread prefix]]></phrase>
+  <phrase title="option.siropuEasyUserBanUserId" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[User ID]]></phrase>
+  <phrase title="option_explain.siropuEasyUserBanBannedAvatar" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[If enabled, banned users will have a special "banned" avatar.]]></phrase>
+  <phrase title="option_explain.siropuEasyUserBanCloseThreads" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[If enabled, all threads will be closed for discussion.]]></phrase>
+  <phrase title="option_explain.siropuEasyUserBanConversationLink" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[If enabled, a link will be added in each conversation message for quick user ban/unban.]]></phrase>
+  <phrase title="option_explain.siropuEasyUserBanDisplayBanDetails" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[If enabled, details about the ban will be displayed for each user.]]></phrase>
+  <phrase title="option_explain.siropuEasyUserBanForum" version_id="2010070" version_string="2.1.0"><![CDATA[This option allows you to ban users from certain forums.]]></phrase>
+  <phrase title="option_explain.siropuEasyUserBanForumId" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[If specified, ban/unban thread notifications will be posted in this forum.]]></phrase>
+  <phrase title="option_explain.siropuEasyUserBanHideBannedContent" version_id="2010070" version_string="2.1.0"><![CDATA[This option allows you to hide the content of banned users in posts.]]></phrase>
+  <phrase title="option_explain.siropuEasyUserBanLargeAvatar" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[The path to the large size avatar for banned users.]]></phrase>
+  <phrase title="option_explain.siropuEasyUserBanMediumAvatar" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[The path to the medium size avatar for banned users.]]></phrase>
+  <phrase title="option_explain.siropuEasyUserBanMemberLink" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[If enabled, a link will be added in user profile for quick user ban/unban.]]></phrase>
+  <phrase title="option_explain.siropuEasyUserBanNotice" version_id="2000031" version_string="2.0.0-Beta-2"><![CDATA[If set, this will be displayed to banned users when viewing the site.]]></phrase>
+  <phrase title="option_explain.siropuEasyUserBanProfileBanReason" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[If enabled, the reason for the ban will be displayed in the user profile page.]]></phrase>
+  <phrase title="option_explain.siropuEasyUserBanProfileLink" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[If enabled, a link will be added in each profile post and comment for quick user ban/unban.]]></phrase>
+  <phrase title="option_explain.siropuEasyUserBanReasonOptions" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[This option allows you to add a list of predefined ban reasons that you can select when banning a user.]]></phrase>
+  <phrase title="option_explain.siropuEasyUserBanRequireReason" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[If enabled, the ban reason will be required when banning a user.]]></phrase>
+  <phrase title="option_explain.siropuEasyUserBanSmallAvatar" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[The path to the small size avatar for banned users.]]></phrase>
+  <phrase title="option_explain.siropuEasyUserBanTempBanGroup" version_id="2000470" version_string="2.0.4"><![CDATA[This option allows you to add temporary banned users to a user group until their ban will expire.]]></phrase>
+  <phrase title="option_explain.siropuEasyUserBanThread" version_id="2010070" version_string="2.1.0"><![CDATA[This option allows you to ban users from certain threads.]]></phrase>
+  <phrase title="option_explain.siropuEasyUserBanThreadId" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[If specified, ban/unban post notifications will be posted in this thread.]]></phrase>
+  <phrase title="option_explain.siropuEasyUserBanThreadLink" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[If enabled, a link will be added in each thread post for quick user ban/unban.]]></phrase>
+  <phrase title="option_explain.siropuEasyUserBanThreadPrefix" version_id="2010070" version_string="2.1.0"><![CDATA[Allows you to set a thread prefix for thread notifications posted in the selected forum.]]></phrase>
+  <phrase title="option_explain.siropuEasyUserBanUserId" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[The user ID of the post author that will be displayed for thread/post notifications.]]></phrase>
+  <phrase title="option_group.siropuEasyUserBan" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Easy User Ban]]></phrase>
+  <phrase title="option_group_description.siropuEasyUserBan" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Options for Easy User Ban by Siropu.]]></phrase>
+  <phrase title="permission.siropuEasyUserBanMod_ban" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Ban users]]></phrase>
+  <phrase title="permission.siropuEasyUserBanMod_banIps" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Ban user IPs]]></phrase>
+  <phrase title="permission.siropuEasyUserBanMod_deleteLogs" version_id="2000051" version_string="2.0.0-RC-1"><![CDATA[Delete logs]]></phrase>
+  <phrase title="permission.siropuEasyUserBanMod_unban" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Unban users]]></phrase>
+  <phrase title="permission.siropuEasyUserBanMod_viewLog" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[View log]]></phrase>
+  <phrase title="permission.siropuEasyUserBan_viewBanCount" version_id="2000370" version_string="2.0.3"><![CDATA[View ban count]]></phrase>
+  <phrase title="permission.siropuEasyUserBan_viewBanReason" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[View ban reason]]></phrase>
+  <phrase title="permission.siropuEasyUserBan_viewBanned" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[View banned user list]]></phrase>
+  <phrase title="permission.siropuEasyUserBan_viewForumBans" version_id="2010070" version_string="2.1.0"><![CDATA[View forum bans]]></phrase>
+  <phrase title="permission.siropuEasyUserBan_viewPostContent" version_id="2010070" version_string="2.1.0"><![CDATA[View post content of banned users]]></phrase>
+  <phrase title="permission.siropuEasyUserBan_viewThreadBans" version_id="2010070" version_string="2.1.0"><![CDATA[View thread bans]]></phrase>
+  <phrase title="permission_interface.siropuEasyUserBan" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Easy User Ban: User permissions]]></phrase>
+  <phrase title="permission_interface.siropuEasyUserBanModerator" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Easy User Ban: Moderator permissions]]></phrase>
+  <phrase title="siropu_easy_user_ban_ban_ip" version_id="2010070" version_string="2.1.0"><![CDATA[Ban IP]]></phrase>
+  <phrase title="siropu_easy_user_ban_ban_ips" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Ban IPs]]></phrase>
+  <phrase title="siropu_easy_user_ban_bans" version_id="2000370" version_string="2.0.3"><![CDATA[Bans]]></phrase>
+  <phrase title="siropu_easy_user_ban_bans_explain" version_id="2000370" version_string="2.0.3"><![CDATA[The number of times user has been banned]]></phrase>
+  <phrase title="siropu_easy_user_ban_board" version_id="2010070" version_string="2.1.0"><![CDATA[Board]]></phrase>
+  <phrase title="siropu_easy_user_ban_expiring_bans" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Expiring bans]]></phrase>
+  <phrase title="siropu_easy_user_ban_forum_ban" version_id="2010070" version_string="2.1.0"><![CDATA[[Forum ban]]]></phrase>
+  <phrase title="siropu_easy_user_ban_forum_bans" version_id="2010070" version_string="2.1.0"><![CDATA[Forum bans]]></phrase>
+  <phrase title="siropu_easy_user_ban_global" version_id="2010070" version_string="2.1.0"><![CDATA[Global ban]]></phrase>
+  <phrase title="siropu_easy_user_ban_ip_has_been_banned" version_id="2010070" version_string="2.1.0"><![CDATA[IP has been successfully banned.]]></phrase>
+  <phrase title="siropu_easy_user_ban_limit" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Limit]]></phrase>
+  <phrase title="siropu_easy_user_ban_limit_explain" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Set how many bans to display in this widget.]]></phrase>
+  <phrase title="siropu_easy_user_ban_log_action_ban" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[{moderator} has banned {user} for the following reason: {reason}]]></phrase>
+  <phrase title="siropu_easy_user_ban_log_action_unban" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[{moderator} has unbanned {user}]]></phrase>
+  <phrase title="siropu_easy_user_ban_manage_bans" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Manage bans]]></phrase>
+  <phrase title="siropu_easy_user_ban_member_has_been_banned_permanently_for_the_following_reason" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[This member has been banned <strong>permanently</strong> for the following reason]]></phrase>
+  <phrase title="siropu_easy_user_ban_member_has_been_banned_until_x_for_the_following_reason" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[This member has been banned until <strong>{date}</strong> for the following reason]]></phrase>
+  <phrase title="siropu_easy_user_ban_no_expiring_bans" version_id="2000032" version_string="2.0.0-Beta-2"><![CDATA[There are no expiring bans.]]></phrase>
+  <phrase title="siropu_easy_user_ban_no_recent_bans" version_id="2000032" version_string="2.0.0-Beta-2"><![CDATA[There are no recent bans.]]></phrase>
+  <phrase title="siropu_easy_user_ban_please_provide_reason_for_ban" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Please provide the reason for the ban.]]></phrase>
+  <phrase title="siropu_easy_user_ban_post_hidden_due_to_ban" version_id="2010070" version_string="2.1.0"><![CDATA[Post hidden due to user being banned.]]></phrase>
+  <phrase title="siropu_easy_user_ban_recent_bans" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Recent bans]]></phrase>
+  <phrase title="siropu_easy_user_ban_requested_ban_not_found" version_id="2010070" version_string="2.1.0"><![CDATA[Requested ban could not be found.]]></phrase>
+  <phrase title="siropu_easy_user_ban_requested_forum_ban_not_found" version_id="2010070" version_string="2.1.0"><![CDATA[The requested forum ban could not be found.]]></phrase>
+  <phrase title="siropu_easy_user_ban_requested_log_not_found" version_id="2010070" version_string="2.1.0"><![CDATA[Requested log could not be found.]]></phrase>
+  <phrase title="siropu_easy_user_ban_requested_thread_ban_not_found" version_id="2010070" version_string="2.1.0"><![CDATA[The requested thread ban could not be found.]]></phrase>
+  <phrase title="siropu_easy_user_ban_thread_ban" version_id="2010070" version_string="2.1.0"><![CDATA[[Thread ban]]]></phrase>
+  <phrase title="siropu_easy_user_ban_thread_bans" version_id="2010070" version_string="2.1.0"><![CDATA[Thread bans]]></phrase>
+  <phrase title="siropu_easy_user_ban_type" version_id="2010070" version_string="2.1.0"><![CDATA[Ban type]]></phrase>
+  <phrase title="siropu_easy_user_ban_type.board" version_id="2010070" version_string="2.1.0"><![CDATA[Board]]></phrase>
+  <phrase title="siropu_easy_user_ban_type.forum" version_id="2010070" version_string="2.1.0"><![CDATA[Forum]]></phrase>
+  <phrase title="siropu_easy_user_ban_type.thread" version_id="2010070" version_string="2.1.0"><![CDATA[Thread]]></phrase>
+  <phrase title="siropu_easy_user_ban_user_has_been_banned_at_least_x_times" version_id="2000370" version_string="2.0.3"><![CDATA[User has been banned at least X times]]></phrase>
+  <phrase title="siropu_easy_user_ban_user_x_has_been_banned" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[{user} has been successfully banned.]]></phrase>
+  <phrase title="siropu_easy_user_ban_user_x_has_been_banned_by_warning" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[{user} has been banned by the System for accumulating warning points.]]></phrase>
+  <phrase title="siropu_easy_user_ban_user_x_has_been_banned_by_x" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[{user} has been banned by {moderator}]]></phrase>
+  <phrase title="siropu_easy_user_ban_user_x_has_been_unbanned" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[{user} has been successfully unbanned.]]></phrase>
+  <phrase title="siropu_easy_user_ban_user_x_has_been_unbanned_by_the_system" version_id="2000170" version_string="2.0.1"><![CDATA[{user} has been unbanned by the system (ban expired).]]></phrase>
+  <phrase title="siropu_easy_user_ban_user_x_has_been_unbanned_by_x" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[{user} has been unbanned by {moderator}]]></phrase>
+  <phrase title="siropu_easy_user_ban_username_explain" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[To ban/unban multiple users, separate each user by a comma.]]></phrase>
+  <phrase title="siropu_easy_user_ban_you_are_banned_from_forum_x_until_y" version_id="2010070" version_string="2.1.0"><![CDATA[You have been banned from forum "<b>{title}</b>" until <b>{date}</b>.]]></phrase>
+  <phrase title="siropu_easy_user_ban_you_are_banned_from_forum_x_until_y_for_reason_z" version_id="2010070" version_string="2.1.0"><![CDATA[You have been banned from forum "<b>{title}</b>" until <b>{date}</b> for the following reason: {reason}]]></phrase>
+  <phrase title="siropu_easy_user_ban_you_are_banned_from_this_forum_permanently" version_id="2010070" version_string="2.1.0"><![CDATA[You are banned from this forum permanently.]]></phrase>
+  <phrase title="siropu_easy_user_ban_you_are_banned_from_this_forum_permanently_for_reason_x" version_id="2010070" version_string="2.1.0"><![CDATA[You are banned from this forum permanently for the following reason: {reason}]]></phrase>
+  <phrase title="siropu_easy_user_ban_you_are_banned_from_this_thread_permanently" version_id="2010070" version_string="2.1.0"><![CDATA[You are banned from this thread permanently.]]></phrase>
+  <phrase title="siropu_easy_user_ban_you_are_banned_from_this_thread_permanently_for_reason_x" version_id="2010070" version_string="2.1.0"><![CDATA[You are banned from this thread permanently for the following reason: {reason}]]></phrase>
+  <phrase title="siropu_easy_user_ban_you_are_banned_from_this_thread_until_x" version_id="2010070" version_string="2.1.0"><![CDATA[You have been banned from this thread until <b>{date}</b>.]]></phrase>
+  <phrase title="siropu_easy_user_ban_you_are_banned_from_this_thread_until_x_for_reason_y" version_id="2010070" version_string="2.1.0"><![CDATA[You have been banned from this thread until <b>{date}</b> for the following reason: {reason}]]></phrase>
+  <phrase title="widget_def.siropu_eub_expiring_bans" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Easy User Ban: Expiring bans]]></phrase>
+  <phrase title="widget_def.siropu_eub_recent_bans" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Easy User Ban: Recent bans]]></phrase>
+  <phrase title="widget_def_desc.siropu_eub_expiring_bans" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Displays the expiring user bans.]]></phrase>
+  <phrase title="widget_def_desc.siropu_eub_recent_bans" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Displays the recent user bans.]]></phrase>
+  <phrase title="widget_pos.siropu_easy_user_ban_list_sidebar" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[Easy User Ban: Ban list sidebar]]></phrase>
+  <phrase title="widget_pos_desc.siropu_easy_user_ban_list_sidebar" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[A position for the sidebar of the user ban list.]]></phrase>
+</phrases>
+ 		  	   				  		 	 	  	  	  		 	  	   			   	  		 			 		 				  		 				   		 				 		  	 	 	   		  			   	 		 	  		 		  	 	 	  		  	 

@@ -1,0 +1,14 @@
+{
+    "legacy_addon_id": "",
+    "title": "[SynapseThemes] ResourceHeroCards",
+    "description": "Provides a helper function to fetch XenForo Resource Manager items for use in hero card displays.",
+    "version_id": 100,
+    "version_string": "1.0.0",
+    "dev": "",
+    "dev_url": "",
+    "faq_url": "",
+    "support_url": "",
+    "extra_urls": [],
+    "require": [],
+    "icon": ""
+}

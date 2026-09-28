@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="payment_profile_synapse_paylix_gateway" version_id="100" version_string="1.0.0"><![CDATA[<xf:textboxrow name="options[api_key]" value="{$profile.options.api_key}"
+	label="{{ phrase('api_key') }}"
+	explain="{{ phrase('paylix_api_key_explain') }}"
+	required="required" />
+
+<xf:textboxrow name="options[webhook_secret]" value="{$profile.options.webhook_secret}"
+	label="{{ phrase('paylix_webhook_secret') }}"
+	explain="{{ phrase('paylix_webhook_secret_explain') }}"
+	required="required" /> ]]></template>
+</templates>

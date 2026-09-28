@@ -4,7 +4,7 @@ namespace DBTech\Credits;
 
 use DBTech\Credits\Entity\Currency;
 use XF\Container;
-use XF\Db\Exception as DbException;
+use XF\Db\Exception;
 use XF\Entity\User;
 use XF\Mvc\Controller;
 use XF\Mvc\Entity\AbstractCollection;
@@ -54,7 +54,7 @@ class Listener
 	/**
 	 * @param \XF\App $app
 	 *
-	 * @throws DbException
+	 * @throws Exception
 	 */
 	public static function appSetup(\XF\App $app): void
 	{
@@ -222,7 +222,7 @@ class Listener
 		$container = $app->container();
 		if (isset($container['dbtechCredits.currencies']) && $currencies = $container['dbtechCredits.currencies'])
 		{
-			/** @var AbstractCollection<Currency> $currencies */
+			/** @var \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Currency> $currencies */
 			$currencies = $currencies->filterViewable();
 
 			$children = [];

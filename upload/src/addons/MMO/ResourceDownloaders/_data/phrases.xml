@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="admin_navigation.mrd_resource_downloaders" version_id="2010070" version_string="2.1.0"><![CDATA[Who downloaded resources]]></phrase>
+  <phrase title="mrd_downloaded_resources" version_id="2010370" version_string="2.1.3"><![CDATA[Downloaded Resources]]></phrase>
+  <phrase title="mrd_filter_by_resource" version_id="2010370" version_string="2.1.3"><![CDATA[Filter by resource]]></phrase>
+  <phrase title="mrd_last_download_in_x" version_id="2010370" version_string="2.1.3"><![CDATA[Last download in {time}]]></phrase>
+  <phrase title="mrd_members_download_this_version" version_id="2010370" version_string="2.1.3"><![CDATA[Members who downloaded this version]]></phrase>
+  <phrase title="mrd_members_who_downloaded_resource" version_id="2010370" version_string="2.1.3"><![CDATA[Members who downloaded resource: {title}]]></phrase>
+  <phrase title="mrd_no_resource_downloaders" version_id="2010370" version_string="2.1.3"><![CDATA[No users have downloaded this resource yet.]]></phrase>
+  <phrase title="mrd_resource_downloaders" version_id="2010370" version_string="2.1.3"><![CDATA[Downloaders]]></phrase>
+  <phrase title="mrd_resources_download_by_x" version_id="2010370" version_string="2.1.3"><![CDATA[Downloaded resources by {name}]]></phrase>
+  <phrase title="mrd_view_resource_downloaders_list" version_id="2010370" version_string="2.1.3"><![CDATA[View List]]></phrase>
+  <phrase title="mrd_x_has_not_download_any_resources_yet" version_id="2010370" version_string="2.1.3"><![CDATA[{name} has not download any resources yet]]></phrase>
+  <phrase title="mrd_xfrm_resource_username" version_id="2010070" version_string="2.1.0"><![CDATA[Username]]></phrase>
+  <phrase title="mrd_you_have_not_download_any_resources_yet" version_id="2010370" version_string="2.1.3"><![CDATA[You have not download any resources yet]]></phrase>
+  <phrase title="option.mrdXfrmDownoloadersPerPage" version_id="2010370" version_string="2.1.3"><![CDATA[Resource downloaders per page]]></phrase>
+  <phrase title="option_explain.mrdXfrmDownoloadersPerPage" version_id="2010370" version_string="2.1.3"><![CDATA[Number of people who downloaded this resource on the page]]></phrase>
+  <phrase title="permission.resource_viewWhoDownResAny" version_id="2000370" version_string="2.0.3"><![CDATA[Can view who downloaded resources by Anyone]]></phrase>
+</phrases>
+ 		    	 			 									    		 		   	 	  		 		 	    				 		 	  	 				  	 		 	  	 			 	 		    		 		    		   	 	 		   				 					 					 	

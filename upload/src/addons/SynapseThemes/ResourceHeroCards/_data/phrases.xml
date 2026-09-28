@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="widget_def.st_hero" version_id="100" version_string="1.0.0"><![CDATA[[SynapseThemes] Hero]]></phrase>
+  <phrase title="widget_def_desc.st_hero" version_id="100" version_string="1.0.0"><![CDATA[Adds a hero widget]]></phrase>
+  <phrase title="widget_pos.st_hero_position" version_id="100" version_string="1.0.0"><![CDATA[Forum List: Hero]]></phrase>
+  <phrase title="widget_pos_desc.st_hero_position" version_id="100" version_string="1.0.0"><![CDATA[]]></phrase>
+</phrases>

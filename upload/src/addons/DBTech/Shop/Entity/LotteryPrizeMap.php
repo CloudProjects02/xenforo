@@ -13,16 +13,16 @@ use XF\Mvc\Entity\Structure;
  * @property float $prize_amount
  *
  * RELATIONS
- * @property-read Lottery|null $Lottery
- * @property-read LotteryPrize|null $Prize
- * @property-read Currency|null $Currency
+ * @property \DBTech\Shop\Entity\Lottery $Lottery
+ * @property \DBTech\Shop\Entity\LotteryPrize $Prize
+ * @property \DBTech\Shop\Entity\Currency $Currency
  */
 class LotteryPrizeMap extends Entity
 {
 	/**
-	 * @param Structure $structure
+	 * @param \XF\Mvc\Entity\Structure $structure
 	 *
-	 * @return Structure
+	 * @return \XF\Mvc\Entity\Structure
 	 */
 	public static function getStructure(Structure $structure): Structure
 	{
@@ -37,23 +37,23 @@ class LotteryPrizeMap extends Entity
 		];
 		$structure->relations = [
 			'Lottery' => [
-				'entity' => Lottery::class,
+				'entity' => 'DBTech\Shop:Lottery',
 				'type' => self::TO_ONE,
 				'conditions' => 'lottery_id',
-				'primary' => true,
+				'primary' => true
 			],
 			'Prize' => [
-				'entity' => LotteryPrize::class,
+				'entity' => 'DBTech\Shop:LotteryPrize',
 				'type' => self::TO_ONE,
 				'conditions' => 'lottery_prize_id',
-				'primary' => true,
+				'primary' => true
 			],
 			'Currency' => [
-				'entity' => Currency::class,
+				'entity' => 'DBTech\Shop:Currency',
 				'type' => self::TO_ONE,
 				'conditions' => 'currency_id',
-				'primary' => true,
-			],
+				'primary' => true
+			]
 		];
 
 		return $structure;

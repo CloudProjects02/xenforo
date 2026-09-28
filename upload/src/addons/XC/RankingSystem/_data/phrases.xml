@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="add_award" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Add Badge]]></phrase>
+  <phrase title="admin_navigation.xc_award_badge" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Exclusive Badges]]></phrase>
+  <phrase title="admin_navigation.xc_experience_points" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Experience Points]]></phrase>
+  <phrase title="admin_navigation.xc_gerneral_options" version_id="1020010" version_string="1.2.0 Alpha"><![CDATA[General Options]]></phrase>
+  <phrase title="admin_navigation.xc_ranking_levels" version_id="1010010" version_string="1.1.0 Alpha"><![CDATA[Levels]]></phrase>
+  <phrase title="admin_navigation.xc_ranking_system" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Ranking System]]></phrase>
+  <phrase title="admin_navigation.xc_user_badges" version_id="1040010" version_string="1.4.0 Alpha"><![CDATA[User Badges]]></phrase>
+  <phrase title="admin_navigation.xc_user_xp" version_id="1040010" version_string="1.4.0 Alpha"><![CDATA[User Experience points]]></phrase>
+  <phrase title="are_your_sure_to_unaward_point" version_id="1030010" version_string="1.3.0 Alpha"><![CDATA[Are you sure to remove award points from ?]]></phrase>
+  <phrase title="cron_entry.xc_badge" version_id="2010210" version_string="2.1.2 Alpha"><![CDATA[[XC] Ranking System ( Update Badges )]]></phrase>
+  <phrase title="custom_bb_code_desc.bold" version_id="2020920" version_string="2.2.9 Alpha"><![CDATA[]]></phrase>
+  <phrase title="custom_bb_code_example.bold" version_id="2020920" version_string="2.2.9 Alpha"><![CDATA[]]></phrase>
+  <phrase title="custom_bb_code_output.bold" version_id="2020920" version_string="2.2.9 Alpha"><![CDATA[]]></phrase>
+  <phrase title="custom_bb_code_title.bold" version_id="2020920" version_string="2.2.9 Alpha"><![CDATA[Bold tooltip]]></phrase>
+  <phrase title="member_stat.xc_ranking_system_level" version_id="2040220" version_string="2.4.2 Alpha"><![CDATA[Highest Level (ranking)]]></phrase>
+  <phrase title="member_stat.xc_ranking_system_xp" version_id="2040220" version_string="2.4.2 Alpha"><![CDATA[Highest Experience Points]]></phrase>
+  <phrase title="no_badge_have_been_created_yet" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[No Badge have been created yet]]></phrase>
+  <phrase title="no_points_have_been_created_yet" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[No Experience Point have been created yet]]></phrase>
+  <phrase title="option.xc_alert_onoff" version_id="2020920" version_string="2.2.9 Alpha"><![CDATA[Alert On/Off]]></phrase>
+  <phrase title="option.xc_double_xp" version_id="2020420" version_string="2.2.4 Alpha"><![CDATA[Double Experience Poinst (XP)]]></phrase>
+  <phrase title="option.xc_forum_xp" version_id="1020010" version_string="1.2.0 Alpha"><![CDATA[Forum on XP]]></phrase>
+  <phrase title="option.xc_progress_position" version_id="1070010" version_string="1.7.0 Alpha"><![CDATA[Message user info level position]]></phrase>
+  <phrase title="option.xc_show_progress_account" version_id="2040320" version_string="2.4.3 Alpha"><![CDATA[Show progress on account setting]]></phrase>
+  <phrase title="option.xc_show_progress_conversation" version_id="1070010" version_string="1.7.0 Alpha"><![CDATA[Show user level progress in conversations]]></phrase>
+  <phrase title="option.xc_show_progress_posts" version_id="1020010" version_string="1.2.0 Alpha"><![CDATA[Show user level progress in posts]]></phrase>
+  <phrase title="option.xc_show_unlock_badges" version_id="2020620" version_string="2.2.6 Alpha"><![CDATA[Show Unlock Badges]]></phrase>
+  <phrase title="option_explain.xc_alert_onoff" version_id="2020920" version_string="2.2.9 Alpha"><![CDATA[you can on/off the Alert]]></phrase>
+  <phrase title="option_explain.xc_double_xp" version_id="2020420" version_string="2.2.4 Alpha"><![CDATA[Enable for get double experience points]]></phrase>
+  <phrase title="option_explain.xc_forum_xp" version_id="1020010" version_string="1.2.0 Alpha"><![CDATA[Select Forums To apply on Experience Points]]></phrase>
+  <phrase title="option_explain.xc_progress_position" version_id="1070010" version_string="1.7.0 Alpha"><![CDATA[Select the position of the level in the message user info for posts and conversations.]]></phrase>
+  <phrase title="option_explain.xc_show_progress_account" version_id="2040320" version_string="2.4.3 Alpha"><![CDATA[]]></phrase>
+  <phrase title="option_explain.xc_show_progress_conversation" version_id="1070010" version_string="1.7.0 Alpha"><![CDATA[]]></phrase>
+  <phrase title="option_explain.xc_show_progress_posts" version_id="1020010" version_string="1.2.0 Alpha"><![CDATA[]]></phrase>
+  <phrase title="option_explain.xc_show_unlock_badges" version_id="2020420" version_string="2.2.4 Alpha"><![CDATA[Show number of unlock Badges in post and conversation]]></phrase>
+  <phrase title="option_group.xc_ranking_system_general" version_id="1020010" version_string="1.2.0 Alpha"><![CDATA[[XC] Ranking System]]></phrase>
+  <phrase title="option_group_description.xc_ranking_system_general" version_id="1020010" version_string="1.2.0 Alpha"><![CDATA[]]></phrase>
+  <phrase title="requires_to_reach_next_level" version_id="2010110" version_string="2.1.1 Alpha"><![CDATA[experience requires to next level]]></phrase>
+  <phrase title="select_username" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Select required username]]></phrase>
+  <phrase title="style_prop.xc_progressbar" version_id="1080010" version_string="1.8.0 Alpha"><![CDATA[[XC] Progress bar]]></phrase>
+  <phrase title="style_prop.xc_progressbarcontainer" version_id="1080010" version_string="1.8.0 Alpha"><![CDATA[[XC] Progress bar container]]></phrase>
+  <phrase title="style_prop_desc.xc_progressbar" version_id="1080010" version_string="1.8.0 Alpha"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.xc_progressbarcontainer" version_id="1080010" version_string="1.8.0 Alpha"><![CDATA[]]></phrase>
+  <phrase title="style_prop_group.xc_xp_user_level_progress" version_id="1080010" version_string="1.8.0 Alpha"><![CDATA[[XC] User level XP progress bar]]></phrase>
+  <phrase title="style_prop_group_desc.xc_xp_user_level_progress" version_id="1080010" version_string="1.8.0 Alpha"><![CDATA[Styling of  level progress bar]]></phrase>
+  <phrase title="x_manual_award_list" version_id="1030010" version_string="1.3.0 Alpha"><![CDATA[Manual Award Point Users]]></phrase>
+  <phrase title="x_thread_x_replies" version_id="1030010" version_string="1.3.0 Alpha"><![CDATA[Make X threads that receive X replies in (Categories)]]></phrase>
+  <phrase title="xc_achievements_base" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Achievements Base]]></phrase>
+  <phrase title="xc_add_bade" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Add Badge]]></phrase>
+  <phrase title="xc_add_exp_point" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Add Point]]></phrase>
+  <phrase title="xc_add_first_badge" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[First add  Badges.....!]]></phrase>
+  <phrase title="xc_add_level" version_id="1010010" version_string="1.1.0 Alpha"><![CDATA[Add level]]></phrase>
+  <phrase title="xc_add_required_experience_point" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[First Add Experience Point....!]]></phrase>
+  <phrase title="xc_add_xp" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Add Experience Point]]></phrase>
+  <phrase title="xc_after_user_banners" version_id="1070010" version_string="1.7.0 Alpha"><![CDATA[After User banner]]></phrase>
+  <phrase title="xc_already_exit" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Already Exit]]></phrase>
+  <phrase title="xc_award" version_id="1030010" version_string="1.3.0 Alpha"><![CDATA[Experience Point]]></phrase>
+  <phrase title="xc_award_badge" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Award Badge]]></phrase>
+  <phrase title="xc_award_badge_criteria" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Badge Criteria]]></phrase>
+  <phrase title="xc_award_badge_point" version_id="2020420" version_string="2.2.4 Alpha"><![CDATA[You have been Award Badge {title}]]></phrase>
+  <phrase title="xc_award_badges" version_id="2020420" version_string="2.2.4 Alpha"><![CDATA[Badges]]></phrase>
+  <phrase title="xc_award_des" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Description]]></phrase>
+  <phrase title="xc_award_list" version_id="1030010" version_string="1.3.0 Alpha"><![CDATA[User list]]></phrase>
+  <phrase title="xc_award_point" version_id="1040010" version_string="1.4.0 Alpha"><![CDATA[Award Point]]></phrase>
+  <phrase title="xc_award_point_alert" version_id="2020620" version_string="2.2.6 Alpha"><![CDATA[You have been Awarded {points} pts  : {title}]]></phrase>
+  <phrase title="xc_award_point_alert_double" version_id="2020620" version_string="2.2.6 Alpha"><![CDATA[You have been Award Double pts: {points} {title}]]></phrase>
+  <phrase title="xc_award_points" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Award Points]]></phrase>
+  <phrase title="xc_award_title" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Title]]></phrase>
+  <phrase title="xc_award_xp" version_id="1030010" version_string="1.3.0 Alpha"><![CDATA[Award Point]]></phrase>
+  <phrase title="xc_badge" version_id="1040010" version_string="1.4.0 Alpha"><![CDATA[Badge]]></phrase>
+  <phrase title="xc_badge_already_assign" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Badge {title} Already assign to {user} .....!]]></phrase>
+  <phrase title="xc_badge_criteria" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Badge Criteria]]></phrase>
+  <phrase title="xc_badge_tooltip_title" version_id="2020920" version_string="2.2.9 Alpha"><![CDATA[{description}]]></phrase>
+  <phrase title="xc_badge_upload_svg" version_id="1020010" version_string="1.2.0 Alpha"><![CDATA[Upload Svg]]></phrase>
+  <phrase title="xc_badges" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Badges]]></phrase>
+  <phrase title="xc_before_avatar" version_id="1070010" version_string="1.7.0 Alpha"><![CDATA[Before Avatar]]></phrase>
+  <phrase title="xc_before_user_banners" version_id="1070010" version_string="1.7.0 Alpha"><![CDATA[Before User banner]]></phrase>
+  <phrase title="xc_below_avatar" version_id="1070010" version_string="1.7.0 Alpha"><![CDATA[Below Avatar]]></phrase>
+  <phrase title="xc_bottom_user_info" version_id="1070010" version_string="1.7.0 Alpha"><![CDATA[Bottom User Info]]></phrase>
+  <phrase title="xc_date" version_id="1040010" version_string="1.4.0 Alpha"><![CDATA[Award Time]]></phrase>
+  <phrase title="xc_delete_thread" version_id="2010110" version_string="2.1.1 Alpha"><![CDATA[Delete Thread]]></phrase>
+  <phrase title="xc_description" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Description]]></phrase>
+  <phrase title="xc_edit_bade" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Edit Badge]]></phrase>
+  <phrase title="xc_edit_xp" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Edit Experience Point]]></phrase>
+  <phrase title="xc_excel_file_required" version_id="1010010" version_string="1.1.0 Alpha"><![CDATA[Excel File required]]></phrase>
+  <phrase title="xc_exp_points" version_id="1010010" version_string="1.1.0 Alpha"><![CDATA[Experience Points]]></phrase>
+  <phrase title="xc_exp_title" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Title]]></phrase>
+  <phrase title="xc_experience_point" version_id="1010010" version_string="1.1.0 Alpha"><![CDATA[Experience Point]]></phrase>
+  <phrase title="xc_experience_points" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Experience Points]]></phrase>
+  <phrase title="xc_experience_points_member_notable" version_id="2040220" version_string="2.4.2 Alpha"><![CDATA[Experience Points]]></phrase>
+  <phrase title="xc_expoints" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Points]]></phrase>
+  <phrase title="xc_file_importing" version_id="1040010" version_string="1.4.0 Alpha"><![CDATA[File importing need to wait......!]]></phrase>
+  <phrase title="xc_file_is_impmorting" version_id="1040010" version_string="1.4.0 Alpha"><![CDATA[Your File {doc} is  importing.....! ]]></phrase>
+  <phrase title="xc_heading_detail" version_id="2010110" version_string="2.1.1 Alpha"><![CDATA[In case Your were wondering]]></phrase>
+  <phrase title="xc_import_level" version_id="1010010" version_string="1.1.0 Alpha"><![CDATA[Import]]></phrase>
+  <phrase title="xc_level" version_id="1010010" version_string="1.1.0 Alpha"><![CDATA[Level]]></phrase>
+  <phrase title="xc_level_add" version_id="1010010" version_string="1.1.0 Alpha"><![CDATA[Add Level]]></phrase>
+  <phrase title="xc_level_edit" version_id="1010010" version_string="1.1.0 Alpha"><![CDATA[Level Edit]]></phrase>
+  <phrase title="xc_level_member_notable" version_id="2040220" version_string="2.4.2 Alpha"><![CDATA[Levels]]></phrase>
+  <phrase title="xc_level_progress_bar_member" version_id="2030520" version_string="2.3.5 Alpha"><![CDATA[]]></phrase>
+  <phrase title="xc_level_progress_bar_member_view" version_id="2030720" version_string="2.3.7 Alpha"><![CDATA[dummy text {leftpoint}]]></phrase>
+  <phrase title="xc_level_progress_bar_post_macro" version_id="2030720" version_string="2.3.7 Alpha"><![CDATA[dummy text {leftpoint}]]></phrase>
+  <phrase title="xc_levels" version_id="1010010" version_string="1.1.0 Alpha"><![CDATA[Levels]]></phrase>
+  <phrase title="xc_login_daily_streak" version_id="1030010" version_string="1.3.0 Alpha"><![CDATA[Daily login streak for days]]></phrase>
+  <phrase title="xc_manual_award_xp_list" version_id="1040010" version_string="1.4.0 Alpha"><![CDATA[Manual Award Experience point list]]></phrase>
+  <phrase title="xc_manual_badge_list" version_id="1040010" version_string="1.4.0 Alpha"><![CDATA[Manual Award Badge list]]></phrase>
+  <phrase title="xc_manuall_award_xp" version_id="2020720" version_string="2.2.7 Alpha"><![CDATA[Award by Admin {point} pts]]></phrase>
+  <phrase title="xc_manually_badge_award" version_id="2020620" version_string="2.2.6 Alpha"><![CDATA[Manually Award]]></phrase>
+  <phrase title="xc_manually_xp_award" version_id="2020620" version_string="2.2.6 Alpha"><![CDATA[Manually Award Points]]></phrase>
+  <phrase title="xc_next_level_points" version_id="1080010" version_string="1.8.0 Alpha"><![CDATA[{nextlevelPoints} XP]]></phrase>
+  <phrase title="xc_next_level_progress" version_id="1080010" version_string="1.8.0 Alpha"><![CDATA[LEVEL {nextlevel}]]></phrase>
+  <phrase title="xc_post_mark_as_solved_answer" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Post marked as solved/best answer in a thread]]></phrase>
+  <phrase title="xc_pts" version_id="2010110" version_string="2.1.1 Alpha"><![CDATA[pts]]></phrase>
+  <phrase title="xc_reach_experience_points" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Reach X (XP)]]></phrase>
+  <phrase title="xc_reach_level" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Reach Level]]></phrase>
+  <phrase title="xc_reach_max_level" version_id="2010210" version_string="2.1.2 Alpha"><![CDATA[You have Reached to max level]]></phrase>
+  <phrase title="xc_reach_next_level" version_id="2010110" version_string="2.1.1 Alpha"><![CDATA[Congratulation reach to next level {level}]]></phrase>
+  <phrase title="xc_receving_like_on_post" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Receive like on post]]></phrase>
+  <phrase title="xc_receving_positive_feedback" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Receiving a positive Feedback]]></phrase>
+  <phrase title="xc_receving_positive_reputation" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Receiving a positive Reputation]]></phrase>
+  <phrase title="xc_refer_memberr" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Refer Member]]></phrase>
+  <phrase title="xc_remove_award" version_id="2020620" version_string="2.2.6 Alpha"><![CDATA[Remove {message} UnAward  pts : {minuspoint} ]]></phrase>
+  <phrase title="xc_required_field" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Select required field....!]]></phrase>
+  <phrase title="xc_required_image" version_id="2020620" version_string="2.2.6 Alpha"><![CDATA[Type Image Required.....!]]></phrase>
+  <phrase title="xc_select_required_badge" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[select required badges....!]]></phrase>
+  <phrase title="xc_select_required_exppoint" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Select Required experience point......!]]></phrase>
+  <phrase title="xc_select_user_not_found" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[select users not found {users}  .....!]]></phrase>
+  <phrase title="xc_svg_format" version_id="2020620" version_string="2.2.6 Alpha"><![CDATA[Svg format required....!]]></phrase>
+  <phrase title="xc_thread_replies" version_id="1030010" version_string="1.3.0 Alpha"><![CDATA[First box for thread then replies]]></phrase>
+  <phrase title="xc_total_experience_user" version_id="2010110" version_string="2.1.1 Alpha"><![CDATA[Total Experience]]></phrase>
+  <phrase title="xc_unlike_post" version_id="2010110" version_string="2.1.1 Alpha"><![CDATA[Unlike Post]]></phrase>
+  <phrase title="xc_update_feedback" version_id="2010110" version_string="2.1.1 Alpha"><![CDATA[Update Feedback]]></phrase>
+  <phrase title="xc_upload_csv_file" version_id="1010010" version_string="1.1.0 Alpha"><![CDATA[Upload Csv File]]></phrase>
+  <phrase title="xc_upload_file" version_id="1010010" version_string="1.1.0 Alpha"><![CDATA[Upload File]]></phrase>
+  <phrase title="xc_user_has_create_post" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Post Creation]]></phrase>
+  <phrase title="xc_user_has_create_thread" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Thread Creation]]></phrase>
+  <phrase title="xc_user_has_posted_at_least_x_messages" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[User has at least X replies on Thread]]></phrase>
+  <phrase title="xc_username" version_id="1030010" version_string="1.3.0 Alpha"><![CDATA[Username]]></phrase>
+  <phrase title="xc_visiting_site_per_day" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Logging in/visiting the website per day]]></phrase>
+  <phrase title="xc_x_make_replies_thread_categories" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Receive X replies in Thread in (Categories)]]></phrase>
+  <phrase title="xc_x_make_solve_best_answer" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Solved/best answer X  times]]></phrase>
+  <phrase title="xc_x_make_thread_categories" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Make X threads in (Categories)]]></phrase>
+  <phrase title="xc_x_reach_post" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Reach X posts
+]]></phrase>
+  <phrase title="xc_x_reach_post_like" version_id="2030120" version_string="2.3.1 Alpha"><![CDATA[Receive X Total likes]]></phrase>
+  <phrase title="xc_x_receving_positive_feedback" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Receive X Positive Feed Back]]></phrase>
+  <phrase title="xc_x_receving_positive_reputation" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Receive X Positive Reputation]]></phrase>
+  <phrase title="xc_xp" version_id="1060010" version_string="1.6.0 Alpha"><![CDATA[Experience Point]]></phrase>
+</phrases>

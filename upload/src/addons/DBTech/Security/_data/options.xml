@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<options>
+  <option option_id="dbtechSecurityAccountLockForceWhitelist" edit_format="textbox" data_type="string" advanced="0">
+    <default_value></default_value>
+    <edit_format_params>rows=2</edit_format_params>
+    <relation group_id="dbtech_security" display_order="2030"/>
+  </option>
+  <option option_id="dbtechSecurityBreachCheck" edit_format="template" data_type="array" advanced="0">
+    <default_value>{"enabled":"0","includeUsername":"0","apiKey":false}</default_value>
+    <edit_format_params>option_template_dbtechSecurityBreachCheck</edit_format_params>
+    <sub_options>enabled
+includeUsername
+apiKey</sub_options>
+    <relation group_id="dbtech_security" display_order="2100"/>
+  </option>
+  <option option_id="dbtechSecurityFingerprinting" edit_format="template" data_type="array" advanced="0">
+    <default_value>{"enabled":"0","includeWebGL":"0"}</default_value>
+    <edit_format_params>option_template_dbtechSecurityFingerprinting</edit_format_params>
+    <sub_options>enabled
+includeWebGL</sub_options>
+    <relation group_id="dbtech_security" display_order="2110"/>
+  </option>
+  <option option_id="dbtechSecurityLoginCaptcha" edit_format="template" data_type="array" advanced="0">
+    <default_value>{"public":false,"admin":false}</default_value>
+    <edit_format_params>option_template_dbtechSecurityLoginCaptcha</edit_format_params>
+    <sub_options>public
+admin</sub_options>
+    <relation group_id="dbtech_security" display_order="6001"/>
+    <relation group_id="users" display_order="625"/>
+  </option>
+  <option option_id="dbtechSecurityPasswordChangeForceWhitelist" edit_format="textbox" data_type="string" advanced="0">
+    <default_value></default_value>
+    <edit_format_params>rows=2</edit_format_params>
+    <relation group_id="dbtech_security" display_order="2020"/>
+  </option>
+  <option option_id="dbtech_security_adminstrikes_prune" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>30</default_value>
+    <edit_format_params>min=0</edit_format_params>
+    <relation group_id="dbtech_security" display_order="3000"/>
+  </option>
+  <option option_id="dbtech_security_allowip" edit_format="callback" data_type="array" validation_class="DBTech\Security\Option\AllowIp" validation_method="verifyOption" advanced="0">
+    <default_value>[]</default_value>
+    <edit_format_params>DBTech\Security\Option\AllowIp::renderOption</edit_format_params>
+    <sub_options>*</sub_options>
+    <relation group_id="debug" display_order="210"/>
+  </option>
+  <option option_id="dbtech_security_allowip_exclude" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="debug" display_order="230"/>
+  </option>
+  <option option_id="dbtech_security_badbehavior_bypass_user" edit_format="onofftextbox" data_type="array" advanced="0">
+    <default_value>{"enabled":"","days":""}</default_value>
+    <edit_format_params>min=0
+onoff=enabled
+value=days
+default=30
+type=spinbox</edit_format_params>
+    <sub_options>enabled
+days</sub_options>
+    <relation group_id="dbtech_security" display_order="5050"/>
+  </option>
+  <option option_id="dbtech_security_badbehavior_enabled" edit_format="callback" data_type="boolean" validation_class="DBTech\Security\Option\BadBehavior" validation_method="verifyOption" advanced="0">
+    <default_value>1</default_value>
+    <edit_format_params>DBTech\Security\Option\BadBehavior::renderOption</edit_format_params>
+    <relation group_id="dbtech_security" display_order="5000"/>
+  </option>
+  <option option_id="dbtech_security_badbehavior_eucookie" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="dbtech_security" display_order="5040"/>
+  </option>
+  <option option_id="dbtech_security_badbehavior_httpbl_key" edit_format="textbox" data_type="string" advanced="0">
+    <default_value></default_value>
+    <relation group_id="dbtech_security" display_order="5100"/>
+  </option>
+  <option option_id="dbtech_security_badbehavior_httpbl_maxage" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>30</default_value>
+    <relation group_id="dbtech_security" display_order="5120"/>
+  </option>
+  <option option_id="dbtech_security_badbehavior_httpbl_threat" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>25</default_value>
+    <relation group_id="dbtech_security" display_order="5110"/>
+  </option>
+  <option option_id="dbtech_security_badbehavior_logging" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="dbtech_security" display_order="5020"/>
+  </option>
+  <option option_id="dbtech_security_badbehavior_reverse_proxy" edit_format="onofftextbox" data_type="array" advanced="0">
+    <default_value>{"enabled":false,"header":"X-Forwarded-For"}</default_value>
+    <edit_format_params>onoff=enabled
+value=header
+default=X-Forwarded-For
+type=textbox</edit_format_params>
+    <sub_options>enabled
+header</sub_options>
+    <relation group_id="dbtech_security" display_order="5060"/>
+  </option>
+  <option option_id="dbtech_security_badbehavior_strict" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="dbtech_security" display_order="5010"/>
+  </option>
+  <option option_id="dbtech_security_badbehavior_verbose" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="dbtech_security" display_order="5030"/>
+  </option>
+  <option option_id="dbtech_security_breach_bannedreason" edit_format="textbox" data_type="string" advanced="0">
+    <default_value>Potential security breach</default_value>
+    <edit_format_params>inputclass=Elastic</edit_format_params>
+    <relation group_id="dbtech_security" display_order="2010"/>
+  </option>
+  <option option_id="dbtech_security_breach_closedreason" edit_format="textbox" data_type="string" advanced="0">
+    <default_value>&lt;p&gt;Sorry, the board is unavailable at the moment due to a security breach.&lt;/p&gt;
+&lt;p&gt;We will be back soon...&lt;/p&gt;</default_value>
+    <edit_format_params>rows=4
+inputclass=Elastic</edit_format_params>
+    <relation group_id="dbtech_security" display_order="2001"/>
+  </option>
+  <option option_id="dbtech_security_emailrecovery_includemods" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value></default_value>
+    <relation group_id="dbtech_security" display_order="4020"/>
+  </option>
+  <option option_id="dbtech_security_emailrecovery_supportemail" edit_format="textbox" data_type="string" advanced="0">
+    <default_value></default_value>
+    <relation group_id="dbtech_security" display_order="4000"/>
+  </option>
+  <option option_id="dbtech_security_emailrecovery_threshold" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>30</default_value>
+    <relation group_id="dbtech_security" display_order="4010"/>
+  </option>
+  <option option_id="dbtech_security_globalallowip" edit_format="callback" data_type="array" validation_class="DBTech\Security\Option\AllowIp" validation_method="verifyOption" advanced="0">
+    <default_value>[]</default_value>
+    <edit_format_params>DBTech\Security\Option\AllowIp::renderOption</edit_format_params>
+    <sub_options>*</sub_options>
+    <relation group_id="dbtech_security" display_order="1001"/>
+  </option>
+  <option option_id="dbtech_security_ipverify_prune" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>30</default_value>
+    <edit_format_params>min=0</edit_format_params>
+    <relation group_id="dbtech_security" display_order="3020"/>
+  </option>
+  <option option_id="dbtech_security_licensekey" edit_format="textbox" data_type="string" advanced="0">
+    <default_value>xFMafia.Com</default_value>
+    <relation group_id="debug" display_order="10000"/>
+  </option>
+  <option option_id="dbtech_security_loginstrikes_prune" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>30</default_value>
+    <edit_format_params>min=0</edit_format_params>
+    <relation group_id="dbtech_security" display_order="3010"/>
+  </option>
+  <option option_id="dbtech_security_spiders" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="dbtech_security" display_order="1110"/>
+  </option>
+  <option option_id="dbtech_security_templatehealth" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="dbtech_security" display_order="1120"/>
+  </option>
+  <option option_id="dbtech_security_tornodes" edit_format="onoff" data_type="boolean" validation_class="DBTech\Security\Option\Tor" validation_method="triggerTorNodeBanning" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="dbtech_security" display_order="1100"/>
+  </option>
+</options>

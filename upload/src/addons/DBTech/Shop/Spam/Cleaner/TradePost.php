@@ -2,10 +2,13 @@
 
 namespace DBTech\Shop\Spam\Cleaner;
 
-use DBTech\Shop\Finder\TradePostFinder;
-use XF\PrintableException;
 use XF\Spam\Cleaner\AbstractHandler;
 
+/**
+ * Class TradePost
+ *
+ * @package DBTech\Shop\Spam\Cleaner
+ */
 class TradePost extends AbstractHandler
 {
 	/**
@@ -17,19 +20,19 @@ class TradePost extends AbstractHandler
 	{
 		return !empty($options['delete_messages']);
 	}
-
+	
 	/**
 	 * @param array $log
 	 * @param null $error
 	 *
 	 * @return bool
-	 * @throws PrintableException
+	 * @throws \XF\PrintableException
 	 */
 	public function cleanUp(array &$log, &$error = null): bool
 	{
 		$app = \XF::app();
 
-		$tradePostsFinder = \XF::app()->finder(TradePostFinder::class);
+		$tradePostsFinder = $app->finder('DBTech\Shop:TradePost');
 		$tradePosts = $tradePostsFinder
 			->where('user_id', $this->user->user_id)
 			->fetch();
@@ -44,7 +47,7 @@ class TradePost extends AbstractHandler
 
 			$log['dbtech_shop_trade_post'] = [
 				'deleteType' => $deleteType,
-				'tradePostIds' => [],
+				'tradePostIds' => []
 			];
 
 			foreach ($tradePosts AS $tradePostId => $tradePost)
@@ -66,17 +69,17 @@ class TradePost extends AbstractHandler
 
 		return true;
 	}
-
+	
 	/**
 	 * @param array $log
 	 * @param null $error
 	 *
 	 * @return bool
-	 * @throws PrintableException
+	 * @throws \XF\PrintableException
 	 */
 	public function restore(array $log, &$error = null): bool
 	{
-		$tradePostsFinder = \XF::app()->finder(TradePostFinder::class);
+		$tradePostsFinder = \XF::app()->finder('DBTech\Shop:TradePost');
 
 		if ($log['deleteType'] == 'soft')
 		{

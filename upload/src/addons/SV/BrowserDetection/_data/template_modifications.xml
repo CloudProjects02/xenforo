@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="PAGE_CONTAINER" modification_key="sv_brower_detect_PAGE_CONTAINER" description="Inject browser detection into page class wrapper" execution_order="7223000" enabled="1" action="preg_replace">
+    <find><![CDATA[#<html.*?class="#si]]></find>
+    <replace><![CDATA[$0{{ $xf.mobileDetect ? $xf.mobileDetect.getHtmlCss() : ''}}]]></replace>
+  </modification>
+</template_modifications>

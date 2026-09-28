@@ -1,0 +1,14 @@
+{
+    "legacy_addon_id": "",
+    "title": "[SynapseThemes] Custom Resource View Page",
+    "description": "Customizes the XenForo Resource Manager (XFRM) resource view page with a modern, responsive layout featuring gradient headers, card-based design, and improved visual hierarchy.",
+    "version_id": 100,
+    "version_string": "1.0.0",
+    "dev": "Synapse-Themes",
+    "dev_url": "https://synapse-themes.cc",
+    "faq_url": "",
+    "support_url": "",
+    "extra_urls": [],
+    "require": [],
+    "icon": ""
+}

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<options>
+  <option option_id="xc_profile_views_block_positions" edit_format="select" data_type="string">
+    <default_value>sidebar</default_value>
+    <edit_format_params>sidebar={{ phrase('xc_profile_views_sidebar') }}
+sidenav={{ phrase('xc_profile_views_sidenav') }}</edit_format_params>
+    <relation group_id="xc_profile_views" display_order="201"/>
+  </option>
+  <option option_id="xc_profile_views_clear_view_logs_after_x_days" edit_format="spinbox" data_type="unsigned_integer">
+    <default_value>0</default_value>
+    <edit_format_params>units={{ phrase('units_days') }}</edit_format_params>
+    <relation group_id="xc_profile_views" display_order="10"/>
+  </option>
+  <option option_id="xc_profile_views_cooldown_period" edit_format="spinbox" data_type="unsigned_integer">
+    <default_value>1</default_value>
+    <edit_format_params>units={{ phrase('units_hours') }}</edit_format_params>
+    <relation group_id="xc_profile_views" display_order="2"/>
+  </option>
+  <option option_id="xc_profile_views_enable_block_profile_views" edit_format="onoff" data_type="boolean">
+    <default_value>1</default_value>
+    <relation group_id="xc_profile_views" display_order="100"/>
+  </option>
+  <option option_id="xc_profile_views_enable_most_profile_viewed" edit_format="onoff" data_type="boolean">
+    <default_value>1</default_value>
+    <relation group_id="xc_profile_views" display_order="120"/>
+  </option>
+  <option option_id="xc_profile_views_enable_widget_recent_viewers" edit_format="onoff" data_type="boolean">
+    <default_value>1</default_value>
+    <relation group_id="xc_profile_views" display_order="110"/>
+  </option>
+  <option option_id="xc_profile_views_user_exclude_most_viewer" edit_format="username" data_type="array">
+    <default_value>[]</default_value>
+    <sub_options>*</sub_options>
+    <relation group_id="xc_profile_views" display_order="301"/>
+  </option>
+</options>

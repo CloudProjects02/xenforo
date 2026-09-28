@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<admin_navigation>
+  <admin_navigation_entry navigation_id="xfdev_lucky_awards" parent_navigation_id="addonFlareAwardSystem" display_order="2000" icon="fa-award" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="xfdev_lucky_awards_manage" parent_navigation_id="xfdev_lucky_awards" display_order="200" link="lucky-awards/manage" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="xfdev_lucky_awards_settings" parent_navigation_id="xfdev_lucky_awards" display_order="100" link="options/groups/xfdev_lucky_awards_options" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="xfdev_lucky_awards_users" parent_navigation_id="xfdev_lucky_awards" display_order="300" link="lucky-awards/users" debug_only="0" development_only="0" hide_no_children="0"/>
+</admin_navigation>

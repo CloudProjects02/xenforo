@@ -1,0 +1,25 @@
+{
+    "legacy_addon_id": "",
+    "title": "[BZ] MenuFlex",
+    "description": "Enhance your XenForo menus with customizable flair and function.",
+    "version_id": 2000070,
+    "version_string": "2.0.0",
+    "dev": "BZ Computers",
+    "dev_url": "https://xenforo.com/community/members/bzcomputers.150507/",
+    "faq_url": "",
+    "support_url": "",
+    "extra_urls": {
+        "Donate": "https://www.paypal.com/donate/?hosted_button_id=HXG8HC8TLWM4S"
+    },
+    "require": {
+        "XF": [
+            2030010,
+            "XenForo 2.3.0+"
+        ],
+        "php": [
+            "8.0",
+            "PHP 8.0+"
+        ]
+    },
+    "icon": "MenuFlex.png"
+}

@@ -2,11 +2,6 @@
 
 namespace DBTech\Shop\Entity;
 
-use DBTech\Shop\ItemType\AbstractHandler;
-use DBTech\Shop\Repository\PurchaseRepository;
-use XF\Entity\Thread;
-use XF\Entity\User;
-use XF\Entity\ViewableInterface;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 
@@ -20,7 +15,6 @@ use XF\Mvc\Entity\Structure;
  * @property int $dateline
  * @property array $configuration
  * @property string $message
- * @property string $message_
  * @property bool $active
  * @property bool $hidden
  * @property bool $configured
@@ -30,15 +24,15 @@ use XF\Mvc\Entity\Structure;
  * @property int $discussion_thread_id
  *
  * GETTERS
- * @property-read AbstractHandler|null $handler
+ * @property \DBTech\Shop\ItemType\AbstractHandler|null $handler
  *
  * RELATIONS
- * @property-read Item|null $Item
- * @property-read User|null $User
- * @property-read User|null $Buyer
- * @property-read Thread|null $Discussion
+ * @property \DBTech\Shop\Entity\Item $Item
+ * @property \XF\Entity\User $User
+ * @property \XF\Entity\User $Buyer
+ * @property \XF\Entity\Thread $Discussion
  */
-class Purchase extends Entity implements ViewableInterface
+class Purchase extends Entity
 {
 	/**
 	 * @param null $error
@@ -60,10 +54,10 @@ class Purchase extends Entity implements ViewableInterface
 		{
 			return false;
 		}
-
+		
 		return true;
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -71,7 +65,7 @@ class Purchase extends Entity implements ViewableInterface
 	{
 		return $this->expiry_date == 0;
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -79,7 +73,7 @@ class Purchase extends Entity implements ViewableInterface
 	{
 		return $this->active;
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -87,7 +81,7 @@ class Purchase extends Entity implements ViewableInterface
 	{
 		return ($this->expiry_date && $this->expiry_date < \XF::$time);
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -97,7 +91,7 @@ class Purchase extends Entity implements ViewableInterface
 			&& $this->Item->isDisplayed()
 		);
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -107,7 +101,7 @@ class Purchase extends Entity implements ViewableInterface
 			&& !$this->isExpired()
 		);
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -118,7 +112,7 @@ class Purchase extends Entity implements ViewableInterface
 			&& $this->Item->canDiscard()
 		);
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -129,7 +123,7 @@ class Purchase extends Entity implements ViewableInterface
 			&& (!$this->gifted || $this->Item->canReGift())
 		);
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -143,7 +137,7 @@ class Purchase extends Entity implements ViewableInterface
 			)
 		);
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -155,7 +149,7 @@ class Purchase extends Entity implements ViewableInterface
 			&& (!$this->traded || $this->Item->canReGift())
 		);
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -163,7 +157,7 @@ class Purchase extends Entity implements ViewableInterface
 	{
 		return $this->handler->isConfigurable();
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -176,7 +170,7 @@ class Purchase extends Entity implements ViewableInterface
 			&& $this->handler->getUserConfigTemplate() !== ''
 		);
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -202,70 +196,82 @@ class Purchase extends Entity implements ViewableInterface
 		$visitor = \XF::visitor();
 		return ($visitor->user_id && $visitor->user_id == $this->user_id);
 	}
-
+	
 	/**
 	 * @return bool
 	 */
 	public function canSendModeratorActionAlert(): bool
 	{
 		$visitor = \XF::visitor();
-
+		
 		return (
 			$visitor->user_id
 			&& $visitor->user_id != $this->user_id
-			//			&& $this->purchase_state == 'visible'
+//			&& $this->purchase_state == 'visible'
 		);
 	}
-
+	
 	/**
 	 * @param string $key
 	 *
 	 * @return array|string|null
 	 */
-	public function getConfiguration(string $key = ''): array|string|null
+	public function getConfiguration(string $key = '')
 	{
 		return ($key ?
-			($this->configuration[$key] ?? null) :
+			(isset($this->configuration[$key]) ? $this->configuration[$key] : null) :
 			$this->configuration
 		);
 	}
-
+	
 	/**
-	 * @return AbstractHandler|null
+	 * @return \DBTech\Shop\ItemType\AbstractHandler|null
 	 * @throws \Exception
 	 */
-	public function getHandler(): ?AbstractHandler
+	public function getHandler(): ?\DBTech\Shop\ItemType\AbstractHandler
 	{
 		$handler = $this->Item->handler;
-		$handler?->setPurchase($this)
-			->addListeners()
-		;
-
+		if ($handler !== null)
+		{
+			$handler->setPurchase($this)
+				->addListeners()
+			;
+		}
+		
 		return $handler;
 	}
 
 	/**
 	 *
 	 */
-	protected function _preSave(): void
+	protected function _preSave()
 	{
 		if ($this->isUpdate())
 		{
 			if ($this->isExpired()
 				&& $this->isChanged('active')
 				&& $this->active
-			)
-			{
+			) {
 				// Somehow this was set to active, but don't trust it as the purchase is expired
 				$this->active = false;
 			}
 		}
-	}
 
+		if ($this->isInsert() && (in_array($this->Item->item_type_id, ['usernameitem'])))
+        {
+            $this->active = false;
+        }
+
+		if ($this->isInsert() && (in_array($this->Item->item_type_id, ['avatarframe', 'profileeffects'])))
+        {
+            $this->active = false;
+        }
+	}
+	
 	/**
 	 *
 	 */
-	protected function _postSave(): void
+	protected function _postSave()
 	{
 		/*
 		if ($this->isUpdate())
@@ -288,51 +294,44 @@ class Purchase extends Entity implements ViewableInterface
 			$handler->activate();
 		}
 		*/
-
-		$purchaseRepo = \XF::app()->repository(PurchaseRepository::class);
+		
+		/** @var \DBTech\Shop\Repository\Purchase $purchaseRepo */
+		$purchaseRepo = $this->getPurchaseRepo();
 
 		if ($this->User)
 		{
 			$purchaseRepo->rebuildCacheForUser($this->User);
 		}
-
+		
 		if ($this->isUpdate()
 			&& $this->isChanged('user_id')
 			&& $this->Buyer
-		)
-		{
+		) {
 			// Update the buyer's cache since this was probably a gift
 			$purchaseRepo->rebuildCacheForUser($this->Buyer);
 		}
-
+		
 		if (in_array($this->Item->item_type_id, ['usernamestyle', 'usernamestyle2']))
 		{
 			$this->rebuildUserNameStyleCache();
 		}
-
+		
 		if (in_array($this->Item->item_type_id, ['usertitlestyle', 'usertitlestyle2']))
 		{
 			$this->rebuildUserTitleStyleCache();
 		}
-
-		if (in_array($this->Item->item_type_id, ['avatarstyle', 'avatarstyle2']))
-		{
-			$this->rebuildAvatarStyleCache();
-		}
 	}
-
+	
 	/**
 	 * @throws \XF\Db\Exception
 	 */
-	protected function _postDelete(): void
+	protected function _postDelete()
 	{
 		if ($this->User)
 		{
-			\XF::app()->repository(PurchaseRepository::class)
-				->rebuildCacheForUser($this->User)
-			;
+			$this->getPurchaseRepo()->rebuildCacheForUser($this->User);
 		}
-
+		
 		/*
 		// Update stock and add purchase counter
 		$this->db()->query("
@@ -341,52 +340,52 @@ class Purchase extends Entity implements ViewableInterface
 			WHERE item_id = ?
 		", $this->item_id);
 		 */
-
+		
 		// Decrement purchases count
 		$this->db()->query('
 			UPDATE xf_user
 				SET dbtech_shop_purchases = GREATEST(0, CAST(dbtech_shop_purchases AS SIGNED) - 1)
 			WHERE user_id = ?
 		', $this->buyer_user_id);
-
+		
 		$category = $this->Item->Category;
 		if ($category)
 		{
 			$category->rebuildLastSale();
 			$category->saveIfChanged();
 		}
-
+		
 		if (in_array($this->Item->item_type_id, ['usernamestyle', 'usernamestyle2']))
 		{
 			$this->rebuildUserNameStyleCache();
 		}
-
+		
 		if (in_array($this->Item->item_type_id, ['usertitlestyle', 'usertitlestyle2']))
 		{
 			$this->rebuildUserTitleStyleCache();
 		}
 	}
-
+	
 	/**
 	 *
 	 */
-	protected function rebuildUserNameStyleCache(): void
+	protected function rebuildUserNameStyleCache()
 	{
-		$repo = \XF::app()->repository(PurchaseRepository::class);
-
+		$repo = $this->getPurchaseRepo();
+		
 		\XF::runOnce('dbtShopUserNameStyleRebuild', function () use ($repo)
 		{
 			$repo->rebuildUserNameStyleCache();
 		});
 	}
-
+	
 	/**
 	 *
 	 */
-	protected function rebuildUserTitleStyleCache(): void
+	protected function rebuildUserTitleStyleCache()
 	{
-		$repo = \XF::app()->repository(PurchaseRepository::class);
-
+		$repo = $this->getPurchaseRepo();
+		
 		\XF::runOnce('dbtShopUserTitleStyleRebuild', function () use ($repo)
 		{
 			$repo->rebuildUserTitleStyleCache();
@@ -394,22 +393,9 @@ class Purchase extends Entity implements ViewableInterface
 	}
 
 	/**
+	 * @param \XF\Mvc\Entity\Structure $structure
 	 *
-	 */
-	protected function rebuildAvatarStyleCache(): void
-	{
-		$repo = \XF::app()->repository(PurchaseRepository::class);
-
-		\XF::runOnce('dbtShopAvatarStyleRebuild', function () use ($repo)
-		{
-			$repo->rebuildAvatarStyleCache();
-		});
-	}
-
-	/**
-	 * @param Structure $structure
-	 *
-	 * @return Structure
+	 * @return \XF\Mvc\Entity\Structure
 	 */
 	public static function getStructure(Structure $structure): Structure
 	{
@@ -434,37 +420,37 @@ class Purchase extends Entity implements ViewableInterface
 			'discussion_thread_id' => ['type' => self::UINT, 'default' => 0],
 		];
 		$structure->getters = [
-			'handler' => true,
+			'handler' => true
 		];
 		$structure->relations = [
 			'Item' => [
-				'entity' => Item::class,
+				'entity' => 'DBTech\Shop:Item',
 				'type' => self::TO_ONE,
 				'conditions' => 'item_id',
-				'primary' => true,
+				'primary' => true
 			],
 			'User' => [
-				'entity' => User::class,
+				'entity' => 'XF:User',
 				'type' => self::TO_ONE,
 				'conditions' => 'user_id',
-				'primary' => true,
+				'primary' => true
 			],
 			'Buyer' => [
-				'entity' => User::class,
+				'entity' => 'XF:User',
 				'type' => self::TO_ONE,
 				'conditions' => [
-					['user_id', '=', '$buyer_user_id'],
+					['user_id', '=', '$buyer_user_id']
 				],
-				'primary' => true,
+				'primary' => true
 			],
 			'Discussion' => [
-				'entity' => Thread::class,
+				'entity' => 'XF:Thread',
 				'type' => self::TO_ONE,
 				'conditions' => [
-					['thread_id', '=', '$discussion_thread_id'],
+					['thread_id', '=', '$discussion_thread_id']
 				],
-				'primary' => true,
-			],
+				'primary' => true
+			]
 		];
 
 		$structure->withAliases = [
@@ -478,12 +464,12 @@ class Purchase extends Entity implements ViewableInterface
 					if ($userId)
 					{
 						return [
-							'Item.Watch|' . $userId,
+							'Item.Watch|' . $userId
 						];
 					}
 
 					return null;
-				},
+				}
 			],
 			'fullCategory' => [
 				'full',
@@ -498,10 +484,18 @@ class Purchase extends Entity implements ViewableInterface
 					}
 
 					return $with;
-				},
-			],
+				}
+			]
 		];
 
 		return $structure;
+	}
+	
+	/**
+	 * @return \DBTech\Shop\Repository\Purchase|\XF\Mvc\Entity\Repository
+	 */
+	protected function getPurchaseRepo()
+	{
+		return $this->repository('DBTech\Shop:Purchase');
 	}
 }

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="option.xfdevs_threadPosters_enabled" version_id="100" version_string="1.0.0"><![CDATA[Enable Thread Poster Avatars ]]></phrase>
+  <phrase title="option.xfdevs_threadPosters_limit" version_id="100" version_string="1.0.0"><![CDATA[Number of Top Poster Avatars ]]></phrase>
+  <phrase title="option_explain.xfdevs_threadPosters_enabled" version_id="100" version_string="1.0.0"><![CDATA[If enabled, avatars of thread owners and top posters will be displayed in thread lists. ]]></phrase>
+  <phrase title="option_explain.xfdevs_threadPosters_limit" version_id="100" version_string="1.0.0"><![CDATA[Enter the number of top poster avatars to display (excluding the thread owner). Maximum: 5 ]]></phrase>
+  <phrase title="option_group_xfdevs_threadPosters" version_id="100" version_string="1.0.0"><![CDATA[Thread Poster Avatars ]]></phrase>
+  <phrase title="option_group_xfdevs_threadPosters_description" version_id="100" version_string="1.0.0"><![CDATA[Configure settings for the Thread Poster Avatars addon. ]]></phrase>
+</phrases>

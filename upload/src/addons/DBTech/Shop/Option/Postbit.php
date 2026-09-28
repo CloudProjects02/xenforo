@@ -2,21 +2,25 @@
 
 namespace DBTech\Shop\Option;
 
-use XF\Entity\Option;
 use XF\Option\AbstractOption;
 
+/**
+ * Class Postbit
+ *
+ * @package DBTech\Shop\Option
+ */
 class Postbit extends AbstractOption
 {
 	/**
-	 * @param Option $option
+	 * @param \XF\Entity\Option $option
 	 * @param array $htmlParams
 	 *
 	 * @return string
 	 */
-	public static function renderCheckbox(Option $option, array $htmlParams): string
+	public static function renderCheckbox(\XF\Entity\Option $option, array $htmlParams): string
 	{
 		$bitfielddefs = [
-			'dbtech_shop_below_postcount' => 2,
+			'dbtech_shop_below_postcount' => 2
 		];
 
 		$value = [];
@@ -32,14 +36,14 @@ class Postbit extends AbstractOption
 
 		return self::getCheckboxRow($option, $htmlParams, $choices, $value);
 	}
-
+	
 	/**
 	 * @param array $choices
-	 * @param Option $option
+	 * @param \XF\Entity\Option $option
 	 *
 	 * @return bool
 	 */
-	public static function verifyOption(array &$choices, Option $option): bool
+	public static function verifyOption(array &$choices, \XF\Entity\Option $option): bool
 	{
 		if ($option->isInsert())
 		{

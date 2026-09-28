@@ -2,10 +2,8 @@
 
 namespace DBTech\Shop\Entity;
 
-use DBTech\Shop\Repository\CategoryPrefixRepository;
 use XF\Entity\AbstractPrefix;
 use XF\Mvc\Entity\Structure;
-use XF\Phrase;
 
 /**
  * COLUMNS
@@ -17,14 +15,14 @@ use XF\Phrase;
  * @property array $allowed_user_group_ids
  *
  * GETTERS
- * @property-read string|Phrase $title
- * @property-read bool $has_usage_help
- * @property-read array $category_ids
+ * @property string|\XF\Phrase $title
+ * @property bool $has_usage_help
+ * @property array $category_ids
  *
  * RELATIONS
- * @property-read \XF\Entity\Phrase|null $MasterTitle
- * @property-read ItemPrefixGroup|null $PrefixGroup
- * @property-read \XF\Mvc\Entity\AbstractCollection<\DBTech\Shop\Entity\CategoryPrefix> $CategoryPrefixes
+ * @property \XF\Entity\Phrase $MasterTitle
+ * @property \DBTech\Shop\Entity\ItemPrefixGroup $PrefixGroup
+ * @property \XF\Mvc\Entity\AbstractCollection|\DBTech\Shop\Entity\CategoryPrefix[] $CategoryPrefixes
  */
 class ItemPrefix extends AbstractPrefix
 {
@@ -35,7 +33,7 @@ class ItemPrefix extends AbstractPrefix
 	{
 		return 'DBTech\Shop:ItemPrefix';
 	}
-
+	
 	/**
 	 * @return string
 	 */
@@ -64,18 +62,19 @@ class ItemPrefix extends AbstractPrefix
 	/**
 	 *
 	 */
-	protected function _postDelete(): void
+	protected function _postDelete()
 	{
 		parent::_postDelete();
 
-		$categoryPrefixRepo = \XF::app()->repository(CategoryPrefixRepository::class);
+		/** @var \DBTech\Shop\Repository\CategoryPrefix $categoryPrefixRepo */
+		$categoryPrefixRepo = $this->repository('DBTech\Shop:CategoryPrefix');
 		$categoryPrefixRepo->removePrefixAssociations($this);
 	}
 
 	/**
-	 * @param Structure $structure
+	 * @param \XF\Mvc\Entity\Structure $structure
 	 *
-	 * @return Structure
+	 * @return \XF\Mvc\Entity\Structure
 	 */
 	public static function getStructure(Structure $structure): Structure
 	{
@@ -84,9 +83,9 @@ class ItemPrefix extends AbstractPrefix
 		$structure->getters['category_ids'] = true;
 
 		$structure->relations['CategoryPrefixes'] = [
-			'entity' => CategoryPrefix::class,
+			'entity' => 'DBTech\Shop:CategoryPrefix',
 			'type' => self::TO_MANY,
-			'conditions' => 'prefix_id',
+			'conditions' => 'prefix_id'
 		];
 
 		return $structure;

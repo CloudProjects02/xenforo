@@ -2,11 +2,16 @@
 
 namespace DBTech\Shop\Search\Data;
 
-use XF\Mvc\Entity\Entity;
 use XF\Search\Data\AbstractData;
+use XF\Mvc\Entity\Entity;
 use XF\Search\IndexRecord;
 use XF\Search\MetadataStructure;
 
+/**
+ * Class TradePostComment
+ *
+ * @package DBTech\Shop\Search\Data
+ */
 class TradePostComment extends AbstractData
 {
 	/**
@@ -24,7 +29,7 @@ class TradePostComment extends AbstractData
 
 		return $get;
 	}
-
+	
 	/**
 	 * @param Entity $entity
 	 *
@@ -45,7 +50,7 @@ class TradePostComment extends AbstractData
 			'date' => $entity->comment_date,
 			'user_id' => $entity->user_id,
 			'discussion_id' => $entity->trade_post_id,
-			'metadata' => $this->getMetaData($entity),
+			'metadata' => $this->getMetaData($entity)
 		]);
 
 		if (!$entity->isVisible())
@@ -55,7 +60,7 @@ class TradePostComment extends AbstractData
 
 		return $index;
 	}
-
+	
 	/**
 	 * @param \DBTech\Shop\Entity\TradePostComment $entity
 	 *
@@ -69,15 +74,15 @@ class TradePostComment extends AbstractData
 
 		return $metadata;
 	}
-
+	
 	/**
 	 * @param MetadataStructure $structure
 	 */
-	public function setupMetadataStructure(MetadataStructure $structure): void
+	public function setupMetadataStructure(MetadataStructure $structure)
 	{
 		$structure->addField('trade_owner', MetadataStructure::INT);
 	}
-
+	
 	/**
 	 * @param Entity $entity
 	 *
@@ -86,10 +91,10 @@ class TradePostComment extends AbstractData
 	public function getResultDate(Entity $entity): int
 	{
 		/** @var \DBTech\Shop\Entity\TradePostComment $entity */
-
+		
 		return $entity->comment_date;
 	}
-
+	
 	/**
 	 * @param Entity $entity
 	 * @param array $options
@@ -100,7 +105,7 @@ class TradePostComment extends AbstractData
 	{
 		return [
 			'comment' => $entity,
-			'options' => $options,
+			'options' => $options
 		];
 	}
 }

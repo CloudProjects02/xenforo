@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<permissions>
+  <permission permission_group_id="dbtech_security" permission_id="pwdrule_expiry" permission_type="integer" interface_group_id="dbtech_securitypermissions" display_order="70"/>
+  <permission permission_group_id="dbtech_security" permission_id="pwdrule_lc" permission_type="flag" interface_group_id="dbtech_securitypermissions" display_order="30"/>
+  <permission permission_group_id="dbtech_security" permission_id="pwdrule_length" permission_type="integer" interface_group_id="dbtech_securitypermissions" display_order="20"/>
+  <permission permission_group_id="dbtech_security" permission_id="pwdrule_num" permission_type="flag" interface_group_id="dbtech_securitypermissions" display_order="50"/>
+  <permission permission_group_id="dbtech_security" permission_id="pwdrule_sym" permission_type="flag" interface_group_id="dbtech_securitypermissions" display_order="60"/>
+  <permission permission_group_id="dbtech_security" permission_id="pwdrule_uc" permission_type="flag" interface_group_id="dbtech_securitypermissions" display_order="40"/>
+</permissions>

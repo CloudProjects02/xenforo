@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<routes>
+  <route route_type="public" route_prefix="resources" sub_name="custom-react" format=":int&lt;resource_id&gt;/custom-react" controller="XFRM:ResourceItem" action_prefix="CustomReact"/>
+</routes>

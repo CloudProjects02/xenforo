@@ -2,10 +2,13 @@
 
 namespace DBTech\Shop\Job;
 
-use DBTech\Shop\Repository\PurchaseRepository;
 use XF\Job\AbstractRebuildJob;
-use XF\Phrase;
 
+/**
+ * Class PurchaseCount
+ *
+ * @package DBTech\Shop\Job
+ */
 class PurchaseCount extends AbstractRebuildJob
 {
 	/**
@@ -16,7 +19,7 @@ class PurchaseCount extends AbstractRebuildJob
 	 */
 	protected function getNextIds($start, $batch): array
 	{
-		$db = \XF::app()->db();
+		$db = $this->app->db();
 
 		return $db->fetchAllColumn($db->limit(
 			'
@@ -32,18 +35,19 @@ class PurchaseCount extends AbstractRebuildJob
 	/**
 	 * @param $id
 	 */
-	protected function rebuildById($id): void
+	protected function rebuildById($id)
 	{
-		$repo = \XF::app()->repository(PurchaseRepository::class);
+		/** @var \DBTech\Shop\Repository\Purchase $repo */
+		$repo = $this->app->repository('DBTech\Shop:Purchase');
 		$count = $repo->getPurchaseCount($id);
 
-		\XF::app()->db()->update('xf_user', ['dbtech_shop_purchases' => $count], 'user_id = ?', $id);
+		$this->app->db()->update('xf_user', ['dbtech_shop_purchases' => $count], 'user_id = ?', $id);
 	}
 
 	/**
-	 * @return Phrase
+	 * @return \XF\Phrase
 	 */
-	protected function getStatusType(): Phrase
+	protected function getStatusType(): \XF\Phrase
 	{
 		return \XF::phrase('dbtech_shop_shop_purchase_counts');
 	}

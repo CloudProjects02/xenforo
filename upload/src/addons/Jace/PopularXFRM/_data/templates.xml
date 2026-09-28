@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="public" title="jace_popular_resource_member_block" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[<div class="block">
+	<div class="block-container">
+		<h3 class="block-header">{{ phrase('jace_popular_resource.popular_resources') }}</h3>
+		<div class="block-body">
+			<xf:foreach loop="$popularResources" value="$resource">
+				<div class="contentRow">
+					<div class="contentRow-figure">
+						<xf:if is="$xf.options.xfrmAllowIcons && $resource.icon_date">
+							
+						<xf:else />
+							<xf:avatar user="$resource.User" size="s" defaultname="{$resource.username}" />
+						</xf:if>
+					</div>
+					<div class="contentRow-main">
+						<h4 class="contentRow-title">
+							<a href="{{ link('resources', $resource) }}">{{ prefix('resource', $resource) }}{$resource.title}</a>
+						</h4>
+						<xf:if is="$resource.tag_line">
+							<div class="contentRow-snippet">{$resource.tag_line}</div>
+						</xf:if>
+						<div class="contentRow-minor">
+							<ul class="listInline listInline--bullet">
+								<li>
+									<xf:if is="$resource.rating_avg">
+										<xf:macro template="rating_macros" name="stars"
+											arg-rating="{$resource.rating_avg}"
+											arg-class="ratingStars--smaller" />
+										<span class="u-muted">({$resource.rating_count|number})</span>
+									<xf:else />
+										<span class="u-muted">{{ phrase('jace_popular_resource.not_rated') }}</span>
+									</xf:if>
+								</li>
+								<li>
+									<xf:if is="$resource.download_count">
+										{{ phrase('jace_popular_resource.x_downloads', {'count': $resource.download_count|number}) }}
+									<xf:else />
+										{{ phrase('jace_popular_resource.no_downloads') }}
+									</xf:if>
+								</li>
+								<li><xf:date time="{$resource.last_update}" /></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</xf:foreach>
+			
+			<xf:if is="$user.xfrm_resource_count > $popularResources.count()">
+				<div class="block-footer">
+					<a href="{{ link('resources/authors', $user) }}">{{ phrase('jace_popular_resource.view_all_resources_by_x', {'name': $user.username}) }}</a>
+				</div>
+			</xf:if>
+		</div>
+	</div>
+</div>]]></template>
+</templates>

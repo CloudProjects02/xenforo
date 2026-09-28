@@ -2,10 +2,13 @@
 
 namespace DBTech\Shop\Job;
 
-use DBTech\Shop\Repository\ItemRepository;
 use XF\Job\AbstractRebuildJob;
-use XF\Phrase;
 
+/**
+ * Class UserItemCount
+ *
+ * @package DBTech\Shop\Job
+ */
 class UserItemCount extends AbstractRebuildJob
 {
 	/**
@@ -16,7 +19,7 @@ class UserItemCount extends AbstractRebuildJob
 	 */
 	protected function getNextIds($start, $batch): array
 	{
-		$db = \XF::app()->db();
+		$db = $this->app->db();
 
 		return $db->fetchAllColumn($db->limit(
 			'
@@ -28,22 +31,23 @@ class UserItemCount extends AbstractRebuildJob
 			$batch
 		), $start);
 	}
-
+	
 	/**
 	 * @param $id
 	 */
-	protected function rebuildById($id): void
+	protected function rebuildById($id)
 	{
-		$repo = \XF::app()->repository(ItemRepository::class);
+		/** @var \DBTech\Shop\Repository\Item $repo */
+		$repo = $this->app->repository('DBTech\Shop:Item');
 		$count = $repo->getUserItemCount($id);
 
-		\XF::app()->db()->update('xf_user', ['dbtech_shop_item_count' => $count], 'user_id = ?', $id);
+		$this->app->db()->update('xf_user', ['dbtech_shop_item_count' => $count], 'user_id = ?', $id);
 	}
-
+	
 	/**
-	 * @return Phrase
+	 * @return \XF\Phrase
 	 */
-	protected function getStatusType(): Phrase
+	protected function getStatusType(): \XF\Phrase
 	{
 		return \XF::phrase('dbtech_shop_shop_item_counts');
 	}

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<class_extensions>
+  <extension from_class="DBTech\Shop\Entity\Purchase" to_class="XFDev\ShopUsernameIcon\Entity\Purchase" execute_order="10" active="1"/>
+  <extension from_class="DBTech\Shop\Pub\Controller\Inventory" to_class="XFDev\ShopUsernameIcon\Pub\Controller\Inventory" execute_order="10" active="1"/>
+  <extension from_class="DBTech\Shop\Pub\Controller\Item" to_class="XFDev\ShopUsernameIcon\Pub\Controller\Item" execute_order="10" active="1"/>
+  <extension from_class="DBTech\Shop\Repository\Purchase" to_class="XFDev\ShopUsernameIcon\Repository\Purchase" execute_order="10" active="1"/>
+  <extension from_class="XF\Template\Templater" to_class="XFDev\ShopUsernameIcon\XF\Template\Templater" execute_order="10" active="1"/>
+</class_extensions>

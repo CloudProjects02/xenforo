@@ -3,8 +3,12 @@
 namespace DBTech\Shop\Job;
 
 use XF\Job\AbstractRebuildJob;
-use XF\Phrase;
 
+/**
+ * Class TradePost
+ *
+ * @package DBTech\Shop\Job
+ */
 class TradePost extends AbstractRebuildJob
 {
 	/**
@@ -15,7 +19,7 @@ class TradePost extends AbstractRebuildJob
 	 */
 	protected function getNextIds($start, $batch): array
 	{
-		$db = \XF::app()->db();
+		$db = $this->app->db();
 
 		return $db->fetchAllColumn($db->limit(
 			"
@@ -27,13 +31,14 @@ class TradePost extends AbstractRebuildJob
 			$batch
 		), $start);
 	}
-
+	
 	/**
 	 * @param $id
 	 */
-	protected function rebuildById($id): void
+	protected function rebuildById($id)
 	{
-		$tradePost = \XF::app()->em()->find(\DBTech\Shop\Entity\TradePost::class, $id);
+		/** @var \DBTech\Shop\Entity\TradePost $tradePost */
+		$tradePost = $this->app->em()->find('DBTech\Shop:TradePost', $id);
 		if (!$tradePost)
 		{
 			return;
@@ -42,11 +47,11 @@ class TradePost extends AbstractRebuildJob
 		$tradePost->rebuildCounters();
 		$tradePost->saveIfChanged();
 	}
-
+	
 	/**
-	 * @return Phrase
+	 * @return \XF\Phrase
 	 */
-	protected function getStatusType(): Phrase
+	protected function getStatusType(): \XF\Phrase
 	{
 		return \XF::phrase('dbtech_shop_shop_trade_posts');
 	}

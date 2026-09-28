@@ -1,0 +1,14 @@
+{
+    "legacy_addon_id": "",
+    "title": "[XC] RankingSystem",
+    "description": "Ranking System for XenForo",
+    "version_id": 2040530,
+    "version_string": "2.4.6 Alpha Extended",
+    "dev": "Xencircle & Jace",
+    "dev_url": "",
+    "faq_url": "",
+    "support_url": "",
+    "extra_urls": [],
+    "require": [],
+    "icon": "fa-star"
+}

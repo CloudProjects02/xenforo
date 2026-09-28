@@ -2,22 +2,13 @@
 
 namespace DBTech\Shop\Entity;
 
-use DBTech\Shop\Repository\TradePostRepository;
-use XF\Api\Result\EntityResult;
 use XF\BbCode\RenderableContentInterface;
-use XF\Entity\ApprovalQueue;
-use XF\Entity\DeletionLog;
 use XF\Entity\LinkableInterface;
-use XF\Entity\ReactionTrait;
 use XF\Entity\User;
-use XF\Entity\ViewableInterface;
-use XF\Mvc\Entity\AbstractCollection;
+use XF\Mvc\Entity\ArrayCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
-use XF\Phrase;
-use XF\PrintableException;
-use XF\Repository\UserAlertRepository;
-use XF\Spam\ContentChecker;
+use XF\Entity\ReactionTrait;
 
 /**
  * COLUMNS
@@ -42,24 +33,24 @@ use XF\Spam\ContentChecker;
  * @property array $reaction_users_
  *
  * GETTERS
- * @property-read array $comment_ids
- * @property-read \XF\Mvc\Entity\AbstractCollection<\DBTech\Shop\Entity\TradePostComment>|null $LatestComments
- * @property-read array $Unfurls
+ * @property array $comment_ids
+ * @property ArrayCollection|null $LatestComments
+ * @property array $Unfurls
  * @property mixed $reactions
  * @property mixed $reaction_users
  *
  * RELATIONS
- * @property-read Trade|null $Trade
- * @property-read User|null $User
- * @property-read DeletionLog|null $DeletionLog
- * @property-read ApprovalQueue|null $ApprovalQueue
- * @property-read \XF\Mvc\Entity\AbstractCollection<\DBTech\Shop\Entity\TradePostComment> $Comments
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\ReactionContent> $Reactions
+ * @property \DBTech\Shop\Entity\Trade $Trade
+ * @property \XF\Entity\User $User
+ * @property \XF\Entity\DeletionLog $DeletionLog
+ * @property \XF\Entity\ApprovalQueue $ApprovalQueue
+ * @property \XF\Mvc\Entity\AbstractCollection|\DBTech\Shop\Entity\TradePostComment[] $Comments
+ * @property \XF\Mvc\Entity\AbstractCollection|\XF\Entity\ReactionContent[] $Reactions
  */
-class TradePost extends Entity implements LinkableInterface, RenderableContentInterface, ViewableInterface
+class TradePost extends Entity implements LinkableInterface, RenderableContentInterface
 {
 	use ReactionTrait;
-
+	
 	/**
 	 * @param null $error
 	 *
@@ -68,29 +59,28 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 	public function canView(&$error = null): bool
 	{
 		$visitor = \XF::visitor();
-
+		
 		if (!$this->Trade)
 		{
 			return false;
 		}
-
+		
 		if (!$this->Trade->canView())
 		{
 			return false;
 		}
-
+		
 		if ($this->message_state == 'moderated')
 		{
 			if (
 				!$visitor->hasPermission('dbtechShopTradePost', 'viewModerated')
 				&& (!$visitor->user_id || $visitor->user_id != $this->user_id)
-			)
-			{
+			) {
 				$error = \XF::phraseDeferred('dbtech_shop_requested_trade_post_not_found');
 				return false;
 			}
 		}
-		else if ($this->message_state == 'deleted')
+		elseif ($this->message_state == 'deleted')
 		{
 			if (!$visitor->hasPermission('dbtechShopTradePost', 'viewDeleted'))
 			{
@@ -98,10 +88,10 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 				return false;
 			}
 		}
-
+		
 		return true;
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
@@ -112,7 +102,7 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 		$visitor = \XF::visitor();
 		return ($visitor->user_id && $visitor->hasPermission('dbtechShopTradePost', 'inlineMod'));
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
@@ -121,12 +111,12 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 	public function canEdit(&$error = null): bool
 	{
 		$visitor = \XF::visitor();
-
+		
 		if (!$visitor->user_id)
 		{
 			return false;
 		}
-
+		
 		if ($visitor->user_id == $this->user_id)
 		{
 			return $visitor->hasPermission('dbtechShopTradePost', 'editOwn');
@@ -136,7 +126,7 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 			return $visitor->hasPermission('dbtechShopTradePost', 'editAny');
 		}
 	}
-
+	
 	/**
 	 * @param string $type
 	 * @param null $error
@@ -150,17 +140,17 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 		{
 			return false;
 		}
-
+		
 		if ($type != 'soft' && !$visitor->hasPermission('dbtechShopTradePost', 'hardDeleteAny'))
 		{
 			return false;
 		}
-
+		
 		if ($visitor->hasPermission('dbtechShopTradePost', 'deleteAny'))
 		{
 			return true;
 		}
-
+		
 		return (
 			(
 				$this->Trade->isParticipant()
@@ -173,7 +163,7 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 			)
 		);
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
@@ -184,7 +174,7 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 		$visitor = \XF::visitor();
 		return ($visitor->user_id && $visitor->hasPermission('dbtechShopTradePost', 'undelete'));
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
@@ -195,7 +185,7 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 		$visitor = \XF::visitor();
 		return ($visitor->user_id && $visitor->hasPermission('dbtechShopTradePost', 'approveUnapprove'));
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
@@ -204,32 +194,31 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 	public function canWarn(&$error = null): bool
 	{
 		$visitor = \XF::visitor();
-
+		
 		if ($this->warning_id
 			|| !$this->user_id
 			|| !$visitor->user_id
 			|| $this->user_id == $visitor->user_id
 			|| !$visitor->hasPermission('dbtechShopTradePost', 'warn')
-		)
-		{
+		) {
 			return false;
 		}
-
+		
 		return ($this->User && $this->User->isWarnable());
 	}
-
+	
 	/**
 	 * @param null $error
 	 * @param User|null $asUser
 	 *
 	 * @return bool
 	 */
-	public function canReport(&$error = null, ?User $asUser = null): bool
+	public function canReport(&$error = null, User $asUser = null): bool
 	{
 		$asUser = $asUser ?: \XF::visitor();
 		return $asUser->canReport($error);
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
@@ -242,21 +231,21 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 		{
 			return false;
 		}
-
+		
 		if ($this->message_state != 'visible')
 		{
 			return false;
 		}
-
+		
 		if ($this->user_id == $visitor->user_id)
 		{
 			$error = \XF::phraseDeferred('reacting_to_your_own_content_is_considered_cheating');
 			return false;
 		}
-
+		
 		return $visitor->hasPermission('dbtechShopTradePost', 'react');
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
@@ -265,7 +254,7 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 	public function canComment(&$error = null): bool
 	{
 		$visitor = \XF::visitor();
-
+		
 		return (
 			$this->message_state == 'visible'
 			&& $visitor->user_id
@@ -273,7 +262,7 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 			&& $visitor->hasPermission('dbtechShopTradePost', 'comment')
 		);
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -281,7 +270,7 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 	{
 		return \XF::visitor()->hasPermission('dbtechShopTradePost', 'viewDeleted');
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -289,30 +278,30 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 	{
 		return \XF::visitor()->hasPermission('dbtechShopTradePost', 'viewModerated');
 	}
-
+	
 	/**
 	 * @return bool
 	 */
 	public function canSendModeratorActionAlert(): bool
 	{
 		$visitor = \XF::visitor();
-
+		
 		if (!$visitor->user_id || $visitor->user_id == $this->user_id)
 		{
 			return false;
 		}
-
+		
 		if ($this->message_state != 'visible')
 		{
 			return false;
 		}
-
+		
 		return (
 			$visitor->hasPermission('dbtechShopTradePost', 'deleteAny')
 			|| $visitor->hasPermission('dbtechShopTradePost', 'editAny')
 		);
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -322,19 +311,19 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 		{
 			return true;
 		}
-
+		
 		$visitor = \XF::visitor();
-
+		
 		$canViewDeleted = $visitor->hasPermission('dbtechShopTradePost', 'viewDeleted');
 		$canViewModerated = $visitor->hasPermission('dbtechShopTradePost', 'viewModerated');
-
+		
 		if (!$canViewDeleted && !$canViewModerated)
 		{
 			return false;
 		}
-
+		
 		$viewableCommentCount = 0;
-
+		
 		foreach ($this->latest_comment_ids AS $commentId => $state)
 		{
 			switch ($state[0])
@@ -342,14 +331,14 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 				case 'visible':
 					$viewableCommentCount++;
 					break;
-
+				
 				case 'moderated':
 					if ($canViewModerated)
 					{
 						$viewableCommentCount++;
 					}
 					break;
-
+				
 				case 'deleted':
 					if ($canViewDeleted)
 					{
@@ -357,16 +346,16 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 					}
 					break;
 			}
-
+			
 			if ($viewableCommentCount > 3)
 			{
 				return true;
 			}
 		}
-
+		
 		return false;
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -374,7 +363,7 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 	{
 		return ($this->message_state == 'visible');
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -382,7 +371,7 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 	{
 		return \XF::visitor()->isIgnoring($this->user_id);
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -390,7 +379,7 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 	{
 		return (\XF::visitor()->canCleanSpam() && $this->User && $this->User->isPossibleSpammer());
 	}
-
+	
 	/**
 	 * @return array
 	 */
@@ -403,58 +392,61 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 			ORDER BY comment_date
 		", $this->trade_post_id);
 	}
-
+	
 	/**
-	 * @return \XF\Mvc\Entity\AbstractCollection<\DBTech\Shop\Entity\TradePostComment>|null
+	 * @return ArrayCollection|null
 	 */
-	public function getLatestComments(): ?AbstractCollection
+	public function getLatestComments(): ?ArrayCollection
 	{
-		\XF::app()->repository(TradePostRepository::class)
-			->addCommentsToTradePosts(
-				\XF::app()->em()->getBasicCollection([$this->trade_post_id => $this])
-			)
-		;
-
-		return $this->_getterCache['LatestComments'] ?? \XF::app()->em()->getBasicCollection([]);
+		$this->repository('DBTech\Shop:TradePost')->addCommentsToTradePosts([$this->trade_post_id => $this]);
+		
+		if (isset($this->_getterCache['LatestComments']))
+		{
+			return $this->_getterCache['LatestComments'];
+		}
+		else
+		{
+			return $this->_em->getBasicCollection([]);
+		}
 	}
-
+	
 	/**
 	 * @param array $latest
 	 */
-	public function setLatestComments(array $latest): void
+	public function setLatestComments(array $latest)
 	{
-		$this->_getterCache['LatestComments'] = \XF::app()->em()->getBasicCollection($latest);
+		$this->_getterCache['LatestComments'] = $this->_em->getBasicCollection($latest);
 	}
-
+	
 	/**
 	 * @param TradePostComment $comment
 	 */
-	public function commentAdded(TradePostComment $comment): void
+	public function commentAdded(TradePostComment $comment)
 	{
 		$this->comment_count++;
-
+		
 		if (!$this->first_comment_date || $comment->comment_date < $this->first_comment_date)
 		{
 			$this->first_comment_date = $comment->comment_date;
 		}
-
+		
 		if ($comment->comment_date > $this->last_comment_date)
 		{
 			$this->last_comment_date = $comment->comment_date;
 		}
-
+		
 		$this->rebuildLatestCommentIds();
-
+		
 		unset($this->_getterCache['comment_ids']);
 	}
-
+	
 	/**
 	 * @param TradePostComment $comment
 	 */
-	public function commentRemoved(TradePostComment $comment): void
+	public function commentRemoved(TradePostComment $comment)
 	{
 		$this->comment_count--;
-
+		
 		if ($this->first_comment_date == $comment->comment_date)
 		{
 			if (!$this->comment_count)
@@ -466,7 +458,7 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 				$this->rebuildFirstCommentInfo();
 			}
 		}
-
+		
 		if ($this->last_comment_date == $comment->comment_date)
 		{
 			if (!$this->comment_count)
@@ -478,12 +470,12 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 				$this->rebuildLastCommentInfo();
 			}
 		}
-
+		
 		$this->rebuildLatestCommentIds();
-
+		
 		unset($this->_getterCache['comment_ids']);
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -494,13 +486,13 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 			$this->rebuildLastCommentInfo();
 			$this->rebuildCommentCount();
 		}
-
+		
 		// since this contains non-visible comments, we always have to rebuild
 		$this->rebuildLatestCommentIds();
-
+		
 		return true;
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -514,7 +506,7 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 			ORDER BY comment_date
 			LIMIT 1
 		", $this->trade_post_id);
-
+		
 		if (!$firstComment)
 		{
 			$this->comment_count = 0;
@@ -528,7 +520,7 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 			return true;
 		}
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -542,7 +534,7 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 			ORDER BY comment_date DESC
 			LIMIT 1
 		", $this->trade_post_id);
-
+		
 		if (!$lastComment)
 		{
 			$this->comment_count = 0;
@@ -556,11 +548,11 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 			return true;
 		}
 	}
-
+	
 	/**
 	 * @return bool|int|null
 	 */
-	public function rebuildCommentCount(): bool|int|null
+	public function rebuildCommentCount()
 	{
 		$visibleComments = $this->db()->fetchOne("
 			SELECT COUNT(*)
@@ -568,22 +560,20 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 			WHERE trade_post_id = ?
 				AND message_state = 'visible'
 		", $this->trade_post_id);
-
+		
 		$this->comment_count = $visibleComments;
-
+		
 		return $this->comment_count;
 	}
-
+	
 	/**
 	 *
 	 */
-	public function rebuildLatestCommentIds(): void
+	public function rebuildLatestCommentIds()
 	{
-		$this->latest_comment_ids = \XF::app()->repository(TradePostRepository::class)
-			->getLatestCommentCache($this)
-		;
+		$this->latest_comment_ids = $this->repository('DBTech\Shop:TradePost')->getLatestCommentCache($this);
 	}
-
+	
 	/**
 	 * @param $context
 	 * @param $type
@@ -596,22 +586,22 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 			'entity' => $this,
 			'user' => $this->User,
 			'treatAsStructuredText' => true,
-			'unfurls' => $this->Unfurls ?: [],
+			'unfurls' => $this->Unfurls ?: []
 		];
 	}
-
+	
 	/**
 	 * @return array
 	 */
 	public function getUnfurls(): array
 	{
-		return $this->_getterCache['Unfurls'] ?? [];
+		return isset($this->_getterCache['Unfurls']) ? $this->_getterCache['Unfurls'] : [];
 	}
-
+	
 	/**
 	 * @param array $unfurls
 	 */
-	public function setUnfurls(array $unfurls): void
+	public function setUnfurls(array $unfurls)
 	{
 		$this->_getterCache['Unfurls'] = $unfurls;
 	}
@@ -621,12 +611,12 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 	 * @param array $extraParams
 	 * @param null $hash
 	 *
-	 * @return string
+	 * @return mixed|string
 	 */
 	public function getContentUrl(bool $canonical = false, array $extraParams = [], $hash = null): string
 	{
 		$route = $canonical ? 'canonical:dbtech-shop/trade-posts' : 'dbtech-shop/trade-posts';
-		return \XF::app()->router('public')->buildLink($route, $this, $extraParams, $hash);
+		return $this->app()->router('public')->buildLink($route, $this, $extraParams, $hash);
 	}
 
 	/**
@@ -640,193 +630,194 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 	/**
 	 * @param string $context
 	 *
-	 * @return Phrase
+	 * @return string|\XF\Phrase
 	 */
-	public function getContentTitle(string $context = ''): Phrase
+	public function getContentTitle(string $context = '')
 	{
 		return \XF::phrase('dbtech_shop_trade_post_x', ['title' => $this->trade_post_id]);
 	}
-
+	
 	/**
-	 * @throws PrintableException
+	 * @throws \XF\PrintableException
 	 */
-	protected function _postSave(): void
+	protected function _postSave()
 	{
 		$visibilityChange = $this->isStateChanged('message_state', 'visible');
 		$approvalChange = $this->isStateChanged('message_state', 'moderated');
 		$deletionChange = $this->isStateChanged('message_state', 'deleted');
-
+		
 		if ($this->isUpdate())
 		{
 			if ($visibilityChange == 'enter')
 			{
 				$this->tradePostMadeVisible();
-
+				
 				if ($approvalChange)
 				{
 					$this->submitHamData();
 				}
 			}
-			else if ($visibilityChange == 'leave')
+			elseif ($visibilityChange == 'leave')
 			{
 				$this->tradePostHidden();
 			}
-
+			
 			if ($deletionChange == 'leave' && $this->DeletionLog)
 			{
 				$this->DeletionLog->delete();
 			}
-
+			
 			if ($approvalChange == 'leave' && $this->ApprovalQueue)
 			{
 				$this->ApprovalQueue->delete();
 			}
 		}
-
+		
 		if ($approvalChange == 'enter')
 		{
 			$approvalQueue = $this->getRelationOrDefault('ApprovalQueue', false);
 			$approvalQueue->content_date = $this->post_date;
 			$approvalQueue->save();
 		}
-		else if ($deletionChange == 'enter' && !$this->DeletionLog)
+		elseif ($deletionChange == 'enter' && !$this->DeletionLog)
 		{
 			$delLog = $this->getRelationOrDefault('DeletionLog', false);
 			$delLog->setFromVisitor();
 			$delLog->save();
 		}
-
+		
 		if ($this->isUpdate() && $this->getOption('log_moderator'))
 		{
-			\XF::app()->logger()->logModeratorChanges('dbtech_shop_trade_post', $this);
+			$this->app()->logger()->logModeratorChanges('dbtech_shop_trade_post', $this);
 		}
 	}
-
+	
 	/**
 	 *
 	 */
 	protected function tradePostMadeVisible()
 	{
 	}
-
+	
 	/**
 	 * @param bool $hardDelete
 	 */
-	protected function tradePostHidden(bool $hardDelete = false): void
+	protected function tradePostHidden($hardDelete = false)
 	{
-		$alertRepo = \XF::app()->repository(UserAlertRepository::class);
+		/** @var \XF\Repository\UserAlert $alertRepo */
+		$alertRepo = $this->repository('XF:UserAlert');
 		$alertRepo->fastDeleteAlertsForContent('dbtech_shop_trade_post', $this->trade_post_id);
 		$alertRepo->fastDeleteAlertsForContent('dbtech_shop_trade_comment', $this->comment_ids);
 	}
-
+	
 	/**
 	 *
 	 */
-	protected function submitHamData(): void
+	protected function submitHamData()
 	{
-		/** @var ContentChecker $submitter */
-		$submitter = \XF::app()->container('spam.contentHamSubmitter');
+		/** @var \XF\Spam\ContentChecker $submitter */
+		$submitter = $this->app()->container('spam.contentHamSubmitter');
 		$submitter->submitHam('dbtech_shop_trade_post', $this->trade_post_id);
 	}
-
+	
 	/**
-	 * @throws PrintableException
+	 * @throws \XF\PrintableException
 	 */
-	protected function _postDelete(): void
+	protected function _postDelete()
 	{
 		if ($this->message_state == 'visible')
 		{
 			$this->tradePostHidden(true);
 		}
-
+		
 		if ($this->message_state == 'deleted' && $this->DeletionLog)
 		{
 			$this->DeletionLog->delete();
 		}
-
+		
 		if ($this->message_state == 'moderated' && $this->ApprovalQueue)
 		{
 			$this->ApprovalQueue->delete();
 		}
-
+		
 		if ($this->getOption('log_moderator'))
 		{
-			\XF::app()->logger()->logModeratorAction('dbtech_shop_trade_post', $this, 'delete_hard');
+			$this->app()->logger()->logModeratorAction('dbtech_shop_trade_post', $this, 'delete_hard');
 		}
-
+		
 		$db = $this->db();
 		$commentIds = $this->comment_ids;
 		if ($commentIds)
 		{
 			$quotedIds = $db->quote($commentIds);
-
-			$db->delete('xf_dbtech_shop_trade_post_comment', "trade_post_comment_id IN ($quotedIds)");
-			$db->delete('xf_approval_queue', "content_id IN ($quotedIds) AND content_type = 'dbtech_shop_trade_comment'");
-			$db->delete('xf_deletion_log', "content_id IN ($quotedIds) AND content_type = 'dbtech_shop_trade_comment'");
+			
+			$db->delete('xf_dbtech_shop_trade_post_comment', "trade_post_comment_id IN ({$quotedIds})");
+			$db->delete('xf_approval_queue', "content_id IN ({$quotedIds}) AND content_type = 'dbtech_shop_trade_comment'");
+			$db->delete('xf_deletion_log', "content_id IN ({$quotedIds}) AND content_type = 'dbtech_shop_trade_comment'");
 		}
 	}
-
+	
 	/**
 	 * @param string $reason
 	 * @param User|null $byUser
 	 *
 	 * @return bool
-	 * @throws PrintableException
+	 * @throws \XF\PrintableException
 	 */
-	public function softDelete(string $reason = '', ?User $byUser = null): bool
+	public function softDelete($reason = '', User $byUser = null): bool
 	{
 		$byUser = $byUser ?: \XF::visitor();
-
+		
 		if ($this->message_state == 'deleted')
 		{
 			return false;
 		}
-
+		
 		$this->message_state = 'deleted';
-
-		/** @var DeletionLog $deletionLog */
+		
+		/** @var \XF\Entity\DeletionLog $deletionLog */
 		$deletionLog = $this->getRelationOrDefault('DeletionLog');
 		$deletionLog->setFromUser($byUser);
 		$deletionLog->delete_reason = $reason;
-
+		
 		$this->save();
-
+		
 		return true;
 	}
-
+	
 	/**
-	 * @return TradePostComment
+	 * @return Entity
 	 */
-	public function getNewComment(): TradePostComment
+	public function getNewComment(): Entity
 	{
-		$comment = \XF::app()->em()->create(TradePostComment::class);
+		$comment = $this->_em->create('DBTech\Shop:TradePostComment');
 		$comment->trade_post_id = $this->trade_post_id;
-
+		
 		return $comment;
 	}
-
+	
 	/**
 	 * @return string
 	 */
 	public function getNewContentState(): string
 	{
 		$visitor = \XF::visitor();
-
+		
 		if ($visitor->user_id && $visitor->hasPermission('dbtechShopTradePost', 'approveUnapprove'))
 		{
 			return 'visible';
 		}
-
+		
 		if (!$visitor->hasPermission('general', 'submitWithoutApproval'))
 		{
 			return 'moderated';
 		}
-
+		
 		return 'visible';
 	}
-
+	
 	/**
-	 * @param EntityResult $result
+	 * @param \XF\Api\Result\EntityResult $result
 	 * @param int $verbosity
 	 * @param array $options
 	 *
@@ -840,31 +831,30 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 	 * @api-see XF\Entity\ReactionTrait::addReactionStateToApiResult
 	 */
 	protected function setupApiResultData(
-		EntityResult $result,
+		\XF\Api\Result\EntityResult $result,
 		$verbosity = self::VERBOSITY_NORMAL,
 		array $options = []
-	): void
-	{
+	) {
 		$result->username = $this->User ? $this->User->username : $this->username;
-
+		
 		if (!empty($options['with_trade']))
 		{
 			$result->includeRelation('Trade');
 		}
-
+		
 		if (!empty($options['with_latest']))
 		{
 			$result->includeGetter('LatestComments');
 		}
-
+		
 		$this->addReactionStateToApiResult($result);
-
+		
 		$result->can_edit = $this->canEdit();
 		$result->can_soft_delete = $this->canDelete();
 		$result->can_hard_delete = $this->canDelete('hard');
 		$result->can_react = $this->canReact();
 	}
-
+	
 	public static function getStructure(Structure $structure): Structure
 	{
 		$structure->table = 'xf_dbtech_shop_trade_post';
@@ -876,15 +866,15 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 			'trade_id' => ['type' => self::UINT, 'required' => true, 'api' => true],
 			'user_id' => ['type' => self::UINT, 'required' => true, 'api' => true],
 			'username' => ['type' => self::STR, 'maxLength' => 50,
-				'required' => 'please_enter_valid_name',
+						   'required' => 'please_enter_valid_name'
 			],
 			'post_date' => ['type' => self::UINT, 'required' => true, 'default' => \XF::$time, 'api' => true],
 			'message' => ['type' => self::STR,
-				'required' => 'please_enter_valid_message', 'api' => true,
+						  'required' => 'please_enter_valid_message', 'api' => true
 			],
 			'ip_id' => ['type' => self::UINT, 'default' => 0],
 			'message_state' => ['type' => self::STR, 'default' => 'visible',
-				'allowedValues' => ['visible', 'moderated', 'deleted'], 'api' => true,
+								'allowedValues' => ['visible', 'moderated', 'deleted'], 'api' => true
 			],
 			'attach_count' => ['type' => self::UINT, 'max' => 65535, 'forced' => true, 'default' => 0],
 			'warning_id' => ['type' => self::UINT, 'default' => 0],
@@ -893,27 +883,27 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 			'first_comment_date' => ['type' => self::UINT, 'default' => 0, 'api' => true],
 			'last_comment_date' => ['type' => self::UINT, 'default' => 0, 'api' => true],
 			'latest_comment_ids' => ['type' => self::JSON_ARRAY, 'default' => []],
-			'embed_metadata' => ['type' => self::JSON_ARRAY, 'nullable' => true, 'default' => null],
+			'embed_metadata' => ['type' => self::JSON_ARRAY, 'nullable' => true, 'default' => null]
 		];
 		$structure->behaviors = [
 			'XF:Reactable' => ['stateField' => 'message_state'],
 			'XF:ReactableContainer' => [
 				'childContentType' => 'dbtech_shop_trade_comment',
 				'childIds' => function ($tradePost) { return $tradePost->comment_ids; },
-				'stateField' => 'message_state',
+				'stateField' => 'message_state'
 			],
 			'XF:Indexable' => [
-				'checkForUpdates' => ['message', 'trade_id', 'user_id', 'post_date', 'message_state'],
+				'checkForUpdates' => ['message', 'trade_id', 'user_id', 'post_date', 'message_state']
 			],
 			'XF:IndexableContainer' => [
 				'childContentType' => 'dbtech_shop_trade_comment',
 				'childIds' => function ($tradePost) { return $tradePost->comment_ids; },
-				'checkForUpdates' => ['trade_id', 'message_state'],
+				'checkForUpdates' => ['trade_id', 'message_state']
 			],
 			'XF:NewsFeedPublishable' => [
 				'usernameField' => 'username',
-				'dateField' => 'post_date',
-			],
+				'dateField' => 'post_date'
+			]
 		];
 		$structure->getters = [
 			'comment_ids' => true,
@@ -922,49 +912,49 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 		];
 		$structure->relations = [
 			'Trade' => [
-				'entity' => Trade::class,
+				'entity' => 'DBTech\Shop:Trade',
 				'type' => self::TO_ONE,
 				'conditions' => [
-					['trade_id', '=', '$trade_id'],
+					['trade_id', '=', '$trade_id']
 				],
-				'primary' => true,
+				'primary' => true
 			],
 			'User' => [
-				'entity' => User::class,
+				'entity' => 'XF:User',
 				'type' => self::TO_ONE,
 				'conditions' => 'user_id',
 				'primary' => true,
-				'api' => true,
+				'api' => true
 			],
 			'DeletionLog' => [
-				'entity' => DeletionLog::class,
+				'entity' => 'XF:DeletionLog',
 				'type' => self::TO_ONE,
 				'conditions' => [
 					['content_type', '=', 'dbtech_shop_trade_post'],
-					['content_id', '=', '$trade_post_id'],
+					['content_id', '=', '$trade_post_id']
 				],
-				'primary' => true,
+				'primary' => true
 			],
 			'ApprovalQueue' => [
-				'entity' => ApprovalQueue::class,
+				'entity' => 'XF:ApprovalQueue',
 				'type' => self::TO_ONE,
 				'conditions' => [
 					['content_type', '=', 'dbtech_shop_trade_post'],
-					['content_id', '=', '$trade_post_id'],
+					['content_id', '=', '$trade_post_id']
 				],
-				'primary' => true,
+				'primary' => true
 			],
 			'Comments' => [
-				'entity' => TradePostComment::class,
+				'entity' => 'DBTech\Shop:TradePostComment',
 				'type' => self::TO_MANY,
 				'conditions' => 'trade_post_id',
-				'primary' => true,
-			],
+				'primary' => true
+			]
 		];
 		$structure->options = [
-			'log_moderator' => true,
+			'log_moderator' => true
 		];
-
+		
 		$structure->withAliases = [
 			'full' => [
 				'User',
@@ -975,9 +965,9 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 					{
 						return 'Reactions|' . $userId;
 					}
-
+					
 					return null;
-				},
+				}
 			],
 			'fullTrade' => ['full', 'Trade'],
 			'api' => [
@@ -991,12 +981,12 @@ class TradePost extends Entity implements LinkableInterface, RenderableContentIn
 					}
 
 					return null;
-				},
-			],
+				}
+			]
 		];
-
+		
 		static::addReactableStructureElements($structure);
-
+		
 		return $structure;
 	}
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="PAGE_CONTAINER" modification_key="st_dmca_reports_footer_link" description="Adds footer link to dmca reports" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<div class="p-footer-row-opposite">
+					<ul class="p-footer-linkList">]]></find>
+    <replace><![CDATA[<div class="p-footer-row-opposite">
+					<ul class="p-footer-linkList">
+						<li><a href="{{ link('dmca') }}">DMCA</a></li>]]></replace>
+  </modification>
+</template_modifications>

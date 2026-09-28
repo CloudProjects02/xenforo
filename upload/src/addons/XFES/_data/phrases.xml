@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="admin_navigation.xfes" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Enhanced search]]></phrase>
+  <phrase title="cron_entry.xfesReindex" version_id="2010270" version_string="2.1.2"><![CDATA[XFES: Reindex]]></phrase>
+  <phrase title="cron_entry.xfesSimilarThreads" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[XFES: Update similar threads caches]]></phrase>
+  <phrase title="option.xfesConfig" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Enhanced search config]]></phrase>
+  <phrase title="option.xfesEnabled" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Enhanced search enabled]]></phrase>
+  <phrase title="option.xfesRecencyRelevance" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Enhanced search recency relevance]]></phrase>
+  <phrase title="option.xfesSimilarThreads" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[Enhanced search similar threads]]></phrase>
+  <phrase title="option.xfesSimilarThreadsExcludedForums" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[Enhanced search similar threads excluded forums]]></phrase>
+  <phrase title="option_explain.xfesConfig" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Please edit this via the "Enhanced search" section.]]></phrase>
+  <phrase title="option_explain.xfesEnabled" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[]]></phrase>
+  <phrase title="option_explain.xfesRecencyRelevance" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Please edit this via the "Enhanced search" section.]]></phrase>
+  <phrase title="option_explain.xfesSimilarThreads" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[Please edit this via the "Enhanced search" section.]]></phrase>
+  <phrase title="option_explain.xfesSimilarThreadsExcludedForums" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[Please edit this via the "Enhanced search" section.]]></phrase>
+  <phrase title="widget_def.xfes_similar_threads" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[XFES: Similar threads]]></phrase>
+  <phrase title="widget_def_desc.xfes_similar_threads" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[Displays a block containing a list of X threads which are similar to the current thread. This widget will only work in "thread view" positions.]]></phrase>
+  <phrase title="xfes_allocated_memory" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Allocated memory]]></phrase>
+  <phrase title="xfes_arabic" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[Arabic]]></phrase>
+  <phrase title="xfes_armenian" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[Armenian]]></phrase>
+  <phrase title="xfes_basque" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[Basque]]></phrase>
+  <phrase title="xfes_bengali" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[Bengali]]></phrase>
+  <phrase title="xfes_brazilian_portuguese" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[Brazilian Portuguese]]></phrase>
+  <phrase title="xfes_bulgarian" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[Bulgarian]]></phrase>
+  <phrase title="xfes_catalan" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[Catalan]]></phrase>
+  <phrase title="xfes_changes_have_been_saved_must_rebuild" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Your changes have been saved. To finish this action, you must now <a href="{link}">rebuild the search index</a>.]]></phrase>
+  <phrase title="xfes_clear_similar_threads_caches" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[Clear similar threads caches]]></phrase>
+  <phrase title="xfes_clear_similar_threads_explain" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[If checked, the "Similar threads" widget caches will be cleared. The caches are built on-demand and updated periodically when a thread is viewed and the widget is active.]]></phrase>
+  <phrase title="xfes_configure_enhanced_search" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Configure enhanced search]]></phrase>
+  <phrase title="xfes_confirm_enhanced_search_configuration" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Confirm enhanced search configuration]]></phrase>
+  <phrase title="xfes_connection_could_not_be_made_to_elasticsearch_server" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[A connection could not be made to the Elasticsearch server.]]></phrase>
+  <phrase title="xfes_current_index_configuration_not_supported" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[The current index configuration represents a configuration not supported by XenForo. Updating the index options here will remove your existing configuration.]]></phrase>
+  <phrase title="xfes_custom_bundle_x" version_id="2030031" version_string="2.3.0 Beta 1"><![CDATA[Custom bundle: {path}]]></phrase>
+  <phrase title="xfes_czech" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[Czech]]></phrase>
+  <phrase title="xfes_danish" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[Danish]]></phrase>
+  <phrase title="xfes_disable_ssl_certificate_verification" version_id="2030031" version_string="2.3.0 Beta 1"><![CDATA[Disable SSL certificate verification]]></phrase>
+  <phrase title="xfes_display_similar_threads_suggestions_in_this_forum" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[Display similar threads suggestions when creating new threads in this forum]]></phrase>
+  <phrase title="xfes_documents" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Documents]]></phrase>
+  <phrase title="xfes_does_not_appear_to_be_elasticsearch_server" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[This does not appear to be an Elasticsearch server.]]></phrase>
+  <phrase title="xfes_dutch" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[Dutch]]></phrase>
+  <phrase title="xfes_elasticsearch_server" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Elasticsearch server]]></phrase>
+  <phrase title="xfes_elasticsearch_server_could_not_be_reached" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[The Elasticsearch server could not be reached. Please check that the server is running.]]></phrase>
+  <phrase title="xfes_elasticsearch_version_does_not_meet_requirements" version_id="2030034" version_string="2.3.0 Beta 4"><![CDATA[Your Elasticsearch version does not meet our requirements. You must be running {required} or newer. Your version is {version}.]]></phrase>
+  <phrase title="xfes_empty_mysql_search_index" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Empty the MySQL search index]]></phrase>
+  <phrase title="xfes_enable_accent_removal_and_character_simplification" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Enable accent removal and character simplification]]></phrase>
+  <phrase title="xfes_enable_enhanced_search_now" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Enable enhanced search now]]></phrase>
+  <phrase title="xfes_enable_recency_weighted_relevance_searches" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Enable recency-weighted relevance searches]]></phrase>
+  <phrase title="xfes_enable_similar_threads_widget" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[Enable similar threads widget]]></phrase>
+  <phrase title="xfes_enable_ssl_certificate_verification" version_id="2030031" version_string="2.3.0 Beta 1"><![CDATA[Enable SSL certificate verification]]></phrase>
+  <phrase title="xfes_enable_stemming_for_language" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Enable stemming for language]]></phrase>
+  <phrase title="xfes_english" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[English]]></phrase>
+  <phrase title="xfes_enhanced_search" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Enhanced search]]></phrase>
+  <phrase title="xfes_enhanced_search_explain" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[<p>Enhanced search uses an Elasticsearch server to provide improved search functionality within XenForo. This includes relevancy sorting, searches for shorter words, support for stemming and customizable stop words, and improved performance.</p>
+
+<p>Enhanced search requires Elasticsearch 2.0 or newer. Elasticsearch is a separate service which must be installed separately from your web server, PHP, and MySQL. Installation of Elasticsearch requires you to have root access to your server. Please speak to your server administrator for questions regarding Elasticsearch installation.</p>]]></phrase>
+  <phrase title="xfes_enhanced_search_not_currently_enabled" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Enhanced search is not currently enabled. Searches are not using it.]]></phrase>
+  <phrase title="xfes_error_was_triggered_while_indexing_see_log" version_id="2000270" version_string="2.0.2"><![CDATA[An error was triggered while indexing. See the <a href="{link}">XenForo error log</a> for details.]]></phrase>
+  <phrase title="xfes_finnish" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[Finnish]]></phrase>
+  <phrase title="xfes_forums_excluded_from_similar_thread_suggestions" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[Do not suggest similar threads when composing in the following forums]]></phrase>
+  <phrase title="xfes_french" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[French]]></phrase>
+  <phrase title="xfes_galician" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[Galician]]></phrase>
+  <phrase title="xfes_german" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[German]]></phrase>
+  <phrase title="xfes_greek" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[Greek]]></phrase>
+  <phrase title="xfes_half_life" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Half-life]]></phrase>
+  <phrase title="xfes_hindi" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[Hindi]]></phrase>
+  <phrase title="xfes_hungarian" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[Hungarian]]></phrase>
+  <phrase title="xfes_if_disabled_similar_thread_suggestions_will_not_be_displayed_in_forum" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[If disabled, similar thread suggestions will not be displayed when creating threads in this forum.]]></phrase>
+  <phrase title="xfes_if_left_blank_this_will_default_to_your_mysql_database_name" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[If left blank, this will default to your MySQL database name.]]></phrase>
+  <phrase title="xfes_index_already_exists_used_as_is" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[This index already exists. It will be used as is.]]></phrase>
+  <phrase title="xfes_index_configuration" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Index configuration]]></phrase>
+  <phrase title="xfes_index_does_not_exist_yet" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[This index does not exist yet.]]></phrase>
+  <phrase title="xfes_index_name" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Index name]]></phrase>
+  <phrase title="xfes_index_updates" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Index updates]]></phrase>
+  <phrase title="xfes_indonesian" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[Indonesian]]></phrase>
+  <phrase title="xfes_irish" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[Irish]]></phrase>
+  <phrase title="xfes_italian" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[Italian]]></phrase>
+  <phrase title="xfes_kurdish_sorani" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[Kurdish (Sorani)]]></phrase>
+  <phrase title="xfes_latvian" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[Latvian]]></phrase>
+  <phrase title="xfes_lithuanian" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[Lithuanian]]></phrase>
+  <phrase title="xfes_maximum_results" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[Maximum results]]></phrase>
+  <phrase title="xfes_norwegian" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[Norwegian]]></phrase>
+  <phrase title="xfes_optimization_required" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Optimization required]]></phrase>
+  <phrase title="xfes_optimize" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Optimize]]></phrase>
+  <phrase title="xfes_optimize_elasticsearch_index" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Optimize Elasticsearch index]]></phrase>
+  <phrase title="xfes_optimize_now" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Optimize now]]></phrase>
+  <phrase title="xfes_optimizing_index_can_reduce_space_required" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Optimizing the index can reduce the amount of space required and improve performance.]]></phrase>
+  <phrase title="xfes_path_to_custom_bundle" version_id="2030031" version_string="2.3.0 Beta 1"><![CDATA[Path to custom bundle]]></phrase>
+  <phrase title="xfes_persian" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[Persian]]></phrase>
+  <phrase title="xfes_portuguese" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[Portuguese]]></phrase>
+  <phrase title="xfes_reconfigure" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Reconfigure]]></phrase>
+  <phrase title="xfes_relevancy_recency_weighted_explain" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[If enabled, the search relevance algorithm will be weighted towards newer results based on the half-life value. A document submitted today will be twice as relevant as an identical one submitted a half-life ago.]]></phrase>
+  <phrase title="xfes_remove_accents_simplify_explain" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[If enabled, before indexing, accents will be removed and other complex character representations converted to simpler ones. This can improve search results by allowing multiple accent variations (esta, está) of a word to match. However, it can also make words match unexpectedly when they differ only by accents.]]></phrase>
+  <phrase title="xfes_romanian" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[Romanian]]></phrase>
+  <phrase title="xfes_russian" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[Russian]]></phrase>
+  <phrase title="xfes_same_forum_boost_amount" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[Same forum boost amount]]></phrase>
+  <phrase title="xfes_same_forum_boost_amount_explain" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[This allows similar thread results in the same forum as the original thread to be considered more relevant. Their relevancy score will be multiplied by the value entered here. Use 1 to disable this boosting.]]></phrase>
+  <phrase title="xfes_search_could_not_be_completed_try_again_later" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[The search could not be completed. Please try again later.]]></phrase>
+  <phrase title="xfes_search_for_similar_threads_when_users_creating_new_threads" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[Search for similar threads when users are creating new threads]]></phrase>
+  <phrase title="xfes_search_options" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Search options]]></phrase>
+  <phrase title="xfes_searches" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Searches]]></phrase>
+  <phrase title="xfes_searches_will_now_use_elasticsearch_rebuild_index" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Searches will now use the Elasticsearch server. You will need to rebuild the search index to make existing content searchable.]]></phrase>
+  <phrase title="xfes_similar_thread_date_limit_explain" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[Only display similar threads created within the specified time period.]]></phrase>
+  <phrase title="xfes_similar_threads" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[Similar threads]]></phrase>
+  <phrase title="xfes_similar_threads_excluded_forums_explain" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[It may be futile or annoying to have similar thread suggestions appear when creating threads in some forums. This control allows specific forums to opt-out of the similar thread suggestion system.]]></phrase>
+  <phrase title="xfes_similar_threads_explain" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[If enabled, a search for similar threads will be performed when users are creating new threads, and any results will be displayed beneath the title input.]]></phrase>
+  <phrase title="xfes_similar_threads_widget_explain" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[If enabled, the similar threads widget will be displayed in all its configured positions.]]></phrase>
+  <phrase title="xfes_spanish" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[Spanish]]></phrase>
+  <phrase title="xfes_ssl_certificate_verification_disabled" version_id="2030031" version_string="2.3.0 Beta 1"><![CDATA[SSL certificate verification is disabled.]]></phrase>
+  <phrase title="xfes_ssl_certificate_verification_enabled" version_id="2030031" version_string="2.3.0 Beta 1"><![CDATA[SSL certificate verification is enabled.]]></phrase>
+  <phrase title="xfes_stats" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Stats]]></phrase>
+  <phrase title="xfes_stop_words" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Stop words]]></phrase>
+  <phrase title="xfes_stop_words_explain" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Stop words are words that will not be included in the search index. Not indexing certain words can save index space at the expense of making some searches more difficult.]]></phrase>
+  <phrase title="xfes_suggest_heading_article" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[Has this topic already been covered?]]></phrase>
+  <phrase title="xfes_suggest_heading_discussion" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[Is this already being discussed?]]></phrase>
+  <phrase title="xfes_suggest_heading_question" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[Has this question already been asked?]]></phrase>
+  <phrase title="xfes_suggest_heading_suggestion" version_id="2020010" version_string="2.2.0 Alpha"><![CDATA[Has this already been suggested?]]></phrase>
+  <phrase title="xfes_swedish" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[Swedish]]></phrase>
+  <phrase title="xfes_test_settings" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Test settings]]></phrase>
+  <phrase title="xfes_thai" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[Thai]]></phrase>
+  <phrase title="xfes_toggle_enhanced_search" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Toggle enhanced search]]></phrase>
+  <phrase title="xfes_turkish" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[Turkish]]></phrase>
+  <phrase title="xfes_use_custom_bundle_for_ssl_certificate_verification" version_id="2030031" version_string="2.3.0 Beta 1"><![CDATA[Use a custom bundle for SSL certificate verification]]></phrase>
+  <phrase title="xfes_use_custom_list" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Use custom list]]></phrase>
+  <phrase title="xfes_use_https_connection" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Use HTTPS connection]]></phrase>
+  <phrase title="xfes_use_language_defaults" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Use language defaults]]></phrase>
+  <phrase title="xfes_version" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Version]]></phrase>
+  <phrase title="xfes_will_save_disk_space_but_index_rebuild_required_mysql" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[This will save disk space, but a full search index rebuild will be required if you return to MySQL searches.]]></phrase>
+  <phrase title="xfes_word_stemming" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Word stemming]]></phrase>
+  <phrase title="xfes_word_stemming_explain" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Word stemming can improve searching by allowing multiple forms of a word to match. For example, a search for "test" would equally match "tests", "testing", "tested", and so on.]]></phrase>
+  <phrase title="xfes_x_milliseconds_average" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[{time} milliseconds average]]></phrase>
+  <phrase title="xfes_you_sure_want_to_optimize_elasticsearch_delete_create" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Are you sure you want to optimize your Elasticsearch index? This will delete the existing index and create a new one in its place.]]></phrase>
+  <phrase title="xfes_you_sure_you_want_to_disable_enhanced_search" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Are you sure you want to disable enhanced search?]]></phrase>
+  <phrase title="xfes_you_sure_you_want_to_enable_enhanced_search" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[Are you sure you want to enable enhanced search?]]></phrase>
+</phrases>

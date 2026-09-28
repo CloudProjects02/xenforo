@@ -2,7 +2,6 @@
 
 namespace DBTech\Shop\Entity;
 
-use XF\Entity\User;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 
@@ -17,16 +16,16 @@ use XF\Mvc\Entity\Structure;
  * @property int $lottery_prize_id
  *
  * RELATIONS
- * @property-read Lottery|null $Lottery
- * @property-read LotteryPrize|null $Prize
- * @property-read User|null $User
+ * @property \DBTech\Shop\Entity\Lottery $Lottery
+ * @property \DBTech\Shop\Entity\LotteryPrize $Prize
+ * @property \XF\Entity\User $User
  */
 class LotteryTicket extends Entity
 {
 	/**
-	 * @param Structure $structure
+	 * @param \XF\Mvc\Entity\Structure $structure
 	 *
-	 * @return Structure
+	 * @return \XF\Mvc\Entity\Structure
 	 */
 	public static function getStructure(Structure $structure): Structure
 	{
@@ -44,23 +43,23 @@ class LotteryTicket extends Entity
 		];
 		$structure->relations = [
 			'Lottery' => [
-				'entity' => Lottery::class,
+				'entity' => 'DBTech\Shop:Lottery',
 				'type' => self::TO_ONE,
 				'conditions' => 'lottery_id',
-				'primary' => true,
+				'primary' => true
 			],
 			'Prize' => [
-				'entity' => LotteryPrize::class,
+				'entity' => 'DBTech\Shop:LotteryPrize',
 				'type' => self::TO_ONE,
 				'conditions' => 'lottery_prize_id',
-				'primary' => true,
+				'primary' => true
 			],
 			'User' => [
-				'entity' => User::class,
+				'entity' => 'XF:User',
 				'type' => self::TO_ONE,
 				'conditions' => 'user_id',
-				'primary' => true,
-			],
+				'primary' => true
+			]
 		];
 
 		return $structure;

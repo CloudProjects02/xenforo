@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="post_edit" modification_key="tckChangeContentOwner_post_edit" description="Allow changing cotent owner and date when editing post" execution_order="6124" enabled="1" action="preg_replace">
+    <find><![CDATA[#<xf:if is="\$post\.canSendModeratorActionAlert\(\).*?">.*?<\/xf:if>#si]]></find>
+    <replace><![CDATA[$0
+
+<xf:macro template="tckChangeContentOwner_macros"
+		  name="change_rows"
+		  arg-handler="{$changeOwnerHandler}"
+		  arg-content="{$post}"
+		  arg-forceHR="{{ true }}"
+		  arg-fullWidth="{$tckCCO_fullWidth}" />]]></replace>
+  </modification>
+  <modification type="public" template="post_macros" modification_key="tckChangeContentOwner_post_macros" description="Add &quot;Change owner or date&quot; in action bar for post" execution_order="6124" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:if is="$hasActionBarMenu">]]></find>
+    <replace><![CDATA[<xf:macro template="tckChangeContentOwner_macros" name="action_link"
+		  arg-content="{$post}"
+		  arg-route="posts" />
+
+$0]]></replace>
+  </modification>
+  <modification type="public" template="profile_post_comment_edit" modification_key="tckChangeContentOwner_profile_post_comment_edit" description="Allow changing cotent owner and date when editing profile post comment" execution_order="6124" enabled="1" action="preg_replace">
+    <find><![CDATA[#<xf:if is="\$comment\.canSendModeratorActionAlert\(\).*?">.*?<\/xf:if>#si]]></find>
+    <replace><![CDATA[$0
+
+<xf:macro template="tckChangeContentOwner_macros"
+		  name="change_rows"
+		  arg-handler="{$changeOwnerHandler}"
+		  arg-content="{$comment}"
+		  arg-forceHR="{{ true }}"
+		  arg-fullWidth="{$tckCCO_fullWidth}" />]]></replace>
+  </modification>
+  <modification type="public" template="profile_post_edit" modification_key="tckChangeContentOwner_profile_post_edit" description="Allow changing cotent owner and date when editing profile post" execution_order="6124" enabled="1" action="preg_replace">
+    <find><![CDATA[#<xf:if is="\$profilePost\.canSendModeratorActionAlert\(\).*?">.*?<\/xf:if>#si]]></find>
+    <replace><![CDATA[$0
+
+<xf:macro template="tckChangeContentOwner_macros"
+		  name="change_rows"
+		  arg-handler="{$changeOwnerHandler}"
+		  arg-content="{$profilePost}"
+		  arg-forceHR="{{ true }}"
+		  arg-fullWidth="{$tckCCO_fullWidth}" />]]></replace>
+  </modification>
+  <modification type="public" template="profile_post_macros" modification_key="tckChangeContentOwner_profile_post_macros_a" description="Add &quot;Change owner or date&quot; in action bar for profile post" execution_order="6124" enabled="1" action="preg_replace">
+    <find><![CDATA[#(<xf:if is="\$profilePost\.canWarn\(\)">.*?)(<xf:if is="\$hasActionBarMenu.*?">)#si]]></find>
+    <replace><![CDATA[$1
+
+<xf:macro template="tckChangeContentOwner_macros" name="action_link"
+		  arg-content="{$profilePost}"
+		  arg-route="profile-posts" />
+
+$2]]></replace>
+  </modification>
+  <modification type="public" template="profile_post_macros" modification_key="tckChangeContentOwner_profile_post_macros_b" description="Add &quot;Change owner or date&quot; in action bar for profile post comment" execution_order="6124" enabled="1" action="preg_replace">
+    <find><![CDATA[#(<xf:if is="\$comment\.canWarn\(\)">.*?)(<xf:if is="\$hasActionBarMenu.*?">)#si]]></find>
+    <replace><![CDATA[$1
+
+<xf:macro template="tckChangeContentOwner_macros" name="action_link"
+		  arg-content="{$comment}"
+		  arg-route="profile-posts/comments" />
+
+$2]]></replace>
+  </modification>
+  <modification type="public" template="thread_edit" modification_key="tckChangeContentOwner_thread_edit" description="Allow changing cotent owner and date when editing thread" execution_order="6124" enabled="1" action="preg_replace">
+    <find><![CDATA[{<xf:macro (?:template|id)="helper_thread_options(?:" name="|::)thread_status".*?>$}sim]]></find>
+    <replace><![CDATA[$0
+
+			<xf:macro template="tckChangeContentOwner_macros"
+					  name="change_rows"
+					  arg-handler="{$changeOwnerHandler}"
+					  arg-content="{$thread}"
+					  arg-forceHR="{{ true }}"
+					  arg-fullWidth="{$tckCCO_fullWidth}" />]]></replace>
+  </modification>
+  <modification type="public" template="thread_view" modification_key="tckChangeContentOwner_thread_view" description="Add &quot;Change owner or date&quot; for thread tools menu" execution_order="6124" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:thread_tools_menu:before_footer]-->]]></find>
+    <replace><![CDATA[$0
+
+<xf:macro template="tckChangeContentOwner_macros" name="menu_link_row"
+		  arg-content="{$thread}" arg-route="threads" />]]></replace>
+  </modification>
+  <modification type="public" template="xfa_csvg_macros" modification_key="tckChangeContentOwner_xfa_csvg_macros" description="Add &quot;Change owner or date&quot; in graph tools menu" execution_order="6124" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:if is="$hasActionBarMenu">]]></find>
+    <replace><![CDATA[<xf:macro template="tckChangeContentOwner_macros" name="action_link"
+		  arg-content="{$graph}"
+		  arg-route="graphs" />
+
+$0]]></replace>
+  </modification>
+  <modification type="public" template="xfmg_album_edit" modification_key="tckChangeContentOwner_xfmg_album_edit" description="Allow changing cotent owner and date when editing album (XFMG)" execution_order="6124" enabled="1" action="preg_replace">
+    <find><![CDATA[#<xf:if is="\$album\.canSendModeratorActionAlert\(\).*?">.*?<\/xf:if>#si]]></find>
+    <replace><![CDATA[$0
+
+<xf:macro template="tckChangeContentOwner_macros"
+		  name="change_rows"
+		  arg-handler="{$changeOwnerHandler}"
+		  arg-content="{$album}"
+		  arg-forceHR="{{ true }}"
+		  arg-fullWidth="{$tckCCO_fullWidth}" />]]></replace>
+  </modification>
+  <modification type="public" template="xfmg_album_view" modification_key="tckChangeContentOwner_xfmg_album_view" description="Add &quot;Change owner or date&quot; in action bar for album (XFMG)" execution_order="6124" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:if is="$hasActionBarMenu">]]></find>
+    <replace><![CDATA[<xf:macro template="tckChangeContentOwner_macros" name="action_link"
+		  arg-content="{$album}"
+		  arg-route="media/albums" />
+
+$0]]></replace>
+  </modification>
+  <modification type="public" template="xfmg_comment_edit" modification_key="tckChangeContentOwner_xfmg_comment_edit" description="Allow changing cotent owner and date when editing comment (XFMG)" execution_order="6124" enabled="1" action="preg_replace">
+    <find><![CDATA[#<xf:if is="\$comment\.canSendModeratorActionAlert\(\).*?">.*?<\/xf:if>#si]]></find>
+    <replace><![CDATA[$0
+
+<xf:macro template="tckChangeContentOwner_macros"
+		  name="change_rows"
+		  arg-handler="{$changeOwnerHandler}"
+		  arg-content="{$comment}"
+		  arg-forceHR="{{ true }}"
+		  arg-fullWidth="{$tckCCO_fullWidth}" />]]></replace>
+  </modification>
+  <modification type="public" template="xfmg_comment_macros" modification_key="tckChangeContentOwner_xfmg_comment_macros" description="Add &quot;Change owner or date&quot; in action bar for comments (XFMG)" execution_order="6124" enabled="1" action="preg_replace">
+    <find><![CDATA[#<xf:elseif is="\$comment\.warning_id AND \$xf\.visitor\.canViewWarnings\(\).*?" \/>.*?\/xf:if>#si]]></find>
+    <replace><![CDATA[$0
+
+<xf:macro template="tckChangeContentOwner_macros" name="action_link"
+		  arg-content="{$comment}"
+		  arg-route="media/comments"
+		  arg-supportsActionBarMenu="{{ false }}" />]]></replace>
+  </modification>
+  <modification type="public" template="xfmg_media_edit" modification_key="tckChangeContentOwner_xfmg_media_edit" description="Allow changing cotent owner and date when editing media (XFMG)" execution_order="6124" enabled="1" action="preg_replace">
+    <find><![CDATA[#<xf:if is="\$mediaItem\.canSendModeratorActionAlert\(\).*?">.*?<\/xf:if>#si]]></find>
+    <replace><![CDATA[$0
+
+<xf:macro template="tckChangeContentOwner_macros"
+		  name="change_rows"
+		  arg-handler="{$changeOwnerHandler}"
+		  arg-content="{$mediaItem}"
+		  arg-forceHR="{{ true }}"
+		  arg-fullWidth="{$tckCCO_fullWidth}" />]]></replace>
+  </modification>
+  <modification type="public" template="xfmg_media_view" modification_key="tckChangeContentOwner_xfmg_media_view" description="Add &quot;Change owner or date&quot; in action bar for media item" execution_order="6124" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:if is="$hasActionBarMenu">]]></find>
+    <replace><![CDATA[<xf:macro template="tckChangeContentOwner_macros" name="action_link"
+		  arg-content="{$mediaItem}"
+		  arg-route="media" />
+
+$0]]></replace>
+  </modification>
+</template_modifications>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style_properties>
+  <style_property property_name="dbtechSecurityPasswordRuleBad" group_name="dbtechSecurity" title="Password Rule: Bad" description="What's displayed when a password rule does not match the requirement." property_type="css" has_variations="0" display_order="20" css_components="text,extra">
+    <value>{
+    "color": "@xf-errorColor"
+}</value>
+  </style_property>
+  <style_property property_name="dbtechSecurityPasswordRuleGood" group_name="dbtechSecurity" title="Password Rule: Good" description="What's displayed when a password rule matches the requirement." property_type="css" has_variations="0" display_order="10" css_components="text,extra">
+    <value>{
+    "color": "@xf-successColor"
+}</value>
+  </style_property>
+</style_properties>

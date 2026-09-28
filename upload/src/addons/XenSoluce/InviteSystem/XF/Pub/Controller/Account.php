@@ -2,15 +2,18 @@
 
 namespace XenSoluce\InviteSystem\XF\Pub\Controller;
 
+use XenSoluce\InviteSystem\Entity\InvitationCarts;
+use XenSoluce\InviteSystem\Entity\Token;
+use XenSoluce\InviteSystem\Service\InvitationEmail;
+use XF\Mvc\ParameterBag;
+use XF\Repository\Payment;
+use XF\Repository\PaymentRepository;
+
 class Account extends XFCP_Account
 {
     public function actionInvitation()
     {
         $visitor = \XF::visitor();
-        if(!$visitor->hasPermission('xs_is', 'xs_is_can_invite_someone'))
-        {
-            return $this->noPermission();
-        }
         $Ban = $this->finder('XenSoluce\InviteSystem:Banning')
             ->where('user_id', $visitor->user_id)
             ->fetchOne();
@@ -20,25 +23,100 @@ class Account extends XFCP_Account
             return $this->view('XenSoluce\InviteSystem:Invitation', 'xs_is_account_Invitation_ban', $viewParams);
         }
 
+        if(!$visitor->canInvite())
+        {
+            return $this->noPermission();
+        }
+
         if ($this->isPost())
         {
-            $InvitationPerMonth = $this->InvitationPerMonth($visitor);
-            if(!$InvitationPerMonth['Between'])
+            $options = \XF::options();
+            $InvitationPerXDay = $this->InvitationPerXDay($visitor);
+            if(!$InvitationPerXDay['Between'])
             {
-                return $this->message(\XF::phrase('xs_is_general_code_limit_reached', ['PerMonth' => $InvitationPerMonth['PerMonth']]));
+                throw $this->exception(
+                    $this->error(\XF::phrase('xs_is_general_code_limit_reached', ['PerMonth' => $InvitationPerXDay['PerMonth'], 'xDay' => $InvitationPerXDay['xDay']]))
+                );
             }
-            $token = $this->filter([
-                'token'=> 'str',
-                'tokenID' => 'int'
-            ]);
+            $token = $this->filter('token', 'int');
 
-            $Code = $this->em()->create('XenSoluce\InviteSystem:CodeInvitation');
-            $Code->user_id = $visitor->user_id;
-            $Code->token_id = $token['tokenID'];
-            $Code->token = $token['token'];
-            $Code->type_code = 1;
-            $Code->save();
-            return $this->redirect($this->buildLink('account/invitation') . '?&code=' . $Code->code);
+            /** @var Token $tokenR */
+            $tokenR = $this->em()->find('XenSoluce\InviteSystem:Token', $token);
+
+            if(!$tokenR->canUse())
+            {
+                return $this->noPermission();
+            }
+            $sendEmil = $this->filter('send_invite', 'bool');
+            $email = $this->filter('email', 'str');
+
+            if(
+                $visitor->hasPermission('xs_is', 'xs_is_only_with_email')
+                && $options->xs_is_predefined_message_email
+            ) {
+                if(empty($email))
+                {
+                    throw $this->exception(
+                        $this->error(\XF::phrase('please_enter_value_for_required_field_x', ['field' => 'email']))
+                    );
+                }
+                $sendEmil = true;
+            }
+
+            if($sendEmil)
+            {
+                if(empty($email))
+                {
+                    throw $this->exception(
+                        $this->error(\XF::phrase('please_enter_value_for_required_field_x', ['field' => 'email']))
+                    );
+                }
+                /** @var InvitationEmail $invitationEmailService */
+                $invitationEmailService = $this->service('XenSoluce\InviteSystem:InvitationEmail', false);
+                $invitationEmailService->setEmail($email);
+                $invitationEmailService->setVerifyEmail((bool)\XF::options()->xs_is_check_email_exist);
+
+                if(!$invitationEmailService->validate($errors)) {
+                    throw $this->exception($this->error($errors));
+                }
+
+                $invitationEmailService->setSubject(
+                    \XF::phrase('xs_is_subject_of_the_email_by_default',
+                        [
+                            'username' => $visitor->username,
+                            'boardTitle' => \XF::options()->boardTitle
+                        ]
+                    )
+                );
+
+                $invitationEmailService->setType(1);
+                $invitationEmailService->setToken($tokenR->token, $token);
+                $invitationEmailService->sendEmail();
+
+                $Code = $invitationEmailService->getInvitation();
+            }
+            else
+            {
+                $Code = $this->em()->create('XenSoluce\InviteSystem:CodeInvitation');
+                $Code->user_id = $visitor->user_id;
+                $Code->token_id = $token;
+                $Code->token = $tokenR->token;
+                $Code->type_code = 1;
+                $Code->save();
+            }
+
+            if($tokenR->enable_add_user_group)
+            {
+                $userGroupCode = $this->em()->create('XenSoluce\InviteSystem:UserGroupCode');
+                $userGroupCode->code = $Code->code;
+                $userGroupCode->entity_id = $Code->code_id;
+                $userGroupCode->max_invite = 1;
+                $userGroupCode->type_user_group = $tokenR->type_user_group;
+                $userGroupCode->user_group = $tokenR->user_group;
+                $userGroupCode->secondary_user_group = $tokenR->secondary_user_group;
+                $userGroupCode->save();
+            }
+            return $this->redirect($this->buildLink('account/invitation', null, ['code' => $Code->code]));
 
         }
         else
@@ -74,7 +152,7 @@ class Account extends XFCP_Account
             ->order('token_id', 'DESC');
         $Invitations['tokenGenerate'] = null;
         $Invitations['total'] = 0;
-        $Invitations += $this->InvitationPerMonth($visitor);
+        $Invitations += $this->InvitationPerXDay($visitor);
         foreach ($Tokens->fetch() as $Token)
         {
             $isCount = 0;
@@ -99,9 +177,10 @@ class Account extends XFCP_Account
             }
             if(in_array($visitor->user_id, $Token->user) && $isToken &&  $Token->type_token == '2')
             {
-                $Invitations['tokenGenerate'] = [
+                $Invitations['tokenGenerate'][$Token->token_id] = [
                     'token' => $Token->token,
                     'tokenID' => $Token->token_id,
+                    'tokenName' => $Token->title
                 ];
                 if(!$isNumber)
                 {
@@ -114,9 +193,10 @@ class Account extends XFCP_Account
             }
             if(in_array($visitor->user_group_id, $Token->user) && $isToken &&  $Token->type_token == '1')
             {
-                $Invitations['tokenGenerate'] = [
+                $Invitations['tokenGenerate'][$Token->token_id] = [
                     'token' => $Token->token,
                     'tokenID' => $Token->token_id,
+                    'tokenName' => $Token->title
                 ];
                 if(!$isNumber)
                 {
@@ -131,9 +211,10 @@ class Account extends XFCP_Account
             {
                 if(in_array($group, $Token->user) && $isToken &&  $Token->type_token == '1')
                 {
-                    $Invitations['tokenGenerate'] = [
+                    $Invitations['tokenGenerate'][$Token->token_id] = [
                         'token' => $Token->token,
                         'tokenID' => $Token->token_id,
+                        'tokenName' => $Token->title
                     ];
                     if(!$isNumber)
                     {
@@ -151,35 +232,159 @@ class Account extends XFCP_Account
             }
             elseif($isCount === 2)
             {
-                $Invitations['total'] += $Token->number_use-count($Codes->fetch());
+                $Invitations['total'] += $Token->number_use - count($Codes->fetch());
             }
-        };
+        }
+
         return $Invitations;
     }
-    protected function InvitationPerMonth(\XF\Entity\User $visitor)
+
+    /**
+     * @throws \Exception
+     */
+    protected function InvitationPerXDay(\XF\Entity\User $visitor)
     {
-        $options = \XF::options();
-        $invitationsPerMonth = $visitor->hasPermission('xs_is', 'xs_is_can_invite_per_m');
-        $timeZone = new \DateTimeZone($options->guestTimeZone);
+        $XDay =  $visitor->hasPermission('xs_is', 'xs_is_x_d');
+        $invitationsPerXDay = $visitor->hasPermission('xs_is', 'xs_is_can_invite_per_x_d');
+
+        $timeZone = new \DateTimeZone('UTC');
         $Invitations['Between'] = true;
-        if($invitationsPerMonth > 0)
+        if($invitationsPerXDay > 0)
         {
-            $dateTime = new \DateTime('first day of this month 00:00', $timeZone);
+            $dateTime = new \DateTime('-' . $XDay . 'day 00:00', $timeZone);
+            $dateTime->add(new \DateInterval('P1D'));
             $CodeInvitationCount = $this->finder('XenSoluce\InviteSystem:CodeInvitation')
                 ->where([
                     'user_id'=> $visitor->user_id,
-                    ['type_code', '!=', '2']
+                    ['type_code', '!=', ['2', '5', '6']]
                 ])
-                ->dateBetweenInvitation($dateTime->format('U'), \XF::$time)
+                ->dateBetweenInvitation((int)$dateTime->format('U'), \XF::$time)
                 ->total();
-            if($invitationsPerMonth <= $CodeInvitationCount)
+
+            if($invitationsPerXDay <= $CodeInvitationCount)
             {
                 $Invitations = [
                     'Between' => false,
-                    'PerMonth' => $invitationsPerMonth
+                    'PerMonth' => $invitationsPerXDay,
+                    'xDay' => $XDay
                 ];
             }
         }
         return $Invitations;
     }
+
+    protected function canBuyInvitation()
+    {
+        if(!isset(\XF::options()->xs_is_code_buy['enable']) || !\XF::options()->xs_is_code_buy['enable']) {
+            throw $this->exception($this->noPermission());
+        }
+    }
+
+    /**
+     * @param ParameterBag $params
+     * @return \XF\Mvc\Reply\Reroute|\XF\Mvc\Reply\View
+     */
+    public function actionInvitationBuy(ParameterBag $params)
+    {
+        $this->canBuyInvitation();
+        if($params->invitation_cart_id)
+        {
+            return $this->rerouteController(__CLASS__, 'InvitationBuyView', $params);
+        }
+
+        $paymentRepo = $this->repository(PaymentRepository::class);
+        $profiles = $paymentRepo->findPaymentProfilesForList()
+            ->pluckFrom(function ($e) {
+                return ($e->display_title ?: $e->Provider->title);
+            })
+            ->where('payment_profile_id', \XF::options()->xs_is_code_buy['payment_profile_ids'])
+            ->fetch();
+
+        $options = \XF::options();
+        $page = $params->page;
+        $perPage = $options->xs_is_perPage_account;
+
+        $invitationCarts = $this->finder('XenSoluce\InviteSystem:InvitationCarts')
+            ->where([
+                'user_id' => \XF::visitor()->user_id,
+                ['state', '!=', 'no']
+            ]);
+        $invitationCarts->limitByPage($page, $perPage);
+
+        $viewParams = [
+            'profiles' => $profiles,
+            'invitationCarts' => $invitationCarts->fetch(),
+            'total' => $invitationCarts->total(),
+
+            'page' => $page,
+            'perPage' => $perPage
+        ];
+        $view = $this->view('XenSoluce\InviteSystem:InvitationBuy', 'xs_is_account_invitation_buy', $viewParams);
+        return $this->addAccountWrapperParams($view, 'xs_invitation_buy');
+    }
+
+    /**
+     * @param ParameterBag $params
+     * @return \XF\Mvc\Reply\View
+     * @throws \XF\Mvc\Reply\Exception
+     */
+    public function actionInvitationBuyView(ParameterBag $params)
+    {
+        $this->canBuyInvitation();
+
+        /** @var InvitationCarts $invitationCart */
+        $invitationCart = $this->assertInvitationCartExists($params->invitation_cart_id);
+        if($invitationCart->state === 'no')
+        {
+            throw $this->exception($this->notFound());
+        }
+
+        $viewParams = [
+            'invitationCart' => $invitationCart,
+        ];
+
+        $view = $this->view('XenSoluce\InviteSystem:InvitationBuy', 'xs_is_account_invitation_buy_view', $viewParams);
+        return $this->addAccountWrapperParams($view, 'xs_invitation_buy');
+    }
+
+
+    /**
+     * @return mixed
+     * @throws \XF\PrintableException
+     */
+    public function actionInvitationBuyComplete()
+    {
+        $this->canBuyInvitation();
+
+        /** @var InvitationCarts $invitationCart */
+        $invitationCart = \XF::em()->find('XenSoluce\InviteSystem:InvitationCarts', $this->filter('invitation_cart_id', 'int'));
+        if(empty($invitationCart))
+        {
+            return $this->noPermission();
+        }
+
+        if($invitationCart->state === 'no') {
+            $invitationCart->state = 'pending';
+            $invitationCart->save();
+        }
+
+        $viewParams = [
+            'invitationCart' => $invitationCart,
+        ];
+        $view = $this->view('XenSoluce\InviteSystem:InvitationBuy', 'xs_is_account_invitation_buy_complete', $viewParams);
+        return $this->addAccountWrapperParams($view, 'xs_invitation_buy');
+    }
+
+    /**
+     * @param $id
+     * @param null $with
+     * @param null $phraseKey
+     * @return \XF\Mvc\Entity\Entity
+     * @throws \XF\Mvc\Reply\Exception
+     */
+    protected function assertInvitationCartExists($id, $with = null, $phraseKey = null)
+    {
+        return $this->assertRecordExists('XenSoluce\InviteSystem:InvitationCarts', $id, $with, $phraseKey);
+    }
 }
+ 		   	  		 		     				  		  		 	  	 	           		          	 	   	  								  		  				 	 		       	 		 					 		   				 	 		  	    

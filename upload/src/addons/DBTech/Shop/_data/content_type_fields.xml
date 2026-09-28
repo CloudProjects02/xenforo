@@ -1,126 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
 <content_type_fields>
-  <field content_type="autobump" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\AutoBumpHandler</field>
-  <field content_type="avatarchange" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\AvatarChangeHandler</field>
-  <field content_type="avatarstyle" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\AvatarStyleHandler</field>
-  <field content_type="avatarstyle2" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\AvatarStylePreDefinedHandler</field>
-  <field content_type="createforum" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\CreateForumHandler</field>
-  <field content_type="custom" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\CustomHandler</field>
-  <field content_type="customicon" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\CustomIconHandler</field>
+  <field content_type="autobump" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\AutoBump</field>
+  <field content_type="avatarchange" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\AvatarChange</field>
+  <field content_type="avatarframe" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\AvatarFrame</field>
+  <field content_type="createforum" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\CreateForum</field>
+  <field content_type="custom" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\Custom</field>
+  <field content_type="customicon" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\CustomIcon</field>
   <field content_type="dbtech_shop_category" field_name="admin_search_class">DBTech\Shop\AdminSearch\Category</field>
   <field content_type="dbtech_shop_category" field_name="entity">DBTech\Shop:Category</field>
   <field content_type="dbtech_shop_category" field_name="permission_handler_class">DBTech\Shop\Permission\CategoryPermissions</field>
   <field content_type="dbtech_shop_category" field_name="phrase">dbtech_shop_shop_category</field>
   <field content_type="dbtech_shop_category" field_name="phrase_plural">dbtech_shop_shop_categories</field>
-  <field content_type="dbtech_shop_currency" field_name="dbtech_shop_trade_offer_handler_class">DBTech\Shop\TradeOffer\CurrencyHandler</field>
+  <field content_type="dbtech_shop_currency" field_name="dbtech_shop_trade_offer_handler_class">DBTech\Shop\TradeOffer\Currency</field>
   <field content_type="dbtech_shop_currency" field_name="entity">DBTech\Shop:Currency</field>
   <field content_type="dbtech_shop_item" field_name="admin_search_class">DBTech\Shop\AdminSearch\Item</field>
-  <field content_type="dbtech_shop_item" field_name="alert_handler_class">DBTech\Shop\Alert\ItemHandler</field>
-  <field content_type="dbtech_shop_item" field_name="approval_queue_handler_class">DBTech\Shop\ApprovalQueue\ItemHandler</field>
-  <field content_type="dbtech_shop_item" field_name="bookmark_handler_class">DBTech\Shop\Bookmark\ItemHandler</field>
-  <field content_type="dbtech_shop_item" field_name="email_stop_class">DBTech\Shop\EmailStop\ItemHandler</field>
+  <field content_type="dbtech_shop_item" field_name="alert_handler_class">DBTech\Shop\Alert\Item</field>
+  <field content_type="dbtech_shop_item" field_name="approval_queue_handler_class">DBTech\Shop\ApprovalQueue\Item</field>
+  <field content_type="dbtech_shop_item" field_name="bookmark_handler_class">DBTech\Shop\Bookmark\Item</field>
+  <field content_type="dbtech_shop_item" field_name="email_stop_class">DBTech\Shop\EmailStop\Item</field>
   <field content_type="dbtech_shop_item" field_name="entity">DBTech\Shop:Item</field>
-  <field content_type="dbtech_shop_item" field_name="find_new_handler_class">DBTech\Shop\FindNew\ItemHandler</field>
-  <field content_type="dbtech_shop_item" field_name="inline_mod_handler_class">DBTech\Shop\InlineMod\ItemHandler</field>
-  <field content_type="dbtech_shop_item" field_name="moderator_log_handler_class">DBTech\Shop\ModeratorLog\ItemHandler</field>
-  <field content_type="dbtech_shop_item" field_name="news_feed_handler_class">DBTech\Shop\NewsFeed\ItemHandler</field>
+  <field content_type="dbtech_shop_item" field_name="find_new_handler_class">DBTech\Shop\FindNew\Item</field>
+  <field content_type="dbtech_shop_item" field_name="inline_mod_handler_class">DBTech\Shop\InlineMod\Item</field>
+  <field content_type="dbtech_shop_item" field_name="moderator_log_handler_class">DBTech\Shop\ModeratorLog\Item</field>
+  <field content_type="dbtech_shop_item" field_name="news_feed_handler_class">DBTech\Shop\NewsFeed\Item</field>
   <field content_type="dbtech_shop_item" field_name="permission_handler_class">DBTech\Shop\Permission\ItemPermissions</field>
   <field content_type="dbtech_shop_item" field_name="phrase">dbtech_shop_shop_item</field>
   <field content_type="dbtech_shop_item" field_name="phrase_plural">dbtech_shop_shop_items</field>
-  <field content_type="dbtech_shop_item" field_name="reaction_handler_class">DBTech\Shop\Reaction\ItemHandler</field>
-  <field content_type="dbtech_shop_item" field_name="report_handler_class">DBTech\Shop\Report\ItemHandler</field>
+  <field content_type="dbtech_shop_item" field_name="reaction_handler_class">DBTech\Shop\Reaction\Item</field>
+  <field content_type="dbtech_shop_item" field_name="report_handler_class">DBTech\Shop\Report\Item</field>
   <field content_type="dbtech_shop_item" field_name="search_handler_class">DBTech\Shop\Search\Data\Item</field>
   <field content_type="dbtech_shop_item" field_name="spam_handler_class">DBTech\Shop\Spam\Cleaner\Item</field>
-  <field content_type="dbtech_shop_item" field_name="stats_handler_class">DBTech\Shop\Stats\ItemHandler</field>
-  <field content_type="dbtech_shop_item" field_name="tag_handler_class">DBTech\Shop\Tag\ItemHandler</field>
-  <field content_type="dbtech_shop_item" field_name="warning_handler_class">DBTech\Shop\Warning\ItemHandler</field>
-  <field content_type="dbtech_shop_purchase" field_name="dbtech_shop_trade_offer_handler_class">DBTech\Shop\TradeOffer\PurchaseHandler</field>
+  <field content_type="dbtech_shop_item" field_name="stats_handler_class">DBTech\Shop\Stats\Item</field>
+  <field content_type="dbtech_shop_item" field_name="tag_handler_class">DBTech\Shop\Tag\Item</field>
+  <field content_type="dbtech_shop_item" field_name="warning_handler_class">DBTech\Shop\Warning\Item</field>
+  <field content_type="dbtech_shop_purchase" field_name="dbtech_shop_trade_offer_handler_class">DBTech\Shop\TradeOffer\Purchase</field>
   <field content_type="dbtech_shop_purchase" field_name="entity">DBTech\Shop:Purchase</field>
-  <field content_type="dbtech_shop_purchase" field_name="inline_mod_handler_class">DBTech\Shop\InlineMod\PurchaseHandler</field>
-  <field content_type="dbtech_shop_rating" field_name="alert_handler_class">DBTech\Shop\Alert\ItemRatingHandler</field>
+  <field content_type="dbtech_shop_purchase" field_name="inline_mod_handler_class">DBTech\Shop\InlineMod\Purchase</field>
+  <field content_type="dbtech_shop_rating" field_name="alert_handler_class">DBTech\Shop\Alert\ItemRating</field>
   <field content_type="dbtech_shop_rating" field_name="entity">DBTech\Shop:ItemRating</field>
-  <field content_type="dbtech_shop_rating" field_name="moderator_log_handler_class">DBTech\Shop\ModeratorLog\ItemRatingHandler</field>
-  <field content_type="dbtech_shop_rating" field_name="news_feed_handler_class">DBTech\Shop\NewsFeed\ItemRatingHandler</field>
+  <field content_type="dbtech_shop_rating" field_name="moderator_log_handler_class">DBTech\Shop\ModeratorLog\ItemRating</field>
+  <field content_type="dbtech_shop_rating" field_name="news_feed_handler_class">DBTech\Shop\NewsFeed\ItemRating</field>
   <field content_type="dbtech_shop_rating" field_name="phrase">dbtech_shop_shop_item_rating</field>
   <field content_type="dbtech_shop_rating" field_name="phrase_plural">dbtech_shop_shop_item_ratings</field>
-  <field content_type="dbtech_shop_rating" field_name="report_handler_class">DBTech\Shop\Report\ItemRatingHandler</field>
+  <field content_type="dbtech_shop_rating" field_name="report_handler_class">DBTech\Shop\Report\ItemRating</field>
   <field content_type="dbtech_shop_rating" field_name="spam_handler_class">DBTech\Shop\Spam\Cleaner\ItemRating</field>
-  <field content_type="dbtech_shop_rating" field_name="warning_handler_class">DBTech\Shop\Warning\ItemRatingHandler</field>
+  <field content_type="dbtech_shop_rating" field_name="warning_handler_class">DBTech\Shop\Warning\ItemRating</field>
   <field content_type="dbtech_shop_ticket" field_name="entity">DBTech\Shop:LotteryTicket</field>
-  <field content_type="dbtech_shop_trade" field_name="alert_handler_class">DBTech\Shop\Alert\TradeHandler</field>
+  <field content_type="dbtech_shop_trade" field_name="alert_handler_class">DBTech\Shop\Alert\Trade</field>
   <field content_type="dbtech_shop_trade" field_name="entity">DBTech\Shop:Trade</field>
-  <field content_type="dbtech_shop_trade_comment" field_name="alert_handler_class">DBTech\Shop\Alert\TradePostCommentHandler</field>
-  <field content_type="dbtech_shop_trade_comment" field_name="approval_queue_handler_class">DBTech\Shop\ApprovalQueue\TradePostCommentHandler</field>
+  <field content_type="dbtech_shop_trade_comment" field_name="alert_handler_class">DBTech\Shop\Alert\TradePostComment</field>
+  <field content_type="dbtech_shop_trade_comment" field_name="approval_queue_handler_class">DBTech\Shop\ApprovalQueue\TradePostComment</field>
   <field content_type="dbtech_shop_trade_comment" field_name="entity">DBTech\Shop:TradePostComment</field>
-  <field content_type="dbtech_shop_trade_comment" field_name="moderator_log_handler_class">DBTech\Shop\ModeratorLog\TradePostCommentHandler</field>
-  <field content_type="dbtech_shop_trade_comment" field_name="news_feed_handler_class">DBTech\Shop\NewsFeed\TradePostCommentHandler</field>
-  <field content_type="dbtech_shop_trade_comment" field_name="reaction_handler_class">DBTech\Shop\Reaction\TradePostCommentHandler</field>
-  <field content_type="dbtech_shop_trade_comment" field_name="report_handler_class">DBTech\Shop\Report\TradePostCommentHandler</field>
+  <field content_type="dbtech_shop_trade_comment" field_name="moderator_log_handler_class">DBTech\Shop\ModeratorLog\TradePostComment</field>
+  <field content_type="dbtech_shop_trade_comment" field_name="news_feed_handler_class">DBTech\Shop\NewsFeed\TradePostComment</field>
+  <field content_type="dbtech_shop_trade_comment" field_name="reaction_handler_class">DBTech\Shop\Reaction\TradePostComment</field>
+  <field content_type="dbtech_shop_trade_comment" field_name="report_handler_class">DBTech\Shop\Report\TradePostComment</field>
   <field content_type="dbtech_shop_trade_comment" field_name="search_handler_class">DBTech\Shop\Search\Data\TradePostComment</field>
   <field content_type="dbtech_shop_trade_comment" field_name="spam_handler_class">DBTech\Shop\Spam\Cleaner\TradePostComment</field>
-  <field content_type="dbtech_shop_trade_comment" field_name="stats_handler_class">DBTech\Shop\Stats\TradePostCommentHandler</field>
-  <field content_type="dbtech_shop_trade_comment" field_name="warning_handler_class">DBTech\Shop\Warning\TradePostCommentHandler</field>
-  <field content_type="dbtech_shop_trade_post" field_name="alert_handler_class">DBTech\Shop\Alert\TradePostHandler</field>
-  <field content_type="dbtech_shop_trade_post" field_name="approval_queue_handler_class">DBTech\Shop\ApprovalQueue\TradePostHandler</field>
+  <field content_type="dbtech_shop_trade_comment" field_name="stats_handler_class">DBTech\Shop\Stats\TradePostComment</field>
+  <field content_type="dbtech_shop_trade_comment" field_name="warning_handler_class">DBTech\Shop\Warning\TradePostComment</field>
+  <field content_type="dbtech_shop_trade_post" field_name="alert_handler_class">DBTech\Shop\Alert\TradePost</field>
+  <field content_type="dbtech_shop_trade_post" field_name="approval_queue_handler_class">DBTech\Shop\ApprovalQueue\TradePost</field>
   <field content_type="dbtech_shop_trade_post" field_name="entity">DBTech\Shop:TradePost</field>
-  <field content_type="dbtech_shop_trade_post" field_name="find_new_handler_class">DBTech\Shop\FindNew\TradePostHandler</field>
-  <field content_type="dbtech_shop_trade_post" field_name="inline_mod_handler_class">DBTech\Shop\InlineMod\TradePostHandler</field>
-  <field content_type="dbtech_shop_trade_post" field_name="moderator_log_handler_class">DBTech\Shop\ModeratorLog\TradePostHandler</field>
-  <field content_type="dbtech_shop_trade_post" field_name="news_feed_handler_class">DBTech\Shop\NewsFeed\TradePostHandler</field>
-  <field content_type="dbtech_shop_trade_post" field_name="reaction_handler_class">DBTech\Shop\Reaction\TradePostHandler</field>
-  <field content_type="dbtech_shop_trade_post" field_name="report_handler_class">DBTech\Shop\Report\TradePostHandler</field>
+  <field content_type="dbtech_shop_trade_post" field_name="find_new_handler_class">DBTech\Shop\FindNew\TradePost</field>
+  <field content_type="dbtech_shop_trade_post" field_name="inline_mod_handler_class">DBTech\Shop\InlineMod\TradePost</field>
+  <field content_type="dbtech_shop_trade_post" field_name="moderator_log_handler_class">DBTech\Shop\ModeratorLog\TradePost</field>
+  <field content_type="dbtech_shop_trade_post" field_name="news_feed_handler_class">DBTech\Shop\NewsFeed\TradePost</field>
+  <field content_type="dbtech_shop_trade_post" field_name="reaction_handler_class">DBTech\Shop\Reaction\TradePost</field>
+  <field content_type="dbtech_shop_trade_post" field_name="report_handler_class">DBTech\Shop\Report\TradePost</field>
   <field content_type="dbtech_shop_trade_post" field_name="search_handler_class">DBTech\Shop\Search\Data\TradePost</field>
   <field content_type="dbtech_shop_trade_post" field_name="spam_handler_class">DBTech\Shop\Spam\Cleaner\TradePost</field>
-  <field content_type="dbtech_shop_trade_post" field_name="stats_handler_class">DBTech\Shop\Stats\TradePostHandler</field>
-  <field content_type="dbtech_shop_trade_post" field_name="warning_handler_class">DBTech\Shop\Warning\TradePostHandler</field>
-  <field content_type="deletethread" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\DeleteThreadHandler</field>
-  <field content_type="firemoderator" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\FireModeratorHandler</field>
-  <field content_type="forumdescription" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\ForumDescriptionHandler</field>
-  <field content_type="forumpassword" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\ForumPasswordHandler</field>
-  <field content_type="forumpermission" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\ForumPermissionHandler</field>
-  <field content_type="immunity" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\ImmunityHandler</field>
-  <field content_type="intpermission" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\IntPermissionHandler</field>
-  <field content_type="moderateforum" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\ModerateForumHandler</field>
-  <field content_type="movethread" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\MoveThreadHandler</field>
-  <field content_type="permission" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\PermissionHandler</field>
-  <field content_type="postbackground" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\PostBackgroundHandler</field>
-  <field content_type="postbackground2" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\PostBackgroundPreDefinedHandler</field>
-  <field content_type="postbithighlight" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\PostbitHighlightHandler</field>
-  <field content_type="postbithighlight2" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\PostbitHighlightPreDefinedHandler</field>
-  <field content_type="poststyle" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\PostStyleHandler</field>
-  <field content_type="poststyle2" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\PostStylePreDefinedHandler</field>
-  <field content_type="profilemusic" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\ProfileMusicHandler</field>
-  <field content_type="shop_buyback" field_name="dbtech_credits_eventtrigger_handler_class">DBTech\Shop\EventTrigger\BuybackHandler</field>
-  <field content_type="shop_deposit" field_name="dbtech_credits_eventtrigger_handler_class">DBTech\Shop\EventTrigger\DepositHandler</field>
-  <field content_type="shop_donate" field_name="dbtech_credits_eventtrigger_handler_class">DBTech\Shop\EventTrigger\DonateHandler</field>
-  <field content_type="shop_lotteryprize" field_name="dbtech_credits_eventtrigger_handler_class">DBTech\Shop\EventTrigger\LotteryPrizeHandler</field>
-  <field content_type="shop_lotteryticket" field_name="dbtech_credits_eventtrigger_handler_class">DBTech\Shop\EventTrigger\LotteryTicketHandler</field>
-  <field content_type="shop_purchase" field_name="dbtech_credits_eventtrigger_handler_class">DBTech\Shop\EventTrigger\PurchaseHandler</field>
-  <field content_type="shop_sale" field_name="dbtech_credits_eventtrigger_handler_class">DBTech\Shop\EventTrigger\SaleHandler</field>
-  <field content_type="shop_sellback" field_name="dbtech_credits_eventtrigger_handler_class">DBTech\Shop\EventTrigger\SellbackHandler</field>
-  <field content_type="shop_stealfail" field_name="dbtech_credits_eventtrigger_handler_class">DBTech\Shop\EventTrigger\StealFailHandler</field>
-  <field content_type="shop_stealsuccess" field_name="dbtech_credits_eventtrigger_handler_class">DBTech\Shop\EventTrigger\StealSuccessHandler</field>
-  <field content_type="shop_trade" field_name="dbtech_credits_eventtrigger_handler_class">DBTech\Shop\EventTrigger\TradeHandler</field>
-  <field content_type="shop_withdraw" field_name="dbtech_credits_eventtrigger_handler_class">DBTech\Shop\EventTrigger\WithdrawHandler</field>
-  <field content_type="signaturechange" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\SignatureChangeHandler</field>
-  <field content_type="smilie" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\SmilieHandler</field>
-  <field content_type="smiliecategory" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\SmilieCategoryHandler</field>
-  <field content_type="stealchance" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\StealChanceHandler</field>
-  <field content_type="stealmore" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\StealMoreHandler</field>
-  <field content_type="stealpenalty" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\StealPenaltyHandler</field>
-  <field content_type="sticky" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\StickyHandler</field>
-  <field content_type="threadban" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\ThreadBanHandler</field>
-  <field content_type="threadbump" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\ThreadBumpHandler</field>
-  <field content_type="threadhighlight" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\ThreadHighlightHandler</field>
-  <field content_type="threadhighlight2" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\ThreadHighlightPreDefinedHandler</field>
-  <field content_type="threadtitlestyle" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\ThreadTitleStyleHandler</field>
-  <field content_type="threadtitlestyle2" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\ThreadTitleStylePreDefinedHandler</field>
-  <field content_type="usergroupchange" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\UserGroupChangeHandler</field>
-  <field content_type="usernamechange" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\UserNameChangeHandler</field>
-  <field content_type="usernamestyle" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\UserNameStyleHandler</field>
-  <field content_type="usernamestyle2" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\UserNameStylePreDefinedHandler</field>
-  <field content_type="usertitlechange" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\UserTitleChangeHandler</field>
-  <field content_type="usertitlechange2" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\UserTitleChangePreDefinedHandler</field>
-  <field content_type="usertitlestyle" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\UserTitleStyleHandler</field>
-  <field content_type="usertitlestyle2" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\UserTitleStylePreDefinedHandler</field>
+  <field content_type="dbtech_shop_trade_post" field_name="stats_handler_class">DBTech\Shop\Stats\TradePost</field>
+  <field content_type="dbtech_shop_trade_post" field_name="warning_handler_class">DBTech\Shop\Warning\TradePost</field>
+  <field content_type="deletethread" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\DeleteThread</field>
+  <field content_type="firemoderator" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\FireModerator</field>
+  <field content_type="forumdescription" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\ForumDescription</field>
+  <field content_type="forumpassword" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\ForumPassword</field>
+  <field content_type="forumpermission" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\ForumPermission</field>
+  <field content_type="immunity" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\Immunity</field>
+  <field content_type="intpermission" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\IntPermission</field>
+  <field content_type="itembundle" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\ItemBundle</field>
+  <field content_type="moderateforum" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\ModerateForum</field>
+  <field content_type="movethread" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\MoveThread</field>
+  <field content_type="permission" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\Permission</field>
+  <field content_type="postbackground" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\PostBackground</field>
+  <field content_type="postbackground2" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\PostBackgroundPreDefined</field>
+  <field content_type="postbithighlight" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\PostbitHighlight</field>
+  <field content_type="postbithighlight2" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\PostbitHighlightPreDefined</field>
+  <field content_type="poststyle" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\PostStyle</field>
+  <field content_type="poststyle2" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\PostStylePreDefined</field>
+  <field content_type="profileeffects" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\ProfileEffects</field>
+  <field content_type="profilemusic" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\ProfileMusic</field>
+  <field content_type="shop_buyback" field_name="dbtech_credits_eventtrigger_handler_class">DBTech\Shop\EventTrigger\Buyback</field>
+  <field content_type="shop_deposit" field_name="dbtech_credits_eventtrigger_handler_class">DBTech\Shop\EventTrigger\Deposit</field>
+  <field content_type="shop_donate" field_name="dbtech_credits_eventtrigger_handler_class">DBTech\Shop\EventTrigger\Donate</field>
+  <field content_type="shop_lotteryprize" field_name="dbtech_credits_eventtrigger_handler_class">DBTech\Shop\EventTrigger\LotteryPrize</field>
+  <field content_type="shop_lotteryticket" field_name="dbtech_credits_eventtrigger_handler_class">DBTech\Shop\EventTrigger\LotteryTicket</field>
+  <field content_type="shop_purchase" field_name="dbtech_credits_eventtrigger_handler_class">DBTech\Shop\EventTrigger\Purchase</field>
+  <field content_type="shop_sale" field_name="dbtech_credits_eventtrigger_handler_class">DBTech\Shop\EventTrigger\Sale</field>
+  <field content_type="shop_sellback" field_name="dbtech_credits_eventtrigger_handler_class">DBTech\Shop\EventTrigger\Sellback</field>
+  <field content_type="shop_stealfail" field_name="dbtech_credits_eventtrigger_handler_class">DBTech\Shop\EventTrigger\StealFail</field>
+  <field content_type="shop_stealsuccess" field_name="dbtech_credits_eventtrigger_handler_class">DBTech\Shop\EventTrigger\StealSuccess</field>
+  <field content_type="shop_trade" field_name="dbtech_credits_eventtrigger_handler_class">DBTech\Shop\EventTrigger\Trade</field>
+  <field content_type="shop_withdraw" field_name="dbtech_credits_eventtrigger_handler_class">DBTech\Shop\EventTrigger\Withdraw</field>
+  <field content_type="signaturechange" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\SignatureChange</field>
+  <field content_type="smilie" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\Smilie</field>
+  <field content_type="smiliecategory" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\SmilieCategory</field>
+  <field content_type="stealchance" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\StealChance</field>
+  <field content_type="stealmore" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\StealMore</field>
+  <field content_type="stealpenalty" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\StealPenalty</field>
+  <field content_type="sticky" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\Sticky</field>
+  <field content_type="threadban" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\ThreadBan</field>
+  <field content_type="threadbump" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\ThreadBump</field>
+  <field content_type="threadhighlight" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\ThreadHighlight</field>
+  <field content_type="threadhighlight2" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\ThreadHighlightPreDefined</field>
+  <field content_type="threadtitlestyle" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\ThreadTitleStyle</field>
+  <field content_type="threadtitlestyle2" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\ThreadTitleStylePreDefined</field>
+  <field content_type="usergroupchange" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\UserGroupChange</field>
+  <field content_type="usernamechange" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\UserNameChange</field>
+  <field content_type="usernameitem" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\UsernameItem</field>
+  <field content_type="usernamestyle" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\UserNameStyle</field>
+  <field content_type="usernamestyle2" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\UserNameStylePreDefined</field>
+  <field content_type="usertitlechange" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\UserTitleChange</field>
+  <field content_type="usertitlechange2" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\UserTitleChangePreDefined</field>
+  <field content_type="usertitlestyle" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\UserTitleStyle</field>
+  <field content_type="usertitlestyle2" field_name="dbtech_shop_itemtype_handler_class">DBTech\Shop\ItemType\UserTitleStylePreDefined</field>
 </content_type_fields>

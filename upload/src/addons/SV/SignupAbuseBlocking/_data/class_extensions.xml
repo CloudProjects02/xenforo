@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<class_extensions>
+  <extension from_class="NF\Tickets\Entity\Ticket" to_class="SV\SignupAbuseBlocking\NF\Tickets\Entity\Ticket" execute_order="10" active="1"/>
+  <extension from_class="XF\Admin\Controller\Index" to_class="SV\SignupAbuseBlocking\XF\Admin\Controller\Index" execute_order="10" active="1"/>
+  <extension from_class="XF\Admin\Controller\Log" to_class="SV\SignupAbuseBlocking\XF\Admin\Controller\Log" execute_order="6812" active="1"/>
+  <extension from_class="XF\Admin\Controller\Login" to_class="SV\SignupAbuseBlocking\XF\Admin\Controller\Login" execute_order="6812" active="1"/>
+  <extension from_class="XF\Admin\Controller\Tools" to_class="SV\SignupAbuseBlocking\XF\Admin\Controller\Tools" execute_order="10" active="1"/>
+  <extension from_class="XF\Admin\Controller\User" to_class="SV\SignupAbuseBlocking\XF\Admin\Controller\User" execute_order="6812" active="1"/>
+  <extension from_class="XF\ApprovalQueue\User" to_class="SV\SignupAbuseBlocking\XF\ApprovalQueue\User" execute_order="6812" active="1"/>
+  <extension from_class="XF\BbCode\RuleSet" to_class="SV\SignupAbuseBlocking\XF\BbCode\RuleSet" execute_order="6812" active="1"/>
+  <extension from_class="XF\ControllerPlugin\Login" to_class="SV\SignupAbuseBlocking\XF\ControllerPlugin\Login" execute_order="6812" active="1"/>
+  <extension from_class="XF\Entity\Forum" to_class="SV\SignupAbuseBlocking\XF\Entity\Forum" execute_order="6812" active="1"/>
+  <extension from_class="XF\Entity\Report" to_class="SV\SignupAbuseBlocking\XF\Entity\Report" execute_order="6812" active="1"/>
+  <extension from_class="XF\Entity\Thread" to_class="SV\SignupAbuseBlocking\XF\Entity\Thread" execute_order="6812" active="1"/>
+  <extension from_class="XF\Entity\User" to_class="SV\SignupAbuseBlocking\XF\Entity\User" execute_order="6812" active="1"/>
+  <extension from_class="XF\Entity\UserProfile" to_class="SV\SignupAbuseBlocking\XF\Entity\UserProfile" execute_order="6812" active="1"/>
+  <extension from_class="XF\Finder\ChangeLog" to_class="SV\SignupAbuseBlocking\XF\Finder\ChangeLog" execute_order="10" active="1"/>
+  <extension from_class="XF\Job\UserAction" to_class="SV\SignupAbuseBlocking\XF\Job\UserAction" execute_order="1" active="1"/>
+  <extension from_class="XF\Pub\Controller\Account" to_class="SV\SignupAbuseBlocking\XF\Pub\Controller\Account" execute_order="6812" active="1"/>
+  <extension from_class="XF\Pub\Controller\Login" to_class="SV\SignupAbuseBlocking\XF\Pub\Controller\Login" execute_order="6812" active="1"/>
+  <extension from_class="XF\Pub\Controller\Login" to_class="SV\SignupAbuseBlocking\XF\Pub\Controller\LoginPatch" execute_order="6811" active="1"/>
+  <extension from_class="XF\Pub\Controller\Logout" to_class="SV\SignupAbuseBlocking\XF\Pub\Controller\Logout" execute_order="6812" active="1"/>
+  <extension from_class="XF\Pub\Controller\Member" to_class="SV\SignupAbuseBlocking\XF\Pub\Controller\Member" execute_order="6812" active="1"/>
+  <extension from_class="XF\Pub\Controller\Misc" to_class="SV\SignupAbuseBlocking\XF\Pub\Controller\Misc" execute_order="6812" active="1"/>
+  <extension from_class="XF\Pub\Controller\Register" to_class="SV\SignupAbuseBlocking\XF\Pub\Controller\Register" execute_order="6812" active="1"/>
+  <extension from_class="XF\Repository\ApprovalQueue" to_class="SV\SignupAbuseBlocking\XF\Repository\ApprovalQueue" execute_order="6812" active="1"/>
+  <extension from_class="XF\Repository\Report" to_class="SV\SignupAbuseBlocking\XF\Repository\Report" execute_order="6812" active="1"/>
+  <extension from_class="XF\Service\Thread\Creator" to_class="SV\SignupAbuseBlocking\XF\Service\Thread\Creator" execute_order="681200" active="1"/>
+  <extension from_class="XF\Service\Thread\Replier" to_class="SV\SignupAbuseBlocking\XF\Service\Thread\Replier" execute_order="681200" active="1"/>
+  <extension from_class="XF\Service\User\DeleteCleanUp" to_class="SV\SignupAbuseBlocking\XF\Service\User\DeleteCleanUp" execute_order="10" active="1"/>
+  <extension from_class="XF\Service\User\EmailConfirmation" to_class="SV\SignupAbuseBlocking\XF\Service\User\EmailConfirmation" execute_order="6812" active="1"/>
+  <extension from_class="XF\Service\User\Login" to_class="SV\SignupAbuseBlocking\XF\Service\User\Login" execute_order="6812" active="1"/>
+  <extension from_class="XF\Service\User\Login" to_class="SV\SignupAbuseBlocking\XF\Service\User\LoginPatch" execute_order="1" active="1"/>
+  <extension from_class="XF\Service\User\Merge" to_class="SV\SignupAbuseBlocking\XF\Service\User\Merge" execute_order="6812" active="1"/>
+  <extension from_class="XF\Service\User\PasswordReset" to_class="SV\SignupAbuseBlocking\XF\Service\User\PasswordReset" execute_order="6812" active="1"/>
+  <extension from_class="XF\Service\User\Registration" to_class="SV\SignupAbuseBlocking\XF\Service\User\Registration" execute_order="6812" active="1"/>
+  <extension from_class="XF\Spam\Checker\PreRegAction" to_class="SV\SignupAbuseBlocking\XF\Spam\Checker\PreRegAction" execute_order="1" active="1"/>
+  <extension from_class="XF\Spam\Checker\ProjectHoneyPot" to_class="SV\SignupAbuseBlocking\XF\Spam\Checker\ProjectHoneyPot" execute_order="6812" active="1"/>
+  <extension from_class="XF\Spam\Checker\StopForumSpam" to_class="SV\SignupAbuseBlocking\XF\Spam\Checker\StopForumSpam" execute_order="6812" active="1"/>
+  <extension from_class="XF\Spam\ContentChecker" to_class="SV\SignupAbuseBlocking\XF\Spam\ContentChecker" execute_order="6812" active="1"/>
+  <extension from_class="XF\Spam\UserChecker" to_class="SV\SignupAbuseBlocking\XF\Spam\UserChecker" execute_order="6812" active="1"/>
+</class_extensions>
+ 		 		 	   	 	  		  				  	 	 		 	 	   	    	 	  	 	  	 	 	 			    	 				 		    			 	 	  		  		  	 	 			 	   		  	 	 	  	 	   	 	 	 

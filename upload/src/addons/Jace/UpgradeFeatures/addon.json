@@ -1,0 +1,14 @@
+{
+    "legacy_addon_id": "",
+    "title": "[Jace] Upgrade Features",
+    "description": "Make list of features for user upgrade page",
+    "version_id": 1000010,
+    "version_string": "1.0.2 Alpha",
+    "dev": "Jace",
+    "dev_url": "https://synapse-themes.cc",
+    "faq_url": "https://synapse-themes.cc",
+    "support_url": "https://synapse-themes.cc",
+    "extra_urls": [],
+    "require": [],
+    "icon": "fa-th-list"
+}

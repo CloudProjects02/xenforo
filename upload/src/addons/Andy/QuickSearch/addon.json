@@ -1,0 +1,14 @@
+{
+    "legacy_addon_id": "",
+    "title": "[Jace] Quick search",
+    "description": "New modern ui for quick search",
+    "version_id": 50,
+    "version_string": "5.0",
+    "dev": "Jace",
+    "dev_url": "",
+    "faq_url": "",
+    "support_url": "",
+    "extra_urls": [],
+    "require": [],
+    "icon": "fa-search"
+}

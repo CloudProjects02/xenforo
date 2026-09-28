@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style_property_groups>
+  <style_property_group group_name="xc_xp_user_level_progress" title="[XC] User level XP progress bar" description="Styling of  level progress bar" display_order="10000"/>
+</style_property_groups>

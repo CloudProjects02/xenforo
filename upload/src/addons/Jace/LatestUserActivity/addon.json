@@ -1,0 +1,14 @@
+{
+    "legacy_addon_id": "",
+    "title": "[Jace] Latest User Activity",
+    "description": "Display the latest user activity on the member profile page.",
+    "version_id": 1000020,
+    "version_string": "1.0.0 Beta",
+    "dev": "Jace",
+    "dev_url": "",
+    "faq_url": "",
+    "support_url": "",
+    "extra_urls": [],
+    "require": [],
+    "icon": "fa-clock"
+}

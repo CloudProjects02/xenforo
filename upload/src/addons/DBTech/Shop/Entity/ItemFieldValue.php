@@ -14,9 +14,9 @@ use XF\Mvc\Entity\Structure;
 class ItemFieldValue extends Entity
 {
 	/**
-	 * @param Structure $structure
+	 * @param \XF\Mvc\Entity\Structure $structure
 	 *
-	 * @return Structure
+	 * @return \XF\Mvc\Entity\Structure
 	 */
 	public static function getStructure(Structure $structure): Structure
 	{
@@ -26,9 +26,9 @@ class ItemFieldValue extends Entity
 		$structure->columns = [
 			'item_id' => ['type' => self::UINT, 'required' => true],
 			'field_id' => ['type' => self::STR, 'maxLength' => 25,
-				'match' => 'alphanumeric',
+				'match' => 'alphanumeric'
 			],
-			'field_value' => ['type' => self::STR, 'default' => ''],
+			'field_value' => ['type' => self::STR, 'default' => '']
 		];
 		$structure->getters = [];
 		$structure->relations = [];

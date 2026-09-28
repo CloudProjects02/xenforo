@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="public" title="andy_quicksearch" version_id="47" version_string="4.7"><![CDATA[<div class="quicksearch-wrapper-wide">
+	<div class="block">
+		<div class="block-container" style="max-height:{$xf.options.quickSearchWideHeight}px;overflow:auto;">
+			<div class="block-body">
+				<xf:if is="$threads is not empty">
+					<xf:datalist data-xf-init="responsive-data-list">
+						<xf:datarow rowtype="header">
+							<xf:cell>{{ phrase('quicksearch_thread_starter') }}</xf:cell>
+							<xf:cell>{{ phrase('quicksearch_title') }}</xf:cell>
+							<xf:cell>{{ phrase('quicksearch_forum') }}</xf:cell>
+							<xf:cell>{{ phrase('quicksearch_replies') }}</xf:cell>
+							<xf:cell>{{ phrase('quicksearch_date') }}</xf:cell>
+						</xf:datarow>
+						<xf:foreach loop="$threads" value="$thread">
+							<xf:datarow rowclass="dataList-row--noHover">
+								<xf:cell>
+								<span class="contentRow-figure">
+									<xf:avatar user="{$thread.User}" size="xs" defaultname="{$thread.username}" />
+								</span>
+								</xf:cell>
+								<xf:cell>
+									<span>
+										<a href="{{ link('threads/', $thread) }}">{{ prefix('thread', $thread.prefix_id, 'html', '') }}</a>
+									</span>
+									<span>
+										<a href="{{ link('threads/', $thread) }}">{$thread.title}</a>
+									</span>
+								</xf:cell>
+								<xf:cell><a href="{{ link('forums', $thread.Forum) }}">{$thread.Forum.title}</a></xf:cell>
+								<xf:cell>{$thread.reply_count}</xf:cell>
+								<xf:cell><xf:date time="{$thread.post_date}" /></xf:cell>
+							</xf:datarow>
+						</xf:foreach>
+					</xf:datalist>
+				<xf:else />
+					<div class="block-body block-row">{{ phrase('no_results_found') }}</div>
+				</xf:if>
+			</div>
+		</div>
+		<xf:button type="reset" style="margin:10px 0px 0px 0px;float:right;" class="button--icon button--icon--cancel button--iconOnly"
+			title="{{ phrase('cancel')|for_attr }}"
+			data-xf-init="tooltip" onclick="quickSearchClose()" />
+		<br /><br />
+	</div>
+</div>
+
+<div class="quicksearch-wrapper-narrow">
+	<div class="block">
+		<div class="block-container" style="max-height:{$xf.options.quickSearchNarrowHeight}px;overflow:auto;">
+			<div class="block-body">
+				<xf:if is="$threads is not empty">
+					<xf:datalist data-xf-init="responsive-data-list">
+						<xf:datarow rowtype="header">
+							<xf:cell>{{ phrase('quicksearch_title') }}</xf:cell>
+						</xf:datarow>
+						<xf:foreach loop="$threads" value="$thread">
+							<xf:datarow rowclass="dataList-row--noHover">
+								<xf:cell>
+									<span>
+										<a href="{{ link('threads/', $thread) }}">{{ prefix('thread', $thread.prefix_id, 'html', '') }}</a>
+									</span>
+									<span>
+										<a href="{{ link('threads/', $thread) }}">{$thread.title}</a>
+									</span>
+								</xf:cell>
+							</xf:datarow>
+						</xf:foreach>
+					</xf:datalist>
+				<xf:else />
+					<div class="block-body block-row">{{ phrase('no_results_found') }}</div>
+				</xf:if>
+			</div>
+		</div>
+		<xf:button type="reset" style="margin:10px 0px 0px 0px;float:right;" class="button--icon button--icon--cancel button--iconOnly"
+			title="{{ phrase('cancel')|for_attr }}"
+			data-xf-init="tooltip" onclick="quickSearchClose()" />
+		<br /><br />
+	</div>
+</div>]]></template>
+  <template type="public" title="andy_quicksearch.less" version_id="45" version_string="4.5"><![CDATA[.block-container.quicksearch {
+	margin: 0px 0px 10px 0px;
+	width: 300px;
+}
+
+@media (max-width: @xf-responsiveMedium) {
+    .block-container.quicksearch {
+		margin: 0px 0px 10px -10px;
+		width: 300px;
+	}
+}]]></template>
+  <template type="public" title="andy_quicksearch_conversation" version_id="47" version_string="4.7"><![CDATA[<div class="quicksearch-wrapper-wide">
+	<div class="block">
+		<div class="block-container" style="max-height:{$xf.options.quickSearchWideHeight}px;overflow:auto;">
+			<div class="block-body">
+				<xf:if is="$conversations is not empty">
+					<xf:datalist data-xf-init="responsive-data-list">
+						<xf:datarow rowtype="header">
+							<xf:cell>{{ phrase('quicksearch_title') }}</xf:cell>
+							<xf:cell>{{ phrase('quicksearch_conversation_starter') }}</xf:cell>
+							<xf:cell>{{ phrase('quicksearch_recipients') }}</xf:cell>
+
+							<xf:cell>{{ phrase('quicksearch_replies') }}</xf:cell>
+							<xf:cell>{{ phrase('quicksearch_date') }}</xf:cell>
+						</xf:datarow>
+						<xf:foreach loop="$conversations" value="$conversation">
+							<xf:datarow rowclass="dataList-row--noHover">
+								<xf:cell><a href="{{ link('conversations', $conversation) }}">{$conversation.title}</a></xf:cell>
+								<xf:cell><xf:username user="{$conversation}" rich="true" /></xf:cell>
+								<xf:cell>
+									<ul class="listInline listInline--comma">
+										<xf:foreach loop="$conversation.recipients" value="$recipient">
+											<li><xf:username user="{$recipient}" rich="true" /></li>
+										</xf:foreach>
+									</ul>
+								</xf:cell>
+								<xf:cell>{$conversation.reply_count}</xf:cell>
+								<xf:cell><xf:date time="{$conversation.start_date}" /></xf:cell>
+							</xf:datarow>
+						</xf:foreach>
+					</xf:datalist>
+					<xf:else />
+					<div class="block-body block-row">{{ phrase('no_results_found') }}</div>
+				</xf:if>
+			</div>
+		</div>
+		<xf:button type="reset" style="margin:10px 0px 0px 0px;float:right;" class="button--icon button--icon--cancel button--iconOnly"
+			title="{{ phrase('cancel')|for_attr }}"
+			data-xf-init="tooltip" onclick="quickSearchClose()" />
+		<br /><br />
+	</div>
+</div>
+
+<div class="quicksearch-wrapper-narrow">
+	<div class="block">
+		<div class="block-container" style="max-height:{$xf.options.quickSearchNarrowHeight}px;overflow:auto;">
+			<div class="block-body">
+				<xf:if is="$conversations is not empty">
+					<xf:datalist data-xf-init="responsive-data-list">
+						<xf:datarow rowtype="header">
+							<xf:cell>{{ phrase('quicksearch_title') }}</xf:cell>
+						</xf:datarow>
+						<xf:foreach loop="$conversations" value="$conversation">
+							<xf:datarow rowclass="dataList-row--noHover">
+								<xf:cell><a href="{{ link('conversations', $conversation) }}">{$conversation.title}</a></xf:cell>
+							</xf:datarow>
+						</xf:foreach>
+					</xf:datalist>
+				<xf:else />
+					<div class="block-body block-row">{{ phrase('no_results_found') }}</div>
+				</xf:if>
+			</div>
+		</div>
+		<xf:button type="reset" style="margin:10px 0px 0px 0px;float:right;" class="button--icon button--icon--cancel button--iconOnly"
+			title="{{ phrase('cancel')|for_attr }}"
+			data-xf-init="tooltip" onclick="quickSearchClose()" />
+		<br /><br />
+	</div>
+</div>]]></template>
+  <template type="public" title="andy_quicksearch_xfrm" version_id="47" version_string="4.7"><![CDATA[<div class="quicksearch-wrapper-wide">
+	<div class="block">
+		<div class="block-container" style="max-height:{$xf.options.quickSearchNarrowHeight}px;overflow:auto;">
+			<div class="block-body">
+				<xf:if is="$results is not empty">
+					<xf:datalist data-xf-init="responsive-data-list">
+						<xf:datarow rowtype="header">
+							<xf:cell>{{ phrase('quicksearch_title') }}</xf:cell>
+							<xf:cell>{{ phrase('quicksearch_version') }}</xf:cell>
+							<xf:cell>{{ phrase('quicksearch_downloads') }}</xf:cell>
+							<xf:cell>{{ phrase('quicksearch_category') }}</xf:cell>
+						</xf:datarow>
+						<xf:foreach loop="$results" value="$result">
+							<xf:datarow rowclass="dataList-row--noHover">
+								<xf:cell href="{{ link('resources/', $result) }}">{$result.title}</xf:cell>
+								<xf:cell>{$result.CurrentVersion.version_string}</xf:cell>
+								<xf:cell>{$result.download_count}</xf:cell>
+								<xf:cell>{$result.Category.title}</xf:cell>
+							</xf:datarow>
+						</xf:foreach>
+					</xf:datalist>
+				<xf:else />
+					<div class="block-body block-row">{{ phrase('no_results_found') }}</div>
+				</xf:if>
+			</div>
+		</div>
+		<xf:button type="reset" style="margin:10px 0px 0px 0px;float:right;" class="button--icon button--icon--cancel button--iconOnly"
+			title="{{ phrase('cancel')|for_attr }}"
+			data-xf-init="tooltip" onclick="quickSearchClose()" />
+		<br /><br />
+	</div>
+</div>
+
+<div class="quicksearch-wrapper-narrow">
+	<div class="block">
+		<div class="block-container" style="max-height:{$xf.options.quickSearchNarrowHeight}px;overflow:auto;">
+			<div class="block-body">
+				<xf:if is="$results is not empty">
+					<xf:datalist data-xf-init="responsive-data-list">
+						<xf:datarow rowtype="header">
+							<xf:cell>{{ phrase('quicksearch_title') }}</xf:cell>
+						</xf:datarow>
+						<xf:foreach loop="$results" value="$result">
+							<xf:datarow rowclass="dataList-row--noHover">
+								<xf:cell href="{{ link('resources/', $result) }}">{$result.title}</xf:cell>
+							</xf:datarow>
+						</xf:foreach>
+					</xf:datalist>
+				<xf:else />
+					<div class="block-body block-row">{{ phrase('no_results_found') }}</div>
+				</xf:if>
+			</div>
+		</div>
+		<xf:button type="reset" style="margin:10px 0px 0px 0px;float:right;" class="button--icon button--icon--cancel button--iconOnly"
+			title="{{ phrase('cancel')|for_attr }}"
+			data-xf-init="tooltip" onclick="quickSearchClose()" />
+		<br /><br />
+	</div>
+</div>]]></template>
+</templates>

@@ -1,0 +1,18 @@
+{
+    "legacy_addon_id": "",
+    "title": "Chunked Uploads",
+    "description": "Allows you to upload very large files even if your server doesn't allow it",
+    "version_id": 1000470,
+    "version_string": "1.0.4",
+    "dev": "JulianD",
+    "dev_url": "https://xenforo.com/community/conversations/add?to=JulianD",
+    "faq_url": "",
+    "support_url": "",
+    "extra_urls": [],
+    "require": {
+        "XF": [2010010, "XenForo 2.1.0+"],
+        "php": ["8.0.0", "PHP 8.0.0+"]
+    },
+    "icon": "fa-compress-arrows-alt",
+    "composer_autoload": "_vendor/composer"
+}

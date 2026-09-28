@@ -10,13 +10,13 @@ class Member extends XFCP_Member
     public function actionInvitations(ParameterBag $params)
     {
         $user = $this->assertViewableUser($params->user_id);
-        $page = $this->filterPage();
+        $page = $this->filterPage($params->page);
         $perPage = $this->options()->membersPerPage;
-        $Codes = $this->finder('XenSoluce\InviteSystem:CodeInvitation')
-            ->where([
-                'user_id'=> $user->user_id,
-                ['registered_user_id', '!=', '0']
-            ])->order('invitation_date', 'desc');
+        $Codes = $this->finder('XenSoluce\InviteSystem:RegisterUser')
+            ->where('by_user_id', $user->user_id)
+            ->where('registered_user_id', '!=', $user->user_id)
+            ->order('invitation_date', 'desc');
+
         $Codes->limitByPage($page, $perPage);
         $viewParams = [
             'user'      => $user,
@@ -29,3 +29,4 @@ class Member extends XFCP_Member
     }
 
 }
+ 		   	  		 		     				  		  		 	  	 	           		          	 	   	  								  		  				 	 		       	 		 					 		   				 	 		  	    

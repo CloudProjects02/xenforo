@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<help_pages>
+  <help_page page_id="hide_bb_codes" page_name="hide-bb-codes" display_order="25" callback_class="XenConcept\HideBBCode\Help\HideBbCodes" callback_method="renderHideBbCodes" advanced_mode="1" active="1"/>
+</help_pages>

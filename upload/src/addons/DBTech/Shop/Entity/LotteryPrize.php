@@ -2,7 +2,6 @@
 
 namespace DBTech\Shop\Entity;
 
-use XF\Entity\ViewableInterface;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 
@@ -15,10 +14,10 @@ use XF\Mvc\Entity\Structure;
  * @property array $numbers
  *
  * RELATIONS
- * @property-read \XF\Mvc\Entity\AbstractCollection<\DBTech\Shop\Entity\LotteryTicket> $WinningTickets
- * @property-read \XF\Mvc\Entity\AbstractCollection<\DBTech\Shop\Entity\LotteryPrizeMap> $PrizeMap
+ * @property \XF\Mvc\Entity\AbstractCollection|\DBTech\Shop\Entity\LotteryTicket[] $WinningTickets
+ * @property \XF\Mvc\Entity\AbstractCollection|\DBTech\Shop\Entity\LotteryPrizeMap[] $PrizeMap
  */
-class LotteryPrize extends Entity implements ViewableInterface
+class LotteryPrize extends Entity
 {
 	/**
 	 * @return bool
@@ -27,7 +26,7 @@ class LotteryPrize extends Entity implements ViewableInterface
 	{
 		return $this->isActive();
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -37,9 +36,9 @@ class LotteryPrize extends Entity implements ViewableInterface
 	}
 
 	/**
-	 * @param Structure $structure
+	 * @param \XF\Mvc\Entity\Structure $structure
 	 *
-	 * @return Structure
+	 * @return \XF\Mvc\Entity\Structure
 	 */
 	public static function getStructure(Structure $structure): Structure
 	{
@@ -55,18 +54,18 @@ class LotteryPrize extends Entity implements ViewableInterface
 		];
 		$structure->relations = [
 			'WinningTickets' => [
-				'entity' => LotteryTicket::class,
+				'entity' => 'DBTech\Shop:LotteryTicket',
 				'type' => self::TO_MANY,
 				'conditions' => [
-					['lottery_prize_id', '=', '$lottery_prize_id'],
+					['lottery_prize_id', '=', '$lottery_prize_id']
 				],
-				'cascadeDelete' => true,
+				'cascadeDelete' => true
 			],
 			'PrizeMap' => [
-				'entity' => LotteryPrizeMap::class,
+				'entity' => 'DBTech\Shop:LotteryPrizeMap',
 				'type' => self::TO_MANY,
 				'conditions' => 'lottery_prize_id',
-				'cascadeDelete' => true,
+				'cascadeDelete' => true
 			],
 		];
 

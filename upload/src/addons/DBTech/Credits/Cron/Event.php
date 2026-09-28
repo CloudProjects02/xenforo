@@ -2,8 +2,6 @@
 
 namespace DBTech\Credits\Cron;
 
-use DBTech\Credits\Job\DailyCredits;
-use DBTech\Credits\Job\Expiry;
 use DBTech\Credits\Repository\EventTriggerRepository;
 
 class Event
@@ -24,7 +22,7 @@ class Event
 	{
 		\XF::app()->jobManager()->enqueueUnique(
 			'dbtechCreditsExpiry',
-			Expiry::class,
+			'DBTech\Credits:Expiry',
 			[],
 			false
 		);
@@ -46,7 +44,7 @@ class Event
 		{
 			\XF::app()->jobManager()->enqueueUnique(
 				'dbtechCreditsDaily',
-				DailyCredits::class,
+				'DBTech\Credits:DailyCredits',
 				[],
 				false
 			);

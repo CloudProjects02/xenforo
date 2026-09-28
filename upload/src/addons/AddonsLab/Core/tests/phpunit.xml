@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="../../TestFramework/bootstrap.php"
+		 backupGlobals="false"
+		 colors="false"
+		 convertErrorsToExceptions="true"
+		 convertNoticesToExceptions="true"
+		 convertWarningsToExceptions="true"
+		 processIsolation="false"
+		 stopOnFailure="true"
+		 syntaxCheck="true"
+		 verbose="true"
+		 strict="true"
+	>
+	<testsuites>
+		<testsuite name="main">
+			<directory>./</directory>
+		</testsuite>
+	</testsuites>
+	<filter>
+		<whitelist>
+			<directory suffix=".php">../</directory> 
+			<exclude>
+				<directory>../tests</directory>
+				<directory>../Abstract</directory>
+			</exclude>
+		</whitelist>
+	</filter> 
+	<logging>
+		<log type="coverage-html" target="./codeCoverage" charset="UTF-8"
+			 yui="true" highlight="true"
+			 lowUpperBound="50" highLowerBound="80"/>
+	</logging>
+</phpunit>

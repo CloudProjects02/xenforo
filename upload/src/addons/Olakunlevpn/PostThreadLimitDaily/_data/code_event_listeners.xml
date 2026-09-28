@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<code_event_listeners>
+  <listener event_id="controller_pre_dispatch" execute_order="10" callback_class="Olakunlevpn\PostThreadLimitDaily\Listener" callback_method="controllerPreDispatch" active="1" description="Add thread and post limit information to templates"/>
+  <listener event_id="entity_pre_save" execute_order="10" callback_class="Olakunlevpn\PostThreadLimitDaily\Listener" callback_method="entityPreSave" active="1" description="Check thread and post limits before saving"/>
+  <listener event_id="templater_template_pre_render" execute_order="10" callback_class="Olakunlevpn\PostThreadLimitDaily\Listener" callback_method="templateRender" active="1"/>
+</code_event_listeners>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<code_events>
+  <event event_id="patch_route_build_callback"><![CDATA[<p>Called when a XF\Mvc\Router object is constructed to manipulate routes</p>
+
+<p>Callback signature:</p>
+<blockquote><code><em>\SV\StandardLib\Repository\LinkBuilder</em> $linkBuilder, <em>\XF\Mvc\Router</em> $router</code></blockquote>
+
+<p>Arguments:</p>
+<ol>
+	<li><code><em>\SV\StandardLib\Repository\LinkBuilder</em> $linkBuilder</code> - The link builder repository with methods to manipulate the current router object.</li>
+	<li><code><em>\XF\Mvc\Router</em>  $router</code> - The router object that is in the middle of being constructed.</li>
+</ol>
+
+<p>Event hint should match the <code><em>\XF::app()->container('app.classType')</em></code> output.<br/>
+Known event hints:</p>
+<ol>
+	<li><code><em>Cli</em></code></li>
+	<li><code><em>Admin</em></code></li>
+	<li><code><em>Api</em></code></li>
+	<li><code><em>Pub</em></code></li>
+</ol>]]></event>
+</code_events>

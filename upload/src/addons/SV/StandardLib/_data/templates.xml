@@ -1,0 +1,916 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="option_template_svStandardLib_entriesPerPageChoices" version_id="2001190501" version_string="1.19.5"><![CDATA[<xf:formrow rowtype="input"
+	label="{$option.title}"
+	hint="{$hintHtml}"
+	explain="{$explainHtml}"
+	html="{$listedHtml}"
+	rowclass="{$rowClass}">
+
+	<ul class="listPlain inputGroup-container">
+		<xf:foreach loop="$choices" key="$counter" value="$choice">
+			<li class="inputGroup">
+				<xf:textbox name="{$inputName}[{$counter}][value]" value="{$choice.value}" placeholder="{{ phrase('value') }}" size="20" />
+			</li>
+		</xf:foreach>
+
+		<li class="inputGroup" data-xf-init="field-adder" data-increment-format="{$inputName}[{counter}]">
+			<xf:textbox name="{$inputName}[{$nextCounter}][value]" placeholder="{{ phrase('value') }}" size="20" />
+		</li>
+	</ul>
+</xf:formrow>]]></template>
+  <template type="admin" title="svStandardLib_template_view_modifications" version_id="2001210014" version_string="1.21.0 RC14"><![CDATA[<xf:title>{$template.title} - {{ count($activeMods)|number }}/{{ count($mods)|number }} - {{ phrase('template_modifications') }}</xf:title>
+
+<xf:page option="breadcrumbPath" value="styles" />
+
+<xf:breadcrumb href="{{ link('styles/templates', $style, {'type': $template.type}) }}">{$style.title} - {{ phrase('templates') }}</xf:breadcrumb>
+<xf:breadcrumb href="{{ link('templates/edit', $template, {'type': $template.type, 'style_id': $style.style_id}) }}">{$template.title}</xf:breadcrumb>
+
+<xf:css src="public:diff.less" />
+<xf:macro name="public:prism_macros::setup" />
+
+<xf:form action="{{ link('templates/view-modifications', $template, {'type': $template.type, 'style_id': $style.style_id, 'tab': $tab}) }}"
+		 class="block"
+		 ajax="{$_xfWithData}" >
+	<div class="block-container">
+		<div class="block-body">
+			<xf:checkboxrow rowtype="fullWidth noLabel" name="active_mod_ids[]">
+				<xf:foreach loop="$mods" value="$mod">
+					<xf:option value="{$mod.modification_id}"
+							   checked="{{ $activeMods.{$mod.modification_id} ? 'checked' : '' }}">
+						<xf:label><xf:trim>
+							{{ $mod.addon_id ? $mod.addon_id . ' - ' : '' }}{{ $mod.modification_key }} - {{ $mod.description }} (<a href='{{ link('template-modifications/edit', $mod) }}'>{{ phrase('edit') }}</a>)
+						</xf:trim></xf:label>
+						<xf:hint>{$status.{$mod->modification_id}}</xf:hint>
+					</xf:option>
+				</xf:foreach>
+			</xf:checkboxrow>
+		</div>
+		
+		<xf:hiddenval name="reload">1</xf:hiddenval>
+		<xf:submitrow rowtype="simple" submit="{{ phrase('svStandardLib_reload') }}" />
+	</div>
+</xf:form>
+
+<div class="block">
+	<div class="block-container">
+		<h2 class="block-tabHeader tabs hScroller" data-xf-init="h-scroller" role="tablist">
+			<span class="hScroller-scroll">
+				<!--[XF:SV/StandardLib:tabs:start]-->
+				<a class="tabs-tab {{ $tab === 'diffs' ? 'is-active' : '' }}" role="tab" tabindex="0"
+				   href="{{ link('templates/view-modifications', $template, {'type': $template.type, 'style_id': $style.style_id, 'tab': 'diffs', 'active_mod_ids': $activeModIds}) }}"
+				   aria-controls="template-contents">{{ phrase('svStandardLib_template_contents') }}</a>
+				
+				<a class="tabs-tab {{ $tab === 'compiled' ? 'is-active' : '' }}" role="tab" tabindex="0"
+				   href="{{ link('templates/view-modifications', $template, {'type': $template.type, 'style_id': $style.style_id, 'tab': 'compiled', 'active_mod_ids': $activeModIds}) }}"
+				   aria-controls="compiled-template-code">{{ phrase('svStandardLib_compiled_template_code') }}</a>
+				<!--[XF:SV/StandardLib:tabs:end]-->
+			</span>
+		</h2>
+		
+		<ul class="tabPanes">
+			<!--[XF:SV/StandardLib:tab_panes:start]-->
+			<li class="{{ $tab === 'diffs' ? 'is-active' : '' }}" role="tabpanel" aria-labelledby="template-contents">
+				<div class="block-body block-row block-body--contained">
+					<ol class="diffList diffList--code">
+						<xf:foreach loop="$diffs" value="$diff">
+							<xf:set var="$diffHtml">{{ $diff.1|join('<br />') }}</xf:set>
+							<li class="diffList-line diffList-line--{$diff.0}">{{ trim($diffHtml) !== '' ? $diffHtml : '&nbsp;' }}</li>
+						</xf:foreach>
+					</ol>
+				</div>
+			</li>
+
+			<li class="{{ $tab === 'compiled' ? 'is-active' : '' }}" role="tabpanel" aria-labelledby="compiled-template-code">
+				<div class="block-body block-row block-body--contained"><pre class="bbCodeCode" dir="ltr" data-xf-init="code-block" data-lang="php"><code>{$compiledTemplate}</code></pre></div>
+				
+				<xf:if contentcheck="true">
+					<h3 class="block-minorHeader">{{ phrase('svStandardLib_compiler_errors:') }}</h3>
+					<ol class="block-body block-body--contained">
+						<xf:contentcheck><xf:trim>
+							<xf:foreach loop="$compilerErrors" value="$compilerError">
+								<li class="block-row block-row--separated">{$compilerError}</li>
+							</xf:foreach>
+						</xf:trim></xf:contentcheck>
+					</ol>
+				</xf:if>
+			</li>
+			<!--[XF:SV/StandardLib:tab_panes:end]-->
+		</ul>
+	</div>
+</div>]]></template>
+  <template type="public" title="svStandardLib_choices.less" version_id="2001230600" version_string="1.23.6"><![CDATA[.choices
+{
+	position: relative;
+	overflow: hidden;
+	//margin-bottom: 24px;
+	&:last-child
+	{
+		margin-bottom: 0;
+	}
+	&.is-open
+	{
+		overflow: visible;
+	}
+	&.is-disabled .choices__inner,
+	&.is-disabled .choices__input
+	{
+		color: @xf-textColorMuted;
+		background-color: @xf-pageBg;
+		cursor: not-allowed !important;
+		-webkit-user-select: none;
+		user-select: none;
+	}
+	&.is-disabled .choices__item
+	{
+		cursor: not-allowed;
+	}
+	& [hidden]
+	{
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		opacity: 0;
+	}
+}
+
+.choices__item .label
+{
+	font-size: inherit;
+}
+
+.choices__list
+{
+	margin: 0;
+	padding-left: 0;
+	list-style: none;
+	&:empty::before
+	{
+		content: '';
+		display: inline-block;
+		height: 1lh;
+	}
+	&--single
+	{
+		display: inline-block;
+		padding: 4px 16px 4px 4px;
+		width: 100%;
+		[dir=rtl] &
+		{
+			padding-right: 4px;
+			padding-left: 16px;
+		}
+		& .choices__item
+		{
+			width: 100%;
+		}
+	}
+	&--multiple
+	{
+		display: inline;
+
+		& .choices__item
+		{
+			display: inline-block;
+			vertical-align: middle;
+			padding: @xf-paddingSmall @xf-paddingSmall;
+			font-weight: 500;
+			margin-right: 3.75px;
+			word-break: break-all;
+			box-sizing: border-box;
+			align-items: center;
+
+			border-radius: @xf-borderRadiusMedium;
+			[dir=rtl] &
+			{
+				margin-right: 0;
+				margin-left: 3.75px;
+			}
+			&.is-highlighted
+			{
+				background-color: @xf-contentHighlightBg;
+				border: 1px solid @xf-borderColorLight;
+			}
+			.is-disabled &
+			{
+				color: @xf-textColorMuted;
+				border: 1px solid @xf-borderColorHeavy;
+			}
+
+			.xf-chip();
+		}
+	}
+
+	&--dropdown,
+	&[aria-expanded]
+	{
+		display: none;
+		z-index: 999;
+		position: absolute;
+		width: 100%;
+		background-color: @xf-inputFocusBgColor;
+		border: 1px solid @xf-borderColor;
+		top: 100%;
+		margin-top: -1px;
+		border-bottom-left-radius: 2.5px;
+		border-bottom-right-radius: 2.5px;
+		overflow: hidden;
+		word-break: break-all;
+
+		.is-active&
+		{
+			display: block;
+		}
+		.is-open &
+		{
+			border-color: @xf-borderColor;
+		}
+		.is-flipped &
+		{
+			top: auto;
+			bottom: 100%;
+			margin-top: 0;
+			margin-bottom: -1px;
+			border-radius: 0.25rem 0.25rem 0 0;
+		}
+		& .choices__list
+		{
+			position: relative;
+			max-height: 300px;
+			overflow: auto;
+			-webkit-overflow-scrolling: touch;
+			will-change: scroll-position;
+		}
+		& .choices__item
+		{
+			position: relative;
+			padding: 10px;
+			[dir=rtl] &
+			{
+				text-align: right;
+			}
+			&--selectable
+			{
+				&.is-highlighted
+				{
+					background-color: @xf-contentHighlightBg;
+
+					&::after
+					{
+						opacity: 0.5;
+					}
+				}
+
+				&.is-highlighted[data-select-text]
+				{
+					@media (min-width: 640px)
+					{
+						padding-right: 100px;
+						&::after
+						{
+							content: attr(data-select-text);
+							opacity: 0;
+							position: absolute;
+							right: 10px;
+							top: 50%;
+							transform: translateY(-50%);
+						}
+
+						[dir=rtl] &
+						{
+							text-align: right;
+							padding-left: 100px;
+							padding-right: 10px;
+							&:after
+							{
+								right: auto;
+								left: 10px;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+.choices__item
+{
+	cursor: default;
+	&--selectable
+	{
+		cursor: pointer;
+	}
+	&--disabled
+	{
+		cursor: not-allowed;
+		-webkit-user-select: none;
+		user-select: none;
+		opacity: 0.5;
+	}
+}
+
+.choices__heading
+{
+	padding: @xf-paddingMedium  @xf-paddingNormal;
+	margin: 0;
+	font-weight: @xf-fontWeightNormal;
+	color: @xf-majorHeadingTextColor;
+	text-decoration: none;
+	background: @xf-majorHeadingBg;
+	border-top: @xf-borderSize solid @xf-borderColorLight;
+	border-bottom: @xf-borderSize solid @xf-borderColorLight;
+}
+
+.choices__button
+{
+	border: 0;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	background-position: center;
+	cursor: pointer;
+	&:focus
+	{
+		outline: none;
+	}
+}
+
+.choices__input
+{
+	display: inline-block;
+	vertical-align: baseline;
+	color: @xf-inputTextColor;
+	background-color: @xf-inputBgColor;
+	font-size: @xf-fontSizeNormal;
+	border: 0;
+	border-radius: 0;
+	max-width: 100%;
+	padding: 4px 0 4px 2px;
+
+	&:focus
+	{
+		outline: 0;
+	}
+	&::-webkit-search-decoration,
+	&::-webkit-search-cancel-button,
+	&::-webkit-search-results-button, &::-webkit-search-results-decoration
+	{
+		display: none;
+	}
+	&::-ms-clear,
+	&::-ms-reveal
+	{
+		display: none;
+		width: 0;
+		height: 0;
+	}
+	[dir=rtl] &
+	{
+		padding-right: 2px;
+		padding-left: 0;
+	}
+}
+
+.choices__placeholder
+{
+  opacity: 0.5;
+}
+
+.svChoices--inputGroup
+{
+	position: relative;
+	&.is-open
+	{
+		> .input
+		{
+			border-bottom-left-radius: 0px;
+			border-bottom-right-radius: 0px;
+		}
+	}
+
+	.choices__inner .choices__item > * 
+	{
+		vertical-align: middle;
+	}
+
+	.choices__item--choice
+	{
+		.choices__description
+		{
+			color: @xf-textColorMuted;
+			display: block;
+			margin-top: @xf-paddingSmall;
+		}
+
+		&.is-selected
+		{
+			> .label
+			{
+				.xf-chip();
+			}
+		}
+	}
+
+	.choices__item
+	{
+		.choices__button
+		{
+			padding-left:0;
+		}
+		.choices__button:after
+		{
+			color: @xf-textColorMuted;
+			<xf:if is="$xf.versionId < 2030000">
+			.m-faBase();
+			</xf:if>
+			.m-faContent(@fa-var-times-circle);
+			transition: all .2s ease-in;
+
+			&:hover
+			{
+				color: @xf-textColorDimmed;
+			}
+		}
+	}
+}]]></template>
+  <template type="public" title="svStandardLib_delete_state" version_id="2001210008" version_string="1.21.0 RC8"><![CDATA[<xf:title>{{ phrase('confirm_action') }}</xf:title>
+
+<xf:breadcrumb href="{$editLink}">{$title}</xf:breadcrumb>
+
+<xf:form action="{$deleteLink}" class="block" ajax="true">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:if is="{$entity.{$stateKey}} == 'deleted'">
+				<xf:radiorow name="hard_delete" value="0"
+							 label="{{ phrase('deletion_type') }}">
+
+					<xf:option value="0"
+							   label="{{ phrase('do_nothing') }}" />
+
+					<xf:if is="$canHardDelete">
+						<xf:option value="1"
+								   label="{{ phrase('permanently_delete') }}"
+								   hint="{{ phrase('selecting_this_option_will_permanently_and_irreversibly_delete_item') }}" />
+					</xf:if>
+
+					<xf:option value="2"
+							   label="{{ phrase('undelete') }}" />
+				</xf:radiorow>
+			<xf:else />
+				<xf:macro name="public:helper_action::delete_type"
+						  arg-canHardDelete="{$canHardDelete}" />
+			</xf:if>
+
+			<xf:if is="$includeAuthorAlert">
+				<xf:macro name="public:helper_action::author_alert" />
+			</xf:if>
+		</div>
+		<xf:submitrow rowtype="simple" icon="delete" />
+	</div>
+</xf:form>]]></template>
+  <template type="public" title="svStandardLib_helper_macros" version_id="2001230400" version_string="1.23.4"><![CDATA[<xf:macro name="date_time_input_row"
+		  arg-name="date_time"
+		  arg-label=""
+		  arg-explain=""
+		  arg-hint=""
+		  arg-useNativeTimeInputs="{{ $xf.versionId >= 2030000 }}"
+		  arg-timestamp="{{ $xf.time }}"
+		  arg-dateTimeArr="{{ [] }}"
+		  arg-readOnly="{{ false }}"
+		  arg-showSeconds="{{ true }}"
+		  arg-xfInit=""
+		  arg-allInputAttrsHtml=""
+		  arg-dateInputAttrsHtml=""
+		  arg-timeInputAttrsHtml=""
+          arg-tzInputAttrsHtml=""
+
+		  arg-ymdInputAttrsHtml=""
+		  arg-hhInputAttrsHtml=""
+		  arg-mmInputAttrsHtml=""
+		  arg-ssInputAttrsHtml=""
+>
+	<xf:formrow label="{$label}" explain="{$explain}" hint="{$hint}" rowtype="input">
+		<xf:macro name="date_time_input"
+				  arg-name="{$name}"
+				  arg-useNativeTimeInputs="{$useNativeTimeInputs}"
+				  arg-timestamp="{$timestamp}"
+				  arg-dateTimeArr="{$dateTimeArr}"
+				  arg-readOnly="{$readOnly}"
+				  arg-showSeconds="{$showSeconds}"
+				  arg-xfInit="{$xfInit}"
+				  arg-allInputAttrsHtml="{$allInputAttrsHtml}"
+				  arg-dateInputAttrsHtml="{$ymdInputAttrsHtml}"
+				  arg-timeInputAttrsHtml="{$hhInputAttrsHtml}"
+				  arg-tzInputAttrsHtml="{$tzInputAttrsHtml}"
+
+				  arg-ymdInputAttrsHtml="{$ymdInputAttrsHtml}"
+				  arg-hhInputAttrsHtml="{$hhInputAttrsHtml}"
+				  arg-mmInputAttrsHtml="{$mmInputAttrsHtml}"
+				  arg-ssInputAttrsHtml="{$ssInputAttrsHtml}"
+/>
+	</xf:formrow>
+</xf:macro>
+
+<xf:macro name="date_time_input"
+		  arg-name="date_time"
+		  arg-useNativeTimeInputs="{{ $xf.versionId >= 2030000 }}"
+		  arg-timestamp="{{ $xf.time }}"
+		  arg-dateTimeArr="{{ [] }}"
+		  arg-readOnly="{{ false }}"
+		  arg-showSeconds="{{ true }}"
+		  arg-xfInit=""
+		  arg-allInputAttrsHtml=""
+		  arg-dateInputAttrsHtml=""
+		  arg-timeInputAttrsHtml=""
+		  arg-tzInputAttrsHtml=""
+
+		  arg-ymdInputAttrsHtml=""
+		  arg-hhInputAttrsHtml=""
+		  arg-mmInputAttrsHtml=""
+		  arg-ssInputAttrsHtml=""
+>
+	<xf:css src="svStandardLib_helper_macros_date_time_input.less" />
+	<xf:set var="$useNativeTimeInputs" value="{{ $useNativeTimeInputs || $xf.versionId >= 2030000 }}" />
+
+	<xf:set var="$selectedTz" value="{{ $dateTimeArr.tz ?: $xf.visitor.timezone }}" />
+
+	<div class="inputGroup-container inputGroup-containerSvStandardLibDateTime" data-timestamp="{$timestamp|for_attr}">
+		<div class="inputGroup">
+			<xf:if is="$useNativeTimeInputs">
+				<xf:set var="$selectedDate" value="{{ $dateTimeArr.ymd ?: ($timestamp ? date($timestamp, 'Y-m-d') : '') }}" />
+				<xf:if is="{{ ($dateTimeArr.hh !== null) || ($dateTimeArr.mm !== null) || ($dateTimeArr.ss !== null) }}">
+					<xf:set var="$selectedTime" value="{{ ($dateTimeArr.hh ?: '') . ':' . ($dateTimeArr.mm ?: '') . ':' . ($showSeconds ? ($dateTimeArr.ss ?: '') : '') }}" />
+					<xf:else />
+					<xf:set var="$selectedTime" value="{{ $timestamp ? time($timestamp, ('H:i' . ($showSeconds ? ':s' : ''))) : '' }}" />
+				</xf:if>
+
+				<xf:macro name="base_date_time_input"
+						  arg-name="{$name}[date]"
+						  arg-type="date"
+						  arg-readOnly="{{ $readOnly }}"
+						  arg-value="{$selectedDate}"
+						  arg-attrsHtml="{{ $allInputAttrsHtml . ' ' . $dateInputAttrsHtml }}" />
+
+				<span class="inputGroup-text">
+					{{ phrase('svStandardLib_at:') }}
+				</span>
+
+				<xf:macro name="base_date_time_input"
+						  arg-name="{$name}[time]"
+						  arg-type="time"
+						  arg-readOnly="{{ $readOnly }}"
+						  arg-value="{$selectedTime}"
+						  arg-attrsHtml="{{ $allInputAttrsHtml . ' ' . $timeInputAttrsHtml .' ' . ($showSeconds ? 'step="1"' : '') }}" />
+			<xf:else />
+
+				<xf:set var="$selectedYMD" value="{{ $dateTimeArr.ymd ?: ($timestamp ? date($timestamp, 'picker') : '') }}" />
+				<xf:set var="$selectedHour" value="{{ $dateTimeArr.hh ?: ($timestamp ? time($timestamp, 'H') : 0) }}" />
+				<xf:set var="$selectedMinute" value="{{ $dateTimeArr.mm ?: ($timestamp ? time($timestamp, 'i') : 0) }}" />
+				<xf:set var="$selectedSecond" value="{{ $dateTimeArr.ss ?: ($timestamp ? time($timestamp, 's') : 0) }}" />
+				<xf:macro name="date_time_wrapper_xf22"
+						  arg-name="{$name}[ymd]"
+						  arg-weekStart="{{ $xf.language.week_start }}"
+						  arg-readOnly="{{ $readOnly }}"
+						  arg-attrsHtml="{{ ' value="' . $selectedYMD . '" ' . $allInputAttrsHtml . $ymdInputAttrsHtml }}"
+						  />
+
+				<span class="inputGroup-text">
+					{{ phrase('svStandardLib_at:') }}
+				</span>
+
+				<select class="input input--inline input--autoSize" name="{$name}[hh]" {{ $readOnly ? 'disabled="disabled"' : '' }} {{ $allInputAttrsHtml|raw }} {{ $hhInputAttrsHtml|raw }}>
+					<xf:foreach loop="{{ range(0, 23, 1) }}" value="$hour">
+						<xf:set var="$readableHour" value="{{ $hour|pad('0', 2) }}" />
+						<option value="{$hour}" {{ $readableHour === $selectedHour ? 'selected="selected"' : '' }}>{$readableHour}</option>
+					</xf:foreach>
+				</select>
+
+				<span class="inputGroup-text">:</span>
+
+				<select class="input input--inline input--autoSize" name="{$name}[mm]" {{ $readOnly ? 'disabled="disabled"' : '' }} {{ $allInputAttrsHtml|raw }} {{ $mmInputAttrsHtml|raw }}>
+					<xf:foreach loop="{{ range(0, 59, 1) }}" value="$minute">
+						<xf:set var="$readableMinute" value="{{ $minute|pad('0', 2) }}" />
+						<option value="{$minute}" {{ $readableMinute === $selectedMinute ? 'selected="selected"' : '' }}>{$readableMinute}</option>
+					</xf:foreach>
+				</select>
+
+				<xf:if is="$showSeconds">
+					<span class="inputGroup-text">:</span>
+
+					<select class="input input--inline input--autoSize" name="{$name}[ss]" {{ $readOnly ? 'disabled="disabled"' : '' }} {{ $allInputAttrsHtml|raw }}  {{ $ssInputAttrsHtml|raw }}>
+						<xf:foreach loop="{{ range(0, 59, 1) }}" value="$second">
+							<xf:set var="$readableSecond" value="{{ $second|pad('0', 2) }}" />
+							<option value="{$second}" {{ $readableSecond === $selectedSecond ? 'selected="selected"' : '' }}>{$readableSecond}</option>
+						</xf:foreach>
+					</select>
+				</xf:if>
+
+			</xf:if>
+		</div>
+
+		<div class="inputGroup">
+			<select class="input" name="{$name}[tz]" {{ $readOnly ? 'disabled="disabled"' : '' }} {{ $allInputAttrsHtml|raw }} {{ $tzInputAttrsHtml|raw }}>
+				<xf:foreach loop="{{ $xf.app.data('XF:TimeZone').getTimeZoneOptions() }}" key="$value" value="$readableTz">
+					<option value="{$value}"{{ $value === $selectedTz ? 'selected="selected"' : '' }}>{$readableTz}</option>
+				</xf:foreach>
+			</select>
+		</div>
+	</div>
+</xf:macro>
+
+<xf:macro name="date_time_wrapper_xf22"
+		  arg-name="!"
+		  arg-weekStart="!"
+		  arg-readOnly="{{ false }}"
+		  arg-class=""
+		  arg-xfInit=""
+		  arg-attrsHtml=""
+		  >
+	<xf:if is="$xf.versionId >= 2020000 && $xf.versionId < 2030000">
+		<xf:js prod="xf/date_input-compiled.js" dev="vendor/pikaday/pikaday.js, xf/date_input.js" />
+		<xf:css src="core_pikaday.less" />
+	</xf:if>
+
+	<div class="inputGroup inputGroup--date inputGroup--joined inputDate">
+		<input type="text" class="input input--date {$class}" autocomplete="off" data-xf-init="date-input {$xfInit}"
+			data-week-start="{$weekStart}"
+			{{ $readOnly ? 'readonly' : '' }}
+			name="{$name}"
+			{$attrsHtml|raw} />
+		<span class="inputGroup-text inputDate-icon js-dateTrigger"></span>
+	</div>
+</xf:macro>
+
+<xf:macro name="base_date_time_input"
+		  arg-name="!"
+		  arg-type="!"
+		  arg-value="{{ null }}"
+		  arg-readOnly="{{ false }}"
+		  arg-class=""
+		  arg-xfInit=""
+		  arg-attrsHtml="">
+	<input type="{$type}" name="{$name}" {{ $value ? 'value="' . $value . '"' : '' }}
+		   class="input input--{$type} {$class}" autocomplete="off"
+		   {{ $readOnly ? 'readonly' : '' }}
+		   data-xf-init="{$xfInit}"
+		   {$attrsHtml|raw} />
+</xf:macro>
+
+<xf:macro name="relative_timestamp_prerequisites">
+	<xf:js src="sv/vendor/moment/moment.js" addon="SV/StandardLib" min="1" />
+	<xf:js src="sv/lib/relative_timestamp.js" addon="SV/StandardLib" min="1" />
+</xf:macro>
+
+<xf:macro name="relative_timestamp"
+		  arg-class=""
+		  arg-timeStr="!"
+		  arg-otherTimestamp="!"
+		  arg-triggerEvent="{{ null }}"
+		  arg-triggerEventOnSelector="{{ null }}"
+		  arg-maximumDateParts="{{ 0 }}"
+		  arg-showSeconds="{{ false }}"
+		  arg-countUp="{{ false }}"><xf:trim>
+	<xf:macro name="relative_timestamp_prerequisites" />
+
+	<span {{ $class is not empty ? 'class="' . $class|for_attr . '" ' : ''}}data-xf-init="sv-standard-lib--relative-timestamp"
+		  data-count-up="{{ $countUp ? 'true' : 'false' }}"
+		  data-timestamp="{$otherTimestamp}"
+		  data-date-format="{$xf.language.date_format}"
+		  data-time-format="{$xf.language.time_format}"
+		  data-maximum-date-parts="{$maximumDateParts}"
+	      {{ $showSeconds ? 'data-show-seconds="1"' : '' }}
+		  {{ $triggerEvent is not empty ? 'data-trigger-event="' . $triggerEvent|for_attr . '" ' . ($triggerEventOnSelector is not empty ? ' data-trigger-event-on-selector="' . $triggerEventOnSelector|for_attr . '" ' : '') : '' }}><xf:trim>
+		{$timeStr}
+	</xf:trim></span>
+</xf:trim></xf:macro>]]></template>
+  <template type="public" title="svStandardLib_helper_macros_date_time_input.less" version_id="1030070" version_string="1.3.0"><![CDATA[.inputGroup-container.inputGroup-containerSvStandardLibDateTime
+{
+	> .inputGroup:last-child
+	{
+		width: 26.5rem;
+	}
+}
+
+.inputGroup-containerSvStandardLibDateTime + .inputGroup-containerSvStandardLibDateTime
+{
+	margin-top: @xf-paddingMedium;
+}
+
+@media (max-width: @xf-formResponsive)
+{
+	.inputGroup-container.inputGroup-containerSvStandardLibDateTime
+	{
+		> .inputGroup:last-child
+		{
+			width: 25.7rem;
+		}
+	}
+}]]></template>
+  <template type="public" title="svStandardLib_macros" version_id="2001230502" version_string="1.23.5"><![CDATA[<xf:macro name="choices_setup" arg-choicesJs="{{ $xf.options.svDefaultChoicesJs ?: 'choices.search-basic.js' }}">
+
+	<xf:js src="sv/vendor/choices/{$choicesJs}" min="1" addon="SV/StandardLib" />
+
+	<xf:js src="sv/lib/select.js" min="1" addon="SV/StandardLib" />
+	<xf:css src="svStandardLib_choices.less" />
+	<script class="js-extraPhrases" type="application/json">
+	{
+		"svChoices_loadingText": "{{ phrase('loading...')|escape('js') }}",
+		"svChoices_noResultsText": "{{ phrase('no_results_found')|escape('js') }}",
+		"svChoices_noChoicesText": "{{ phrase('(none)')|escape('js') }}",
+		"svChoices_itemSelectText": "{{ phrase('svChoices.itemSelectText')|escape('js') }}",
+		"svChoices_uniqueItemText": "{{ phrase('svChoices.uniqueItemText')|escape('js') }}",
+		"svChoices_customAddItemText": "{{ phrase('svChoices.customAddItemText')|escape('js') }}",
+		"svChoices_addItemText": "{{ phrase('svChoices.addItemText')|escape('js') }}",
+		"svChoices_removeItemLabel": "{{ phrase('svChoices.removeItemLabel')|escape('js') }}",
+		"svChoices_maxItemText": "{{ phrase('svChoices.maxItemText')|escape('js') }}"
+	}
+	</script>
+</xf:macro>
+
+<xf:macro name="choices_static_render"
+		  arg-name="!"
+		  arg-value="!"
+		  arg-multiple="!"
+		  arg-placeholder=""
+		  arg-selectHtml="!"
+		  arg-controlOptions="!"
+		  arg-choices="!"
+		  arg-selectedChoices="!"
+		  arg-search="{{ true }}"
+		  arg-class="{{ [] }}"
+		  >
+	<div class="choices inputGroup svChoices--inputGroup u-JsOnly {$class.containerOuter}" data-type="select-multiple" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false">
+		<div class="choices__inner input {$class.containerInner}">
+			{$selectHtml|raw}
+			<div class="choices__list {$class.list} choices__list--multiple {$class.listItems}" role="listbox"><xf:trim>
+				<xf:foreach loop="$selectedChoices" key="$i" value="$choice"><xf:trim>
+					<div class="choices__item {$class.item} choices__item--selectable {$class.itemSelectable}" data-item="" data-id="{$i}" data-value="{$choice.value}" aria-selected="true" role="option" data-deletable=""><button type="button" class="choices__button" aria-label="{{ phrase('svChoices.removeItemLabel', {'value': $choice.value} )|for_attr }}" data-button=""></button>{{
+						$choice.span
+						? '<span class="' . $choice.span .'">'. ($choice.escape ? $choice.label : $choice.label|raw) .'</span>'
+						: ($choice.escape ? $choice.label : $choice.label|raw)
+					}}</div>
+				</xf:trim></xf:foreach>
+			</xf:trim></div>
+			<xf:if is="$search">
+			<input type="search" class="choices__input {$class.input} choices__input--cloned {$class.inputCloned}" autocomplete="off" autocapitalize="off" spellcheck="false" role="textbox" aria-autocomplete="list" {{$selectedChoices ? 'style="min-width: '.($placeholder ? 1 + strlen(trim($placeholder)) : '1').'ch; width: 1ch;"' : '' }} {{
+				$placeholder 
+				? 'placeholder="' . $placeholder . '" aria-label="' . $placeholder . '"' 
+				: '' }}>
+			</xf:if>
+		</div>
+	</div>
+	<noscript>{$selectHtml|raw}</noscript>
+</xf:macro>
+
+<xf:macro name="render_prefix_filter"
+		  arg-filters="!"
+		  arg-prefixId="!"
+		  ><xf:trim>
+
+	<xf:if is="!is_scalar($prefixId)">
+		<xf:set var="$prefixId" value="{{ $prefixId.prefix_id is not empty ? $prefixId.prefix_id : 0 }}" />
+	</xf:if>
+
+	<xf:set var="$filterRoute" value="{{ $__globals.filterRoute !== null ? $__globals.filterRoute : 'forums' }}" />
+	<xf:set var="$filterContainer" value="{{ ($filterRoute === 'forums' && $__globals.filterContainer !== null) ? $__globals.filterContainer : null }}" />
+
+	<xf:set var="$removeFilter" value="{{ $prefixId === $filters.prefix_id }}" />
+	<xf:set var="$filters" value="{{ $removeFilter
+									? $filters|replace('prefix_id', null)
+									: $filters|replace('prefix_id', $prefixId)
+								}}" />
+	<xf:if contentcheck="true">
+		<a href="{{ link($filterRoute, $filterContainer, $filters) }}" class="labelLink" rel="nofollow" data-xf-init="tooltip" title="{{
+			($removeFilter
+			? phrase('svStandardLib_remove_from_filters')
+			: phrase('svStandardLib_add_to_filters')
+			)|for_attr }}"  rel="nofollow">
+			<xf:contentcheck><xf:trim>{{ prefix('thread', $prefixId) }}</xf:trim></xf:contentcheck>
+		</a>
+	</xf:if>
+</xf:trim></xf:macro>
+
+<xf:macro name="render_forum_filter"
+		  arg-filters="!"
+		  arg-nodeId="!"
+		  arg-forum="!"
+		  arg-removeFilter="!"
+		  arg-noFilterValue=""
+		  ><xf:trim>
+
+	<xf:set var="$filterRoute" value="{{ $__globals.filterRoute !== null ? $__globals.filterRoute : 'forums' }}" />
+	<xf:set var="$filterContainer" value="{{ ($filterRoute === 'forums' && $__globals.filterContainer !== null) ? $__globals.filterContainer : $forum }}" />
+
+	<xf:set var="$removeFilter" value="{{ in_array($nodeId, $filters.nodes ?: [], true) }}" />
+	<xf:set var="$filters.nodes" value="{{ $removeFilter
+											   ? ($filters.nodes|replaceValue($nodeId, null) ?: $noFilterValue)
+											   : $filters.nodes|addValue($nodeId)
+											   }}" />
+	<a href="{{ link($filterRoute, $filterContainer, $filters) }}" class="labelLink" rel="nofollow" data-xf-init="tooltip" title="{{
+		($removeFilter
+			? phrase('svStandardLib_remove_from_filters')
+			: phrase('svStandardLib_add_to_filters')
+		)|for_attr }}"  rel="nofollow">
+		{$forum.title}
+	</a>
+</xf:trim></xf:macro>
+
+<xf:macro name="dynamic_quick_filter" arg-key="" arg-ajax="" arg-class="" arg-page="" arg-filter="{{ [] }}">
+    <xf:js src="xf/filter.js" min="1" />
+	<xf:js src="sv/vendor/domurl/url.js" addon="SV/StandardLib" min="1" />
+	<xf:js src="sv/lib/xf/filter.js" addon="SV/StandardLib" min="1" />
+	<script class="js-extraPhrases" type="application/json">
+		{
+			"no_items_matched_your_filter": "{{ phrase('no_items_matched_your_filter')|escape('js') }}"
+		}
+	</script>
+	<xf:css src="sv_quick_filter.less" />
+
+    <div class="{$class} quickFilter u-jsOnly"
+         data-xf-init="sv-dynamic-filter"
+         data-key="{$key}"
+         data-ajax="{$ajax}"
+         data-search-target=".userList"
+         data-search-row=".userList-row"
+		 data-search-limit=".username"
+         data-no-results-format="<div class=&quot;blockMessage js-filterNoResults&quot;>%s</div>">
+		<div class="inputGroup inputGroup--inline inputGroup--joined">
+			<input type="text" class="input js-filterInput" value="{$filter.text}" placeholder="{{ phrase('filter...')|for_attr }}" data-xf-key="{{ phrase('shortcut.filter')|for_attr }}" />
+			<span class="inputGroup-text">
+				<xf:checkbox standalone="true">
+					<xf:option class="js-filterPrefix" label="{{ phrase('prefix') }}" checked="{$filter.prefix}" />
+				</xf:checkbox>
+			</span>
+			<i class="inputGroup-text js-filterClear is-disabled" aria-hidden="true"></i>
+        </div>
+    </div>
+</xf:macro>]]></template>
+  <template type="public" title="svStandardLib_redirect_interstitial" version_id="2001240301" version_string="1.24.3"><![CDATA[<xf:title>{{ phrase('svStandardLib_redirect_interstitial') }}</xf:title>
+
+<xf:head option="metaNoindex"><meta name="robots" content="noindex" /></xf:head>
+
+<xf:form id="autoSubmit" action="{$route}" class="block">
+	<xf:hiddenval name="_xfRedirect">{$redirect}</xf:hiddenval>
+	<xf:submitrow rowtype="simple" submit="{{ phrase('redirect') }}" />
+</xf:form>
+<xf:if is="$autoSubmit">
+<script type="text/javascript">
+	document.addEventListener('DOMContentLoaded', () => {
+		setTimeout(function(){ document.querySelector('form#autoSubmit').submit(); }, 0);
+	})
+</script>
+</xf:if>]]></template>
+  <template type="public" title="sv_quick_filter.less" version_id="2001190501" version_string="1.19.5"><![CDATA[.sv-quick-filter,
+.sv-dynamic-filter
+{
+  .block,
+  .blockMessage
+  {
+    &.is-hidden
+    {
+      display: none;
+    }
+  }
+
+  .is-disabled
+  {
+    .contentRow-figure,
+    .contentRow-header,
+    .contentRow-lesser
+    {
+      opacity: 0.5;
+    }
+
+    .contentRow-header
+    {
+      text-decoration: line-through;
+    }
+
+    .contentRow-extra
+    {
+      // this is needed to move this above the semi-transparent layer that's created above
+      position: relative;
+      z-index: 2;
+    }
+  }
+
+  .is-hidden
+  {
+    display: none;
+  }
+
+  .contentRow-lesser
+  {
+    &.no-description
+    {
+      visibility: hidden;
+    }
+  }
+
+  .is-match
+  {
+    text-decoration: underline;
+    color: red;
+  }
+}]]></template>
+</templates>

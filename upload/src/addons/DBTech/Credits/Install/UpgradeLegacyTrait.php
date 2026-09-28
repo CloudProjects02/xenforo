@@ -5,7 +5,7 @@ namespace DBTech\Credits\Install;
 use XF\AddOn\AddOn;
 use XF\App;
 use XF\Db\AbstractAdapter;
-use XF\Db\Exception as DbException;
+use XF\Db\Exception;
 use XF\Db\Schema\Alter;
 use XF\Db\Schema\Column;
 use XF\Db\Schema\Create;
@@ -63,7 +63,7 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws DbException
+	 * @throws Exception
 	 */
 	public function upgrade20160301Step2(): void
 	{
@@ -76,8 +76,8 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws DbException
-	 * @throws DbException
+	 * @throws Exception
+	 * @throws Exception
 	 */
 	public function upgrade20160308Step1(): void
 	{
@@ -109,9 +109,9 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws DbException
-	 * @throws DbException
-	 * @throws DbException
+	 * @throws Exception
+	 * @throws Exception
+	 * @throws Exception
 	 */
 	public function upgrade20160315Step2(): void
 	{
@@ -135,8 +135,8 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws DbException
-	 * @throws DbException
+	 * @throws Exception
+	 * @throws Exception
 	 */
 	public function upgrade20160322Step1(): void
 	{
@@ -202,10 +202,10 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws DbException
-	 * @throws DbException
-	 * @throws DbException
-	 * @throws DbException
+	 * @throws Exception
+	 * @throws Exception
+	 * @throws Exception
+	 * @throws Exception
 	 */
 	public function upgrade20160328Step3(): void
 	{
@@ -258,9 +258,9 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws DbException
-	 * @throws DbException
-	 * @throws DbException
+	 * @throws Exception
+	 * @throws Exception
+	 * @throws Exception
 	 */
 	public function upgrade20160329Step2(): void
 	{
@@ -296,7 +296,7 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws DbException
+	 * @throws Exception
 	 */
 	public function upgrade20160402Step2(): void
 	{
@@ -323,8 +323,8 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws DbException
-	 * @throws DbException
+	 * @throws Exception
+	 * @throws Exception
 	 */
 	public function upgrade20160416Step1(): void
 	{
@@ -343,9 +343,9 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws DbException
-	 * @throws DbException
-	 * @throws DbException
+	 * @throws Exception
+	 * @throws Exception
+	 * @throws Exception
 	 */
 	public function upgrade20160518Step1(): void
 	{
@@ -374,7 +374,7 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws DbException
+	 * @throws Exception
 	 */
 	public function upgrade20160608Step1(): void
 	{
@@ -389,7 +389,7 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws DbException
+	 * @throws Exception
 	 */
 	public function upgrade20160618Step1(): void
 	{
@@ -457,7 +457,7 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws DbException
+	 * @throws Exception
 	 */
 	public function upgrade20161019Step1(): void
 	{
@@ -483,7 +483,7 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws DbException
+	 * @throws Exception
 	 */
 	public function upgrade20161101Step2(): void
 	{
@@ -586,7 +586,7 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws DbException
+	 * @throws Exception
 	 */
 	public function upgrade20161103Step1(): void
 	{
@@ -621,7 +621,7 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws DbException
+	 * @throws Exception
 	 */
 	public function upgrade20161111Step2(): void
 	{
@@ -634,8 +634,8 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws DbException
-	 * @throws DbException
+	 * @throws Exception
+	 * @throws Exception
 	 */
 	public function upgrade20161115Step1(): void
 	{
@@ -708,7 +708,7 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws DbException
+	 * @throws Exception
 	 */
 	public function upgrade20161129Step1(): void
 	{
@@ -724,23 +724,23 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws DbException
-	 * @throws DbException
-	 * @throws DbException
-	 * @throws DbException
-	 * @throws DbException
-	 * @throws DbException
-	 * @throws DbException
-	 * @throws DbException
-	 * @throws DbException
-	 * @throws DbException
-	 * @throws DbException
-	 * @throws DbException
-	 * @throws DbException
-	 * @throws DbException
-	 * @throws DbException
-	 * @throws DbException
-	 * @throws DbException
+	 * @throws Exception
+	 * @throws Exception
+	 * @throws Exception
+	 * @throws Exception
+	 * @throws Exception
+	 * @throws Exception
+	 * @throws Exception
+	 * @throws Exception
+	 * @throws Exception
+	 * @throws Exception
+	 * @throws Exception
+	 * @throws Exception
+	 * @throws Exception
+	 * @throws Exception
+	 * @throws Exception
+	 * @throws Exception
+	 * @throws Exception
 	 */
 	public function upgrade20170314Step1(): void
 	{
@@ -872,7 +872,7 @@ trait UpgradeLegacyTrait
 
 	/**
 	 *
-	 * @throws DbException
+	 * @throws Exception
 	 */
 	public function upgrade20170426Step1(): void
 	{

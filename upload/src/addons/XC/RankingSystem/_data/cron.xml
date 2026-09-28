@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cron>
+  <entry entry_id="xc_badge" cron_class="XC\RankingSystem\Cron\Badge" cron_method="runBadgeCheck" active="1"><![CDATA[{"day_type":"dom","dom":[-1],"hours":[2,6,10,14,18,22],"minutes":[1]}]]></entry>
+</cron>

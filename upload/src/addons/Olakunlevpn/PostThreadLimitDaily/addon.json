@@ -1,0 +1,28 @@
+{
+    "legacy_addon_id": "Olakunlevpn_ptld",
+    "title": "Post Thread Limit Daily",
+    "description": "Limits the number of threads and posts a user can create per day",
+    "version_id": 1000200,
+    "version_string": "1.0.2",
+    "dev": "Olakunlevpn",
+    "dev_url": "https://maylancer.org",
+    "faq_url": "",
+    "support_url": "https://xenforo.com/community/resources/post-thread-limit-daily-by-olakunlevpn.9931/",
+    "extra_urls": {
+        "Product Information": "https://maylancer.org/products",
+        "Twitter": "https://twitter.com/maylancer",
+        "docs": "https://maylancer.org/docs/xenforojobsystem",
+        "Contribute": "https://github.com/olakunlevpn/Xenforo-Post-Thread-Limit-Daily"
+    },
+    "require": {
+        "XF": [
+            2030000,
+            "XenForo 2.3.0+"
+        ],
+        "php": [
+            "7.4.0",
+            "PHP 7.4.0+"
+        ]
+    },
+    "icon": "icon.png"
+}

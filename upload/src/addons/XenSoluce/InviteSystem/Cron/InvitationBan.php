@@ -9,3 +9,4 @@ class InvitationBan
 		\XF::app()->repository('XenSoluce\InviteSystem:Banning')->deleteExpiredInvitationBans();
 	}
 }
+ 		   	  		 		     				  		  		 	  	 	           		          	 	   	  								  		  				 	 		       	 		 					 		   				 	 		  	    

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="eae_tc_thread_search_options" version_id="1000011" version_string="1.0.0 Alpha 1"><![CDATA[<xf:formrow rowtype="input"
+	label="{{ phrase('eae_tc_thread_count_between') }}"
+	explain="{{ phrase('use_negative_one_specify_no_max') }}">
+
+	<div class="inputGroup">
+		<xf:numberbox name="criteria[thread_count][start]" value="{$criteria.thread_count.start}" min="0" readonly="{$readOnly}" />
+		<span class="inputGroup-text">-</span>
+		<xf:numberbox name="criteria[thread_count][end]" value="{$criteria.thread_count.end}" min="-1" readonly="{$readOnly}" />
+	</div>
+</xf:formrow>]]></template>
+  <template type="admin" title="eae_tc_tools_rebuild" version_id="1000011" version_string="1.0.0 Alpha 1"><![CDATA[<xf:macro template="tools_rebuild" name="rebuild_job"
+	arg-header="[EAE] {{ phrase('eae_tc_rebuild_user_thread_counts') }}"
+	arg-job="EAEAddons\ThreadCount:UserThreadCount" />
+<!--[XF:after_tc_thread_count]-->]]></template>
+  <template type="admin" title="option_template_eaetcIconOptions" version_id="1020070" version_string="1.2.0"><![CDATA[<xf:checkboxrow
+	label="{$option.title}"
+	hint="{$hintHtml}"
+	explain="{$explainHtml}"
+	html="{$listedHtml}"
+	rowclass="{$rowClass}">
+
+	<xf:option name="{$inputName}[visitor]" selected="$option.option_value.visitor"
+		label="{{ phrase('eae_tc_visitor_panel') }}" />
+
+	<xf:option name="{$inputName}[member]" selected="$option.option_value.member"
+		label="{{ phrase('eae_tc_member_profile') }}" />
+
+	<xf:option name="{$inputName}[message]" selected="$option.option_value.message"
+		label="{{ phrase('eae_tc_message_user_info_elements') }}" />
+
+	<xf:option name="{$inputName}[memberList]" selected="$option.option_value.memberList"
+		label="{{ phrase('eae_tc_member_list') }}" />
+</xf:checkboxrow>]]></template>
+  <template type="public" title="eae_tc_forum_view_mod" version_id="1010070" version_string="1.1.0"><![CDATA[<xf:set var="$createCount" value="{{ $xf.visitor.hasNodePermission($forum.node_id, 'createThreadCount') }}" />
+<xf:set var="$othersCount" value="{{ $xf.visitor.hasNodePermission($forum.node_id, 'viewOthersThreadCount') }}" />
+
+<xf:if is="$createCount OR $othersCount">
+	<xf:if contentcheck="true">
+		<div class="blockMessage blockMessage--important">
+			<xf:contentcheck>
+				<xf:if is="$xf.visitor.eaetc_thread_count < $createCount">
+					<div>{{ phrase('eae_tc_you_need_x_threads_to_start_topic', {'count': $createCount - $xf.visitor.eaetc_thread_count}) }}</div>
+				</xf:if>
+				<xf:if is="$xf.visitor.eaetc_thread_count < $othersCount">
+					<div>{{ phrase('eae_tc_you_need_x_threads_to_view_threads_by_others', {'count': $othersCount - $xf.visitor.eaetc_thread_count}) }}</div>
+				</xf:if>
+			</xf:contentcheck>
+		</div>
+	</xf:if>
+</xf:if>]]></template>
+  <template type="public" title="eae_tc_member_list_macros_insert" version_id="1020370" version_string="1.2.3"><![CDATA[<li><dl class="pairs pairs--inline">
+	<xf:if is="$xf.options.eaetcUseIcon.memberList">
+		<dt><xf:fa icon="{{ $xf.options.eaetcFaIcon ? $xf.options.eaetcFaIcon : 'fa-sort-numeric-up' }}" data-xf-init="tooltip" data-original-title="{{ phrase('threads') }}" /><span class="u-srOnly">{{ phrase('threads') }}</span></dt>
+	<xf:else />
+		<dt>{{ phrase('threads') }}</dt>
+	</xf:if>
+	<dd>{$user.eaetc_thread_count|number}</dd>
+</dl></li>]]></template>
+  <template type="public" title="eae_tc_member_macros_insert" version_id="1020370" version_string="1.2.3"><![CDATA[<dl class="pairs pairs--rows pairs--rows--centered fauxBlockLink">
+	<xf:if is="$xf.options.eaetcUseIcon.member">
+		<dt><xf:fa icon="{{ $xf.options.eaetcFaIcon ? $xf.options.eaetcFaIcon : 'fa-sort-numeric-up' }}" data-xf-init="tooltip" data-original-title="{{ phrase('threads') }}" /><span class="u-srOnly">{{ phrase('threads') }}</span></dt>
+	<xf:else />
+		<dt>{{ phrase('threads') }}</dt>
+	</xf:if>
+	<dd>
+		<a href="{{ link('search/member', null, {'user_id': $user.user_id, 'content': 'thread'}) }}" class="fauxBlockLink-linkRow u-concealed">
+			{$user.eaetc_thread_count|number}
+		</a>
+	</dd>
+</dl>]]></template>
+  <template type="public" title="eae_tc_message_macros_insert" version_id="1020270" version_string="1.2.2"><![CDATA[<dl class="pairs pairs--justified">
+	<xf:if is="$xf.options.eaetcUseIcon.message">
+		<dt><xf:fa icon="{{ $xf.options.eaetcFaIcon ? $xf.options.eaetcFaIcon : 'fa-sort-numeric-up' }}" data-xf-init="tooltip" data-original-title="{{ phrase('threads') }}" /><span class="u-srOnly">{{ phrase('threads') }}</span></dt>
+	<xf:else />
+		<dt>{{ phrase('threads') }}</dt>
+	</xf:if>
+	<dd>{$user.eaetc_thread_count|number}</dd>
+</dl>]]></template>
+  <template type="public" title="eae_tc_visitor_panel_insert" version_id="1020370" version_string="1.2.3"><![CDATA[<dl class="pairs pairs--justified fauxBlockLink">
+	<xf:if is="$xf.options.eaetcUseIcon.visitor">
+		<dt><xf:fa icon="{{ $xf.options.eaetcFaIcon ? $xf.options.eaetcFaIcon : 'fa-sort-numeric-up' }}" data-xf-init="tooltip" data-original-title="{{ phrase('threads') }}" /><span class="u-srOnly">{{ phrase('threads') }}</span></dt>
+	<xf:else />
+		<dt>{{ phrase('threads') }}</dt>
+	</xf:if>
+	<dd>
+		<a href="{{ link('find-threads/started') }}" class="fauxBlockLink-linkRow u-concealed">
+			{$xf.visitor.eaetc_thread_count|number}
+		</a>
+	</dd>
+</dl>]]></template>
+</templates>

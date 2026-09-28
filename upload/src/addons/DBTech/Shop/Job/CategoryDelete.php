@@ -2,12 +2,13 @@
 
 namespace DBTech\Shop\Job;
 
-use DBTech\Shop\Entity\Item;
-use DBTech\Shop\Finder\ItemFinder;
 use XF\Job\AbstractJob;
-use XF\Job\JobResult;
-use XF\PrintableException;
 
+/**
+ * Class CategoryDelete
+ *
+ * @package DBTech\Shop\Job
+ */
 class CategoryDelete extends AbstractJob
 {
 	/**
@@ -16,18 +17,18 @@ class CategoryDelete extends AbstractJob
 	protected $defaultData = [
 		'category_id' => null,
 		'count' => 0,
-		'total' => null,
+		'total' => null
 	];
-
+	
 	/**
 	 * @param $maxRunTime
 	 *
-	 * @return JobResult
+	 * @return \XF\Job\JobResult
 	 * @throws \InvalidArgumentException
 	 * @throws \LogicException
-	 * @throws PrintableException
+	 * @throws \XF\PrintableException
 	 */
-	public function run($maxRunTime): JobResult
+	public function run($maxRunTime): \XF\Job\JobResult
 	{
 		$s = microtime(true);
 
@@ -36,7 +37,7 @@ class CategoryDelete extends AbstractJob
 			throw new \InvalidArgumentException('Cannot delete items without a category_id.');
 		}
 
-		$finder = \XF::app()->finder(ItemFinder::class)
+		$finder = $this->app->finder('DBTech\Shop:Item')
 			->where('category_id', $this->data['category_id']);
 
 		if ($this->data['total'] === null)
@@ -60,7 +61,8 @@ class CategoryDelete extends AbstractJob
 		{
 			$this->data['count']++;
 
-			$item = \XF::app()->em()->find(Item::class, $id);
+			/** @var \DBTech\Shop\Entity\Item $item */
+			$item = $this->app->find('DBTech\Shop:Item', $id);
 			if (!$item)
 			{
 				continue;
@@ -80,7 +82,7 @@ class CategoryDelete extends AbstractJob
 		{
 			return $this->resume();
 		}
-
+		
 		return $this->complete();
 	}
 

@@ -8,7 +8,6 @@ use DBTech\Credits\Repository\EventTriggerRepository;
 use DBTech\Credits\XF\Entity\User;
 use XF\Mvc\ParameterBag;
 use XF\Mvc\Reply\AbstractReply;
-use XF\Mvc\Reply\Exception as ReplyException;
 use XF\Mvc\Reply\View;
 
 /**
@@ -20,7 +19,7 @@ class MemberController extends XFCP_MemberController
 	 * @param ParameterBag $params
 	 *
 	 * @return AbstractReply
-	 * @throws ReplyException
+	 * @throws \XF\Mvc\Reply\Exception
 	 * @throws \Exception
 	 */
 	public function actionView(ParameterBag $params)

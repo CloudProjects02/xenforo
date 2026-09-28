@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style_properties>
+  <style_property property_name="xc_progressbar" group_name="xc_xp_user_level_progress" title="[XC] Progress bar" property_type="css" display_order="1" css_components="text,background,border,border_radius,extra">
+    <value>{
+    "font-size": "0.85em",
+    "color": "@xf-contentBg",
+    "background-color": "@xf-majorHeadingTextColor",
+    "border-width": "1px",
+    "border-color": "@xf-majorHeadingTextColor",
+    "border-radius": "4px"
+}</value>
+  </style_property>
+  <style_property property_name="xc_progressbarcontainer" group_name="xc_xp_user_level_progress" title="[XC] Progress bar container" property_type="css" display_order="0" css_components="background,border,border_radius,padding,extra">
+    <value>{
+    "background-color": "@xf-majorHeadingBg",
+    "border-width": "@xf-borderSize",
+    "border-color": "@xf-majorHeadingTextColor",
+    "border-radius": "4px",
+    "padding": "4px"
+}</value>
+  </style_property>
+</style_properties>

@@ -1,0 +1,34 @@
+{
+    "legacy_addon_id": "dbtech_security",
+    "title": "DragonByte Security",
+    "description": "Improves Two-Factor Authentication, provides security alerts, and more.",
+    "version_id": 905001070,
+    "version_string": "5.0.1",
+    "dev": "DragonByte Technologies, Ltd.",
+    "dev_url": "https://www.dragonbyte-tech.com",
+    "faq_url": "",
+    "support_url": "https://www.dragonbyte-tech.com/support/create-ticket",
+    "extra_urls": {
+        "Product Information": "https://www.dragonbyte-tech.com/store/dragonbyte-security.345/",
+        "Twitter": "https://twitter.com/DragonByteTech"
+    },
+    "require": {
+        "XF": [
+            2030070,
+            "XenForo 2.3.0+"
+        ],
+        "php": [
+            "8.0.0",
+            "PHP 8.0.0+"
+        ]
+    },
+    "icon": "icon.png",
+    "require-soft": {
+        "php": [
+            "8.2.0",
+            "PHP 8.2.0+",
+            false
+        ]
+    },
+    "composer_autoload": "vendor/composer"
+}

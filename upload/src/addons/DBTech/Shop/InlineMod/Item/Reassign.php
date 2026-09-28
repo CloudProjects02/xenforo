@@ -2,31 +2,35 @@
 
 namespace DBTech\Shop\InlineMod\Item;
 
-use DBTech\Shop\Entity\Item;
-use DBTech\Shop\Service\Item\ReassignService;
-use XF\Entity\User;
 use XF\Http\Request;
 use XF\InlineMod\AbstractAction;
-use XF\Mvc\Controller;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
-use XF\Mvc\Reply\AbstractReply;
-use XF\Phrase;
-use XF\PrintableException;
 
+/**
+ * Class Reassign
+ *
+ * @package DBTech\Shop\InlineMod\Item
+ */
 class Reassign extends AbstractAction
 {
-	protected ?User $targetUser = null;
-	protected ?int $targetUserId = null;
-
 	/**
-	 * @return Phrase
+	 * @var
 	 */
-	public function getTitle(): Phrase
+	protected $targetUser;
+	/**
+	 * @var
+	 */
+	protected $targetUserId;
+	
+	/**
+	 * @return \XF\Phrase
+	 */
+	public function getTitle(): \XF\Phrase
 	{
 		return \XF::phrase('dbtech_shop_reassign_items...');
 	}
-
+	
 	/**
 	 * @param AbstractCollection $entities
 	 * @param array $options
@@ -37,16 +41,16 @@ class Reassign extends AbstractAction
 	protected function canApplyInternal(AbstractCollection $entities, array $options, &$error): bool
 	{
 		$result = parent::canApplyInternal($entities, $options, $error);
-
+		
 		if ($result && $options['confirmed'] && !$options['target_user_id'])
 		{
 			$error = \XF::phrase('requested_user_not_found');
 			return false;
 		}
-
+		
 		return $result;
 	}
-
+	
 	/**
 	 * @param Entity $entity
 	 * @param array $options
@@ -56,10 +60,10 @@ class Reassign extends AbstractAction
 	 */
 	protected function canApplyToEntity(Entity $entity, array $options, &$error = null): bool
 	{
-		/** @var Item $entity */
+		/** @var \DBTech\Shop\Entity\Item $entity */
 		return $entity->canReassign($error);
 	}
-
+	
 	/**
 	 * @param Entity $entity
 	 * @param array $options
@@ -67,9 +71,9 @@ class Reassign extends AbstractAction
 	 * @throws \LogicException
 	 * @throws \InvalidArgumentException
 	 * @throws \Exception
-	 * @throws PrintableException
+	 * @throws \XF\PrintableException
 	 */
-	protected function applyToEntity(Entity $entity, array $options): void
+	protected function applyToEntity(Entity $entity, array $options)
 	{
 		$user = $this->getTargetUser($options['target_user_id']);
 		if (!$user)
@@ -77,7 +81,8 @@ class Reassign extends AbstractAction
 			throw new \InvalidArgumentException('No target specified');
 		}
 
-		$reassigner = \XF::app()->service(ReassignService::class, $entity);
+		/** @var \DBTech\Shop\Service\Item\Reassign $reassigner */
+		$reassigner = $this->app()->service('DBTech\Shop:Item\Reassign', $entity);
 
 		if ($options['alert'])
 		{
@@ -86,7 +91,7 @@ class Reassign extends AbstractAction
 
 		$reassigner->reassignTo($user);
 	}
-
+	
 	/**
 	 * @return array
 	 */
@@ -96,25 +101,25 @@ class Reassign extends AbstractAction
 			'target_user_id' => 0,
 			'confirmed' => false,
 			'alert' => false,
-			'alert_reason' => '',
+			'alert_reason' => ''
 		];
 	}
-
+	
 	/**
 	 * @param AbstractCollection $entities
-	 * @param Controller $controller
+	 * @param \XF\Mvc\Controller $controller
 	 *
-	 * @return AbstractReply
+	 * @return \XF\Mvc\Reply\AbstractReply
 	 */
-	public function renderForm(AbstractCollection $entities, Controller $controller): AbstractReply
+	public function renderForm(AbstractCollection $entities, \XF\Mvc\Controller $controller): \XF\Mvc\Reply\AbstractReply
 	{
 		$viewParams = [
 			'items' => $entities,
-			'total' => count($entities),
+			'total' => count($entities)
 		];
 		return $controller->view('DBTech\Shop:Public:InlineMod\Item\Reassign', 'inline_mod_dbtech_shop_item_reassign', $viewParams);
 	}
-
+	
 	/**
 	 * @param AbstractCollection $entities
 	 * @param Request $request
@@ -124,23 +129,23 @@ class Reassign extends AbstractAction
 	public function getFormOptions(AbstractCollection $entities, Request $request): array
 	{
 		$username = $request->filter('username', 'str');
-		$user = \XF::app()->em()->findOne(User::class, ['username' => $username]);
+		$user = $this->app()->em()->findOne('XF:User', ['username' => $username]);
 
 		return [
 			'target_user_id' => $user ? $user->user_id : 0,
 			'confirmed' => true,
 			'alert' => $request->filter('alert', 'bool'),
-			'alert_reason' => $request->filter('alert_reason', 'str'),
+			'alert_reason' => $request->filter('alert_reason', 'str')
 		];
 	}
-
+	
 	/**
 	 * @param int $userId
 	 *
-	 * @return null|User
+	 * @return null|\XF\Entity\User
 	 * @throws \InvalidArgumentException
 	 */
-	protected function getTargetUser(int $userId): ?User
+	protected function getTargetUser(int $userId): ?\XF\Entity\User
 	{
 		if ($this->targetUserId && $this->targetUserId == $userId)
 		{
@@ -151,7 +156,8 @@ class Reassign extends AbstractAction
 			return null;
 		}
 
-		$user = \XF::app()->em()->find(User::class, $userId);
+		/** @var \XF\Entity\User $user */
+		$user = $this->app()->em()->find('XF:User', $userId);
 		if (!$user)
 		{
 			throw new \InvalidArgumentException("Invalid target user ($userId)");

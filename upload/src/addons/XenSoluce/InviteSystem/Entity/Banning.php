@@ -5,6 +5,18 @@ namespace XenSoluce\InviteSystem\Entity;
 use XF\Mvc\Entity\Structure;
 use XF\Mvc\Entity\Entity;
 
+/**
+ * COLUMNS
+ * @property int user_id
+ * @property int ban_user_id
+ * @property int ban_date
+ * @property int end_date
+ * @property string ban_reason
+ *
+ * RELATIONS
+ * @property \XF\Entity\User User
+ * @property \XF\Entity\User BanUser
+ */
 class Banning extends Entity
 {
     public static function getStructure(Structure $structure)
@@ -43,3 +55,4 @@ class Banning extends Entity
         return $structure;
     }
 }
+ 		   	  		 		     				  		  		 	  	 	           		          	 	   	  								  		  				 	 		       	 		 					 		   				 	 		  	    

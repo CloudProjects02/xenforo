@@ -2,15 +2,9 @@
 
 namespace DBTech\Shop\Entity;
 
-use DBTech\Shop\Repository\TransactionRepository;
-use XF\Entity\Ip;
 use XF\Entity\LinkableInterface;
-use XF\Entity\User;
-use XF\Entity\ViewableInterface;
-use XF\Mvc\Entity\ArrayCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
-use XF\Phrase;
 
 /**
  * COLUMNS
@@ -25,16 +19,16 @@ use XF\Phrase;
  * @property array $info
  *
  * GETTERS
- * @property-read Phrase $title
- * @property-read ArrayCollection|Entity|null $Content
- * @property-read ArrayCollection|Entity|null $Item
+ * @property \XF\Phrase $title
+ * @property \XF\Mvc\Entity\ArrayCollection|Entity|null $Content
+ * @property \XF\Mvc\Entity\ArrayCollection|Entity|null $Item
  *
  * RELATIONS
- * @property-read User|null $User
- * @property-read User|null $Recipient
- * @property-read Ip|null $Ip
+ * @property \XF\Entity\User $User
+ * @property \XF\Entity\User $Recipient
+ * @property \XF\Entity\Ip $Ip
  */
-class TransactionLog extends Entity implements LinkableInterface, ViewableInterface
+class TransactionLog extends Entity implements LinkableInterface
 {
 	/**
 	 * @param null $error
@@ -52,33 +46,34 @@ class TransactionLog extends Entity implements LinkableInterface, ViewableInterf
 	}
 
 	/**
-	 * @return Phrase
+	 * @return \XF\Phrase
 	 */
-	public function getTitle(): Phrase
+	public function getTitle(): \XF\Phrase
 	{
-		return \XF::app()->repository(TransactionRepository::class)
-			->getActionTitle($this->action)
-		;
+		return $this->getTransactionRepo()->getActionTitle($this->action);
 	}
 
 	/**
-	 * @return ArrayCollection|Entity|null
+	 * @return \XF\Mvc\Entity\ArrayCollection|Entity|null
 	 */
-	public function getItem(): Entity|ArrayCollection|null
+	public function getItem()
 	{
-		return match ($this->content_type)
+		switch ($this->content_type)
 		{
-			'dbtech_shop_item' => $this->Content,
-			'dbtech_shop_purchase' => \XF::app()->em()->find(Item::class, $this->info['featureid']),
-			default => null,
-		};
+			case 'dbtech_shop_item':
+				return $this->Content;
 
+			case 'dbtech_shop_purchase':
+				return $this->_em->find('DBTech\Shop:Item', $this->info['featureid']);
+		}
+
+		return null;
 	}
 
 	/**
-	 * @return ArrayCollection|Entity|null
+	 * @return \XF\Mvc\Entity\ArrayCollection|Entity|null
 	 */
-	public function getContent(): Entity|ArrayCollection|null
+	public function getContent()
 	{
 		return \XF::app()->findByContentType($this->content_type, $this->content_id);
 	}
@@ -88,12 +83,12 @@ class TransactionLog extends Entity implements LinkableInterface, ViewableInterf
 	 * @param array $extraParams
 	 * @param null $hash
 	 *
-	 * @return string
+	 * @return mixed|string
 	 */
 	public function getContentUrl(bool $canonical = false, array $extraParams = [], $hash = null): string
 	{
 		$route = $canonical ? 'canonical:dbtech-shop/transactions' : 'dbtech-shop/transactions';
-		return \XF::app()->router('public')->buildLink($route, $this, $extraParams, $hash);
+		return $this->app()->router('public')->buildLink($route, $this, $extraParams, $hash);
 	}
 
 	/**
@@ -107,17 +102,17 @@ class TransactionLog extends Entity implements LinkableInterface, ViewableInterf
 	/**
 	 * @param string $context
 	 *
-	 * @return Phrase
+	 * @return string|\XF\Phrase
 	 */
-	public function getContentTitle(string $context = ''): Phrase
+	public function getContentTitle(string $context = '')
 	{
 		return \XF::phrase('dbtech_shop_transaction_x', ['title' => $this->transaction_log_id]);
 	}
 
 	/**
-	 * @param Structure $structure
+	 * @param \XF\Mvc\Entity\Structure $structure
 	 *
-	 * @return Structure
+	 * @return \XF\Mvc\Entity\Structure
 	 */
 	public static function getStructure(Structure $structure): Structure
 	{
@@ -138,29 +133,29 @@ class TransactionLog extends Entity implements LinkableInterface, ViewableInterf
 		$structure->getters = [
 			'title' => true,
 			'Content' => true,
-			'Item' => true,
+			'Item' => true
 		];
 		$structure->relations = [
 			'User' => [
-				'entity' => User::class,
+				'entity' => 'XF:User',
 				'type' => self::TO_ONE,
 				'conditions' => 'user_id',
-				'primary' => true,
+				'primary' => true
 			],
 			'Recipient' => [
-				'entity' => User::class,
+				'entity' => 'XF:User',
 				'type' => self::TO_ONE,
 				'conditions' => [
-					['user_id', '=', '$recipient_user_id'],
+					['user_id', '=', '$recipient_user_id']
 				],
-				'primary' => true,
+				'primary' => true
 			],
 			'Ip' => [
-				'entity' => Ip::class,
+				'entity' => 'XF:Ip',
 				'type' => self::TO_ONE,
 				'conditions' => 'ip_id',
-				'primary' => true,
-			],
+				'primary' => true
+			]
 		];
 
 		$structure->withAliases = [
@@ -171,5 +166,13 @@ class TransactionLog extends Entity implements LinkableInterface, ViewableInterf
 		];
 
 		return $structure;
+	}
+
+	/**
+	 * @return \DBTech\Shop\Repository\Transaction|\XF\Mvc\Entity\Repository
+	 */
+	protected function getTransactionRepo()
+	{
+		return $this->repository('DBTech\Shop:Transaction');
 	}
 }

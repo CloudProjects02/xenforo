@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+/** 
+* @package [AL] Filter Framework
+* @author AddonsLab
+* @license https://addonslab.com/
+* @link https://addonslab.com/
+* @version 1.4.3
+This software is furnished under a license and may be used and copied
+only  in  accordance  with  the  terms  of such  license and with the
+inclusion of the above copyright notice.  This software  or any other
+copies thereof may not be provided or otherwise made available to any
+other person.  No title to and  ownership of the  software is  hereby
+transferred.                                                         
+                                                                     
+You may not reverse  engineer, decompile, defeat  license  encryption
+mechanisms, or  disassemble this software product or software product
+license.  AddonsLab may terminate this license if you don't comply with
+any of these terms and conditions.  In such event,  licensee  agrees 
+to return licensor  or destroy  all copies of software  upon termination 
+of the license.
+*/
+ -->
+
+<code_events>
+  <event event_id="filter_framework_display_formatter_active_filters"><![CDATA[<p>Called when formatting the field to be displayed in the Active Filters.</p>
+
+<p>Callback signature:</p>
+<blockquote><code><em>\AL\FilterFramework\ContentTypeProviderInterface</em> $contentTypeProvider, <em>\XF\CustomField\Definition</em> $fieldDefinition, <em>array</em> $filterData, <em>string</em> &$template, <em>string</em> &$phrase, <em>array</em> &$phraseParams, <em>array</em> &$templateParams, <em>bool</em> &$showLabel</code></blockquote>
+
+<p>Arguments:</p>
+<ol>
+	<li><code><em>\AL\FilterFramework\ContentTypeProviderInterface</em> $contentTypeProvider</code> - An object representing the content type provider from an add-on.</li>
+	<li><code><em>\XF\CustomField\Definition</em> $fieldDefinition</code> - Field definition.</li>
+	<li><code><em>array</em> $filterData</code> - The filter data for the field with values for all active custom field filters.</li>
+	<li><code><em>string</em> &$template</code> - The name of the template to be used to render the active filter.</li>
+	<li><code><em>string</em> &$phrase</code> - The phrase key to be used to render the active filter.</li>
+	<li><code><em>array</em> &$phraseParams</code> - The parameters to be used to render the phrase.</li>
+	<li><code><em>array</em> &$templateParams</code> - The parameters to be used to render the template.</li>
+	<li><code><em>bool</em> &$showLabel</code> - A reference to a boolean value indicating whether the label should be shown.</li>
+</ol>]]></event>
+  <event event_id="filter_framework_enable_filterable_lists"><![CDATA[<p>Called to configure filterable lists in the framework based on the field definition and API URL.</p>
+
+<p>Callback signature:</p>
+<blockquote><code><em>\XF\CustomField\Definition</em> $field, &amp;$filterableListApi</code></blockquote>
+
+<p>Arguments:</p>
+<ol>
+	<li><code><em>\XF\CustomField\Definition</em> $field</code> - Field definition used to determine the configuration of filterable lists.</li>
+	<li><code>&amp;$filterableListApi</code> - A reference to the API URL string for loading filterable options. Filterable lists are not enabled if this variable is not populated by the listener.</li>
+</ol>
+
+<p>Note:</p>
+<p>Populate <code>&amp;$filterableListApi</code> within the callback with the API URL to enable filterable lists based on the provided field definition.</p>]]></event>
+  <event event_id="filter_framework_filter_active_choices"><![CDATA[<p>If enabled, the choices will be filtered to active choices only to decrease the number of options loaded. Should be enabled by add-ons only when Filterable Lists are enabled.</p>
+
+<p>Callback signature:</p>
+<blockquote><code><em>\XF\CustomField\Definition</em> $definition, &amp;$enabled</code></blockquote>
+
+<p>Arguments:</p>
+<ol>
+	<li><code><em>\XF\CustomField\Definition</em> $definition</code> - The field definition for which the filter is being applied.</li>
+	<li><code>&amp;$enabled</code> - A reference to a boolean value, indicating whether the active choices filter should be enabled.</li>
+</ol>
+
+<p>Note:</p>
+<p>Set <code>&amp;$enabled</code> to <code>true</code> within the callback to enable filtering to active choices only based on the field definition.</p>]]></event>
+  <event event_id="filter_framework_format_field_for_display"><![CDATA[<p>Called when a field is being formatted for display in the framework.</p>
+
+<p>Callback signature:</p>
+<blockquote><code><em>\AL\FilterFramework\ContentTypeProviderInterface</em> $contentTypeProvider, <em>\XF\CustomField\Definition</em> $field, $value, &$formattedValue</code></blockquote>
+
+<p>Arguments:</p>
+<ol>
+	<li><code><em>\AL\FilterFramework\ContentTypeProviderInterface</em> $contentTypeProvider</code> - An object representing the content type provider from an add-on.</li>
+	<li><code><em>\XF\CustomField\Definition</em> $field</code> - Field definition.</li>
+	<li><code>$value</code> - The original value of the field.</li>
+	<li><code>&amp;$formattedValue</code> - A reference to the value that will be displayed. Set to any non-null value to skip default processing.</li>
+</ol>]]></event>
+</code_events>

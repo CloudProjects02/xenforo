@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+/** 
+* @package [AddonsLab] Resource Filter
+* @author AddonsLab
+* @license https://addonslab.com/
+* @link https://addonslab.com/
+* @version 3.6.1
+This software is furnished under a license and may be used and copied
+only  in  accordance  with  the  terms  of such  license and with the
+inclusion of the above copyright notice.  This software  or any other
+copies thereof may not be provided or otherwise made available to any
+other person.  No title to and  ownership of the  software is  hereby
+transferred.                                                         
+                                                                     
+You may not reverse  engineer, decompile, defeat  license  encryption
+mechanisms, or  disassemble this software product or software product
+license.  AddonsLab may terminate this license if you don't comply with
+any of these terms and conditions.  In such event,  licensee  agrees 
+to return licensor  or destroy  all copies of software  upon termination 
+of the license.
+*/
+ -->
+
+<class_extensions>
+  <extension from_class="XFES\Search\Source\Elasticsearch" to_class="AL\ResourceFilter\XFES\Search\Source\Elasticsearch" execute_order="10" active="1"/>
+  <extension from_class="XFES\Service\Optimizer" to_class="AL/ResourceFilter/XFES/Service/Optimizer" execute_order="10" active="1"/>
+  <extension from_class="XFRM\Admin\Controller\Category" to_class="AL\ResourceFilter\XFRM\Admin\Controller\Category" execute_order="10" active="1"/>
+  <extension from_class="XFRM\Admin\Controller\ResourceField" to_class="AL\ResourceFilter\XFRM\Admin\Controller\ResourceField" execute_order="10" active="1"/>
+  <extension from_class="XFRM\ControllerPlugin\Overview" to_class="AL\ResourceFilter\XFRM\ControllerPlugin\Overview" execute_order="10" active="1"/>
+  <extension from_class="XFRM\Entity\Category" to_class="AL\ResourceFilter\XFRM\Entity\Category" execute_order="10" active="1"/>
+  <extension from_class="XFRM\Entity\ResourceField" to_class="AL\ResourceFilter\XFRM\Entity\ResourceField" execute_order="10" active="1"/>
+  <extension from_class="XFRM\Entity\ResourceItem" to_class="AL\ResourceFilter\XFRM\Entity\ResourceItem" execute_order="10" active="1"/>
+  <extension from_class="XFRM\Pub\Controller\Category" to_class="AL\ResourceFilter\XFRM\Pub\Controller\Category" execute_order="10" active="1"/>
+  <extension from_class="XFRM\Pub\Controller\ResourceItem" to_class="AL\ResourceFilter\XFRM\Pub\Controller\ResourceItem" execute_order="10" active="1"/>
+  <extension from_class="XFRM\Repository\ResourceField" to_class="AL\ResourceFilter\XFRM\Repository\ResourceField" execute_order="10" active="1"/>
+  <extension from_class="XFRM\Search\Data\ResourceItem" to_class="AL\ResourceFilter\XFRM\Search\Data\ResourceItem" execute_order="10" active="1"/>
+  <extension from_class="XFRM\Search\Data\ResourceUpdate" to_class="AL\ResourceFilter\XFRM\Search\Data\ResourceUpdate" execute_order="10" active="1"/>
+  <extension from_class="XF\Behavior\CustomFieldsHolder" to_class="AL\ResourceFilter\XF\Behavior\CustomFieldsHolder" execute_order="10" active="1"/>
+  <extension from_class="XF\CustomField\Definition" to_class="AL\ResourceFilter\XF\CustomField\Definition" execute_order="10" active="1"/>
+  <extension from_class="XF\Entity\Option" to_class="AL\ResourceFilter\XF\Entity\Option" execute_order="10" active="1"/>
+  <extension from_class="XF\Entity\WidgetDefinition" to_class="AL\ResourceFilter\XF\Entity\WidgetDefinition" execute_order="10" active="1"/>
+  <extension from_class="XF\Pub\Controller\Misc" to_class="AL\ResourceFilter\XF\Pub\Controller\Misc" execute_order="10" active="1"/>
+  <extension from_class="XF\Pub\Controller\Search" to_class="AL\ResourceFilter\XF\Pub\Controller\Search" execute_order="10" active="1"/>
+  <extension from_class="XF\Search\Search" to_class="AL\ResourceFilter\XF\Search\Search" execute_order="10" active="1"/>
+  <extension from_class="XF\Search\Source\MySqlFt" to_class="AL\ResourceFilter\XF\Search\Source\MySqlFt" execute_order="10" active="1"/>
+  <extension from_class="XF\Service\RebuildNestedSet" to_class="AL\ResourceFilter\XF\Service\RebuildNestedSet" execute_order="10" active="1"/>
+  <extension from_class="XF\Template\Templater" to_class="AL\ResourceFilter\XF\Template\Templater" execute_order="10" active="1"/>
+</class_extensions>

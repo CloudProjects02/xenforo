@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<options>
+  <option option_id="olakunlevpn_ptld_excludeAdminsMods" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="olakunlevpn_postThreadLimitDaily" display_order="20"/>
+  </option>
+  <option option_id="olakunlevpn_ptld_excludedUserGroups" edit_format="textbox" data_type="string" advanced="0">
+    <default_value></default_value>
+    <relation group_id="olakunlevpn_postThreadLimitDaily" display_order="30"/>
+  </option>
+  <option option_id="olakunlevpn_ptld_excludedUserIds" edit_format="textbox" data_type="string" advanced="0">
+    <default_value></default_value>
+    <relation group_id="olakunlevpn_postThreadLimitDaily" display_order="40"/>
+  </option>
+  <option option_id="olakunlevpn_ptld_maxPostsPerDay" edit_format="spinbox" data_type="integer" advanced="0">
+    <default_value>50</default_value>
+    <edit_format_params>min=0</edit_format_params>
+    <relation group_id="olakunlevpn_postThreadLimitDaily" display_order="10"/>
+  </option>
+  <option option_id="olakunlevpn_ptld_maxThreadsPerDay" edit_format="spinbox" data_type="integer" advanced="0">
+    <default_value>10</default_value>
+    <edit_format_params>min=0</edit_format_params>
+    <relation group_id="olakunlevpn_postThreadLimitDaily" display_order="5"/>
+  </option>
+  <option option_id="olakunlevpn_ptld_postLimitEnabled" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="olakunlevpn_postThreadLimitDaily" display_order="1"/>
+  </option>
+  <option option_id="olakunlevpn_ptld_threadLimitEnabled" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="olakunlevpn_postThreadLimitDaily" display_order="2"/>
+  </option>
+</options>

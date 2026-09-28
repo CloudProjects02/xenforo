@@ -2,12 +2,10 @@
 
 namespace DBTech\Credits\Service\Event;
 
-use DBTech\Credits\Entity\Transaction;
 use DBTech\Credits\Finder\TransactionFinder;
 use XF\App;
 use XF\ContinuationResult;
 use XF\MultiPartRunnerTrait;
-use XF\Mvc\Entity\AbstractCollection;
 use XF\PrintableException;
 use XF\Service\AbstractService;
 
@@ -70,7 +68,7 @@ class DeleteCleanUpService extends AbstractService
 	{
 		$start = microtime(true);
 
-		/** @var AbstractCollection<Transaction> $transactions */
+		/** @var \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Transaction> $transactions */
 		$finder = \XF::app()->finder(TransactionFinder::class)
 			->where('event_id', $this->eventId)
 			->order('transaction_id');

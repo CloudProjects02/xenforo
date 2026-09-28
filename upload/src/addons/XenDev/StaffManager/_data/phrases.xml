@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="admin_navigation.xendevStaffManager" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Yönetim Ekibi Blokları]]></phrase>
+  <phrase title="xendev_staffmanager_activate_block" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Bloğu Aktifleştir]]></phrase>
+  <phrase title="xendev_staffmanager_active" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Aktif]]></phrase>
+  <phrase title="xendev_staffmanager_add_block" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Yeni Blok Ekle]]></phrase>
+  <phrase title="xendev_staffmanager_admin_blocks_title" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[ Yönetim Ekibi Blokları]]></phrase>
+  <phrase title="xendev_staffmanager_choose_group" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Grup Seçin]]></phrase>
+  <phrase title="xendev_staffmanager_choose_node" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Kategori Seçin]]></phrase>
+  <phrase title="xendev_staffmanager_delete_block" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Blok Sil]]></phrase>
+  <phrase title="xendev_staffmanager_delete_block_confirm" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[“{title}” adlı bloğu silmek istediğinize emin misiniz?]]></phrase>
+  <phrase title="xendev_staffmanager_edit_block_title" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[ Blok Düzenle: {title}]]></phrase>
+  <phrase title="xendev_staffmanager_group_match_both" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Hem birincil hem ikincil grup]]></phrase>
+  <phrase title="xendev_staffmanager_group_match_primary" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Sadece birincil grup]]></phrase>
+  <phrase title="xendev_staffmanager_group_match_secondary" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Sadece ikincil grup]]></phrase>
+  <phrase title="xendev_staffmanager_group_match_type" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Grup Eşleşme Şartı]]></phrase>
+  <phrase title="xendev_staffmanager_icon_class" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[FontAwesome İkonu]]></phrase>
+  <phrase title="xendev_staffmanager_inactive" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Pasif]]></phrase>
+  <phrase title="xendev_staffmanager_member_count" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[{count} üye]]></phrase>
+  <phrase title="xendev_staffmanager_member_default_title" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Üye]]></phrase>
+  <phrase title="xendev_staffmanager_no_active_blocks" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Aktif ekip bloğu bulunamadı.]]></phrase>
+  <phrase title="xendev_staffmanager_no_blocks_created" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Henüz gösterilecek bir ekip bloğu oluşturulmamış.]]></phrase>
+  <phrase title="xendev_staffmanager_no_members_in_block" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Bu blokta gösterilecek üye bulunamadı.]]></phrase>
+  <phrase title="xendev_staffmanager_not_selected" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Seçilmemiş]]></phrase>
+  <phrase title="xendev_staffmanager_send_message" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Mesaj Gönder]]></phrase>
+  <phrase title="xendev_staffmanager_source_admin" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Sistem Yöneticileri]]></phrase>
+  <phrase title="xendev_staffmanager_source_admin_full" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Sistem Yöneticileri (Administrators)]]></phrase>
+  <phrase title="xendev_staffmanager_source_global_mod" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Genel Moderatörler]]></phrase>
+  <phrase title="xendev_staffmanager_source_global_mod_full" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Genel Moderatörler (Global Moderators)]]></phrase>
+  <phrase title="xendev_staffmanager_source_node_mod" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Kategori Moderatörleri]]></phrase>
+  <phrase title="xendev_staffmanager_source_node_mod_full" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Kategori Moderatörleri (Node Moderators)]]></phrase>
+  <phrase title="xendev_staffmanager_source_type" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Veri Kaynağı]]></phrase>
+  <phrase title="xendev_staffmanager_source_user_group" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Kullanıcı Grubu]]></phrase>
+  <phrase title="xendev_staffmanager_source_user_group_full" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Belirli Bir Kullanıcı Grubu (User Group)]]></phrase>
+  <phrase title="xendev_staffmanager_staff_nodes_label" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Yetkili Alanlar:]]></phrase>
+  <phrase title="xendev_staffmanager_staff_page_desc" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Topluluğun düzenini sağlayan ve üyelerimize destek olan ekip üyelerini burada görüntüleyebilirsiniz.
+]]></phrase>
+  <phrase title="xendev_staffmanager_staff_page_title" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Yönetim Ekibi]]></phrase>
+</phrases>
+ 		  					 	  		   	  			   	  			  	    	 				     		 			 		 		 	  			     	  	 		 			  	   	   	 		  	    		  			      	      		  

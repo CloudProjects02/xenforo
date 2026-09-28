@@ -1,4 +1,4 @@
-DragonByte Shop for XenForo 2.3.0+
+DragonByte Shop for XenForo 2.2.0+
 ==================================
 
 ![Deploy](https://github.com/DragonByteTech/xf2shop/workflows/Deploy/badge.svg) ![Lint](https://github.com/DragonByteTech/xf2shop/workflows/Lint/badge.svg)  
@@ -11,12 +11,12 @@ Members can buy permissions, features and more on your forum with points.
 Requirements
 ------------
 
-- PHP 8.0.0+
+- PHP 7.2.0+
 
 Recommendations
 ---------------
 
-- PHP 8.2.0+
+- PHP 7.4.0+
 - DragonByte Credits v5.1.0+
 
 Options
@@ -86,6 +86,34 @@ Options
 Permissions
 -----------
 
+#### DragonByte Shop trade post moderator permissions
+
+- Can use inline moderation on trade posts
+- Edit any trade posts
+- Delete any trade posts
+- Hard-delete any trade posts
+- Give warnings on trade posts
+- View deleted trade posts
+- View unapproved trade posts
+- Undelete trade posts
+- Approve / unapprove trade posts
+
+#### DragonByte Shop moderator permissions
+
+- Use inline moderation on items
+- View deleted items
+- Delete any item
+- Undelete items
+- View deleted reviews
+- Hard-delete any items
+- Delete any item reviews
+- Edit any items
+- Reassign items
+- Manage any tags
+- View unapproved items
+- Approve / unapprove items
+- Give warnings on items
+
 #### DragonByte Shop permissions
 
 - View
@@ -105,22 +133,6 @@ Permissions
 - Steal currency from others
 - Trade items and currency
 
-#### DragonByte Shop moderator permissions
-
-- Use inline moderation on items
-- View deleted items
-- Delete any item
-- Undelete items
-- View deleted reviews
-- Hard-delete any items
-- Delete any item reviews
-- Edit any items
-- Reassign items
-- Manage any tags
-- View unapproved items
-- Approve / unapprove items
-- Give warnings on items
-
 #### DragonByte Shop trade post permissions
 
 - View trade posts
@@ -130,18 +142,6 @@ Permissions
 - Comment on trade posts
 - Delete own trade posts
 - Edit own trade posts
-
-#### DragonByte Shop trade post moderator permissions
-
-- Can use inline moderation on trade posts
-- Edit any trade posts
-- Delete any trade posts
-- Hard-delete any trade posts
-- Give warnings on trade posts
-- View deleted trade posts
-- View unapproved trade posts
-- Undelete trade posts
-- Approve / unapprove trade posts
 
 Admin Permissions
 -----------------

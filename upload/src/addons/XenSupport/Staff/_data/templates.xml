@@ -1,0 +1,2901 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="widget_options_xs_staff" version_id="1000110" version_string="1.0.1"><![CDATA[<xf:selectrow name="options[style]" label="{{ phrase('xen_staff_widget_style') }}" value="{$options.style}">
+	<xf:option value="grid">{{ phrase('xen_staff_widget_style_grid') }}</xf:option>
+	<xf:option value="spotlight">{{ phrase('xen_staff_widget_style_spotlight') }}</xf:option>
+	<xf:option value="compact">{{ phrase('xen_staff_widget_style_compact') }}</xf:option>
+</xf:selectrow>
+
+<xf:numberboxrow name="options[limit]" label="{{ phrase('xen_staff_widget_limit') }}" value="{$options.limit}" min="1" max="30" />
+]]></template>
+  <template type="admin" title="xs_staff_admin.less" version_id="2000410" version_string="2.0.4"><![CDATA[/* ============================================================
+ * XenStaff - ACP badge library styling. Light-only (ACP), so
+ * plain hex values rather than theme variables.
+ * ============================================================ */
+
+/* --- Badge list --- */
+.xsStaffAdmin-badgeName { display: inline-flex; align-items: center; gap: 12px; min-width: 0; }
+.xsStaffAdmin-badgeChip {
+	width: 34px;
+	height: 34px;
+	flex: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 9px;
+	color: #fff;
+	font-size: 15px;
+	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .08);
+	overflow: hidden;
+}
+.xsStaffAdmin-badgeChip-img { width: 100%; height: 100%; object-fit: cover; }
+.xsStaffAdmin-badgeName-text { display: flex; flex-direction: column; line-height: 1.3; min-width: 0; }
+.xsStaffAdmin-badgeName-title { font-weight: 700; }
+.xsStaffAdmin-badgeName-desc { font-size: 12px; color: #6b7280; }
+
+.xsStaffAdmin-swatch {
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	border-radius: 5px;
+	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .15);
+	vertical-align: middle;
+}
+
+/* --- Edit form live preview --- */
+.xsStaffAdmin-preview { display: inline-flex; align-items: center; gap: 16px; }
+.xsStaffAdmin-preview-chip {
+	width: 60px;
+	height: 60px;
+	flex: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 16px;
+	color: #fff;
+	font-size: 28px;
+	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .08), 0 10px 24px rgba(17, 24, 60, .14);
+	overflow: hidden;
+}
+.xsStaffAdmin-preview-img { width: 100%; height: 100%; object-fit: cover; }
+.xsStaffAdmin-preview-iconwrap { display: inline-flex; align-items: center; justify-content: center; line-height: 1; }
+.xsStaffAdmin-preview-title { font-size: 18px; font-weight: 800; color: #1f2937; }
+
+/* --- Color field (native picker swatch + synced hex) --- */
+.xsStaffAdmin-colorField { display: inline-flex; align-items: center; gap: 10px; }
+.xsStaffAdmin-colorSwatch {
+	width: 44px;
+	height: 38px;
+	flex: none;
+	padding: 0;
+	border: 1px solid #ccd2da;
+	border-radius: 8px;
+	background: none;
+	cursor: pointer;
+	-webkit-appearance: none;
+	appearance: none;
+}
+.xsStaffAdmin-colorSwatch::-webkit-color-swatch-wrapper { padding: 3px; }
+.xsStaffAdmin-colorSwatch::-webkit-color-swatch { border: none; border-radius: 5px; }
+.xsStaffAdmin-colorSwatch::-moz-color-swatch { border: none; border-radius: 5px; }
+.xsStaffAdmin-colorHex { max-width: 160px; }
+]]></template>
+  <template type="admin" title="xs_staff_admin_badge_assign" version_id="2000310" version_string="2.0.3"><![CDATA[<xf:title>{{ phrase('xen_staff_admin_assign_title') }}</xf:title>
+
+<xf:pageaction>
+	<xf:button href="{{ link('staff-badges') }}" icon="config">{{ phrase('xen_staff_admin_badges_title') }}</xf:button>
+</xf:pageaction>
+
+<div class="blockMessage blockMessage--info">{{ phrase('xen_staff_admin_assign_explain') }}</div>
+
+<xf:if is="$badges is empty">
+	<div class="blockMessage">{{ phrase('xen_staff_admin_assign_no_badges') }}</div>
+<xf:else />
+	<xf:form action="{{ link('staff-badges/assign') }}" method="post" class="block">
+		<div class="block-container">
+			<div class="block-body">
+				<xf:if is="$staff is not empty">
+					<xf:foreach loop="$staff" value="$s">
+						<xf:if is="$s.user">
+							<xf:selectrow name="badges[{$s.user.user_id}]"
+								value="{{ $s.profile ? $s.profile.badge_id : 0 }}"
+								label="{$s.user.username}">
+								<xf:option value="0">{{ phrase('xen_staff_admin_badge_none') }}</xf:option>
+								<xf:foreach loop="$badges" value="$b">
+									<xf:option value="{$b.badge_id}">{$b.title}</xf:option>
+								</xf:foreach>
+							</xf:selectrow>
+						</xf:if>
+					</xf:foreach>
+				<xf:else />
+					<div class="block-body block-row">{{ phrase('xen_staff_no_staff') }}</div>
+				</xf:if>
+			</div>
+			<xf:submitrow icon="save" />
+		</div>
+	</xf:form>
+</xf:if>
+]]></template>
+  <template type="admin" title="xs_staff_admin_badge_delete" version_id="2000410" version_string="2.0.4"><![CDATA[<xf:title>Delete badge: {$badge.title}</xf:title>
+
+<xf:form action="{{ link('staff-badges/delete', $badge) }}" method="post" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<div class="block-row">
+				Are you sure you want to delete the badge <strong>{$badge.title}</strong>?
+				<xf:if is="$badge.assigned_count">
+					It is currently assigned to {$badge.assigned_count|number} staff member(s) and will be removed from them.
+				</xf:if>
+				This cannot be undone.
+			</div>
+		</div>
+		<xf:submitrow icon="delete" submit="Delete badge" />
+	</div>
+</xf:form>
+]]></template>
+  <template type="admin" title="xs_staff_admin_badge_edit" version_id="2000410" version_string="2.0.4"><![CDATA[<xf:title>{{ $badge.badge_id ? phrase('xen_staff_admin_edit_badge') : phrase('xen_staff_admin_add_badge') }}</xf:title>
+<xf:css src="xs_staff_admin.less" />
+
+<xf:form action="{{ $badge.badge_id ? link('staff-badges/save', $badge) : link('staff-badges/save') }}" method="post" ajax="true" class="block">
+	<div class="block-container">
+		<h2 class="block-header">{{ $badge.badge_id ? phrase('xen_staff_admin_edit_badge') : phrase('xen_staff_admin_add_badge') }}</h2>
+		<div class="block-body">
+			<div class="block-row block-row--separated">
+				<div class="xsStaffAdmin-preview">
+					<span class="xsStaffAdmin-preview-chip" data-xsstaff-chip style="background:{{ $badge.color ?: '#fbbf24' }};">
+						<img class="xsStaffAdmin-preview-img" data-xsstaff-img alt="" src="{$badge.image_url}"{{ $badge.image_url ? '' : ' style="display:none"' }} />
+						<span class="xsStaffAdmin-preview-iconwrap" data-xsstaff-iconwrap{{ $badge.image_url ? ' style="display:none"' : '' }}><xf:fa icon="{{ $badge.icon ?: 'fa-medal' }}" /></span>
+					</span>
+					<span class="xsStaffAdmin-preview-title" data-xsstaff-title>{{ $badge.title ?: 'Badge preview' }}</span>
+				</div>
+			</div>
+
+			<xf:textboxrow name="title" value="{$badge.title}" label="Title" required="required" maxlength="100" />
+			<xf:textboxrow name="description" value="{$badge.description}" label="Description" maxlength="500" />
+			<xf:textboxrow name="icon" value="{$badge.icon}" label="FontAwesome icon" explain="e.g. fa-shield, fa-crown. Leave empty if using an image URL." maxlength="50" placeholder="fa-medal" />
+			<xf:textboxrow name="image_url" value="{$badge.image_url}" label="Image URL" explain="Optional. Overrides the icon when set." maxlength="255" />
+			<xf:formrow label="Color" explain="Pick a color, or type/paste a hex value.">
+				<div class="xsStaffAdmin-colorField">
+					<input type="color" class="xsStaffAdmin-colorSwatch" data-xsstaff-swatch value="{{ $badge.color ?: '#fbbf24' }}" aria-label="Color picker" />
+					<input type="text" name="color" value="{$badge.color}" maxlength="20" placeholder="#fbbf24" class="input xsStaffAdmin-colorHex" />
+				</div>
+			</xf:formrow>
+			<xf:numberboxrow name="display_order" value="{$badge.display_order}" label="Display order" min="0" />
+		</div>
+		<xf:submitrow icon="save" />
+	</div>
+</xf:form>
+
+<xf:js>
+(function () {
+	var chip = document.querySelector('[data-xsstaff-chip]');
+	if (!chip) { return; }
+	var img = document.querySelector('[data-xsstaff-img]');
+	var iconWrap = document.querySelector('[data-xsstaff-iconwrap]');
+	var title = document.querySelector('[data-xsstaff-title]');
+	function field(n) { return document.querySelector('[name="' + n + '"]'); }
+	var fT = field('title'), fI = field('icon'), fImg = field('image_url'), fC = field('color');
+
+	var swatch = document.querySelector('[data-xsstaff-swatch]');
+	function applyColor(v) { chip.style.background = (v && v.trim()) || '#fbbf24'; }
+
+	if (fT) { fT.addEventListener('input', function () { title.textContent = this.value || 'Badge preview'; }); }
+	if (fC) {
+		fC.addEventListener('input', function () {
+			applyColor(this.value);
+			if (swatch && /^#[0-9a-fA-F]{6}$/.test(this.value.trim())) { swatch.value = this.value.trim(); }
+		});
+	}
+	if (swatch && fC) {
+		swatch.addEventListener('input', function () { fC.value = this.value; applyColor(this.value); });
+	}
+	if (fI && iconWrap) {
+		fI.addEventListener('input', function () {
+			var name = (this.value || 'fa-medal').replace(/^fa-/, '');
+			iconWrap.innerHTML = '<i class="fa fa-' + name + '" aria-hidden="true"></i>';
+		});
+	}
+	if (fImg && img) {
+		fImg.addEventListener('input', function () {
+			var v = this.value.trim();
+			if (v) { img.src = v; img.style.display = ''; if (iconWrap) { iconWrap.style.display = 'none'; } }
+			else { img.removeAttribute('src'); img.style.display = 'none'; if (iconWrap) { iconWrap.style.display = ''; } }
+		});
+	}
+})();
+</xf:js>
+]]></template>
+  <template type="admin" title="xs_staff_admin_badge_list" version_id="2000410" version_string="2.0.4"><![CDATA[<xf:title>{{ phrase('xen_staff_admin_badges_title') }}</xf:title>
+<xf:css src="xs_staff_admin.less" />
+
+<xf:pageaction>
+	<xf:button href="{{ link('staff-badges/assign') }}" icon="user">{{ phrase('xen_staff_admin_assign_button') }}</xf:button>
+	<xf:button href="{{ link('staff-badges/add') }}" icon="add">{{ phrase('xen_staff_admin_add_badge') }}</xf:button>
+</xf:pageaction>
+
+<div class="blockMessage blockMessage--info">{{ phrase('xen_staff_admin_badges_explain') }}</div>
+
+<xf:if is="$badges is not empty">
+	<div class="block">
+		<div class="block-container">
+			<table class="dataList-table">
+				<thead>
+					<tr class="dataList-row dataList-row--header">
+						<th class="dataList-cell">Badge</th>
+						<th class="dataList-cell" style="text-align:center; width:80px;">Color</th>
+						<th class="dataList-cell" style="text-align:center; width:110px;">Assigned</th>
+						<th class="dataList-cell" style="text-align:center; width:80px;">Order</th>
+						<th class="dataList-cell" style="width:110px;"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<xf:foreach loop="$badges" value="$b">
+						<tr class="dataList-row">
+							<td class="dataList-cell">
+								<span class="xsStaffAdmin-badgeName">
+									<span class="xsStaffAdmin-badgeChip" style="background:{$b.color};">
+										<xf:if is="$b.image_url">
+											<img src="{$b.image_url}" alt="" class="xsStaffAdmin-badgeChip-img" />
+										<xf:else />
+											<xf:fa icon="{{ $b.icon ?: 'fa-medal' }}" />
+										</xf:if>
+									</span>
+									<span class="xsStaffAdmin-badgeName-text">
+										<a href="{{ link('staff-badges/edit', $b) }}" class="xsStaffAdmin-badgeName-title">{$b.title}</a>
+										<xf:if is="$b.description">
+											<span class="xsStaffAdmin-badgeName-desc">{$b.description}</span>
+										</xf:if>
+									</span>
+								</span>
+							</td>
+							<td class="dataList-cell" style="text-align:center;">
+								<span class="xsStaffAdmin-swatch" style="background:{$b.color};" title="{$b.color}"></span>
+							</td>
+							<td class="dataList-cell" style="text-align:center;">{$b.assigned_count|number}</td>
+							<td class="dataList-cell" style="text-align:center;">{$b.display_order|number}</td>
+							<td class="dataList-cell dataList-cell--action" style="text-align:right; white-space:nowrap;">
+								<xf:button href="{{ link('staff-badges/edit', $b) }}" class="button--link" icon="edit" title="Edit" />
+								<xf:button href="{{ link('staff-badges/delete', $b) }}" class="button--link" icon="delete" overlay="true" title="Delete" />
+							</td>
+						</tr>
+					</xf:foreach>
+				</tbody>
+			</table>
+		</div>
+	</div>
+<xf:else />
+	<div class="blockMessage">No badges created yet. Use <strong>{{ phrase('xen_staff_admin_add_badge') }}</strong> to create your first one.</div>
+</xf:if>
+]]></template>
+  <template type="public" title="account_xs_staff_profile" version_id="1000110" version_string="1.0.1"><![CDATA[<xf:title>{{ phrase('xen_staff_profile_edit_title') }}</xf:title>
+<xf:css src="xs_staff.less" />
+
+<xf:breadcrumb href="{{ link('account') }}">{{ phrase('your_account') }}</xf:breadcrumb>
+<xf:breadcrumb href="{{ link('account/xs-staff-profile') }}">{{ phrase('xen_staff_profile_edit_title') }}</xf:breadcrumb>
+
+<div class="block">
+	<div class="block-container">
+		<h2 class="block-header">
+			<xf:fa icon="fa-award" /> {{ phrase('xen_staff_profile_edit_title') }}
+		</h2>
+		<div class="block-body">
+			<div class="block-row block-row--separated">
+				<p class="hint">{{ phrase('xen_staff_profile_edit_explain') }}</p>
+			</div>
+
+			<xf:form action="{{ link('account/xs-staff-profile') }}" ajax="true" class="block">
+				<div class="block-body">
+
+					<xf:textboxrow name="quote" label="{{ phrase('xen_staff_quote') }}"
+						value="{$profile.quote}" maxlength="280"
+						placeholder="{{ phrase('xen_staff_quote_placeholder')|for_attr }}"
+						explain="{{ phrase('xen_staff_quote_explain') }}" />
+
+					<xf:textboxrow name="accent_color" label="{{ phrase('xen_staff_accent_color') }}"
+						value="{$profile.accent_color}" maxlength="20"
+						placeholder="#f59e0b"
+						explain="{{ phrase('xen_staff_accent_color_explain') }}" />
+
+					<xf:formrow rowtype="separator" label="{{ phrase('xen_staff_socials') }}" hint="{{ phrase('xen_staff_socials_explain') }}" />
+
+					<xf:textboxrow name="social_discord" label="{{ phrase('xen_staff_social_discord') }}" value="{$profile.social_discord}" maxlength="100" placeholder="username#0000" />
+					<xf:textboxrow name="social_twitter" label="{{ phrase('xen_staff_social_twitter') }}" value="{$profile.social_twitter}" maxlength="100" placeholder="@username" />
+					<xf:textboxrow name="social_twitch" label="{{ phrase('xen_staff_social_twitch') }}" value="{$profile.social_twitch}" maxlength="100" placeholder="channel" />
+					<xf:textboxrow name="social_youtube" label="{{ phrase('xen_staff_social_youtube') }}" value="{$profile.social_youtube}" maxlength="100" placeholder="@channel or full URL" />
+					<xf:textboxrow name="social_instagram" label="{{ phrase('xen_staff_social_instagram') }}" value="{$profile.social_instagram}" maxlength="100" placeholder="@username" />
+					<xf:textboxrow name="social_github" label="{{ phrase('xen_staff_social_github') }}" value="{$profile.social_github}" maxlength="100" placeholder="username" />
+					<xf:textboxrow name="social_website" label="{{ phrase('xen_staff_social_website') }}" value="{$profile.social_website}" maxlength="255" placeholder="https://yoursite.com" />
+
+				</div>
+				<xf:submitrow icon="save" />
+			</xf:form>
+		</div>
+	</div>
+</div>
+]]></template>
+  <template type="public" title="alert_user_xs_staff_contact" version_id="2000210" version_string="2.0.2"><![CDATA[<a href="{{ link('staff/inbox') }}">{{ phrase('xen_staff_alert_contact', {
+	'sender': $alert.User ? $alert.User.username : $alert.username,
+	'subject': $alert.extra_data.subject|default('')
+}) }}</a>
+]]></template>
+  <template type="public" title="widget_xs_staff" version_id="2010000" version_string="2.1.0"><![CDATA[<xf:if is="$staff is not empty">
+
+<xf:css src="xs_staff.less" />
+
+<div class="block xsStaffWidget-block">
+	<div class="block-container">
+		<h3 class="block-minorHeader">
+			<xf:fa icon="fa-users" /> {{ $title ?: phrase('xen_staff_widget_title') }}
+		</h3>
+		<div class="block-body">
+
+			<xf:if is="$style === 'spotlight' && $featured">
+				<xf:set var="$u" value="{$featured.user}" />
+				<xf:set var="$p" value="{$featured.profile}" />
+				<div class="xsStaffWidget xsStaffWidget--spotlight">
+					<a href="{{ link('members', $u) }}" class="xsStaffWidget-spotlight-avatar">
+						<xf:avatar user="{$u}" size="s" notooltip="true" />
+					</a>
+					<div class="xsStaffWidget-spotlight-body">
+						<a href="{{ link('members', $u) }}" class="xsStaffWidget-spotlight-name">{$u.username}</a>
+						<span class="xsStaffWidget-spotlight-title">{{ $u.custom_title ?: ($u.XSStaffUserGroup ? $u.XSStaffUserGroup.title : '') }}</span>
+						<xf:if is="$p && $p.quote">
+							<p class="xsStaffWidget-spotlight-quote">{$p.quote}</p>
+						</xf:if>
+					</div>
+				</div>
+
+			<xf:elseif is="$style === 'compact'" />
+				<div class="xsStaffWidget xsStaffWidget--compact">
+					<xf:foreach loop="$staff" value="$entry">
+						<a href="{{ link('members', $entry.user) }}" class="xsStaffWidget-compactAvatar" data-xf-init="tooltip" title="{$entry.user.username}">
+							<xf:avatar user="{$entry.user}" size="xs" notooltip="true" />
+						</a>
+					</xf:foreach>
+				</div>
+
+			<xf:else />
+				<div class="xsStaffWidget xsStaffWidget--grid">
+					<xf:foreach loop="$staff" value="$entry">
+						<a href="{{ link('members', $entry.user) }}" class="xsStaffWidget-mini">
+							<xf:avatar user="{$entry.user}" size="s" notooltip="true" />
+							<span class="xsStaffWidget-mini-name">{$entry.user.username}</span>
+							<span class="xsStaffWidget-mini-title">{{ $entry.user.custom_title ?: ($entry.user.XSStaffUserGroup ? $entry.user.XSStaffUserGroup.title : '') }}</span>
+						</a>
+					</xf:foreach>
+				</div>
+			</xf:if>
+
+			<a href="{{ link('staff') }}" class="xsStaffWidget-viewAll">
+				<xf:fa icon="fa-arrow-right" /> {{ phrase('xen_staff_view_all') }}
+			</a>
+		</div>
+	</div>
+</div>
+
+</xf:if>
+]]></template>
+  <template type="public" title="xs_staff.less" version_id="2020400" version_string="2.2.4"><![CDATA[/* =============================================================================
+ * XenStaff — native XF chrome + large vignette cards that FLIP to show details.
+ * Front = big portrait. Back = member info / actions.
+ * ============================================================================= */
+
+@xsStaff-accent: @xf-linkColor;
+@xsStaff-border: @xf-borderColor;
+@xsStaff-online: #16a34a;
+@xsStaff-busy: #e11d48;
+@xsStaff-away: #d97706;
+
+.xsStaff-page
+{
+	--xsStaff-accent: @xsStaff-accent;
+	margin-bottom: @xf-elementSpacer;
+	color: @xf-textColor;
+}
+
+/* Masthead — roster stage + live dock */
+.xsStaff-masthead
+{
+	--xsStaff-mast-pad: 32px;
+	position: relative;
+	margin: 0 0 @xf-elementSpacer;
+	border: 1px solid @xsStaff-border;
+	border-radius: @xf-borderRadiusLarge;
+	background: @xf-contentBg;
+	overflow: hidden;
+	box-shadow: 0 22px 50px fade(#000, 8%);
+}
+.xsStaff-masthead-rail
+{
+	position: absolute;
+	left: 0;
+	top: 18px;
+	bottom: 18px;
+	width: 4px;
+	border-radius: 0 4px 4px 0;
+	background: linear-gradient(180deg, @xsStaff-accent 0%, fade(@xsStaff-accent, 15%) 100%);
+	z-index: 2;
+}
+.xsStaff-masthead-bg
+{
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	overflow: hidden;
+}
+.xsStaff-masthead-wash
+{
+	position: absolute;
+	inset: 0;
+	background:
+		radial-gradient(120% 80% at 100% 0%, fade(@xsStaff-accent, 14%) 0%, transparent 55%),
+		radial-gradient(90% 70% at 0% 100%, fade(@xsStaff-online, 10%) 0%, transparent 50%),
+		linear-gradient(180deg, @xf-contentAltBg 0%, @xf-contentBg 55%);
+}
+.xsStaff-masthead-orb
+{
+	position: absolute;
+	border-radius: 50%;
+	filter: blur(0);
+}
+.xsStaff-masthead-orb--a
+{
+	width: 340px;
+	height: 340px;
+	top: -160px;
+	right: -80px;
+	background: radial-gradient(circle, fade(@xsStaff-accent, 26%) 0%, fade(@xsStaff-accent, 0%) 68%);
+	animation: xsStaff-orbFloat 9s ease-in-out infinite;
+}
+.xsStaff-masthead-orb--b
+{
+	width: 260px;
+	height: 260px;
+	bottom: -120px;
+	left: 8%;
+	background: radial-gradient(circle, fade(@xsStaff-online, 18%) 0%, fade(@xsStaff-online, 0%) 70%);
+	animation: xsStaff-orbFloat 11s ease-in-out infinite reverse;
+}
+.xsStaff-masthead-orb--c
+{
+	width: 160px;
+	height: 160px;
+	top: 40%;
+	left: 42%;
+	background: radial-gradient(circle, fade(@xsStaff-accent, 12%) 0%, transparent 70%);
+	opacity: .7;
+}
+@keyframes xsStaff-orbFloat
+{
+	0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+	50% { transform: translate3d(-12px, 10px, 0) scale(1.05); }
+}
+.xsStaff-masthead-grid
+{
+	position: absolute;
+	inset: 0;
+	opacity: .22;
+	background-image:
+		linear-gradient(fade(#000, 10%) 1px, transparent 1px),
+		linear-gradient(90deg, fade(#000, 10%) 1px, transparent 1px);
+	background-size: 32px 32px;
+	-webkit-mask-image: radial-gradient(ellipse at 80% 20%, #000 10%, transparent 70%);
+	mask-image: radial-gradient(ellipse at 80% 20%, #000 10%, transparent 70%);
+}
+.xsStaff-masthead-beam
+{
+	position: absolute;
+	top: -20%;
+	right: 18%;
+	width: 2px;
+	height: 140%;
+	background: linear-gradient(180deg, transparent 0%, fade(@xsStaff-accent, 45%) 40%, transparent 100%);
+	transform: rotate(18deg);
+	opacity: .55;
+}
+.xsStaff-masthead-sheen
+{
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(115deg, transparent 35%, fade(#fff, 22%) 48%, transparent 60%);
+	transform: translateX(-55%);
+	animation: xsStaff-mastheadSheen 8s ease-in-out infinite;
+}
+@keyframes xsStaff-mastheadSheen
+{
+	0%, 58% { transform: translateX(-55%); opacity: 0; }
+	68% { opacity: .85; }
+	100% { transform: translateX(55%); opacity: 0; }
+}
+.xsStaff-masthead-noise
+{
+	position: absolute;
+	inset: 0;
+	opacity: .035;
+	background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.xsStaff-masthead-stage
+{
+	position: relative;
+	z-index: 1;
+	display: grid;
+	grid-template-columns: minmax(0, 1.15fr) minmax(220px, .85fr);
+	gap: 20px 36px;
+	align-items: center;
+	padding: var(--xsStaff-mast-pad) var(--xsStaff-mast-pad) 20px ~"calc(var(--xsStaff-mast-pad) + 4px)";
+}
+.xsStaff-masthead-copy { min-width: 0; }
+.xsStaff-masthead-eyebrow
+{
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0 0 14px;
+	padding: 6px 14px 6px 10px;
+	border-radius: 999px;
+	background: @xf-contentBg;
+	border: 1px solid @xsStaff-border;
+	color: @xf-textColorMuted;
+	font-size: 11px;
+	font-weight: @xf-fontWeightHeavy;
+	letter-spacing: .1em;
+	text-transform: uppercase;
+	box-shadow: 0 8px 20px fade(#000, 4%);
+}
+.xsStaff-masthead-eyebrow-dot
+{
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: @xsStaff-accent;
+	box-shadow: 0 0 0 4px fade(@xsStaff-accent, 18%);
+	animation: xsStaff-pulse 2.2s ease-out infinite;
+}
+.xsStaff-masthead-eyebrow .fa,
+.xsStaff-masthead-eyebrow .fa--xf { color: @xsStaff-accent; }
+
+.xsStaff-masthead-title
+{
+	position: relative;
+	margin: 0 0 12px;
+}
+.xsStaff-masthead-title-text
+{
+	display: block;
+	font-size: ~"clamp(2.1rem, 4.2vw, 3.2rem)";
+	font-weight: @xf-fontWeightHeavy;
+	line-height: 1.05;
+	letter-spacing: -.035em;
+	color: @xf-textColor;
+}
+.xsStaff-masthead-title-rule
+{
+	display: block;
+	width: 72px;
+	height: 4px;
+	margin-top: 14px;
+	border-radius: 999px;
+	background: linear-gradient(90deg, @xsStaff-accent 0%, fade(@xsStaff-accent, 0%) 100%);
+}
+.xsStaff-masthead-subtitle
+{
+	margin: 0;
+	max-width: 34em;
+	font-size: ~"clamp(0.95rem, 1.4vw, 1.08rem)";
+	line-height: 1.6;
+	color: @xf-textColorMuted;
+}
+.xsStaff-masthead-meta
+{
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-top: 20px;
+}
+.xsStaff-masthead-chip
+{
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 14px 8px 8px;
+	border-radius: 999px;
+	background: @xf-contentBg;
+	border: 1px solid @xsStaff-border;
+	font-size: @xf-fontSizeSmaller;
+	font-weight: @xf-fontWeightHeavy;
+	color: @xf-textColor;
+	box-shadow: 0 10px 24px fade(#000, 6%);
+}
+.xsStaff-masthead-chip-ico
+{
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 26px;
+	height: 26px;
+	border-radius: 50%;
+	background: fade(@xsStaff-accent, 12%);
+	color: @xsStaff-accent;
+}
+.xsStaff-masthead-chip--live
+{
+	border-color: fade(@xsStaff-online, 40%);
+	background: fade(@xsStaff-online, 9%);
+	color: @xsStaff-online;
+	padding-left: 12px;
+}
+.xsStaff-masthead-chip--live strong
+{
+	color: @xsStaff-online;
+	font-variant-numeric: tabular-nums;
+}
+.xsStaff-masthead-pulse
+{
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: @xsStaff-online;
+	box-shadow: 0 0 0 0 fade(@xsStaff-online, 55%);
+	animation: xsStaff-pulse 1.8s ease-out infinite;
+}
+@keyframes xsStaff-pulse
+{
+	0% { box-shadow: 0 0 0 0 fade(@xsStaff-online, 50%); }
+	70% { box-shadow: 0 0 0 9px fade(@xsStaff-online, 0%); }
+	100% { box-shadow: 0 0 0 0 fade(@xsStaff-online, 0%); }
+}
+
+/* Roster composition */
+.xsStaff-masthead-roster
+{
+	position: relative;
+	min-height: 210px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.xsStaff-masthead-watermark
+{
+	position: absolute;
+	right: -6%;
+	top: 50%;
+	transform: translateY(-50%);
+	font-size: ~"clamp(4.5rem, 9vw, 7rem)";
+	font-weight: @xf-fontWeightHeavy;
+	letter-spacing: -.04em;
+	line-height: 1;
+	color: @xf-textColor;
+	opacity: .05;
+	text-transform: uppercase;
+	user-select: none;
+	pointer-events: none;
+	white-space: nowrap;
+}
+.xsStaff-masthead-ring
+{
+	position: absolute;
+	width: 190px;
+	height: 190px;
+	border-radius: 50%;
+	border: 1px dashed fade(@xsStaff-accent, 35%);
+	animation: xsStaff-ringSpin 22s linear infinite;
+}
+.xsStaff-masthead-ring::before
+{
+	content: '';
+	position: absolute;
+	inset: 14px;
+	border-radius: 50%;
+	border: 1px solid fade(@xsStaff-accent, 16%);
+}
+@keyframes xsStaff-ringSpin
+{
+	to { transform: rotate(360deg); }
+}
+.xsStaff-masthead-faces
+{
+	position: relative;
+	width: 220px;
+	height: 200px;
+}
+.xsStaff-masthead-face
+{
+	position: absolute;
+	z-index: ~"calc(10 - var(--xs-face, 0))";
+	transition: transform .25s ease, z-index 0s;
+	opacity: 0;
+	animation: xsStaff-faceIn .65s ease forwards;
+	animation-delay: ~"calc(var(--xs-face, 0) * 70ms)";
+}
+@keyframes xsStaff-faceIn
+{
+	from { opacity: 0; }
+	to { opacity: 1; }
+}
+.xsStaff-masthead-face-frame
+{
+	display: block;
+	border-radius: 50%;
+	padding: 3px;
+	background: linear-gradient(145deg, fade(@xsStaff-accent, 70%), fade(@xsStaff-accent, 10%));
+	box-shadow: 0 14px 28px fade(#000, 18%);
+}
+.xsStaff-masthead-face .avatar,
+.xsStaff-masthead-face .avatar img
+{
+	display: block;
+	width: 54px !important;
+	height: 54px !important;
+	border-radius: 50% !important;
+	border: 3px solid @xf-contentBg !important;
+	box-sizing: border-box;
+}
+.xsStaff-masthead-face--lead
+{
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -54%);
+	z-index: 20;
+}
+.xsStaff-masthead-face--lead .xsStaff-masthead-face-frame
+{
+	border-radius: 22px;
+	padding: 4px;
+	background: linear-gradient(160deg, @xsStaff-accent, fade(@xsStaff-accent, 20%));
+	box-shadow:
+		0 0 0 6px fade(@xsStaff-accent, 10%),
+		0 22px 40px fade(#000, 22%);
+}
+.xsStaff-masthead-face--lead .avatar,
+.xsStaff-masthead-face--lead .avatar img
+{
+	width: 112px !important;
+	height: 112px !important;
+	border-radius: 18px !important;
+	border-width: 4px !important;
+}
+.xsStaff-masthead-face--lead:hover { transform: translate(-50%, -58%) scale(1.03); }
+
+.xsStaff-masthead-face:nth-child(2) { left: 8px; top: 18px; }
+.xsStaff-masthead-face:nth-child(3) { right: 4px; top: 10px; }
+.xsStaff-masthead-face:nth-child(4) { left: 0; bottom: 10px; }
+.xsStaff-masthead-face:nth-child(5) { right: 2px; bottom: 18px; }
+
+.xsStaff-masthead-face:not(.xsStaff-masthead-face--lead):hover
+{
+	transform: translateY(-6px) scale(1.06);
+	z-index: 30;
+}
+
+.xsStaff-masthead-faceMore
+{
+	position: absolute;
+	right: 28px;
+	top: 50%;
+	transform: translateY(-20%);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	background: @xf-contentBg;
+	border: 2px solid @xsStaff-border;
+	color: @xf-textColor;
+	font-size: @xf-fontSizeSmall;
+	font-weight: @xf-fontWeightHeavy;
+	box-shadow: 0 12px 24px fade(#000, 12%);
+	z-index: 15;
+}
+
+/* Live stats dock */
+.xsStaff-masthead-dock
+{
+	position: relative;
+	z-index: 1;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+	gap: 10px;
+	margin: 0 16px 16px;
+	padding: 0;
+}
+.xsStaff-masthead-stat
+{
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 14px 14px 16px;
+	min-width: 0;
+	border: 1px solid @xsStaff-border;
+	border-radius: 16px;
+	background: @xf-contentAltBg;
+	box-shadow: 0 10px 24px fade(#000, 5%);
+	overflow: hidden;
+	transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.xsStaff-masthead-stat:hover
+{
+	transform: translateY(-3px);
+	border-color: fade(@xsStaff-accent, 35%);
+	box-shadow: 0 16px 30px fade(#000, 8%);
+}
+.xsStaff-masthead-stat-icon
+{
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 42px;
+	height: 42px;
+	border-radius: 13px;
+	background: fade(@xsStaff-accent, 12%);
+	color: @xsStaff-accent;
+	font-size: 14px;
+	flex: 0 0 auto;
+}
+.xsStaff-masthead-stat--online .xsStaff-masthead-stat-icon
+{
+	background: fade(@xsStaff-online, 14%);
+	color: @xsStaff-online;
+}
+.xsStaff-masthead-stat--thanks .xsStaff-masthead-stat-icon
+{
+	background: fade(@xsStaff-busy, 12%);
+	color: @xsStaff-busy;
+}
+.xsStaff-masthead-stat--speed .xsStaff-masthead-stat-icon
+{
+	background: fade(@xsStaff-away, 14%);
+	color: @xsStaff-away;
+}
+.xsStaff-masthead-stat-body { min-width: 0; }
+.xsStaff-masthead-stat-num
+{
+	font-size: 1.55rem;
+	font-weight: @xf-fontWeightHeavy;
+	line-height: 1.05;
+	color: @xf-textColor;
+	font-variant-numeric: tabular-nums;
+	letter-spacing: -.02em;
+}
+.xsStaff-masthead-stat-unit
+{
+	font-size: @xf-fontSizeSmall;
+	color: @xf-textColorMuted;
+	margin-left: 2px;
+	font-weight: @xf-fontWeightHeavy;
+}
+.xsStaff-masthead-stat-label
+{
+	margin-top: 3px;
+	font-size: 10px;
+	font-weight: @xf-fontWeightHeavy;
+	color: @xf-textColorMuted;
+	text-transform: uppercase;
+	letter-spacing: .08em;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.xsStaff-masthead-stat-bar
+{
+	position: absolute;
+	left: 14px;
+	right: 14px;
+	bottom: 0;
+	height: 3px;
+	border-radius: 999px 999px 0 0;
+	background: linear-gradient(90deg, @xsStaff-accent, fade(@xsStaff-accent, 0%));
+	opacity: .55;
+}
+.xsStaff-masthead-stat--online .xsStaff-masthead-stat-bar { background: linear-gradient(90deg, @xsStaff-online, fade(@xsStaff-online, 0%)); }
+.xsStaff-masthead-stat--thanks .xsStaff-masthead-stat-bar { background: linear-gradient(90deg, @xsStaff-busy, fade(@xsStaff-busy, 0%)); }
+.xsStaff-masthead-stat--speed .xsStaff-masthead-stat-bar { background: linear-gradient(90deg, @xsStaff-away, fade(@xsStaff-away, 0%)); }
+
+.xsStaff-topHero
+{
+	position: relative;
+	margin: 0 0 @xf-elementSpacer;
+	max-width: 320px;
+}
+.xsStaff-topHero-ribbon
+{
+	position: absolute;
+	top: 12px;
+	left: 12px;
+	z-index: 6;
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 4px 10px;
+	border-radius: @xf-borderRadiusMedium;
+	background: @xsStaff-accent;
+	color: #fff;
+	font-size: @xf-fontSizeSmallest;
+	font-weight: @xf-fontWeightHeavy;
+	text-transform: uppercase;
+	letter-spacing: .06em;
+	pointer-events: none;
+}
+
+.xsStaff-group { margin: 0 0 @xf-elementSpacer; }
+.xsStaff-group-head
+{
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin: 0 0 @xf-paddingLarge;
+}
+.xsStaff-group-rule
+{
+	flex: 1;
+	height: 1px;
+	background: @xsStaff-border;
+}
+.xsStaff-group-title
+{
+	margin: 0;
+	font-size: @xf-fontSizeLarge;
+	font-weight: @xf-fontWeightHeavy;
+	color: @xf-textColor;
+	white-space: nowrap;
+	background: none;
+	-webkit-text-fill-color: currentColor;
+	text-transform: none;
+	letter-spacing: 0;
+}
+.xsStaff-group-count
+{
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 22px;
+	height: 22px;
+	padding: 0 7px;
+	border-radius: @xf-borderRadiusMedium;
+	background: @xf-contentAltBg;
+	border: 1px solid @xsStaff-border;
+	color: @xf-textColorMuted;
+	font-size: @xf-fontSizeSmallest;
+	font-weight: @xf-fontWeightHeavy;
+}
+
+.xsStaff-grid
+{
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+	gap: @xf-paddingLarge;
+}
+
+/* =============================================================================
+ * FLIP CARD
+ * ============================================================================= */
+.xsStaff-flip
+{
+	--xsStaff-accent: @xsStaff-accent;
+	position: relative;
+	height: 380px;
+	perspective: 1400px;
+	outline: none;
+	cursor: pointer;
+}
+.xsStaff-flip--featured { height: 400px; }
+.xsStaff-flip:focus-visible
+{
+	outline: 2px solid @xsStaff-accent;
+	outline-offset: 3px;
+	border-radius: @xf-borderRadiusLarge;
+}
+
+.xsStaff-flip-inner
+{
+	position: relative;
+	width: 100%;
+	height: 100%;
+	transform-style: preserve-3d;
+	transition: transform .55s cubic-bezier(.2, .8, .2, 1);
+}
+
+/* Desktop: hover flips to the info face */
+@media (hover: hover) and (pointer: fine)
+{
+	.xsStaff-flip:hover .xsStaff-flip-inner,
+	.xsStaff-flip:focus-within .xsStaff-flip-inner
+	{
+		transform: rotateY(180deg);
+	}
+	/* Soft lift + portrait zoom before / while approaching the flip */
+	.xsStaff-flip:hover .xsStaff-card--front
+	{
+		box-shadow:
+			0 18px 36px -18px fade(@xf-textColor, 35%),
+			0 0 0 1px fade(@xsStaff-accent, 28%);
+	}
+	.xsStaff-flip:hover .xsStaff-card-vignette-media
+	{
+		transform: scale(1.05);
+	}
+	.xsStaff-flip:hover .xsStaff-card-vignette-sheen
+	{
+		opacity: 1;
+		transform: translateX(120%) skewX(-18deg);
+	}
+}
+
+/* Click / tap / keyboard lock */
+.xsStaff-flip.is-flipped .xsStaff-flip-inner
+{
+	transform: rotateY(180deg);
+}
+
+.xsStaff-card-face
+{
+	position: absolute;
+	inset: 0;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+	border-radius: @xf-borderRadiusLarge;
+}
+.xsStaff-card-face--front { transform: rotateY(0deg); z-index: 2; }
+.xsStaff-card-face--back { transform: rotateY(180deg); z-index: 1; }
+
+.xsStaff-card,
+.xsStaff-card--front,
+.xsStaff-card--back
+{
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	border: 1px solid @xsStaff-border;
+	border-radius: @xf-borderRadiusLarge;
+	background: @xf-contentBg;
+	box-shadow: 0 2px 10px fade(@xf-textColor, 10%);
+	overflow: hidden;
+	color: @xf-textColor;
+	transition: box-shadow .25s ease;
+}
+.xsStaff-flip--featured .xsStaff-card
+{
+	border-color: fade(@xsStaff-accent, 50%);
+	box-shadow:
+		0 2px 10px fade(@xf-textColor, 10%),
+		0 0 0 1px fade(@xsStaff-accent, 18%);
+}
+.xsStaff-card::before { content: none; }
+.xsStaff-card:hover { transform: none; }
+
+/* FRONT vignette — cinematic portrait */
+.xsStaff-card-vignette
+{
+	position: relative;
+	flex: 1;
+	min-height: 0;
+	background: @xf-contentAltBg;
+	overflow: hidden;
+}
+.xsStaff-card-vignette-media
+{
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	transform: scale(1);
+	transition: transform .55s cubic-bezier(.2, .8, .2, 1);
+	will-change: transform;
+}
+.xsStaff-card-vignette .avatar,
+.xsStaff-card-vignette .avatar img,
+.xsStaff-card-vignette a.avatar
+{
+	display: block !important;
+	position: absolute !important;
+	inset: 0 !important;
+	width: 100% !important;
+	height: 100% !important;
+	max-width: none !important;
+	max-height: none !important;
+	border-radius: 0 !important;
+	border: 0 !important;
+	box-shadow: none !important;
+	object-fit: cover;
+	object-position: center 20%;
+}
+.xsStaff-card-vignette .avatar > span,
+.xsStaff-card-vignette .avatar.avatar--default--dynamic,
+.xsStaff-card-vignette .avatar.avatar--default--text
+{
+	width: 100% !important;
+	height: 100% !important;
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	font-size: 88px !important;
+	font-weight: @xf-fontWeightHeavy !important;
+	letter-spacing: -.04em !important;
+	border-radius: 0 !important;
+	text-shadow: 0 8px 28px fade(#000, 25%);
+}
+
+/* Soft light sweep */
+.xsStaff-card-vignette-sheen
+{
+	position: absolute;
+	top: -20%;
+	left: -40%;
+	z-index: 2;
+	width: 45%;
+	height: 140%;
+	pointer-events: none;
+	opacity: 0;
+	background: linear-gradient(
+		90deg,
+		transparent,
+		fade(#fff, 18%),
+		transparent
+	);
+	transform: translateX(-30%) skewX(-18deg);
+	transition: transform .7s ease, opacity .35s ease;
+}
+
+/* Depth: top vignette + rich bottom scrim */
+.xsStaff-card-vignette-shade
+{
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	pointer-events: none;
+	background:
+		linear-gradient(180deg, fade(#000, 28%) 0%, transparent 32%),
+		linear-gradient(180deg, transparent 38%, fade(#000, 35%) 68%, fade(#000, 78%) 100%),
+		radial-gradient(120% 70% at 50% 100%, fade(#000, 45%), transparent 70%);
+}
+
+/* Inner frame rim */
+.xsStaff-card-vignette-frame
+{
+	position: absolute;
+	inset: 8px;
+	z-index: 2;
+	pointer-events: none;
+	border-radius: calc(@xf-borderRadiusLarge - 2px);
+	border: 1px solid fade(#fff, 18%);
+	box-shadow: inset 0 0 0 1px fade(#000, 12%);
+}
+
+.xsStaff-card-vignette-top
+{
+	position: absolute;
+	top: 12px;
+	left: 12px;
+	right: 12px;
+	z-index: 4;
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 8px;
+	pointer-events: none;
+}
+.xsStaff-card-vignette-topRight
+{
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.xsStaff-card-vignette-meta
+{
+	position: absolute;
+	left: 14px;
+	right: 14px;
+	bottom: 14px;
+	z-index: 3;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 4px;
+	color: #fff;
+	text-shadow: 0 2px 10px fade(#000, 45%);
+}
+.xsStaff-card-name
+{
+	display: block;
+	max-width: 100%;
+	font-size: 1.35rem;
+	font-weight: @xf-fontWeightHeavy;
+	line-height: 1.15;
+	letter-spacing: -.02em;
+	color: #fff;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.xsStaff-card-title
+{
+	display: inline-flex;
+	align-items: center;
+	margin-top: 2px;
+	padding: 2px 8px;
+	border-radius: 999px;
+	font-size: @xf-fontSizeSmaller;
+	font-weight: @xf-fontWeightHeavy;
+	color: #fff;
+	background: fade(#000, 28%);
+	border: 1px solid fade(#fff, 16%);
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+	text-shadow: none;
+}
+.xsStaff-card-banners
+{
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+	margin-top: 4px;
+}
+.xsStaff-card-banners .userBanner
+{
+	box-shadow: 0 2px 8px fade(#000, 25%);
+}
+.xsStaff-card-hint
+{
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	margin-top: 8px;
+	padding: 5px 10px;
+	border-radius: 999px;
+	font-size: @xf-fontSizeSmallest;
+	font-weight: @xf-fontWeightHeavy;
+	color: #fff;
+	letter-spacing: .02em;
+	text-shadow: none;
+	background: fade(#000, 32%);
+	border: 1px solid fade(#fff, 18%);
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+}
+.xsStaff-card-hint .fa,
+.xsStaff-card-hint .fa--xf { font-size: 10px; opacity: .9; }
+
+.xsStaff-card-badge
+{
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	padding: 5px 10px;
+	border-radius: 999px;
+	background: fade(#000, 40%);
+	border: 1px solid fade(#fff, 16%);
+	color: #fff;
+	font-size: @xf-fontSizeSmallest;
+	font-weight: @xf-fontWeightHeavy;
+	text-transform: uppercase;
+	letter-spacing: .04em;
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+	box-shadow: 0 4px 14px fade(#000, 25%);
+}
+.xsStaff-card-badge .fa { font-size: 11px; color: var(--xsStaff-badge-color, #fff); }
+.xsStaff-card-badge-img { width: 14px; height: 14px; border-radius: 3px; object-fit: cover; }
+.xsStaff-card-badge-label { max-width: 120px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.xsStaff-card-statusdot
+{
+	width: 12px;
+	height: 12px;
+	border-radius: 50%;
+	border: 2px solid #fff;
+	box-shadow: 0 0 0 1px fade(#000, 25%), 0 2px 8px fade(#000, 35%);
+}
+.xsStaff-card-statusdot--online
+{
+	background: @xsStaff-online;
+	box-shadow: 0 0 0 1px fade(#000, 25%), 0 0 0 4px fade(@xsStaff-online, 28%);
+}
+.xsStaff-card-statusdot--busy    { background: @xsStaff-busy; }
+.xsStaff-card-statusdot--away    { background: @xsStaff-away; }
+.xsStaff-card-statusdot--offline { background: fade(#fff, 55%); }
+
+.xsStaff-card-medal
+{
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	height: 24px;
+	padding: 0 8px;
+	border-radius: 999px;
+	background: fade(#000, 40%);
+	border: 1px solid fade(#fff, 16%);
+	color: #fff;
+	font-size: @xf-fontSizeSmallest;
+	font-weight: @xf-fontWeightHeavy;
+	backdrop-filter: blur(10px);
+	-webkit-backdrop-filter: blur(10px);
+	box-shadow: 0 4px 14px fade(#000, 25%);
+}
+.xsStaff-card-medal .fa { font-size: 10px; color: #fbbf24; }
+
+/* BACK — cinematic member dossier */
+.xsStaff-card--back
+{
+	background: @xf-contentBg;
+	overflow: hidden;
+}
+.xsStaff-card-back
+{
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+.xsStaff-card-back-hero
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 118px;
+	overflow: hidden;
+	pointer-events: none;
+	z-index: 0;
+}
+.xsStaff-card-back-hero-media
+{
+	position: absolute;
+	inset: -20% -10% auto;
+	height: 160%;
+	filter: blur(18px) saturate(1.15);
+	transform: scale(1.12);
+	opacity: .55;
+}
+.xsStaff-card-back-hero-media .avatar,
+.xsStaff-card-back-hero-media .avatar img,
+.xsStaff-card-back-hero-media a.avatar
+{
+	width: 100% !important;
+	height: 100% !important;
+	border-radius: 0 !important;
+	object-fit: cover;
+}
+.xsStaff-card-back-hero-media .avatar > span
+{
+	width: 100% !important;
+	height: 100% !important;
+	border-radius: 0 !important;
+	font-size: 4rem !important;
+}
+.xsStaff-card-back-hero-shade
+{
+	position: absolute;
+	inset: 0;
+	background:
+		linear-gradient(180deg, fade(#000, 28%) 0%, fade(#000, 8%) 40%, @xf-contentBg 100%);
+}
+.xsStaff-card-back-hero-glow
+{
+	position: absolute;
+	inset: auto -20% 20% -20%;
+	height: 70%;
+	background: radial-gradient(ellipse at center, fade(@xsStaff-accent, 28%) 0%, transparent 70%);
+	opacity: .7;
+}
+
+.xsStaff-card-back-head
+{
+	position: relative;
+	z-index: 1;
+	display: flex;
+	align-items: flex-end;
+	gap: 12px;
+	padding: 14px 14px 0;
+	min-height: 96px;
+}
+.xsStaff-card-back-ava
+{
+	position: relative;
+	flex: 0 0 auto;
+	box-shadow: 0 10px 24px fade(#000, 22%);
+	border-radius: @xf-borderRadiusLarge;
+}
+.xsStaff-card-back-ava .avatar,
+.xsStaff-card-back-ava .avatar img
+{
+	width: 64px !important;
+	height: 64px !important;
+	border-radius: @xf-borderRadiusLarge !important;
+	border: 2px solid @xf-contentBg !important;
+	box-sizing: border-box;
+}
+.xsStaff-card-back-ava .xsStaff-card-statusdot
+{
+	position: absolute;
+	right: 2px;
+	bottom: 2px;
+	width: 12px;
+	height: 12px;
+	border: 2px solid @xf-contentBg;
+	box-shadow: none;
+}
+.xsStaff-card-back-id { min-width: 0; flex: 1; padding-bottom: 2px; }
+.xsStaff-card-back-name
+{
+	display: block;
+	font-size: 1.2rem;
+	font-weight: @xf-fontWeightHeavy;
+	line-height: 1.2;
+	color: @xf-textColor;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.xsStaff-card-back-meta
+{
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 6px;
+	margin-top: 4px;
+}
+.xsStaff-card-back-title
+{
+	display: inline-flex;
+	align-items: center;
+	padding: 2px 8px;
+	border-radius: 999px;
+	background: @xf-contentBg;
+	border: 1px solid @xsStaff-border;
+	font-size: 11px;
+	font-weight: @xf-fontWeightHeavy;
+	color: @xf-textColorMuted;
+	max-width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.xsStaff-card-back-status
+{
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	padding: 2px 8px;
+	border-radius: 999px;
+	font-size: 10px;
+	font-weight: @xf-fontWeightHeavy;
+	letter-spacing: .02em;
+	text-transform: uppercase;
+	background: @xf-contentBg;
+	border: 1px solid @xsStaff-border;
+	color: @xf-textColorMuted;
+}
+.xsStaff-card-back-status::before
+{
+	content: '';
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: currentColor;
+}
+.xsStaff-card-back-status--online { color: @xsStaff-online; }
+.xsStaff-card-back-status--busy { color: @xsStaff-busy; }
+.xsStaff-card-back-status--away { color: @xsStaff-away; }
+.xsStaff-card-back-status--offline { color: @xf-textColorMuted; }
+.xsStaff-card-back-banners
+{
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+	margin-top: 6px;
+}
+.xsStaff-card-back-banners .userBanner
+{
+	transform: scale(.88);
+	transform-origin: left center;
+}
+
+.xsStaff-card-back-body
+{
+	position: relative;
+	z-index: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	flex: 1;
+	min-height: 0;
+	padding: 14px 14px 0;
+	overflow: auto;
+}
+
+.xsStaff-card-stats
+{
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 8px;
+}
+.xsStaff-card-stat
+{
+	position: relative;
+	padding: 10px 10px 9px;
+	border-radius: @xf-borderRadiusMedium;
+	background: @xf-contentAltBg;
+	border: 1px solid @xsStaff-border;
+	overflow: hidden;
+}
+.xsStaff-card-stat::after
+{
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 2px;
+	background: linear-gradient(90deg, var(--xsStaff-accent, @xsStaff-accent), fade(@xsStaff-accent, 0%));
+	opacity: .85;
+}
+.xsStaff-card-stat-value
+{
+	display: block;
+	font-size: 1.15rem;
+	font-weight: @xf-fontWeightHeavy;
+	line-height: 1.15;
+	color: @xf-textColor;
+	font-variant-numeric: tabular-nums;
+}
+.xsStaff-card-stat-label
+{
+	display: block;
+	margin-top: 2px;
+	font-size: 10px;
+	font-weight: @xf-fontWeightHeavy;
+	letter-spacing: .04em;
+	text-transform: uppercase;
+	color: @xf-textColorMuted;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.xsStaff-card-since
+{
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 10px;
+	border-radius: @xf-borderRadiusMedium;
+	background: @xf-contentAltBg;
+	border: 1px dashed @xsStaff-border;
+	font-size: @xf-fontSizeSmaller;
+	color: @xf-textColorMuted;
+}
+.xsStaff-card-since-icon
+{
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 26px;
+	height: 26px;
+	border-radius: 8px;
+	background: fade(@xsStaff-accent, 12%);
+	color: @xsStaff-accent;
+	flex: 0 0 auto;
+}
+.xsStaff-card-since-text { min-width: 0; line-height: 1.3; }
+
+.xsStaff-card-quote
+{
+	position: relative;
+	margin: 0;
+	padding: 12px 12px 12px 14px;
+	background: @xf-contentAltBg;
+	border: 1px solid @xsStaff-border;
+	border-radius: @xf-borderRadiusMedium;
+	overflow: hidden;
+}
+.xsStaff-card-quote::before
+{
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	width: 3px;
+	background: var(--xsStaff-accent, @xsStaff-accent);
+}
+.xsStaff-card-quote p
+{
+	position: relative;
+	z-index: 1;
+	margin: 0;
+	font-size: @xf-fontSizeSmall;
+	line-height: @xf-lineHeightDefault;
+	font-style: italic;
+	color: @xf-textColor;
+}
+.xsStaff-card-quote-mark
+{
+	position: absolute;
+	right: 8px;
+	top: -6px;
+	font-size: 48px;
+	line-height: 1;
+	font-family: Georgia, 'Times New Roman', serif;
+	color: fade(@xsStaff-accent, 18%);
+	pointer-events: none;
+}
+
+.xsStaff-card-bio
+{
+	padding: 10px 12px;
+	background: @xf-contentAltBg;
+	border: 1px solid @xsStaff-border;
+	border-radius: @xf-borderRadiusMedium;
+	font-size: @xf-fontSizeSmall;
+	line-height: @xf-lineHeightDefault;
+}
+.xsStaff-card-bio-content
+{
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+.xsStaff-card-bio-content > * { margin: 0; }
+
+.xsStaff-card-socials
+{
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+.xsStaff-card-social
+{
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	border-radius: 10px;
+	background: @xf-contentAltBg;
+	border: 1px solid @xsStaff-border;
+	color: @xf-textColorMuted;
+	font-size: 13px;
+	text-decoration: none;
+	transition: transform .15s ease, background .15s ease, color .15s ease, border-color .15s ease;
+}
+.xsStaff-card-social:hover
+{
+	color: #fff;
+	border-color: transparent;
+	background: @xsStaff-accent;
+	text-decoration: none;
+	transform: translateY(-1px);
+}
+.xsStaff-card-social--discord:hover   { background: #5865F2; }
+.xsStaff-card-social--twitter:hover   { background: #000; }
+.xsStaff-card-social--twitch:hover    { background: #9146FF; }
+.xsStaff-card-social--youtube:hover   { background: #FF0000; }
+.xsStaff-card-social--instagram:hover { background: #E1306C; }
+.xsStaff-card-social--github:hover    { background: #24292e; }
+.xsStaff-card-social--website:hover   { background: @xsStaff-accent; }
+
+.xsStaff-card-footer
+{
+	position: relative;
+	z-index: 1;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 8px;
+	margin-top: auto;
+	padding: 12px 14px 14px;
+	flex-wrap: wrap;
+	border-top: 1px solid @xsStaff-border;
+	background: @xf-contentBg;
+}
+.xsStaff-card-actions
+{
+	display: flex;
+	gap: 6px;
+	flex-wrap: wrap;
+	flex: 1;
+	min-width: 0;
+}
+.xsStaff-card-action
+{
+	display: inline-flex;
+	align-items: center;
+	gap: 5px;
+	padding: 7px 10px;
+	border-radius: 10px;
+	background: @xf-contentAltBg;
+	border: 1px solid @xsStaff-border;
+	color: @xf-textColor;
+	font-size: @xf-fontSizeSmaller;
+	font-weight: @xf-fontWeightHeavy;
+	text-decoration: none;
+	white-space: nowrap;
+	transition: background .15s ease, border-color .15s ease, transform .15s ease;
+}
+.xsStaff-card-action:hover
+{
+	background: fade(@xsStaff-accent, 10%);
+	border-color: fade(@xsStaff-accent, 40%);
+	color: @xf-textColor;
+	text-decoration: none;
+	transform: translateY(-1px);
+}
+.xsStaff-card-action--primary
+{
+	background: var(--xsStaff-accent, @xsStaff-accent);
+	border-color: transparent;
+	color: #fff !important;
+	box-shadow: 0 6px 16px fade(@xsStaff-accent, 28%);
+}
+.xsStaff-card-action--primary:hover
+{
+	filter: brightness(1.06);
+	color: #fff !important;
+	background: var(--xsStaff-accent, @xsStaff-accent);
+	border-color: transparent;
+}
+.xsStaff-card-action--pro
+{
+	background: @xf-contentBg !important;
+	color: @xf-textColor !important;
+	border-color: fade(@xsStaff-accent, 45%) !important;
+}
+.xsStaff-card-action--pro:hover
+{
+	background: fade(@xsStaff-accent, 10%) !important;
+	color: @xf-textColor !important;
+}
+
+.xsStaff-card-thanks { margin: 0; }
+.xsStaff-card-thanks-btn
+{
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 7px 11px;
+	border-radius: 999px;
+	background: fade(@xsStaff-busy, 10%);
+	border: 1px solid fade(@xsStaff-busy, 28%);
+	color: @xsStaff-busy;
+	font-size: @xf-fontSizeSmaller;
+	font-weight: @xf-fontWeightHeavy;
+	cursor: pointer;
+	font-variant-numeric: tabular-nums;
+	box-shadow: 0 4px 12px fade(@xsStaff-busy, 12%);
+	transition: background .15s ease, color .15s ease, transform .15s ease;
+}
+.xsStaff-card-thanks-btn:hover:not(:disabled)
+{
+	background: @xsStaff-busy;
+	border-color: transparent;
+	color: #fff;
+	transform: translateY(-1px);
+}
+.xsStaff-card-thanks-btn.is-thanked
+{
+	background: @xsStaff-busy;
+	border-color: transparent;
+	color: #fff;
+	pointer-events: none;
+}
+.xsStaff-card-thanks-btn.is-thanked .xsStaff-card-thanks-heart { animation: xsStaff-heartbeat .55s ease; }
+@keyframes xsStaff-heartbeat
+{
+	0% { transform: scale(1); }
+	30% { transform: scale(1.35); }
+	100% { transform: scale(1); }
+}
+.xsStaff-card-thanks-btn--disabled
+{
+	background: @xf-contentAltBg;
+	border-color: @xsStaff-border;
+	color: @xf-textColorMuted;
+	cursor: default;
+	box-shadow: none;
+}
+.xsStaff-card--justThanked { box-shadow: 0 0 0 2px fade(@xsStaff-accent, 35%); }
+
+.xsStaff-empty
+{
+	padding: 40px 24px;
+	text-align: center;
+	background: @xf-contentBg;
+	border: 1px dashed @xsStaff-border;
+	border-radius: @xf-borderRadiusLarge;
+}
+.xsStaff-empty-icon
+{
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 48px;
+	height: 48px;
+	margin-bottom: 10px;
+	border-radius: @xf-borderRadiusLarge;
+	background: @xf-contentAltBg;
+	color: @xf-textColorMuted;
+	font-size: 20px;
+}
+.xsStaff-empty-text { color: @xf-textColorMuted; }
+
+.xsStaff-reveal
+{
+	opacity: 0;
+	transform: translateY(10px);
+	transition: opacity .35s ease, transform .35s ease;
+	transition-delay: var(--xs-reveal-delay, 0ms);
+}
+.xsStaff-reveal--in { opacity: 1; transform: none; }
+
+/* Legacy unused */
+.xsStaff-card-aura,
+.xsStaff-card-spotlight,
+.xsStaff-card-head,
+.xsStaff-tilt { display: none; }
+
+/* Widget */
+.xsStaffWidget { padding: 4px 0; }
+.xsStaffWidget--compact { display: flex; flex-wrap: wrap; gap: 8px; padding: 8px; }
+.xsStaffWidget-compactAvatar:hover { transform: scale(1.05); }
+.xsStaffWidget--grid
+{
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+	gap: 8px;
+	padding: 8px;
+}
+.xsStaffWidget-mini
+{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 5px;
+	padding: 8px 4px;
+	border-radius: @xf-borderRadiusMedium;
+	background: @xf-contentAltBg;
+	border: 1px solid @xsStaff-border;
+	text-decoration: none;
+	color: @xf-textColor;
+}
+.xsStaffWidget-mini:hover
+{
+	background: fade(@xsStaff-accent, 8%);
+	border-color: fade(@xsStaff-accent, 35%);
+	text-decoration: none;
+	color: @xf-textColor;
+}
+.xsStaffWidget-mini-name
+{
+	font-size: @xf-fontSizeSmaller;
+	font-weight: @xf-fontWeightHeavy;
+	max-width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.xsStaffWidget-mini-title { font-size: @xf-fontSizeSmallest; color: @xf-textColorMuted; }
+
+.xsStaffWidget--spotlight
+{
+	padding: @xf-paddingLarge;
+	border-radius: @xf-borderRadiusLarge;
+	background: @xf-contentAltBg;
+	border: 1px solid @xsStaff-border;
+	display: flex;
+	gap: 12px;
+	align-items: center;
+}
+.xsStaffWidget--spotlight::before { content: none; }
+.xsStaffWidget-spotlight-avatar .avatar,
+.xsStaffWidget-spotlight-avatar .avatar img
+{
+	width: 56px !important;
+	height: 56px !important;
+}
+.xsStaffWidget-spotlight-name
+{
+	display: block;
+	font-weight: @xf-fontWeightHeavy;
+	color: @xf-textColor;
+}
+.xsStaffWidget-spotlight-title
+{
+	display: block;
+	font-size: @xf-fontSizeSmaller;
+	color: @xf-textColorMuted;
+	margin-top: 2px;
+}
+.xsStaffWidget-spotlight-quote
+{
+	margin: 6px 0 0;
+	font-size: @xf-fontSizeSmall;
+	color: @xf-textColorMuted;
+	font-style: italic;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+.xsStaffWidget-viewAll
+{
+	display: block;
+	margin: 8px;
+	padding: 8px 10px;
+	text-align: center;
+	border-radius: @xf-borderRadiusMedium;
+	background: @xsStaff-accent;
+	color: #fff;
+	font-size: @xf-fontSizeSmaller;
+	font-weight: @xf-fontWeightHeavy;
+	text-decoration: none;
+}
+.xsStaffWidget-viewAll:hover { color: #fff; text-decoration: none; filter: brightness(1.05); }
+
+/* Secondary pages */
+.xsStaff-proPage { margin-bottom: @xf-elementSpacer; }
+.xsStaff-proPage-hero
+{
+	padding: @xf-paddingLarge;
+	margin-bottom: @xf-paddingLarge;
+	border-radius: @xf-borderRadiusLarge;
+	background: @xf-contentBg;
+	border: 1px solid @xsStaff-border;
+}
+.xsStaff-proPage-hero-eyebrow
+{
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	margin-bottom: 6px;
+	color: @xf-textColorMuted;
+	font-size: @xf-fontSizeSmaller;
+	font-weight: @xf-fontWeightHeavy;
+	text-transform: uppercase;
+}
+.xsStaff-proPage-hero-eyebrow .fa { color: @xsStaff-accent; }
+.xsStaff-proPage-hero-title
+{
+	margin: 0 0 4px;
+	font-size: @xf-fontSizeLarger;
+	font-weight: @xf-fontWeightHeavy;
+}
+.xsStaff-proPage-hero-subtitle
+{
+	margin: 0;
+	color: @xf-textColorMuted;
+}
+.xsStaff-statGrid
+{
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+	gap: @xf-paddingMedium;
+}
+.xsStaff-statBox
+{
+	padding: @xf-paddingLarge;
+	border-radius: @xf-borderRadiusLarge;
+	background: @xf-contentAltBg;
+	border: 1px solid @xsStaff-border;
+}
+.xsStaff-statBox-num
+{
+	font-size: @xf-fontSizeLarger;
+	font-weight: @xf-fontWeightHeavy;
+	font-variant-numeric: tabular-nums;
+}
+.xsStaff-statBox-label
+{
+	margin-top: 4px;
+	font-size: @xf-fontSizeSmallest;
+	font-weight: @xf-fontWeightHeavy;
+	text-transform: uppercase;
+	color: @xf-textColorMuted;
+}
+.xsStaff-chart-empty
+{
+	padding: 32px 20px;
+	text-align: center;
+	color: @xf-textColorMuted;
+}
+.xsStaff-chart-empty .fa { display: block; font-size: 28px; margin-bottom: 8px; opacity: .45; }
+.xsStaff-chart-axis { stroke: @xsStaff-border; stroke-width: 1; }
+.xsStaff-proPage .block { margin-bottom: 0; }
+.xsStaff-proPage .block-container
+{
+	border-radius: @xf-borderRadiusLarge;
+	border: 1px solid @xsStaff-border;
+	background: @xf-contentBg;
+	overflow: hidden;
+}
+.xsStaff-proPage .block-header { display: none; }
+
+@media (max-width: 900px)
+{
+	.xsStaff-masthead-stage
+	{
+		grid-template-columns: 1fr;
+		padding: 24px 20px 12px;
+		gap: 8px;
+	}
+	.xsStaff-masthead-roster { min-height: 180px; }
+	.xsStaff-masthead-faces { width: 200px; height: 180px; }
+	.xsStaff-masthead-face--lead .avatar,
+	.xsStaff-masthead-face--lead .avatar img
+	{
+		width: 96px !important;
+		height: 96px !important;
+	}
+	.xsStaff-masthead-watermark { opacity: .04; right: 0; }
+	.xsStaff-masthead-dock { margin: 0 12px 12px; }
+}
+
+@media (max-width: 700px)
+{
+	.xsStaff-masthead { --xsStaff-mast-pad: 18px; }
+	.xsStaff-masthead-dock { grid-template-columns: 1fr 1fr; gap: 8px; }
+	.xsStaff-masthead-stat { padding: 12px; border-radius: 14px; }
+	.xsStaff-masthead-stat-num { font-size: 1.25rem; }
+	.xsStaff-masthead-stat-icon { width: 36px; height: 36px; border-radius: 11px; }
+	.xsStaff-masthead-face .avatar,
+	.xsStaff-masthead-face .avatar img
+	{
+		width: 46px !important;
+		height: 46px !important;
+	}
+	.xsStaff-masthead-faceMore { width: 42px; height: 42px; }
+
+	.xsStaff-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+	.xsStaff-flip { height: 320px; }
+	.xsStaff-card-name { font-size: 1.15rem; }
+	.xsStaff-card-vignette-frame { inset: 6px; }
+	.xsStaff-card-action:not(.xsStaff-card-action--primary) span { display: none; }
+	.xsStaff-card-action:not(.xsStaff-card-action--primary)
+	{
+		width: 34px;
+		height: 34px;
+		padding: 0;
+		justify-content: center;
+	}
+	.xsStaff-card-back-ava .avatar,
+	.xsStaff-card-back-ava .avatar img
+	{
+		width: 56px !important;
+		height: 56px !important;
+	}
+	.xsStaff-card-stats { gap: 6px; }
+	.xsStaff-card-stat { padding: 8px; }
+	.xsStaff-card-stat-value { font-size: 1.05rem; }
+}
+
+@media (prefers-reduced-motion: reduce)
+{
+	.xsStaff-flip-inner,
+	.xsStaff-card-vignette-media,
+	.xsStaff-card-vignette-sheen { transition: none !important; }
+	.xsStaff-flip:hover .xsStaff-card-vignette-media { transform: none; }
+	.xsStaff-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+	.xsStaff-card-thanks-btn.is-thanked .xsStaff-card-thanks-heart { animation: none; }
+	.xsStaff-masthead-sheen,
+	.xsStaff-masthead-pulse,
+	.xsStaff-masthead-eyebrow-dot,
+	.xsStaff-masthead-orb--a,
+	.xsStaff-masthead-orb--b,
+	.xsStaff-masthead-ring,
+	.xsStaff-masthead-face { animation: none !important; }
+}
+]]></template>
+  <template type="public" title="xs_staff_bio_edit" version_id="2000010" version_string="2.0.0"><![CDATA[<xf:title>{{ phrase('xen_staff_bio_title') }}</xf:title>
+<xf:css src="xs_staff.less" />
+
+<xf:breadcrumb href="{{ link('staff') }}">{{ phrase('xen_staff_page_title') }}</xf:breadcrumb>
+<xf:breadcrumb href="{{ link('staff/bio') }}">{{ phrase('xen_staff_bio_title') }}</xf:breadcrumb>
+
+<div class="xsStaff-proPage">
+	<div class="xsStaff-proPage-hero">
+		<div class="xsStaff-proPage-hero-content">
+			<span class="xsStaff-proPage-hero-eyebrow"><xf:fa icon="fa-feather" /> {{ phrase('xen_staff_hero_eyebrow') }}</span>
+			<h1 class="xsStaff-proPage-hero-title">{{ phrase('xen_staff_bio_title') }}</h1>
+			<p class="xsStaff-proPage-hero-subtitle">{{ phrase('xen_staff_bio_explain') }}</p>
+		</div>
+	</div>
+
+	<xf:form action="{{ link('staff/bio') }}" method="post" ajax="true" class="block">
+		<div class="block-container">
+			<h2 class="block-header">{{ phrase('xen_staff_bio_title') }}</h2>
+			<div class="block-body">
+				<xf:textarearow name="rich_bio" rows="10" value="{$profile.rich_bio}"
+					label="{{ phrase('xen_staff_bio_title') }}" />
+
+				<xf:textboxrow name="timezone" value="{$profile.timezone}"
+					label="{{ phrase('time_zone') }}" maxlength="50" />
+
+				<xf:checkboxrow>
+					<xf:option name="allow_contact" value="1" selected="{$profile.allow_contact}"
+						label="{{ phrase('xen_staff_contact_button') }}" />
+					<xf:option name="allow_anonymous_contact" value="1" selected="{$profile.allow_anonymous_contact}"
+						label="{{ phrase('xen_staff_contact_anonymous') }}" />
+				</xf:checkboxrow>
+
+				<xf:selectrow name="online_override" value="{$profile.online_override}"
+					label="Online status">
+					<xf:option value="auto">Auto (based on activity)</xf:option>
+					<xf:option value="online">{{ phrase('xen_staff_status_online') }}</xf:option>
+					<xf:option value="busy">{{ phrase('xen_staff_status_busy') }}</xf:option>
+					<xf:option value="away">{{ phrase('xen_staff_status_away') }}</xf:option>
+					<xf:option value="offline">{{ phrase('xen_staff_status_offline') }}</xf:option>
+				</xf:selectrow>
+			</div>
+			<xf:submitrow icon="save" submit="{{ phrase('xen_staff_bio_save') }}" />
+		</div>
+	</xf:form>
+</div>
+]]></template>
+  <template type="public" title="xs_staff_card" version_id="2020200" version_string="2.2.2"><![CDATA[<xf:macro name="render" arg-user="!" arg-profile="!" arg-options="{{ {} }}">
+
+	<xf:set var="$accent" value="{{ $profile && $profile.accent_color ? $profile.accent_color : '' }}" />
+	<xf:set var="$canThank" value="{{ $xf.options.xenStaffEnableThanks && $xf.visitor.user_id && $xf.visitor.user_id != $user.user_id && $xf.visitor.hasPermission('xenStaff', 'thank') }}" />
+	<xf:set var="$thanksCount" value="{{ $profile ? $profile.thanks_count : 0 }}" />
+	<xf:set var="$yearsService" value="{{ floor(($xf.time - $user.register_date) / 31536000) }}" />
+
+	<xf:set var="$proBadge"      value="{{ $profile && $profile.badge_id && $profile.Badge }}" />
+	<xf:set var="$proBio"        value="{{ $profile && $profile.rich_bio }}" />
+	<xf:set var="$proContact"    value="{{ $xf.options.xenStaffContactEnabled && $profile && $profile.allow_contact && $xf.visitor.user_id != $user.user_id }}" />
+	<xf:set var="$proStats"      value="{{ $xf.options.xenStaffShowStats && $xf.visitor.hasPermission('xenStaff', 'viewStats') }}" />
+	<xf:set var="$proOnline"     value="{{ $xf.options.xenStaffShowOnlineIndicator && $profile }}" />
+	<xf:set var="$secsIdle" value="{{ $xf.time - $user.last_activity }}" />
+	<xf:set var="$statusCode" value="offline" />
+	<xf:if is="$secsIdle < 900"><xf:set var="$statusCode" value="away" /></xf:if>
+	<xf:if is="$secsIdle < 300"><xf:set var="$statusCode" value="online" /></xf:if>
+	<xf:if is="$xf.visitor.user_id && $user.user_id == $xf.visitor.user_id"><xf:set var="$statusCode" value="online" /></xf:if>
+	<xf:if is="$profile && $profile.online_override && $profile.online_override != 'auto'">
+		<xf:set var="$statusCode" value="{$profile.online_override}" />
+	</xf:if>
+
+	<xf:set var="$isFeatured" value="{{ $options && $options.featured ? 1 : 0 }}" />
+
+	<div class="xsStaff-flip js-xsStaffFlip{{ $isFeatured ? ' xsStaff-flip--featured' : '' }}" tabindex="0" role="button" aria-expanded="false" aria-label="{{ phrase('xen_staff_card_flip_hint')|for_attr }} — {$user.username}">
+		<div class="xsStaff-flip-inner"<xf:if is="$accent"> style="--xsStaff-accent: {$accent}"</xf:if>>
+
+			<div class="xsStaff-card-face xsStaff-card-face--front">
+				<article class="xsStaff-card xsStaff-card--front xsStaff-card--status-{$statusCode}" data-user-id="{$user.user_id}">
+					<div class="xsStaff-card-vignette">
+						<div class="xsStaff-card-vignette-media">
+							<xf:avatar user="{$user}" size="l" href="" notooltip="true" />
+						</div>
+						<div class="xsStaff-card-vignette-sheen" aria-hidden="true"></div>
+						<div class="xsStaff-card-vignette-shade" aria-hidden="true"></div>
+						<div class="xsStaff-card-vignette-frame" aria-hidden="true"></div>
+
+						<div class="xsStaff-card-vignette-top">
+							<xf:if is="$proBadge">
+								<div class="xsStaff-card-badge" style="--xsStaff-badge-color: {$profile.Badge.color}">
+									<xf:if is="$profile.Badge.image_url">
+										<img src="{$profile.Badge.image_url}" alt="" class="xsStaff-card-badge-img" />
+									<xf:elseif is="$profile.Badge.icon" />
+										<xf:fa icon="{$profile.Badge.icon}" />
+									<xf:else />
+										<xf:fa icon="fa-award" />
+									</xf:if>
+									<span class="xsStaff-card-badge-label">{$profile.Badge.title}</span>
+								</div>
+							</xf:if>
+
+							<div class="xsStaff-card-vignette-topRight">
+								<xf:if is="$xf.options.xenStaffShowYearsService && $yearsService >= 1">
+									<span class="xsStaff-card-medal"><xf:fa icon="fa-medal" /> {$yearsService}</span>
+								</xf:if>
+								<xf:if is="$proOnline">
+									<span class="xsStaff-card-statusdot xsStaff-card-statusdot--{$statusCode}"></span>
+								</xf:if>
+							</div>
+						</div>
+
+						<div class="xsStaff-card-vignette-meta">
+							<span class="xsStaff-card-name">{$user.username}</span>
+							<xf:if is="$user.custom_title">
+								<span class="xsStaff-card-title">{$user.custom_title}</span>
+							</xf:if>
+							<xf:userbanners user="$user" tag="div" class="xsStaff-card-banners" />
+							<span class="xsStaff-card-hint">
+								<xf:fa icon="fa-sync-alt" /> {{ phrase('xen_staff_card_flip_hint') }}
+							</span>
+						</div>
+					</div>
+				</article>
+			</div>
+
+			<div class="xsStaff-card-face xsStaff-card-face--back">
+				<article class="xsStaff-card xsStaff-card--back xsStaff-card--status-{$statusCode}" data-user-id="{$user.user_id}">
+					<div class="xsStaff-card-back">
+						<div class="xsStaff-card-back-hero" aria-hidden="true">
+							<div class="xsStaff-card-back-hero-media">
+								<xf:avatar user="{$user}" size="l" href="" notooltip="true" />
+							</div>
+							<div class="xsStaff-card-back-hero-shade"></div>
+							<div class="xsStaff-card-back-hero-glow"></div>
+						</div>
+
+						<header class="xsStaff-card-back-head">
+							<span class="xsStaff-card-back-ava">
+								<xf:avatar user="{$user}" size="m" href="" notooltip="true" />
+								<xf:if is="$proOnline">
+									<span class="xsStaff-card-statusdot xsStaff-card-statusdot--{$statusCode}"></span>
+								</xf:if>
+							</span>
+							<div class="xsStaff-card-back-id">
+								<span class="xsStaff-card-back-name">{$user.username}</span>
+								<div class="xsStaff-card-back-meta">
+									<xf:if is="$user.custom_title">
+										<span class="xsStaff-card-back-title">{$user.custom_title}</span>
+									</xf:if>
+									<span class="xsStaff-card-back-status xsStaff-card-back-status--{$statusCode}">
+										<xf:if is="$statusCode == 'online'">{{ phrase('xen_staff_card_status_online') }}
+										<xf:elseif is="$statusCode == 'busy'" />{{ phrase('xen_staff_card_status_busy') }}
+										<xf:elseif is="$statusCode == 'away'" />{{ phrase('xen_staff_card_status_away') }}
+										<xf:else />{{ phrase('xen_staff_card_status_offline') }}</xf:if>
+									</span>
+								</div>
+								<xf:userbanners user="$user" tag="div" class="xsStaff-card-back-banners" />
+							</div>
+						</header>
+
+						<div class="xsStaff-card-back-body">
+							<div class="xsStaff-card-stats">
+								<div class="xsStaff-card-stat">
+									<span class="xsStaff-card-stat-value">{$user.message_count|number}</span>
+									<span class="xsStaff-card-stat-label">{{ phrase('messages') }}</span>
+								</div>
+								<div class="xsStaff-card-stat">
+									<span class="xsStaff-card-stat-value">{$user.reaction_score|number}</span>
+									<span class="xsStaff-card-stat-label">{{ phrase('reaction_score') }}</span>
+								</div>
+								<div class="xsStaff-card-stat">
+									<span class="xsStaff-card-stat-value">{$user.trophy_points|number}</span>
+									<span class="xsStaff-card-stat-label">{{ phrase('trophy_points') }}</span>
+								</div>
+								<div class="xsStaff-card-stat">
+									<span class="xsStaff-card-stat-value">
+										<xf:if is="$yearsService >= 1">{$yearsService}<xf:else />{{ phrase('xen_staff_card_stat_new') }}</xf:if>
+									</span>
+									<span class="xsStaff-card-stat-label">
+										<xf:if is="$yearsService >= 1">{{ phrase('xen_staff_card_stat_years') }}<xf:else />{{ phrase('xen_staff_card_stat_service') }}</xf:if>
+									</span>
+								</div>
+							</div>
+
+							<div class="xsStaff-card-since">
+								<span class="xsStaff-card-since-icon"><xf:fa icon="fa-calendar-alt" /></span>
+								<span class="xsStaff-card-since-text">{{ phrase('xen_staff_member_since_x', {'date': date($user.register_date, 'absolute')}) }}</span>
+							</div>
+
+							<xf:if is="$profile && $profile.quote">
+								<blockquote class="xsStaff-card-quote">
+									<span class="xsStaff-card-quote-mark" aria-hidden="true">“</span>
+									<p>{$profile.quote}</p>
+								</blockquote>
+							</xf:if>
+
+							<xf:if is="$proBio">
+								<div class="xsStaff-card-bio">
+									<div class="xsStaff-card-bio-content">{$profile.rich_bio|raw}</div>
+								</div>
+							</xf:if>
+
+							<xf:if is="$xf.options.xenStaffEnableSocials && $profile">
+								<xf:set var="$socials" value="{{ $profile.getSocialLinks() }}" />
+								<xf:if is="$socials is not empty">
+									<div class="xsStaff-card-socials">
+										<xf:foreach loop="$socials" key="$kind" value="$social">
+											<xf:if is="$social.link">
+												<a href="{$social.link}" target="_blank" rel="nofollow noopener" class="xsStaff-card-social xsStaff-card-social--{$kind}" data-xf-init="tooltip" title="{$social.value}">
+													<xf:fa icon="{$social.icon}" />
+												</a>
+											<xf:else />
+												<span class="xsStaff-card-social xsStaff-card-social--{$kind}" data-xf-init="tooltip" title="{$social.value}">
+													<xf:fa icon="{$social.icon}" />
+												</span>
+											</xf:if>
+										</xf:foreach>
+									</div>
+								</xf:if>
+							</xf:if>
+						</div>
+
+						<footer class="xsStaff-card-footer">
+							<div class="xsStaff-card-actions">
+								<a href="{{ link('members', $user) }}" class="xsStaff-card-action xsStaff-card-action--primary">
+									<xf:fa icon="fa-user" /> <span>{{ phrase('xen_staff_view_profile') }}</span>
+								</a>
+
+								<xf:if is="$proContact">
+									<a href="{{ link('staff/contact', $user) }}" class="xsStaff-card-action xsStaff-card-action--pro">
+										<xf:fa icon="fa-paper-plane" /> <span>{{ phrase('xen_staff_card_contact_button') }}</span>
+									</a>
+								</xf:if>
+
+								<xf:if is="$proStats">
+									<a href="{{ link('staff/stats', $user) }}" class="xsStaff-card-action">
+										<xf:fa icon="fa-chart-line" /> <span>{{ phrase('xen_staff_card_view_stats') }}</span>
+									</a>
+								</xf:if>
+
+								<xf:if is="!$proContact && $xf.visitor.user_id && $xf.visitor.user_id != $user.user_id">
+									<a href="{{ link('conversations/add', null, {'to': $user.username}) }}" class="xsStaff-card-action">
+										<xf:fa icon="fa-envelope" /> <span>{{ phrase('xen_staff_send_message') }}</span>
+									</a>
+								</xf:if>
+							</div>
+
+							<xf:if is="$xf.options.xenStaffEnableThanks">
+								<xf:if is="$canThank">
+									<form action="{{ link('staff/thanks', $user) }}" method="post" class="formInline xsStaff-card-thanks js-xsStaffThanksForm" data-xf-init="ajax-submit">
+										<xf:csrf />
+										<button type="submit" class="xsStaff-card-thanks-btn js-xsStaffThanksBtn">
+											<span class="xsStaff-card-thanks-heart"><xf:fa icon="fa-heart" /></span>
+											<span class="xsStaff-card-thanks-count js-xsStaffThanksCount">{$thanksCount|number}</span>
+										</button>
+									</form>
+								<xf:else />
+									<div class="xsStaff-card-thanks xsStaff-card-thanks--static">
+										<span class="xsStaff-card-thanks-btn xsStaff-card-thanks-btn--disabled">
+											<span class="xsStaff-card-thanks-heart"><xf:fa icon="fa-heart" /></span>
+											<span class="xsStaff-card-thanks-count">{$thanksCount|number}</span>
+										</span>
+									</div>
+								</xf:if>
+							</xf:if>
+						</footer>
+					</div>
+				</article>
+			</div>
+
+		</div>
+	</div>
+</xf:macro>
+]]></template>
+  <template type="public" title="xs_staff_contact" version_id="2000010" version_string="2.0.0"><![CDATA[<xf:title>{{ phrase('xen_staff_contact_title', {'username': $toUser.username}) }}</xf:title>
+<xf:css src="xs_staff.less" />
+
+<xf:breadcrumb href="{{ link('staff') }}">{{ phrase('xen_staff_page_title') }}</xf:breadcrumb>
+
+<div class="xsStaff-proPage">
+	<div class="xsStaff-proPage-hero">
+		<div class="xsStaff-proPage-hero-content">
+			<span class="xsStaff-proPage-hero-eyebrow"><xf:fa icon="fa-paper-plane" /> Direct line</span>
+			<h1 class="xsStaff-proPage-hero-title">{{ phrase('xen_staff_contact_title', {'username': $toUser.username}) }}</h1>
+			<p class="xsStaff-proPage-hero-subtitle">{{ phrase('xen_staff_contact_explain') }}</p>
+		</div>
+	</div>
+
+	<xf:form action="{{ link('staff/contact', $toUser) }}" method="post" ajax="true" class="block">
+		<div class="block-container">
+			<h2 class="block-header">{{ phrase('xen_staff_contact_title', {'username': $toUser.username}) }}</h2>
+			<div class="block-body">
+				<xf:textboxrow name="subject" label="{{ phrase('xen_staff_contact_subject') }}" maxlength="150" required="required" />
+
+				<xf:textarearow name="message" label="{{ phrase('xen_staff_contact_message') }}" rows="8" required="required" />
+
+				<xf:if is="!$xf.visitor.user_id">
+					<xf:textboxrow name="from_email" label="{{ phrase('email') }}" type="email" />
+				</xf:if>
+
+				<xf:if is="$xf.visitor.user_id && $xf.visitor.hasPermission('xenStaff', 'contactAnonymous')">
+					<xf:checkboxrow>
+						<xf:option name="anonymous" value="1"
+							label="{{ phrase('xen_staff_contact_anonymous') }}"
+							hint="{{ phrase('xen_staff_contact_anonymous_explain') }}" />
+					</xf:checkboxrow>
+				</xf:if>
+			</div>
+			<xf:submitrow icon="message" submit="{{ phrase('xen_staff_contact_send') }}" />
+		</div>
+	</xf:form>
+</div>
+]]></template>
+  <template type="public" title="xs_staff_hours_edit" version_id="2000010" version_string="2.0.0"><![CDATA[<xf:title>{{ phrase('xen_staff_hours_title') }}</xf:title>
+<xf:css src="xs_staff.less" />
+
+<xf:breadcrumb href="{{ link('staff') }}">{{ phrase('xen_staff_page_title') }}</xf:breadcrumb>
+<xf:breadcrumb href="{{ link('staff/hours') }}">{{ phrase('xen_staff_hours_title') }}</xf:breadcrumb>
+
+<xf:macro name="daySelect" arg-name="!" arg-selected="{{ -1 }}">
+	<select name="{$name}" class="input">
+		<option value="0" {{ $selected == 0 ? 'selected' : '' }}>Sun</option>
+		<option value="1" {{ $selected == 1 ? 'selected' : '' }}>Mon</option>
+		<option value="2" {{ $selected == 2 ? 'selected' : '' }}>Tue</option>
+		<option value="3" {{ $selected == 3 ? 'selected' : '' }}>Wed</option>
+		<option value="4" {{ $selected == 4 ? 'selected' : '' }}>Thu</option>
+		<option value="5" {{ $selected == 5 ? 'selected' : '' }}>Fri</option>
+		<option value="6" {{ $selected == 6 ? 'selected' : '' }}>Sat</option>
+	</select>
+</xf:macro>
+
+<div class="xsStaff-proPage">
+	<div class="xsStaff-proPage-hero">
+		<div class="xsStaff-proPage-hero-content">
+			<span class="xsStaff-proPage-hero-eyebrow"><xf:fa icon="fa-clock" /> Schedule</span>
+			<h1 class="xsStaff-proPage-hero-title">{{ phrase('xen_staff_hours_title') }}</h1>
+			<p class="xsStaff-proPage-hero-subtitle">{{ phrase('xen_staff_hours_explain') }}</p>
+		</div>
+	</div>
+
+	<xf:form action="{{ link('staff/hours') }}" method="post" ajax="true" class="block">
+		<div class="block-container">
+			<h2 class="block-header">{{ phrase('xen_staff_hours_title') }}</h2>
+			<div class="block-body">
+				<table class="dataList-table">
+					<tr class="dataList-row dataList-row--header">
+						<th class="dataList-cell">{{ phrase('xen_staff_hours_day') }}</th>
+						<th class="dataList-cell">{{ phrase('xen_staff_hours_start') }}</th>
+						<th class="dataList-cell">{{ phrase('xen_staff_hours_end') }}</th>
+						<th class="dataList-cell">{{ phrase('xen_staff_hours_note') }}</th>
+					</tr>
+					<xf:foreach loop="$hours" value="$h" i="$i">
+						<tr class="dataList-row">
+							<td class="dataList-cell">
+								<xf:macro name="daySelect" arg-name="slots[{$i}][day_of_week]" arg-selected="{$h.day_of_week}" />
+							</td>
+							<td class="dataList-cell"><input name="slots[{$i}][start_time]" type="number" class="input" min="0" max="1440" value="{$h.start_time}" /></td>
+							<td class="dataList-cell"><input name="slots[{$i}][end_time]" type="number" class="input" min="0" max="1440" value="{$h.end_time}" /></td>
+							<td class="dataList-cell"><input name="slots[{$i}][note]" type="text" class="input" value="{$h.note}" maxlength="100" /></td>
+						</tr>
+					</xf:foreach>
+					<xf:set var="$existingCount" value="{$hours|count}" />
+					<xf:set var="$idx0" value="{{ $existingCount + 0 }}" /><tr class="dataList-row">
+						<td class="dataList-cell"><xf:macro name="daySelect" arg-name="slots[{$idx0}][day_of_week]" /></td>
+						<td class="dataList-cell"><input name="slots[{$idx0}][start_time]" type="number" class="input" min="0" max="1440" placeholder="540" /></td>
+						<td class="dataList-cell"><input name="slots[{$idx0}][end_time]" type="number" class="input" min="0" max="1440" placeholder="1020" /></td>
+						<td class="dataList-cell"><input name="slots[{$idx0}][note]" type="text" class="input" maxlength="100" /></td>
+					</tr>
+					<xf:set var="$idx1" value="{{ $existingCount + 1 }}" /><tr class="dataList-row">
+						<td class="dataList-cell"><xf:macro name="daySelect" arg-name="slots[{$idx1}][day_of_week]" /></td>
+						<td class="dataList-cell"><input name="slots[{$idx1}][start_time]" type="number" class="input" min="0" max="1440" /></td>
+						<td class="dataList-cell"><input name="slots[{$idx1}][end_time]" type="number" class="input" min="0" max="1440" /></td>
+						<td class="dataList-cell"><input name="slots[{$idx1}][note]" type="text" class="input" maxlength="100" /></td>
+					</tr>
+					<xf:set var="$idx2" value="{{ $existingCount + 2 }}" /><tr class="dataList-row">
+						<td class="dataList-cell"><xf:macro name="daySelect" arg-name="slots[{$idx2}][day_of_week]" /></td>
+						<td class="dataList-cell"><input name="slots[{$idx2}][start_time]" type="number" class="input" min="0" max="1440" /></td>
+						<td class="dataList-cell"><input name="slots[{$idx2}][end_time]" type="number" class="input" min="0" max="1440" /></td>
+						<td class="dataList-cell"><input name="slots[{$idx2}][note]" type="text" class="input" maxlength="100" /></td>
+					</tr>
+				</table>
+			</div>
+			<xf:submitrow icon="save" />
+		</div>
+	</xf:form>
+</div>
+]]></template>
+  <template type="public" title="xs_staff_inbox" version_id="2000010" version_string="2.0.0"><![CDATA[<xf:title>{{ phrase('xen_staff_inbox_title') }}</xf:title>
+<xf:css src="xs_staff.less" />
+
+<xf:breadcrumb href="{{ link('staff') }}">{{ phrase('xen_staff_page_title') }}</xf:breadcrumb>
+<xf:breadcrumb href="{{ link('staff/inbox') }}">{{ phrase('xen_staff_inbox_title') }}</xf:breadcrumb>
+
+<div class="xsStaff-proPage">
+	<div class="xsStaff-proPage-hero">
+		<div class="xsStaff-proPage-hero-content">
+			<span class="xsStaff-proPage-hero-eyebrow"><xf:fa icon="fa-envelope" /> Mailbox</span>
+			<h1 class="xsStaff-proPage-hero-title">{{ phrase('xen_staff_inbox_title') }}</h1>
+			<p class="xsStaff-proPage-hero-subtitle">{{ phrase('xen_staff_inbox_explain') }}</p>
+		</div>
+	</div>
+
+	<div class="block">
+		<div class="block-container">
+			<h2 class="block-header">{{ phrase('xen_staff_inbox_title') }}</h2>
+			<div class="block-body">
+				<xf:if is="$messages is not empty">
+					<ol class="dataList">
+						<xf:foreach loop="$messages" value="$m">
+							<li class="dataList-row {{ $m.status == 'open' ? 'is-unread' : '' }}">
+								<div class="dataList-cell">
+									<a href="{{ link('staff/message', $m) }}" class="block-textHeader">
+										<xf:if is="$m.status == 'open'"><xf:fa icon="fa-envelope" /></xf:if>
+										<xf:if is="$m.status == 'replied'"><xf:fa icon="fa-check" /></xf:if>
+										{$m.subject}
+									</a>
+									<div class="contentRow-minor">
+										<xf:if is="$m.is_anonymous">
+											<em>{{ phrase('xen_staff_inbox_anonymous') }}</em>
+										<xf:elseif is="$m.FromUser" />
+											<xf:username user="$m.FromUser" rich="true" />
+										<xf:else />
+											{$m.from_email}
+										</xf:if>
+										&middot; <xf:date time="$m.created_date" />
+									</div>
+								</div>
+							</li>
+						</xf:foreach>
+					</ol>
+				<xf:else />
+					<div class="block-row">{{ phrase('xen_staff_inbox_empty') }}</div>
+				</xf:if>
+			</div>
+		</div>
+	</div>
+</div>
+]]></template>
+  <template type="public" title="xs_staff_index" version_id="2020400" version_string="2.2.4"><![CDATA[<xf:title>{{ phrase('xen_staff_page_title') }}</xf:title>
+<xf:description>{{ phrase('xen_staff_page_subtitle') }}</xf:description>
+<xf:css src="xs_staff.less" />
+
+<xf:breadcrumb href="{{ link('staff') }}">{{ phrase('xen_staff_page_title') }}</xf:breadcrumb>
+
+<div class="xsStaff-page xsStaff-page--pro">
+
+	<section class="xsStaff-masthead">
+		<div class="xsStaff-masthead-bg" aria-hidden="true">
+			<span class="xsStaff-masthead-wash"></span>
+			<span class="xsStaff-masthead-orb xsStaff-masthead-orb--a"></span>
+			<span class="xsStaff-masthead-orb xsStaff-masthead-orb--b"></span>
+			<span class="xsStaff-masthead-orb xsStaff-masthead-orb--c"></span>
+			<span class="xsStaff-masthead-grid"></span>
+			<span class="xsStaff-masthead-beam"></span>
+			<span class="xsStaff-masthead-sheen"></span>
+			<span class="xsStaff-masthead-noise"></span>
+		</div>
+		<span class="xsStaff-masthead-rail" aria-hidden="true"></span>
+
+		<div class="xsStaff-masthead-stage">
+			<div class="xsStaff-masthead-copy">
+				<span class="xsStaff-masthead-eyebrow">
+					<span class="xsStaff-masthead-eyebrow-dot"></span>
+					<xf:fa icon="fa-shield-alt" /> {{ phrase('xen_staff_hero_eyebrow') }}
+				</span>
+
+				<h1 class="xsStaff-masthead-title">
+					<span class="xsStaff-masthead-title-text">{{ phrase('xen_staff_page_title') }}</span>
+					<span class="xsStaff-masthead-title-rule" aria-hidden="true"></span>
+				</h1>
+
+				<p class="xsStaff-masthead-subtitle">{{ phrase('xen_staff_page_subtitle') }}</p>
+
+				<div class="xsStaff-masthead-meta">
+					<xf:if is="$total">
+						<span class="xsStaff-masthead-chip">
+							<span class="xsStaff-masthead-chip-ico"><xf:fa icon="fa-users" /></span>
+							{{ phrase('xen_staff_count', {'count': $total}) }}
+						</span>
+					</xf:if>
+					<xf:if is="$liveStats">
+						<span class="xsStaff-masthead-chip xsStaff-masthead-chip--live">
+							<span class="xsStaff-masthead-pulse"></span>
+							{{ phrase('xen_staff_stats_online_now') }}
+							<strong>{$liveStats.online}</strong>
+						</span>
+					</xf:if>
+				</div>
+			</div>
+
+			<xf:if is="$groups is not empty">
+				<div class="xsStaff-masthead-roster" aria-hidden="true">
+					<span class="xsStaff-masthead-watermark">{{ phrase('xen_staff_hero_eyebrow') }}</span>
+					<div class="xsStaff-masthead-ring"></div>
+					<div class="xsStaff-masthead-faces">
+						<xf:set var="$faceCount" value="{{ 0 }}" />
+						<xf:foreach loop="$groups" value="$group">
+							<xf:foreach loop="$group.users" value="$entry">
+								<xf:if is="$faceCount < 5">
+									<span class="xsStaff-masthead-face{{ $faceCount == 0 ? ' xsStaff-masthead-face--lead' : '' }}" style="--xs-face: {$faceCount}">
+										<span class="xsStaff-masthead-face-frame">
+											<xf:avatar user="{$entry.user}" size="{{ $faceCount == 0 ? 'l' : 'm' }}" href="" notooltip="true" />
+										</span>
+									</span>
+									<xf:set var="$faceCount" value="{{ $faceCount + 1 }}" />
+								</xf:if>
+							</xf:foreach>
+						</xf:foreach>
+						<xf:if is="$total > $faceCount">
+							<span class="xsStaff-masthead-faceMore">+{{ $total - $faceCount }}</span>
+						</xf:if>
+					</div>
+				</div>
+			</xf:if>
+		</div>
+
+		<xf:if is="$liveStats">
+			<div class="xsStaff-masthead-dock">
+				<div class="xsStaff-masthead-stat xsStaff-masthead-stat--online">
+					<div class="xsStaff-masthead-stat-icon"><xf:fa icon="fa-circle" /></div>
+					<div class="xsStaff-masthead-stat-body">
+						<div class="xsStaff-masthead-stat-num js-xsStaffCount" data-final="{$liveStats.online}">{$liveStats.online}</div>
+						<div class="xsStaff-masthead-stat-label">{{ phrase('xen_staff_stats_online_now') }}</div>
+					</div>
+					<span class="xsStaff-masthead-stat-bar" aria-hidden="true"></span>
+				</div>
+				<div class="xsStaff-masthead-stat xsStaff-masthead-stat--thanks">
+					<div class="xsStaff-masthead-stat-icon"><xf:fa icon="fa-heart" /></div>
+					<div class="xsStaff-masthead-stat-body">
+						<div class="xsStaff-masthead-stat-num js-xsStaffCount" data-final="{$liveStats.total_thanks}">{$liveStats.total_thanks|number}</div>
+						<div class="xsStaff-masthead-stat-label">{{ phrase('xen_staff_stats_total_thanks_label') }}</div>
+					</div>
+					<span class="xsStaff-masthead-stat-bar" aria-hidden="true"></span>
+				</div>
+				<xf:if is="$liveStats.avg_response_min > 0">
+					<div class="xsStaff-masthead-stat xsStaff-masthead-stat--speed">
+						<div class="xsStaff-masthead-stat-icon"><xf:fa icon="fa-bolt" /></div>
+						<div class="xsStaff-masthead-stat-body">
+							<div class="xsStaff-masthead-stat-num">{$liveStats.avg_response_min}<span class="xsStaff-masthead-stat-unit">m</span></div>
+							<div class="xsStaff-masthead-stat-label">{{ phrase('xen_staff_stats_avg_response_label') }}</div>
+						</div>
+						<span class="xsStaff-masthead-stat-bar" aria-hidden="true"></span>
+					</div>
+				</xf:if>
+				<div class="xsStaff-masthead-stat xsStaff-masthead-stat--active">
+					<div class="xsStaff-masthead-stat-icon"><xf:fa icon="fa-shield-alt" /></div>
+					<div class="xsStaff-masthead-stat-body">
+						<div class="xsStaff-masthead-stat-num js-xsStaffCount" data-final="{$liveStats.active}">{$liveStats.active}</div>
+						<div class="xsStaff-masthead-stat-label">{{ phrase('xen_staff_stats_active_staff') }}</div>
+					</div>
+					<span class="xsStaff-masthead-stat-bar" aria-hidden="true"></span>
+				</div>
+			</div>
+		</xf:if>
+	</section>
+
+	<xf:if is="$topStaff">
+		<section class="xsStaff-topHero">
+			<div class="xsStaff-topHero-ribbon">
+				<xf:fa icon="fa-star" /> {{ phrase('xen_staff_top_staff_label') }}
+			</div>
+			<xf:macro template="xs_staff_card" name="render"
+				arg-user="{$topStaff.user}"
+				arg-profile="{$topStaff.profile}"
+				arg-options="{{ {'featured': true} }}" />
+		</section>
+	</xf:if>
+
+	<xf:if is="$groups is not empty">
+		<xf:foreach loop="$groups" value="$group">
+			<section class="xsStaff-group">
+				<xf:if is="$group.title">
+					<header class="xsStaff-group-head">
+						<span class="xsStaff-group-rule"></span>
+						<h2 class="xsStaff-group-title">{$group.title}</h2>
+						<span class="xsStaff-group-count">{$group.users|count}</span>
+						<span class="xsStaff-group-rule"></span>
+					</header>
+				</xf:if>
+
+				<div class="xsStaff-grid">
+					<xf:foreach loop="$group.users" value="$entry" i="$cardIdx">
+						<div class="xsStaff-reveal" style="--xs-reveal-delay: {{ ($cardIdx - 1) * 60 }}ms">
+							<xf:macro template="xs_staff_card" name="render" arg-user="{$entry.user}" arg-profile="{$entry.profile}" />
+						</div>
+					</xf:foreach>
+				</div>
+			</section>
+		</xf:foreach>
+	<xf:else />
+		<div class="xsStaff-empty">
+			<div class="xsStaff-empty-icon"><xf:fa icon="fa-users" /></div>
+			<div class="xsStaff-empty-text">{{ phrase('xen_staff_no_staff') }}</div>
+		</div>
+	</xf:if>
+
+</div>
+
+<xf:js>
+	(function() {
+		if (window.__xsStaffProBound) return;
+		window.__xsStaffProBound = true;
+
+		document.addEventListener('ajax-submit-response', function(e) {
+			var form = e.target;
+			if (!form || !form.classList || !form.classList.contains('js-xsStaffThanksForm')) return;
+			var detail = e.detail || {};
+			var data = detail.data || detail;
+			if (!data || typeof data.thanks_count === 'undefined') return;
+			var card = form.closest('.xsStaff-card, .xsStaff-flip');
+			if (!card) return;
+			var counter = (card.closest('.xsStaff-flip') || card).querySelector('.js-xsStaffThanksCount');
+			if (counter) counter.textContent = Number(data.thanks_count).toLocaleString();
+			var btn = (card.closest('.xsStaff-flip') || card).querySelector('.js-xsStaffThanksBtn');
+			if (btn) {
+				btn.classList.add('is-thanked');
+				btn.disabled = true;
+			}
+			var art = (card.closest('.xsStaff-flip') || document).querySelector('.xsStaff-card--back');
+			if (art) art.classList.add('xsStaff-card--justThanked');
+		});
+
+		if ('IntersectionObserver' in window) {
+			var io = new IntersectionObserver(function(entries) {
+				entries.forEach(function(entry) {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('xsStaff-reveal--in');
+						io.unobserve(entry.target);
+					}
+				});
+			}, { threshold: 0.12 });
+			document.querySelectorAll('.xsStaff-reveal').forEach(function(el) { io.observe(el); });
+		} else {
+			document.querySelectorAll('.xsStaff-reveal').forEach(function(el) {
+				el.classList.add('xsStaff-reveal--in');
+			});
+		}
+
+		function animateCount(el) {
+			var target = parseInt(el.getAttribute('data-final'), 10) || 0;
+			if (target < 5) { el.textContent = target.toLocaleString(); return; }
+			var duration = 900, start = null, done = false;
+			function finish() {
+				if (done) return;
+				done = true;
+				el.textContent = target.toLocaleString();
+			}
+			function step(ts) {
+				if (done) return;
+				if (!start) start = ts;
+				var progress = Math.min((ts - start) / duration, 1);
+				el.textContent = Math.round(target * (1 - Math.pow(1 - progress, 3))).toLocaleString();
+				if (progress < 1) requestAnimationFrame(step); else finish();
+			}
+			el.textContent = '0';
+			requestAnimationFrame(step);
+			setTimeout(finish, duration + 250);
+		}
+		if ('IntersectionObserver' in window) {
+			var ioCount = new IntersectionObserver(function(entries) {
+				entries.forEach(function(entry) {
+					if (entry.isIntersecting) {
+						animateCount(entry.target);
+						ioCount.unobserve(entry.target);
+					}
+				});
+			}, { threshold: 0.5 });
+			document.querySelectorAll('.js-xsStaffCount').forEach(function(el) { ioCount.observe(el); });
+		}
+
+		// Flip card: front vignette ↔ back member info.
+		// Desktop also flips on hover (CSS). Click/tap locks the flipped state.
+		function setFlipped(el, on) {
+			el.classList.toggle('is-flipped', !!on);
+			el.setAttribute('aria-expanded', on ? 'true' : 'false');
+		}
+		document.querySelectorAll('.js-xsStaffFlip').forEach(function(el) {
+			el.addEventListener('click', function(e) {
+				if (e.target.closest('a, button, input, textarea, select, label, form')) return;
+				setFlipped(el, !el.classList.contains('is-flipped'));
+			});
+			el.addEventListener('keydown', function(e) {
+				if (e.key !== 'Enter' && e.key !== ' ') return;
+				e.preventDefault();
+				setFlipped(el, !el.classList.contains('is-flipped'));
+			});
+		});
+	})();
+</xf:js>
+]]></template>
+  <template type="public" title="xs_staff_message" version_id="2000010" version_string="2.0.0"><![CDATA[<xf:title>{$msg.subject}</xf:title>
+<xf:css src="xs_staff.less" />
+
+<xf:breadcrumb href="{{ link('staff') }}">{{ phrase('xen_staff_page_title') }}</xf:breadcrumb>
+<xf:breadcrumb href="{{ link('staff/inbox') }}">{{ phrase('xen_staff_inbox_title') }}</xf:breadcrumb>
+
+<div class="xsStaff-proPage">
+	<div class="xsStaff-proPage-hero">
+		<div class="xsStaff-proPage-hero-content">
+			<span class="xsStaff-proPage-hero-eyebrow"><xf:fa icon="fa-envelope-open-text" /> Message</span>
+			<h1 class="xsStaff-proPage-hero-title">{$msg.subject}</h1>
+			<p class="xsStaff-proPage-hero-subtitle">
+				<xf:if is="$msg.is_anonymous">
+					<em>{{ phrase('xen_staff_inbox_anonymous') }}</em>
+				<xf:elseif is="$msg.FromUser" />
+					<xf:username user="$msg.FromUser" rich="true" />
+				<xf:else />
+					{$msg.from_email}
+				</xf:if>
+				&middot; <xf:date time="$msg.created_date" />
+			</p>
+		</div>
+	</div>
+
+	<div class="block">
+		<div class="block-container">
+			<h2 class="block-header">{$msg.subject}</h2>
+			<div class="block-body">
+				<div class="block-row">
+					<div class="bbWrapper" style="white-space:pre-wrap;">{$msg.message}</div>
+				</div>
+			</div>
+			<div class="block-footer">
+				<xf:if is="$msg.status != 'replied'">
+					<form action="{{ link('staff/message', $msg) }}" method="post" style="display:inline">
+						<xf:csrf />
+						<input type="hidden" name="action" value="replied" />
+						<button type="submit" class="button button--primary">
+							<xf:fa icon="fa-check" /> {{ phrase('xen_staff_inbox_mark_replied') }}
+						</button>
+					</form>
+				</xf:if>
+				<form action="{{ link('staff/message', $msg) }}" method="post" style="display:inline;margin-left:8px;">
+					<xf:csrf />
+					<input type="hidden" name="action" value="close" />
+					<button type="submit" class="button button--link"><xf:fa icon="fa-times" /> {{ phrase('close') }}</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+]]></template>
+  <template type="public" title="xs_staff_stats" version_id="2000410" version_string="2.0.4"><![CDATA[<xf:title>{{ phrase('xen_staff_stats_title', {'username': $user.username}) }}</xf:title>
+<xf:css src="xs_staff.less" />
+
+<xf:breadcrumb href="{{ link('staff') }}">{{ phrase('xen_staff_page_title') }}</xf:breadcrumb>
+<xf:breadcrumb href="{{ link('staff/stats', $user) }}">{{ phrase('xen_staff_stats_title', {'username': $user.username}) }}</xf:breadcrumb>
+
+<div class="xsStaff-proPage">
+	<div class="xsStaff-proPage-hero">
+		<div class="xsStaff-proPage-hero-content">
+			<span class="xsStaff-proPage-hero-eyebrow"><xf:fa icon="fa-chart-line" /> Performance</span>
+			<h1 class="xsStaff-proPage-hero-title">{{ phrase('xen_staff_stats_title', {'username': $user.username}) }}</h1>
+		</div>
+	</div>
+
+	<div class="block">
+		<div class="block-container">
+			<h2 class="block-header">{{ phrase('xen_staff_stats_title', {'username': $user.username}) }}</h2>
+			<div class="block-body">
+
+				<xf:if is="$profile">
+					<div class="block-row xsStaff-statGrid">
+						<div class="xsStaff-statBox">
+							<div class="xsStaff-statBox-num">{$profile.thanks_count|number}</div>
+							<div class="xsStaff-statBox-label">{{ phrase('xen_staff_stats_total_thanks') }}</div>
+						</div>
+						<div class="xsStaff-statBox">
+							<div class="xsStaff-statBox-num">{$profile.total_responses|number}</div>
+							<div class="xsStaff-statBox-label">{{ phrase('xen_staff_stats_total_responses') }}</div>
+						</div>
+						<div class="xsStaff-statBox">
+							<div class="xsStaff-statBox-num">{{ phrase('xen_staff_stats_minutes', {'value': $profile.avg_response_minutes}) }}</div>
+							<div class="xsStaff-statBox-label">{{ phrase('xen_staff_stats_avg_response') }}</div>
+						</div>
+					</div>
+				</xf:if>
+
+				<div class="block-row block-row--separated">
+					<h3 class="block-textHeader">{{ phrase('xen_staff_stats_thanks_last_30') }}</h3>
+
+					<xf:set var="$maxVal" value="{{ 1 }}" />
+					<xf:set var="$total" value="{{ 0 }}" />
+					<xf:foreach loop="$daily" value="$v">
+						<xf:set var="$total" value="{{ $total + $v }}" />
+						<xf:if is="$v > $maxVal"><xf:set var="$maxVal" value="{$v}" /></xf:if>
+					</xf:foreach>
+
+					<xf:if is="$total > 0">
+						<svg viewBox="0 0 620 160" style="width:100%;height:auto;display:block;">
+							<line class="xsStaff-chart-axis" x1="0" y1="150" x2="620" y2="150" />
+							<xf:foreach loop="$daily" value="$v" key="$day" i="$i">
+								<xf:set var="$h" value="{{ ($v / $maxVal) * 130 }}" />
+								<xf:set var="$x" value="{{ $i * 20 }}" />
+								<xf:set var="$y" value="{{ 150 - $h }}" />
+								<rect x="{$x}" y="{$y}" width="16" height="{$h}" rx="2" fill="#fbbf24" opacity="0.9">
+									<title>{$day}: {$v}</title>
+								</rect>
+							</xf:foreach>
+						</svg>
+					<xf:else />
+						<div class="xsStaff-chart-empty">
+							<div class="xsStaff-chart-empty-icon"><xf:fa icon="fa-chart-line" /></div>
+							{{ phrase('xen_staff_stats_no_thanks_30') }}
+						</div>
+					</xf:if>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+]]></template>
+</templates>

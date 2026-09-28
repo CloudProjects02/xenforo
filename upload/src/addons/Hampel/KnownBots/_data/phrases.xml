@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="admin_navigation.hampelKnownBots" version_id="2060070" version_string="2.6.0"><![CDATA[Known Bots]]></phrase>
+  <phrase title="admin_navigation.hampelKnownBotsDetect" version_id="3180070" version_string="3.18.0"><![CDATA[Test bot detection]]></phrase>
+  <phrase title="admin_navigation.hampelKnownBotsGenerateMd" version_id="3180070" version_string="3.18.0"><![CDATA[Known Bots markdown]]></phrase>
+  <phrase title="admin_navigation.hampelKnownBotsList" version_id="2000070" version_string="2.0.0"><![CDATA[Show list of Known Bots]]></phrase>
+  <phrase title="admin_navigation.hampelKnownBotsNew" version_id="3180070" version_string="3.18.0"><![CDATA[List detected bots]]></phrase>
+  <phrase title="admin_permission.knownbots" version_id="6000570" version_string="6.0.5"><![CDATA[Manage known bots]]></phrase>
+  <phrase title="cron_entry.hampelKnownBotsFetchBots" version_id="4000031" version_string="4.0.0 Beta 1"><![CDATA[Known Bots: Fetch New Bots from API]]></phrase>
+  <phrase title="cron_entry.hampelKnownBotsPurgeAgent" version_id="5000032" version_string="5.0.0 Beta 2"><![CDATA[Known Bots: Purge Old User Agents]]></phrase>
+  <phrase title="cron_entry.hampelKnownBotsUserAgents" version_id="5010070" version_string="5.1.0"><![CDATA[Known Bots: Send New User Agents]]></phrase>
+  <phrase title="hampel_knownbots_about_license_validation" version_id="5010070" version_string="5.1.0"><![CDATA[<ul>
+<li>Enter your <a href="https://xenforo.com/customers/" target="_blank">XenForo license validation token</a> which will be sent to the KnownBots API server and validated.</li>
+<li>A KnownBots API token will be returned and used to authenticate when sending updates. </li>
+<li>KnonwBots API tokens are regenerated every 28 days and inactive XenForo license validation tokens are purged from the servers automatically.</li>
+<li>Regenerating your XenForo license validation token using the XenForo customer UI will disable KnownBots API token regeneration unless you also update the license validation token in these settings.</li>
+</ul>]]></phrase>
+  <phrase title="hampel_knownbots_agents_sent" version_id="6000070" version_string="6.0.0"><![CDATA[Marked {rows} user agents sent]]></phrase>
+  <phrase title="hampel_knownbots_api_setup" version_id="5010070" version_string="5.1.0"><![CDATA[KnownBots API setup]]></phrase>
+  <phrase title="hampel_knownbots_api_token" version_id="5010070" version_string="5.1.0"><![CDATA[API token]]></phrase>
+  <phrase title="hampel_knownbots_bot_detected" version_id="5000034" version_string="5.0.0 Beta 4"><![CDATA[Bot detected]]></phrase>
+  <phrase title="hampel_knownbots_browser_detected" version_id="5000034" version_string="5.0.0 Beta 4"><![CDATA[Valid browser detected]]></phrase>
+  <phrase title="hampel_knownbots_clear" version_id="5000032" version_string="5.0.0 Beta 2"><![CDATA[Clear all user agents]]></phrase>
+  <phrase title="hampel_knownbots_cleared" version_id="5000032" version_string="5.0.0 Beta 2"><![CDATA[Cleared {rows} user agents]]></phrase>
+  <phrase title="hampel_knownbots_deleted" version_id="5000033" version_string="5.0.0 Beta 3"><![CDATA[Purged {rows} user agents older than {days} days]]></phrase>
+  <phrase title="hampel_knownbots_detect" version_id="2060070" version_string="2.6.0"><![CDATA[Detect Bot]]></phrase>
+  <phrase title="hampel_knownbots_detection_test" version_id="2060070" version_string="2.6.0"><![CDATA[Test Bot Detection]]></phrase>
+  <phrase title="hampel_knownbots_email_none_found" version_id="3020070" version_string="3.2.0"><![CDATA[No new bots found]]></phrase>
+  <phrase title="hampel_knownbots_email_not_configured" version_id="2070070" version_string="2.7.0"><![CDATA[Known Bots email not configured]]></phrase>
+  <phrase title="hampel_knownbots_email_subject" version_id="3030070" version_string="3.3.0"><![CDATA[New bots detected [{version}]]]></phrase>
+  <phrase title="hampel_knownbots_error_updating" version_id="5010070" version_string="5.1.0"><![CDATA[{message}]]></phrase>
+  <phrase title="hampel_knownbots_fetch" version_id="5000032" version_string="5.0.0 Beta 2"><![CDATA[Fetch new bots]]></phrase>
+  <phrase title="hampel_knownbots_ignored" version_id="5000034" version_string="5.0.0 Beta 4"><![CDATA[Ignored user agent detected - possibly a bot, but without sufficient information available to definitively identify it]]></phrase>
+  <phrase title="hampel_knownbots_is_this_a_bot" version_id="2060070" version_string="2.6.0"><![CDATA[Is this User Agent a bot?]]></phrase>
+  <phrase title="hampel_knownbots_knownbots_api_token" version_id="5010070" version_string="5.1.0"><![CDATA[KnownBots API token]]></phrase>
+  <phrase title="hampel_knownbots_last_updated" version_id="5000033" version_string="5.0.0 Beta 3"><![CDATA[Last updated: {date}]]></phrase>
+  <phrase title="hampel_knownbots_license_validation_token" version_id="5010070" version_string="5.1.0"><![CDATA[License validation token]]></phrase>
+  <phrase title="hampel_knownbots_list" version_id="4000031" version_string="4.0.0 Beta 1"><![CDATA[Known Bots List]]></phrase>
+  <phrase title="hampel_knownbots_new" version_id="5000034" version_string="5.0.0 Beta 4"><![CDATA[Last 100 bots detected]]></phrase>
+  <phrase title="hampel_knownbots_no_updates_available" version_id="5000032" version_string="5.0.0 Beta 2"><![CDATA[No updates available]]></phrase>
+  <phrase title="hampel_knownbots_none_detected" version_id="2060070" version_string="2.6.0"><![CDATA[No bot detected]]></phrase>
+  <phrase title="hampel_knownbots_online_now_x_robots" version_id="2060070" version_string="2.6.0"><![CDATA[Robots:&nbsp;{robots}]]></phrase>
+  <phrase title="hampel_knownbots_purge" version_id="5000032" version_string="5.0.0 Beta 2"><![CDATA[Purge old user agents]]></phrase>
+  <phrase title="hampel_knownbots_recently_seen_bots" version_id="5000033" version_string="5.0.0 Beta 3"><![CDATA[Recently seen bots]]></phrase>
+  <phrase title="hampel_knownbots_see_attachment" version_id="6000170" version_string="6.0.1"><![CDATA[See attached file]]></phrase>
+  <phrase title="hampel_knownbots_send_agents" version_id="6000070" version_string="6.0.0"><![CDATA[Send user agents]]></phrase>
+  <phrase title="hampel_knownbots_sending_api_failed" version_id="6000070" version_string="6.0.0"><![CDATA[Sending user agents via API failed - see server logs for details]]></phrase>
+  <phrase title="hampel_knownbots_successfully_updated" version_id="5000032" version_string="5.0.0 Beta 2"><![CDATA[Bots updated successfully - loaded {maps} search keys; {bots} bot definitions and {browsers} browser search strings.]]></phrase>
+  <phrase title="hampel_knownbots_unidentified_user_agents" version_id="5000034" version_string="5.0.0 Beta 4"><![CDATA[Other user agents]]></phrase>
+  <phrase title="hampel_knownbots_useragent" version_id="2060070" version_string="2.6.0"><![CDATA[User Agent]]></phrase>
+  <phrase title="hampel_knownbots_useragent_explain" version_id="2060070" version_string="2.6.0"><![CDATA[Test if this user agent string will be detected as a bot]]></phrase>
+  <phrase title="hampel_knownbots_validation_token" version_id="5010070" version_string="5.1.0"><![CDATA[Validation token]]></phrase>
+  <phrase title="option.knownbotsEmailUserAgents" version_id="5000037" version_string="5.0.0 Beta 7"><![CDATA[Email user agents]]></phrase>
+  <phrase title="option.knownbotsFetchNewBots" version_id="5000032" version_string="5.0.0 Beta 2"><![CDATA[Fetch new bots]]></phrase>
+  <phrase title="option.knownbotsSendUserAgents" version_id="5010070" version_string="5.1.0"><![CDATA[Send user agents via API]]></phrase>
+  <phrase title="option.knownbotsShowBotStats" version_id="5000032" version_string="5.0.0 Beta 2"><![CDATA[Show robot statistics]]></phrase>
+  <phrase title="option.knownbotsStoreUserAgents" version_id="5000032" version_string="5.0.0 Beta 2"><![CDATA[Store user agents in database and purge after:]]></phrase>
+  <phrase title="option_explain.knownbotsEmailUserAgents" version_id="5010070" version_string="5.1.0"><![CDATA[Enable this option to periodically email user agent strings that were stored in the database to the specified email address. This option only has effect if the "Store user agents in database" option is also enabled. Leave blank to send emails to the admin email address.]]></phrase>
+  <phrase title="option_explain.knownbotsFetchNewBots" version_id="5000032" version_string="5.0.0 Beta 2"><![CDATA[Turn on to automatically fetch new bot identifiers from the KnownBots API set up by the addon author. If you disable this option, you must set up your own system to update the known bots definitions - see the addon FAQ for instructions.]]></phrase>
+  <phrase title="option_explain.knownbotsSendUserAgents" version_id="5010070" version_string="5.1.0"><![CDATA[Enable to send detected user agents via API for further analysis. This option only has effect if the "Store user agents in database" option is also enabled.]]></phrase>
+  <phrase title="option_explain.knownbotsShowBotStats" version_id="2040070" version_string="2.4.0"><![CDATA[Turn on to show robot statistics in the sidebar widgets]]></phrase>
+  <phrase title="option_explain.knownbotsStoreUserAgents" version_id="5000032" version_string="5.0.0 Beta 2"><![CDATA[Enable to store unknown and bot user agents in the database for further analysis. Choose how long to retain user agent records before being automatically purged. Set days to zero to never purge user agent records (not recommended).]]></phrase>
+  <phrase title="option_group.knownbots" version_id="2040070" version_string="2.4.0"><![CDATA[Known Bots]]></phrase>
+  <phrase title="option_group_description.knownbots" version_id="2040070" version_string="2.4.0"><![CDATA[Configure settings for display of robot information]]></phrase>
+</phrases>
+ 		 		   			      	 			   					  					 	 				    	 			   	   	   		 	 		    	  					       		  	 						 				  			 		    	 	   		 	 	

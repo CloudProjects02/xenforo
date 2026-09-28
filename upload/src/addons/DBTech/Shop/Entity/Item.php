@@ -2,38 +2,12 @@
 
 namespace DBTech\Shop\Entity;
 
-use DBTech\Shop\Finder\PurchaseFinder;
-use DBTech\Shop\ItemType\AbstractHandler;
-use DBTech\Shop\Job\ItemDeleteCleanUp;
-use DBTech\Shop\Repository\ItemFieldRepository;
-use DBTech\Shop\Repository\ItemRatingRepository;
-use DBTech\Shop\Repository\ItemRepository;
-use DBTech\Shop\Repository\PurchaseRepository;
-use DBTech\Shop\Service\Item\IconService;
-use XF\BbCode\RenderableContentInterface;
-use XF\Criteria\UserCriteria;
-use XF\CustomField\DefinitionSet;
-use XF\CustomField\Set;
-use XF\Entity\ApprovalQueue;
-use XF\Entity\BookmarkTrait;
-use XF\Entity\DatableInterface;
-use XF\Entity\DatableTrait;
-use XF\Entity\DeletionLog;
-use XF\Entity\Forum;
-use XF\Entity\LinkableInterface;
-use XF\Entity\PermissionCacheContent;
-use XF\Entity\Phrase;
-use XF\Entity\ReactionTrait;
-use XF\Entity\Thread;
-use XF\Entity\User;
-use XF\Entity\ViewableInterface;
-use XF\Mvc\Entity\ArrayCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
-use XF\PrintableException;
-use XF\Repository\ReactionRepository;
-use XF\Repository\UserAlertRepository;
-use XF\Spam\ContentChecker;
+use XF\Entity\LinkableInterface;
+use XF\Entity\BookmarkTrait;
+use XF\Entity\ReactionTrait;
+use XF\BbCode\RenderableContentInterface;
 
 /**
  * COLUMNS
@@ -95,51 +69,50 @@ use XF\Spam\ContentChecker;
  *
  * GETTERS
  * @property string|\XF\Phrase $title
- * @property-read \XF\Phrase $tagline
- * @property-read \XF\Phrase $duration
- * @property-read AbstractHandler|null $handler
- * @property-read int $real_review_count
- * @property-read \XF\Phrase $ItemTypeTitle
- * @property Set $item_fields
- * @property-read array $item_rating_ids
+ * @property \XF\Phrase $tagline
+ * @property \XF\Phrase $duration
+ * @property \DBTech\Shop\ItemType\AbstractHandler|null $handler
+ * @property int $real_review_count
+ * @property \XF\Phrase $ItemTypeTitle
+ * @property \XF\CustomField\Set $item_fields
+ * @property array $item_rating_ids
  * @property mixed $reactions
  * @property mixed $reaction_users
  *
  * RELATIONS
- * @property-read Phrase|null $MasterTagline
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\PermissionCacheContent> $Permissions
- * @property-read \XF\Mvc\Entity\AbstractCollection<\DBTech\Shop\Entity\ItemRating> $Ratings
- * @property-read Category|null $Category
- * @property-read \XF\Mvc\Entity\AbstractCollection<\DBTech\Shop\Entity\Cart> $Carts
- * @property-read User|null $User
- * @property-read Forum|null $ThreadForum
- * @property-read Thread|null $Discussion
- * @property-read \XF\Mvc\Entity\AbstractCollection<\DBTech\Shop\Entity\Purchase> $Purchases
- * @property-read Currency|null $PurchaseCurrency
- * @property-read Currency|null $BuybackCurrency
- * @property-read ItemPrefix|null $Prefix
- * @property-read \XF\Mvc\Entity\AbstractCollection<\DBTech\Shop\Entity\ItemWatch> $Watch
- * @property-read DeletionLog|null $DeletionLog
- * @property-read ApprovalQueue|null $ApprovalQueue
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\BookmarkItem> $Bookmarks
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\ReactionContent> $Reactions
+ * @property \XF\Entity\Phrase $MasterTagline
+ * @property \XF\Mvc\Entity\AbstractCollection|\XF\Entity\PermissionCacheContent[] $Permissions
+ * @property \XF\Mvc\Entity\AbstractCollection|\DBTech\Shop\Entity\ItemRating[] $Ratings
+ * @property \DBTech\Shop\Entity\Category $Category
+ * @property \XF\Mvc\Entity\AbstractCollection|\DBTech\Shop\Entity\Cart[] $Carts
+ * @property \XF\Entity\User $User
+ * @property \XF\Entity\Forum $ThreadForum
+ * @property \XF\Entity\Thread $Discussion
+ * @property \XF\Mvc\Entity\AbstractCollection|\DBTech\Shop\Entity\Purchase[] $Purchases
+ * @property \DBTech\Shop\Entity\Currency $PurchaseCurrency
+ * @property \DBTech\Shop\Entity\Currency $BuybackCurrency
+ * @property \DBTech\Shop\Entity\ItemPrefix $Prefix
+ * @property \XF\Mvc\Entity\AbstractCollection|\DBTech\Shop\Entity\ItemWatch[] $Watch
+ * @property \XF\Entity\DeletionLog $DeletionLog
+ * @property \XF\Entity\ApprovalQueue $ApprovalQueue
+ * @property \XF\Mvc\Entity\AbstractCollection|\XF\Entity\BookmarkItem[] $Bookmarks
+ * @property \XF\Mvc\Entity\AbstractCollection|\XF\Entity\ReactionContent[] $Reactions
  */
-class Item extends Entity implements DatableInterface, LinkableInterface, RenderableContentInterface, ViewableInterface
+class Item extends Entity implements LinkableInterface, RenderableContentInterface
 {
-	use DatableTrait;
 	use BookmarkTrait;
 	use ReactionTrait;
 
 	/** @var int */
 	public const RATING_WEIGHTED_THRESHOLD = 10;
-
+	
 	/** @var int */
 	public const RATING_WEIGHTED_AVERAGE = 3;
-
-	/** @var AbstractHandler|null */
-	protected ?AbstractHandler $cachedHandler = null;
-
-
+	
+	/** @var \DBTech\Shop\ItemType\AbstractHandler|null */
+	protected $cachedHandler;
+	
+	
 	/**
 	 * @return string
 	 */
@@ -147,7 +120,7 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	{
 		return 'dbtech_shop_item_tag.' . $this->item_id;
 	}
-
+	
 	/**
 	 * @return \XF\Phrase
 	 */
@@ -155,16 +128,17 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	{
 		return \XF::phrase($this->getTaglinePhraseName());
 	}
-
+	
 	/**
 	 * @return mixed|null
 	 */
-	public function getMasterTaglinePhrase(): ?Phrase
+	public function getMasterTaglinePhrase(): ?\XF\Entity\Phrase
 	{
 		$phrase = $this->MasterTagline;
 		if (!$phrase)
 		{
-			$phrase = \XF::app()->em()->create(Phrase::class);
+			/** @var \XF\Entity\Phrase $phrase */
+			$phrase = $this->_em->create('XF:Phrase');
 			$phrase->title = $this->_getDeferredValue(function (): string
 			{
 				return $this->getTaglinePhraseName();
@@ -172,10 +146,10 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 			$phrase->language_id = 0;
 			$phrase->addon_id = '';
 		}
-
+		
 		return $phrase;
 	}
-
+	
 	public function getDuration(): \XF\Phrase
 	{
 		if ($this->length_amount == 0)
@@ -184,13 +158,20 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 		}
 		else
 		{
-			return match ($this->length_unit)
+			switch ($this->length_unit)
 			{
-				'day' => \XF::phrase('x_days', ['days' => $this->length_amount]),
-				'month' => \XF::phrase('x_months', ['months' => $this->length_amount]),
-				'year' => \XF::phrase('x_years', ['years' => $this->length_amount]),
-				default => \XF::phrase('n_a'),
-			};
+				case 'day':
+					return \XF::phrase('x_days', ['days' => $this->length_amount]);
+
+				case 'month':
+					return \XF::phrase('x_months', ['months' => $this->length_amount]);
+
+				case 'year':
+					return \XF::phrase('x_years', ['years' => $this->length_amount]);
+
+				default:
+					return \XF::phrase('n_a');
+			}
 		}
 	}
 
@@ -205,16 +186,23 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 		}
 		else
 		{
-			return match ($this->length_unit)
+			switch ($this->length_unit)
 			{
-				'day' => \XF::$time + (60 * 60 * 24 * $this->length_amount),
-				'month' => \XF::$time + (2629743 * $this->length_amount),
-				'year' => \XF::$time + (31556926 * $this->length_amount),
-				default => throw new \LogicException("Unknown length unit: $this->length_unit"),
-			};
+				case 'day':
+					return \XF::$time + (60 * 60 * 24 * $this->length_amount);
+
+				case 'month':
+					return \XF::$time + (2629743 * $this->length_amount);
+
+				case 'year':
+					return \XF::$time + (31556926 * $this->length_amount);
+
+				default:
+					throw new \LogicException("Unknown length unit: {$this->length_unit}");
+			}
 		}
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -222,7 +210,7 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	{
 		return \XF::visitor()->isIgnoring($this->user_id);
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -263,7 +251,7 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 
 		return $flags[$flag] ?? $fallback;
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -273,7 +261,7 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 			&& !$this->is_stealth_item
 		);
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -281,7 +269,7 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	{
 		return $this->getFlag('is_giftable');
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -289,7 +277,7 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	{
 		return $this->getFlag('is_only_giftable');
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -297,7 +285,7 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	{
 		return $this->getFlag('is_unique');
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -305,7 +293,7 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	{
 		return $this->getFlag('is_exclusive');
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -313,7 +301,7 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	{
 		return $this->getFlag('is_always_hidden');
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -321,7 +309,7 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	{
 		return $this->getFlag('can_regift');
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -339,7 +327,7 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	{
 		return $this->getFlag('can_discard');
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -347,7 +335,7 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	{
 		return $this->handler->isConfigurable();
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -355,7 +343,7 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	{
 		return $this->getFlag('can_reconfigure');
 	}
-
+	
 	/**
 	 * @param string|null $sizeCode
 	 * @return string
@@ -363,35 +351,35 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	public function getAbstractedIconPath(?string $sizeCode = null): string
 	{
 		$itemId = $this->item_id;
-
+		
 		return sprintf(
 			'data://dbtechShop/itemIcons/%d/%d.jpg',
 			floor($itemId / 1000),
 			$itemId
 		);
 	}
-
+	
 	/**
 	 * @param string|null $sizeCode
 	 * @param bool $canonical
 	 * @return mixed|null
 	 */
-	public function getIconUrl(?string $sizeCode = null, bool $canonical = false): mixed
+	public function getIconUrl(?string $sizeCode = null, bool $canonical = false)
 	{
 		$app = $this->app();
-
+		
 		if ($this->icon_date)
 		{
 			$group = floor($this->item_id / 1000);
 			return $app->applyExternalDataUrl(
-				"dbtechShop/itemIcons/$group/$this->item_id.jpg?$this->icon_date",
+				"dbtechShop/itemIcons/{$group}/{$this->item_id}.jpg?{$this->icon_date}",
 				$canonical
 			);
 		}
-
+		
 		return null;
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
@@ -403,35 +391,34 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 		{
 			return false;
 		}
-
+		
 		$visitor = \XF::visitor();
-
+		
 		if (!$this->hasPermission('view'))
 		{
 			return false;
 		}
-
+		
 		if ($this->item_state == 'moderated')
 		{
 			if (
 				(!$visitor->user_id || $visitor->user_id != $this->user_id)
 				&& !$this->hasPermission('viewModerated')
-			)
-			{
+			) {
 				return false;
 			}
 		}
-		else if ($this->item_state == 'deleted')
+		elseif ($this->item_state == 'deleted')
 		{
 			if (!$this->hasPermission('viewDeleted'))
 			{
 				return false;
 			}
 		}
-
+		
 		return true;
 	}
-
+	
 	/**
 	 * @param null $error
 	 * @return bool
@@ -439,23 +426,23 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	public function canEdit(&$error = null): bool
 	{
 		$visitor = \XF::visitor();
-
+		
 		if (!$visitor->user_id)
 		{
 			return false;
 		}
-
+		
 		if ($this->hasPermission('editAny'))
 		{
 			return true;
 		}
-
+		
 		return (
 			$this->user_id == $visitor->user_id
 			&& $this->hasPermission('updateOwn')
 		);
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
@@ -468,19 +455,19 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 		{
 			return false;
 		}
-
+		
 		if ($this->hasPermission('editAny'))
 		{
 			return true;
 		}
-
+		
 		if ($this->user_id == $visitor->user_id)
 		{
 			if ($this->hasPermission('updateOwn'))
 			{
 				return true;
 			}
-
+			
 			if (!$this->icon_date && $this->creation_date > \XF::$time - 3 * 3600)
 			{
 				// allow an icon to be set shortly after item creation, even if not editable since you can't
@@ -488,10 +475,10 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 				return true;
 			}
 		}
-
+		
 		return false;
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
@@ -500,13 +487,13 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	public function canMove(&$error = null): bool
 	{
 		$visitor = \XF::visitor();
-
+		
 		return (
 			$visitor->user_id
 			&& $this->hasPermission('editAny')
 		);
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
@@ -515,13 +502,13 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	public function canReassign(&$error = null): bool
 	{
 		$visitor = \XF::visitor();
-
+		
 		return (
 			$visitor->user_id
 			&& $this->hasPermission('reassign')
 		);
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
@@ -531,33 +518,33 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	{
 		return $this->isVisible();
 	}
-
+	
 	/**
 	 * @param string $type
 	 * @param null $error
 	 *
-	 * @return bool
+	 * @return bool|mixed
 	 */
 	public function canDelete(string $type = 'soft', &$error = null): bool
 	{
 		$visitor = \XF::visitor();
-
+		
 		if ($type != 'soft')
 		{
 			return $this->hasPermission('hardDeleteAny');
 		}
-
+		
 		if ($this->hasPermission('deleteAny'))
 		{
 			return true;
 		}
-
+		
 		return (
 			$this->user_id == $visitor->user_id
 			&& $this->hasPermission('deleteOwn')
 		);
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
@@ -568,7 +555,7 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 		$visitor = \XF::visitor();
 		return $visitor->user_id && $this->hasPermission('undelete');
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
@@ -581,7 +568,7 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 			&& $this->hasPermission('approveUnapprove')
 		);
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
@@ -590,14 +577,14 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	public function canWatch(&$error = null): bool
 	{
 		$visitor = \XF::visitor();
-
+		
 		// don't let authors watch as only they can update anyway
 		return (
 			$visitor->user_id
 			&& $visitor->user_id != $this->user_id
 		);
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
@@ -606,9 +593,9 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	public function canEditTags(&$error = null): bool
 	{
 		$category = $this->Category;
-		return $category && $category->canEditTags($this, $error);
+		return $category ? $category->canEditTags($this, $error) : false;
 	}
-
+	
 	/**
 	 * @param null $error
 	 * @return bool
@@ -620,21 +607,21 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 		{
 			return false;
 		}
-
+		
 		if ($this->item_state != 'visible')
 		{
 			return false;
 		}
-
+		
 		if ($this->user_id == $visitor->user_id)
 		{
 			$error = \XF::phraseDeferred('reacting_to_your_own_content_is_considered_cheating');
 			return false;
 		}
-
+		
 		return $this->hasPermission('react');
 	}
-
+	
 	/**
 	 * @return int
 	 * @throws \InvalidArgumentException
@@ -645,11 +632,12 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 		{
 			return $this->review_count;
 		}
-
-		$ratingRepo = \XF::app()->repository(ItemRatingRepository::class);
+		
+		/** @var \DBTech\Shop\Repository\ItemRating $ratingRepo */
+		$ratingRepo = $this->repository('DBTech\Shop:ItemRating');
 		return $ratingRepo->findReviewsInItem($this)->total();
 	}
-
+	
 	/**
 	 * @return array
 	 */
@@ -662,7 +650,7 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 			ORDER BY rating_date
 		', $this->item_id);
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -674,32 +662,31 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 		{
 			return false;
 		}
-
-		//		if ($visitor->user_id == $this->user_id)
-		//		{
-		//			return false;
-		//		}
-
+		
+//		if ($visitor->user_id == $this->user_id)
+//		{
+//			return false;
+//		}
+		
 		if ($visitor->user_id != $this->user_id
 			&& !$this->isVisible()
-		)
-		{
+		) {
 			return false;
 		}
-
+		
 		if (!$this->hasPermission('purchase'))
 		{
 			return false;
 		}
-
+		
 		if ($this->stock == 0)
 		{
 			return false;
 		}
-
+		
 		return true;
 	}
-
+	
 	/**
 	 * @param bool $includeCart
 	 * @param null $error
@@ -710,10 +697,10 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	{
 		/** @var \DBTech\Shop\XF\Entity\User $visitor */
 		$visitor = \XF::visitor();
-
-		/** @var \XF\Mvc\Entity\AbstractCollection<\DBTech\Shop\Entity\Purchase> $purchases */
+		
+		/** @var \XF\Mvc\Entity\ArrayCollection $purchases */
 		$purchases = $visitor->dbtech_shop_purchase;
-
+		
 		if ($this->isUnique())
 		{
 			$itemIds = $purchases->pluckNamed('item_id', 'item_id');
@@ -722,7 +709,7 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 				$error = \XF::phraseDeferred('dbtech_shop_this_item_is_unique_already_owned');
 				return false;
 			}
-
+			
 			if ($includeCart)
 			{
 				if (in_array($visitor->user_id, $this->Carts->pluckNamed('user_id')))
@@ -732,25 +719,24 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 				}
 			}
 		}
-
+		
 		if ($this->isExclusive())
 		{
 			$itemTypeIds = $purchases->pluck(function (Purchase $e, int $k): array
 			{
 				return [$e->Item->item_type_id, $e->Item->item_type_id];
-			}, false);
-
+			});
 			if (!empty($itemTypeIds[$this->item_type_id]))
 			{
 				$error = \XF::phraseDeferred('dbtech_shop_this_item_is_exclusive_already_owned', [
-					'itemType' => $this->getItemTypeTitle(),
+					'itemType' => $this->getItemTypeTitle()
 				]);
 				return false;
 			}
-
+			
 			if ($includeCart)
 			{
-				/** @var \XF\Mvc\Entity\AbstractCollection<\DBTech\Shop\Entity\Cart> $carts */
+				/** @var Cart[]|\XF\Mvc\Entity\ArrayCollection $carts */
 				$carts = $this->Carts;
 				$cartItemTypeIds = $carts->pluck(function (Cart $e, $k) use ($visitor): ?array
 				{
@@ -758,35 +744,35 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 					{
 						return null;
 					}
-
+					
 					return [$e->Item->item_type_id, $e->Item->item_type_id];
 				});
 				if (!empty($cartItemTypeIds[$this->item_type_id]))
 				{
 					$error = \XF::phraseDeferred('dbtech_shop_this_item_is_exclusive_already_in_cart', [
-						'itemType' => $this->getItemTypeTitle(),
+						'itemType' => $this->getItemTypeTitle()
 					]);
 					return false;
 				}
 			}
 		}
-
+		
 		return true;
 	}
-
-
+	
+	
 	/**
-	 * @param User $user
+	 * @param \XF\Entity\User $user
 	 * @param bool $includeCart
 	 * @param null $error
 	 *
 	 * @return bool
 	 */
-	public function canPurchaseForUser(User $user, bool $includeCart = true, &$error = null): bool
+	public function canPurchaseForUser(\XF\Entity\User $user, bool $includeCart = true, &$error = null): bool
 	{
-		/** @var ArrayCollection $purchases */
+		/** @var \XF\Mvc\Entity\ArrayCollection $purchases */
 		$purchases = $user->dbtech_shop_purchase;
-
+		
 		if ($this->isUnique())
 		{
 			$itemIds = $purchases->pluckNamed('item_id', 'item_id');
@@ -794,11 +780,11 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 			{
 				$error = \XF::phraseDeferred('dbtech_shop_unique_item_gifterror', [
 					'recipient' => $user->username,
-					'item' => $this->title,
+					'item' => $this->title
 				]);
 				return false;
 			}
-
+			
 			if ($includeCart)
 			{
 				if (in_array($user->user_id, $this->Carts->pluckNamed('user_id')))
@@ -808,7 +794,7 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 				}
 			}
 		}
-
+		
 		if ($this->isExclusive())
 		{
 			$itemTypeIds = $purchases->pluck(function (Purchase $e, int $k): array
@@ -819,39 +805,37 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 			{
 				$error = \XF::phraseDeferred('dbtech_shop_exclusive_item_gifterror', [
 					'recipient' => $user->username,
-					'itemType' => $this->getItemTypeTitle(),
+					'itemType' => $this->getItemTypeTitle()
 				]);
 				return false;
 			}
-
+			
 			if ($includeCart)
 			{
-				/** @var \XF\Mvc\Entity\AbstractCollection<\DBTech\Shop\Entity\Cart> $carts */
+				/** @var Cart[]|\XF\Mvc\Entity\ArrayCollection $carts */
 				$carts = $this->Carts;
-
-				$cartItemTypeIds = $carts->pluck(function (Cart $e, string $k) use ($user): ?array
+				$cartItemTypeIds = $carts->pluck(function (Cart $e, int $k) use ($user): ?array
 				{
 					if ($e->user_id != $user->user_id)
 					{
 						return null;
 					}
-
+					
 					return [$e->Item->item_type_id, $e->Item->item_type_id];
-				}, false);
-
+				});
 				if (!empty($cartItemTypeIds[$this->item_type_id]))
 				{
 					$error = \XF::phraseDeferred('dbtech_shop_this_item_is_exclusive_recipient_already_in_cart', [
-						'itemType' => $this->getItemTypeTitle(),
+						'itemType' => $this->getItemTypeTitle()
 					]);
 					return false;
 				}
 			}
 		}
-
+		
 		return true;
 	}
-
+	
 	/**
 	 * @return mixed
 	 */
@@ -859,7 +843,7 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	{
 		return $this->hasPermission('viewDeleted');
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -870,10 +854,10 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 		{
 			return true;
 		}
-
+		
 		return $visitor->user_id && $this->user_id == $visitor->user_id;
 	}
-
+	
 	/**
 	 * @param bool $checkPurchaseIfRequired
 	 * @param null $error
@@ -882,41 +866,40 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	 */
 	public function canRate(bool $checkPurchaseIfRequired = true, &$error = null): bool
 	{
-		if (!\XF::app()->options()->dbtechShopEnableRate)
+		if (!$this->app()->options()->dbtechShopEnableRate)
 		{
 			return false;
 		}
-
+		
 		if (!$this->isVisible())
 		{
 			return false;
 		}
-
+		
 		$visitor = \XF::visitor();
 		if (!$visitor->user_id || $visitor->user_id == $this->user_id)
 		{
 			return false;
 		}
-
+		
 		if (!$this->hasPermission('rate') || !$this->hasPermission('purchase'))
 		{
 			// if you can't buy, you can't rate it
 			return false;
 		}
-
+		
 		if (
 			$checkPurchaseIfRequired
-			&& \XF::app()->options()->dbtechShopRequirePurchaseToRate
+			&& $this->app()->options()->dbtechShopRequirePurchaseToRate
 			&& !$this->Purchases[$visitor->user_id]
-		)
-		{
+		) {
 			$error = \XF::phraseDeferred('dbtech_shop_you_only_rate_item_purchased');
 			return false;
 		}
-
+		
 		return true;
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
@@ -927,14 +910,14 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 		$visitor = \XF::visitor();
 		return ($visitor->user_id && $this->hasPermission('inlineMod'));
 	}
-
+	
 	/**
 	 * @return bool
 	 */
 	public function canSendModeratorActionAlert(): bool
 	{
 		$visitor = \XF::visitor();
-
+		
 		return (
 			$visitor->user_id
 			&& $this->user_id
@@ -942,19 +925,19 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 			&& $this->item_state == 'visible'
 		);
 	}
-
+	
 	/**
 	 * @param null $error
-	 * @param User|null $asUser
+	 * @param \XF\Entity\User|null $asUser
 	 *
 	 * @return bool
 	 */
-	public function canReport(&$error = null, ?User $asUser = null): bool
+	public function canReport(&$error = null, ?\XF\Entity\User $asUser = null): bool
 	{
 		$asUser = $asUser ?: \XF::visitor();
 		return $asUser->canReport($error);
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
@@ -963,21 +946,20 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	public function canWarn(&$error = null): bool
 	{
 		$visitor = \XF::visitor();
-
+		
 		if ($this->warning_id
 			|| !$this->user_id
 			|| !$visitor->user_id
 			|| $this->user_id == $visitor->user_id
 			|| !$this->hasPermission('warn')
-		)
-		{
+		) {
 			return false;
 		}
-
+		
 		$user = $this->User;
 		return ($user && $user->isWarnable());
 	}
-
+	
 	/**
 	 * @param string $permission
 	 * @return bool
@@ -986,23 +968,31 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	{
 		/** @var \DBTech\Shop\XF\Entity\User $visitor */
 		$visitor = \XF::visitor();
-
-		return match ($permission)
+		
+		switch ($permission)
 		{
-			'view', 'purchase', 'react', 'rate' => $visitor->hasDbtechShopItemPermission($this->item_id, $permission),
-			default => $visitor->hasDbtechShopCategoryPermission($this->category_id, $permission),
-		};
+			case 'view':
+			case 'purchase':
+			case 'react':
+			case 'rate':
+				// These are per-item
+				return $visitor->hasDbtechShopItemPermission($this->item_id, $permission);
+
+			default:
+				// The rest are per-category
+				return $visitor->hasDbtechShopCategoryPermission($this->category_id, $permission);
+		}
 	}
 
 	/**
-	 * @return AbstractHandler|null
+	 * @return \DBTech\Shop\ItemType\AbstractHandler|null
 	 * @throws \Exception
 	 */
-	public function getHandler(): ?AbstractHandler
+	public function getHandler(): ?\DBTech\Shop\ItemType\AbstractHandler
 	{
 		if (!$this->cachedHandler)
 		{
-			$this->cachedHandler = \XF::app()->repository(ItemRepository::class)
+			$this->cachedHandler = $this->getItemRepo()
 				->getHandler($this->item_type_id)
 			;
 		}
@@ -1017,7 +1007,7 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 
 		return null;
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -1025,7 +1015,7 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	{
 		return !empty($this->handler->getAdminConfigTemplate());
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -1035,11 +1025,11 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 			&& !empty($this->handler->getUserConfigTemplate())
 		);
 	}
-
+	
 	/**
 	 * @return string|\XF\Phrase
 	 */
-	public function getTitle(): \XF\Phrase|string
+	public function getTitle()
 	{
 		switch ($this->item_type_id)
 		{
@@ -1048,11 +1038,11 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 				{
 					return $this->title_;
 				}
-
+				
 				return $this->getItemTypeTitle();
 		}
 	}
-
+	
 	/**
 	 * @return \XF\Phrase
 	 */
@@ -1060,7 +1050,7 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	{
 		return \XF::phrase('dbtech_shop_itemtype_title.' . $this->item_type_id);
 	}
-
+	
 	/**
 	 * @return \XF\Phrase
 	 */
@@ -1068,7 +1058,7 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	{
 		return \XF::phrase('dbtech_shop_itemtype_description.' . $this->item_type_id);
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -1078,16 +1068,16 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 		{
 			return false;
 		}
-
+		
 		$thread = $this->Discussion;
 		if (!$thread)
 		{
 			return false;
 		}
-
+		
 		return $thread->canView();
 	}
-
+	
 	/**
 	 * @return array
 	 */
@@ -1098,33 +1088,33 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 			// if they haven't set anything, we can bail out quickly
 			return [];
 		}
-
-		/** @var Set $fieldSet */
+		
+		/** @var \XF\CustomField\Set $fieldSet */
 		$fieldSet = $this->item_fields;
 		$definitionSet = $fieldSet->getDefinitionSet()
 			->filterOnly($this->Category->field_cache)
 			->filterGroup('new_tab')
 			->filterWithValue($fieldSet);
-
+		
 		$output = [];
 		foreach ($definitionSet AS $fieldId => $definition)
 		{
 			$output[$fieldId] = $definition->title;
 		}
-
+		
 		return $output;
 	}
-
+	
 	/**
 	 * @return string
 	 */
 	public function getFieldEditMode(): string
 	{
 		$visitor = \XF::visitor();
-
+		
 		$isSelf = ($visitor->user_id == $this->user_id || !$this->item_id);
 		$isMod = ($visitor->user_id && $this->hasPermission('editAny'));
-
+		
 		if ($isMod || !$isSelf)
 		{
 			return $isSelf ? 'moderator_user' : 'moderator';
@@ -1136,43 +1126,45 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	}
 
 	/**
-	 * @return Set
+	 * @return \XF\CustomField\Set
 	 * @throws \Exception
 	 */
-	public function getItemFields(): Set
+	public function getItemFields(): \XF\CustomField\Set
 	{
-		/** @var DefinitionSet $fieldDefinitions */
-		$fieldDefinitions = \XF::app()->container('customFields.dbtechShopItems');
+		$class = 'XF\CustomField\Set';
+		$class = $this->app()->extendClass($class);
 
-		$class = \XF::extendClass(Set::class);
+		/** @var \XF\CustomField\DefinitionSet $fieldDefinitions */
+		$fieldDefinitions = $this->app()->container('customFields.dbtechShopItems');
+
 		return new $class($fieldDefinitions, $this, 'item_fields');
 	}
-
+	
 	/**
 	 * @return string
 	 */
 	public function getExpectedThreadTitle(): string
 	{
 		$template = '';
-		$options = \XF::app()->options();
-
+		$options = $this->app()->options();
+		
 		if ($this->item_state != 'visible' && $options->dbtechShopContentDeleteThreadAction['update_title'])
 		{
 			$template = $options->dbtechShopContentDeleteThreadAction['title_template'];
 		}
-
+		
 		if (!$template)
 		{
 			$template = '{title} [{category}]';
 		}
-
+		
 		$threadTitle = strtr($template, [
 			'{title}' => $this->title,
 			'{category}' => $this->Category->title,
 		]);
-		return \XF::app()->stringFormatter()->wholeWordTrim($threadTitle, 100);
+		return $this->app()->stringFormatter()->wholeWordTrim($threadTitle, 100);
 	}
-
+	
 	/**
 	 * @param string $context
 	 * @param string $type
@@ -1186,10 +1178,10 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 			'entity' => $this,
 			'user' => $this->User,
 			'attachments' => [],
-			'viewAttachments' => false,
+			'viewAttachments' => false
 		];
 	}
-
+	
 	/**
 	 * @param bool $includeSelf
 	 *
@@ -1201,45 +1193,45 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 		if ($includeSelf && $this->exists())
 		{
 			$breadcrumbs[] = [
-				'href' => \XF::app()->router()->buildLink('dbtech-shop', $this),
-				'value' => $this->title,
+				'href' => $this->app()->router()->buildLink('dbtech-shop', $this),
+				'value' => $this->title
 			];
 		}
-
+		
 		return $breadcrumbs;
 	}
-
+	
 	/**
 	 * @return bool
 	 */
 	public function rebuildCounters(): bool
 	{
 		// I'm sure I'll have uses for this, then switch this to true
-		//		$this->rebuildReviewCount();
-		//		$this->rebuildRating();
+//		$this->rebuildReviewCount();
+//		$this->rebuildRating();
 		return false;
 	}
-
+	
 	/**
 	 * @return int
 	 */
 	public function rebuildReviewCount(): int
 	{
-		$this->review_count = (int) $this->db()->fetchOne("
+		$this->review_count = (int)$this->db()->fetchOne("
 			SELECT COUNT(item_rating_id)
 				FROM xf_dbtech_shop_item_rating
 				WHERE item_id = ?
 					AND is_review = 1
 					AND rating_state = 'visible'
 		", $this->item_id);
-
+		
 		return $this->review_count;
 	}
-
+	
 	/**
 	 *
 	 */
-	public function rebuildRating(): void
+	public function rebuildRating()
 	{
 		$rating = $this->db()->fetchRow("
 			SELECT COUNT(item_rating_id) AS total,
@@ -1249,27 +1241,27 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 				AND count_rating = 1
 				AND rating_state = 'visible'
 		", $this->item_id);
-
+		
 		$this->rating_sum = $rating['sum'] ?: 0;
 		$this->rating_count = $rating['total'] ?: 0;
-
+		
 		if ($this->Category)
 		{
 			$this->Category->rebuildRating();
 			$this->Category->saveIfChanged();
 		}
 	}
-
+	
 	/**
 	 *
 	 */
-	protected function updateRatingAverage(): void
+	protected function updateRatingAverage()
 	{
 		$threshold = self::RATING_WEIGHTED_THRESHOLD;
 		$average = self::RATING_WEIGHTED_AVERAGE;
-
+		
 		$this->rating_weighted = ($threshold * $average + $this->rating_sum) / ($threshold + $this->rating_count);
-
+		
 		if ($this->rating_count)
 		{
 			$this->rating_avg = $this->rating_sum / $this->rating_count;
@@ -1279,15 +1271,15 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 			$this->rating_avg = 0;
 		}
 	}
-
+	
 	/**
 	 *
 	 */
-	public function rebuildItemFieldValuesCache(): void
+	public function rebuildItemFieldValuesCache()
 	{
-		\XF::app()->repository(ItemFieldRepository::class)->rebuildItemFieldValuesCache($this->item_id);
+		$this->repository('DBTech\Shop:ItemField')->rebuildItemFieldValuesCache($this->item_id);
 	}
-
+	
 	/**
 	 * @param array $criteria
 	 *
@@ -1295,12 +1287,12 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	 */
 	protected function verifyUserCriteria(array &$criteria): bool
 	{
-		$userCriteria = \XF::app()->criteria(UserCriteria::class, $criteria);
+		$userCriteria = \XF::app()->criteria('XF:User', $criteria);
 		$criteria = $userCriteria->getCriteria();
 
 		return true;
 	}
-
+	
 	/**
 	 * @param int $categoryId
 	 *
@@ -1308,9 +1300,9 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	 */
 	protected function verifyCategoryId(int &$categoryId): bool
 	{
-		return \XF::app()->em()->find(Category::class, $categoryId) !== null;
+		return $this->_em->find('DBTech\Shop:Category', $categoryId) !== null;
 	}
-
+	
 	/**
 	 * @param int $currencyId
 	 *
@@ -1318,11 +1310,11 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	 */
 	protected function verifyCurrencyId(int &$currencyId): bool
 	{
-		return \XF::app()->em()->find(Currency::class, $currencyId) !== null;
+		return $this->_em->find('DBTech\Shop:Currency', $currencyId) !== null;
 	}
-
-
-
+	
+	
+	
 	/**
 	 * @param int $userId
 	 *
@@ -1334,23 +1326,23 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 		{
 			return true;
 		}
-
-		return \XF::app()->em()->find(User::class, $userId) !== null;
+		
+		return $this->_em->find('XF:User', $userId) !== null;
 	}
-
+	
 	/**
 	 * @param int $amount
 	 * @param null $userId
 	 *
 	 * @throws \XF\Db\Exception
 	 */
-	protected function adjustUserItemCountIfNeeded(int $amount, $userId = null): void
+	protected function adjustUserItemCountIfNeeded(int $amount, $userId = null)
 	{
 		if ($userId === null)
 		{
 			$userId = $this->user_id;
 		}
-
+		
 		if ($userId)
 		{
 			$this->db()->query('
@@ -1360,69 +1352,71 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 			', [$amount, $userId]);
 		}
 	}
-
+	
 	/**
 	 * @throws \XF\Db\Exception
 	 */
-	protected function itemMadeVisible(): void
+	protected function itemMadeVisible()
 	{
 		$this->adjustUserItemCountIfNeeded(1);
-
+		
 		if ($this->discussion_thread_id && $this->Discussion && $this->Discussion->discussion_type == 'dbtech_shop_item')
 		{
 			$thread = $this->Discussion;
-
-			switch (\XF::app()->options()->dbtechShopContentDeleteThreadAction['action'])
+			
+			switch ($this->app()->options()->dbtechShopContentDeleteThreadAction['action'])
 			{
 				case 'delete':
 					$thread->discussion_state = 'visible';
 					break;
-
+				
 				case 'close':
 					$thread->discussion_open = true;
 					break;
 			}
-
+			
 			$thread->title = $this->getExpectedThreadTitle();
 			$thread->saveIfChanged($saved, false, false);
 		}
-
-		$reactionRepo = \XF::app()->repository(ReactionRepository::class);
+		
+		/** @var \XF\Repository\Reaction $reactionRepo */
+		$reactionRepo = $this->repository('XF:Reaction');
 		$reactionRepo->recalculateReactionIsCounted('dbtech_shop_item', $this->item_id);
 	}
-
+	
 	/**
 	 * @param bool $hardDelete
 	 *
 	 * @throws \XF\Db\Exception
 	 */
-	protected function itemHidden(bool $hardDelete = false): void
+	protected function itemHidden(bool $hardDelete = false)
 	{
 		$this->adjustUserItemCountIfNeeded(-1);
-
+		
 		if ($this->discussion_thread_id && $this->Discussion && $this->Discussion->discussion_type == 'dbtech_shop_item')
 		{
 			$thread = $this->Discussion;
-
-			switch (\XF::app()->options()->dbtechShopContentDeleteThreadAction['action'])
+			
+			switch ($this->app()->options()->dbtechShopContentDeleteThreadAction['action'])
 			{
 				case 'delete':
 					$thread->discussion_state = 'deleted';
 					break;
-
+				
 				case 'close':
 					$thread->discussion_open = false;
 					break;
 			}
-
+			
 			$thread->title = $this->getExpectedThreadTitle();
 			$thread->saveIfChanged($saved, false, false);
 		}
-
-		$alertRepo = \XF::app()->repository(UserAlertRepository::class);
+		
+		/** @var \XF\Repository\UserAlert $alertRepo */
+		$alertRepo = $this->repository('XF:UserAlert');
 		$alertRepo->fastDeleteAlertsForContent('dbtech_shop_rating', $this->item_rating_ids);
 	}
-
+	
 	/**
 	 * @param Category $from
 	 * @param Category $to
@@ -1430,13 +1424,13 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	protected function itemMoved(Category $from, Category $to)
 	{
 	}
-
+	
 	/**
 	 *
 	 * @throws \InvalidArgumentException
 	 * @throws \XF\Db\Exception
 	 */
-	protected function itemReassigned(): void
+	protected function itemReassigned()
 	{
 		if ($this->item_state == 'visible')
 		{
@@ -1444,40 +1438,40 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 			$this->adjustUserItemCountIfNeeded(1);
 		}
 	}
-
+	
 	/**
 	 * @throws \XF\Db\Exception
 	 */
-	protected function itemInsertedVisible(): void
+	protected function itemInsertedVisible()
 	{
 		$this->adjustUserItemCountIfNeeded(1);
 	}
-
+	
 	/**
 	 *
 	 */
-	protected function submitHamData(): void
+	protected function submitHamData()
 	{
-		/** @var ContentChecker $submitter */
-		$submitter = \XF::app()->container('spam.contentHamSubmitter');
+		/** @var \XF\Spam\ContentChecker $submitter */
+		$submitter = $this->app()->container('spam.contentHamSubmitter');
 		$submitter->submitHam('dbtech_shop_item', $this->item_id);
 	}
-
+	
 	/**
 	 * @throws \InvalidArgumentException
 	 * @throws \LogicException
 	 * @throws \Exception
-	 * @throws PrintableException
+	 * @throws \XF\PrintableException
 	 */
-	protected function updateCategoryRecord(): void
+	protected function updateCategoryRecord()
 	{
 		if (!$this->Category)
 		{
 			return;
 		}
-
+		
 		$category = $this->Category;
-
+		
 		if ($this->isUpdate() && $this->isChanged('category_id'))
 		{
 			// moved, trumps the rest
@@ -1486,7 +1480,7 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 				$category->itemAdded($this);
 				$category->save();
 			}
-
+			
 			if ($this->getExistingValue('item_state') == 'visible')
 			{
 				/** @var Category $oldCategory */
@@ -1497,10 +1491,10 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 					$oldCategory->save();
 				}
 			}
-
+			
 			return;
 		}
-
+		
 		// check for entering/leaving visible
 		$visibilityChange = $this->isStateChanged('item_state', 'visible');
 		if ($visibilityChange == 'enter')
@@ -1508,36 +1502,35 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 			$category->itemAdded($this);
 			$category->save();
 		}
-		else if ($visibilityChange == 'leave')
+		elseif ($visibilityChange == 'leave')
 		{
 			$category->itemRemoved($this);
 			$category->save();
 		}
-		else if ($this->isUpdate() && $this->item_state == 'visible')
+		elseif ($this->isUpdate() && $this->item_state == 'visible')
 		{
 			$category->itemDataChanged($this);
 			$category->save();
 		}
 	}
-
+	
 	/**
 	 * Pre-save handling.
 	 */
-	protected function _preSave(): void
+	protected function _preSave()
 	{
 		if ($this->prefix_id && $this->isChanged(['prefix_id', 'category_id']) && !$this->Category->isPrefixValid($this->prefix_id))
 		{
 			$this->prefix_id = 0;
 		}
-
+		
 		if (!$this->user_id && !$this->getOption('is_automated'))
 		{
-			/** @var User $user */
+			/** @var \XF\Entity\User $user */
 			if (
-				\XF::app()->options()->dbtechShopDefaultItemOwner
-				&& $user = \XF::app()->em()->find(User::class, \XF::app()->options()->dbtechShopDefaultItemOwner)
-			)
-			{
+				$this->app()->options()->dbtechShopDefaultItemOwner
+				&& $user = $this->_em->find('XF:User', $this->app()->options()->dbtechShopDefaultItemOwner)
+			) {
 				$this->user_id = $user->user_id;
 				$this->username = $user->username;
 			}
@@ -1548,20 +1541,19 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 				$this->username = $visitor->username;
 			}
 		}
-
+		
 		if ($this->isInsert() || $this->isChanged(['rating_sum', 'rating_count']))
 		{
 			$this->updateRatingAverage();
 		}
-
+		
 		if ($this->buyback_price > $this->price
 			&& $this->buyback_currency_id == $this->currency_id
-		)
-		{
+		) {
 			// Ensure people aren't nawty
 			$this->_setInternal('buyback_price', $this->price);
 		}
-
+		
 		if ($this->getOption('admin_edit'))
 		{
 			if ($this->stock == -1)
@@ -1588,53 +1580,53 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 			}
 		}
 	}
-
+	
 	/**
 	 * @throws \Exception
 	 */
-	protected function _postSave(): void
+	protected function _postSave()
 	{
 		$visibilityChange = $this->isStateChanged('item_state', 'visible');
 		$approvalChange = $this->isStateChanged('item_state', 'moderated');
 		$deletionChange = $this->isStateChanged('item_state', 'deleted');
-
+		
 		if ($this->isUpdate())
 		{
 			if ($visibilityChange == 'enter')
 			{
 				$this->itemMadeVisible();
-
+				
 				if ($approvalChange)
 				{
 					$this->submitHamData();
 				}
 			}
-			else if ($visibilityChange == 'leave')
+			elseif ($visibilityChange == 'leave')
 			{
 				$this->itemHidden();
 			}
-
+			
 			if ($this->isChanged('category_id'))
 			{
-				/** @var Category $oldCategory */
+				/** @var \DBTech\Shop\Entity\Category $oldCategory */
 				$oldCategory = $this->getExistingRelation('Category');
 				if ($oldCategory && $this->Category)
 				{
 					$this->itemMoved($oldCategory, $this->Category);
 				}
 			}
-
+			
 			if ($deletionChange == 'leave' && $this->DeletionLog)
 			{
 				$this->DeletionLog->delete();
 			}
-
+			
 			if ($deletionChange == 'leave' && $this->Discussion)
 			{
 				$this->Discussion->discussion_state = 'visible';
 				$this->Discussion->save();
 			}
-
+			
 			if ($approvalChange == 'leave' && $this->ApprovalQueue)
 			{
 				$this->ApprovalQueue->delete();
@@ -1648,7 +1640,7 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 				$this->itemInsertedVisible();
 			}
 		}
-
+		
 		if ($this->isUpdate())
 		{
 			if ($this->isChanged('user_id'))
@@ -1656,7 +1648,7 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 				$this->itemReassigned();
 			}
 		}
-
+		
 		if ($this->discussion_thread_id)
 		{
 			$newThreadTitle = $this->getExpectedThreadTitle();
@@ -1664,200 +1656,228 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 				$this->Discussion
 				&& $this->Discussion->discussion_type == 'dbtech_shop_item'
 				&& $newThreadTitle != $this->Discussion->title
-			)
-			{
+			) {
 				$this->Discussion->title = $newThreadTitle;
 				$this->Discussion->saveIfChanged($saved, false, false);
 			}
 		}
-
+		
 		if ($approvalChange == 'enter')
 		{
-			/** @var ApprovalQueue $approvalQueue */
+			/** @var \XF\Entity\ApprovalQueue $approvalQueue */
 			$approvalQueue = $this->getRelationOrDefault('ApprovalQueue', false);
 			$approvalQueue->content_date = $this->creation_date;
 			$approvalQueue->save();
 		}
-		else if ($deletionChange == 'enter' && !$this->DeletionLog)
+		elseif ($deletionChange == 'enter' && !$this->DeletionLog)
 		{
 			$delLog = $this->getRelationOrDefault('DeletionLog', false);
 			$delLog->setFromVisitor();
 			$delLog->save();
 		}
-
+		
 		$this->updateCategoryRecord();
-
+		
 		if ($this->isUpdate() && $this->getOption('log_moderator'))
 		{
-			\XF::app()->logger()->logModeratorChanges('dbtech_shop_item', $this);
+			$this->app()->logger()->logModeratorChanges('dbtech_shop_item', $this);
 		}
-
+		
 		if ($this->item_type_id == 'usernamestyle2')
 		{
 			$this->rebuildUserNameStyleCache();
 		}
-
+		
 		if ($this->item_type_id == 'usertitlestyle2')
 		{
 			$this->rebuildUserTitleStyleCache();
 		}
 	}
-
+	
 	/**
 	 * @throws \Exception
 	 */
-	protected function _postDelete(): void
+	protected function _postDelete()
 	{
 		if ($this->item_state == 'visible')
 		{
 			$this->itemHidden(true);
 		}
-
+		
 		if ($this->Category && $this->item_state == 'visible')
 		{
 			$this->Category->itemRemoved($this);
 			$this->Category->save();
 		}
-
+		
 		if ($this->item_state == 'deleted' && $this->DeletionLog)
 		{
 			$this->DeletionLog->delete();
 		}
-
+		
 		if ($this->item_state == 'moderated' && $this->ApprovalQueue)
 		{
 			$this->ApprovalQueue->delete();
 		}
-
+		
 		if ($this->getOption('log_moderator'))
 		{
-			\XF::app()->logger()->logModeratorAction('dbtech_shop_item', $this, 'delete_hard');
+			$this->app()->logger()->logModeratorAction('dbtech_shop_item', $this, 'delete_hard');
 		}
-
+		
 		$db = $this->db();
-
+		
 		//$db->delete('xf_dbtech_shop_item_feature', 'item_id = ?', $this->item_id);
 		$db->delete('xf_dbtech_shop_item_watch', 'item_id = ?', $this->item_id);
-
-		\XF::app()->jobManager()->enqueue(ItemDeleteCleanUp::class, [
+		
+		$this->app()->jobManager()->enqueue('DBTech\Shop:ItemDeleteCleanUp', [
 			'itemId' => $this->item_id,
-			'title' => $this->title,
+			'title' => $this->title
 		]);
-
-		$reactionRepo = \XF::app()->repository(ReactionRepository::class);
+		
+		/** @var \XF\Repository\Reaction $reactionRepo */
+		$reactionRepo = $this->repository('XF:Reaction');
 		$reactionRepo->fastDeleteReactions('dbtech_shop_item', $this->item_id);
-
-		$iconService = \XF::app()->service(IconService::class, $this);
+		
+		/** @var \DBTech\Shop\Service\Item\Icon $iconService */
+		$iconService = $this->app()->service('DBTech\Shop:Item\Icon', $this);
 		$iconService->deleteIconForItemDelete();
-
+		
 		/** @var \DBTech\Shop\Entity\Purchase[] $purchases */
-		$purchases = \XF::app()->finder(PurchaseFinder::class)
+		$purchases = $this->finder('DBTech\Shop:Purchase')
 			->where('item_id', $this->item_id)
 			->fetch()
 		;
-
-		foreach ($purchases AS $purchase)
+		
+		foreach ($purchases as $purchase)
 		{
 			$purchase->hydrateRelation('Item', $this);
-
+			
 			$this->getHandler()
 				->setPurchase($purchase)
 				->logIp(false)
 				->discard($null, 'item_delete')
 			;
 		}
-
+		
 		$db = $this->db();
-
+		
 		// Update other records - delete purchases again just in case some failed to discard
 		$db->update('xf_dbtech_shop_category', ['latest_sale_id' => 0], 'latest_sale_id = ?', $this->item_id);
 		$db->delete('xf_dbtech_shop_purchase', 'item_id = ?', $this->item_id);
-
+		
 		if ($this->item_type_id == 'usernamestyle2')
 		{
 			$this->rebuildUserNameStyleCache();
 		}
-
+		
 		if ($this->item_type_id == 'usertitlestyle2')
 		{
 			$this->rebuildUserTitleStyleCache();
 		}
 	}
-
+	
 	/**
 	 * @param string $reason
-	 * @param User|null $byUser
+	 * @param \XF\Entity\User|null $byUser
 	 *
 	 * @return bool
 	 * @throws \InvalidArgumentException
 	 * @throws \LogicException
 	 * @throws \Exception
-	 * @throws PrintableException
+	 * @throws \XF\PrintableException
 	 */
-	public function softDelete(string $reason = '', ?User $byUser = null): bool
+	public function softDelete(string $reason = '', ?\XF\Entity\User $byUser = null): bool
 	{
 		$byUser = $byUser ?: \XF::visitor();
-
+		
 		if ($this->item_state == 'deleted')
 		{
 			return false;
 		}
-
+		
 		$this->item_state = 'deleted';
-
-		/** @var DeletionLog $deletionLog */
+		
+		/** @var \XF\Entity\DeletionLog $deletionLog */
 		$deletionLog = $this->getRelationOrDefault('DeletionLog');
 		$deletionLog->setFromUser($byUser);
 		$deletionLog->delete_reason = $reason;
-
+		
 		$this->save();
-
+		
 		return true;
 	}
 
+	protected function handleUsergroupDiscounts(array $discountData)
+	{
+		// Delete existing discounts
+		$this->db()->delete('xf_dbtech_shop_item_usergroup_discount', 'item_id = ?', $this->item_id);
+		
+		// Add new discounts
+		foreach ($discountData as $userGroupId => $discount)
+		{
+			$userGroupId = intval($userGroupId);
+			$discountType = $discount['type'] ?? 'percentage';
+			$discountValue = floatval($discount['value'] ?? 0);
+			
+			if ($userGroupId > 0 && $discountValue > 0)
+			{
+				/** @var \DBTech\Shop\Entity\ItemUsergroupDiscount $discountEntity */
+				$discountEntity = $this->em()->create('DBTech\Shop:ItemUsergroupDiscount');
+				$discountEntity->bulkSet([
+					'item_id' => $this->item_id,
+					'user_group_id' => $userGroupId,
+					'discount_type' => $discountType,
+					'discount_value' => $discountValue
+				]);
+				$discountEntity->save();
+			}
+		}
+	}
+	
 	/**
-	 * @param User|null $byUser
+	 * @param \XF\Entity\User|null $byUser
 	 *
 	 * @return bool
 	 * @throws \LogicException
 	 * @throws \Exception
-	 * @throws PrintableException
+	 * @throws \XF\PrintableException
 	 */
-	public function unDelete(?User $byUser = null): bool
+	public function unDelete(?\XF\Entity\User $byUser = null): bool
 	{
 		$byUser = $byUser ?: \XF::visitor();
-
+		
 		if ($this->item_state == 'visible')
 		{
 			return false;
 		}
-
+		
 		$this->item_state = 'visible';
 		$this->save();
-
+		
 		return true;
 	}
-
+	
 	/**
 	 *
 	 */
-	protected function rebuildUserNameStyleCache(): void
+	protected function rebuildUserNameStyleCache()
 	{
-		$repo = \XF::app()->repository(PurchaseRepository::class);
-
+		$repo = $this->getPurchaseRepo();
+		
 		\XF::runOnce('dbtShopUserNameStyleRebuild', function () use ($repo)
 		{
 			$repo->rebuildUserNameStyleCache();
 		});
 	}
-
+	
 	/**
 	 *
 	 */
-	protected function rebuildUserTitleStyleCache(): void
+	protected function rebuildUserTitleStyleCache()
 	{
-		$repo = \XF::app()->repository(PurchaseRepository::class);
-
+		$repo = $this->getPurchaseRepo();
+		
 		\XF::runOnce('dbtShopUserTitleStyleRebuild', function () use ($repo)
 		{
 			$repo->rebuildUserTitleStyleCache();
@@ -1865,24 +1885,16 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	}
 
 	/**
-	 * @return string
-	 */
-	public function getContentDateColumn(): string
-	{
-		return 'creation_date';
-	}
-
-	/**
 	 * @param bool $canonical
 	 * @param array $extraParams
 	 * @param string|null $hash
 	 *
-	 * @return string
+	 * @return mixed|string
 	 */
 	public function getContentUrl(bool $canonical = false, array $extraParams = [], $hash = null): string
 	{
 		$route = $canonical ? 'canonical:dbtech-shop' : 'dbtech-shop';
-		return \XF::app()->router('public')->buildLink($route, $this, $extraParams, $hash);
+		return $this->app()->router('public')->buildLink($route, $this, $extraParams, $hash);
 	}
 
 	/**
@@ -1896,17 +1908,17 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 	/**
 	 * @param string $context
 	 *
-	 * @return \XF\Phrase
+	 * @return string|\XF\Phrase
 	 */
-	public function getContentTitle(string $context = ''): \XF\Phrase
+	public function getContentTitle(string $context = '')
 	{
 		return \XF::phrase('dbtech_shop_item_x', ['title' => $this->title]);
 	}
 
 	/**
-	 * @param Structure $structure
+	 * @param \XF\Mvc\Entity\Structure $structure
 	 *
-	 * @return Structure
+	 * @return \XF\Mvc\Entity\Structure
 	 */
 	public static function getStructure(Structure $structure): Structure
 	{
@@ -1924,8 +1936,8 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 				'allowedValues' => [
 					'visible',
 					'moderated',
-					'deleted',
-				],
+					'deleted'
+				]
 			],
 			'display_order'               => ['type' => self::UINT, 'default' => 10],
 			'creation_date'               => ['type' => self::UINT, 'default' => \XF::$time],
@@ -1949,12 +1961,12 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 			'length_unit'                 => [
 				'type'          => self::STR,
 				'default'       => '',
-				'allowedValues' => ['day', 'month', 'year', ''],
+				'allowedValues' => ['day', 'month', 'year', '']
 			],
 			'user_id'                     => [
 				'type'    => self::UINT,
 				'default' => 0,
-				'verify'  => 'verifyUserIdOrZero',
+				'verify'  => 'verifyUserIdOrZero'
 			],
 			'username'                    => ['type' => self::STR, 'maxLength' => 50],
 			'ip_id'                       => ['type' => self::UINT, 'default' => 0],
@@ -1982,23 +1994,23 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 			'review_count'                => ['type' => self::UINT, 'default' => 0, 'forced' => true],
 			'icon_date'                   => ['type' => self::UINT, 'default' => 0],
 			'prefix_id'                   => ['type' => self::UINT, 'default' => 0],
-			'tags'                        => ['type' => self::JSON_ARRAY, 'default' => []],
+			'tags'                        => ['type' => self::JSON_ARRAY, 'default' => []]
 		];
 		$structure->behaviors = [
 			'XF:PermissionRebuildable' => [
-				'permissionContentType' => $structure->contentType,
+				'permissionContentType' => $structure->contentType
 			],
 			'XF:Taggable' => ['stateField' => 'item_state'],
-			//			'XF:Likeable' => ['stateField' => 'item_state'],
+//			'XF:Likeable' => ['stateField' => 'item_state'],
 			'XF:Indexable' => [
 				'checkForUpdates' => [
 					'category_id', 'description', 'prefix_id', 'tags',
-					'creation_date', 'item_state',
-				],
+					'creation_date', 'item_state'
+				]
 			],
 			'XF:NewsFeedPublishable' => [
 				'usernameField' => 'username',
-				'dateField' => 'creation_date',
+				'dateField' => 'creation_date'
 			],
 			'XF:CustomFieldsHolder' => [
 				'column' => 'item_fields',
@@ -2007,8 +2019,8 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 				'getAllowedFields' => function ($item): array
 				{
 					return $item->Category ? $item->Category->field_cache : [];
-				},
-			],
+				}
+			]
 		];
 		$structure->getters = [
 			'title' => true,
@@ -2022,118 +2034,124 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 		];
 		$structure->relations = [
 			'MasterTagline' => [
-				'entity' => Phrase::class,
+				'entity' => 'XF:Phrase',
 				'type' => self::TO_ONE,
 				'conditions' => [
 					['language_id', '=', 0],
-					['title', '=', 'dbtech_shop_item_tag.', '$item_id'],
+					['title', '=', 'dbtech_shop_item_tag.', '$item_id']
 				],
-				'cascadeDelete' => true,
+				'cascadeDelete' => true
 			],
 			'Permissions' => [
-				'entity' => PermissionCacheContent::class,
+				'entity' => 'XF:PermissionCacheContent',
 				'type' => self::TO_MANY,
 				'conditions' => [
 					['content_type', '=', 'dbtech_shop_item'],
-					['content_id', '=', '$item_id'],
+					['content_id', '=', '$item_id']
 				],
 				'key' => 'permission_combination_id',
-				'proxy' => true,
+				'proxy' => true
 			],
 			'Ratings' => [
-				'entity' => ItemRating::class,
+				'entity' => 'DBTech\Shop:ItemRating',
 				'type' => self::TO_MANY,
 				'conditions' => 'item_id',
-				'key' => 'user_id',
+				'key' => 'user_id'
 			],
 			'Category' => [
-				'entity' => Category::class,
+				'entity' => 'DBTech\Shop:Category',
 				'type' => self::TO_ONE,
 				'conditions' => 'category_id',
-				'primary' => true,
+				'primary' => true
 			],
 			'Carts' => [
-				'entity' => Cart::class,
+				'entity' => 'DBTech\Shop:Cart',
 				'type' => self::TO_MANY,
 				'conditions' => 'item_id',
 				'with' => 'Item',
-				'cascadeDelete' => true,
+				'cascadeDelete' => true
 			],
 			'User' => [
-				'entity' => User::class,
+				'entity' => 'XF:User',
 				'type' => self::TO_ONE,
 				'conditions' => 'user_id',
-				'primary' => true,
+				'primary' => true
 			],
 			'ThreadForum' => [
-				'entity' => Forum::class,
+				'entity' => 'XF:Forum',
 				'type' => self::TO_ONE,
 				'conditions' => [
-					['node_id', '=', '$thread_node_id'],
+					['node_id', '=', '$thread_node_id']
 				],
 				'primary' => true,
-				'with' => 'Node',
+				'with' => 'Node'
 			],
 			'Discussion' => [
-				'entity' => Thread::class,
+				'entity' => 'XF:Thread',
 				'type' => self::TO_ONE,
 				'conditions' => [
-					['thread_id', '=', '$discussion_thread_id'],
+					['thread_id', '=', '$discussion_thread_id']
 				],
-				'primary' => true,
+				'primary' => true
 			],
 			'Purchases' => [
-				'entity' => Purchase::class,
+				'entity' => 'DBTech\Shop:Purchase',
 				'type' => self::TO_MANY,
 				'conditions' => 'item_id',
-				'key' => 'user_id',
+				'key' => 'user_id'
 			],
 			'PurchaseCurrency' => [
-				'entity' => Currency::class,
+				'entity' => 'DBTech\Shop:Currency',
 				'type' => self::TO_ONE,
 				'conditions' => 'currency_id',
 				'primary' => true,
 			],
 			'BuybackCurrency' => [
-				'entity' => Currency::class,
+				'entity' => 'DBTech\Shop:Currency',
 				'type' => self::TO_ONE,
 				'conditions' => [
-					['currency_id', '=', '$buyback_currency_id'],
+					['currency_id', '=', '$buyback_currency_id']
 				],
-				'primary' => true,
+				'primary' => true
 			],
 			'Prefix' => [
-				'entity' => ItemPrefix::class,
+				'entity' => 'DBTech\Shop:ItemPrefix',
 				'type' => self::TO_ONE,
 				'conditions' => 'prefix_id',
-				'primary' => true,
+				'primary' => true
 			],
 			'Watch' => [
-				'entity' => ItemWatch::class,
+				'entity' => 'DBTech\Shop:ItemWatch',
 				'type' => self::TO_MANY,
 				'conditions' => 'item_id',
-				'key' => 'user_id',
+				'key' => 'user_id'
 			],
 			'DeletionLog' => [
-				'entity' => DeletionLog::class,
+				'entity' => 'XF:DeletionLog',
 				'type' => self::TO_ONE,
 				'conditions' => [
 					['content_type', '=', 'dbtech_shop_item'],
-					['content_id', '=', '$item_id'],
+					['content_id', '=', '$item_id']
 				],
-				'primary' => true,
+				'primary' => true
+			],
+			'UsergroupDiscounts' => [
+				'entity' => 'DBTech\Shop:ItemUsergroupDiscount',
+				'type' => self::TO_MANY,
+				'conditions' => 'item_id',
+				'key' => 'user_group_id'
 			],
 			'ApprovalQueue' => [
-				'entity' => ApprovalQueue::class,
+				'entity' => 'XF:ApprovalQueue',
 				'type' => self::TO_ONE,
 				'conditions' => [
 					['content_type', '=', 'dbtech_shop_item'],
-					['content_id', '=', '$item_id'],
+					['content_id', '=', '$item_id']
 				],
-				'primary' => true,
-			],
+				'primary' => true
+			]
 		];
-
+		
 		$structure->withAliases = [
 			'full' => [
 				'User',
@@ -2144,10 +2162,10 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 					if ($userId)
 					{
 						return [
-							'Watch|' . $userId,
+							'Watch|' . $userId
 						];
 					}
-
+					
 					return null;
 				},
 				function ($withParams): ?array
@@ -2156,7 +2174,7 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 					{
 						return ['Category', 'Category.Permissions|' . \XF::visitor()->permission_combination_id];
 					}
-
+					
 					return null;
 				},
 				function ($withParams): ?array
@@ -2166,7 +2184,7 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 					{
 						return ['Category.Watch|' . $userId];
 					}
-
+					
 					return null;
 				},
 				function (): ?string
@@ -2176,24 +2194,24 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 					{
 						return 'Reactions|' . $userId;
 					}
-
+					
 					return null;
-				},
+				}
 			],
 			'fullCategory' => [
 				'full',
 				function (): array
 				{
 					$with = ['Category', 'Category.Permissions|' . \XF::visitor()->permission_combination_id];
-
+					
 					$userId = \XF::visitor()->user_id;
 					if ($userId)
 					{
 						$with[] = 'Category.Watch|' . $userId;
 					}
-
+					
 					return $with;
-				},
+				}
 			],
 			'api' => [
 				'User.api',
@@ -2207,7 +2225,7 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 					{
 						return ['Watch|' . $userId];
 					}
-
+					
 					return null;
 				},
 				function (): ?string
@@ -2217,21 +2235,132 @@ class Item extends Entity implements DatableInterface, LinkableInterface, Render
 					{
 						return 'Reactions|' . $userId;
 					}
-
+					
 					return null;
-				},
-			],
+				}
+			]
 		];
-
+		
 		$structure->options = [
 			'admin_edit' => false,
 			'is_automated' => false,
-			'log_moderator' => true,
+			'log_moderator' => true
 		];
-
+		
 		static::addBookmarkableStructureElements($structure);
 		static::addReactableStructureElements($structure);
-
+		
 		return $structure;
+	}
+
+	/**
+	 * Get the discount for a specific user
+	 * 
+	 * @param \XF\Entity\User|null $user
+	 * @return array
+	 */
+	public function getDiscountForUser(\XF\Entity\User $user = null): array
+	{
+		if (!$user)
+		{
+			$user = \XF::visitor();
+		}
+		
+		$bestDiscount = [
+			'type' => 'percentage',
+			'value' => 0,
+			'usergroup_id' => 0
+		];
+		
+		foreach ($this->UsergroupDiscounts as $discount)
+		{
+			if ($user->isMemberOf($discount->user_group_id))
+			{
+				// Find the best discount (highest percentage or highest fixed amount)
+				if ($discount->discount_type === 'percentage' && $bestDiscount['type'] === 'percentage')
+				{
+					if ($discount->discount_value > $bestDiscount['value'])
+					{
+						$bestDiscount = [
+							'type' => $discount->discount_type,
+							'value' => $discount->discount_value,
+							'usergroup_id' => $discount->user_group_id
+						];
+					}
+				}
+				elseif ($discount->discount_type === 'fixed')
+				{
+					if ($bestDiscount['type'] === 'percentage' || $discount->discount_value > $bestDiscount['value'])
+					{
+						$bestDiscount = [
+							'type' => $discount->discount_type,
+							'value' => $discount->discount_value,
+							'usergroup_id' => $discount->user_group_id
+						];
+					}
+				}
+			}
+		}
+		
+		return $bestDiscount;
+	}
+
+	/**
+	 * Get the final price after applying usergroup discount
+	 * 
+	 * @param \XF\Entity\User|null $user
+	 * @return float
+	 */
+	public function getFinalPriceForUser(\XF\Entity\User $user = null): float
+	{
+		$basePrice = $this->price;
+		$discount = $this->getDiscountForUser($user);
+		
+		if ($discount['value'] <= 0)
+		{
+			return $basePrice;
+		}
+		
+		if ($discount['type'] === 'percentage')
+		{
+			$discountAmount = ($basePrice * $discount['value']) / 100;
+			return max(0, $basePrice - $discountAmount);
+		}
+		else // fixed
+		{
+			return max(0, $basePrice - $discount['value']);
+		}
+	}
+
+	public function hasDiscountForUser(\XF\Entity\User $user = null): bool
+	{
+		$discount = $this->getDiscountForUser($user);
+		return $discount['value'] > 0;
+	}
+	
+	/**
+	 * @return \DBTech\Shop\Repository\Item|\XF\Mvc\Entity\Repository
+	 */
+	protected function getItemRepo()
+	{
+		return $this->repository('DBTech\Shop:Item');
+	}
+	
+	/**
+	 * @return \DBTech\Shop\Repository\Purchase|\XF\Mvc\Entity\Repository
+	 */
+	protected function getPurchaseRepo()
+	{
+		return $this->repository('DBTech\Shop:Purchase');
+	}
+
+	public function getTotalPrice(): float
+	{
+		return $this->Item->getFinalPriceForUser() * $this->quantity;
+	}
+
+	public function getUnitPrice(): float
+	{
+		return $this->Item->getFinalPriceForUser();
 	}
 }

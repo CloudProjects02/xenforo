@@ -1,0 +1,2642 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="dbtech_security" version_id="905000011" version_string="5.0.0 Alpha 1"><![CDATA[<xf:title>{{ phrase('admin_navigation.dbtechSecurity') }}</xf:title>
+
+<xf:macro id="section_nav_macros::section_nav" arg-section="dbtechSecurity" />]]></template>
+  <template type="admin" title="dbtech_security_breach_check" version_id="905000011" version_string="5.0.0 Alpha 1"><![CDATA[<xf:title>{{ phrase('dbtech_security_breachcheck') }}</xf:title>
+
+<xf:set var="$breachCheckBody">
+	<xf:inforow>
+		{{ phrase('dbtech_security_breachcheck_descr') }}
+	</xf:inforow>
+</xf:set>
+
+<xf:macro id="tools_rebuild::rebuild_job"
+		  arg-header="DragonByte Security: {{ phrase('dbtech_security_breachcheck') }}"
+		  arg-body="{$breachCheckBody}"
+		  arg-job="DBTech\Security:BreachCheck" />]]></template>
+  <template type="admin" title="dbtech_security_country_block" version_id="904020170" version_string="4.2.1"><![CDATA[<xf:title>{{ phrase('dbtech_security_countryblock') }}</xf:title>
+
+<xf:form action="{{ link('dbtech-security/country-block') }}" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:checkboxrow name="countries" listclass="_listInline"
+				label="{{ phrase('dbtech_security_country_list') }}">
+
+				<xf:foreach loop="$countries" key="$countryCode" value="$country">
+					<xf:option value="{$countryCode}" checked="{$country.blocked}">
+						<xf:label>{$country.name}</xf:label>
+					</xf:option>
+				</xf:foreach>
+			</xf:checkboxrow>
+		</div>
+		<xf:submitrow icon="save" sticky="true" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="dbtech_security_helper_user_search_criteria" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:checkboxrow name="criteria[Option][use_tfa]" readonly="{$readOnly}"
+				label="{{ phrase('two_step_verification') }}">
+
+	<xf:option value="0" selected="in_array(0, $criteria.Option.use_tfa)">{{ phrase('user_has_not_enabled_two_step_verification') }}</xf:option>
+	<xf:option value="1" selected="in_array(1, $criteria.Option.use_tfa)">{{ phrase('user_has_enabled_two_step_verification') }}</xf:option>
+</xf:checkboxrow>
+
+<xf:checkboxrow name="criteria[Option][dbtech_security_is_user_locked]" readonly="{$readOnly}"
+				label="{{ phrase('dbtech_security_account_user_lock_state') }}">
+
+	<xf:option value="0" selected="in_array(0, $criteria.Option.dbtech_security_is_user_locked)">{{ phrase('dbtech_security_not_user_locked') }}</xf:option>
+	<xf:option value="1" selected="in_array(1, $criteria.Option.dbtech_security_is_user_locked)">{{ phrase('dbtech_security_user_locked') }}</xf:option>
+</xf:checkboxrow>
+
+<xf:checkboxrow name="criteria[Option][dbtech_security_is_admin_locked]" readonly="{$readOnly}"
+				label="{{ phrase('dbtech_security_account_admin_lock_state') }}">
+
+	<xf:option value="0" selected="in_array(0, $criteria.Option.dbtech_security_is_admin_locked)">{{ phrase('dbtech_security_not_admin_locked') }}</xf:option>
+	<xf:option value="1" selected="in_array(1, $criteria.Option.dbtech_security_is_admin_locked)">{{ phrase('dbtech_security_admin_locked') }}</xf:option>
+</xf:checkboxrow>]]></template>
+  <template type="admin" title="dbtech_security_ip_search" version_id="905000011" version_string="5.0.0 Alpha 1"><![CDATA[<xf:title>{{ phrase('dbtech_security_search_ip_addresses') }}</xf:title>
+
+<div class="block">
+	<div class="block-container">
+		<h2 class="block-tabHeader tabs hScroller" data-xf-init="tabs h-scroller" role="tablist">
+			<span class="hScroller-scroll">
+				<a class="tabs-tab is-active" role="tab" tabindex="0" aria-controls="ip-search">{{ phrase('dbtech_security_search_ip_addresses') }}</a>
+				<a class="tabs-tab" role="tab" tabindex="0" aria-controls="new-ip-search">{{ phrase('dbtech_security_iplog_search1_title') }}</a>
+				<a class="tabs-tab js-duplicateIpsTab" role="tab" id="duplicateIps">{{ phrase('dbtech_security_iplog_search2_title') }}</a>
+				<a class="tabs-tab js-suspectIpsTab" role="tab" id="suspectIps">{{ phrase('dbtech_security_find_suspect_ips') }}</a>
+				<a class="tabs-tab js-intruderIpsTab" role="tab" id="intruderIps">{{ phrase('dbtech_security_find_intruder_ips') }}</a>
+			</span>
+		</h2>
+		<ul class="tabPanes">
+			<li class="is-active" role="tabpanel" id="ip-search">
+				<xf:form action="{{ link('dbtech-security/search/ip') }}">
+					<div class="block-body">
+						<xf:textboxrow name="ipaddress"
+									   label="{{ phrase('ip_address') }}"
+									   explain="{{ phrase('ip_search_explain') }}" />
+
+						<xf:textboxrow name="username" ac="single"
+									   label="{{ phrase('user_name') }}" />
+					</div>
+					<xf:submitrow sticky="true" icon="search" />
+				</xf:form>
+			</li>
+			<li role="tabpanel" id="new-ip-search">
+				<xf:form action="{{ link('dbtech-security/search/new-ips') }}">
+					<div class="block-body">
+						<xf:dateinputrow name="firstvisit" value="{{ date($xf.time - 604800, 'picker') }}"
+										 label="{{ phrase('start_date') }}"
+										 explain="{{ phrase('dbtech_security_iplog_search1') }}" />
+					</div>
+					<xf:submitrow icon="search" />
+				</xf:form>
+			</li>
+			<li data-href="{{ link('dbtech-security/search/duplicate-ips') }}" role="tabpanel" aria-labelledby="duplicateIps" data-tab=".js-duplicateIpsTab">
+				<div class="blockMessage">{{ phrase('loading...') }}</div>
+			</li>
+			<li data-href="{{ link('dbtech-security/search/suspect-ips') }}" role="tabpanel" aria-labelledby="suspectIps" data-tab=".js-suspectIpsTab">
+				<div class="blockMessage">{{ phrase('loading...') }}</div>
+			</li>
+			<li data-href="{{ link('dbtech-security/search/intruder-ips') }}" role="tabpanel" aria-labelledby="intruderIps" data-tab=".js-intruderIpsTab">
+				<div class="blockMessage">{{ phrase('loading...') }}</div>
+			</li>
+		</ul>
+	</div>
+</div>
+
+<xf:macro id="duplicate_list" arg-ipList="!" arg-users="!">
+	<div class="block">
+		<div class="block-container">
+			<div class="block-body">
+				<xf:if is="$ipList is not empty">
+					<ul class="listPlain block-row">
+						<xf:foreach loop="$ipList" key="$ip" value="$data">
+							<li>
+								<h3 class="block-minorHeader"><a href="{{ link_type('public', 'misc/ip-info', null, {'ip': $ip}) }}" target="_blank" class="u-ltr">{$ip}</a></h3>
+								<ul class="listPadded">
+									<xf:foreach loop="$data" key="$userId" value="$info">
+										<li><xf:username user="{$users.{$userId}}" defaultname="{{ phrase('unknown_user') }}" /></li>
+									</xf:foreach>
+								</ul>
+							</li>
+						</xf:foreach>
+					</ul>
+				<xf:else />
+					<div class="blockMessage">{{ phrase('dbtech_security_no_duplicate_ips_found') }}</div>
+				</xf:if>
+			</div>
+		</div>
+	</div>
+</xf:macro>
+
+<xf:macro id="suspect_list" arg-ipList="!">
+	<div class="block">
+		<div class="block-container">
+			<div class="block-body block-row">
+				<xf:if is="$ipList is not empty">
+					<xf:foreach loop="$ipList" key="$ip" value="$hits">
+						<dl class="pairs pairs--columns pairs--fixedSmall">
+							<dt>{$ip}</dt>
+							<dd>{{ phrase('dbtech_security_x_hits', {'param1': $hits|number}) }}</dd>
+						</dl>
+					</xf:foreach>
+				<xf:else />
+					<div class="blockMessage">{{ phrase('dbtech_security_no_suspect_ips_found') }}</div>
+				</xf:if>
+			</div>
+		</div>
+	</div>
+</xf:macro>
+
+<xf:macro id="intruder_list" arg-ipList="!">
+	<div class="block">
+		<div class="block-container">
+			<div class="block-body">
+				<xf:if is="$ipList is not empty">
+					<ul class="listPlain block-row">
+						<xf:foreach loop="$ipList" key="$ip" value="$data">
+							<li>
+								<a href="{{ link_type('public', 'misc/ip-info', null, {'ip': $ip}) }}" target="_blank" class="u-ltr">{$ip}</a>
+								<xf:if is="$data.failed is not empty">
+									<h3 class="block-minorHeader">{{ phrase('dbtech_security_failed_logins') }}</h3>
+									<ul class="listPadded">
+										<xf:foreach loop="$data.failed" value="$attempt">
+											<li>{$attempt.username} {{ phrase('(dbtech_security_x_tries)', {'param1': $attempt.count|number}) }}</li>
+										</xf:foreach>
+									</ul>
+								</xf:if>
+								<xf:if is="$data.successful is not empty">
+									<h3 class="block-minorHeader">{{ phrase('dbtech_security_successful_logins') }}</h3>
+									<ul class="listPadded">
+										<xf:foreach loop="$data.successful" value="$attempt">
+											<li><xf:username user="$attempt.user" defaultname="{$attempt.username}" /></li>
+										</xf:foreach>
+									</ul>
+								</xf:if>
+							</li>
+						</xf:foreach>
+					</ul>
+				<xf:else />
+					<div class="blockMessage">{{ phrase('dbtech_security_no_intruder_ips_found') }}</div>
+				</xf:if>
+			</div>
+		</div>
+	</div>
+</xf:macro>]]></template>
+  <template type="admin" title="dbtech_security_ip_search_duplicate" version_id="905000011" version_string="5.0.0 Alpha 1"><![CDATA[<xf:macro id="dbtech_security_ip_search::duplicate_list"
+	arg-ipList="{$ipList}" arg-users="{$users}" />]]></template>
+  <template type="admin" title="dbtech_security_ip_search_intruder" version_id="905000011" version_string="5.0.0 Alpha 1"><![CDATA[<xf:macro id="dbtech_security_ip_search::intruder_list"
+	arg-ipList="{$ipList}" />]]></template>
+  <template type="admin" title="dbtech_security_ip_search_ip" version_id="904020270" version_string="4.2.2"><![CDATA[<xf:title>{{ phrase('search_results') }}</xf:title>
+
+<div class="block">
+	<div class="block-container">
+		<xf:if is="$users">
+			<ol class="block-body">
+				<xf:foreach loop="$users" value="$share">
+					<li class="block-row block-row--separated">
+						<div class="contentRow">
+							<div class="contentRow-figure">
+								<xf:avatar user="$share.user" size="s" notooltip="true" />
+							</div>
+							<div class="contentRow-main">
+								<h3 class="contentRow-header"><xf:username user="$share.user" rich="true" notooltip="true" /></h3>
+
+								<xf:userblurb user="$share.user" class="contentRow-lesser" />
+
+								<div class="contentRow-minor">
+									<ul class="listInline listInline--bullet">
+										<li><dl class="pairs pairs--inline">
+											<dt>{{ phrase('joined') }}</dt>
+											<dd><xf:date time="{$share.user.register_date}" /></dd>
+										</dl></li>
+										<li><dl class="pairs pairs--inline">
+											<dt>{{ phrase('messages') }}</dt>
+											<dd>{$share.user.message_count|number}</dd>
+										</dl></li>
+										<li><dl class="pairs pairs--inline">
+											<dt>{{ phrase('likes') }}</dt>
+											<dd>{$share.user.like_count|number}</dd>
+										</dl></li>
+									</ul>
+								</div>
+
+								<div class="contentRow-lesser">
+									<ol>
+										<xf:foreach loop="{$share.ips}" value="$ip">
+											<li>
+												<ul class="listInline listInline--bullet">
+													<li><a href="{{ link_type('public', 'misc/ip-info', '', {'ip': $ip.ip|ip}) }}" target="_blank">{$ip.ip|ip}</a></li>
+													<xf:if is="$ip.total > 1">
+														<li>{{ phrase('x_times', {'total': $ip.total|number}) }}</li>
+														<li><xf:date time="{$ip.first_date}" /> - <xf:date time="{$ip.last_date}" /></li>
+													<xf:else />
+														<li>{{ phrase('1_time') }}</li>
+														<li><xf:date time="{$ip.first_date}" /></li>
+													</xf:if>
+												</ul>
+											</li>
+										</xf:foreach>
+									</ol>
+								</div>
+							</div>
+						</div>
+					</li>
+				</xf:foreach>
+			</ol>
+			<div class="block-footer">
+				<span class="block-footer-counter">{{ phrase('matched_x_users', {'count': count($users)}) }}</span>
+			</div>
+		<xf:else />
+			<div class="block-body block-row">{{ phrase('no_matching_users_were_found') }}</div>
+		</xf:if>
+	</div>
+</div>]]></template>
+  <template type="admin" title="dbtech_security_ip_search_new" version_id="904010032" version_string="4.1.0 Beta 2"><![CDATA[<xf:title>{{ phrase('dbtech_security_iplog_search1_title') }}</xf:title>
+
+<div class="block">
+	<div class="block-container">
+		<xf:if is="$users">
+			<ol class="block-body">
+				<xf:foreach loop="$users" value="$share">
+					<li class="block-row block-row--separated">
+						<div class="contentRow">
+							<div class="contentRow-figure">
+								<xf:avatar user="$share.user" size="s" notooltip="true" />
+							</div>
+							<div class="contentRow-main">
+								<h3 class="contentRow-header"><xf:username user="$share.user" rich="true" notooltip="true" /></h3>
+
+								<xf:userblurb user="$share.user" class="contentRow-lesser" />
+
+								<div class="contentRow-minor">
+									<ul class="listInline listInline--bullet">
+										<li><dl class="pairs pairs--inline">
+											<dt>{{ phrase('joined') }}</dt>
+											<dd><xf:date time="{$share.user.register_date}" /></dd>
+										</dl></li>
+										<li><dl class="pairs pairs--inline">
+											<dt>{{ phrase('messages') }}</dt>
+											<dd>{$share.user.message_count|number}</dd>
+										</dl></li>
+										<li><dl class="pairs pairs--inline">
+											<dt>{{ phrase('likes') }}</dt>
+											<dd>{$share.user.like_count|number}</dd>
+										</dl></li>
+									</ul>
+								</div>
+
+								<div class="contentRow-lesser">
+									<ol>
+										<xf:foreach loop="{$share.ips}" value="$ip">
+											<li>
+												<ul class="listInline listInline--bullet">
+													<li><a href="{{ link_type('public', 'misc/ip-info', '', {'ip': $ip.ip|ip}) }}" target="_blank">{$ip.ip|ip}</a></li>
+													<xf:if is="$ip.total > 1">
+														<li>{{ phrase('x_times', {'total': $ip.total|number}) }}</li>
+														<li><xf:date time="{$ip.first_date}" /> - <xf:date time="{$ip.last_date}" /></li>
+														<xf:else />
+														<li>{{ phrase('1_time') }}</li>
+														<li><xf:date time="{$ip.first_date}" /></li>
+													</xf:if>
+												</ul>
+											</li>
+										</xf:foreach>
+									</ol>
+								</div>
+							</div>
+						</div>
+					</li>
+				</xf:foreach>
+			</ol>
+			<div class="block-footer">
+				<span class="block-footer-counter">{{ phrase('matched_x_users', {'count': count($users)}) }}</span>
+			</div>
+			<xf:else />
+			<div class="block-body block-row">{{ phrase('no_matching_users_were_found') }}</div>
+		</xf:if>
+	</div>
+</div>]]></template>
+  <template type="admin" title="dbtech_security_ip_search_suspect" version_id="905000011" version_string="5.0.0 Alpha 1"><![CDATA[<xf:macro id="dbtech_security_ip_search::suspect_list"
+	arg-ipList="{$ipList}" />]]></template>
+  <template type="admin" title="dbtech_security_log_admin_strikes_list" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:title>{{ phrase('dbtech_security_admin_strike_log') }}</xf:title>
+
+<xf:pageaction>
+	<xf:button href="{{ link('dbtech-security/logs/admin-strikes/search') }}" icon="search">{{ phrase('search_logs') }}</xf:button>
+</xf:pageaction>
+
+<xf:if is="$entries is not empty">
+	<div class="block">
+		<div class="block-container">
+			<div class="block-body">
+				<xf:datalist>
+					<xf:foreach loop="$entries" value="$entry">
+						<xf:set var="$user">
+							<xf:if is="$entry.user_id">
+								{$entry.User.username}
+							<xf:else />
+								{{ phrase('guest') }}
+							</xf:if>
+						</xf:set>
+
+						<xf:datarow>
+							<xf:main href="{{ link('dbtech-security/logs/admin-strikes', $entry) }}" overlay="true">
+								<xf:label>
+									{$user}
+								</xf:label>
+								<xf:hint>
+									{$entry.username}
+								</xf:hint>
+								<xf:explain>
+									<ul class="listInline listInline--bullet">
+										<li><xf:date time="{$entry.dateline}" data-full-date="true" /></li>
+										<li>{$entry.ipaddress}</li>
+									</ul>
+								</xf:explain>
+							</xf:main>
+						</xf:datarow>
+					</xf:foreach>
+				</xf:datalist>
+			</div>
+			<div class="block-footer">
+				<span class="block-footer-counter">{{ display_totals($entries, $total) }}</span>
+			</div>
+		</div>
+		<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+					link="dbtech-security/logs/admin-strikes" params="{{ {'criteria': $criteria, 'order': $order, 'direction': $direction} }}"
+					wrapperclass="block-outer block-outer--after" />
+	</div>
+	<xf:else />
+	<div class="blockMessage">{{ $criteria ? phrase('no_records_matched') : phrase('no_entries_have_been_logged') }}</div>
+</xf:if>]]></template>
+  <template type="admin" title="dbtech_security_log_admin_strikes_search" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<!--suppress ALL -->
+<xf:title>{{ phrase('dbtech_security_admin_strike_log_search') }}</xf:title>
+
+<xf:form action="{{ link('dbtech-security/logs/admin-strikes') }}" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:textboxrow name="criteria[User][username]" ac="single" value="{$criteria.User.username}"
+						   label="{{ phrase('user') }}" />
+
+			<xf:textboxrow name="criteria[username]" value="{$criteria.username}"
+						   label="{{ phrase('dbtech_security_attempted_user_name') }}" />
+
+			<hr class="formRowSep" />
+
+			<xf:formrow rowtype="input"
+						label="{{ phrase('date_range') }}">
+				<div class="inputGroup">
+					<xf:dateinput name="criteria[dateline][start]" value="{$criteria.dateline.start}" size="15" />
+					<span class="inputGroup-text">-</span>
+					<xf:dateinput name="criteria[dateline][end]" value="{$criteria.dateline.end}" size="15" />
+				</div>
+			</xf:formrow>
+
+			<hr class="formRowSep" />
+
+			<xf:formrow rowtype="input"
+						label="{{ phrase('sort') }}">
+
+				<div class="inputPair">
+					<xf:select name="order">
+						<xf:options source="{$sortOrders}" />
+					</xf:select>
+					<xf:select name="direction" value="desc">
+						<xf:option value="asc">{{ phrase('ascending') }}</xf:option>
+						<xf:option value="desc">{{ phrase('descending') }}</xf:option>
+					</xf:select>
+				</div>
+			</xf:formrow>
+		</div>
+		<xf:submitrow sticky="true" icon="search" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="dbtech_security_log_admin_strikes_view" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:title>{{ phrase('dbtech_security_admin_strike_log_id_x', {'logId': $entry.admin_strike_id}) }}</xf:title>
+
+<div class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:formrow label="{{ phrase('user') }}">
+				<xf:username user="{$entry.User}" defaultname="{{ phrase('unknown_user') }}" />
+			</xf:formrow>
+
+			<xf:formrow label="{{ phrase('dbtech_security_attempted_user_name') }}">
+				{$entry.username}
+			</xf:formrow>
+
+			<xf:formrow label="{{ phrase('ip_address') }}">
+				<a href="{{ link_type('public', 'misc/ip-info', null, {'ip': $entry.ipaddress}) }}" target="_blank" class="u-ltr">{$entry.ipaddress}</a>
+			</xf:formrow>
+
+			<xf:formrow label="{{ phrase('date') }}">
+				<xf:date time="{$entry.dateline}" data-full-date="true" />
+			</xf:formrow>
+		</div>
+	</div>
+</div>]]></template>
+  <template type="admin" title="dbtech_security_log_bad_behavior_list" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:title>{{ phrase('dbtech_security_bad_behavior_log') }}</xf:title>
+
+<xf:pageaction>
+	<xf:button href="{{ link('dbtech-security/logs/bad-behavior/search') }}" icon="search">{{ phrase('search_logs') }}</xf:button>
+</xf:pageaction>
+
+<div class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:datalist data-xf-init="responsive-data-list">
+				<xf:datarow rowtype="header">
+					<xf:cell>{{ phrase('date') }}</xf:cell>
+					<xf:cell>{{ phrase('ip_address') }}</xf:cell>
+					<xf:cell>{{ phrase('dbtech_security_request_method') }}</xf:cell>
+					<xf:cell>{{ phrase('dbtech_security_request_uri') }}</xf:cell>
+					<xf:cell>&nbsp;</xf:cell>
+				</xf:datarow>
+
+				<xf:foreach loop="$entries" value="$entry">
+					<xf:datarow>
+						<xf:cell>
+							{$entry.date}
+						</xf:cell>
+						<xf:cell class="u-ltr">
+							<a href="{{ link_type('public', 'misc/ip-info', null, {'ip': $entry.ip}) }}" target="_blank">{$entry.ip}</a>
+						</xf:cell>
+						<xf:cell>
+							{$entry.request_method}
+						</xf:cell>
+						<xf:cell class="dataList-cell--breakWord">
+							{$entry.request_uri}
+							<div class="u-muted">[{$entry.response_code}] {$entry.response}</div>
+						</xf:cell>
+						<xf:action href="{{ link('dbtech-security/logs/bad-behavior', $entry) }}" overlay="true">{{ phrase('view') }}</xf:action>
+					</xf:datarow>
+					<xf:else />
+					<xf:datarow>
+						<xf:cell colspan="5">{{ phrase('no_entries_have_been_logged') }}</xf:cell>
+					</xf:datarow>
+				</xf:foreach>
+			</xf:datalist>
+		</div>
+		<div class="block-footer">
+			<span class="block-footer-counter">{{ display_totals($entries, $total) }}</span>
+		</div>
+	</div>
+	<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+				link="dbtech-security/logs/bad-behavior" params="{{ {'criteria': $criteria, 'order': $order, 'direction': $direction} }}"
+				wrapperclass="block-outer block-outer--after" />
+</div>]]></template>
+  <template type="admin" title="dbtech_security_log_bad_behavior_search" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<!--suppress ALL -->
+<xf:title>{{ phrase('dbtech_security_bad_behavior_log_search') }}</xf:title>
+
+<xf:form action="{{ link('dbtech-security/logs/bad-behavior') }}" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:textboxrow name="criteria[request_uri]" ac="single" value="{$criteria.request_uri}"
+						   label="{{ phrase('dbtech_security_request_uri') }}" />
+
+			<xf:checkboxrow name="criteria[request_method]" value="{$criteria.request_method}"
+						   label="{{ phrase('dbtech_security_request_method') }}">
+				<xf:option value="GET">GET</xf:option>
+				<xf:option value="POST">POST</xf:option>
+				<xf:option value="HEAD">HEAD</xf:option>
+				<xf:option value="PUT">PUT</xf:option>
+				<xf:option value="DELETE">DELETE</xf:option>
+				<xf:option value="CONNECT">CONNECT</xf:option>
+				<xf:option value="OPTIONS">OPTIONS</xf:option>
+				<xf:option value="TRACE">TRACE</xf:option>
+				<xf:option value="PATCH">PATCH</xf:option>
+			</xf:checkboxrow>
+
+			<hr class="formRowSep" />
+
+			<xf:formrow rowtype="input"
+						label="{{ phrase('sort') }}">
+
+				<div class="inputPair">
+					<xf:select name="order">
+						<xf:options source="{$sortOrders}" />
+					</xf:select>
+					<xf:select name="direction" value="desc">
+						<xf:option value="asc">{{ phrase('ascending') }}</xf:option>
+						<xf:option value="desc">{{ phrase('descending') }}</xf:option>
+					</xf:select>
+				</div>
+			</xf:formrow>
+		</div>
+		<xf:submitrow sticky="true" icon="search" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="dbtech_security_log_bad_behavior_view" version_id="904020070" version_string="4.2.0"><![CDATA[<xf:title>{{ phrase('dbtech_security_bad_behavior_log_id_x', {'logId': $entry.id}) }}</xf:title>
+
+<div class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:formrow label="{{ phrase('ip_address') }}">
+				<a href="{{ link_type('public', 'misc/ip-info', null, {'ip': $entry.ip}) }}" target="_blank" class="u-ltr">{$entry.ip}</a>
+			</xf:formrow>
+
+			<xf:formrow label="{{ phrase('date') }}">
+				{$entry.date}
+			</xf:formrow>
+
+			<hr class="formRowSep" />
+
+			<xf:formrow label="{{ phrase('dbtech_security_request_method') }}">
+				<code>{$entry.request_method}</code>
+			</xf:formrow>
+
+			<xf:formrow label="{{ phrase('dbtech_security_request_uri') }}">
+				<code>{$entry.request_uri}</code>
+			</xf:formrow>
+
+			<xf:formrow label="{{ phrase('dbtech_security_response') }}">
+				[{$entry.response_code}] {$entry.response}
+			</xf:formrow>
+
+			<xf:formrow label="{{ phrase('dbtech_security_server_protocol') }}">
+				<code>{$entry.server_protocol}</code>
+			</xf:formrow>
+
+			<xf:formrow label="{{ phrase('dbtech_security_useragent') }}">
+				<code>{$entry.user_agent}</code>
+			</xf:formrow>
+		</div>
+
+		<h3 class="block-minorHeader">
+			<span class="collapseTrigger collapseTrigger--block" data-xf-click="toggle" data-target="< :up:next">
+				{{ phrase('dbtech_security_http_headers') }}
+			</span>
+		</h3>
+		<div class="block-body block-body--contained block-body--collapsible block-row" dir="ltr">
+			{{ dump_simple($entry.http_headers) }}
+		</div>
+	</div>
+</div>]]></template>
+  <template type="admin" title="dbtech_security_log_change_list" version_id="905000011" version_string="5.0.0 Alpha 1"><![CDATA[<xf:title>{{ phrase('dbtech_security_change_logs') }}</xf:title>
+
+<xf:form action="{{ link('dbtech-security/logs/changes') }}" class="block">
+	<div class="block-container">
+		<div class="block-body block-row">
+			<xf:textbox name="username" placeholder="{{ phrase('user_name...') }}" type="search" value="{{ $limitUser ? $limitUser.username : '' }}" class="input--inline" />
+			<xf:button type="submit">{{ phrase('show_changes') }}</xf:button>
+		</div>
+	</div>
+</xf:form>
+
+<xf:if is="$changesGrouped">
+	<div class="block">
+		<div class="block-container">
+			<div class="block-body">
+				<xf:macro id="change_log_list" arg-changesGrouped="{$changesGrouped}" />
+			</div>
+			<div class="block-footer">
+				<span class="block-footer-counter">{{ display_totals($totalChanges, $total) }}</span>
+			</div>
+		</div>
+
+		<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+			link="dbtech-security/logs/changes" params="{$linkFilters}"
+			wrapperclass="block-outer block-outer--after" />
+	</div>
+<xf:else />
+	<div class="blockMessage">{{ phrase('no_changes_have_been_logged') }}</div>
+</xf:if>
+
+<xf:macro id="change_log_list" arg-changesGrouped="!">
+	<xf:datalist data-xf-init="responsive-data-list">
+	<thead>
+		<xf:datarow rowtype="header">
+			<xf:cell>{{ phrase('field_name') }}</xf:cell>
+			<xf:cell>{{ phrase('old_value') }}</xf:cell>
+			<xf:cell>{{ phrase('new_value') }}</xf:cell>
+		</xf:datarow>
+	</thead>
+	<xf:foreach loop="$changesGrouped" value="$group">
+		<tbody class="dataList-rowGroup">
+			<xf:datarow rowtype="subsection" rowclass="dataList-row--noHover">
+				<xf:cell colspan="3">
+					<span class="u-pullRight"><xf:date time="{$group.date}" /></span>
+					<ul class="listInline listInline--bullet">
+						<li>
+							<xf:if is="$group.content_type == 'dbtech_security_option'">
+								{{ phrase('settings') }}
+							<xf:elseif is="$group.content_type == 'dbtech_security_adminperm'" />
+								{{ phrase('admin_permissions:') }} <xf:avatar user="$group.content" size="xxs" href="" /> {$group.content.username}
+							<xf:elseif is="$group.content_type == 'dbtech_security_forumperm'" />
+								{{ phrase('node_permissions:') }} {$group.content.title}
+							<xf:elseif is="$group.content_type == 'dbtech_security_groupperm'" />
+								{{ phrase('user_group_permissions:') }} {$group.content.title}
+							<xf:elseif is="$group.content_type == 'dbtech_security_group'" />
+								{{ phrase('user_group') }}
+							<xf:elseif is="$group.content_type == 'dbtech_security_userperm'" />
+								{{ phrase('user_permissions:') }} <xf:avatar user="$group.content" size="xxs" href="" /> {$group.content.username}
+							<xf:elseif is="$group.content_type == 'user'" />
+								{{ phrase('user_info:') }} <xf:avatar user="$group.content" size="xxs" href="" /> {$group.content.username}
+							<xf:else />
+								{$group.content.title}
+							</xf:if>
+						</li>
+						<xf:if is="$group.editUser">
+							<li>{{ phrase('edited_by_x', {'name': $group.editUser.username}) }}</li>
+						</xf:if>
+					</ul>
+				</xf:cell>
+			</xf:datarow>
+			<xf:foreach loop="$group.changes" value="$change">
+				<xf:datarow rowclass="{{ $change.protected ? 'dataList-row--protected' : '' }}">
+					<xf:cell>{$change.label}</xf:cell>
+					<xf:cell class="dataList-cell--breakWord">{$change.old}</xf:cell>
+					<xf:cell class="dataList-cell--breakWord">{$change.new}</xf:cell>
+				</xf:datarow>
+			</xf:foreach>
+		</tbody>
+	</xf:foreach>
+	</xf:datalist>
+</xf:macro>]]></template>
+  <template type="admin" title="dbtech_security_log_compromised_account_list" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:title>{{ phrase('dbtech_security_compromised_log') }}</xf:title>
+
+<xf:pageaction>
+	<xf:button href="{{ link('dbtech-security/logs/compromised-accounts/search') }}" icon="search">{{ phrase('search_logs') }}</xf:button>
+</xf:pageaction>
+
+<div class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:datalist data-xf-init="responsive-data-list">
+				<xf:datarow rowtype="header">
+					<xf:cell>{{ phrase('user') }}</xf:cell>
+					<xf:cell>{{ phrase('date') }}</xf:cell>
+					<xf:cell>{{ phrase('ip_address') }}</xf:cell>
+					<xf:cell>{{ phrase('dbtech_security_attempted_usernames') }}</xf:cell>
+				</xf:datarow>
+
+				<xf:foreach loop="$entries" value="$entry">
+					<xf:datarow>
+						<xf:cell>
+							<xf:if is="$entry.User">
+								<a href="{{ link('users/edit', $entry.User) }}"
+								   data-xf-init="tooltip"
+								   title="{$entry.User.username}">{$entry.User.username}</a>
+							<xf:else />
+								{{ phrase('unknown_user') }}
+							</xf:if>
+						</xf:cell>
+						<xf:cell>
+							<xf:date time="{$entry.dateline}" data-full-date="true" />
+						</xf:cell>
+						<xf:cell>
+							<a href="{{ link_type('public', 'misc/ip-info', null, {'ip': $entry.ipaddress}) }}" target="_blank" class="u-ltr">{$entry.ipaddress}</a>
+
+						</xf:cell>
+						<xf:cell>
+							{$entry.attempted_usernames}
+						</xf:cell>
+					</xf:datarow>
+				<xf:else />
+					<xf:datarow>
+						<xf:cell colspan="5">{{ phrase('no_entries_have_been_logged') }}</xf:cell>
+					</xf:datarow>
+				</xf:foreach>
+			</xf:datalist>
+		</div>
+		<div class="block-footer">
+			<span class="block-footer-counter">{{ display_totals($entries, $total) }}</span>
+		</div>
+	</div>
+	<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+				link="dbtech-security/logs/compromised-accounts" params="{{ {'criteria': $criteria, 'order': $order, 'direction': $direction} }}"
+				wrapperclass="block-outer block-outer--after" />
+</div>]]></template>
+  <template type="admin" title="dbtech_security_log_compromised_account_search" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<!--suppress ALL -->
+<xf:title>{{ phrase('dbtech_security_compromised_account_log_search') }}</xf:title>
+
+<xf:form action="{{ link('dbtech-security/logs/compromised-accounts') }}" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:textboxrow name="criteria[User][username]" ac="single" value="{$criteria.User.username}"
+						   label="{{ phrase('user') }}" />
+
+			<xf:textboxrow name="criteria[attempted_usernames]" value="{$criteria.attempted_usernames}"
+						   label="{{ phrase('dbtech_security_attempted_user_name') }}" />
+
+			<hr class="formRowSep" />
+
+			<xf:formrow rowtype="input"
+						label="{{ phrase('date_range') }}">
+				<div class="inputGroup">
+					<xf:dateinput name="criteria[dateline][start]" value="{$criteria.dateline.start}" size="15" />
+					<span class="inputGroup-text">-</span>
+					<xf:dateinput name="criteria[dateline][end]" value="{$criteria.dateline.end}" size="15" />
+				</div>
+			</xf:formrow>
+
+			<hr class="formRowSep" />
+
+			<xf:formrow rowtype="input"
+						label="{{ phrase('sort') }}">
+
+				<div class="inputPair">
+					<xf:select name="order">
+						<xf:options source="{$sortOrders}" />
+					</xf:select>
+					<xf:select name="direction" value="desc">
+						<xf:option value="asc">{{ phrase('ascending') }}</xf:option>
+						<xf:option value="desc">{{ phrase('descending') }}</xf:option>
+					</xf:select>
+				</div>
+			</xf:formrow>
+		</div>
+		<xf:submitrow sticky="true" icon="search" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="dbtech_security_log_fingerprint_list" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:title>{{ phrase('dbtech_security_fingerprint_log') }}</xf:title>
+
+<xf:pageaction>
+	<xf:button href="{{ link('dbtech-security/logs/fingerprints/search') }}" icon="search">{{ phrase('search_logs') }}</xf:button>
+</xf:pageaction>
+
+<div class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:datalist data-xf-init="responsive-data-list">
+				<xf:datarow rowtype="header">
+					<xf:cell>{{ phrase('date') }}</xf:cell>
+					<xf:cell>{{ phrase('user') }}</xf:cell>
+					<xf:cell>{{ phrase('ip_address') }}</xf:cell>
+					<xf:cell>{{ phrase('dbtech_security_fingerprint') }}</xf:cell>
+					<xf:cell>&nbsp;</xf:cell>
+				</xf:datarow>
+
+				<xf:foreach loop="$entries" value="$entry">
+					<xf:datarow>
+						<xf:cell>
+							<xf:date time="{$entry.dateline}" data-full-date="true" />
+						</xf:cell>
+						<xf:cell>
+							<xf:username user="{$entry.User}" defaultname="{{ phrase('unknown_user') }}" />
+						</xf:cell>
+						<xf:cell class="u-ltr">
+							<a href="{{ link_type('public', 'misc/ip-info', null, {'ip': $entry.ipaddress}) }}" target="_blank">{$entry.ipaddress}</a>
+						</xf:cell>
+						<xf:cell>
+							{$entry.fingerprint}
+						</xf:cell>
+						<xf:action href="{{ link('dbtech-security/logs/fingerprints', $entry) }}" overlay="true">{{ phrase('view') }}</xf:action>
+					</xf:datarow>
+				<xf:else />
+					<xf:datarow>
+						<xf:cell colspan="5">{{ phrase('no_entries_have_been_logged') }}</xf:cell>
+					</xf:datarow>
+				</xf:foreach>
+			</xf:datalist>
+		</div>
+		<div class="block-footer">
+			<span class="block-footer-counter">{{ display_totals($entries, $total) }}</span>
+		</div>
+	</div>
+	<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+				link="dbtech-security/logs/fingerprints" params="{{ {'criteria': $criteria, 'order': $order, 'direction': $direction} }}"
+				wrapperclass="block-outer block-outer--after" />
+</div>]]></template>
+  <template type="admin" title="dbtech_security_log_fingerprint_search" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<!--suppress ALL -->
+<xf:title>{{ phrase('dbtech_security_fingerprint_log_search') }}</xf:title>
+
+<xf:form action="{{ link('dbtech-security/logs/fingerprints') }}" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:textboxrow name="criteria[User][username]" ac="single" value="{$criteria.User.username}"
+						   label="{{ phrase('user') }}" />
+
+			<xf:textboxrow name="criteria[fingerprint]" value="{$criteria.fingerprint}"
+						   label="{{ phrase('dbtech_security_fingerprint') }}" />
+
+			<hr class="formRowSep" />
+
+			<xf:formrow rowtype="input"
+						label="{{ phrase('date_range') }}">
+				<div class="inputGroup">
+					<xf:dateinput name="criteria[dateline][start]" value="{$criteria.dateline.start}" size="15" />
+					<span class="inputGroup-text">-</span>
+					<xf:dateinput name="criteria[dateline][end]" value="{$criteria.dateline.end}" size="15" />
+				</div>
+			</xf:formrow>
+
+			<hr class="formRowSep" />
+
+			<xf:formrow rowtype="input"
+						label="{{ phrase('sort') }}">
+
+				<div class="inputPair">
+					<xf:select name="order">
+						<xf:options source="{$sortOrders}" />
+					</xf:select>
+					<xf:select name="direction" value="desc">
+						<xf:option value="asc">{{ phrase('ascending') }}</xf:option>
+						<xf:option value="desc">{{ phrase('descending') }}</xf:option>
+					</xf:select>
+				</div>
+			</xf:formrow>
+		</div>
+		<xf:submitrow sticky="true" icon="search" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="dbtech_security_log_fingerprint_view" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:title>{{ phrase('dbtech_security_fingerprint_log_id_x', {'logId': $entry.fingerprint_log_id}) }}</xf:title>
+
+<div class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:formrow label="{{ phrase('user') }}">
+				<xf:username user="{$entry.User}" defaultname="{{ phrase('unknown_user') }}" />
+			</xf:formrow>
+
+			<xf:formrow label="{{ phrase('ip_address') }}">
+				<a href="{{ link_type('public', 'misc/ip-info', null, {'ip': $entry.ipaddress}) }}" target="_blank" class="u-ltr">{$entry.ipaddress}</a>
+			</xf:formrow>
+
+			<xf:formrow label="{{ phrase('date') }}">
+				<xf:date time="{$entry.dateline}" data-full-date="true" />
+			</xf:formrow>
+
+			<hr class="formRowSep" />
+
+			<xf:formrow label="{{ phrase('dbtech_security_fingerprint') }}">
+				{$entry.fingerprint|raw}
+			</xf:formrow>
+		</div>
+
+		<h3 class="block-minorHeader">
+			<span class="collapseTrigger collapseTrigger--block" data-xf-click="toggle" data-target="< :up:next">
+				{{ phrase('dbtech_security_fingerprinting_components') }}
+			</span>
+		</h3>
+		<div class="block-body block-body--contained block-body--collapsible block-row" dir="ltr">
+			{{ dump_simple($entry.components) }}
+		</div>
+	</div>
+</div>]]></template>
+  <template type="admin" title="dbtech_security_log_login_strikes_list" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:title>{{ phrase('dbtech_security_login_strike_log') }}</xf:title>
+
+<xf:pageaction>
+	<xf:button href="{{ link('dbtech-security/logs/login-strikes/search') }}" icon="search">{{ phrase('search_logs') }}</xf:button>
+</xf:pageaction>
+
+<xf:if is="$entries is not empty">
+	<div class="block">
+		<div class="block-container">
+			<div class="block-body">
+				<xf:datalist>
+					<xf:foreach loop="$entries" value="$entry">
+						<xf:datarow>
+							<xf:main href="{{ link('dbtech-security/logs/login-strikes', $entry) }}" overlay="true">
+								<xf:label>
+									{$entry.username}
+								</xf:label>
+								<xf:hint>
+									{{ $entry.valid_user ? phrase('dbtech_security_valid_user') : phrase('dbtech_security_not_valid_user') }}
+								</xf:hint>
+								<xf:explain>
+									<ul class="listInline listInline--bullet">
+										<li><xf:date time="{$entry.dateline}" data-full-date="true" /></li>
+										<li>{$entry.ipaddress}</li>
+									</ul>
+								</xf:explain>
+							</xf:main>
+						</xf:datarow>
+					</xf:foreach>
+				</xf:datalist>
+			</div>
+			<div class="block-footer">
+				<span class="block-footer-counter">{{ display_totals($entries, $total) }}</span>
+			</div>
+		</div>
+		<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+					link="dbtech-security/logs/login-strikes" params="{{ {'criteria': $criteria, 'order': $order, 'direction': $direction} }}"
+					wrapperclass="block-outer block-outer--after" />
+	</div>
+	<xf:else />
+	<div class="blockMessage">{{ $criteria ? phrase('no_records_matched') : phrase('no_entries_have_been_logged') }}</div>
+</xf:if>]]></template>
+  <template type="admin" title="dbtech_security_log_login_strikes_search" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<!--suppress ALL -->
+<xf:title>{{ phrase('dbtech_security_login_strike_log_search') }}</xf:title>
+
+<xf:form action="{{ link('dbtech-security/logs/login-strikes') }}" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:textboxrow name="criteria[username]" value="{$criteria.username}"
+						   label="{{ phrase('dbtech_security_attempted_user_name') }}" />
+
+			<xf:checkboxrow name="criteria[valid_user]"
+				label="{{ phrase('valid') }}">
+				<xf:option value="0" selected="in_array(0, $criteria.valid_user)">{{ phrase('dbtech_security_not_valid_user') }}</xf:option>
+				<xf:option value="1" selected="in_array(1, $criteria.valid_user)">{{ phrase('dbtech_security_valid_user') }}</xf:option>
+			</xf:checkboxrow>
+			
+			<hr class="formRowSep" />
+
+			<xf:formrow rowtype="input"
+						label="{{ phrase('date_range') }}">
+				<div class="inputGroup">
+					<xf:dateinput name="criteria[dateline][start]" value="{$criteria.dateline.start}" size="15" />
+					<span class="inputGroup-text">-</span>
+					<xf:dateinput name="criteria[dateline][end]" value="{$criteria.dateline.end}" size="15" />
+				</div>
+			</xf:formrow>
+
+			<hr class="formRowSep" />
+
+			<xf:formrow rowtype="input"
+						label="{{ phrase('sort') }}">
+
+				<div class="inputPair">
+					<xf:select name="order">
+						<xf:options source="{$sortOrders}" />
+					</xf:select>
+					<xf:select name="direction" value="desc">
+						<xf:option value="asc">{{ phrase('ascending') }}</xf:option>
+						<xf:option value="desc">{{ phrase('descending') }}</xf:option>
+					</xf:select>
+				</div>
+			</xf:formrow>
+		</div>
+		<xf:submitrow sticky="true" icon="search" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="dbtech_security_log_login_strikes_view" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:title>{{ phrase('dbtech_security_login_strike_log_id_x', {'logId': $entry.login_strike_id}) }}</xf:title>
+
+<div class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:formrow label="{{ phrase('dbtech_security_attempted_user_name') }}">
+				{$entry.username}
+			</xf:formrow>
+			
+			<xf:formrow label="{{ phrase('valid') }}">
+				{{ $entry.valid_user ? phrase('yes') : phrase('no') }}
+			</xf:formrow>
+
+			<xf:formrow label="{{ phrase('ip_address') }}">
+				<a href="{{ link_type('public', 'misc/ip-info', null, {'ip': $entry.ipaddress}) }}" target="_blank" class="u-ltr">{$entry.ipaddress}</a>
+			</xf:formrow>
+
+			<xf:formrow label="{{ phrase('date') }}">
+				<xf:date time="{$entry.dateline}" data-full-date="true" />
+			</xf:formrow>
+		</div>
+	</div>
+</div>]]></template>
+  <template type="admin" title="dbtech_security_log_watcher_list" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:title>{{ phrase('dbtech_security_watcher_log') }}</xf:title>
+
+<xf:pageaction>
+	<xf:button href="{{ link('dbtech-security/logs/watchers/search') }}" icon="search">{{ phrase('search_logs') }}</xf:button>
+</xf:pageaction>
+
+<div class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:datalist data-xf-init="responsive-data-list">
+				<xf:datarow rowtype="header">
+					<xf:cell>{{ phrase('date') }}</xf:cell>
+					<xf:cell>{{ phrase('dbtech_security_watcher') }}</xf:cell>
+					<xf:cell>{{ phrase('action') }}</xf:cell>
+					<xf:cell>&nbsp;</xf:cell>
+				</xf:datarow>
+
+				<xf:foreach loop="$entries" value="$entry">
+					<xf:datarow>
+						<xf:cell>
+							<xf:date time="{$entry.log_date}" data-full-date="true" />
+						</xf:cell>
+						<xf:cell>
+							<a href="{{ link('dbtech-security/watchers/edit', $entry.Watcher) }}">{$entry.Watcher.title}</a>
+							<xf:if is="$entry.Watcher.hint"> - {$entry.Watcher.hint}</xf:if>
+							<br />
+							<span class="u-muted">{$entry.Watcher.getParsedRule()}</span>
+						</xf:cell>
+						<xf:cell>
+							{$entry.getActionPhrase()}
+						</xf:cell>
+						<xf:action href="{{ link('dbtech-security/logs/watchers', $entry) }}" overlay="true">{{ phrase('view') }}</xf:action>
+					</xf:datarow>
+				<xf:else />
+					<xf:datarow>
+						<xf:cell colspan="5">{{ phrase('no_entries_have_been_logged') }}</xf:cell>
+					</xf:datarow>
+				</xf:foreach>
+			</xf:datalist>
+		</div>
+		<div class="block-footer">
+			<span class="block-footer-counter">{{ display_totals($entries, $total) }}</span>
+		</div>
+	</div>
+	<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+				link="dbtech-security/logs/watchers" params="{{ {'criteria': $criteria, 'order': $order, 'direction': $direction} }}"
+				wrapperclass="block-outer block-outer--after" />
+</div>]]></template>
+  <template type="admin" title="dbtech_security_log_watcher_search" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<!--suppress ALL -->
+<xf:title>{{ phrase('dbtech_security_watcher_log_search') }}</xf:title>
+
+<xf:form action="{{ link('dbtech-security/logs/watchers') }}" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:selectrow name="criteria[Watcher][watcher_type]" value="{$criteria.Watcher.watcher_type}"
+						  label="{{ phrase('dbtech_security_watcher') }}">
+				<xf:option>{{ phrase('(any)') }}</xf:option>
+				<xf:options source="$watchers" />
+			</xf:selectrow>
+
+			<hr class="formRowSep" />
+
+			<xf:formrow rowtype="input"
+						label="{{ phrase('date_range') }}">
+				<div class="inputGroup">
+					<xf:dateinput name="criteria[dateline][start]" value="{$criteria.dateline.start}" size="15" />
+					<span class="inputGroup-text">-</span>
+					<xf:dateinput name="criteria[dateline][end]" value="{$criteria.dateline.end}" size="15" />
+				</div>
+			</xf:formrow>
+
+			<hr class="formRowSep" />
+
+			<xf:formrow rowtype="input"
+						label="{{ phrase('sort') }}">
+
+				<div class="inputPair">
+					<xf:select name="order">
+						<xf:options source="{$sortOrders}" />
+					</xf:select>
+					<xf:select name="direction" value="desc">
+						<xf:option value="asc">{{ phrase('ascending') }}</xf:option>
+						<xf:option value="desc">{{ phrase('descending') }}</xf:option>
+					</xf:select>
+				</div>
+			</xf:formrow>
+		</div>
+		<xf:submitrow sticky="true" icon="search" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="dbtech_security_log_watcher_view" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:title>{{ phrase('dbtech_security_watcher_log_id_x', {'logId': $entry.watcher_log_id}) }}</xf:title>
+
+<div class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:formrow label="{{ phrase('dbtech_security_watcher') }}">
+				{$entry.Watcher.title}
+			</xf:formrow>
+
+			<xf:formrow label="{{ phrase('dbtech_security_watcher_rule') }}">
+				{$entry.Watcher.getParsedRule()}
+				<xf:if is="$entry.Watcher.hint">
+					<div class="u-muted">{$entry.Watcher.hint}</div>
+				</xf:if>
+			</xf:formrow>
+
+			<hr class="formRowSep" />
+
+			<xf:formrow label="{{ phrase('action') }}">
+				{$entry.getActionPhrase()}
+			</xf:formrow>
+
+			<xf:if is="$entry.user_id">
+				<xf:formrow label="{{ phrase('user') }}">
+					<xf:username user="{$entry.User}" defaultname="{{ phrase('unknown_user') }}" />
+				</xf:formrow>
+			</xf:if>
+
+			<xf:if is="$entry.ip_address">
+				<xf:formrow label="{{ phrase('ip_address') }}">
+					<a href="{{ link_type('public', 'misc/ip-info', null, {'ip': $entry.ip_address}) }}" target="_blank" class="u-ltr">{$entry.ip_address}</a>
+				</xf:formrow>
+			</xf:if>
+
+			<xf:formrow label="{{ phrase('date') }}">
+				<xf:date time="{$entry.log_date}" data-full-date="true" />
+			</xf:formrow>
+
+			<hr class="formRowSep" />
+
+			<xf:formrow label="{{ phrase('message') }}">
+				<ul class="listInline">
+					{$entry.message|raw}
+				</ul>
+			</xf:formrow>
+		</div>
+	</div>
+</div>]]></template>
+  <template type="admin" title="dbtech_security_logs" version_id="905000011" version_string="5.0.0 Alpha 1"><![CDATA[<xf:title>{{ phrase('admin_navigation.logs') }}</xf:title>
+
+<xf:macro id="section_nav_macros::section_nav" arg-section="dbtechSecLogs" />]]></template>
+  <template type="admin" title="dbtech_security_option_macros" version_id="905000011" version_string="5.0.0 Alpha 1"><![CDATA[<xf:macro id="option_form_block" arg-group="" arg-options="!" arg-containerBeforeHtml="">
+	<xf:if is="$options is not empty">
+		<xf:form action="{{ link('options/update') }}" ajax="true" class="block">
+			{$containerBeforeHtml|raw}
+			<div class="block-container">
+				<h3 class="block-formSectionHeader">
+					{{ phrase('general_options') }}
+				</h3>
+				<div class="block-body">
+					<xf:foreach loop="$options" value="$option">
+						<xf:if is="{$option.Relations.{$group.group_id}.display_order} < 2000">
+
+							<xf:if is="$group">
+								<xf:set var="$curHundred" value="{{ floor($option.Relations.{$group.group_id}.display_order / 100) }}" />
+								<xf:if is="{{ $curHundred > $hundred }}">
+									<xf:set var="$hundred" value="{$curHundred}" />
+									<hr class="formRowSep" />
+								</xf:if>
+							</xf:if>
+
+							<xf:macro id="option_macros::option_row" arg-group="{$group}" arg-option="{$option}" />
+						</xf:if>
+					</xf:foreach>
+				</div>
+
+				<h3 class="block-formSectionHeader">
+					{{ phrase('dbtech_security_watcher_options') }}
+				</h3>
+				<div class="block-body">
+					<xf:foreach loop="$options" value="$option">
+						<xf:if is="{$option.Relations.{$group.group_id}.display_order} >= 2000 AND {$option.Relations.{$group.group_id}.display_order} < 3000">
+
+							<xf:if is="$group">
+								<xf:set var="$curHundred" value="{{ floor($option.Relations.{$group.group_id}.display_order / 100) }}" />
+								<xf:if is="{{ $curHundred > $hundred }}">
+									<xf:set var="$hundred" value="{$curHundred}" />
+									<hr class="formRowSep" />
+								</xf:if>
+							</xf:if>
+
+							<xf:macro id="option_macros::option_row" arg-group="{$group}" arg-option="{$option}" />
+						</xf:if>
+					</xf:foreach>
+				</div>
+
+				<h3 class="block-formSectionHeader">
+					{{ phrase('dbtech_security_log_options') }}
+				</h3>
+				<div class="block-body">
+					<xf:foreach loop="$options" value="$option">
+						<xf:if is="{$option.Relations.{$group.group_id}.display_order} >= 3000 AND {$option.Relations.{$group.group_id}.display_order} < 4000">
+
+							<xf:if is="$group">
+								<xf:set var="$curHundred" value="{{ floor($option.Relations.{$group.group_id}.display_order / 100) }}" />
+								<xf:if is="{{ $curHundred > $hundred }}">
+									<xf:set var="$hundred" value="{$curHundred}" />
+									<hr class="formRowSep" />
+								</xf:if>
+							</xf:if>
+
+							<xf:macro id="option_macros::option_row" arg-group="{$group}" arg-option="{$option}" />
+						</xf:if>
+					</xf:foreach>
+				</div>
+
+				<h3 class="block-formSectionHeader">
+					{{ phrase('dbtech_security_email_recovery_options') }}
+				</h3>
+				<div class="block-body">
+					<xf:foreach loop="$options" value="$option">
+						<xf:if is="{$option.Relations.{$group.group_id}.display_order} >= 4000 AND {$option.Relations.{$group.group_id}.display_order} < 5000">
+
+							<xf:if is="$group">
+								<xf:set var="$curHundred" value="{{ floor($option.Relations.{$group.group_id}.display_order / 100) }}" />
+								<xf:if is="{{ $curHundred > $hundred }}">
+									<xf:set var="$hundred" value="{$curHundred}" />
+									<hr class="formRowSep" />
+								</xf:if>
+							</xf:if>
+
+							<xf:macro id="option_macros::option_row" arg-group="{$group}" arg-option="{$option}" />
+						</xf:if>
+					</xf:foreach>
+				</div>
+
+				<h3 class="block-formSectionHeader">
+					{{ phrase('dbtech_security_bad_behaviour_options') }}
+				</h3>
+				<div class="block-body">
+					<xf:foreach loop="$options" value="$option">
+						<xf:if is="{$option.Relations.{$group.group_id}.display_order} >= 5000">
+
+							<xf:if is="$group">
+								<xf:set var="$curHundred" value="{{ floor($option.Relations.{$group.group_id}.display_order / 100) }}" />
+								<xf:if is="{{ $curHundred > $hundred }}">
+									<xf:set var="$hundred" value="{$curHundred}" />
+									<hr class="formRowSep" />
+								</xf:if>
+							</xf:if>
+
+							<xf:macro id="option_macros::option_row" arg-group="{$group}" arg-option="{$option}" />
+						</xf:if>
+					</xf:foreach>
+				</div>
+
+				<xf:submitrow sticky="true" icon="save" />
+			</div>
+		</xf:form>
+	</xf:if>
+</xf:macro>
+
+<xf:macro id="option_form_block_tabs" arg-group="" arg-options="!" arg-containerBeforeHtml="">
+	<xf:if is="$options is not empty">
+		<xf:form action="{{ link('options/update') }}" ajax="true" class="block">
+			{$containerBeforeHtml|raw}
+			<div class="block-container">
+				<h2 class="block-tabHeader tabs" data-xf-init="tabs" role="tablist">
+					<a class="tabs-tab is-active" role="tab" tabindex="0" aria-controls="generalOptions">{{ phrase('general_options') }}</a>
+					<a class="tabs-tab" role="tab" tabindex="0" aria-controls="watcherOptions">{{ phrase('dbtech_security_watcher_options') }}</a>
+					<a class="tabs-tab" role="tab" tabindex="0" aria-controls="logOptions">{{ phrase('dbtech_security_log_options') }}</a>
+					<a class="tabs-tab" role="tab" tabindex="0" aria-controls="recoveryOptions">{{ phrase('dbtech_security_email_recovery_options') }}</a>
+					<a class="tabs-tab" role="tab" tabindex="0" aria-controls="badBehaviorOptions">{{ phrase('dbtech_security_bad_behaviour_options') }}</a>
+				</h2>
+				<ul class="tabPanes">
+					<li class="is-active" role="tabpanel" id="generalOptions">
+						<div class="block-body">
+							<xf:foreach loop="$options" value="$option">
+								<xf:if is="{$option.Relations.{$group.group_id}.display_order} < 2000">
+
+									<xf:if is="$group">
+										<xf:set var="$curHundred" value="{{ floor($option.Relations.{$group.group_id}.display_order / 100) }}" />
+										<xf:if is="{{ $curHundred > $hundred }}">
+											<xf:set var="$hundred" value="{$curHundred}" />
+											<hr class="formRowSep" />
+										</xf:if>
+									</xf:if>
+
+									<xf:macro id="option_macros::option_row" arg-group="{$group}" arg-option="{$option}" />
+								</xf:if>
+							</xf:foreach>
+						</div>
+					</li>
+					<li role="tabpanel" id="watcherOptions">
+						<div class="block-body">
+							<xf:foreach loop="$options" value="$option">
+								<xf:if is="{$option.Relations.{$group.group_id}.display_order} >= 2000 AND {$option.Relations.{$group.group_id}.display_order} < 3000">
+
+									<xf:if is="$group">
+										<xf:set var="$curHundred" value="{{ floor($option.Relations.{$group.group_id}.display_order / 100) }}" />
+										<xf:if is="{{ $curHundred > $hundred }}">
+											<xf:set var="$hundred" value="{$curHundred}" />
+											<hr class="formRowSep" />
+										</xf:if>
+									</xf:if>
+
+									<xf:macro id="option_macros::option_row" arg-group="{$group}" arg-option="{$option}" />
+								</xf:if>
+							</xf:foreach>
+						</div>
+					</li>
+					<li role="tabpanel" id="logOptions">
+						<div class="block-body">
+							<xf:foreach loop="$options" value="$option">
+								<xf:if is="{$option.Relations.{$group.group_id}.display_order} >= 3000 AND {$option.Relations.{$group.group_id}.display_order} < 4000">
+
+									<xf:if is="$group">
+										<xf:set var="$curHundred" value="{{ floor($option.Relations.{$group.group_id}.display_order / 100) }}" />
+										<xf:if is="{{ $curHundred > $hundred }}">
+											<xf:set var="$hundred" value="{$curHundred}" />
+											<hr class="formRowSep" />
+										</xf:if>
+									</xf:if>
+
+									<xf:macro id="option_macros::option_row" arg-group="{$group}" arg-option="{$option}" />
+								</xf:if>
+							</xf:foreach>
+						</div>
+					</li>
+					<li role="tabpanel" id="recoveryOptions">
+						<div class="block-body">
+							<xf:foreach loop="$options" value="$option">
+								<xf:if is="{$option.Relations.{$group.group_id}.display_order} >= 4000 AND {$option.Relations.{$group.group_id}.display_order} < 5000">
+
+									<xf:if is="$group">
+										<xf:set var="$curHundred" value="{{ floor($option.Relations.{$group.group_id}.display_order / 100) }}" />
+										<xf:if is="{{ $curHundred > $hundred }}">
+											<xf:set var="$hundred" value="{$curHundred}" />
+											<hr class="formRowSep" />
+										</xf:if>
+									</xf:if>
+
+									<xf:macro id="option_macros::option_row" arg-group="{$group}" arg-option="{$option}" />
+								</xf:if>
+							</xf:foreach>
+						</div>
+					</li>
+					<li role="tabpanel" id="badBehaviorOptions">
+						<div class="block-body">
+							<xf:foreach loop="$options" value="$option">
+								<xf:if is="{$option.Relations.{$group.group_id}.display_order} >= 5000">
+
+									<xf:if is="$group">
+										<xf:set var="$curHundred" value="{{ floor($option.Relations.{$group.group_id}.display_order / 100) }}" />
+										<xf:if is="{{ $curHundred > $hundred }}">
+											<xf:set var="$hundred" value="{$curHundred}" />
+											<hr class="formRowSep" />
+										</xf:if>
+									</xf:if>
+
+									<xf:macro id="option_macros::option_row" arg-group="{$group}" arg-option="{$option}" />
+								</xf:if>
+							</xf:foreach>
+						</div>
+					</li>
+				</ul>
+				<xf:submitrow sticky="true" icon="save" />
+			</div>
+		</xf:form>
+	</xf:if>
+</xf:macro>]]></template>
+  <template type="admin" title="dbtech_security_password_change" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:title>{{ phrase('dbtech_security_force_password_change') }}</xf:title>
+
+<xf:description>{{ phrase('dbtech_security_force_password_change_descr') }}</xf:description>
+
+<xf:form action="{{ link('users/batch-update/confirm') }}" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:include template="helper_user_search_criteria" />
+		</div>
+		<xf:submitrow submit="{{ phrase('proceed...') }}" sticky="true" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="dbtech_security_password_generator" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:title>{{ phrase('dbtech_security_passwordgenerator') }}</xf:title>
+
+<xf:description>{{ phrase('dbtech_security_passwordgenerator_descr') }}</xf:description>
+
+<xf:form action="{{ link('dbtech-security/passwords/generator') }}" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:textboxrow name="username" required="required"
+						   label="{{ phrase('user_name') }}" />
+
+			<xf:radiorow name="password_chooser" value="0"
+						   label="{{ phrase('password') }}">
+				<xf:option value="0">
+					<xf:label>{{ phrase('set_new_password') }}</xf:label>
+					<xf:dependent>
+						<xf:textbox name="password" type="password" />
+					</xf:dependent>
+				</xf:option>
+
+				<xf:option value="1">
+					<xf:label>{{ phrase('dbtech_security_generate_password') }}</xf:label>
+					<xf:dependent>
+						<div class="inputGroup">
+							<span class="inputGroup-text">{{ phrase('length:') }}</span>
+							<span class="inputGroup-splitter"></span>
+							<xf:numberbox name="length" explain="test" min="0" step="1" value="12" />
+						</div>
+					</xf:dependent>
+
+					<xf:dependent>
+						<xf:checkbox name="rules[lowercase]">
+							<xf:option value="1" label="{{ phrase('dbtech_security_passwordrule_lowercase') }}" />
+						</xf:checkbox>
+					</xf:dependent>
+
+					<xf:dependent>
+						<xf:checkbox name="rules[uppercase]">
+							<xf:option value="1" label="{{ phrase('dbtech_security_passwordrule_uppercase') }}" />
+						</xf:checkbox>
+					</xf:dependent>
+
+					<xf:dependent>
+						<xf:checkbox name="rules[numbers]">
+							<xf:option value="1" label="{{ phrase('dbtech_security_passwordrule_numbers') }}" />
+						</xf:checkbox>
+					</xf:dependent>
+
+					<xf:dependent>
+						<xf:checkbox name="rules[symbols]">
+							<xf:option value="1" label="{{ phrase('dbtech_security_passwordrule_symbols') }}" />
+						</xf:checkbox>
+					</xf:dependent>
+				</xf:option>
+			</xf:radiorow>
+		</div>
+		<xf:submitrow submit="{{ phrase('proceed...') }}" sticky="true" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="dbtech_security_password_generator_result" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:title>{{ phrase('password') }}</xf:title>
+
+<div class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:if is="$password">
+				<xf:inforow rowtype="confirm">
+					{{ phrase('password:') }} <strong><code>{$password}</code></strong>
+				</xf:inforow>
+			</xf:if>
+
+			<xf:inforow rowtype="confirm">
+				{{ phrase('dbtech_security_key:') }} <strong><code>{$key}</code></strong>
+			</xf:inforow>
+		</div>
+	</div>
+</div>]]></template>
+  <template type="admin" title="dbtech_security_password_reset" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:title>{{ phrase('dbtech_security_mass_password_reset') }}</xf:title>
+
+<xf:description>{{ phrase('dbtech_security_mass_password_reset_descr') }}</xf:description>
+
+<xf:form action="{{ link('users/batch-update/confirm') }}" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:include template="helper_user_search_criteria" />
+		</div>
+		<xf:submitrow submit="{{ phrase('proceed...') }}" sticky="true" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="dbtech_security_snapshot_list" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:title>{{ phrase('dbtech_security_settings_backups') }}</xf:title>
+
+<xf:pageaction>
+	<xf:button href="{{ link('dbtech-security/settings-backups/backup') }}" icon="add">{{ phrase('dbtech_security_take_backup') }}</xf:button>
+</xf:pageaction>
+
+<div class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:datalist>
+				<xf:foreach loop="$snapshots" value="$snapshot">
+					<xf:datarow>
+						<xf:main hash="{$snapshot.snapshot_id}" label="{{ date_time($snapshot.dateline) }}" />
+						<xf:action href="{{ link('dbtech-security/settings-backups/load', $snapshot) }}" overlay="true">
+							{{ phrase('dbtech_security_load_backup') }}
+						</xf:action>
+						<xf:delete href="{{ link('dbtech-security/settings-backups/delete', $snapshot) }}"
+								   tooltip="{{ phrase('delete') }} " />
+					</xf:datarow>
+				</xf:foreach>
+			</xf:datalist>
+		</div>
+		<div class="block-footer">
+			<span class="block-footer-counter">{{ display_totals($snapshots) }}</span>
+		</div>
+	</div>
+</div>]]></template>
+  <template type="admin" title="dbtech_security_snapshot_load" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:title>{{ phrase('confirm_action') }}</xf:title>
+
+<xf:breadcrumb href="{{ link('dbtech-security/settings-backups') }}">{{ date_time($snapshot.dateline) }}</xf:breadcrumb>
+
+<xf:form action="{{ link('dbtech-security/settings-backups/load', $snapshot) }}" class="block" ajax="true">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:inforow rowtype="confirm">
+				{{ phrase('dbtech_security_please_confirm_that_you_want_to_load_following_backup:') }}
+				<strong><a href="{{ link('dbtech-security/settings-backups') }}">{{ date_time($snapshot.dateline) }}</a></strong>
+			</xf:inforow>
+		</div>
+		<xf:submitrow rowtype="simple" icon="save" submit="{{ phrase('dbtech_security_load_backup') }}" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="dbtech_security_tools_rebuild" version_id="905000011" version_string="5.0.0 Alpha 1"><![CDATA[<xf:set var="$breachCheckBody">
+	<xf:inforow>
+		{{ phrase('dbtech_security_breachcheck_descr') }}
+	</xf:inforow>
+</xf:set>
+
+<xf:macro id="tools_rebuild::rebuild_job"
+		  arg-header="DragonByte Security: {{ phrase('dbtech_security_breachcheck') }}"
+		  arg-body="{$breachCheckBody}"
+		  arg-job="DBTech\Security:BreachCheck" />
+<!--[XF:after_dbtech_security_breach_check]-->]]></template>
+  <template type="admin" title="dbtech_security_watcher_add_chooser" version_id="905000011" version_string="5.0.0 Alpha 1"><![CDATA[<xf:title>{{ phrase('dbtech_security_add_watcher...') }}</xf:title>
+
+<xf:form action="{{ link('dbtech-security/watchers/add') }}" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:macro id="public:dbtech_security_watcher_macros::watcher_type_select"
+					  arg-watcherType="" arg-watcherTypes="{$watcherTypes}" />
+		</div>
+
+		<xf:submitrow icon="add" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="dbtech_security_watcher_edit" version_id="905000031" version_string="5.0.0 Beta 1"><![CDATA[<xf:if is="$watcher.isInsert()">
+	<xf:title>{{ phrase('dbtech_security_add_watcher') }}</xf:title>
+<xf:else />
+	<xf:title>{{ phrase('dbtech_security_edit_watcher:') }} {$watcher.title}</xf:title>
+</xf:if>
+
+<xf:pageaction if="$watcher.isUpdate()">
+	<xf:button href="{{ link('dbtech-security/watchers/delete', $watcher) }}" icon="delete" overlay="true" />
+</xf:pageaction>
+
+<xf:set var="$watcherType" value="{{ $xf.app.em.getRepository('DBTech\Security:WatcherRepository').getHandler($watcher.watcher_type) }}" />
+
+<xf:form action="{{ link('dbtech-security/watchers/save', $watcher) }}" class="block" ajax="true">
+	<div class="block-container">
+		<div class="block-body">
+
+			<xf:formrow label="{{ phrase('dbtech_security_security_watcher_type') }}">
+				{{ $watcherType.getTitle() }}
+				<div class="u-muted">{{ $watcherType.getDescription() }}</div>
+			</xf:formrow>
+
+			<xf:macro id="display_order_macros::row"
+					  arg-name="priority"
+					  arg-value="{$watcher.priority}"
+					  arg-label="{{ phrase('dbtech_security_watcher_priority') }}"
+					  arg-explain="{{ phrase('dbtech_security_watcher_priority_desc') }}" />
+
+			<xf:checkboxrow>
+				<xf:option name="active" value="1" selected="$watcher.active">{{ phrase('dbtech_security_watcher_is_active') }}</xf:option>
+			</xf:checkboxrow>
+		</div>
+
+		<h3 class="block-formSectionHeader">
+			<span class="collapseTrigger collapseTrigger--block is-active" data-xf-click="toggle" data-target="< :up:next">
+				<span class="block-formSectionHeader-aligner">{{ phrase('dbtech_security_watcher_options') }}</span>
+			</span>
+		</h3>
+		<div class="block-body block-body--collapsible is-active">
+			{{ $watcherType.renderOptions($watcher)|raw }}
+
+			<xf:checkboxrow label="{{ phrase('actions') }}" explain="{{ phrase('dbtech_security_watcher_actions_desc') }}">
+				<xf:if is="$watcherType.getOption('closeForum')">
+					<xf:option name="actions[closeForum]" value="1" selected="$watcher.actions.closeForum">{{ phrase('dbtech_security_actions.closeForum') }}</xf:option>
+				</xf:if>
+
+				<xf:if is="$watcherType.getOption('emailWebmaster')">
+					<xf:option name="actions[emailWebmaster]" value="1" selected="$watcher.actions.emailWebmaster">{{ phrase('dbtech_security_actions.emailWebmaster') }}</xf:option>
+				</xf:if>
+
+				<xf:if is="$watcherType.getOption('banIp')">
+					<xf:option name="actions[banIp]" value="1" selected="$watcher.actions.banIp">{{ phrase('dbtech_security_actions.banIp') }}</xf:option>
+				</xf:if>
+
+				<xf:if is="$watcherType.getOption('banUser')">
+					<xf:option name="actions[banUser]" value="1" selected="$watcher.actions.banUser">{{ phrase('dbtech_security_actions.banUser') }}</xf:option>
+				</xf:if>
+
+				<xf:if is="$watcherType.getOption('emailUser')">
+					<xf:option name="actions[emailUser]" value="1" selected="$watcher.actions.emailUser">{{ phrase('dbtech_security_actions.emailUser') }}</xf:option>
+				</xf:if>
+
+				<xf:if is="$watcherType.getOption('lockChange')">
+					<xf:option name="actions[lockChange]" value="1" selected="$watcher.actions.lockChange">{{ phrase('dbtech_security_actions.lockChange') }}</xf:option>
+				</xf:if>
+
+				<xf:if is="$watcherType.getOption('lockReset')">
+					<xf:option name="actions[lockReset]" value="1" selected="$watcher.actions.lockReset">{{ phrase('dbtech_security_actions.lockReset') }}</xf:option>
+				</xf:if>
+
+				<xf:if is="$watcherType.getOption('lockUser')">
+					<xf:option name="actions[lockUser]" value="1" selected="$watcher.actions.lockUser">{{ phrase('dbtech_security_actions.lockUser') }}</xf:option>
+				</xf:if>
+
+				<xf:if is="$watcherType.getOption('adminLockUser')">
+					<xf:option name="actions[adminLockUser]" value="1" selected="$watcher.actions.adminLockUser">{{ phrase('dbtech_security_actions.adminLockUser') }}</xf:option>
+				</xf:if>
+			</xf:checkboxrow>
+		</div>
+
+		<xf:hiddenval name="watcher_type" value="{$watcher.watcher_type}" />
+
+		<xf:submitrow sticky="true" icon="save" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="dbtech_security_watcher_edit_adminpermissions" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:numberboxrow name="rules[intrusions]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.intrusions : 5 }}" step="1" min="0"
+				 label="{{ phrase('dbtech_security_intrusions') }}"
+				 explain="{{ phrase('dbtech_security_intrusions_desc') }}" />
+
+<xf:formrow rowtype="input" label="{{ phrase('dbtech_security_time_frame') }}">
+	<div class="inputGroup">
+		<xf:numberbox name="rules[hours]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.hours : 1 }}" step="1" min="0" />
+		<span class="inputGroup-text">{{ phrase('hours') }}</span>
+	</div>
+</xf:formrow>
+
+<hr class="formRowSep" />]]></template>
+  <template type="admin" title="dbtech_security_watcher_edit_compromisedlogon" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:numberboxrow name="rules[intrusions]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.intrusions : 5 }}" step="1" min="0"
+				 label="{{ phrase('dbtech_security_intrusions') }}"
+				 explain="{{ phrase('dbtech_security_intrusions_compromised_desc') }}" />
+
+<xf:formrow rowtype="input" label="{{ phrase('dbtech_security_time_frame') }}">
+	<div class="inputGroup">
+		<xf:numberbox name="rules[hours]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.hours : 1 }}" step="1" min="0" />
+		<span class="inputGroup-text">{{ phrase('hours') }}</span>
+	</div>
+</xf:formrow>
+
+<hr class="formRowSep" />]]></template>
+  <template type="admin" title="dbtech_security_watcher_edit_compromisedstafflogon" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:numberboxrow name="rules[intrusions]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.intrusions : 5 }}" step="1" min="0"
+				 label="{{ phrase('dbtech_security_intrusions') }}"
+				 explain="{{ phrase('dbtech_security_intrusions_compromised_desc') }}" />
+
+<xf:formrow rowtype="input" label="{{ phrase('dbtech_security_time_frame') }}">
+	<div class="inputGroup">
+		<xf:numberbox name="rules[hours]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.hours : 1 }}" step="1" min="0" />
+		<span class="inputGroup-text">{{ phrase('hours') }}</span>
+	</div>
+</xf:formrow>
+
+<hr class="formRowSep" />]]></template>
+  <template type="admin" title="dbtech_security_watcher_edit_deletedusergroup" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:numberboxrow name="rules[intrusions]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.intrusions : 5 }}" step="1" min="0"
+				 label="{{ phrase('dbtech_security_intrusions') }}"
+				 explain="{{ phrase('dbtech_security_intrusions_desc') }}" />
+
+<xf:formrow rowtype="input" label="{{ phrase('dbtech_security_time_frame') }}">
+	<div class="inputGroup">
+		<xf:numberbox name="rules[hours]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.hours : 1 }}" step="1" min="0" />
+		<span class="inputGroup-text">{{ phrase('hours') }}</span>
+	</div>
+</xf:formrow>
+
+<hr class="formRowSep" />]]></template>
+  <template type="admin" title="dbtech_security_watcher_edit_failedbreachedlogon" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:numberboxrow name="rules[intrusions]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.intrusions : 5 }}" step="1" min="0"
+				 label="{{ phrase('dbtech_security_intrusions') }}"
+				 explain="{{ phrase('dbtech_security_intrusions_desc') }}" />
+
+<xf:radiorow name="rules[ipaddresses]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.ipaddresses : 'same' }}" listclass="indented"
+			 label="{{ phrase('dbtech_security_source') }}">
+	<xf:option value="same">{{ phrase('dbtech_security_same_ip_address') }}</xf:option>
+	<xf:option value="any">{{ phrase('dbtech_security_any_ip_address') }}</xf:option>
+</xf:radiorow>
+
+<xf:formrow rowtype="input" label="{{ phrase('dbtech_security_time_frame') }}">
+	<div class="inputGroup">
+		<xf:numberbox name="rules[hours]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.hours : 1 }}" step="1" min="0" />
+		<span class="inputGroup-text">{{ phrase('hours') }}</span>
+	</div>
+</xf:formrow>
+
+<hr class="formRowSep" />]]></template>
+  <template type="admin" title="dbtech_security_watcher_edit_failedbreachedstafflogon" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:numberboxrow name="rules[intrusions]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.intrusions : 5 }}" step="1" min="0"
+				 label="{{ phrase('dbtech_security_intrusions') }}"
+				 explain="{{ phrase('dbtech_security_intrusions_desc') }}" />
+
+<xf:radiorow name="rules[ipaddresses]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.ipaddresses : 'same' }}" listclass="indented"
+			 label="{{ phrase('dbtech_security_source') }}">
+	<xf:option value="same">{{ phrase('dbtech_security_same_ip_address') }}</xf:option>
+	<xf:option value="any">{{ phrase('dbtech_security_any_ip_address') }}</xf:option>
+</xf:radiorow>
+
+<xf:formrow rowtype="input" label="{{ phrase('dbtech_security_time_frame') }}">
+	<div class="inputGroup">
+		<xf:numberbox name="rules[hours]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.hours : 1 }}" step="1" min="0" />
+		<span class="inputGroup-text">{{ phrase('hours') }}</span>
+	</div>
+</xf:formrow>
+
+<hr class="formRowSep" />]]></template>
+  <template type="admin" title="dbtech_security_watcher_edit_failedlogon" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:numberboxrow name="rules[intrusions]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.intrusions : 5 }}" step="1" min="0"
+				 label="{{ phrase('dbtech_security_intrusions') }}"
+				 explain="{{ phrase('dbtech_security_intrusions_desc') }}" />
+
+<xf:radiorow name="rules[ipaddresses]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.ipaddresses : 'same' }}" listclass="indented"
+			 label="{{ phrase('dbtech_security_source') }}">
+	<xf:option value="same">{{ phrase('dbtech_security_same_ip_address') }}</xf:option>
+	<xf:option value="any">{{ phrase('dbtech_security_any_ip_address') }}</xf:option>
+</xf:radiorow>
+
+<xf:formrow rowtype="input" label="{{ phrase('dbtech_security_time_frame') }}">
+	<div class="inputGroup">
+		<xf:numberbox name="rules[hours]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.hours : 1 }}" step="1" min="0" />
+		<span class="inputGroup-text">{{ phrase('hours') }}</span>
+	</div>
+</xf:formrow>
+
+<hr class="formRowSep" />]]></template>
+  <template type="admin" title="dbtech_security_watcher_edit_failedlogonadmin" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:numberboxrow name="rules[intrusions]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.intrusions : 5 }}" step="1" min="0"
+				 label="{{ phrase('dbtech_security_intrusions') }}"
+				 explain="{{ phrase('dbtech_security_intrusions_desc') }}" />
+
+<xf:radiorow name="rules[ipaddresses]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.ipaddresses : 'same' }}" listclass="indented"
+			 label="{{ phrase('dbtech_security_source') }}">
+	<xf:option value="same">{{ phrase('dbtech_security_same_ip_address') }}</xf:option>
+	<xf:option value="any">{{ phrase('dbtech_security_any_ip_address') }}</xf:option>
+</xf:radiorow>
+
+<xf:formrow rowtype="input" label="{{ phrase('dbtech_security_time_frame') }}">
+	<div class="inputGroup">
+		<xf:numberbox name="rules[hours]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.hours : 1 }}" step="1" min="0" />
+		<span class="inputGroup-text">{{ phrase('hours') }}</span>
+	</div>
+</xf:formrow>
+
+<hr class="formRowSep" />]]></template>
+  <template type="admin" title="dbtech_security_watcher_edit_failedlogonbogus" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:numberboxrow name="rules[intrusions]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.intrusions : 5 }}" step="1" min="0"
+				 label="{{ phrase('dbtech_security_intrusions') }}"
+				 explain="{{ phrase('dbtech_security_intrusions_desc') }}" />
+
+<xf:radiorow name="rules[ipaddresses]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.ipaddresses : 'same' }}" listclass="indented"
+			 label="{{ phrase('dbtech_security_source') }}">
+	<xf:option value="same">{{ phrase('dbtech_security_same_ip_address') }}</xf:option>
+	<xf:option value="any">{{ phrase('dbtech_security_any_ip_address') }}</xf:option>
+</xf:radiorow>
+
+<xf:formrow rowtype="input" label="{{ phrase('dbtech_security_time_frame') }}">
+	<div class="inputGroup">
+		<xf:numberbox name="rules[hours]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.hours : 1 }}" step="1" min="0" />
+		<span class="inputGroup-text">{{ phrase('hours') }}</span>
+	</div>
+</xf:formrow>
+
+<hr class="formRowSep" />]]></template>
+  <template type="admin" title="dbtech_security_watcher_edit_failedmasslogon" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:numberboxrow name="rules[intrusions]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.intrusions : 5 }}" step="1" min="0"
+				 label="{{ phrase('dbtech_security_intrusions') }}"
+				 explain="{{ phrase('dbtech_security_intrusions_desc') }}" />
+
+<xf:radiorow name="rules[ipaddresses]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.ipaddresses : 'same' }}" listclass="indented"
+			 label="{{ phrase('dbtech_security_source') }}">
+	<xf:option value="same">{{ phrase('dbtech_security_same_ip_address') }}</xf:option>
+	<xf:option value="any">{{ phrase('dbtech_security_any_ip_address') }}</xf:option>
+</xf:radiorow>
+
+<xf:formrow rowtype="input" label="{{ phrase('dbtech_security_time_frame') }}">
+	<div class="inputGroup">
+		<xf:numberbox name="rules[hours]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.hours : 1 }}" step="1" min="0" />
+		<span class="inputGroup-text">{{ phrase('hours') }}</span>
+	</div>
+</xf:formrow>
+
+<hr class="formRowSep" />]]></template>
+  <template type="admin" title="dbtech_security_watcher_edit_failedmasslogonbogus" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:numberboxrow name="rules[intrusions]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.intrusions : 5 }}" step="1" min="0"
+				 label="{{ phrase('dbtech_security_intrusions') }}"
+				 explain="{{ phrase('dbtech_security_intrusions_desc') }}" />
+
+<xf:radiorow name="rules[ipaddresses]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.ipaddresses : 'same' }}" listclass="indented"
+			 label="{{ phrase('dbtech_security_source') }}">
+	<xf:option value="same">{{ phrase('dbtech_security_same_ip_address') }}</xf:option>
+	<xf:option value="any">{{ phrase('dbtech_security_any_ip_address') }}</xf:option>
+</xf:radiorow>
+
+<xf:formrow rowtype="input" label="{{ phrase('dbtech_security_time_frame') }}">
+	<div class="inputGroup">
+		<xf:numberbox name="rules[hours]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.hours : 1 }}" step="1" min="0" />
+		<span class="inputGroup-text">{{ phrase('hours') }}</span>
+	</div>
+</xf:formrow>
+
+<hr class="formRowSep" />]]></template>
+  <template type="admin" title="dbtech_security_watcher_edit_failedstafflogon" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:numberboxrow name="rules[intrusions]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.intrusions : 5 }}" step="1" min="0"
+				 label="{{ phrase('dbtech_security_intrusions') }}"
+				 explain="{{ phrase('dbtech_security_intrusions_desc') }}" />
+
+<xf:radiorow name="rules[ipaddresses]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.ipaddresses : 'same' }}" listclass="indented"
+			 label="{{ phrase('dbtech_security_source') }}">
+	<xf:option value="same">{{ phrase('dbtech_security_same_ip_address') }}</xf:option>
+	<xf:option value="any">{{ phrase('dbtech_security_any_ip_address') }}</xf:option>
+</xf:radiorow>
+
+<xf:formrow rowtype="input" label="{{ phrase('dbtech_security_time_frame') }}">
+	<div class="inputGroup">
+		<xf:numberbox name="rules[hours]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.hours : 1 }}" step="1" min="0" />
+		<span class="inputGroup-text">{{ phrase('hours') }}</span>
+	</div>
+</xf:formrow>
+
+<hr class="formRowSep" />]]></template>
+  <template type="admin" title="dbtech_security_watcher_edit_forumpermissions" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:numberboxrow name="rules[intrusions]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.intrusions : 5 }}" step="1" min="0"
+				 label="{{ phrase('dbtech_security_intrusions') }}"
+				 explain="{{ phrase('dbtech_security_intrusions_desc') }}" />
+
+<xf:formrow rowtype="input" label="{{ phrase('dbtech_security_time_frame') }}">
+	<div class="inputGroup">
+		<xf:numberbox name="rules[hours]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.hours : 1 }}" step="1" min="0" />
+		<span class="inputGroup-text">{{ phrase('hours') }}</span>
+	</div>
+</xf:formrow>
+
+<hr class="formRowSep" />]]></template>
+  <template type="admin" title="dbtech_security_watcher_edit_newusergroup" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:numberboxrow name="rules[intrusions]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.intrusions : 5 }}" step="1" min="0"
+				 label="{{ phrase('dbtech_security_intrusions') }}"
+				 explain="{{ phrase('dbtech_security_intrusions_desc') }}" />
+
+<xf:formrow rowtype="input" label="{{ phrase('dbtech_security_time_frame') }}">
+	<div class="inputGroup">
+		<xf:numberbox name="rules[hours]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.hours : 1 }}" step="1" min="0" />
+		<span class="inputGroup-text">{{ phrase('hours') }}</span>
+	</div>
+</xf:formrow>
+
+<hr class="formRowSep" />]]></template>
+  <template type="admin" title="dbtech_security_watcher_edit_option" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:numberboxrow name="rules[intrusions]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.intrusions : 5 }}" step="1" min="0"
+				 label="{{ phrase('dbtech_security_intrusions') }}"
+				 explain="{{ phrase('dbtech_security_intrusions_desc') }}" />
+
+<xf:formrow rowtype="input" label="{{ phrase('dbtech_security_time_frame') }}">
+	<div class="inputGroup">
+		<xf:numberbox name="rules[hours]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.hours : 1 }}" step="1" min="0" />
+		<span class="inputGroup-text">{{ phrase('hours') }}</span>
+	</div>
+</xf:formrow>
+
+<xf:radiorow name="rules[field]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.field : 'boardActive' }}" listclass="indented"
+			 label="{{ phrase('dbtech_security_option') }}">
+	<xf:option value="boardActive">{{ phrase('dbtech_security_watcher_field.boardActive') }}</xf:option>
+	<xf:option value="boardInactiveMessage">{{ phrase('dbtech_security_watcher_field.boardInactiveMessage') }}</xf:option>
+	<xf:comment>
+	<xf:option value="dbtech_security_allowip">{{ phrase('dbtech_security_watcher_field.dbtech_security_allowip') }}</xf:option>
+	<xf:option value="dbtech_security_allowip_exclude">{{ phrase('dbtech_security_watcher_field.dbtech_security_allowip_exclude') }}</xf:option>
+	</xf:comment>
+	<xf:option value="dbtech_security_globalallowip">{{ phrase('dbtech_security_watcher_field.dbtech_security_globalallowip') }}</xf:option>
+</xf:radiorow>
+
+<hr class="formRowSep" />]]></template>
+  <template type="admin" title="dbtech_security_watcher_edit_user" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:numberboxrow name="rules[intrusions]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.intrusions : 5 }}" step="1" min="0"
+				 label="{{ phrase('dbtech_security_intrusions') }}"
+				 explain="{{ phrase('dbtech_security_intrusions_desc') }}" />
+
+<xf:formrow rowtype="input" label="{{ phrase('dbtech_security_time_frame') }}">
+	<div class="inputGroup">
+		<xf:numberbox name="rules[hours]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.hours : 1 }}" step="1" min="0" />
+		<span class="inputGroup-text">{{ phrase('hours') }}</span>
+	</div>
+</xf:formrow>
+
+<xf:radiorow name="rules[field]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.field : 'username' }}" listclass="indented"
+			 label="{{ phrase('field') }}">
+	<xf:option value="username">{{ phrase('dbtech_security_watcher_field.username') }}</xf:option>
+	<xf:option value="password">{{ phrase('dbtech_security_watcher_field.password') }}</xf:option>
+	<xf:option value="email">{{ phrase('dbtech_security_watcher_field.email') }}</xf:option>
+	<xf:option value="user_group_id">{{ phrase('dbtech_security_watcher_field.user_group_id') }}</xf:option>
+	<xf:option value="secondary_group_ids">{{ phrase('dbtech_security_watcher_field.secondary_group_ids') }}</xf:option>
+</xf:radiorow>
+
+<hr class="formRowSep" />]]></template>
+  <template type="admin" title="dbtech_security_watcher_edit_usergrouppermissions" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:numberboxrow name="rules[intrusions]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.intrusions : 5 }}" step="1" min="0"
+				 label="{{ phrase('dbtech_security_intrusions') }}"
+				 explain="{{ phrase('dbtech_security_intrusions_desc') }}" />
+
+<xf:formrow rowtype="input" label="{{ phrase('dbtech_security_time_frame') }}">
+	<div class="inputGroup">
+		<xf:numberbox name="rules[hours]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.hours : 1 }}" step="1" min="0" />
+		<span class="inputGroup-text">{{ phrase('hours') }}</span>
+	</div>
+</xf:formrow>
+
+<hr class="formRowSep" />]]></template>
+  <template type="admin" title="dbtech_security_watcher_edit_userpermissions" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:numberboxrow name="rules[intrusions]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.intrusions : 5 }}" step="1" min="0"
+				 label="{{ phrase('dbtech_security_intrusions') }}"
+				 explain="{{ phrase('dbtech_security_intrusions_desc') }}" />
+
+<xf:formrow rowtype="input" label="{{ phrase('dbtech_security_time_frame') }}">
+	<div class="inputGroup">
+		<xf:numberbox name="rules[hours]" value="{{ $watcher.isUpdate() ? $watcher.rule_data.hours : 1 }}" step="1" min="0" />
+		<span class="inputGroup-text">{{ phrase('hours') }}</span>
+	</div>
+</xf:formrow>
+
+<hr class="formRowSep" />]]></template>
+  <template type="admin" title="dbtech_security_watcher_list" version_id="905000011" version_string="5.0.0 Alpha 1"><![CDATA[<xf:title>{{ phrase('dbtech_security_watchers') }}</xf:title>
+
+<xf:pageaction>
+	<xf:button href="{{ link('dbtech-security/watchers/add') }}" overlay="true" icon="add">{{ phrase('dbtech_security_add_new_watcher') }}</xf:button>
+</xf:pageaction>
+
+<xf:form action="{{ link('dbtech-security/watchers/toggle') }}" class="block" ajax="true">
+	<div class="block-outer">
+		<xf:macro id="filter_macros::quick_filter" arg-key="dbtech-security/watchers" arg-class="block-outer-opposite" />
+	</div>
+	<div class="block-container">
+		<div class="block-body">
+			<xf:datalist>
+				<xf:foreach loop="$watchers" value="$watcher">
+					<xf:set var="$actions" value="{$watcher.getParsedActionSet()}" />
+
+					<xf:datarow>
+						<xf:main hash="{$watcher.watcher_id}" href="{{ link('dbtech-security/watchers/edit', $watcher) }}"
+								 label="{$watcher.title}">
+							<xf:hint>
+								{$watcher.hint}
+							</xf:hint>
+							<xf:explain>
+								<ul class="listInline listInline--bullet">
+									<li>{$watcher.getParsedRule()}</li>
+
+									<xf:if is="$actions">
+										<xf:foreach loop="$actions" value="$action">
+											<li>{$action}</li>
+										</xf:foreach>
+									<xf:else />
+										<li>{{ phrase('dbtech_security_actions.none') }}</li>
+									</xf:if>
+								</ul>
+							</xf:explain>
+						</xf:main>
+						<xf:cell class="dataList-cell--min dataList-cell--hint">{$watcher.priority}</xf:cell>
+						<xf:toggle name="active[{$watcher.watcher_id}]" selected="$watcher.active"
+								   class="dataList-cell--separated" submit="true"
+								   tooltip="{{ phrase('enable_disable_x', {'title': $watcher.title}) }}" />
+						<xf:delete href="{{ link('dbtech-security/watchers/delete', $watcher) }}"
+								   tooltip="{{ phrase('delete') }} " />
+					</xf:datarow>
+				</xf:foreach>
+			</xf:datalist>
+		</div>
+		<div class="block-footer">
+			<span class="block-footer-counter">{{ display_totals($watchers) }}</span>
+		</div>
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="option_template_dbtechSecurityAllowIp" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:formrow rowtype="input"
+	label="{$option.title}"
+	hint="{$hintHtml}"
+	explain="{$explainHtml}"
+	html="{$listedHtml}">
+
+	<ul class="listPlain inputGroup-container">
+		<xf:foreach loop="$choices" key="$counter" value="$choice">
+			<li class="inputGroup">
+				<xf:textbox name="{$inputName}[{$counter}][ip]" value="{$choice.ip}" placeholder="{{ phrase('ip_address') }}" size="20" />
+			</li>
+		</xf:foreach>
+
+		<li class="inputGroup" data-xf-init="field-adder" data-increment-format="{$inputName}[{counter}]">
+			<xf:textbox name="{$inputName}[{$nextCounter}][ip]" placeholder="{{ phrase('ip_address') }}" size="20" />
+		</li>
+	</ul>
+</xf:formrow>]]></template>
+  <template type="admin" title="option_template_dbtechSecurityBreachCheck" version_id="904020670" version_string="4.2.6"><![CDATA[<xf:checkboxrow
+	hint="{$hintHtml}"
+	explain="{$explainHtml}"
+	html="{$listedHtml}">
+
+	<xf:option name="{$inputName}[enabled]" label="{{ phrase('dbtech_security_enable_account_breach_check') }}" hint="{{ phrase('dbtech_security_enable_account_breach_check_explain') }}" value="1" selected="$option.option_value.enabled" data-hide="true">
+		<xf:checkbox>
+			
+			<xf:option name="{$inputName}[includeUsername]" selected="$option.option_value.includeUsername">
+				<xf:label>{{ phrase('dbtech_security_include_user_name') }}</xf:label>
+				<xf:hint>{{ phrase('dbtech_security_include_user_name_explain') }}</xf:hint>			
+			</xf:option>
+
+		</xf:checkbox>
+
+		<xf:dependent>
+			<div class="inputGroup">
+				<span class="inputGroup-text">{{ phrase('api_key:') }}</span>
+				<span class="inputGroup-splitter"></span>
+				<xf:textbox name="{$inputName}[apiKey]" value="{$option.option_value.apiKey}" />
+			</div>
+			<p class="formRow-explain">{{ phrase('dbtech_security_hibp_api_key') }}</p>
+		</xf:dependent>
+	</xf:option>
+</xf:checkboxrow>]]></template>
+  <template type="admin" title="option_template_dbtechSecurityFingerprinting" version_id="905000011" version_string="5.0.0 Alpha 1"><![CDATA[<xf:checkboxrow
+	hint="{$hintHtml}"
+	explain="{$explainHtml}"
+	html="{$listedHtml}">
+
+	<xf:option name="{$inputName}[enabled]"
+			   label="{{ phrase('dbtech_security_enable_fingerprinting') }}"
+			   hint="{{ phrase('dbtech_security_enable_fingerprinting_explain') }}"
+			   value="1"
+			   selected="$option.option_value.enabled"
+			   data-hide="true">
+		<xf:checkbox>
+
+			<xf:option name="{$inputName}[includeWebGL]" selected="$option.option_value.includeWebGL">
+				<xf:label>{{ phrase('dbtech_security_include_webgl') }}</xf:label>
+				<xf:hint>{{ phrase('dbtech_security_include_webgl_explain') }}</xf:hint>
+			</xf:option>
+
+		</xf:checkbox>
+	</xf:option>
+</xf:checkboxrow>]]></template>
+  <template type="admin" title="option_template_dbtechSecurityLoginCaptcha" version_id="904050770" version_string="4.5.7"><![CDATA[<xf:checkboxrow
+	label="{$option.title}"
+	hint="{$hintHtml}"
+	explain="{$explainHtml}"
+	html="{$listedHtml}"
+	rowclass="{$rowClass}">
+
+	<xf:option name="{$inputName}[public]" selected="$option.option_value.public">
+		<xf:label>{{ phrase('dbtech_security_front_end') }}</xf:label>
+	</xf:option>
+	<xf:option name="{$inputName}[admin]" selected="$option.option_value.admin">
+		<xf:label>{{ phrase('admin_control_panel') }}</xf:label>
+	</xf:option>
+</xf:checkboxrow>]]></template>
+  <template type="admin" title="option_template_dbtech_security_badbehavior_enabled" version_id="904070031" version_string="4.7.0 Beta 1"><![CDATA[<xf:checkboxrow
+	hint="{$hintHtml}"
+	explain="{{ !$noBadBehavior ? $explainHtml : phrase('dbtech_security_bad_behavior_cannot_run_x_y_z', {
+		'minVersion': $minVersion,
+		'maxVersion': $maxVersion,
+		'yourVersion': $yourVersion
+	})  }}"
+	html="{$listedHtml}"
+	rowclass="{$rowClass}">
+
+	<xf:option name="{$inputName}" selected="$option.option_value" label="{$option.title}" disabled="{{ $noBadBehavior ? 'disabled' : '' }}" />
+</xf:checkboxrow>]]></template>
+  <template type="email" title="dbtech_security_account_lock" version_id="904070031" version_string="4.7.0 Beta 1"><![CDATA[<mail:subject>
+	{{ phrase('dbtech_security_security_lock_title', {'board': $xf.options.boardTitle}) }}
+</mail:subject>
+
+{{ phrase('dbtech_security_security_lock_body_html', {
+	'board': '<a href="' . link('canonical:index') . '">' . $xf.options.boardTitle . '</a>'
+}) }}
+
+<xf:if is="$hash">
+	<p>{{ phrase('dbtech_security_security_may_be_admin_locked') }}</p>
+
+	<table cellpadding="10" cellspacing="0" border="0" width="100%" class="linkBar">
+		<tr>
+			<td>
+				<a href="{{ link_type('public', 'canonical:dbtech-security/account-lock/unlock', '', {'user_id': $toUser.user_id, 'hash': $hash}) }}" class="button">{{ phrase('dbtech_security_unlock_your_account_at_x', {'param1': $xf.options.boardTitle}) }}</a>
+			</td>
+		</tr>
+	</table>
+<xf:else />
+	<p>{{ phrase('dbtech_security_security_lock_admin_body_html') }}</p>
+</xf:if>
+
+<xf:if is="$brandingVariables">
+<p class="footer p-footer-copyright">{$brandingVariables.flavour}
+	<a>{$brandingVariables.title}</a>.
+	<br />
+	<a>Copyright &copy; {$brandingVariables.date} DragonByte Technologies</a>
+</p>
+</xf:if>]]></template>
+  <template type="email" title="dbtech_security_account_lock_admin" version_id="904070031" version_string="4.7.0 Beta 1"><![CDATA[<mail:subject>
+	{{ phrase('dbtech_security_security_admin_lock_title', {
+		'username': $lockedUser.username,
+		'board': $xf.options.boardTitle
+	}) }}
+</mail:subject>
+
+{{ phrase('dbtech_security_security_admin_lock_body_html', {
+	'username': username_link_email($lockedUser, $lockedUser.username),
+	'watcher': '<b>' . $watcher.title . '</b>',
+	'board': '<a href="' . link('canonical:index') . '">' . $xf.options.boardTitle . '</a>'
+}) }}
+
+<xf:if is="{$hash}">
+<table cellpadding="10" cellspacing="0" border="0" width="100%" class="linkBar">
+	<tr>
+		<td>
+			<a href="{{ link_type('public', 'canonical:dbtech-security/account-lock/unlock', '', {'user_id': $lockedUser.user_id, 'hash': $hash, 'type': 'admin'}) }}" class="button">{{ phrase('dbtech_security_unlock_x_account_at_y', {'username': $lockedUser.username, 'param1': $xf.options.boardTitle}) }}</a>
+		</td>
+	</tr>
+</table>
+</xf:if>
+
+<xf:if is="{$brandingVariables}">
+<p class="footer p-footer-copyright">{$brandingVariables.flavour}
+	<a>{$brandingVariables.title}</a>.
+	<br />
+	<a>Copyright &copy; {$brandingVariables.date} DragonByte Technologies</a>
+</p>
+</xf:if>]]></template>
+  <template type="email" title="dbtech_security_alert" version_id="904070031" version_string="4.7.0 Beta 1"><![CDATA[<mail:subject>
+	{{ phrase('dbtech_security_security_alert_title', {
+		'watcher': $watcher.title,
+		'board': $xf.options.boardTitle
+	}) }}
+</mail:subject>
+
+{{ phrase('dbtech_security_security_alert_body_html', {
+	'watcher': '<b>' . $watcher.title . '</b>',
+	'board': '<a href="' . link('canonical:index') . '">' . $xf.options.boardTitle . '</a>'
+}) }}
+
+<div style="font-size: 11px; margin: 10px 0"><ul>{$differences|raw}</ul></div>
+
+<xf:if is="!{$noActions}">
+<p>{{ phrase('dbtech_security_security_alert_actions_taken') }}</p>
+</xf:if>
+
+<xf:if is="{$brandingVariables}">
+<p class="footer p-footer-copyright">{$brandingVariables.flavour}
+	<a>{$brandingVariables.title}</a>.
+	<br />
+	<a>Copyright &copy; {$brandingVariables.date} DragonByte Technologies</a>
+</p>
+</xf:if>]]></template>
+  <template type="email" title="dbtech_security_alert_breach" version_id="904070031" version_string="4.7.0 Beta 1"><![CDATA[<mail:subject>
+	{{ phrase('dbtech_security_account_breach_alert_title', {'board': $xf.options.boardTitle}) }}
+</mail:subject>
+
+{{ phrase('dbtech_security_account_breach_alert_body', {
+	'board': '<a href="' . link('canonical:index') . '">' . $xf.options.boardTitle . '</a>'
+}) }}
+
+<div style="font-size: 11px; margin: 10px 0">
+	<ul>
+		<xf:foreach loop="$breaches" value="$breach">
+			<li>{{ phrase('dbtech_security_breach_description', {
+					'siteName': $breach.Title,
+					'domain': $breach.Domain,
+					'breachDate': '<b>' . date($breach.BreachDate, 'absolute') . '</b>',
+					'addedDate': '<b>' . date_time($breach.AddedDate) . '</b>'
+				}) }}</li>
+		</xf:foreach>
+	</ul>
+</div>
+
+<table cellpadding="10" cellspacing="0" border="0" width="100%" class="linkBar">
+	<tr>
+		<td>
+			<a href="{{ link_type('public', 'canonical:account/security') }}" class="button">{{ phrase('dbtech_security_click_here_change_password') }}</a>
+		</td>
+	</tr>
+</table>
+
+<xf:if is="{$brandingVariables}">
+<p class="footer p-footer-copyright">{$brandingVariables.flavour}
+	<a>{$brandingVariables.title}</a>.
+	<br />
+	<a>Copyright &copy; {$brandingVariables.date} DragonByte Technologies</a>
+</p>
+</xf:if>]]></template>
+  <template type="email" title="dbtech_security_alert_template" version_id="904070031" version_string="4.7.0 Beta 1"><![CDATA[<mail:subject>
+	{{ phrase('dbtech_security_security_alert_title', {
+		'watcher': $type,
+		'board': $xf.options.boardTitle
+	}) }}
+</mail:subject>
+
+{{ phrase('dbtech_security_security_alert_body_html', {
+	'watcher': '<b>' . $type . '</b>',
+	'board': '<a href="' . link('canonical:index') . '">' . $xf.options.boardTitle . '</a>'
+}) }}
+
+<h2>{{ is_scalar($templateObj) ? $templateObj : $templateObj.title }}</h2>
+
+<ul style="margin:10px 0px 20px 0px; padding:0; list-style:none;">
+	<xf:foreach loop="$diffs" value="$diff" if="$diff.0 != 'e'">
+		<xf:set var="$diffHtml">{{ $diff.1|join('<br />') }}</xf:set>
+		<li style="
+			line-height: 1.5;
+			min-height: 8px;
+			padding: 0 3px;
+			{{ $diff.0 == 'u' ? 'background-color: #F0F8FF; border: 1px solid #D0D8DF; color: #4040A0;' : '' }}
+			{{ $diff.0 == 'd' ? 'background-color: #FAE4E4; border: 1px solid #C86060; color: #882020;' : '' }}
+			{{ $diff.0 == 'i' ? 'background-color: #E4FBE4; border: 1px solid #60C860; color: #208820;' : '' }}
+		">{{ trim($diffHtml) !== '' ? $diffHtml : '&nbsp;' }}</li>
+	</xf:foreach>
+</ul>
+
+<xf:if is="!is_scalar($templateObj)">
+	<table cellpadding="10" cellspacing="0" border="0" width="100%" class="linkBar">
+		<tr>
+			<td>
+				<a href="{{ link_type('admin', 'canonical:templates/history', $templateObj) }}" class="button">{{ phrase('template_history') }}</a>
+			</td>
+		</tr>
+	</table>
+</xf:if>
+
+<xf:if is="{$brandingVariables}">
+<p class="footer p-footer-copyright">{$brandingVariables.flavour}
+	<a>{$brandingVariables.title}</a>.
+	<br />
+	<a>Copyright &copy; {$brandingVariables.date} DragonByte Technologies</a>
+</p>
+</xf:if>]]></template>
+  <template type="email" title="dbtech_security_alert_user" version_id="904070031" version_string="4.7.0 Beta 1"><![CDATA[<mail:subject>
+	{{ phrase('dbtech_security_security_alert_title', {
+		'watcher': $watcher.title,
+		'board': $xf.options.boardTitle
+	}) }}
+</mail:subject>
+
+{{ phrase('dbtech_security_security_alert_body_html', {
+	'watcher': '<b>' . $watcher.title . '</b>',
+	'board': '<a href="' . link('canonical:index') . '">' . $xf.options.boardTitle . '</a>'
+}) }}
+
+<xf:if is="{$extraInfo}"><div style="font-size: 11px; margin: 10px 0"><ul>{$extraInfo|raw}</ul></div></xf:if>
+
+<xf:if is="!{$noActions}">
+<p>{{ phrase('dbtech_security_security_alert_actions_taken') }}</p>
+</xf:if>
+
+<xf:if is="{$brandingVariables}">
+<p class="footer p-footer-copyright">{$brandingVariables.flavour}
+	<a>{$brandingVariables.title}</a>.
+	<br />
+	<a>Copyright &copy; {$brandingVariables.date} DragonByte Technologies</a>
+</p>
+</xf:if>]]></template>
+  <template type="email" title="dbtech_security_email_recovery_request" version_id="904070031" version_string="4.7.0 Beta 1"><![CDATA[<mail:subject>
+	{{ phrase('dbtech_security_email_change_request_title', {
+		'ipaddress': $ipaddress,
+		'username': $username,
+		'board': $xf.options.boardTitle
+	}) }}
+</mail:subject>
+
+{{ phrase('dbtech_security_email_change_request_body_html', {
+	'ipaddress': $ipaddress,
+	'username': $username,
+	'board': '<a href="' . link('canonical:index') . '">' . $xf.options.boardTitle . '</a>'
+}) }}
+
+<p>{{ phrase('dbtech_security_details_below') }}</p>
+
+<div style="font-size: 11px; margin: 10px 0">
+	<ul>
+		<li>{{ phrase('user_name') }}: {$filled_username}</li>
+		<li>{{ phrase('dbtech_security_existing_email_address') }}: {$filled_existingemail}</li>
+		<li>{{ phrase('dbtech_security_new_email_address') }}: {$filled_newemail}</li>
+		<li>{{ phrase('dbtech_security_last_non_admin_pmd_short') }}: {$filled_pmuser}</li>
+		<li>{{ phrase('dbtech_security_paid_sub_transaction_id') }}: {$filled_txnid}</li>
+	</ul>
+</div>
+
+<p>{{ phrase('dbtech_security_total_score_x', {
+	'score': $score
+}) }}</p>
+
+<div style="font-size: 11px; margin: 10px 0">
+	{$breakdown_html|raw}
+</div>
+
+<p>{{ phrase('dbtech_security_reply_to_converse') }}</p>
+
+<xf:if is="{$brandingVariables}">
+<p class="footer p-footer-copyright">{$brandingVariables.flavour}
+	<a>{$brandingVariables.title}</a>.
+	<br />
+	<a>Copyright &copy; {$brandingVariables.date} DragonByte Technologies</a>
+</p>
+</xf:if>]]></template>
+  <template type="email" title="dbtech_security_email_recovery_request_received" version_id="904070031" version_string="4.7.0 Beta 1"><![CDATA[<mail:subject>
+	{{ phrase('dbtech_security_email_change_request_received_title', {
+		'board': $xf.options.boardTitle
+	}) }}
+</mail:subject>
+
+{{ phrase('dbtech_security_email_change_request_received_body_html', {
+	'board': '<a href="' . link('canonical:index') . '">' . $xf.options.boardTitle . '</a>'
+}) }}
+
+<xf:if is="{$brandingVariables}">
+<p class="footer p-footer-copyright">{$brandingVariables.flavour}
+	<a>{$brandingVariables.title}</a>.
+	<br />
+	<a>Copyright &copy; {$brandingVariables.date} DragonByte Technologies</a>
+</p>
+</xf:if>]]></template>
+  <template type="email" title="dbtech_security_email_recovery_successful" version_id="904070031" version_string="4.7.0 Beta 1"><![CDATA[<mail:subject>
+	{{ phrase('dbtech_security_email_change_successful_title', {
+		'board': $xf.options.boardTitle
+	}) }}
+</mail:subject>
+
+{{ phrase('dbtech_security_email_change_successful_body_html', {
+	'ipaddress': $ipaddress,
+	'username': $username,
+	'board': '<a href="' . link('canonical:index') . '">' . $xf.options.boardTitle . '</a>'
+}) }}
+
+<p>{{ phrase('dbtech_security_details_below') }}</p>
+
+<div style="font-size: 11px; margin: 10px 0">
+	<ul>
+		<li>{{ phrase('user_name') }}: {$filled_username}</li>
+		<li>{{ phrase('dbtech_security_existing_email_address') }}: {$filled_existingemail}</li>
+		<li>{{ phrase('dbtech_security_new_email_address') }}: {$filled_newemail}</li>
+		<li>{{ phrase('dbtech_security_last_non_admin_pmd_short') }}: {$filled_pmuser}</li>
+		<li>{{ phrase('dbtech_security_paid_sub_transaction_id') }}: {$filled_txnid}</li>
+	</ul>
+</div>
+
+<p>{{ phrase('dbtech_security_total_score_x', {
+	'score': $score
+}) }}</p>
+
+<div style="font-size: 11px; margin: 10px 0">
+	{$breakdown_html|raw}
+</div>
+
+<p>{{ phrase('dbtech_security_reply_to_converse') }}</p>
+
+<xf:if is="{$brandingVariables}">
+<p class="footer p-footer-copyright">{$brandingVariables.flavour}
+	<a>{$brandingVariables.title}</a>.
+	<br />
+	<a>Copyright &copy; {$brandingVariables.date} DragonByte Technologies</a>
+</p>
+</xf:if>]]></template>
+  <template type="public" title="dbtech_security_delete_state" version_id="905000011" version_string="5.0.0 Alpha 1"><![CDATA[<xf:title>{{ phrase('confirm_action') }}</xf:title>
+
+<xf:breadcrumb href="{$editLink}">{$title}</xf:breadcrumb>
+
+<xf:form action="{$confirmUrl}" class="block" ajax="true">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:macro id="public:dbtech_security_helper_action::delete_type"
+					  arg-content="{$entity}"
+					  arg-stateKey="{$stateKey}"
+					  arg-canHardDelete="{$canHardDelete}" />
+
+			<xf:if is="$includeAuthorAlert">
+				<xf:macro id="public:helper_action::author_alert" />
+			</xf:if>
+		</div>
+		<xf:submitrow rowtype="simple" icon="delete" />
+	</div>
+</xf:form>]]></template>
+  <template type="public" title="dbtech_security_fingerprint" version_id="905000011" version_string="5.0.0 Alpha 1"><![CDATA[<xf:if is="$app == 'public' && $xf.visitor.user_id && $xf.options.dbtechSecurityFingerprinting.enabled && !$xf.visitor.Option.dbtech_security_is_user_locked && !$xf.visitor.Option.dbtech_security_is_admin_locked">
+	<script>
+		var dbtechSecurityFingerprintConfig = {
+			excludeVideoCard: <xf:if is="!$xf.options.dbtechSecurityFingerprinting.includeWebGL">true<xf:else />false</xf:if>,
+			excludeFonts: true
+		};
+	</script>
+	<xf:js src="DBTech/Security/vendor/fingerprintjs/fingerprintjs.js" min="1" addon="DBTech/Security" />
+	<xf:js src="DBTech/Security/fingerprint.js" min="1" addon="DBTech/Security" />
+</xf:if>]]></template>
+  <template type="public" title="dbtech_security_helper_action" version_id="905000011" version_string="5.0.0 Alpha 1"><![CDATA[<xf:macro id="delete_type" arg-content="!" arg-stateKey="!" arg-canHardDelete="{{ false }}" arg-typeName="hard_delete" arg-reasonName="reason">
+	<xf:if is="{$content.{$stateKey}} == 'deleted'">
+
+		<xf:radiorow name="{$typeName}" value="0"
+					 label="{{ phrase('deletion_type') }}">
+
+			<xf:option value="0"
+					   label="{{ phrase('dbtech_security_keep_deleted') }}" />
+
+			<xf:if is="$canHardDelete">
+				<xf:option value="1"
+						   label="{{ phrase('permanently_delete') }}"
+						   hint="{{ phrase('selecting_this_option_will_permanently_and_irreversibly_delete_item') }}" />
+			</xf:if>
+
+			<xf:option value="2"
+					   label="{{ phrase('undelete') }}" />
+		</xf:radiorow>
+	<xf:else />
+		<xf:macro id="public:helper_action::delete_type" arg-canHardDelete="{$canHardDelete}" />
+	</xf:if>
+</xf:macro>]]></template>
+  <template type="public" title="dbtech_security_locked_account" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:title>{{ phrase('dbtech_security_locked_account') }}</xf:title>
+
+<xf:breadcrumb href="{{ link('full:account') }}">{{ phrase('your_account') }}</xf:breadcrumb>
+
+<div class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:inforow>{{ phrase('dbtech_security_locked_account_desc') }}</xf:inforow>
+
+			<xf:inforow>
+				<xf:if is="$xf.visitor.Option.dbtech_security_is_user_locked">
+					{{ phrase('dbtech_security_user_locked_desc', { 
+						'resend': '<a href="' . link('dbtech-security/account-lock/resend') . '">' . phrase('resend_email') . '</a>'
+					}) }}
+				<xf:else />
+					{{ phrase('dbtech_security_admin_locked_desc') }}
+				</xf:if>
+			</xf:inforow>
+		</div>
+	</div>
+</div>]]></template>
+  <template type="public" title="dbtech_security_navbar_macro" version_id="905000011" version_string="5.0.0 Alpha 1"><![CDATA[<xf:macro id="navbar" arg-section="!" arg-nav="">
+	<xf:if is="{{ $nav AND $xf.visitor.hasPermission('dbtech_security', 'canview') AND $xf.options.dbtech_security_navbar.enabled == 2 AND $xf.options.dbtech_security_navbar.right_position == $section }}">
+
+		<xf:if is="$nav.href">
+			<xf:if is="$nav.children">
+				<xf:set var="$nav.attributes.data-xf-click" value="menu" />
+			</xf:if>
+			<xf:macro id="PAGE_CONTAINER::nav_link"
+				arg-navId="dbtechSecurity"
+				arg-nav="{$nav}"
+				arg-class="p-navgroup-link p-navgroup-link--iconic p-navgroup-link--dbtech-security" />
+		<xf:elseif is="$nav.children" /><a data-xf-click="menu"
+			class="p-navgroup-link p-navgroup-link--iconic p-navgroup-link--dbtech-security"
+			role="button"
+			tabindex="0"
+			aria-expanded="false"
+			aria-haspopup="true">
+			<xf:macro id="PAGE_CONTAINER::nav_link"
+				arg-navId="dbtechSecurity"
+				arg-nav="{$nav}" />
+		</a>
+
+		<xf:else />
+
+			<xf:macro id="PAGE_CONTAINER::nav_link"
+				arg-navId="dbtechSecurity"
+				arg-nav="{$nav}"
+				arg-class="p-navgroup-link p-navgroup-link--iconic p-navgroup-link--dbtech-security" />
+
+		</xf:if>
+
+		<xf:if is="$nav.children">
+			<div class="menu menu--structural" data-menu="menu" aria-hidden="true">
+				<div class="menu-content">
+					<!--<h4 class="menu-header">{$nav.title}</h4>-->
+					<xf:foreach loop="$nav.children" key="$childNavId" value="$child">
+						<xf:macro id="PAGE_CONTAINER::nav_menu_entry"
+							arg-navId="{$childNavId}"
+							arg-nav="{$child}" />
+					</xf:foreach>
+				</div>
+			</div>
+		</xf:if>
+	</xf:if>
+</xf:macro>]]></template>
+  <template type="public" title="dbtech_security_password_errors" version_id="904010031" version_string="4.1.0 Beta 1"><![CDATA[<xf:if is="$xf.visitor.isDbtechSecurityPasswordExpired()">
+	<xf:inforow>
+		<p class="block-rowMessage block-rowMessage--error block-rowMessage--iconic">
+			<strong>{{ phrase('warning:') }}</strong>
+			{{ phrase('dbtech_security_password_expired') }}
+		</p>
+	</xf:inforow>
+</xf:if>
+
+<xf:if is="$xf.visitor.hasDbtechSecurityForcedPasswordChange()">
+	<xf:inforow>
+		<p class="block-rowMessage block-rowMessage--error block-rowMessage--iconic">
+			<strong>{{ phrase('warning:') }}</strong>
+			{{ phrase('dbtech_security_must_change_password') }}
+		</p>
+	</xf:inforow>
+</xf:if>
+]]></template>
+  <template type="public" title="dbtech_security_passwordrules" version_id="905000011" version_string="5.0.0 Alpha 1"><![CDATA[<xf:css src="dbtech_security_passwordrules.less" />
+
+<xf:js src="DBTech/Security/passwordrules.js" min="1" addon="DBTech/Security" />
+
+<xf:js>
+	let passwordRules = {};
+	<xf:if is="$xf.visitor.hasPermission('dbtech_security', 'pwdrule_length') > 0">
+		passwordRules['passwordLength'] = {
+			callback: function(params) { return this.length >= params; },
+			params: [{{ $xf.visitor.hasPermission('dbtech_security', 'pwdrule_length') }}]
+		};
+	</xf:if>
+	<xf:if is="$xf.visitor.hasPermission('dbtech_security', 'pwdrule_lc')">
+		passwordRules['containsLowerCase'] = {
+			phrase: "{{ phrase('dbtech_security_passwordrule_lowercase')|escape('js') }}",
+			callback: function() { return this.match(/[a-z]+/); }
+		};
+	</xf:if>
+	<xf:if is="$xf.visitor.hasPermission('dbtech_security', 'pwdrule_uc')">
+		passwordRules['containsUpperCase'] = {
+			phrase: "{{ phrase('dbtech_security_passwordrule_uppercase')|escape('js') }}",
+			callback: function() { return this.match(/[A-Z]+/); }
+		};
+	</xf:if>
+	<xf:if is="$xf.visitor.hasPermission('dbtech_security', 'pwdrule_num')">
+		passwordRules['containsNumbers'] = {
+			phrase: "{{ phrase('dbtech_security_passwordrule_numbers')|escape('js') }}",
+			callback: function() { return this.match(/[0-9]+/); }
+		};
+	</xf:if>
+	<xf:if is="$xf.visitor.hasPermission('dbtech_security', 'pwdrule_sym')">
+		passwordRules['containsSymbols'] = {
+			phrase: "{{ phrase('dbtech_security_passwordrule_symbols')|escape('js') }}",
+			callback: function() { return this.match(/\W+/); }
+		};
+	</xf:if>
+</xf:js>
+
+<div class="js-passwordRules">
+	<xf:if is="$xf.visitor.hasPermission('dbtech_security', 'pwdrule_length') > 0">
+		<div class="passwordRule passwordRule--length"  data-security-rule="length" data-param="{{ $xf.visitor.hasPermission('dbtech_security', 'pwdrule_length') }}">
+			<xf:fa icon="fas fa-times" class="passwordRule--bad" /> {{ phrase('dbtech_security_passwordrule_passwordlength', {'param1': $xf.visitor.hasPermission('dbtech_security', 'pwdrule_length')}) }}
+		</div>
+	</xf:if>
+
+	<xf:if is="$xf.visitor.hasPermission('dbtech_security', 'pwdrule_lc')">
+		<div class="passwordRule passwordRule--lowerCase" data-security-rule="lowercase">
+			<xf:fa icon="fas fa-times" class="passwordRule--bad" /> {{ phrase('dbtech_security_passwordrule_lowercase') }}
+		</div>
+	</xf:if>
+
+	<xf:if is="$xf.visitor.hasPermission('dbtech_security', 'pwdrule_uc')">
+		<div class="passwordRule passwordRule--upperCase" data-security-rule="uppercase">
+			<xf:fa icon="fas fa-times" class="passwordRule--bad" /> {{ phrase('dbtech_security_passwordrule_uppercase') }}
+		</div>
+	</xf:if>
+
+	<xf:if is="$xf.visitor.hasPermission('dbtech_security', 'pwdrule_num')">
+		<div class="passwordRule passwordRule--numbers" data-security-rule="numbers">
+			<xf:fa icon="fas fa-times" class="passwordRule--bad" /> {{ phrase('dbtech_security_passwordrule_numbers') }}
+		</div>
+	</xf:if>
+
+	<xf:if is="$xf.visitor.hasPermission('dbtech_security', 'pwdrule_sym')">
+		<div class="passwordRule passwordRule--symbols" data-security-rule="symbols">
+			<xf:fa icon="fas fa-times" class="passwordRule--bad" /> {{ phrase('dbtech_security_passwordrule_symbols') }}
+		</div>
+	</xf:if>
+</div>]]></template>
+  <template type="public" title="dbtech_security_passwordrules.less" version_id="904020370" version_string="4.2.3"><![CDATA[.js-passwordRules {
+	display: none;
+
+	.passwordRule {
+		padding-top: @xf-paddingMedium;
+
+		&--bad {
+			.xf-dbtechSecurityPasswordRuleBad();
+		}
+
+		&--good {
+			.xf-dbtechSecurityPasswordRuleGood();
+		}
+	}
+}]]></template>
+  <template type="public" title="dbtech_security_remembered_logins" version_id="905000031" version_string="5.0.0 Beta 1"><![CDATA[<xf:set var="$sessionRepo" value="{$xf.app.em.getRepository('DBTech\Security:SessionRepository')}" />
+<xf:set var="$sessions" value="{$sessionRepo.getSessionsForUser().fetch()}" />
+
+<xf:if contentcheck="true">
+	<div class="block">
+		<div class="block-container">
+			<h2 class="block-header">
+				{{ phrase('dbtech_security_login_sessions') }}
+				<div class="block-desc">{{ phrase('dbtech_security_login_sessions_desc') }}</div>
+			</h2>
+			<div class="block-body">
+				<xf:contentcheck>
+					<xf:foreach loop="$sessions" value="$session" if="$session.session_id == $xf.app.request.getCookie('dbtechSecuritySession')">
+						<xf:macro id="session" arg-session="{$session}" arg-canDelete="{{ false }}" />
+					</xf:foreach>
+
+					<xf:foreach loop="$sessions" value="$session" if="$session.session_id != $xf.app.request.getCookie('dbtechSecuritySession')">
+						<xf:macro id="session" arg-session="{$session}" arg-canDelete="{{ true }}" />
+					</xf:foreach>
+				</xf:contentcheck>
+			</div>
+		</div>
+	</div>
+</xf:if>
+
+<xf:macro id="session" arg-session="!" arg-canDelete="{{ true }}">
+	<div class="block-row block-row--separated">
+		<dl class="pairs pairs--columns pairs--fixedSmall">
+			<dt>{{ phrase('dbtech_security_browser') }}</dt>
+			<dd>{{ $session.browser ?: phrase('n_a') }}</dd>
+		</dl>
+		<dl class="pairs pairs--columns pairs--fixedSmall">
+			<dt>{{ phrase('dbtech_security_os') }}</dt>
+			<dd>{{ $session.platform ?: phrase('n_a') }}</dd>
+		</dl>
+		<dl class="pairs pairs--columns pairs--fixedSmall">
+			<dt>{{ phrase('dbtech_security_first_login') }}</dt>
+			<dd><xf:date time="$session.start_date" data-full-date="true" /></dd>
+		</dl>
+		<dl class="pairs pairs--columns pairs--fixedSmall">
+			<dt>{{ phrase('last_activity') }}</dt>
+			<dd><xf:date time="$session.last_activity_date" /></dd>
+		</dl>
+
+		<xf:if is="$canDelete">
+			<xf:form action="{{ link('dbtech-security/session/delete') }}">
+				<xf:button type="submit">{{ phrase('log_out') }}</xf:button>
+				<xf:hiddenval name="session_id">{$session.session_id}</xf:hiddenval>
+			</xf:form>
+		</xf:if>
+	</div>
+</xf:macro>]]></template>
+  <template type="public" title="dbtech_security_watcher_macros" version_id="905000031" version_string="5.0.0 Beta 1"><![CDATA[<xf:macro id="watcher_select" arg-watcherId="!" arg-row="{{ true }}" arg-class="" arg-watchers="{{ null }}" arg-includeBlank="{{ true }}" arg-includeAny="{{ false }}" arg-includeNone="{{ false }}" arg-inputName="{{ 'watcher_id' }}" arg-phrase="{{ phrase('dbtech_security_watcher') }}">
+	<xf:if is="$watchers is empty">
+		<xf:set var="$watchers" value="{{ $xf.app.em.getRepository('DBTech\Security:WatcherRepository').getWatcherTitlePairs() }}" />
+	</xf:if>
+
+	<xf:set var="$select">
+		<xf:select name="{$inputName}" value="{$watcherId}" class="{$class}">
+			<xf:if is="$includeBlank">
+				<xf:option value=""></xf:option>
+			</xf:if>
+			<xf:if is="$includeAny">
+				<xf:option value="_any">{{ phrase('(any)') }}</xf:option>
+			</xf:if>
+			<xf:if is="$includeNone">
+				<xf:option>{{ phrase('(none)') }}</xf:option>
+			</xf:if>
+
+			<xf:options source="$watchers" />
+		</xf:select>
+	</xf:set>
+	<xf:if is="$row">
+		<xf:formrow rowtype="input"
+					label="{$phrase}">
+
+			{$select|raw}
+		</xf:formrow>
+	<xf:else />
+		{$select|raw}
+	</xf:if>
+</xf:macro>
+
+<xf:macro id="watcher_type_select" arg-watcherType="!" arg-row="{{ true }}" arg-class="" arg-watcherTypes="{{ null }}" arg-includeBlank="{{ true }}" arg-includeAny="{{ false }}" arg-includeNone="{{ false }}" arg-inputName="{{ 'watcher_type' }}" arg-phrase="{{ phrase('dbtech_security_watcher_type') }}">
+	<xf:if is="$watcherTypes is empty">
+		<xf:set var="$watcherTypes" value="{{ $xf.app.em.getRepository('DBTech\Security:WatcherRepository').getWatcherTypeTitlePairs(true, true) }}" />
+	</xf:if>
+
+	<xf:set var="$select">
+		<xf:select name="{$inputName}" value="{$watcherType}" class="{$class}">
+			<xf:if is="$includeBlank">
+				<xf:option value=""></xf:option>
+			</xf:if>
+			<xf:if is="$includeAny">
+				<xf:option value="_any">{{ phrase('(any)') }}</xf:option>
+			</xf:if>
+			<xf:if is="$includeNone">
+				<xf:option>{{ phrase('(none)') }}</xf:option>
+			</xf:if>
+
+			<xf:options source="$watcherTypes" />
+		</xf:select>
+	</xf:set>
+	<xf:if is="$row">
+		<xf:formrow rowtype="input"
+					label="{$phrase}">
+
+			{$select|raw}
+		</xf:formrow>
+	<xf:else />
+		{$select|raw}
+	</xf:if>
+</xf:macro>]]></template>
+</templates>

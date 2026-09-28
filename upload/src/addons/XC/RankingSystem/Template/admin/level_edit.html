@@ -1,0 +1,32 @@
+<xf:if is="$level.isInsert()">
+	<xf:title>{{ phrase('xc_level_add') }}</xf:title>
+<xf:else />
+	<xf:title>{{ phrase('xc_level_edit:') }} {$level.level}</xf:title>
+</xf:if>
+
+<xf:form action="{{ link('levels/save', $level) }}" ajax="true" class="block" enctype="multipart/form-data">	
+	
+	<div class="block-container">
+			<div class="block-body">
+				<xf:formrow label="{{ phrase('xc_level') }}">
+					<xf:numberbox name="level" value="{$level.level}"
+						size="5" min="0" step="1" />
+				</xf:formrow>
+				<xf:formrow label="{{ phrase('xc_exp_points') }}">
+						<xf:numberbox name="exp_points" value="{$level.exp_points}"
+						size="5" min="0" step="1" />
+				</xf:formrow>
+				
+				<xf:formrow label="{{ phrase('level_badge_image') }}" explain="{{ phrase('level_badge_image_explain') }}">
+					<xf:upload name="badge_image" accept=".svg,.png,.jpg,.jpeg,.gif" />
+					<xf:if is="!$level.isInsert() AND $level.LevelBadge AND $level.LevelBadge.getImageExists()">
+						<div class="formRow-explain">
+							<img src="{$level.LevelBadge.getImgPath()}" alt="Current badge" style="max-width: 100px; max-height: 100px;" />
+						</div>
+					</xf:if>
+				</xf:formrow>
+				
+			</div>
+			<xf:submitrow icon="save" rowtype="simple" />
+		</div>
+	</xf:form>

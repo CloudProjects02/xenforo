@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="member_view" modification_key="xc_display_exp_info" description="Experience Info user" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:macro template="member_macros" name="member_action_buttons"
+									arg-user="{$user}"
+									arg-context="profile" />]]></find>
+    <replace><![CDATA[$0
+<xf:include template ="xc_member_view_experience_point_info"/>]]></replace>
+  </modification>
+  <modification type="public" template="member_view" modification_key="xc_show_badges" description="show badges on member view" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:ad position="member_view_below_tabs" arg-user="{$user}" />]]></find>
+    <replace><![CDATA[<xf:include template ="xc_member_view_badages"/>
+$0]]></replace>
+  </modification>
+  <modification type="public" template="message_macros" modification_key="xc_after_banner" description="Display after banner" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[/<div class="message-userDetails">.*?<\/div>/s]]></find>
+    <replace><![CDATA[$0
+<xf:if is="{$xf.options.xc_progress_position} == 'after_banners'"><xf:include template="xc_xp_progress_bar" /></xf:if>]]></replace>
+  </modification>
+  <modification type="public" template="message_macros" modification_key="xc_before_avatar" description="display before avatar" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<div class="message-avatar {{ ($xf.options.showMessageOnlineStatus && $user && $user.isOnline()) ? 'message-avatar--online' : '' }}">]]></find>
+    <replace><![CDATA[<xf:if is="{$xf.options.xc_progress_position} == 'before_avatar'"><xf:include template="xc_xp_progress_bar" /></xf:if>
+$0]]></replace>
+  </modification>
+  <modification type="public" template="message_macros" modification_key="xc_before_banner" description="display before banner" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[/<div class="message-userDetails">.*?<\/div>/s]]></find>
+    <replace><![CDATA[<xf:if is="{$xf.options.xc_progress_position} == 'before_banners'"><xf:include template="xc_xp_progress_bar" /></xf:if>
+$0]]></replace>
+  </modification>
+  <modification type="public" template="message_macros" modification_key="xc_bottom_user_info" description="bottom user info" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[#(<section itemscope itemtype="https://schema.org/Person".*)(</section>)#sU]]></find>
+    <replace><![CDATA[$1
+<xf:if is="{$xf.options.xc_progress_position} == 'bottom_info'"><xf:include template="xc_xp_progress_bar" /></xf:if>]]></replace>
+  </modification>
+  <modification type="public" template="message_macros" modification_key="xc_display_below_avatar" description="Display below avatar" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<div class="message-userDetails">]]></find>
+    <replace><![CDATA[<xf:if is="{$xf.options.xc_progress_position} == 'below_avatar'"><xf:include template="xc_xp_progress_bar" /></xf:if>
+$0]]></replace>
+  </modification>
+</template_modifications>

@@ -49,9 +49,9 @@ class Banning extends Repository
 
     public function deleteExpiredInvitationBans($cutOff = null)
     {
-        foreach ($this->findExpiredInvitationBans($cutOff)->fetch() AS $Ban)
+        foreach ($this->findExpiredInvitationBans($cutOff)->fetch() AS $ban)
         {
-            $Ban->delete();
+            $ban->delete();
         }
     }
 
@@ -67,3 +67,4 @@ class Banning extends Repository
             ->where('end_date', '<=', $cutOff);
     }
 }
+ 		   	  		 		     				  		  		 	  	 	           		          	 	   	  								  		  				 	 		       	 		 					 		   				 	 		  	    

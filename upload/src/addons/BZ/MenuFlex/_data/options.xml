@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<options>
+  <option option_id="bzmf_compilewithoutcomments" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="bzmf_options" display_order="70"/>
+  </option>
+  <option option_id="bzmf_fontawesome" edit_format="template" data_type="array" advanced="0">
+    <default_value>{"fontawesomeicons":false,"standardiconassignments":false,"mainmenu":false,"submenus":false,"accountvisitorsmenu":false,"moreoptionsmenu":false,"searchtabs":false,"whatsnewtabs":false,"staffbar":false}</default_value>
+    <edit_format_params>bzmf_option_template_fontawesome</edit_format_params>
+    <sub_options>fontawesomeicons
+standardiconassignments
+mainmenu
+submenus
+accountvisitorsmenu
+moreoptionsmenu
+searchtabs
+whatsnewtabs
+staffbar</sub_options>
+    <relation group_id="bzmf_options" display_order="30"/>
+  </option>
+  <option option_id="bzmf_fontawesomecolor" edit_format="template" data_type="array" advanced="0">
+    <default_value>{"faColorMode":"default","faPrimaryColor":false,"faSecondaryColor":false}</default_value>
+    <edit_format_params>bzmf_option_template_fontawesomecolor</edit_format_params>
+    <sub_options>faColorMode
+faPrimaryColor
+faSecondaryColor</sub_options>
+    <relation group_id="bzmf_options" display_order="50"/>
+  </option>
+  <option option_id="bzmf_fontawesomecustom" edit_format="textbox" data_type="string" validation_class="BZ\MenuFlex\Options" validation_method="validateFontAwesomeCustom" advanced="0">
+    <default_value># Sample Single, Pair, Trio, and Quad
+
+# Main Menu Custom Icons
+testnavid1:
+testnavid2:comments
+testnavid3:users:light
+testnavid4:sun-cloud:solid:#00ff00</default_value>
+    <edit_format_params>rows=10</edit_format_params>
+    <relation group_id="bzmf_options" display_order="60"/>
+  </option>
+  <option option_id="bzmf_fontawesomestyle" edit_format="radio" data_type="string" advanced="0">
+    <default_value>duotone</default_value>
+    <edit_format_params>duotone=Duotone
+solid=Solid
+regular=Regular
+light=Light</edit_format_params>
+    <relation group_id="bzmf_options" display_order="40"/>
+  </option>
+  <option option_id="bzmf_openmenusonhover" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="bzmf_options" display_order="10"/>
+  </option>
+  <option option_id="bzmf_tieredmenus" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="bzmf_options" display_order="20"/>
+  </option>
+</options>

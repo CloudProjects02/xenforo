@@ -6,7 +6,6 @@ use DBTech\Credits\Entity\Event;
 use DBTech\Credits\EventTrigger\AbstractHandler;
 use DBTech\Credits\EventTrigger\BirthdayHandler;
 use DBTech\Credits\Finder\EventFinder;
-use XF\Entity\User;
 use XF\Finder\UserFinder;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\ArrayCollection;
@@ -93,7 +92,7 @@ class EventTriggerRepository extends Repository
 
 		if ($onlyWithEvents)
 		{
-			/** @var AbstractCollection<Event> $events */
+			/** @var \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Event> $events */
 			$events = \XF::app()->finder(EventFinder::class)->fetch();
 
 			$eventTriggers = $eventTriggers->filter(function (AbstractHandler $eventTrigger) use ($events, $onlyActive): ?AbstractHandler
@@ -243,7 +242,7 @@ class EventTriggerRepository extends Repository
 	{
 		$arr = $this->getEventTriggers($filterActive, $onlyWithEvents)
 			->pluck(
-				fn (AbstractHandler $e, $k): array => [$k, $e->getTitle()->render()],
+				fn(AbstractHandler $e, $k): array => [$k, $e->getTitle()->render()],
 				false
 			);
 
@@ -256,7 +255,7 @@ class EventTriggerRepository extends Repository
 	 * @param string $eventTrigger
 	 * @param array $extraParams
 	 *
-	 * @return AbstractCollection<Event>
+	 * @return \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Event>
 	 * @throws \Exception
 	 */
 	public function getEventsForEventTrigger(
@@ -280,8 +279,11 @@ class EventTriggerRepository extends Repository
 		/** @var BirthdayHandler $birthdayHandler */
 		$birthdayHandler = $this->getHandler('birthday');
 
-		/** @var AbstractCollection<User> $birthdays */
-		$birthdays = \XF::app()->finder(UserFinder::class)
+		/** @var UserFinder $userFinder */
+		$userFinder = \XF::app()->finder(UserFinder::class);
+
+		/** @var \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\XF\Entity\User> $birthdays */
+		$birthdays = $userFinder
 			->isBirthday(false)
 			->isValidUser()
 			->where('Profile.dob_year', '!=', 0)

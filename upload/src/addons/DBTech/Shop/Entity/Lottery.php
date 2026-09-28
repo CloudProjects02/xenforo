@@ -3,10 +3,8 @@
 namespace DBTech\Shop\Entity;
 
 use XF\Entity\LinkableInterface;
-use XF\Entity\ViewableInterface;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
-use XF\Phrase;
 
 /**
  * COLUMNS
@@ -25,13 +23,13 @@ use XF\Phrase;
  * @property int $tickets_sold
  *
  * RELATIONS
- * @property-read Currency|null $Currency
- * @property-read \XF\Mvc\Entity\AbstractCollection<\DBTech\Shop\Entity\LotteryPrizeMap> $PrizeMap
- * @property-read \XF\Mvc\Entity\AbstractCollection<\DBTech\Shop\Entity\LotteryTicket> $CurrentTickets
- * @property-read \XF\Mvc\Entity\AbstractCollection<\DBTech\Shop\Entity\LotteryTicket> $AllTickets
- * @property-read \XF\Mvc\Entity\AbstractCollection<\DBTech\Shop\Entity\LotteryHistory> $History
+ * @property \DBTech\Shop\Entity\Currency $Currency
+ * @property \XF\Mvc\Entity\AbstractCollection|\DBTech\Shop\Entity\LotteryPrizeMap[] $PrizeMap
+ * @property \XF\Mvc\Entity\AbstractCollection|\DBTech\Shop\Entity\LotteryTicket[] $CurrentTickets
+ * @property \XF\Mvc\Entity\AbstractCollection|\DBTech\Shop\Entity\LotteryTicket[] $AllTickets
+ * @property \XF\Mvc\Entity\AbstractCollection|\DBTech\Shop\Entity\LotteryHistory[] $History
  */
-class Lottery extends Entity implements LinkableInterface, ViewableInterface
+class Lottery extends Entity implements LinkableInterface
 {
 	/**
 	 * @return bool
@@ -40,7 +38,7 @@ class Lottery extends Entity implements LinkableInterface, ViewableInterface
 	{
 		return $this->isActive();
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -48,7 +46,7 @@ class Lottery extends Entity implements LinkableInterface, ViewableInterface
 	{
 		return $this->active;
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -65,12 +63,12 @@ class Lottery extends Entity implements LinkableInterface, ViewableInterface
 	 * @param array $extraParams
 	 * @param null $hash
 	 *
-	 * @return string
+	 * @return mixed|string
 	 */
 	public function getContentUrl(bool $canonical = false, array $extraParams = [], $hash = null): string
 	{
 		$route = $canonical ? 'canonical:dbtech-shop/lotteries' : 'dbtech-shop/lotteries';
-		return \XF::app()->router('public')->buildLink($route, $this, $extraParams, $hash);
+		return $this->app()->router('public')->buildLink($route, $this, $extraParams, $hash);
 	}
 
 	/**
@@ -84,17 +82,17 @@ class Lottery extends Entity implements LinkableInterface, ViewableInterface
 	/**
 	 * @param string $context
 	 *
-	 * @return Phrase
+	 * @return string|\XF\Phrase
 	 */
-	public function getContentTitle(string $context = ''): Phrase
+	public function getContentTitle(string $context = '')
 	{
 		return \XF::phrase('dbtech_shop_lottery_x', ['title' => $this->title]);
 	}
 
 	/**
-	 * @param Structure $structure
+	 * @param \XF\Mvc\Entity\Structure $structure
 	 *
-	 * @return Structure
+	 * @return \XF\Mvc\Entity\Structure
 	 */
 	public static function getStructure(Structure $structure): Structure
 	{
@@ -114,51 +112,51 @@ class Lottery extends Entity implements LinkableInterface, ViewableInterface
 			'previous_draw_date' => ['type' => self::UINT, 'default' => 0],
 			'prizes'             => ['type' => self::JSON_ARRAY, 'default' => []],
 			'drawn_numbers'      => ['type' => self::JSON_ARRAY, 'default' => []],
-			'tickets_sold'       => ['type' => self::UINT, 'default' => 0],
+			'tickets_sold'       => ['type' => self::UINT, 'default' => 0]
 		];
 		$structure->relations = [
 			'Currency' => [
-				'entity' => Currency::class,
+				'entity' => 'DBTech\Shop:Currency',
 				'type' => self::TO_ONE,
 				'conditions' => 'currency_id',
-				'primary' => true,
+				'primary' => true
 			],
 			'PrizeMap' => [
-				'entity' => LotteryPrizeMap::class,
+				'entity' => 'DBTech\Shop:LotteryPrizeMap',
 				'type' => self::TO_MANY,
 				'conditions' => 'lottery_id',
 				'with' => ['Prize', 'Currency'],
-				'cascadeDelete' => true,
+				'cascadeDelete' => true
 			],
 			'CurrentTickets' => [
-				'entity' => LotteryTicket::class,
+				'entity' => 'DBTech\Shop:LotteryTicket',
 				'type' => self::TO_MANY,
 				'conditions' => [
 					['lottery_id', '=', '$lottery_id'],
-					['draw_date', '=', '$next_draw_date'],
-				],
+					['draw_date', '=', '$next_draw_date']
+				]
 			],
 			'AllTickets' => [
-				'entity' => LotteryTicket::class,
+				'entity' => 'DBTech\Shop:LotteryTicket',
 				'type' => self::TO_MANY,
 				'conditions' => 'lottery_id',
-				'cascadeDelete' => true,
+				'cascadeDelete' => true
 			],
 			'History' => [
-				'entity' => LotteryHistory::class,
+				'entity' => 'DBTech\Shop:LotteryHistory',
 				'type' => self::TO_MANY,
 				'conditions' => 'lottery_id',
-				'cascadeDelete' => true,
-			],
+				'cascadeDelete' => true
+			]
 		];
 
 		return $structure;
 	}
-
+	
 	/**
 	 *
 	 */
-	protected function _setupDefaults(): void
+	protected function _setupDefaults()
 	{
 		$this->active = true;
 		$this->ticket_price = 50;

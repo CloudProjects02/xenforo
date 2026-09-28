@@ -2,27 +2,22 @@
 
 namespace DBTech\Shop\Install;
 
-use XF\AddOn\AddOn;
-use XF\App;
-use XF\Db\AbstractAdapter;
 use XF\Db\Schema\Alter;
-use XF\Db\Schema\Column;
-use XF\Db\SchemaManager;
 
 /**
- * @property AddOn addOn
- * @property App app
+ * @property \XF\AddOn\AddOn addOn
+ * @property \XF\App app
  *
- * @method AbstractAdapter db()
- * @method SchemaManager schemaManager()
- * @method Column addOrChangeColumn($table, $name, $type = null, $length = null)
+ * @method \XF\Db\AbstractAdapter db()
+ * @method \XF\Db\SchemaManager schemaManager()
+ * @method \XF\Db\Schema\Column addOrChangeColumn($table, $name, $type = null, $length = null)
  */
 trait Upgrade906029970Trait
 {
 	/**
 	 *
 	 */
-	public function upgrade906020033Step1(): void
+	public function upgrade906020033Step1()
 	{
 		$sm = $this->schemaManager();
 		$db = $this->db();
@@ -34,7 +29,7 @@ trait Upgrade906029970Trait
 
 		$sm->alterTable('xf_user', function (Alter $table) use ($currencies)
 		{
-			foreach ($currencies AS $currency)
+			foreach ($currencies as $currency)
 			{
 				if ($table->getColumnDefinition($currency['column']))
 				{
@@ -51,7 +46,7 @@ trait Upgrade906029970Trait
 	/**
 	 *
 	 */
-	public function upgrade906020033Step2(): void
+	public function upgrade906020033Step2()
 	{
 		$this->applyTables();
 	}

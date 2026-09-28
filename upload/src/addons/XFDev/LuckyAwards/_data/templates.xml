@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="xfdev_lucky_awards_add" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[<xf:if is="$luckyAward.isInsert()">
+	<xf:title>{{ phrase('xfdev_lucky_awards_add') }}</xf:title>
+<xf:else />
+	<xf:title>{{ phrase('xfdev_lucky_awards_edit:') }} {$luckyAward.lucky_award_title}</xf:title>
+</xf:if>
+
+
+<xf:pageaction if="$luckyAward.isUpdate()">
+    <xf:button href="{{ link('lucky-awards/delete', $luckyAward) }}" icon="delete" upload="true" overlay="true" />
+</xf:pageaction>
+
+<xf:form action="{{ link('lucky-awards/save', $luckyAward) }}" ajax="true" class="block">
+
+    <div class="block-container">
+        <div class="block-body">
+			
+			<xf:textboxrow name="lucky_award_title" value="{$luckyAward.lucky_award_title}"
+						   label="{{ phrase('xfdev_lucky_award_title') }}" explain="{{ phrase('xfdev_lucky_award_title_explain') }}" />
+			
+			<xf:checkboxrow label="{{ phrase('xfdev_lucky_award_active') }}" explain="{{ phrase('xfdev_lucky_award_active_explain') }}">
+                <xf:option name="lucky_award_active" selected="$luckyAward.lucky_award_active"
+                    label="{{ phrase('xfdev_lucky_award_active') }}" />
+            </xf:checkboxrow>
+			
+            <xf:selectrow name="award_id" value="{$luckyAward.award_id}"
+                data-xf-init="desc-loader"
+                data-desc-url="{{ link('award-system/get-award-icon', $award) }}"
+                label="{{ phrase('xfdev_lucky_award_award') }}" explain="{{ phrase('xfdev_lucky_award_award_explain') }}">
+                <xf:option />
+                <xf:options source="{$awards}" />
+                <xf:html>
+                    <div class="js-descTarget formRow-explain">
+                        <xf:if is="$award">
+                            <img src="{$award.icon_url}" style="max-width:100px; max-height:75px;">
+                        </xf:if>
+                    </div>
+                </xf:html>
+            </xf:selectrow>
+			
+			<xf:numberboxrow name="lucky_award_chances" 
+							 label="{{ phrase('xfedv_lucky_awards_chances') }}"
+							 explain="{{ phrase('xfdev_lucky_awards_chances_explain') }}"
+							 min="0" value="{$luckyAward.lucky_award_chances}"/>
+
+            <xf:if is="$existingLuckyAwards is not empty">
+				<xf:checkboxrow name="lucky_award_dependent" value="{$luckyAward.lucky_award_dependent}" listclass="listColumns"
+					label="{{ phrase('lucky_award_dependent') }}"
+					explain="{{ phrase('lucky_awards_dependent_explain') }}">
+					<xf:options source="$existingLuckyAwards" />
+				</xf:checkboxrow>
+			</xf:if>
+
+            <xf:textarearow name="lucky_award_reason" rows="5" autosize="true" value="{$luckyAward.lucky_award_reason}"
+                label="{{ phrase('xfdev_lucky_award_reason') }}" explain="{{ phrase('xfdev_lucky_award_reason_explain') }}" />
+        </div>
+
+        <xf:submitrow icon="save" sticky="true" />
+
+    </div>
+</xf:form>]]></template>
+  <template type="admin" title="xfdev_lucky_awards_delete" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[<xf:title>{{ phrase('confirm_action') }}</xf:title>
+
+<xf:form action="{{ link('lucky-awards/delete',$luckyAward) }}" ajax="true" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:inforow rowtype="confirm">
+				{{ phrase('please_confirm_that_you_want_to_delete_following:') }}
+				<strong>
+					<a href="{{ link('lucky-awards/edit',$luckyAward) }}">{$luckyAward.lucky_award_title}</a>
+				</strong>
+				<div class="blockMessage blockMessage--important blockMessage--iconic">
+					{{ phrase('xfdev_lucky_award_confirm_deletion' )}}
+				</div>
+			</xf:inforow>
+		</div>
+		<xf:submitrow rowtype="simple" icon="delete" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="xfdev_lucky_awards_manage" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[<xf:title>{{ phrase('xfdev_lucky_awards_manage') }}</xf:title>
+
+<xf:pageaction>
+	<div class="buttonGroup">
+		<xf:button href="{{ link('lucky-awards/add') }}" icon="add">{{ phrase('xfdev_lucky_awards_add') }}</xf:button>
+	</div>
+</xf:pageaction>
+
+<div class="block-container">
+	<div class="block-body">
+		<xf:datalist>
+			<colgroup>
+				<col style="width: 3%">
+				<col style="width: 40%">
+				<col style="width: 1%">
+				<col style="width: 1%">
+			</colgroup>
+			
+			<xf:foreach loop="{$luckyAwardsData}" key="$luckyAwardId" value="$luckyAward">
+				<xf:datarow style="{{ $luckyAward.lucky_award_active != 1 ? 'background-color:rgb(0 0 0 / 17%)' : ''}} ">
+					<xf:cell class="dataList-cell-min dataList-cell--image dataList-cell--imageMedium">
+						<xf:if is="$luckyAward.Award.icon_url">
+							{{ award_image($luckyAward.Award, link('award-system/edit', $luckyAward.Award)) }}
+							<xf:else />
+								<span class="dataList-imagePlaceholder"></span>
+						</xf:if>
+					</xf:cell>
+					
+					<xf:cell href="{{ link('lucky-awards/edit',$luckyAward) }}" class="dataList-cell--main">
+						<div class="dataList-mainRow" dir="auto">
+							{$luckyAward.lucky_award_title}
+						</div>
+						<div class="dataList-subRow">
+							{$luckyAward.lucky_award_reason|nl2br}
+						</div>
+					</xf:cell>
+					
+					<xf:cell class="dataList-cell--min dataList-cell--awardPoints">
+						<span class="u-dimmed">1/{$luckyAward.lucky_award_chances|number}</span>
+					</xf:cell>
+					
+					<xf:delete href="{{ link('lucky-awards/delete',$luckyAward) }}" />
+				</xf:datarow>
+			</xf:foreach>
+		</xf:datalist>
+	</div>
+	<div class="block-footer block-footer--split">
+		<span class="block-footer-counter">{{ display_totals($count,$total) }}</span>
+		
+		<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+				link="lucky-awards/manage"
+				wrapperclass="js-filterHide block-outer block-outer--after" />
+	</div>
+</div>
+
+
+<xf:css>
+.dataList-cell--awardPoints .u-dimmed::after {
+    content: "{{ phrase('chance') }}";
+    font-size: 0.7em;
+    display: block;
+}
+</xf:css>]]></template>
+  <template type="admin" title="xfdev_lucky_awards_users_list" version_id="1010170" version_string="1.1.1"><![CDATA[<xf:title>{{ phrase('xfdev_lucky_awards_winners_list') }}</xf:title>
+
+<div class="block-container">
+	<div class="block-body">
+		<xf:datalist data-xf-init="responsive-data-list">
+			<colgroup>
+				<col style="width:15%">
+				<col style="width:10%">
+				<col style="width:25%">
+				<col style="width:25%">
+				<col style="width:25%">
+			</colgroup>
+			
+			<thead>
+				<xf:datarow rowtype="header">
+					<xf:cell>{{ phrase('xfdev_lucky_awards_received_on') }}</xf:cell>
+					<xf:cell>{{ phrase('user') }}</xf:cell>
+					<xf:cell>{{ phrase('xfdev_lucky_award') }}</xf:cell>
+					<xf:cell>{{ phrase('af_as_award') }}</xf:cell>
+					<xf:cell>{{ phrase('thread') }} or {{ phrase('post') }}</xf:cell>
+				</xf:datarow>
+			</thead>
+			
+			<xf:foreach loop="$userLuckyAwards" key="$userLuckyAwardsId" value="$userLuckyAward">
+				<xf:datarow>
+					<xf:cell>
+						<xf:date time="{$userLuckyAward.date_received}" />
+					</xf:cell>
+					<xf:cell>
+						<xf:username user="{$userLuckyAward.User}" />
+					</xf:cell>
+					<xf:cell>
+						<a href="{{ link('lucky-awards/edit',$userLuckyAward.LuckyAward) }}">
+							{$userLuckyAward.LuckyAward.lucky_award_title}
+						</a>
+					</xf:cell>
+					<xf:cell>
+						<a href="{{ link('award-system/edit',$userLuckyAward.LuckyAward.Award) }}">
+							{$userLuckyAward.LuckyAward.Award.title}
+						</a>
+					</xf:cell>
+					<xf:cell>
+						<xf:if is="$userLuckyAward.post_id">
+							<a href="{{ link_type('public', 'posts', $userLuckyAward.Post) }}" target="_blank">
+								{$userLuckyAward.Post.Thread.title}
+							</a>
+						</xf:if>
+					</xf:cell>
+				</xf:datarow>
+			</xf:foreach>
+		</xf:datalist>
+	</div>
+	
+	<div class="block-footer block-footer--split">
+		<span class="block-footer-counter">
+			{{ display_totals($userLuckyAwardsTotal, $total) }}
+		</span>
+		
+		<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+				link="lucky-awards/users"
+				wrapperclass="js-filterHide block-outer block-outer--after" />
+	</div>
+
+</div>]]></template>
+  <template type="public" title="xfdev_lucky_awards_list" version_id="1010170" version_string="1.1.1"><![CDATA[<xf:title>{{ phrase('xfdev_lucky_awards') }}</xf:title>
+
+<xf:css src="awards_pagestyle.less"  />
+
+<style>
+    .dataList-totalAwards {
+        margin-top: 10px;
+        font-size: 14px;
+    }
+	.block-container {
+		background: transparent;
+		box-shadow: none !important;
+		border: none !important;
+	}
+	.categoryList-itemRow {
+    display: flex;
+    background: #272727;
+    min-width: 0;
+    margin: 5px;
+    border-radius: 5px;
+}
+	.label.label--subtle {
+    color: #fff;
+background: #5c2a9ea6;
+    border-color: #491f92;
+}
+	.categoryList-itemRow:hover {
+    background: #252525;
+}
+	.categoryList-link:hover {
+    text-decoration: none;
+    color: white;
+}
+</style>
+
+<ol class="categoryList toggleTarget is-active">
+	<li class="categoryList-item">
+		<div class="categoryList-itemRow">
+			<a href="{{ link('award-system/list') }}" class="categoryList-link{{ $categoryId == -1 ? ' is-selected' : '' }} icon category{$awardCategory.award_category_id}">
+				{{ phrase('xfdev_lucky_awards_view_all_awards') }}
+			</a>
+		</div>
+	</li>
+</ol>
+
+<xf:if is="$luckyAwardsData is not empty">
+        <xf:foreach loop="{$luckyAwardsData}" key="$luckyAwardId" value="$luckyAward">
+            <div class="grid grid-3-3-3-3 top-space centered">
+                <div class="badge-item-stat" style="{{ $luckyAward.lucky_award_active == 0 ? 'opacity:.3' : '' }}">
+					<xf:if is="{{$luckyAward.lucky_award_active == 0}}">
+						<span style="position: absolute;top: 0;right: 0; padding: 4px; background-color: black;color: white;">Disabled</span>
+					</xf:if>
+                    <xf:if is="$luckyAward.Award.icon_url">
+                        <img class="badge-item-stat-image-preview dataList-cell--imageMedium" src="{$luckyAward.Award.icon_url}" alt="" />
+                        <xf:else />
+                        <span class="dataList-imagePlaceholder"></span>
+                    </xf:if>
+
+                    <xf:if is="$luckyAward.Award.icon_url">
+                        <img class="badge-item-stat-image dataList-cell--imageMedium" src="{$luckyAward.Award.icon_url}" alt="" />
+                        <xf:else />
+                        <span class="dataList-imagePlaceholder"></span>
+                    </xf:if>
+
+                    <p class="badge-item-stat-title">{$luckyAward.lucky_award_title}</p>
+
+                    <p class="badge-item-stat-text">{$luckyAward.lucky_award_reason|nl2br}</p>
+					
+                    <div class="progress-stat lucky_award_chances">
+                       	<div>
+							1/{$luckyAward.lucky_award_chances}
+						</div>
+						<span style="font:small-caption">{{ phrase('xfdev_chances') }}</span>
+                    </div>
+                </div>
+            </div>
+        </xf:foreach>
+    </xf:if>
+
+<xf:css>
+.lucky_award_chances{
+		text-align:center;
+		font-size:20px;
+	}
+</xf:css>]]></template>
+</templates>

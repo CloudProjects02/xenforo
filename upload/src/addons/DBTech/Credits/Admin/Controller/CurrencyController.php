@@ -13,7 +13,7 @@ use XF\InputFilterer;
 use XF\Mvc\FormAction;
 use XF\Mvc\ParameterBag;
 use XF\Mvc\Reply\AbstractReply;
-use XF\Mvc\Reply\Exception as ReplyException;
+use XF\Mvc\Reply\Exception;
 use XF\PrintableException;
 
 class CurrencyController extends AbstractController
@@ -21,8 +21,7 @@ class CurrencyController extends AbstractController
 	/**
 	 * @param $action
 	 * @param ParameterBag $params
-	 *
-	 * @throws ReplyException
+	 * @throws Exception
 	 */
 	protected function preDispatchController($action, ParameterBag $params): void
 	{
@@ -67,9 +66,8 @@ class CurrencyController extends AbstractController
 
 	/**
 	 * @param ParameterBag $params
-	 *
 	 * @return AbstractReply
-	 * @throws ReplyException
+	 * @throws Exception
 	 */
 	public function actionEdit(ParameterBag $params): AbstractReply
 	{
@@ -132,7 +130,7 @@ class CurrencyController extends AbstractController
 	 * @param ParameterBag $params
 	 *
 	 * @return AbstractReply
-	 * @throws ReplyException
+	 * @throws Exception
 	 * @throws PrintableException
 	 */
 	public function actionSave(ParameterBag $params): AbstractReply
@@ -158,7 +156,7 @@ class CurrencyController extends AbstractController
 	 * @param ParameterBag $params
 	 *
 	 * @return AbstractReply
-	 * @throws ReplyException
+	 * @throws Exception
 	 */
 	public function actionDelete(ParameterBag $params): AbstractReply
 	{
@@ -189,7 +187,7 @@ class CurrencyController extends AbstractController
 	 * @param null|string $phraseKey
 	 *
 	 * @return Currency
-	 * @throws ReplyException
+	 * @throws Exception
 	 */
 	protected function assertCurrencyExists(?int $id, array $with = [], ?string $phraseKey = null): Currency
 	{

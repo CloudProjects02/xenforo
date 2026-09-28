@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="public" title="andy_change_uesr_register_date_confirm" version_id="10" version_string="1.0"><![CDATA[<xf:title>{{ phrase('changeuserregisterdate_change_user_register_date') }}</xf:title>
+
+<div class="block">
+	<div class="block-container">
+		<div class="block-body block-row">
+			{{ phrase('changeuserregisterdate_register_date_successfully_updated') }}
+		</div>
+	</div>
+</div>]]></template>
+  <template type="public" title="andy_change_user_register_date" version_id="10" version_string="1.0"><![CDATA[<xf:title>{{ phrase('changeuserregisterdate_change_user_register_date') }}</xf:title>
+
+<xf:form action="{{ link('changeuserregisterdate/save') }}" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:textboxrow label="{{ phrase('changeuserregisterdate_username') }}" name="username" placeholder="{{ phrase('member') }}" ac="single" autocomplete="off" type="search" />
+		</div>
+		<xf:formrow label="{{ phrase('date') }}">		   
+			<div class="inputGroup">
+				<xf:dateinput 
+					id="date" 
+					name="date" 
+					value="" />
+				&nbsp;
+				<input class="input input--date"
+					id="time"
+					name="time"
+					type="time" 
+					value="08:00" />
+			</div>
+		</xf:formrow>
+		<xf:submitrow submit="{{ phrase('changeuserregisterdate_submit') }}" />
+	</div>
+</xf:form>]]></template>
+</templates>

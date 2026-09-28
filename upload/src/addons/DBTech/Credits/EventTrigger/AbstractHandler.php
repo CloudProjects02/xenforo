@@ -42,7 +42,7 @@ abstract class AbstractHandler
 	];
 	protected string $contentType;
 
-	/** @var AbstractCollection<EventEntity>|null */
+	/** @var \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Event>|null */
 	protected ?AbstractCollection $events = null;
 
 
@@ -164,7 +164,7 @@ abstract class AbstractHandler
 	}
 
 	/**
-	 * @param AbstractCollection<EventEntity>|null $events
+	 * @param \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Event>|null $events
 	 *
 	 * @return $this
 	 */
@@ -178,13 +178,13 @@ abstract class AbstractHandler
 	/**
 	 * @param bool $force
 	 *
-	 * @return AbstractCollection<EventEntity>
+	 * @return \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Event>
 	 */
 	public function getEvents(bool $force = false): AbstractCollection
 	{
 		if ($this->events === null || $force)
 		{
-			/** @var AbstractCollection<EventEntity> $events */
+			/** @var \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Event> $events */
 			$events = \XF::app()->finder(EventFinder::class)
 				->where('event_trigger_id', $this->getContentType())
 				->fetch()
@@ -202,7 +202,7 @@ abstract class AbstractHandler
 	 * @param mixed $refId
 	 * @param bool $negate
 	 *
-	 * @return AbstractCollection<EventEntity>
+	 * @return \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Event>
 	 * @throws PrintableException
 	 */
 	public function getApplicableEvents(
@@ -217,7 +217,7 @@ abstract class AbstractHandler
 		// Used by our own extensions like DB Donate and DB Shop
 		$this->assertEventExists($extraParams->currency_id);
 
-		/** @var AbstractCollection<EventEntity> $events */
+		/** @var \XF\Mvc\Entity\AbstractCollection<EventEntity> $events */
 		$events = $this->getEvents()
 			->filter(function (EventEntity $event) use ($extraParams, $user): bool
 			{
@@ -535,7 +535,7 @@ abstract class AbstractHandler
 			{
 				// We have enough information to look for an existing transaction
 
-				/** @var AbstractCollection<TransactionEntity> $transactions */
+				/** @var \XF\Mvc\Entity\AbstractCollection<TransactionEntity> $transactions */
 				$transactions = \XF::app()->finder(TransactionFinder::class)
 					->where('event_id', $event->event_id)
 					->where('user_id', $user->user_id)

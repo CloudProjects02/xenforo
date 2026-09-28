@@ -1,0 +1,17 @@
+{
+    "legacy_addon_id": "",
+    "title": "[SynapseThemes] Resource Count",
+    "description": "Displays the total count of resources from XenForo Resource Manager",
+    "version_id": 100,
+    "version_string": "1.0.0",
+    "dev": "SynapseThemes",
+    "dev_url": "https://synapse-themes.cc",
+    "faq_url": "",
+    "support_url": "",
+    "extra_urls": [],
+    "require": {
+        "XF": [2010070, "XenForo 2.1.0+"],
+        "XFRM": [2010070, "XenForo Resource Manager 2.1.0+"]
+    },
+    "icon": "fa-box"
+}

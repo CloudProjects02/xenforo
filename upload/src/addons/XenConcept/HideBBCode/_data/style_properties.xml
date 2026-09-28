@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style_properties>
+  <style_property property_name="xc_hide_bbcode_hidden_border_color" group_name="xc_hide_bbcode" title="Hidden - Border Color" property_type="value" value_type="color" display_order="10">
+    <value>"rgb(225, 72, 72)"</value>
+  </style_property>
+  <style_property property_name="xc_hide_bbcode_unhidden_border_color" group_name="xc_hide_bbcode" title="UnHidden - Border Color" property_type="value" value_type="color" display_order="20">
+    <value>"rgb(127, 185, 0)"</value>
+  </style_property>
+</style_properties>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<options>
+  <option option_id="svDefaultChoicesJs" edit_format="radio" data_type="string" advanced="0">
+    <default_value>choices.search-basic.js</default_value>
+    <edit_format_params>choices.search-prefix.js={{ phrase('svStandardLib_choices_search.prefix') }}
+choices.search-kmp.js={{ phrase('svStandardLib_choices_search.kmp') }}
+choices.search-basic.js={{ phrase('svStandardLib_choices_search.fusejs_basic') }}
+choices.js={{ phrase('svStandardLib_choices_search.fusejs_full') }}</edit_format_params>
+    <relation group_id="discussionOptions" display_order="700"/>
+  </option>
+  <option option_id="svLogLessFunc" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="debug" display_order="90010"/>
+  </option>
+</options>

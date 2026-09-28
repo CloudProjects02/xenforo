@@ -1,0 +1,749 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="widget_def_options_xfes_similar_threads" version_id="2020032" version_string="2.2.0 Beta 2"><![CDATA[<hr class="formRowSep" />
+
+<xf:numberboxrow name="options[limit]" value="{$options.limit}"
+	label="{{ phrase('maximum_entries') }}"
+	min="1" />
+
+<xf:radiorow name="options[style]" value="{{ $options.style ?: 'simple' }}"
+	label="{{ phrase('display_style') }}">
+
+	<xf:option value="simple"
+		label="{{ phrase('simple') }}"
+		hint="{{ phrase('widget_display_simple_explain') }}" />
+	<xf:option value="full"
+		label="{{ phrase('standard') }}"
+		hint="{{ phrase('new_threads_display_style_full_explain') }}" />
+</xf:radiorow>
+
+<xf:selectrow name="options[node_ids][]" value="{{ $options.node_ids ?: '' }}" multiple="multiple" size="7"
+	label="{{ phrase('forum_limit') }}"
+	explain="{{ phrase('only_include_threads_in_selected_forums') }}">
+
+	<xf:option value="">{{ phrase('all_forums') }}</xf:option>
+	<xf:foreach loop="$nodeTree.getFlattened(0)" value="$treeEntry">
+		<xf:option value="{$treeEntry.record.node_id}" disabled="{{ $treeEntry.record.node_type_id != 'Forum' }}">
+			{{ repeat('&nbsp;&nbsp;', $treeEntry.depth)|raw }} {$treeEntry.record.title}
+		</xf:option>
+	</xf:foreach>
+</xf:selectrow>
+
+<xf:selectrow name="options[date_limit_days]" value="{$options.date_limit_days}"
+	label="{{ phrase('date_limit') }}"
+	explain="{{ phrase('xfes_similar_thread_date_limit_explain') }}">
+
+	<xf:option value="0">{{ phrase('none') }}</xf:option>
+	<xf:option value="7">{{ phrase('x_days', {'days': '7'}) }}</xf:option>
+	<xf:option value="14">{{ phrase('x_days', {'days': '14'}) }}</xf:option>
+	<xf:option value="30">{{ phrase('x_days', {'days': '30'}) }}</xf:option>
+	<xf:option value="60">{{ phrase('x_months', {'months': '2'}) }}</xf:option>
+	<xf:option value="90">{{ phrase('x_months', {'months': '3'}) }}</xf:option>
+	<xf:option value="182">{{ phrase('x_months', {'months': '6'}) }}</xf:option>
+	<xf:option value="365">{{ phrase('1_year') }}</xf:option>
+</xf:selectrow>
+]]></template>
+  <template type="admin" title="xfes_config" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:title>{{ phrase('xfes_configure_enhanced_search') }}</xf:title>
+
+<xf:macro id="xfes_macros::config_form" />]]></template>
+  <template type="admin" title="xfes_config_confirm" version_id="2030031" version_string="2.3.0 Beta 1"><![CDATA[<xf:title>{{ phrase('xfes_confirm_enhanced_search_configuration') }}</xf:title>
+
+<xf:form action="{{ link('enhanced-search/setup') }}" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:set var="$serverExplain">
+				<xf:if is="$config.https">
+					<xf:if is="$config.verify === false">
+						{{ phrase('xfes_ssl_certificate_verification_disabled') }}
+					<xf:else />
+						{{ phrase('xfes_ssl_certificate_verification_enabled') }}
+
+						<xf:if is="$config.verify !== null">
+							{{ phrase('(xfes_custom_bundle_x)', {'path': $config.verify}) }}
+						</xf:if>
+					</xf:if>
+				</xf:if>
+			</xf:set>
+			<xf:formrow
+				label="{{ phrase('xfes_elasticsearch_server') }}"
+				explain="{$serverExplain}">
+
+				{$es.printableBaseUrl}
+			</xf:formrow>
+			<xf:formrow label="{{ phrase('xfes_index_name') }}">
+				{$es.index}
+				<div class="formRow-explain">
+					<xf:if is="$indexExists">
+						{{ phrase('xfes_index_already_exists_used_as_is') }}
+					<xf:else />
+						{{ phrase('xfes_index_does_not_exist_yet') }}
+					</xf:if>
+				</div>
+			</xf:formrow>
+			<xf:checkboxrow>
+				<xf:option name="enable" selected="true" label="{{ phrase('xfes_enable_enhanced_search_now') }}">
+					<xf:hint>{{ phrase('xfes_searches_will_now_use_elasticsearch_rebuild_index') }}</xf:hint>
+					<xf:checkbox>
+						<xf:option name="empty_mysql" label="{{ phrase('xfes_empty_mysql_search_index') }}">
+							<xf:hint>{{ phrase('xfes_will_save_disk_space_but_index_rebuild_required_mysql') }}</xf:hint>
+						</xf:option>
+					</xf:checkbox>
+				</xf:option>
+			</xf:checkboxrow>
+		</div>
+		<xf:if is="!$indexExists">
+			<h2 class="block-formSectionHeader">
+				<span class="block-formSectionHeader-aligner">{{ phrase('xfes_index_configuration') }}</span>
+			</h2>
+			<div class="block-body">
+				<xf:macro id="xfes_macros::analyzer_config" arg-analyzerConfig="{$analyzerConfig}" />
+			</div>
+		</xf:if>
+		<xf:submitrow icon="save" />
+	</div>
+	<xf:hiddenval name="config">{$config|json}</xf:hiddenval>
+</xf:form>]]></template>
+  <template type="admin" title="xfes_index" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[<xf:title>{{ phrase('xfes_enhanced_search') }}</xf:title>
+
+<xf:pageaction if="$es">
+	<xf:button href="{{ link('enhanced-search/config') }}" icon="config" overlay="true">{{ phrase('xfes_reconfigure') }}</xf:button>
+</xf:pageaction>
+
+<xf:if is="$reindex">
+	<div class="blockMessage blockMessage--success blockMessage--iconic">
+		{{ phrase('xfes_changes_have_been_saved_must_rebuild', {'link': link('tools/rebuild')}) }}
+	</div>
+</xf:if>
+
+<xf:if is="$es">
+	<xf:if is="!$xf.options.xfesEnabled">
+		<div class="blockMessage blockMessage--important blockMessage--iconic">
+			{{ phrase('xfes_enhanced_search_not_currently_enabled') }}
+		</div>
+	</xf:if>
+
+	<xf:if is="!$version">
+		<div class="blockMessage blockMessage--error blockMessage--iconic">
+			{{ phrase('xfes_elasticsearch_server_could_not_be_reached') }}
+		</div>
+	<xf:elseif is="$testError is not empty" />
+		<div class="blockMessage blockMessage--error blockMessage--iconic">
+			{$testError}
+		</div>
+	</xf:if>
+
+	<div class="block">
+		<div class="block-container">
+			<div class="block-body">
+				<xf:formrow label="{{ phrase('enabled') }}" rowtype="button">
+					<xf:if is="$xf.options.xfesEnabled">
+						{{ phrase('yes') }}
+						<xf:button href="{{ link('enhanced-search/toggle') }}" data-xf-click="overlay">{{ phrase('disable') }}</xf:button>
+					<xf:else />
+						{{ phrase('no') }}
+						<xf:button href="{{ link('enhanced-search/toggle') }}" data-xf-click="overlay">{{ phrase('enable') }}</xf:button>
+					</xf:if>
+				</xf:formrow>
+				<xf:set var="$serverExplain">
+					<xf:if is="$config.https">
+						<xf:if is="$config.verify === false">
+							{{ phrase('xfes_ssl_certificate_verification_disabled') }}
+						<xf:else />
+							{{ phrase('xfes_ssl_certificate_verification_enabled') }}
+
+							<xf:if is="$config.verify !== null">
+								{{ phrase('(xfes_custom_bundle_x)', {'path': $config.verify}) }}
+							</xf:if>
+						</xf:if>
+					</xf:if>
+				</xf:set>
+				<xf:formrow
+					label="{{ phrase('xfes_elasticsearch_server') }}"
+					explain="{$serverExplain}">
+
+					{$es.printableBaseUrl}
+				</xf:formrow>
+
+				<xf:if is="$version">
+					<xf:formrow label="{{ phrase('xfes_version') }}">{$version} ({$distribution} {$distributionVersion})</xf:formrow>
+
+					<xf:if is="$stats">
+						<xf:formrow label="{{ phrase('xfes_stats') }}">
+							<dl class="pairs pairs--columns pairs--fixedSmall">
+								<dt>{{ phrase('xfes_documents') }}</dt>
+								<dd>{$stats.docs.count|number} {{ parens($stats.store.size_in_bytes|file_size) }}</dd>
+							</dl>
+							<dl class="pairs pairs--columns pairs--fixedSmall">
+								<dt>{{ phrase('xfes_index_updates') }}</dt>
+								<dd>{$stats.indexing.index_total|number}</dd>
+							</dl>
+							<dl class="pairs pairs--columns pairs--fixedSmall">
+								<dt>{{ phrase('xfes_searches') }}</dt>
+								<dd>
+									{$stats.search.query_total|number}
+									<xf:if is="$stats.search.query_total">
+										{{ parens(phrase('xfes_x_milliseconds_average', {'time': number(($stats.search.query_time_in_millis + $stats.search.fetch_time_in_millis) / ($stats.search.query_total + $stats.search.fetch_total))})) }}
+									</xf:if>
+								</dd>
+							</dl>
+							<dl class="pairs pairs--columns pairs--fixedSmall">
+								<dt>{{ phrase('xfes_allocated_memory') }}</dt>
+								<dd>
+									{$stats.segments.memory_in_bytes|file_size}
+								</dd>
+							</dl>
+						</xf:formrow>
+					</xf:if>
+
+					<xf:if is="$isOptimizable">
+						<xf:formrow label="{{ phrase('xfes_optimization_required') }}" rowtype="button">
+							{{ phrase('yes') }}
+							<xf:button href="{{ link('enhanced-search/optimize') }}" data-xf-click="overlay">{{ phrase('xfes_optimize_now') }}</xf:button>
+							<div class="formRow-explain">{{ phrase('xfes_optimizing_index_can_reduce_space_required') }}</div>
+						</xf:formrow>
+					<xf:else />
+						<xf:formrow label="{{ phrase('xfes_optimization_required') }}">{{ phrase('no') }}</xf:formrow>
+					</xf:if>
+				</xf:if>
+			</div>
+		</div>
+	</div>
+
+	<xf:form action="{{ link('enhanced-search/options') }}" class="block">
+		<div class="block-container">
+			<h2 class="block-header">{{ phrase('xfes_search_options') }}</h2>
+			<div class="block-body">
+				<xf:checkboxrow>
+					<xf:option name="recencyWeighted" selected="{$xf.options.xfesRecencyRelevance.enabled}"
+						label="{{ phrase('xfes_enable_recency_weighted_relevance_searches') }}">
+
+						<xf:dependent>
+							<div class="inputGroup">
+								<span class="inputGroup-text">{{ phrase('xfes_half_life:') }}</span>
+								<xf:numberbox name="recencyHalfLife"
+									value="{{ $xf.options.xfesRecencyRelevance.halfLife ?: 365 }}"
+									min="1" />
+								<span class="inputGroup-text">{{ phrase('days') }}</span>
+							</div>
+						</xf:dependent>
+
+					</xf:option>
+					<xf:explain>{{ phrase('xfes_relevancy_recency_weighted_explain') }}</xf:explain>
+				</xf:checkboxrow>
+
+				<div class="formRowSep"></div>
+
+				<xf:checkboxrow>
+					<xf:option name="similarThreadsWidget" selected="{$xf.options.xfesSimilarThreads.widgetEnabled}"
+						label="{{ phrase('xfes_enable_similar_threads_widget') }}" />
+
+					<xf:explain>{{ phrase('xfes_similar_threads_widget_explain') }}</xf:explain>
+				</xf:checkboxrow>
+
+				<xf:checkboxrow>
+					<xf:option name="clear_similar_threads"
+						label="{{ phrase('xfes_clear_similar_threads_caches') }}">
+					</xf:option>
+
+					<xf:explain>{{ phrase('xfes_clear_similar_threads_explain') }}</xf:explain>
+				</xf:checkboxrow>
+
+				<div class="formRowSep"></div>
+
+				<xf:checkboxrow>
+					<xf:option name="similarThreadsSuggestions" selected="{$xf.options.xfesSimilarThreads.suggestionsEnabled}"
+						label="{{ phrase('xfes_search_for_similar_threads_when_users_creating_new_threads') }}">
+
+						<xf:dependent>
+							<div class="inputGroup">
+								<span class="inputGroup-text">{{ phrase('xfes_maximum_results') }}:</span>
+								<xf:numberbox name="similarThreadsMax"
+									value="{{ $xf.options.xfesSimilarThreads.maxResults ?: 5 }}"
+									min="1" />
+							</div>
+						</xf:dependent>
+					</xf:option>
+
+					<xf:explain>{{ phrase('xfes_similar_threads_explain') }}</xf:explain>
+				</xf:checkboxrow>
+
+				<xf:formrow rowtype="input"
+					label="{{ phrase('xfes_forums_excluded_from_similar_thread_suggestions') }}"
+					explain="{{ phrase('xfes_similar_threads_excluded_forums_explain') }}">
+
+					<xf:macro id="forum_selection_macros::select_forums"
+						arg-nodeIds="{$xf.options.xfesSimilarThreadsExcludedForums}"
+						arg-nodeTree="{$nodeTree}"
+						arg-withRow="{{ false }}"
+						arg-selectName="similarThreadsExcludedForums" />
+				</xf:formrow>
+
+				<div class="formRowSep"></div>
+
+				<xf:formrow label="{{ phrase('xfes_same_forum_boost_amount') }}">
+					<ul class="inputChoices inputChoices--noChoice">
+						<li class="inputChoices-choice">
+							<div></div>
+							<xf:numberbox name="similarThreadsForumBoost"
+								value="{{ $xf.options.xfesSimilarThreads.forumBoost ?: 1 }}"
+								min="1"
+								step="any" />
+							<dfn class="inputChoices-explain">
+								{{ phrase('xfes_same_forum_boost_amount_explain') }}
+							</dfn>
+						</li>
+					</ul>
+				</xf:formrow>
+			</div>
+			<xf:submitrow icon="save" />
+		</div>
+	</xf:form>
+
+	<xf:if is="$analyzerConfig">
+		<xf:if is="$analyzerConfig.unknown">
+			<div action="{{ link('enhanced-search/index-config') }}" class="block js-indexUnknownBlock">
+				<div class="block-container">
+					<h2 class="block-header">{{ phrase('xfes_index_configuration') }}</h2>
+					<div class="block-body block-row">
+						{{ phrase('xfes_current_index_configuration_not_supported') }}
+						<xf:button data-xf-click="toggle" data-target=".js-indexConfigForm" data-hide=".js-indexUnknownBlock">{{ phrase('continue...') }}</xf:button>
+					</div>
+				</div>
+			</div>
+		</xf:if>
+
+		<xf:form action="{{ link('enhanced-search/index-config') }}" class="block {{ $analyzerConfig.unknown ? 'toggleTarget js-indexConfigForm' : '' }}">
+			<div class="block-container">
+				<h2 class="block-header">{{ phrase('xfes_index_configuration') }}</h2>
+				<div class="block-body">
+					<xf:macro id="xfes_macros::analyzer_config" arg-analyzerConfig="{$analyzerConfig}" />
+				</div>
+				<xf:submitrow icon="save" />
+			</div>
+		</xf:form>
+	</xf:if>
+<xf:else />
+	<div class="blockMessage">
+		{{ phrase('xfes_enhanced_search_explain') }}
+	</div>
+
+	<xf:macro id="xfes_macros::config_form" />
+</xf:if>]]></template>
+  <template type="admin" title="xfes_macros" version_id="2030036" version_string="2.3.0 Beta 6"><![CDATA[<xf:macro id="config_form">
+	<xf:form action="{{ link('enhanced-search/config') }}" class="block" ajax="true">
+		<div class="block-container">
+			<div class="block-body">
+				<xf:formrow label="{{ phrase('xfes_elasticsearch_server') }}" rowtype="input">
+					<div class="inputGroup">
+						<xf:textbox name="host" value="localhost" placeholder="{{ phrase('host') }}" size="40" />
+						<span class="inputGroup-text">:</span>
+						<xf:textbox name="port" value="9200" placeholder="{{ phrase('port') }}" size="5" />
+					</div>
+
+					<div class="u-inputSpacer">
+						<div class="inputGroup">
+							<xf:textbox name="username" placeholder="{{ phrase('user_name') }}" size="15" autocomplete="off" />
+							<span class="inputGroup-splitter"></span>
+							<xf:textbox type="password" name="password" placeholder="{{ phrase('password') }}" size="15" autocomplete="new-password" />
+						</div>
+					</div>
+
+					<div class="u-inputSpacer">
+						<xf:checkbox name="https" value="1" standalone="true">
+							<xf:option value="1"
+								label="{{ phrase('xfes_use_https_connection') }}"
+								data-xf-init="disabler" data-hide="true" data-container=".js-httpsVerify" />
+						</xf:checkbox>
+					</div>
+
+					<div class="u-inputSpacer js-httpsVerify">
+						<xf:select name="https_verify" value="on">
+							<xf:option value="enabled" label="{{ phrase('xfes_enable_ssl_certificate_verification') }}" />
+							<xf:option value="disabled"
+								label="{{ phrase('xfes_disable_ssl_certificate_verification') }}" />
+							<xf:option value="custom"
+								label="{{ phrase('xfes_use_custom_bundle_for_ssl_certificate_verification') }}"
+								data-xf-init="disabler" data-hide="true" data-container=".js-httpsVerifyBundle" />
+						</xf:select>
+
+						<div class="u-inputSpacer js-httpsVerifyBundle">
+							<xf:textbox name="https_verify_bundle" placeholder="{{ phrase('xfes_path_to_custom_bundle') }}" />
+						</div>
+					</div>
+				</xf:formrow>
+
+				<xf:textboxrow label="{{ phrase('xfes_index_name') }}" name="index">
+					<xf:explain>{{ phrase('xfes_if_left_blank_this_will_default_to_your_mysql_database_name') }}</xf:explain>
+				</xf:textboxrow>
+			</div>
+
+			<xf:submitrow submit="{{ phrase('xfes_test_settings') }}" />
+		</div>
+	</xf:form>
+</xf:macro>
+
+<xf:macro id="analyzer_config" arg-analyzerConfig="!">
+	<xf:radiorow label="{{ phrase('xfes_stop_words') }}" name="index[stop]" value="{$analyzerConfig.stop}">
+		<xf:option value="none">{{ phrase('none') }}</xf:option>
+		<xf:option value="language" label="{{ phrase('xfes_use_language_defaults:') }}">
+			<xf:select name="index[stop_language]" value="{$analyzerConfig.stop_language}">
+				<xf:option value="_arabic_">{{ phrase('xfes_arabic') }}</xf:option>
+				<xf:option value="_armenian_">{{ phrase('xfes_armenian') }}</xf:option>
+				<xf:option value="_basque_">{{ phrase('xfes_basque') }}</xf:option>
+				<xf:option value="_bengali_">{{ phrase('xfes_bengali') }}</xf:option>
+				<xf:option value="_brazilian_">{{ phrase('xfes_brazilian_portuguese') }}</xf:option>
+				<xf:option value="_bulgarian_">{{ phrase('xfes_bulgarian') }}</xf:option>
+				<xf:option value="_catalan_">{{ phrase('xfes_catalan') }}</xf:option>
+				<xf:option value="_czech_">{{ phrase('xfes_czech') }}</xf:option>
+				<xf:option value="_danish_">{{ phrase('xfes_danish') }}</xf:option>
+				<xf:option value="_dutch_">{{ phrase('xfes_dutch') }}</xf:option>
+				<xf:option value="_english_">{{ phrase('xfes_english') }}</xf:option>
+				<xf:option value="_finnish_">{{ phrase('xfes_finnish') }}</xf:option>
+				<xf:option value="_french_">{{ phrase('xfes_french') }}</xf:option>
+				<xf:option value="_galician_">{{ phrase('xfes_galician') }}</xf:option>
+				<xf:option value="_german_">{{ phrase('xfes_german') }}</xf:option>
+				<xf:option value="_greek_">{{ phrase('xfes_greek') }}</xf:option>
+				<xf:option value="_hindi_">{{ phrase('xfes_hindi') }}</xf:option>
+				<xf:option value="_hungarian_">{{ phrase('xfes_hungarian') }}</xf:option>
+				<xf:option value="_indonesian_">{{ phrase('xfes_indonesian') }}</xf:option>
+				<xf:option value="_irish_">{{ phrase('xfes_irish') }}</xf:option>
+				<xf:option value="_italian_">{{ phrase('xfes_italian') }}</xf:option>
+				<xf:option value="_sorani_">{{ phrase('xfes_kurdish_sorani') }}</xf:option>
+				<xf:option value="_latvian_">{{ phrase('xfes_latvian') }}</xf:option>
+				<xf:option value="_norwegian_">{{ phrase('xfes_norwegian') }}</xf:option>
+				<xf:option value="_persian_">{{ phrase('xfes_persian') }}</xf:option>
+				<xf:option value="_portuguese_">{{ phrase('xfes_portuguese') }}</xf:option>
+				<xf:option value="_romanian_">{{ phrase('xfes_romanian') }}</xf:option>
+				<xf:option value="_russian_">{{ phrase('xfes_russian') }}</xf:option>
+				<xf:option value="_spanish_">{{ phrase('xfes_spanish') }}</xf:option>
+				<xf:option value="_swedish_">{{ phrase('xfes_swedish') }}</xf:option>
+				<xf:option value="_thai_">{{ phrase('xfes_thai') }}</xf:option>
+				<xf:option value="_turkish_">{{ phrase('xfes_turkish') }}</xf:option>
+			</xf:select>
+		</xf:option>
+		<xf:option value="custom" label="{{ phrase('xfes_use_custom_list:') }}">
+			<xf:textarea name="index[stop_custom]"  value="{$analyzerConfig.stop_custom}" rows="2" autosize="true" />
+		</xf:option>
+		<xf:explain>{{ phrase('xfes_stop_words_explain') }}</xf:explain>
+	</xf:radiorow>
+
+	<xf:radiorow label="{{ phrase('xfes_word_stemming') }}" name="index[stemming]" value="{$analyzerConfig.stemming}">
+		<xf:option value="none">{{ phrase('none') }}</xf:option>
+		<xf:option value="language" label="{{ phrase('xfes_enable_stemming_for_language:') }}">
+			<xf:select name="index[stemming_language]" value="{$analyzerConfig.stemming_language}">
+				<xf:option value="arabic">{{ phrase('xfes_arabic') }}</xf:option>
+				<xf:option value="armenian">{{ phrase('xfes_armenian') }}</xf:option>
+				<xf:option value="basque">{{ phrase('xfes_basque') }}</xf:option>
+				<xf:option value="bengali">{{ phrase('xfes_bengali') }}</xf:option>
+				<xf:option value="brazilian">{{ phrase('xfes_brazilian_portuguese') }}</xf:option>
+				<xf:option value="bulgarian">{{ phrase('xfes_bulgarian') }}</xf:option>
+				<xf:option value="catalan">{{ phrase('xfes_catalan') }}</xf:option>
+				<xf:option value="czech">{{ phrase('xfes_czech') }}</xf:option>
+				<xf:option value="danish">{{ phrase('xfes_danish') }}</xf:option>
+				<xf:option value="dutch">{{ phrase('xfes_dutch') }}</xf:option>
+				<xf:option value="porter2">{{ phrase('xfes_english') }}</xf:option>
+				<xf:option value="finnish">{{ phrase('xfes_finnish') }}</xf:option>
+				<xf:option value="french">{{ phrase('xfes_french') }}</xf:option>
+				<xf:option value="galician">{{ phrase('xfes_galician') }}</xf:option>
+				<xf:option value="german2">{{ phrase('xfes_german') }}</xf:option>
+				<xf:option value="greek">{{ phrase('xfes_greek') }}</xf:option>
+				<xf:option value="hindi">{{ phrase('xfes_hindi') }}</xf:option>
+				<xf:option value="hungarian">{{ phrase('xfes_hungarian') }}</xf:option>
+				<xf:option value="indonesian">{{ phrase('xfes_indonesian') }}</xf:option>
+				<xf:option value="irish">{{ phrase('xfes_irish') }}</xf:option>
+				<xf:option value="italian">{{ phrase('xfes_italian') }}</xf:option>
+				<xf:option value="sorani">{{ phrase('xfes_kurdish_sorani') }}</xf:option>
+				<xf:option value="latvian">{{ phrase('xfes_latvian') }}</xf:option>
+				<xf:option value="lithuanian">{{ phrase('xfes_lithuanian') }}</xf:option>
+				<xf:option value="norwegian">{{ phrase('xfes_norwegian') }}</xf:option>
+				<xf:option value="portuguese">{{ phrase('xfes_portuguese') }}</xf:option>
+				<xf:option value="romanian">{{ phrase('xfes_romanian') }}</xf:option>
+				<xf:option value="russian">{{ phrase('xfes_russian') }}</xf:option>
+				<xf:option value="spanish">{{ phrase('xfes_spanish') }}</xf:option>
+				<xf:option value="swedish">{{ phrase('xfes_swedish') }}</xf:option>
+				<xf:option value="turkish">{{ phrase('xfes_turkish') }}</xf:option>
+			</xf:select>
+		</xf:option>
+		<xf:explain>{{ phrase('xfes_word_stemming_explain') }}</xf:explain>
+	</xf:radiorow>
+
+	<xf:checkboxrow>
+		<xf:option name="index[ascii_folding]" selected="{$analyzerConfig.ascii_folding}" label="{{ phrase('xfes_enable_accent_removal_and_character_simplification') }}">
+			<xf:hint>{{ phrase('xfes_remove_accents_simplify_explain') }}</xf:hint>
+		</xf:option>
+	</xf:checkboxrow>
+</xf:macro>]]></template>
+  <template type="admin" title="xfes_mlt_analyzer" version_id="2020035" version_string="2.2.0 Beta 5"><![CDATA[<xf:title>MLT query analyzer</xf:title>
+
+<div class="block">
+	<div class="block-container">
+		<h2 class="block-tabHeader tabs" data-xf-init="tabs">
+			<a class="tabs-tab {{ $type == 'thread_creation' ? 'is-active' : '' }}" role="tab" tabindex="0">Thread creation</a>
+			<a class="tabs-tab {{ $type == 'similar_threads' ? 'is-active' : '' }}" role="tab" tabindex="0">Similar threads</a>
+			<a class="tabs-tab {{ $type == 'raw_query' ? 'is-active' : '' }}" role="tab" tabindex="0">Raw query</a>
+		</h2>
+
+		<ul class="tabPanes">
+			<li class="{{ $type == 'thread_creation' ? 'is-active' : '' }}">
+				<xf:form action="{{ link('enhanced-search/mlt-analyzer') }}">
+					<div class="block-body">
+						<xf:textboxrow label="Title" name="title" value="{$creationTitle}" required="required" />
+						<xf:selectrow label="Forum" name="node_id" value="{$creationNodeId}" required="required">
+							<xf:option></xf:option>
+
+							<xf:foreach loop="$nodeTree.getFlattened(0)" value="$treeEntry">
+								<xf:option value="{$treeEntry.record.node_id}"
+									disabled="{{ $treeEntry.record.node_type_id != 'Forum' }}"
+									label="{{ repeat('&nbsp;&nbsp;', $treeEntry.depth)|raw }} {$treeEntry.record.title}" />
+							</xf:foreach>
+						</xf:selectrow>
+					</div>
+					<xf:submitrow submit="Get results" />
+					<xf:hiddenval name="type">thread_creation</xf:hiddenval>
+				</xf:form>
+			</li>
+			<li class="{{ $type == 'similar_threads' ? 'is-active' : '' }}">
+				<xf:form action="{{ link('enhanced-search/mlt-analyzer') }}">
+					<div class="block-body">
+						<xf:textboxrow label="Thread URL" name="thread_url" value="{$threadUrl}" type="url" required="required" />
+					</div>
+					<xf:submitrow submit="Get results" />
+					<xf:hiddenval name="type">similar_threads</xf:hiddenval>
+				</xf:form>
+			</li>
+			<li class="{{ $type == 'raw_query' ? 'is-active' : '' }}">
+				<xf:form action="{{ link('enhanced-search/mlt-analyzer') }}">
+					<div class="block-body">
+						<xf:textarearow label="Query JSON" name="query"
+							value="{{ $query ?: ($dsl ? $dsl|json(true) : '') }}" rows="10" code="true" required="required" />
+					</div>
+					<xf:submitrow submit="Get results" />
+					<xf:hiddenval name="type">raw_query</xf:hiddenval>
+				</xf:form>
+			</li>
+		</ul>
+	</div>
+</div>
+
+<xf:if is="$dsl">
+	<div class="block">
+		<div class="block-container">
+			<h2 class="block-header">Results: {$inputThread.title}</h2>
+			<div class="block-body">
+				<xf:datalist>
+					<xf:datarow rowtype="header">
+						<xf:cell>{{ phrase('title') }}</xf:cell>
+						<xf:cell class="dataList-cell--min">Score</xf:cell>
+						<xf:cell class="dataList-cell--min">{{ phrase('forum') }}</xf:cell>
+						<xf:cell class="dataList-cell--min">{{ phrase('thread_starter') }}</xf:cell>
+						<xf:cell class="dataList-cell--min">{{ phrase('last_message') }}</xf:cell>
+					</xf:datarow>
+					<xf:foreach loop="$threadScores" key="$threadId" value="$score">
+						<xf:set var="$thread" value="{$threads.{$threadId}}" />
+						<xf:datarow>
+							<xf:cell>
+								<a href="{{ link_type('public', 'threads', $thread) }}">{$thread.title}</a>
+							</xf:cell>
+							<xf:cell class="dataList-cell--min">
+								{$score}
+							</xf:cell>
+							<xf:cell class="dataList-cell--min">
+								{$thread.Forum.title}
+							</xf:cell>
+							<xf:cell class="dataList-cell--min">
+								{$thread.username}
+							</xf:cell>
+							<xf:cell class="dataList-cell--min">
+								<xf:date time="{$thread.last_post_date}" />
+							</xf:cell>
+						</xf:datarow>
+					</xf:foreach>
+				</xf:datalist>
+			</div>
+		</div>
+	</div>
+
+	<div class="block">
+		<div class="block-container">
+			<h2 class="block-header">DSL</h2>
+			<div class="block-body block-row block-body--contained">
+				<pre>{{ $dsl|json(true) }}</pre>
+			</div>
+		</div>
+	</div>
+</xf:if>]]></template>
+  <template type="admin" title="xfes_optimize" version_id="2000010" version_string="2.0.0 Alpha"><![CDATA[<xf:title>{{ phrase('xfes_optimize_elasticsearch_index') }}</xf:title>
+
+<xf:form action="{{ link('enhanced-search/optimize') }}" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:inforow rowtype="confirm">
+				{{ phrase('xfes_you_sure_want_to_optimize_elasticsearch_delete_create') }}
+			</xf:inforow>
+		</div>
+		<xf:submitrow submit="{{ phrase('xfes_optimize') }}" rowtype="simple" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="xfes_toggle" version_id="2000036" version_string="2.0.0 Beta 6"><![CDATA[<xf:title>{{ phrase('xfes_toggle_enhanced_search') }}</xf:title>
+
+<xf:form action="{{ link('enhanced-search/toggle') }}" class="block">
+	<div class="block-container">
+		<xf:if is="$enabled">
+			<div class="block-body">
+				<xf:inforow rowtype="confirm">
+					{{ phrase('xfes_you_sure_you_want_to_disable_enhanced_search') }}
+				</xf:inforow>
+			</div>
+			<xf:submitrow submit="{{ phrase('disable') }}" rowtype="simple" icon="disable" />
+		<xf:else />
+			<div class="block-body">
+				<xf:inforow rowtype="confirm">
+					{{ phrase('xfes_you_sure_you_want_to_enable_enhanced_search') }}
+				</xf:inforow>
+				<xf:checkboxrow>
+					<xf:option name="empty_mysql" label="{{ phrase('xfes_empty_mysql_search_index') }}">
+						<xf:hint>{{ phrase('xfes_will_save_disk_space_but_index_rebuild_required_mysql') }}</xf:hint>
+					</xf:option>
+				</xf:checkboxrow>
+			</div>
+			<xf:submitrow submit="{{ phrase('enable') }}" icon="enable" />
+		</xf:if>
+	</div>
+</xf:form>]]></template>
+  <template type="public" title="xfes_forum_find_suggested_threads" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:css src="xfes_suggested_threads.less" />
+
+<xf:head option="robots"><meta name="robots" content="noindex" /></xf:head>
+
+<xf:if is="$suggestedThreads is not empty">
+	<div class="suggestedThreads">
+		<h4 class="suggestedThreads-header">
+			<a class="suggestedThreads-headerCloser js-suggestedThreadDisable"
+				role="button" tabindex="0"
+				title="{{ phrase('close')|for_attr }}"
+				aria-label="{{ phrase('close')|for_attr }}"></a>
+
+			<xf:if is="$forum.forum_type_id == 'article'">
+				{{ phrase('xfes_suggest_heading_article') }}
+			<xf:elseif is="$forum.forum_type_id == 'question'" />
+				{{ phrase('xfes_suggest_heading_question') }}
+			<xf:elseif is="$forum.forum_type_id == 'suggestion'" />
+				{{ phrase('xfes_suggest_heading_suggestion') }}
+			<xf:else />
+				{{ phrase('xfes_suggest_heading_discussion') }}
+			</xf:if>
+		</h4>
+		<ol class="suggestedThreads-threads">
+			<xf:foreach loop="$suggestedThreads" value="$suggestedThread">
+				<li>
+					<xf:macro id="suggested_thread" arg-thread="{$suggestedThread}" />
+				</li>
+			</xf:foreach>
+		</ol>
+	</div>
+</xf:if>
+
+<xf:macro id="suggested_thread" arg-thread="!">
+	<div class="contentRow">
+		<div class="contentRow-figure">
+			<xf:avatar user="{$thread.User}" href="" size="xxs" defaultname="{$thread.username}" />
+		</div>
+
+		<div class="contentRow-main contentRow-main--close">
+			<a href="{{ link('threads', $thread) }}">{{ prefix('thread', $thread) }}{$thread.title}</a>
+
+			<div class="contentRow-minor contentRow-minor--smaller">
+				{{ snippet($thread.FirstPost.message, 100, {'stripQuote': true}) }}
+			</div>
+		</div>
+	</div>
+</xf:macro>]]></template>
+  <template type="public" title="xfes_suggested_threads.less" version_id="2020035" version_string="2.2.0 Beta 5"><![CDATA[.suggestedThreads
+{
+	margin-top: @xf-paddingLarge;
+	.xf-blockBorder();
+	border-radius: @xf-blockBorderRadius;
+}
+
+.suggestedThreads-header
+{
+	padding: @xf-blockPaddingV @xf-paddingLarge;
+	margin: 0;
+	font-size: @xf-fontSizeLarge;
+	font-weight: @xf-fontWeightNormal;
+	color: @xf-majorHeadingTextColor;
+	text-decoration: none;
+	background: @xf-majorHeadingBg;
+	border-bottom: @xf-borderSize solid @xf-borderColorLight;
+
+	.m-clearFix();
+	.m-hiddenLinks();
+}
+
+.suggestedThreads-headerCloser
+{
+	float: right;
+	cursor: pointer;
+	margin-left: 5px;
+	text-decoration: none;
+	opacity: .75;
+	.m-transition();
+
+	&:after
+	{
+		.m-faBase();
+		.m-faContent(@fa-var-times, .625em);
+	}
+
+	&:hover
+	{
+		text-decoration: none;
+		opacity: 1;
+	}
+}
+
+.suggestedThreads-threads
+{
+	.m-listPlain();
+
+	> li
+	{
+		padding: @xf-paddingLarge;
+	}
+}]]></template>
+  <template type="public" title="xfes_suggested_threads_container" version_id="2020035" version_string="2.2.0 Beta 5"><![CDATA[<xf:if is="$forum.isSimilarThreadSuggestionsEnabled()">
+	<xf:css src="xfes_suggested_threads.less" />
+	<xf:js src="xfes/thread.js" min="1" />
+
+	<div class="js-suggestedThreadContainer" style="display: none;"></div>
+</xf:if>]]></template>
+  <template type="public" title="xfes_widget_similar_threads" version_id="2030010" version_string="2.3.0 Alpha"><![CDATA[<xf:if is="$threads is not empty">
+	<div class="block" {{ widget_data($widget) }}>
+		<div class="block-container">
+			<xf:if is="$style == 'full'">
+				<h3 class="block-header">{{ $title ?: phrase('xfes_similar_threads') }}</h3>
+
+				<div class="block-body">
+					<div class="structItemContainer">
+						<xf:foreach loop="$threads" value="$thread">
+							<xf:macro id="thread_list_macros::item"
+								arg-allowInlineMod="{{ false }}"
+								arg-thread="{$thread}" />
+						</xf:foreach>
+					</div>
+				</div>
+			<xf:else />
+				<h3 class="block-minorHeader">{{ $title ?: phrase('xfes_similar_threads') }}</h3>
+
+				<ul class="block-body">
+					<xf:foreach loop="$threads" value="$thread">
+						<li class="block-row">
+							<xf:macro id="thread_list_macros::item_new_threads"
+								arg-thread="{$thread}" />
+						</li>
+					</xf:foreach>
+				</ul>
+			</xf:if>
+		</div>
+	</div>
+</xf:if>]]></template>
+</templates>

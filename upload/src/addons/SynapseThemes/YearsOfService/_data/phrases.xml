@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="option.synapseYearsOfService_displayPostbit" version_id="1000010" version_string="1.0.0"><![CDATA[Display in Postbit]]></phrase>
+  <phrase title="option.synapseYearsOfService_displayProfile" version_id="1000010" version_string="1.0.0"><![CDATA[Display in Profiles]]></phrase>
+  <phrase title="option_explain.synapseYearsOfService_displayPostbit" version_id="1000010" version_string="1.0.0"><![CDATA[Enable to display the years of service badge in the postbit area next to user information.]]></phrase>
+  <phrase title="option_explain.synapseYearsOfService_displayProfile" version_id="1000010" version_string="1.0.0"><![CDATA[Enable to display the years of service badge on user profile pages.]]></phrase>
+  <phrase title="option_group.synapseYearsOfService" version_id="1000010" version_string="1.0.0"><![CDATA[[SynapseThemes] Years of Service]]></phrase>
+  <phrase title="option_group_description.synapseYearsOfService" version_id="1000010" version_string="1.0.0"><![CDATA[Configure display options for the Years of Service addon.]]></phrase>
+  <phrase title="synapseYearsOfService_month_singular" version_id="1000010" version_string="1.0.0"><![CDATA[Month of Service]]></phrase>
+  <phrase title="synapseYearsOfService_months_plural" version_id="1000010" version_string="1.0.0"><![CDATA[Months of Service]]></phrase>
+  <phrase title="synapseYearsOfService_year_singular" version_id="1000010" version_string="1.0.0"><![CDATA[Year of Service]]></phrase>
+  <phrase title="synapseYearsOfService_years_plural" version_id="1000010" version_string="1.0.0"><![CDATA[Years of Service]]></phrase>
+</phrases>

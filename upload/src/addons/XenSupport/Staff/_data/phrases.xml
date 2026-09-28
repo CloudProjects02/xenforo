@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="admin_navigation.xenStaff" version_id="2010000" version_string="2.1.0"><![CDATA[XenStaff]]></phrase>
+  <phrase title="admin_navigation.xenStaffBadges" version_id="2010000" version_string="2.1.0"><![CDATA[Staff: Badges]]></phrase>
+  <phrase title="admin_navigation.xenStaffContacts" version_id="2010000" version_string="2.1.0"><![CDATA[Staff: Contact messages]]></phrase>
+  <phrase title="nav.xenStaff" version_id="2010000" version_string="2.1.0"><![CDATA[Staff]]></phrase>
+  <phrase title="option.xenStaffContactEnabled" version_id="2010000" version_string="2.1.0"><![CDATA[Enable contact form]]></phrase>
+  <phrase title="option.xenStaffContactHourlyLimit" version_id="2010000" version_string="2.1.0"><![CDATA[Contact form: max submissions per IP per hour]]></phrase>
+  <phrase title="option.xenStaffEnableSocials" version_id="2010000" version_string="2.1.0"><![CDATA[Enable social links]]></phrase>
+  <phrase title="option.xenStaffEnableThanks" version_id="2010000" version_string="2.1.0"><![CDATA[Enable thanks button]]></phrase>
+  <phrase title="option.xenStaffRichBioMaxLength" version_id="2010000" version_string="2.1.0"><![CDATA[Rich bio max length]]></phrase>
+  <phrase title="option.xenStaffShowHours" version_id="2010000" version_string="2.1.0"><![CDATA[Show office hours]]></phrase>
+  <phrase title="option.xenStaffShowOnlineIndicator" version_id="2010000" version_string="2.1.0"><![CDATA[Show online indicator]]></phrase>
+  <phrase title="option.xenStaffShowStats" version_id="2010000" version_string="2.1.0"><![CDATA[Show stats dashboard link]]></phrase>
+  <phrase title="option.xenStaffShowYearsService" version_id="2010000" version_string="2.1.0"><![CDATA[Show years of service]]></phrase>
+  <phrase title="option.xenStaffSortMode" version_id="2010000" version_string="2.1.0"><![CDATA[Sort staff members by]]></phrase>
+  <phrase title="option.xenStaffUseIsStaff" version_id="2010000" version_string="2.1.0"><![CDATA[Include XenForo staff users]]></phrase>
+  <phrase title="option.xenStaffUsergroups" version_id="2010000" version_string="2.1.0"><![CDATA[Staff usergroups]]></phrase>
+  <phrase title="option_explain.xenStaffContactEnabled" version_id="2010000" version_string="2.1.0"><![CDATA[Members can send a private message to staff members directly from their card (with optional anonymity).]]></phrase>
+  <phrase title="option_explain.xenStaffContactHourlyLimit" version_id="2010000" version_string="2.1.0"><![CDATA[Anti-spam cap. Rate-limited by IP hash.]]></phrase>
+  <phrase title="option_explain.xenStaffEnableSocials" version_id="2010000" version_string="2.1.0"><![CDATA[Staff members can add personal social links (Discord, Twitter, Twitch, YouTube, Instagram, GitHub, website) shown on their card.]]></phrase>
+  <phrase title="option_explain.xenStaffEnableThanks" version_id="2010000" version_string="2.1.0"><![CDATA[Members can give a one-time "thanks" to each staff member, displayed as a heart counter on their card.]]></phrase>
+  <phrase title="option_explain.xenStaffRichBioMaxLength" version_id="2010000" version_string="2.1.0"><![CDATA[Maximum characters in a staff member's rich bio.]]></phrase>
+  <phrase title="option_explain.xenStaffShowHours" version_id="2010000" version_string="2.1.0"><![CDATA[Display each staff member's office-hour slots on their card.]]></phrase>
+  <phrase title="option_explain.xenStaffShowOnlineIndicator" version_id="2010000" version_string="2.1.0"><![CDATA[Render a live green/yellow/grey dot showing whether each staff member is currently online.]]></phrase>
+  <phrase title="option_explain.xenStaffShowStats" version_id="2010000" version_string="2.1.0"><![CDATA[Add a "Stats" link on each staff card.]]></phrase>
+  <phrase title="option_explain.xenStaffShowYearsService" version_id="2010000" version_string="2.1.0"><![CDATA[Display a medal badge with the years since the staff member joined the forum.]]></phrase>
+  <phrase title="option_explain.xenStaffSortMode" version_id="2010000" version_string="2.1.0"><![CDATA[Determines the order in which staff members appear on the page.]]></phrase>
+  <phrase title="option_explain.xenStaffUseIsStaff" version_id="2010000" version_string="2.1.0"><![CDATA[Also include any user with the native XenForo "is_staff" flag set, in addition to the selected usergroups.]]></phrase>
+  <phrase title="option_explain.xenStaffUsergroups" version_id="2010000" version_string="2.1.0"><![CDATA[Comma-separated list of user group IDs whose members will appear on the staff page (e.g. 3,4,5). Leave empty to only rely on the native is_staff flag.]]></phrase>
+  <phrase title="option_group.xenStaff" version_id="2010000" version_string="2.1.0"><![CDATA[XenStaff]]></phrase>
+  <phrase title="option_group_description.xenStaff" version_id="2010000" version_string="2.1.0"><![CDATA[Options related to the XenStaff add-on.]]></phrase>
+  <phrase title="permission.xenStaff_contactAnonymous" version_id="2010000" version_string="2.1.0"><![CDATA[Can send anonymous contact messages]]></phrase>
+  <phrase title="permission.xenStaff_contactSend" version_id="2010000" version_string="2.1.0"><![CDATA[Can send messages via the staff contact form]]></phrase>
+  <phrase title="permission.xenStaff_editProfile" version_id="2010000" version_string="2.1.0"><![CDATA[Edit own staff profile (quote &amp; socials)]]></phrase>
+  <phrase title="permission.xenStaff_thank" version_id="2010000" version_string="2.1.0"><![CDATA[Send thanks to staff members]]></phrase>
+  <phrase title="permission.xenStaff_viewStats" version_id="2010000" version_string="2.1.0"><![CDATA[Can view staff stats dashboard]]></phrase>
+  <phrase title="permission_interface.xenStaff" version_id="2010000" version_string="2.1.0"><![CDATA[XenStaff]]></phrase>
+  <phrase title="widget_def.xs_staff" version_id="2010000" version_string="2.1.0"><![CDATA[XenStaff — meet the team]]></phrase>
+  <phrase title="widget_def_desc.xs_staff" version_id="2010000" version_string="2.1.0"><![CDATA[Displays your staff members on the page in one of three styles: spotlight (1 featured), grid (multi-card), or compact (avatar row).]]></phrase>
+  <phrase title="xen_staff_accent_color" version_id="2010000" version_string="2.1.0"><![CDATA[Card accent color]]></phrase>
+  <phrase title="xen_staff_accent_color_explain" version_id="2010000" version_string="2.1.0"><![CDATA[Hex color (e.g. #f59e0b) used as the accent on your staff card. Leave empty to use the default gold accent.]]></phrase>
+  <phrase title="xen_staff_admin_add_badge" version_id="2010000" version_string="2.1.0"><![CDATA[Add badge]]></phrase>
+  <phrase title="xen_staff_admin_assign_button" version_id="2010000" version_string="2.1.0"><![CDATA[Assign to members]]></phrase>
+  <phrase title="xen_staff_admin_assign_explain" version_id="2010000" version_string="2.1.0"><![CDATA[Choose which badge each staff member shows on their card. Create badges in the library first, then assign them here.]]></phrase>
+  <phrase title="xen_staff_admin_assign_no_badges" version_id="2010000" version_string="2.1.0"><![CDATA[No badges yet. Create one in the badge library first, then come back to assign it.]]></phrase>
+  <phrase title="xen_staff_admin_assign_title" version_id="2010000" version_string="2.1.0"><![CDATA[Assign badges]]></phrase>
+  <phrase title="xen_staff_admin_badge_none" version_id="2010000" version_string="2.1.0"><![CDATA[(None)]]></phrase>
+  <phrase title="xen_staff_admin_badges_explain" version_id="2010000" version_string="2.1.0"><![CDATA[Library of admin-defined badges that you can assign to staff members.]]></phrase>
+  <phrase title="xen_staff_admin_badges_title" version_id="2010000" version_string="2.1.0"><![CDATA[Staff badges]]></phrase>
+  <phrase title="xen_staff_admin_edit_badge" version_id="2010000" version_string="2.1.0"><![CDATA[Edit badge]]></phrase>
+  <phrase title="xen_staff_admin_settings_saved" version_id="2010000" version_string="2.1.0"><![CDATA[Settings saved.]]></phrase>
+  <phrase title="xen_staff_alert_contact" version_id="2010000" version_string="2.1.0"><![CDATA[{sender} sent you a contact message: {subject}]]></phrase>
+  <phrase title="xen_staff_badge_assigned" version_id="2010000" version_string="2.1.0"><![CDATA[Badge: {title}]]></phrase>
+  <phrase title="xen_staff_bio_explain" version_id="2010000" version_string="2.1.0"><![CDATA[A longer-form introduction. BBCode supported.]]></phrase>
+  <phrase title="xen_staff_bio_save" version_id="2010000" version_string="2.1.0"><![CDATA[Save bio]]></phrase>
+  <phrase title="xen_staff_bio_title" version_id="2010000" version_string="2.1.0"><![CDATA[Rich bio]]></phrase>
+  <phrase title="xen_staff_card_available_now" version_id="2010000" version_string="2.1.0"><![CDATA[Available now]]></phrase>
+  <phrase title="xen_staff_card_badge_tooltip" version_id="2010000" version_string="2.1.0"><![CDATA[Badge: {title}]]></phrase>
+  <phrase title="xen_staff_card_contact_button" version_id="2010000" version_string="2.1.0"><![CDATA[Contact]]></phrase>
+  <phrase title="xen_staff_card_flip_hint" version_id="2020000" version_string="2.2.0"><![CDATA[View details]]></phrase>
+  <phrase title="xen_staff_card_office_hours" version_id="2010000" version_string="2.1.0"><![CDATA[Office hours]]></phrase>
+  <phrase title="xen_staff_card_stat_new" version_id="2020200" version_string="2.2.2"><![CDATA[New]]></phrase>
+  <phrase title="xen_staff_card_stat_service" version_id="2020200" version_string="2.2.2"><![CDATA[Service]]></phrase>
+  <phrase title="xen_staff_card_stat_years" version_id="2020200" version_string="2.2.2"><![CDATA[Years]]></phrase>
+  <phrase title="xen_staff_card_status_away" version_id="2010000" version_string="2.1.0"><![CDATA[Away]]></phrase>
+  <phrase title="xen_staff_card_status_busy" version_id="2010000" version_string="2.1.0"><![CDATA[Busy]]></phrase>
+  <phrase title="xen_staff_card_status_offline" version_id="2010000" version_string="2.1.0"><![CDATA[Offline]]></phrase>
+  <phrase title="xen_staff_card_status_online" version_id="2010000" version_string="2.1.0"><![CDATA[Online now]]></phrase>
+  <phrase title="xen_staff_card_view_bio" version_id="2010000" version_string="2.1.0"><![CDATA[Read full bio]]></phrase>
+  <phrase title="xen_staff_card_view_stats" version_id="2010000" version_string="2.1.0"><![CDATA[View stats]]></phrase>
+  <phrase title="xen_staff_contact_anonymous" version_id="2010000" version_string="2.1.0"><![CDATA[Send anonymously]]></phrase>
+  <phrase title="xen_staff_contact_anonymous_disabled" version_id="2010000" version_string="2.1.0"><![CDATA[This staff member does not accept anonymous messages.]]></phrase>
+  <phrase title="xen_staff_contact_anonymous_explain" version_id="2010000" version_string="2.1.0"><![CDATA[Hide your username from the recipient.]]></phrase>
+  <phrase title="xen_staff_contact_button" version_id="2010000" version_string="2.1.0"><![CDATA[Contact]]></phrase>
+  <phrase title="xen_staff_contact_disabled" version_id="2010000" version_string="2.1.0"><![CDATA[This staff member is not accepting messages at the moment.]]></phrase>
+  <phrase title="xen_staff_contact_error_empty" version_id="2010000" version_string="2.1.0"><![CDATA[Please write a subject and a message.]]></phrase>
+  <phrase title="xen_staff_contact_error_rate_limit" version_id="2010000" version_string="2.1.0"><![CDATA[Too many messages from your connection in the last hour. Please slow down.]]></phrase>
+  <phrase title="xen_staff_contact_explain" version_id="2010000" version_string="2.1.0"><![CDATA[Send a private message directly to this staff member.]]></phrase>
+  <phrase title="xen_staff_contact_message" version_id="2010000" version_string="2.1.0"><![CDATA[Your message]]></phrase>
+  <phrase title="xen_staff_contact_send" version_id="2010000" version_string="2.1.0"><![CDATA[Send message]]></phrase>
+  <phrase title="xen_staff_contact_subject" version_id="2010000" version_string="2.1.0"><![CDATA[Subject]]></phrase>
+  <phrase title="xen_staff_contact_success" version_id="2010000" version_string="2.1.0"><![CDATA[Your message has been sent to {username}.]]></phrase>
+  <phrase title="xen_staff_contact_title" version_id="2010000" version_string="2.1.0"><![CDATA[Contact {username}]]></phrase>
+  <phrase title="xen_staff_count" version_id="2010000" version_string="2.1.0"><![CDATA[{count} staff members]]></phrase>
+  <phrase title="xen_staff_generic_bucket" version_id="2010000" version_string="2.1.0"><![CDATA[Staff]]></phrase>
+  <phrase title="xen_staff_hero_eyebrow" version_id="2010000" version_string="2.1.0"><![CDATA[Staff]]></phrase>
+  <phrase title="xen_staff_hours_add_slot" version_id="2010000" version_string="2.1.0"><![CDATA[Add slot]]></phrase>
+  <phrase title="xen_staff_hours_day" version_id="2010000" version_string="2.1.0"><![CDATA[Day]]></phrase>
+  <phrase title="xen_staff_hours_end" version_id="2010000" version_string="2.1.0"><![CDATA[End]]></phrase>
+  <phrase title="xen_staff_hours_explain" version_id="2010000" version_string="2.1.0"><![CDATA[Define when you're typically available. Visitors see this on your card.]]></phrase>
+  <phrase title="xen_staff_hours_in_hours_now" version_id="2010000" version_string="2.1.0"><![CDATA[On duty now]]></phrase>
+  <phrase title="xen_staff_hours_note" version_id="2010000" version_string="2.1.0"><![CDATA[Note]]></phrase>
+  <phrase title="xen_staff_hours_start" version_id="2010000" version_string="2.1.0"><![CDATA[Start]]></phrase>
+  <phrase title="xen_staff_hours_title" version_id="2010000" version_string="2.1.0"><![CDATA[Office hours]]></phrase>
+  <phrase title="xen_staff_inbox_anonymous" version_id="2010000" version_string="2.1.0"><![CDATA[Anonymous]]></phrase>
+  <phrase title="xen_staff_inbox_empty" version_id="2010000" version_string="2.1.0"><![CDATA[Your staff inbox is empty.]]></phrase>
+  <phrase title="xen_staff_inbox_explain" version_id="2010000" version_string="2.1.0"><![CDATA[Messages sent to you via the staff contact form.]]></phrase>
+  <phrase title="xen_staff_inbox_mark_replied" version_id="2010000" version_string="2.1.0"><![CDATA[Mark as replied]]></phrase>
+  <phrase title="xen_staff_inbox_title" version_id="2010000" version_string="2.1.0"><![CDATA[Staff inbox]]></phrase>
+  <phrase title="xen_staff_member_since_x" version_id="2010000" version_string="2.1.0"><![CDATA[Joined {date}]]></phrase>
+  <phrase title="xen_staff_no_permission_profile" version_id="2010000" version_string="2.1.0"><![CDATA[You don't have permission to edit a staff profile.]]></phrase>
+  <phrase title="xen_staff_no_staff" version_id="2010000" version_string="2.1.0"><![CDATA[No staff members configured yet. An administrator can set this up from the Admin CP.]]></phrase>
+  <phrase title="xen_staff_page_subtitle" version_id="2010000" version_string="2.1.0"><![CDATA[The moderators and administrators who look after this community.]]></phrase>
+  <phrase title="xen_staff_page_title" version_id="2010000" version_string="2.1.0"><![CDATA[Our team]]></phrase>
+  <phrase title="xen_staff_profile_edit_explain" version_id="2010000" version_string="2.1.0"><![CDATA[Customize how you appear on the public staff page. Your personal quote and social links will be displayed to all members.]]></phrase>
+  <phrase title="xen_staff_profile_edit_title" version_id="2010000" version_string="2.1.0"><![CDATA[Staff profile]]></phrase>
+  <phrase title="xen_staff_profile_saved" version_id="2010000" version_string="2.1.0"><![CDATA[Your staff profile has been saved.]]></phrase>
+  <phrase title="xen_staff_quote" version_id="2010000" version_string="2.1.0"><![CDATA[Personal quote]]></phrase>
+  <phrase title="xen_staff_quote_explain" version_id="2010000" version_string="2.1.0"><![CDATA[A short message that will appear on your staff card (max 280 characters).]]></phrase>
+  <phrase title="xen_staff_quote_placeholder" version_id="2010000" version_string="2.1.0"><![CDATA[Tell members why you love this community...]]></phrase>
+  <phrase title="xen_staff_send_message" version_id="2010000" version_string="2.1.0"><![CDATA[Send message]]></phrase>
+  <phrase title="xen_staff_send_thanks" version_id="2010000" version_string="2.1.0"><![CDATA[Send thanks]]></phrase>
+  <phrase title="xen_staff_social_discord" version_id="2010000" version_string="2.1.0"><![CDATA[Discord]]></phrase>
+  <phrase title="xen_staff_social_github" version_id="2010000" version_string="2.1.0"><![CDATA[GitHub]]></phrase>
+  <phrase title="xen_staff_social_instagram" version_id="2010000" version_string="2.1.0"><![CDATA[Instagram]]></phrase>
+  <phrase title="xen_staff_social_twitch" version_id="2010000" version_string="2.1.0"><![CDATA[Twitch]]></phrase>
+  <phrase title="xen_staff_social_twitter" version_id="2010000" version_string="2.1.0"><![CDATA[Twitter / X]]></phrase>
+  <phrase title="xen_staff_social_website" version_id="2010000" version_string="2.1.0"><![CDATA[Website]]></phrase>
+  <phrase title="xen_staff_social_youtube" version_id="2010000" version_string="2.1.0"><![CDATA[YouTube]]></phrase>
+  <phrase title="xen_staff_socials" version_id="2010000" version_string="2.1.0"><![CDATA[Social links]]></phrase>
+  <phrase title="xen_staff_socials_explain" version_id="2010000" version_string="2.1.0"><![CDATA[Public links displayed on your staff card. Leave any field empty to hide it.]]></phrase>
+  <phrase title="xen_staff_sort_group_priority" version_id="2010000" version_string="2.1.0"><![CDATA[Group priority]]></phrase>
+  <phrase title="xen_staff_sort_join_date" version_id="2010000" version_string="2.1.0"><![CDATA[Join date (oldest first)]]></phrase>
+  <phrase title="xen_staff_sort_thanks" version_id="2010000" version_string="2.1.0"><![CDATA[Most thanked]]></phrase>
+  <phrase title="xen_staff_sort_username" version_id="2010000" version_string="2.1.0"><![CDATA[Username (A-Z)]]></phrase>
+  <phrase title="xen_staff_stats_active_staff" version_id="2010000" version_string="2.1.0"><![CDATA[Active staff]]></phrase>
+  <phrase title="xen_staff_stats_avg_response" version_id="2010000" version_string="2.1.0"><![CDATA[Average response time]]></phrase>
+  <phrase title="xen_staff_stats_avg_response_label" version_id="2010000" version_string="2.1.0"><![CDATA[Avg response]]></phrase>
+  <phrase title="xen_staff_stats_minutes" version_id="2010000" version_string="2.1.0"><![CDATA[{value} min]]></phrase>
+  <phrase title="xen_staff_stats_no_thanks_30" version_id="2010000" version_string="2.1.0"><![CDATA[No thanks received in the last 30 days yet.]]></phrase>
+  <phrase title="xen_staff_stats_online_now" version_id="2010000" version_string="2.1.0"><![CDATA[Online now]]></phrase>
+  <phrase title="xen_staff_stats_thanks_last_30" version_id="2010000" version_string="2.1.0"><![CDATA[Thanks received (last 30 days)]]></phrase>
+  <phrase title="xen_staff_stats_title" version_id="2010000" version_string="2.1.0"><![CDATA[Stats for {username}]]></phrase>
+  <phrase title="xen_staff_stats_total_responses" version_id="2010000" version_string="2.1.0"><![CDATA[Messages replied to]]></phrase>
+  <phrase title="xen_staff_stats_total_thanks" version_id="2010000" version_string="2.1.0"><![CDATA[Total thanks]]></phrase>
+  <phrase title="xen_staff_stats_total_thanks_label" version_id="2010000" version_string="2.1.0"><![CDATA[Total thanks]]></phrase>
+  <phrase title="xen_staff_status_away" version_id="2010000" version_string="2.1.0"><![CDATA[Away]]></phrase>
+  <phrase title="xen_staff_status_busy" version_id="2010000" version_string="2.1.0"><![CDATA[Busy]]></phrase>
+  <phrase title="xen_staff_status_offline" version_id="2010000" version_string="2.1.0"><![CDATA[Offline]]></phrase>
+  <phrase title="xen_staff_status_online" version_id="2010000" version_string="2.1.0"><![CDATA[Online]]></phrase>
+  <phrase title="xen_staff_thanks_already" version_id="2010000" version_string="2.1.0"><![CDATA[You already thanked this staff member.]]></phrase>
+  <phrase title="xen_staff_thanks_given" version_id="2010000" version_string="2.1.0"><![CDATA[Thanks sent — they'll feel the love!]]></phrase>
+  <phrase title="xen_staff_thanks_guest" version_id="2010000" version_string="2.1.0"><![CDATA[Please log in to thank our staff.]]></phrase>
+  <phrase title="xen_staff_thanks_received" version_id="2010000" version_string="2.1.0"><![CDATA[{count} thanks received]]></phrase>
+  <phrase title="xen_staff_thanks_self" version_id="2010000" version_string="2.1.0"><![CDATA[You can't thank yourself.]]></phrase>
+  <phrase title="xen_staff_top_staff_label" version_id="2010000" version_string="2.1.0"><![CDATA[Top staff member]]></phrase>
+  <phrase title="xen_staff_view_all" version_id="2010000" version_string="2.1.0"><![CDATA[View all]]></phrase>
+  <phrase title="xen_staff_view_profile" version_id="2010000" version_string="2.1.0"><![CDATA[View profile]]></phrase>
+  <phrase title="xen_staff_widget_limit" version_id="2010000" version_string="2.1.0"><![CDATA[Number of staff members to display]]></phrase>
+  <phrase title="xen_staff_widget_style" version_id="2010000" version_string="2.1.0"><![CDATA[Widget style]]></phrase>
+  <phrase title="xen_staff_widget_style_compact" version_id="2010000" version_string="2.1.0"><![CDATA[Compact (avatar row)]]></phrase>
+  <phrase title="xen_staff_widget_style_grid" version_id="2010000" version_string="2.1.0"><![CDATA[Grid (multi-card)]]></phrase>
+  <phrase title="xen_staff_widget_style_spotlight" version_id="2010000" version_string="2.1.0"><![CDATA[Spotlight (1 featured staff)]]></phrase>
+  <phrase title="xen_staff_widget_title" version_id="2010000" version_string="2.1.0"><![CDATA[Meet the team]]></phrase>
+  <phrase title="xen_staff_year_one" version_id="2010000" version_string="2.1.0"><![CDATA[1 year of service]]></phrase>
+  <phrase title="xen_staff_years_x" version_id="2010000" version_string="2.1.0"><![CDATA[{years} years of service]]></phrase>
+</phrases>

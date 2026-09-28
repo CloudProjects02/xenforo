@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<permissions>
+  <permission permission_group_id="forum" permission_id="svSignup_limitRepliesDay" permission_type="integer" interface_group_id="forumPermissions" display_order="380"/>
+  <permission permission_group_id="general" permission_id="svSignup_approve_email" permission_type="flag" interface_group_id="generalModeratorPermissions" display_order="143"/>
+  <permission permission_group_id="general" permission_id="svSignup_ban_asn" permission_type="flag" interface_group_id="generalModeratorPermissions" display_order="145"/>
+  <permission permission_group_id="general" permission_id="svSignup_ban_email" permission_type="flag" interface_group_id="generalModeratorPermissions" display_order="144"/>
+  <permission permission_group_id="multipleAccountHandling" permission_id="bypass" permission_type="flag" interface_group_id="multipleAccountHandling" display_order="5"/>
+  <permission permission_group_id="multipleAccountHandling" permission_id="logAlerting" permission_type="flag" interface_group_id="multipleAccountHandling" display_order="15"/>
+  <permission permission_group_id="multipleAccountHandling" permission_id="userAlerting" permission_type="flag" interface_group_id="multipleAccountHandling" display_order="10"/>
+  <permission permission_group_id="multipleAccountHandling" permission_id="viewreport" permission_type="flag" interface_group_id="multipleAccountHandling" display_order="20"/>
+</permissions>
+ 		 		 	   	 	  		  				  	 	 		 	 	   	    	 	  	 	  	 	 	 			    	 				 		    			 	 	  		  		  	 	 			 	   		  	 	 	  	 	   	 	 	 

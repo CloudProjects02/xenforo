@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+/** 
+* @package [AddonsLab] Resource Filter
+* @author AddonsLab
+* @license https://addonslab.com/
+* @link https://addonslab.com/
+* @version 3.6.1
+This software is furnished under a license and may be used and copied
+only  in  accordance  with  the  terms  of such  license and with the
+inclusion of the above copyright notice.  This software  or any other
+copies thereof may not be provided or otherwise made available to any
+other person.  No title to and  ownership of the  software is  hereby
+transferred.                                                         
+                                                                     
+You may not reverse  engineer, decompile, defeat  license  encryption
+mechanisms, or  disassemble this software product or software product
+license.  AddonsLab may terminate this license if you don't comply with
+any of these terms and conditions.  In such event,  licensee  agrees 
+to return licensor  or destroy  all copies of software  upon termination 
+of the license.
+*/
+ -->
+
+<template_modifications>
+  <modification type="public" template="PAGE_CONTAINER" modification_key="alrf_license_message" description="License message if applicable" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:copyright />]]></find>
+    <replace><![CDATA[<xf:copyright />
+{{ $ResourceFilterCopyright|raw }}]]></replace>
+  </modification>
+  <modification type="public" template="PAGE_CONTAINER" modification_key="alrf_off_canvas_filter" description="Off-canvas filter for mobile devices" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<div class="offCanvasMenu offCanvasMenu--nav js-headerOffCanvasMenu" data-menu="menu" aria-hidden="true" data-ocm-builder="navigation">]]></find>
+    <replace><![CDATA[<xf:include template="alrf_filter_mobile" />
+<div class="offCanvasMenu offCanvasMenu--nav js-headerOffCanvasMenu" data-menu="menu" aria-hidden="true" data-ocm-builder="navigation">]]></replace>
+  </modification>
+  <modification type="public" template="PAGE_CONTAINER" modification_key="alrf_off_canvas_filter_icon" description="Filter icon for off-canvas menu next to search icon" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[#<div class="p\-navgroup p\-discovery.*?</a>#s]]></find>
+    <replace><![CDATA[$0
+<xf:include template="alrf_filter_icon_search" />]]></replace>
+  </modification>
+  <modification type="admin" template="base_custom_field_edit" modification_key="alrf_option_field_extra_options" description="Adds an extra options variable allowing to add additional data for choice fields" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[#possible_choices.*?</xf:formrow>#s]]></find>
+    <replace><![CDATA[$0
+{$extraResourceFilterChoiceOptions|raw}]]></replace>
+  </modification>
+  <modification type="public" template="search_form_resource" modification_key="alrf_resource_filter_in_search" description="Adds resource filter controls in search pages" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:macro template="search_form_macros" name="order"]]></find>
+    <replace><![CDATA[<xf:include template="alrf_search_form" />
+<xf:macro template="search_form_macros" name="order"]]></replace>
+  </modification>
+  <modification type="public" template="search_result_resource" modification_key="alrf_search_result_include_fields" description="Includes custom field values in search results based on category configuration" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<div class="contentRow-minor contentRow-minor--hideLinks">
+]]></find>
+    <replace><![CDATA[<xf:include template="alrf_resource_field_search_list">
+				<xf:set var="$columnList" value="{$resource.Category.display_fields.search.metadata}" />
+				<xf:set var="$fieldData" value="{$resource.custom_fields}" />
+			</xf:include>
+			$0]]></replace>
+  </modification>
+  <modification type="public" template="search_result_resource" modification_key="alrf_search_result_prefix" description="Adds fields as prefix in front of resource title in search results" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<h3 class="contentRow-title">]]></find>
+    <replace><![CDATA[$0
+			<xf:include template="alrf_list_prefix">
+				<xf:set var="$columnList" value="{$resource.Category.display_fields.search.prefix}" />
+				<xf:set var="$fieldData" value="{$resource.custom_fields}" />
+			</xf:include>]]></replace>
+  </modification>
+  <modification type="admin" template="tools_rebuild" modification_key="alrf_rebuild_resource_field" description="Rebuild resource fields" execution_order="1" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:rebuild_bottom]-->]]></find>
+    <replace><![CDATA[<!--[XF:rebuild_bottom]-->
+<xf:include template="alrf_rebuild_resource_fields" />]]></replace>
+  </modification>
+  <modification type="admin" template="xfrm_category_edit" modification_key="alrf_filter_location" description="Add filter location options to the category" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:if is="$availablePrefixes is not empty">]]></find>
+    <replace><![CDATA[<xf:include template="alrf_filter_location" />
+$0]]></replace>
+  </modification>
+  <modification type="public" template="xfrm_category_view" modification_key="alrf_above_resource_list_filter_container" description="Adding resource filter above resource list" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<div class="block" data-xf-init="{{ $canInlineMod ? 'inline-mod' : '' }}" data-type="resource" data-href="{{ link('inline-mod') }}">]]></find>
+    <replace><![CDATA[<xf:include template="alrf_above_resource_filter_container"/>
+$0
+	]]></replace>
+  </modification>
+  <modification type="public" template="xfrm_filters" modification_key="alrf_clear_button" description="Add clear button" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[#(<div class="menu-footer">)(.*?)(</div>)#s]]></find>
+    <replace><![CDATA[$1
+	<xf:include template="alrf_clear_button" />
+	$3]]></replace>
+  </modification>
+  <modification type="public" template="xfrm_filters" modification_key="alrf_disable_default_filter_fields" description="Optionally disable some default filter fields" execution_order="5" enabled="1" action="preg_replace">
+    <find><![CDATA[#(<\!\-\-\[XF\:above_created_by\]\-\->)(.*)(<\!\-\-\[XF\:above_sort_by\]\-\->)(.*)(<div class="menu\-footer">)#s]]></find>
+    <replace><![CDATA[$1
+	<xf:if is="!$xf.options.alrf_disable_default_filter_field.created_by">$2</xf:if>
+	$3
+	<xf:if is="!$xf.options.alrf_disable_default_filter_field.sorted_by">$4</xf:if>
+	$5]]></replace>
+  </modification>
+  <modification type="public" template="xfrm_filters" modification_key="alrf_filters_above_created_by" description="Adds custom field filters to Filters popup on resource list pages above  created by" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:above_created_by]-->]]></find>
+    <replace><![CDATA[<!--[XF:above_created_by]-->
+<xf:if is="$xf.options.alrf_custom_field_location == 'above_created_by'">
+	<xf:include template="alrf_resource_filter_popup_form" />
+</xf:if>]]></replace>
+  </modification>
+  <modification type="public" template="xfrm_filters" modification_key="alrf_filters_above_prefixes" description="Adds custom field filters to Filters popup on resource list pages above prefixes" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:above_prefixes]-->]]></find>
+    <replace><![CDATA[<!--[XF:above_prefixes]-->
+<xf:if is="$xf.options.alrf_custom_field_location == 'above_prefixes'">
+	<xf:include template="alrf_resource_filter_popup_form" />
+</xf:if>]]></replace>
+  </modification>
+  <modification type="public" template="xfrm_filters" modification_key="alrf_filters_above_sort_by" description="Adds custom field filters to Filters popup on resource list pages above sort by" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:above_sort_by]-->]]></find>
+    <replace><![CDATA[<!--[XF:above_sort_by]-->
+<xf:if is="$xf.options.alrf_custom_field_location == 'above_sort_by'">
+	<xf:include template="alrf_resource_filter_popup_form" />
+</xf:if>]]></replace>
+  </modification>
+  <modification type="public" template="xfrm_filters" modification_key="alrf_filters_above_type" description="Adds custom field filters to Filters popup on resource list pages above type" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:above_type]-->]]></find>
+    <replace><![CDATA[<!--[XF:above_type]-->
+<xf:if is="$xf.options.alrf_custom_field_location == 'above_type'">
+	<xf:include template="alrf_resource_filter_popup_form" />
+</xf:if>
+]]></replace>
+  </modification>
+  <modification type="public" template="xfrm_filters" modification_key="alrf_filters_below_sort_by" description="Adds custom field filters to Filters popup on resource list pages below sort by" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<div class="menu-footer">]]></find>
+    <replace><![CDATA[<xf:if is="$xf.options.alrf_custom_field_location == 'below_sort_by'">
+	<xf:include template="alrf_resource_filter_popup_form" />
+</xf:if>
+<div class="menu-footer">]]></replace>
+  </modification>
+  <modification type="public" template="xfrm_filters" modification_key="alrf_multi_prefix" description="Search for multiple prefixes if enabled" execution_order="5" enabled="1" action="preg_replace">
+    <find><![CDATA[#<!\-\-\[XF:above_prefixes\]\-\->(.*?</xf:if>)#s]]></find>
+    <replace><![CDATA[<!--[XF:above_prefixes]-->
+	<xf:if is="{$xf.options.alrf_multi_prefix_search} !== 'disabled'">
+	<xf:if is="$prefixesGrouped is not empty">
+		<div class="menu-row menu-row--separated">
+			{{ phrase('prefixes:') }}
+			<div class="u-inputSpacer">
+				<xf:macro template="prefix_macros" name="select"
+					arg-prefixes="{$prefixesGrouped}"
+					arg-type="resource"
+					arg-selected="{{ $filterSet.__prefix_ids ?: [] }}"
+					arg-multiple="{{ true }}"
+					arg-name="rf[__prefix_ids]"
+					arg-noneLabel="{{ phrase('(any)') }}"
+				/>
+			</div>
+		</div>
+	</xf:if>
+	<xf:else />
+		$1
+	</xf:if>]]></replace>
+  </modification>
+  <modification type="public" template="xfrm_filters" modification_key="alrf_sort_options" description="Adds custom field sorting options after default options" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:option value="title">{{ phrase('title') }}</xf:option>]]></find>
+    <replace><![CDATA[$0
+				<xf:foreach loop="$sortableFields" key="$fieldId" value="$field">
+					<xf:option value="rf_{$fieldId}">{$field.title}</xf:option>
+				</xf:foreach>]]></replace>
+  </modification>
+  <modification type="public" template="xfrm_filters" modification_key="alrf_total_count_indicator" description="Adds total count indicator next to the Filter button" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<div class="menu-footer">]]></find>
+    <replace><![CDATA[<xf:if is="$xf.options.alrf_total_count_indicator">
+		<div class="menu-row menu-row--separated">
+			<xf:include template="alrf_total_count_indicator" />
+		</div>
+	</xf:if>
+	$0]]></replace>
+  </modification>
+  <modification type="public" template="xfrm_overview" modification_key="alrf_above_overview_filter_container" description="Adding resource filter above overview page" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<div class="block" data-xf-init="{{ $canInlineMod ? 'inline-mod' : '' }}" data-type="resource" data-href="{{ link('inline-mod') }}">]]></find>
+    <replace><![CDATA[<xf:include template="alrf_above_resource_filter_container"/>
+$0]]></replace>
+  </modification>
+  <modification type="public" template="xfrm_overview_macros" modification_key="alrf_add_sort_options_to_array" description="Adds custom field sort options to the array with sorting options" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[#<xf:set var="\$sortOrders".*?/>#s]]></find>
+    <replace><![CDATA[$0
+<xf:set var="$sortOrders" value="{{ $sortOrders + (is_array($__globals.additionalSortOptions) ? $__globals.additionalSortOptions : []) }}" />]]></replace>
+  </modification>
+  <modification type="public" template="xfrm_overview_macros" modification_key="alrf_category_view_active_filters" description="Show active filters on top of resource list" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[#(<ul class="filterBar\-filters">)(.*?)(<xf:if is="\$filters\.order.*?</xf:contentcheck>)#s]]></find>
+    <replace><![CDATA[$1
+					<xf:include template="alrf_auto_reload_configurator" />
+$2
+					<xf:include template="alrf_category_view_active_filters" />
+						$3
+					<xf:include template="alrf_clear_active_filters" />]]></replace>
+  </modification>
+  <modification type="public" template="xfrm_overview_macros" modification_key="alrf_hide_filter_popup" description="Hides filter popup if filter location is not popup" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[#<a class="filterBar-menuTrigger".*?</a>#]]></find>
+    <replace><![CDATA[<xf:include template="alrf_filter_icon_replace_filter" />
+    <xf:if is="$__globals.filter_location && $__globals.filter_location==='popup'">
+					$0
+				<xf:else />
+					<xf:css src="alrf_active_filter.less"/>
+					<span class="filterButtonPlaceholder ResourceFilter">.</span>
+				</xf:if>]]></replace>
+  </modification>
+  <modification type="admin" template="xfrm_resource_field_edit" modification_key="alrf_resource_field_display_options" description="Additional display options for resource fields" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:set var="$displayOptions">]]></find>
+    <replace><![CDATA[<xf:set var="$extraResourceFilterChoiceOptions">
+	<xf:include template="alrf_resource_field_choice_options" />
+</xf:set>
+<xf:set var="$displayOptions">
+	<xf:include template="alrf_resource_field_display_options" />]]></replace>
+  </modification>
+  <modification type="public" template="xfrm_resource_list_macros" modification_key="alrf_category_view_metadata" description="Adds custom fields under resource titles in home/category view" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<div class="structItem-minor">]]></find>
+    <replace><![CDATA[<xf:include template="alrf_list_metadata">
+				<xf:set var="$columnList" value="{$resource.Category.display_fields.category_view.metadata}" />
+				<xf:set var="$fieldData" value="{$resource.custom_fields}" />
+			</xf:include>
+			$0]]></replace>
+  </modification>
+  <modification type="public" template="xfrm_resource_list_macros" modification_key="alrf_category_view_prefix" description="Adds custom fields as prefix in home/category view" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[#(<div class="structItem-title">.*?<a.*?)(<a)#s]]></find>
+    <replace><![CDATA[$1
+				<xf:include template="alrf_list_prefix">
+					<xf:set var="$columnList" value="{$resource.Category.display_fields.category_view.prefix}" />
+					<xf:set var="$fieldData" value="{$resource.custom_fields}" />
+				</xf:include>
+				$2]]></replace>
+  </modification>
+  <modification type="public" template="xfrm_resource_list_macros" modification_key="alrf_resource_field_columns" description="Adds resource fields as additional columns in resource view" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<div class="structItem-cell structItem-cell--resourceMeta">]]></find>
+    <replace><![CDATA[<xf:include template="alrf_resource_field_column_list">
+	<xf:set var="$columnList" value="{$resource.Category.display_fields.category_view.column}" />
+	<xf:set var="$fieldData" value="{$resource.custom_fields}" />
+</xf:include>
+$0]]></replace>
+  </modification>
+</template_modifications>

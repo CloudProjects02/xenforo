@@ -1,0 +1,19 @@
+{
+    "config": {
+        "optimize-autoloader": true,
+        "classmap-authoritative": true,
+        "platform": {
+            "php": "7.2.0"
+        },
+        "vendor-dir": "_vendor"
+    },
+    "require": {
+        "geoip2/geoip2": "^2.10",
+        "ext-json": "*",
+        "ext-dom": "*",
+        "ext-simplexml": "*",
+        "ext-sockets": "*",
+        "ext-mbstring": "*"
+    }
+}
+ 		 		 	   	 	  		  				  	 	 		 	 	   	    	 	  	 	  	 	 	 			    	 				 		    			 	 	  		  		  	 	 			 	   		  	 	 	  	 	   	 	 	 

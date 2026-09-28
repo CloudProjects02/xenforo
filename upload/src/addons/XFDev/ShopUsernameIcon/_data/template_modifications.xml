@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="dbtech_shop_inventory" modification_key="xfdev_dbtech_shop_inventory_shopIcon_conditioning" description="[XFDev] DBTech Shop Inventory Conditioning Configuration" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:if is="$inactivePurchases is not empty || $activePurchases is not empty || $expiredPurchases is not empty">]]></find>
+    <replace><![CDATA[<xf:if is="$inactivePurchases is not empty || $activePurchases is not empty || $expiredPurchases is not empty || $shopUsernameIcon is not empty">]]></replace>
+  </modification>
+  <modification type="public" template="dbtech_shop_inventory" modification_key="xfdev_dbtech_shop_inventory_shopUsernameIcon" description="[XFDev] Show Shop Username Icons in Inventory" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:if is="$inactivePurchases is not empty">]]></find>
+    <replace><![CDATA[<xf:if is="$shopUsernameIcon is not empty">
+		<div class="block">
+			<div class="block-container egxItems">
+				<h2 class="block-header">
+				<span class="collapseTrigger collapseTrigger--block {{ !is_toggled('collapse_dbtech_shop_inventory_shopCustomItem') ? 'is-active' : '' }}" data-xf-click="toggle" data-xf-init="toggle-storage" data-storage-type="cookie" data-storage-key="collapse_dbtech_shop_inventory_shopCustomItem" data-target="#js-collapse-dbtech-shop-inventory-shopCustomItem">
+					{{ phrase('xfdev_shop_username_icon') }}
+				</span>
+				<span class="block-desc">{{ phrase('xfdev_shop_usernameicon_activate_one_at_a_time') }}</span>
+				</h2>
+				
+				<div class="block-body block-body--collapsible {{ !is_toggled('collapse_dbtech_shop_inventory_shopCustomItem') ? 'is-active' : '' }}" id="js-collapse-dbtech-shop-inventory-shopCustomItem">
+					<xf:foreach loop="$shopUsernameIcon" value="$purchase">
+						<xf:macro template="dbtech_shop_item_list_macros" name="item_inventory"
+								  arg-purchase="{$purchase}" arg-item="{$purchase.Item}" />
+					</xf:foreach>
+				</div>
+			</div>
+		</div>
+	</xf:if>
+$0]]></replace>
+  </modification>
+  <modification type="public" template="dbtech_shop_inventory" modification_key="xfdev_dbtech_shop_inventory_usernameicon_condition" description="[XFDev] DBTech Shop Inventory Conditioning Configuration 2" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:if is="$inactivePurchases is empty && $activePurchases is empty && $expiredPurchases is empty">]]></find>
+    <replace><![CDATA[<xf:if is="$inactivePurchases is empty && $activePurchases is empty && $expiredPurchases is empty && $shopUsernameIcon is empty">]]></replace>
+  </modification>
+  <modification type="public" template="dbtech_shop_item_list_macros" modification_key="xfdev_dbtech_shopUsernameIco_display_button_config" description="[XFDev] Sets Display button for Shop Username Icon" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<ul class="structItem-extraInfo listInline listInline--bullet">
+							<xf:if is="$purchase.canConfigure()">
+								<li><a href="{{ link('dbtech-shop/inventory/configure', $purchase) }}" data-xf-click="overlay">{{ phrase('dbtech_shop_configure') }}</a></li>
+							</xf:if>
+
+							<xf:if is="$purchase.canEditSettings()">
+								<li><a href="{{ link('dbtech-shop/inventory/settings', $purchase) }}" data-xf-click="overlay">{{ phrase('settings') }}</a></li>
+							</xf:if>
+						</ul>]]></find>
+    <replace><![CDATA[<xf:if is="$purchase.isShopUsernameIcon() && $purchase.active == 1 && $purchase.canEditSettings()">
+							<ul class="structItem-extraInfo listInline listInline--bullet">
+								<li>
+									<xf:form action="{{ link('dbtech-shop/inventory/settings', $purchase) }}" ajax="true" data-force-flash-message="on">
+										<xf:hiddenval name="active" value="0" />
+										<xf:button type="submit" icon="hide">
+											{{ phrase('xfdev_egx_item_undisplay') }}
+										</xf:button>
+									</xf:form>
+								</li>
+							</ul>
+							<xf:elseif is="$purchase.isShopUsernameIcon() && $purchase.active == 0 && $purchase.canEditSettings()" />
+								<ul class="structItem-extraInfo listInline listInline--bullet">
+									<li>
+										<xf:form action="{{ link('dbtech-shop/inventory/settings', $purchase) }}" ajax="true" data-force-flash-message="on">
+										<xf:hiddenval name="active" value="1" />
+										<xf:button type="submit" icon="show">
+											{{ phrase('xfdev_egx_item_display') }}
+										</xf:button>
+									</xf:form>
+									</li>
+								</ul>
+							<xf:else />
+	$0
+</xf:if>]]></replace>
+  </modification>
+  <modification type="public" template="dbtech_shop_item_list_macros" modification_key="xfdev_shopUsernameIcon_show_active_status" description="[XFDev] Show Active Status of Username Icon" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<a href="{{ link('dbtech-shop/inventory', $purchase) }}" data-xf-click="overlay" data-tp-primary="on">{$item.title}</a>]]></find>
+    <replace><![CDATA[$0
+<xf:if is="$purchase.isShopUsernameIcon() && $purchase.active == 1">
+	<span class="egxActive" style="background-color:#42A5F5; color:white; border-radius:10px; padding:2px 10px; font-size:15px;">{{ phrase('xfdev_egx_item_active') }}</span>
+</xf:if>]]></replace>
+  </modification>
+  <modification type="public" template="dbtech_shop_postbit" modification_key="xfdev_dbtech_shopUsernameIcon_hide_from_postbit" description="[XFDev] Hide Shop Username Icon from Postbit" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:if is="$xf.options.dbtech_shop_enablegiftgiver && $purchase.gifted">
+							<xf:if is="$purchase.message is not empty">
+								<xf:set var="$title_extra" value="- {{ phrase('dbtech_shop_gift_received_x_from_y_message', {
+																	'user': $purchase.buyer_username,
+																	'message': $purchase.message
+																  }) }}" />
+							<xf:else />
+								<xf:set var="$title_extra" value="- {{ phrase('dbtech_shop_gift_received_x_from_y', {
+																	'user': $purchase.buyer_username
+																  }) }}" />
+							</xf:if>
+						<xf:else />
+							<xf:set var="$title_extra" value="" />
+						</xf:if>
+
+						<xf:set var="$title"><xf:trim>
+							{$purchase.Item.title} {$title_extra}
+						</xf:trim></xf:set>
+
+						<div class="dbtechShopPostbit--item" data-xf-init="tooltip" title="{{ $title|for_attr }}">
+							{{ dbtech_shop_item_icon($purchase.Item, 'xxs', link('dbtech-shop', $purchase.Item)) }}
+						</div>]]></find>
+    <replace><![CDATA[<xf:if is="!$purchase.isShopUsernameIcon()">
+	$0
+</xf:if>]]></replace>
+  </modification>
+</template_modifications>

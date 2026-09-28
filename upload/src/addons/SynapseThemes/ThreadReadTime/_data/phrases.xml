@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="option.synapseThreadReadTimeInList" version_id="100" version_string="1.0.0"><![CDATA[Show read time in thread lists ]]></phrase>
+  <phrase title="option.synapseThreadReadTimeInPosts" version_id="100" version_string="1.0.0"><![CDATA[Show read time in posts ]]></phrase>
+  <phrase title="option_explain.synapseThreadReadTimeInList" version_id="100" version_string="1.0.0"><![CDATA[If enabled, the estimated read time will be shown in thread lists. ]]></phrase>
+  <phrase title="option_explain.synapseThreadReadTimeInPosts" version_id="100" version_string="1.0.0"><![CDATA[If enabled, the estimated read time will be shown in posts. ]]></phrase>
+  <phrase title="option_group.synapseThreadReadTime" version_id="100" version_string="1.0.0"><![CDATA[Thread Read Time ]]></phrase>
+  <phrase title="option_group_description.synapseThreadReadTime" version_id="100" version_string="1.0.0"><![CDATA[Configure settings for thread read time display. ]]></phrase>
+  <phrase title="synapse_thread_read_time" version_id="100" version_string="1.0.0"><![CDATA[{minutes} min read]]></phrase>
+  <phrase title="synapse_thread_read_time_tooltip" version_id="100" version_string="1.0.0"><![CDATA[Read time]]></phrase>
+  <phrase title="thread_read_time_options" version_id="100" version_string="1.0.0"><![CDATA[Thread Read Time Options ]]></phrase>
+</phrases>

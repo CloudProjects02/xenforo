@@ -9,9 +9,8 @@ use DBTech\Credits\Finder\CurrencyFinder;
 use DBTech\Credits\Repository\EventTriggerRepository;
 use XF\Entity\User;
 use XF\InputFilterer;
-use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\FormAction;
-use XF\Mvc\Reply\Exception as ReplyException;
+use XF\Mvc\Reply\Exception;
 
 /**
  * @extends \XF\Admin\Controller\UserController
@@ -22,14 +21,14 @@ class UserController extends XFCP_UserController
 	 * @param User $user
 	 *
 	 * @return FormAction
-	 * @throws ReplyException
+	 * @throws Exception
 	 */
 	protected function userSaveProcess(User $user)
 	{
 		$form = parent::userSaveProcess($user);
 		$input = $this->filter('credits', InputFilterer::ARRAY);
 
-		/** @var AbstractCollection<Currency> $currencies */
+		/** @var \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Currency> $currencies */
 		$currencies = \XF::app()->finder(CurrencyFinder::class)
 			->fetch()
 		;

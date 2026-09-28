@@ -1,0 +1,11 @@
+{
+    "parent_navigation_id": "dbtechCredits",
+    "display_order": 200,
+    "navigation_type_id": "basic",
+    "type_config": {
+        "link": "{{ link('dbtech-credits/charge/unlocked') }}",
+        "display_condition": "$xf.visitor.user_id",
+        "extra_attributes": []
+    },
+    "enabled": false
+}

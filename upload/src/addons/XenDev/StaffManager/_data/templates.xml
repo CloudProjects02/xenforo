@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="xendev_staffmanager_block_delete" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[<xf:title>{{ phrase('xendev_staffmanager_delete_block') }}</xf:title>
+
+<xf:form action="{{ link('staff-blocks/delete', $block) }}" ajax="true" class="block">
+	<div class="block-container">
+		<div class="block-body block-row">
+			<p>{{ phrase('xendev_staffmanager_delete_block_confirm', {'title': $block.title}) }}</p>
+		</div>
+		<xf:submitrow submit="{{ phrase('delete') }}" icon="delete" rowtype="simple" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="xendev_staffmanager_block_edit" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[<xf:if is="$block.isInsert()">
+	<xf:title>{{ phrase('xendev_staffmanager_add_block') }}</xf:title>
+<xf:else />
+	<xf:title>{{ phrase('xendev_staffmanager_edit_block_title', {'title': $block.title}) }}</xf:title>
+</xf:if>
+
+<xf:pageaction>
+	<xf:if is="!$block.isInsert()">
+		<xf:button href="{{ link('staff-blocks/delete', $block) }}" icon="delete" overlay="true" />
+	</xf:if>
+</xf:pageaction>
+
+<xf:form action="{{ link('staff-blocks/save', $block) }}" ajax="true" class="block">
+	<div class="block-container">
+		<div class="block-body">
+
+			<xf:radiorow
+				name="source_type"
+				value="{$block.source_type}"
+				label="{{ phrase('xendev_staffmanager_source_type') }}">
+
+				<xf:option value="user_group" data-hide="true" label="{{ phrase('xendev_staffmanager_source_user_group_full') }}">
+					<xf:dependent>
+						<xf:selectrow name="user_group_id" value="{$block.user_group_id}" label="{{ phrase('xendev_staffmanager_choose_group') }}">
+							<xf:foreach loop="$userGroups" value="$userGroup">
+								<xf:option value="{$userGroup.user_group_id}">{$userGroup.title}</xf:option>
+							</xf:foreach>
+						</xf:selectrow>
+
+						<xf:radiorow name="group_match_type" value="{$block.group_match_type}" label="{{ phrase('xendev_staffmanager_group_match_type') }}">
+							<xf:option value="both" label="{{ phrase('xendev_staffmanager_group_match_both') }}" />
+							<xf:option value="primary" label="{{ phrase('xendev_staffmanager_group_match_primary') }}" />
+							<xf:option value="secondary" label="{{ phrase('xendev_staffmanager_group_match_secondary') }}" />
+						</xf:radiorow>
+					</xf:dependent>
+				</xf:option>
+
+				<xf:option value="admin" label="{{ phrase('xendev_staffmanager_source_admin_full') }}" />
+				<xf:option value="global_mod" label="{{ phrase('xendev_staffmanager_source_global_mod_full') }}" />
+
+				<xf:option value="node_mod" data-hide="true" label="{{ phrase('xendev_staffmanager_source_node_mod_full') }}">
+					<xf:dependent>
+						<xf:selectrow name="node_id" value="{$block.node_id}" label="{{ phrase('xendev_staffmanager_choose_node') }}">
+							<xf:foreach loop="$nodes" value="$node">
+								<xf:option value="{$node.node_id}">{$node.title}</xf:option>
+							</xf:foreach>
+						</xf:selectrow>
+					</xf:dependent>
+				</xf:option>
+			</xf:radiorow>
+
+			<hr class="formRowSep" />
+
+			<xf:textboxrow
+				name="icon_class"
+				value="{$block.icon_class}"
+				label="{{ phrase('xendev_staffmanager_icon_class') }}"
+				dir="ltr" />
+
+			<xf:checkboxrow>
+				<xf:option name="active" selected="{$block.active}" label="{{ phrase('xendev_staffmanager_activate_block') }}" />
+			</xf:checkboxrow>
+
+			<xf:numberboxrow
+				name="display_order"
+				value="{$block.display_order}"
+				min="0"
+				label="{{ phrase('display_order') }}" />
+
+		</div>
+
+		<xf:submitrow icon="save" sticky="true" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="xendev_staffmanager_block_list" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[<xf:title>{{ phrase('xendev_staffmanager_admin_blocks_title') }}</xf:title>
+
+<xf:pageaction>
+	<xf:button href="{{ link('staff-blocks/add') }}" icon="add">
+		{{ phrase('xendev_staffmanager_add_block') }}
+	</xf:button>
+</xf:pageaction>
+
+<xf:if is="$blocks is not empty">
+	<div class="block">
+		<div class="block-container">
+			<div class="block-body">
+				<xf:datalist>
+					<xf:foreach loop="$blocks" value="$block">
+						<xf:datarow>
+							<xf:cell href="{{ link('staff-blocks/edit', $block) }}" class="dataList-cell--main">
+								<div class="u-depth0">
+									<div class="dataList-mainRow">
+										<xf:if is="$block.icon_class">
+											<xf:fa icon="{$block.icon_class}" />
+										</xf:if>
+										{$block.title}
+									</div>
+
+									<div class="dataList-subRow">
+										<xf:if is="$block.source_type == 'user_group'">
+											{{ phrase('xendev_staffmanager_source_user_group') }}:
+											<strong><xf:if is="$block.UserGroup">{$block.UserGroup.title}<xf:else />{{ phrase('xendev_staffmanager_not_selected') }}</xf:if></strong>
+										<xf:elseif is="$block.source_type == 'admin'" />
+											{{ phrase('xendev_staffmanager_source_admin') }}
+										<xf:elseif is="$block.source_type == 'global_mod'" />
+											{{ phrase('xendev_staffmanager_source_global_mod') }}
+										<xf:elseif is="$block.source_type == 'node_mod'" />
+											{{ phrase('xendev_staffmanager_source_node_mod') }}:
+											<strong><xf:if is="$block.Node">{$block.Node.title}<xf:else />{{ phrase('xendev_staffmanager_not_selected') }}</xf:if></strong>
+										</xf:if>
+									</div>
+								</div>
+							</xf:cell>
+
+							<xf:cell class="dataList-cell--action">
+								<xf:if is="$block.active">
+									<span class="label label--green">{{ phrase('xendev_staffmanager_active') }}</span>
+								<xf:else />
+									<span class="label label--red">{{ phrase('xendev_staffmanager_inactive') }}</span>
+								</xf:if>
+							</xf:cell>
+
+							<xf:delete href="{{ link('staff-blocks/delete', $block) }}" />
+						</xf:datarow>
+					</xf:foreach>
+				</xf:datalist>
+			</div>
+		</div>
+	</div>
+<xf:else />
+	<div class="blockMessage">
+		{{ phrase('xendev_staffmanager_no_blocks_created') }}
+	</div>
+</xf:if>]]></template>
+  <template type="public" title="xendev_staffmanager_index" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[<xf:title>Yönetim Ekibi</xf:title>
+
+<xf:css>
+    .staffGrid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 15px;
+        margin-top: 10px;
+    }
+    .staffCard {
+        display: flex;
+        align-items: flex-start;
+        padding: 15px;
+        background: @xf-contentBg;
+        border: 1px solid @xf-borderColor;
+        border-radius: @xf-borderRadiusM;
+        transition: box-shadow 0.2s ease;
+    }
+    .staffCard:hover {
+        box-shadow: 0 4px 8px rgba(0,0,0, 0.05);
+    }
+    .staffCard-avatar {
+        margin-right: 15px;
+    }
+    .staffCard-info {
+        flex: 1;
+        min-width: 0;
+    }
+    .staffCard-name {
+        font-weight: @xf-fontWeightHeavy;
+        font-size: 1.1em;
+        margin-bottom: 2px;
+    }
+    .staffCard-title {
+        color: @xf-textColorMuted;
+        font-size: @xf-fontSizeSmall;
+        margin-bottom: 8px;
+    }
+    .staffCard-nodes {
+        font-size: @xf-fontSizeSmaller;
+        color: @xf-textColorFeature;
+        margin-bottom: 8px;
+        background: @xf-paletteNeutral1;
+        padding: 6px 10px;
+        border-radius: @xf-borderRadiusS;
+        line-height: 1.4;
+    }
+    .staffCard-actions {
+        margin-top: 10px;
+    }
+</xf:css>
+
+
+
+<xf:if is="$blocks is not empty">
+    <xf:foreach loop="$blocks" value="$block">
+        
+        <xf:set var="$blockId" value="{$block.block_id}" />
+        <xf:set var="$blockUsers" value="{$staffData.{$blockId}}" />
+        
+        <xf:if is="$blockUsers">
+            <div class="block">
+                <div class="block-container">
+                    <h2 class="block-header">
+                        <xf:if is="$block.icon_class">
+                            <xf:fa icon="{$block.icon_class}" />
+                        </xf:if>
+                        {$block.title}
+                    </h2>
+                    
+                    <div class="block-body block-row">
+                        <div class="staffGrid">
+                            <xf:foreach loop="$blockUsers" value="$user">
+                                
+                                <div class="staffCard">
+                                    <div class="staffCard-avatar">
+                                        <xf:avatar user="$user" size="m" defaultname="{$user.username}" />
+                                    </div>
+                                    <div class="staffCard-info">
+                                        <div class="staffCard-name">
+                                            <xf:username user="$user" rich="true" />
+                                        </div>
+                                        <div class="staffCard-title">
+                                            {{ user_title($user) }}
+                                        </div>
+                                        
+                                        <xf:if is="$block.source_type == 'node_mod'">
+                                            <xf:set var="$userId" value="{$user.user_id}" />
+                                            <xf:set var="$userNodes" value="{$nodeModerators.{$userId}}" />
+                                            
+                                            <xf:if is="$userNodes">
+                                                <div class="staffCard-nodes">
+                                                    <strong><xf:fa icon="fa-folder-open" /> Yetkili Alanlar:</strong><br />
+                                                    {{ implode(', ', $userNodes) }}
+                                                </div>
+                                            </xf:if>
+                                        </xf:if>
+                                        
+                                        <div class="staffCard-actions">
+                                            <xf:if is="$xf.visitor.user_id AND $user.user_id != $xf.visitor.user_id AND $xf.visitor.canStartConversationWith($user)">
+                                                <xf:button href="{{ link('conversations/add', '', {'to': $user.username}) }}" 
+                                                           class="button--link button--small" 
+                                                           icon="write" 
+                                                           overlay="true">
+                                                    Mesaj Gönder
+                                                </xf:button>
+                                            </xf:if>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </xf:foreach>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </xf:if>
+        
+    </xf:foreach>
+<xf:else />
+    <div class="blockMessage">Henüz gösterilecek bir ekip bloğu oluşturulmamış.</div>
+</xf:if>]]></template>
+  <template type="public" title="xendev_staffmanager_macros" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[<xf:macro name="staff_card_minimal"
+	arg-member="!"
+	arg-block="!">
+
+	<div class="staffCard staffCard--minimal">
+		<div class="staffCard-main">
+			<div class="staffCard-avatar">
+				<xf:avatar user="{$member}" size="s" defaultname="{$member.username}" />
+			</div>
+
+			<div class="staffCard-content">
+				<div class="staffCard-name">
+					<xf:username user="{$member}" rich="true" />
+				</div>
+
+				<div class="staffCard-subtitle">
+					<xf:if is="{{ user_title($member) }}">
+						{{ user_title($member) }}
+					<xf:else />
+						{{ phrase('xendev_staffmanager_member_default_title') }}
+					</xf:if>
+				</div>
+			</div>
+		</div>
+	</div>
+</xf:macro>]]></template>
+  <template type="public" title="xendev_staffmanager_members" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[<xf:title>{{ phrase('xendev_staffmanager_staff_page_title') }}</xf:title>
+<xf:page option="wrapperTemplate">member_wrapper</xf:page>
+<xf:page option="sideNavTitle">{{ phrase('members') }}</xf:page>
+
+<xf:css src="xendev_staffmanager_members.less" />
+<xf:sidenav>
+	<div class="block">
+		<div class="block-container">
+			<h3 class="block-header">{{ phrase('members') }}</h3>
+			<div class="block-body">
+				<a class="blockLink {{ $pageSelected == 'overview' ? 'is-selected' : '' }}" href="{{ link('members') }}">{{ phrase('overview') }}</a>
+				<xf:foreach loop="$memberStats" key="$key" value="$memberStat">
+					<a class="blockLink {{ $pageSelected == $key ? 'is-selected' : '' }}" href="{{ link('members', null, {'key': $memberStat.member_stat_key}) }}">{$memberStat.title}</a>
+				</xf:foreach>
+				<xf:if is="$xf.options.enableMemberList">
+					<a class="blockLink {{ $pageSelected == 'member_list' ? 'is-selected' : '' }}" href="{{ link('members/list') }}">{{ phrase('registered_members') }}</a>
+				</xf:if>
+			</div>
+		</div>
+	</div>
+</xf:sidenav>
+<xf:page option="sideNavTitle">{{ phrase('members') }}</xf:page>
+
+<xf:widgetpos id="member_wrapper_sidenav" position="sidenav" />
+{$innerContent|raw}
+
+
+<div class="staffPage">
+	<xf:if is="$staffBlocks is not empty">
+		<xf:foreach loop="$staffBlocks" value="$staffBlock">
+			<xf:set var="$block" value="{$staffBlock.block}" />
+			<xf:set var="$members" value="{$staffBlock.members}" />
+
+			<div class="block staffSection">
+				<div class="block-container">
+					<div class="block-header staffSection-header">
+						<div>
+							<h2 class="staffSection-title">
+								<xf:if is="$block.icon_class">
+									<xf:fa icon="{$block.icon_class}" class="staffSection-icon" />
+								</xf:if>
+								{$block.title}
+							</h2>
+
+							<xf:if is="$members is not empty">
+								<div class="staffSection-meta">
+									{{ phrase('xendev_staffmanager_member_count', {'count': count($members)}) }}
+									
+								</div>
+							</xf:if>
+						</div>
+					</div>
+
+					<div class="block-body block-row">
+						<xf:if is="$members is not empty">
+							<div class="staffGrid">
+								<xf:foreach loop="$members" value="$member">
+									<xf:macro
+										template="xendev_staffmanager_macros"
+										name="staff_card_minimal"
+										arg-member="{$member}"
+										arg-block="{$block}" />
+								</xf:foreach>
+							</div>
+						<xf:else />
+							<div class="blockMessage">
+								{{ phrase('xendev_staffmanager_no_members_in_block') }}
+							</div>
+						</xf:if>
+					</div>
+				</div>
+			</div>
+		</xf:foreach>
+	<xf:else />
+		<div class="blockMessage">
+			{{ phrase('xendev_staffmanager_no_active_blocks') }}
+		</div>
+	</xf:if>
+</div>]]></template>
+  <template type="public" title="xendev_staffmanager_members.less" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[.staffPage
+{
+	.staffSection
+	{
+		& + &
+		{
+			margin-top: @xf-paddingLarge;
+		}
+	}
+
+	.staffSection-header
+	{
+		padding-top: @xf-paddingMedium;
+		padding-bottom: @xf-paddingMedium;
+	}
+
+	.staffSection-title
+	{
+		margin: 0;
+		font-size: 18px;
+		font-weight: @xf-fontWeightHeavy;
+		line-height: 1.35;
+		color: @xf-textColorEmphasized;
+	}
+
+	.staffSection-icon
+	{
+		margin-right: 8px;
+		color: @xf-textColorMuted;
+	}
+
+	.staffSection-meta
+	{
+		margin-top: 4px;
+		font-size: @xf-fontSizeSmall;
+		color: @xf-textColorMuted;
+	}
+
+	.staffGrid
+	{
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+		gap: 10px;
+	}
+
+	.staffCard--minimal
+	{
+		background: @xf-contentBg;
+		border: 1px solid @xf-borderColor;
+		border-radius: @xf-borderRadiusMedium;
+	}
+
+	.staffCard-main
+	{
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding: 12px;
+		min-width: 0;
+	}
+
+	.staffCard-avatar
+	{
+		flex: 0 0 auto;
+	}
+
+	.staffCard-content
+	{
+		flex: 1 1 auto;
+		min-width: 0;
+	}
+
+	.staffCard-name
+	{
+		min-width: 0;
+		font-size: 15px;
+		font-weight: @xf-fontWeightHeavy;
+		line-height: 1.35;
+		color: @xf-textColorEmphasized;
+
+		.username
+		{
+			display: inline-block;
+			max-width: 100%;
+			.m-overflowEllipsis();
+		}
+	}
+
+	.staffCard-subtitle
+	{
+		margin-top: 2px;
+		font-size: @xf-fontSizeSmall;
+		line-height: 1.5;
+		color: @xf-textColorMuted;
+		.m-overflowEllipsis();
+	}
+}
+
+@media (max-width: @xf-responsiveMedium)
+{
+	.staffPage
+	{
+		.staffGrid
+		{
+		//	grid-template-columns: 1fr;
+		}
+	}
+}]]></template>
+</templates>
+ 		  					 	  		   	  			   	  			  	    	 				     		 			 		 		 	  			     	  	 		 			  	   	   	 		  	    		  			      	      		  

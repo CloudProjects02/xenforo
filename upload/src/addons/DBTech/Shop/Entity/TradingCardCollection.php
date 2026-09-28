@@ -2,7 +2,6 @@
 
 namespace DBTech\Shop\Entity;
 
-use XF\Entity\User;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 
@@ -13,15 +12,15 @@ use XF\Mvc\Entity\Structure;
  * @property bool $trade_locked
  *
  * RELATIONS
- * @property-read TradingCard|null $Card
- * @property-read User|null $User
+ * @property \DBTech\Shop\Entity\TradingCard $Card
+ * @property \XF\Entity\User $User
  */
 class TradingCardCollection extends Entity
 {
 	/**
-	 * @param Structure $structure
+	 * @param \XF\Mvc\Entity\Structure $structure
 	 *
-	 * @return Structure
+	 * @return \XF\Mvc\Entity\Structure
 	 */
 	public static function getStructure(Structure $structure): Structure
 	{
@@ -35,17 +34,17 @@ class TradingCardCollection extends Entity
 		];
 		$structure->relations = [
 			'Card' => [
-				'entity' => TradingCard::class,
+				'entity' => 'DBTech\Shop:TradingCard',
 				'type' => self::TO_ONE,
 				'conditions' => 'trading_card_id',
 				'primary' => true,
 			],
 			'User' => [
-				'entity' => User::class,
+				'entity' => 'XF:User',
 				'type' => self::TO_ONE,
 				'conditions' => 'user_id',
-				'primary' => true,
-			],
+				'primary' => true
+			]
 		];
 
 		return $structure;

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<admin_navigation>
+  <admin_navigation_entry navigation_id="hampelKnownBots" parent_navigation_id="tools" display_order="390" debug_only="0" development_only="0" hide_no_children="1"/>
+  <admin_navigation_entry navigation_id="hampelKnownBotsDetect" parent_navigation_id="hampelKnownBots" display_order="2" link="tools/hampel-knownbots-detect" admin_permission_id="knownbots" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="hampelKnownBotsGenerateMd" parent_navigation_id="development" display_order="900" link="tools/hampel-knownbots-md" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="hampelKnownBotsList" parent_navigation_id="hampelKnownBots" display_order="3" link="tools/hampel-knownbots-list" admin_permission_id="knownbots" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="hampelKnownBotsNew" parent_navigation_id="hampelKnownBots" display_order="1" link="tools/hampel-knownbots-new" admin_permission_id="knownbots" debug_only="0" development_only="0" hide_no_children="0"/>
+</admin_navigation>
+ 		 		   			      	 			   					  					 	 				    	 			   	   	   		 	 		    	  					       		  	 						 				  			 		    	 	   		 	 	

@@ -2,49 +2,53 @@
 
 namespace DBTech\Shop\Widget;
 
-use DBTech\Shop\Repository\PurchaseRepository;
+use XF\Mvc\Entity\ArrayCollection;
 use XF\Widget\AbstractWidget;
-use XF\Widget\WidgetRenderer;
 
+/**
+ * Class Cart
+ *
+ * @package DBTech\Shop\Widget
+ */
 class Cart extends AbstractWidget
 {
 	/** @var array */
 	protected $defaultOptions = [
-		'excludedpages' => '',
+		'excludedpages' => ''
 	];
-
+	
 	/**
-	 * @return WidgetRenderer
+	 * @return \XF\Widget\WidgetRenderer
 	 */
-	public function render(): WidgetRenderer
+	public function render(): \XF\Widget\WidgetRenderer
 	{
-		/** @var \XF\Mvc\Entity\AbstractCollection<\DBTech\Shop\Entity\Cart> $shoppingCart */
-		$shoppingCart = \XF::app()->repository(PurchaseRepository::class)
+		/** @var \DBTech\Shop\Entity\Cart[]|ArrayCollection $shoppingCart */
+		$shoppingCart = $this->repository('DBTech\Shop:Purchase')
 			->getCart()
 			->fetch()
 		;
-
+		
 		$totalPrices = $currencies = [];
-		foreach ($shoppingCart AS $cartItem)
+		foreach ($shoppingCart as $cartItem)
 		{
 			$currency = $cartItem->getCurrency();
-
+			
 			if (!isset($totalPrices[$currency->currency_id]))
 			{
 				$totalPrices[$currency->currency_id] = [
 					'total' => 0.00,
-					'currency' => $currency,
+					'currency' => $currency
 				];
 			}
-
+			
 			$totalPrices[$currency->currency_id]['total'] += $cartItem->getPrice();
 			$currencies[$currency->currency_id] = $currency;
 		}
-
+		
 		$viewParams = [
 			'cartItems' => $shoppingCart,
 			'totalPrices' => $totalPrices,
-			'currencies' => $currencies,
+			'currencies' => $currencies
 		];
 		return $this->renderer('dbtech_shop_widget_cart', $viewParams);
 	}

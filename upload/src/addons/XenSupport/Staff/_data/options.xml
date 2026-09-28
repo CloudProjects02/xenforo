@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<options>
+  <option option_id="xenStaffContactEnabled" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="xenStaff" display_order="60"/>
+  </option>
+  <option option_id="xenStaffContactHourlyLimit" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>5</default_value>
+    <edit_format_params>min=1&amp;max=50</edit_format_params>
+    <relation group_id="xenStaff" display_order="70"/>
+  </option>
+  <option option_id="xenStaffEnableSocials" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="xenStaff" display_order="30"/>
+  </option>
+  <option option_id="xenStaffEnableThanks" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="xenStaff" display_order="20"/>
+  </option>
+  <option option_id="xenStaffRichBioMaxLength" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>5000</default_value>
+    <edit_format_params>min=200&amp;max=20000</edit_format_params>
+    <relation group_id="xenStaff" display_order="110"/>
+  </option>
+  <option option_id="xenStaffShowHours" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="xenStaff" display_order="80"/>
+  </option>
+  <option option_id="xenStaffShowOnlineIndicator" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="xenStaff" display_order="90"/>
+  </option>
+  <option option_id="xenStaffShowStats" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="xenStaff" display_order="100"/>
+  </option>
+  <option option_id="xenStaffShowYearsService" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="xenStaff" display_order="40"/>
+  </option>
+  <option option_id="xenStaffSortMode" edit_format="select" data_type="string" advanced="0">
+    <default_value>group_priority</default_value>
+    <edit_format_params>group_priority={{ phrase('xen_staff_sort_group_priority') }}
+join_date={{ phrase('xen_staff_sort_join_date') }}
+username={{ phrase('xen_staff_sort_username') }}
+thanks={{ phrase('xen_staff_sort_thanks') }}</edit_format_params>
+    <relation group_id="xenStaff" display_order="50"/>
+  </option>
+  <option option_id="xenStaffUseIsStaff" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="xenStaff" display_order="15"/>
+  </option>
+  <option option_id="xenStaffUsergroups" edit_format="textbox" data_type="string" advanced="0">
+    <default_value></default_value>
+    <relation group_id="xenStaff" display_order="10"/>
+  </option>
+</options>

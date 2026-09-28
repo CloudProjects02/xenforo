@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<routes>
+  <route route_type="admin" route_prefix="anti-spam" controller="SV\SignupAbuseBlocking:AntiSpam" context="svAntiSpam"/>
+  <route route_type="admin" route_prefix="anti-spam" sub_name="multi-accounts" format="multi-accounts/:int&lt;user_id&gt;/" controller="SV\SignupAbuseBlocking:MultiAccount" context="svAntiSpamMultiAccount"/>
+  <route route_type="admin" route_prefix="anti-spam" sub_name="option" format="option/:str&lt;option_id&gt;/" controller="SV\SignupAbuseBlocking:AntiSpam" context="svAntiSpamOptions" action_prefix="option"/>
+  <route route_type="admin" route_prefix="banning" sub_name="allowed-email-domains" format="allowed-email-domains" controller="SV\SignupAbuseBlocking:AllowEmailDomain" context="svSignupAbuseBlocking_allowedEmailDomains"/>
+  <route route_type="admin" route_prefix="logs" sub_name="user-registration" format="user-registration/:int&lt;user_registration_log_id&gt;/" controller="XF:Log" context="userRegistrationLog" action_prefix="userRegistration"/>
+  <route route_type="public" route_prefix="login" sub_name="connected-accounts" format="register/connected-accounts/:str&lt;provider_id&gt;/" controller="XF:Login" action_prefix="RegisterConnectedAccounts"/>
+  <route route_type="public" route_prefix="members" sub_name="multiple-account-list" format=":int&lt;user_id,username&gt;/multiple-account-list/:page" controller="XF:Member" context="members" action_prefix="MultipleAccountList"/>
+</routes>
+ 		 		 	   	 	  		  				  	 	 		 	 	   	    	 	  	 	  	 	 	 			    	 				 		    			 	 	  		  		  	 	 			 	   		  	 	 	  	 	   	 	 	 

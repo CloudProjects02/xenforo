@@ -4,7 +4,7 @@ namespace DBTech\Credits\Entity;
 
 use XF\Entity\Ip;
 use XF\Entity\User;
-use XF\Mvc\Entity\AbstractCollection;
+use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 
 /**
@@ -21,12 +21,12 @@ use XF\Mvc\Entity\Structure;
  * @property int $ip_id
  *
  * RELATIONS
- * @property-read AbstractCollection<Event> $Event
+ * @property-read \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Event> $Event
  * @property-read User|null $User
  * @property-read User|null $FromUser
  * @property-read Ip|null $Ip
  */
-class PurchaseTransaction extends AbstractEntity
+class PurchaseTransaction extends Entity
 {
 	/**
 	 * @param Structure $structure
@@ -44,8 +44,8 @@ class PurchaseTransaction extends AbstractEntity
 			'user_id'          => ['type' => self::UINT, 'required' => true],
 			'from_user_id'     => ['type' => self::UINT, 'required' => true],
 			'transaction_date' => ['type' => self::UINT, 'default' => \XF::$time],
-			'amount'           => ['type' => self::FLOAT, 'required' => true, 'min' => 0.01, 'max' => PHP_INT_MAX, 'isDecimal' => true],
-			'cost'             => ['type' => self::FLOAT, 'required' => true, 'min' => 0.01, 'max' => PHP_INT_MAX, 'isDecimal' => true],
+			'amount'           => ['type' => self::FLOAT, 'required' => true, 'min' => 0.01],
+			'cost'             => ['type' => self::FLOAT, 'required' => true, 'min' => 0.01],
 			'currency_id'      => ['type' => self::STR, 'required' => true],
 			'message'          => ['type' => self::STR, 'default' => ''],
 			'ip_id'            => ['type' => self::UINT, 'default' => 0],

@@ -1,0 +1,2087 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="public" title="xfdevs_attachments_slider" version_id="100" version_string="1.0.0"><![CDATA[<xf:macro name="attachments_slider" arg-attachments="!" arg-resource="!">
+    <xf:set var="$imageAttachments" value="{{ $attachments|filter('is_image', true) }}" />
+    <xf:if is="$imageAttachments.count()">
+        <div class="xfdevs__attachments__slider">
+            <div class="xfdevs__attachments__slider_container">
+                <div class="xfdevs__attachments__slider_wrapper">
+                    <div class="xfdevs__attachments__slider_track" data-current="0">
+                        <xf:foreach loop="$imageAttachments" value="$attachment" i="$i">
+                            <div class="xfdevs__attachments__slider_slide" data-slide="{$i}">
+                                <a href="{{ link('attachments', $attachment) }}" 
+                                   data-fancybox="resource-gallery" 
+                                   data-caption="{$attachment.filename}"
+                                   class="xfdevs__attachments__slider_link">
+                                    <img src="{{ link('attachments', $attachment) }}" 
+                                         alt="{$attachment.filename}" 
+                                         class="xfdevs__attachments__slider_image" 
+                                         loading="lazy" />
+                                    <div class="xfdevs__attachments__slider_overlay">
+                                        <svg class="xfdevs__attachments__slider_zoom" width="24" height="24" viewBox="0 0 24 24">
+                                            <path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.5 6.5 0 1 0 13.2 15.72l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5S14 7.01 14 9.5S11.99 14 9.5 14z"/>
+                                        </svg>
+                                        <span class="xfdevs__attachments__slider_filename">{$attachment.filename}</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </xf:foreach>
+                    </div>
+                </div>
+                
+                <!-- Navigation Arrows -->
+                <xf:if is="$imageAttachments.count() > 1">
+                    <button class="xfdevs__attachments__slider_nav xfdevs__attachments__slider_nav--prev" type="button">
+                        <svg width="20" height="20" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M15.41 7.41L14 6l-6 6l6 6l1.41-1.41L10.83 12z"/>
+                        </svg>
+                    </button>
+                    <button class="xfdevs__attachments__slider_nav xfdevs__attachments__slider_nav--next" type="button">
+                        <svg width="20" height="20" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M10 6L8.59 7.41L13.17 12l-4.58 4.59L10 18l6-6z"/>
+                        </svg>
+                    </button>
+                </xf:if>
+            </div>
+            
+            <!-- Dots Indicator -->
+            <xf:if is="$imageAttachments.count() > 1">
+                <div class="xfdevs__attachments__slider_dots">
+                    <xf:foreach loop="$imageAttachments" value="$attachment" i="$i">
+                        <button class="xfdevs__attachments__slider_dot{{ $i == 0 ? ' is-active' : '' }}" 
+                                data-slide="{$i}" type="button">
+                            <span class="xfdevs__attachments__slider_dot_inner"></span>
+                        </button>
+                    </xf:foreach>
+                </div>
+            </xf:if>
+            
+            <!-- Image Counter -->
+            <xf:if is="$imageAttachments.count() > 1">
+                <div class="xfdevs__attachments__slider_counter">
+                    <span class="xfdevs__attachments__slider_current">1</span>
+                    <span class="xfdevs__attachments__slider_separator">/</span>
+                    <span class="xfdevs__attachments__slider_total">{$imageAttachments.count()}</span>
+                </div>
+            </xf:if>
+        </div>
+    <xf:else />
+        <!-- Fallback for no images -->
+        <div class="xfdevs__resource__view_no_preview">
+            <svg width="80" height="80" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+            </svg>
+            <p>No preview available</p>
+        </div>
+    </xf:if>
+</xf:macro> ]]></template>
+  <template type="public" title="xfdevs_custom_breadcrumb" version_id="100" version_string="1.0.0"><![CDATA[<div class="xfdevs__resource__view_breadcrumb">
+    <xf:set var="$breadcrumbs" value="{{ $resource.getBreadcrumbs(false) }}" />
+    <xf:if is="$breadcrumbs">
+        <nav class="xfdevs__resource__view_breadcrumb_nav" aria-label="Breadcrumb">
+            <ol class="xfdevs__resource__view_breadcrumb_list">
+                <li class="xfdevs__resource__view_breadcrumb_item">
+                    <a href="{{ link('index') }}" class="xfdevs__resource__view_breadcrumb_link">
+                        {{ phrase('home') }}
+                    </a>
+                </li>
+                
+                <xf:foreach loop="$breadcrumbs" value="$breadcrumb">
+                    <li class="xfdevs__resource__view_breadcrumb_item">
+                        <svg class="xfdevs__resource__view_icon" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12.6 12L8 7.4L9.4 6l6 6l-6 6L8 16.6z"/></svg>
+                        <a href="{{ $breadcrumb.href }}" class="xfdevs__resource__view_breadcrumb_link">
+                            {{ $breadcrumb.value }}
+                        </a>
+                    </li>
+                </xf:foreach>
+                
+                <li class="xfdevs__resource__view_breadcrumb_item xfdevs__resource__view_breadcrumb_item--current">
+                    <svg class="xfdevs__resource__view_icon" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12.6 12L8 7.4L9.4 6l6 6l-6 6L8 16.6z"/></svg>
+                    <span class="xfdevs__resource__view_breadcrumb_current">
+                        {{ $resource.title }}
+                    </span>
+                </li>
+            </ol>
+        </nav>
+    </xf:if>
+</div> 
+
+]]></template>
+  <template type="public" title="xfdevs_custom_resource_view" version_id="100" version_string="1.0.0"><![CDATA[<xf:set
+  var="$descSnippet"
+  value="{{ snippet($description.message, 250, {'stripBbCode': true}) }}"
+/>
+
+<xf:macro
+  id="metadata_macros::metadata"
+  arg-description="{$descSnippet}"
+  arg-shareUrl="{{ link('canonical:resources', $resource) }}"
+  arg-canonicalUrl="{{ link('canonical:resources', $resource) }}"
+/>
+
+<xf:page option="ldJsonHtml">
+  <script type="application/ld+json">
+    {{ $resource.getLdStructuredData()|json(true)|raw }}
+  </script>
+</xf:page>
+
+<xf:if is="$iconError">
+  <div class="blockMessage blockMessage--error">
+    {{ phrase('xfrm_new_icon_could_not_be_applied_try_later') }}
+  </div>
+</xf:if>
+
+<xf:css src="xfdevs_resource_view.css" />
+<xf:css src="xfdevs_gallery.css" />
+
+<xf:macro
+  id="lightbox_macros::setup"
+  arg-canViewAttachments="{{ $resource.canViewUpdateImages() }}"
+/>
+
+<div class="xfdevs__resource__view">
+  <!-- Header Section with Different Background -->
+  <div class="xfdevs__resource__view_header">
+    <div class="xfdevs__resource__view_container">
+      <div class="xfdevs__resource__view_header_content">
+        <!-- Left side - Title and Badge -->
+        <div class="xfdevs__resource__view_header_left">
+          <xf:if is="$resource.prefix_id">
+            <span
+              class="xfdevs__resource__view_badge xfdevs__resource__view_badge__prefix"
+            >
+              {{ prefix('resource', $resource) }}
+              <xf:macro
+                template="xfdevs_resource_actions_macro"
+                name="resource_actions"
+                arg-resource="{$resource}"
+              />
+            </span>
+          </xf:if>
+          <h1 class="xfdevs__resource__view_title">{{ $resource.title }}</h1>
+          <div class="xfdevs__resource__view_breadcrumbs">
+            <xf:include template="xfdevs_custom_breadcrumb" />
+            <!-- Right side - Views and Like -->
+            <div class="xfdevs__resource__view_header_right">
+              <div class="xfdevs__resource__view_views">
+                <svg
+                  class="xfdevs__resource__view_icon"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5"
+                  />
+                </svg>
+                <span class="xfdevs__resource__view_count"
+                  >{{ $resource.view_count }}</span
+                >
+              </div>
+              <div class="xfdevs__resource__view_header_separator"></div>
+              <div class="xfdevs__resource__view_likes">
+                <xf:react
+                  class="react-like xfdevs__resource__view__reaction reaction reaction--small reaction--imageHidden reaction--1 button"
+                  content="{$description}"
+                  link="resources/update/react"
+                  list="< .js-resourceBody | .js-reactionsList"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="xfdevs__resource__view_container">
+    <div class="xfdevs__resource__view_grid">
+      <!-- Main Content -->
+      <div class="xfdevs__resource__view_main">
+        <!-- Main Preview -->
+        <div class="xfdevs__resource__view_card">
+          <xf:if
+            is="$description.Attachments && $description.Attachments.count()"
+          >
+            <!-- Image Gallery -->
+            <xf:macro
+              template="xfdevs_image_gallery_macro"
+              name="image_gallery"
+              arg-attachments="{$description.Attachments}"
+            />
+            <xf:else />
+            <!-- Fallback if no attachments -->
+            <div class="xfdevs__resource__view_preview">
+              <xf:if is="$fileInfo.extension">
+                <span
+                  class="xfdevs__resource__view_badge xfdevs__resource__view_badge__psd"
+                  >{$fileInfo.extension|to_upper}</span
+                >
+              </xf:if>
+              <div class="xfdevs__resource__view_no_preview">
+                <svg
+                  width="80"
+                  height="80"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"
+                  />
+                </svg>
+                <p>No preview available</p>
+              </div>
+            </div>
+          </xf:if>
+        </div>
+        <xf:macro
+          name="xfdevs_resource_content_macro::content_tabs"
+          arg-resource="{$resource}"
+          arg-description="{$description}"
+        />
+        <div class="xfdevs__resource__view_reactions">
+          <div
+            class="reactionsBar js-reactionsList {{ $description.reactions ? 'is-active' : '' }}"
+          >
+            <xf:reactions
+              content="{$description}"
+              link="resources/update/reactions"
+            />
+          </div>
+        </div>
+     
+      </div>
+
+      <!-- Sidebar -->
+      <div class="xfdevs__resource__view_sidebar">
+        <!-- Product Info -->
+        <div class="xfdevs__resource__view_card">
+          <div class="xfdevs__resource__view_info">
+            <div class="xfdevs__resource__view_info_header">
+              <div class="xfdevs__resource__view_info_date">
+                <xf:if is="$resource.last_update > $resource.resource_date">
+                  Updated:
+                  <xf:else />
+                  Uploaded:
+                </xf:if>
+                <xf:if is="$resource.last_update > $resource.resource_date">
+                  <xf:date
+                    time="$resource.last_update"
+                    class="xfdevs__resource__view_info_date_value"
+                  />
+                  <xf:else />
+                  <xf:date
+                    time="$resource.resource_date"
+                    class="xfdevs__resource__view_info_date_value"
+                  />
+                </xf:if>
+              </div>
+              <div class="xfdevs__resource__view_info_id">
+                <span class="xfdevs__resource__view_info_id_label">ID:</span>
+                <span class="xfdevs__resource__view_info_date_value"
+                  >{{ $resource.resource_id }}</span
+                >
+              </div>
+            </div>
+
+            <div class="xfdevs__resource__view_separator"></div>
+
+            <div class="xfdevs__resource__view_info_details">
+              <xf:if is="$fileInfo.size">
+                <div class="xfdevs__resource__view_info_row">
+                  <div class="xfdevs__resource__view_info_label">
+                    <span>Download size:</span>
+                  </div>
+                  <span class="xfdevs__resource__view_info_value"
+                    >{$fileInfo.size|file_size}</span
+                  >
+                </div>
+              </xf:if>
+
+              <xf:if is="$fileInfo.extension">
+                <div class="xfdevs__resource__view_info_row">
+                  <div class="xfdevs__resource__view_info_label">
+                    <span>File format:</span>
+                  </div>
+                  <span
+                    class="xfdevs__resource__view_badge xfdevs__resource__view_badge__outline"
+                    >{$fileInfo.extension|to_upper}</span
+                  >
+                </div>
+              </xf:if>
+            </div>
+
+            <div class="xfdevs__resource__view_separator"></div>
+
+            <div class="xfdevs__resource__view_pricing">
+              <xf:macro
+                name="xfdevs_resource_download_button::download_button"
+                arg-resource="{$resource}"
+              />
+
+              <div class="xfdevs__resource__view_payment_info">
+                Fast download through XFDevs CDN
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Related Product -->
+        <div class="xfdevs__resource__view_card">
+          <h3 class="xfdevs__resource__view_card_title">
+            More from this author
+          </h3>
+          <xf:foreach loop="$authorOthers" value="$authorOther">
+            <div class="xfdevs__resource__view_related">
+              {{ resource_icon($authorOther, 'm', link('resources',
+              $authorOther)) }}
+              <div class="xfdevs__resource__view_related_content">
+                <h3 class="xfdevs__resource__view_related_title">
+                  {$authorOther.title}
+                </h3>
+                <div class="xfdevs__resource__view_related_author">
+                  by {$authorOther.username} • {$authorOther.Category.title}
+                </div>
+                <div class="xfdevs__resource__view_related_footer">
+                  <xf:button
+                    href="{{ link('resources', $authorOther) }}"
+                    class="xfdevs__resource__view_button xfdevs__resource__view_button__primary xfdevs__resource__view_button__small"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="currentColor"
+                        d="M19 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h6v2H5v12h12v-6zM13 3v2h4.586l-7.793 7.793l1.414 1.414L19 6.414V11h2V3z"
+                      />
+                    </svg>
+                    View resource
+                  </xf:button>
+                </div>
+              </div>
+            </div>
+          </xf:foreach>
+        </div>
+
+        <!-- Designer Info -->
+        <div class="xfdevs__resource__view_card">
+          <div class="xfdevs__resource__view_designer">
+            <div class="xfdevs__resource__view_designer_header">
+              <div class="xfdevs__resource__view_designer_avatar">
+                <xf:avatar user="{$resource.User}" size="s" />
+              </div>
+              <div class="xfdevs__resource__view_designer_info">
+                <h3 class="xfdevs__resource__view_designer_name">
+                  <xf:username user="{$resource.User}" />
+                </h3>
+                <div class="xfdevs__resource__view_designer_join">
+                  Author joined <xf:date time="$resource.User.register_date" />
+                </div>
+              </div>
+            </div>
+            <div class="xfdevs__resource__view_designer_description">
+              {{ bb_code($resource.User.Profile.about, 'user:about',
+              $resource.User) }}
+            </div>
+          </div>
+        </div>
+
+        <div class="xfdevs__resource__view_separator"></div>
+
+        <div class="xfdevs__resource__view_tags">
+          <xf:macro
+            template="tag_macros"
+            name="list"
+            arg-tags="{$resource.tags}"
+            arg-tagList="tagList--resource-{$resource.resource_id}"
+            arg-editLink="{{ $resource.canEditTags() ? link('resources/tags', $resource) : '' }}"
+          />
+        </div>
+
+        <div class="xfdevs__resource__view_separator"></div>
+
+        <div class="xfdevs__resource__view_report">
+          Any problem with this resource?
+          <a
+            href="{{ link('resources/update/report', $description) }}"
+            class="xfdevs__report_button"
+            data-xf-click="overlay"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="M19.538 3.723c-1.3 1.016-2.469 1.246-3.594 1.124c-1.18-.127-2.342-.64-3.638-1.218l-.053-.024c-1.235-.552-2.6-1.162-4.036-1.317c-1.511-.163-3.07.176-4.679 1.434a.75.75 0 0 0-.288.591V21a.75.75 0 0 0 1.5 0v-4.936c1.186-.835 2.264-1.023 3.306-.91c1.18.126 2.342.639 3.638 1.218l.053.023c1.235.553 2.6 1.162 4.036 1.317c1.511.163 3.07-.176 4.679-1.434a.75.75 0 0 0 .288-.591V4.313a.75.75 0 0 0-1.212-.59"
+              />
+            </svg>
+            Report this resource!
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Initialize Lucide icons
+  lucide.createIcons();
+</script>
+]]></template>
+  <template type="public" title="xfdevs_gallery.css" version_id="100" version_string="1.0.0"><![CDATA[/* Image Gallery Styles */
+.xfdevs__gallery {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+/* Main Image Display */
+.xfdevs__gallery__main {
+    position: relative;
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #f8f9fa;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 16px;
+}
+
+.xfdevs__gallery__main-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.3s ease;
+}
+
+/* Lightbox Container Styling */
+.xfdevs__gallery__main-container {
+    display: block;
+    cursor: zoom-in;
+}
+
+.xfdevs__gallery__main-container:hover .xfdevs__gallery__main-image {
+    opacity: 0.9;
+}
+
+.xfdevs__gallery__main-overlay {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Slider Container */
+.xfdevs__gallery__slider {
+    width: 100%;
+}
+
+.xfdevs__gallery__slider-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Navigation Buttons */
+.xfdevs__gallery__nav {
+    background: #ffffff;
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.xfdevs__gallery__nav:hover:not(:disabled) {
+    background: #f1f3f4;
+    border-color: #d0d7de;
+    transform: translateY(-1px);
+}
+
+.xfdevs__gallery__nav:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background: #f8f9fa;
+}
+
+.xfdevs__gallery__nav svg {
+    color: #656d76;
+}
+
+/* Thumbnails Container */
+.xfdevs__gallery__thumbnails {
+    flex: 1;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.xfdevs__gallery__thumbnails-track {
+    display: flex;
+    gap: 8px;
+    transition: transform 0.3s ease;
+}
+
+/* Individual Thumbnail */
+.xfdevs__gallery__thumbnail {
+    flex-shrink: 0;
+    width: 112px;
+    height: 80px;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    border: 3px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.xfdevs__gallery__thumbnail:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.xfdevs__gallery__thumbnail--active {
+    border-color: #1976d2;
+    box-shadow: 0 0 0 1px #1976d2;
+}
+
+.xfdevs__gallery__thumbnail-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.2s ease;
+}
+
+.xfdevs__gallery__thumbnail:hover .xfdevs__gallery__thumbnail-image {
+    opacity: 0.8;
+}
+
+.xfdevs__gallery__thumbnail--active .xfdevs__gallery__thumbnail-image {
+    opacity: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .xfdevs__gallery__main-image {
+        height: 300px;
+    }
+    
+    .xfdevs__gallery__thumbnail {
+        width: 80px;
+        height: 60px;
+    }
+    
+    .xfdevs__gallery__nav {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .xfdevs__gallery__nav svg {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .xfdevs__gallery__main-image {
+        height: 250px;
+    }
+    
+    .xfdevs__gallery__thumbnail {
+        width: 70px;
+        height: 50px;
+    }
+    
+    .xfdevs__gallery__slider-container {
+        gap: 8px;
+    }
+    
+    .xfdevs__gallery__main-overlay {
+        top: 12px;
+        right: 12px;
+        padding: 4px 8px;
+        font-size: 12px;
+    }
+}
+
+/* Tabs Section Styles */
+.xfdevs__resource__view_tabs {
+    margin-top: 32px;
+    width: 100%;
+}
+
+.xfdevs__resource__view_tab_content {
+    margin-top: 16px;
+}
+
+.xfdevs__resource__view_tab_pane {
+    display: none;
+}
+
+.xfdevs__resource__view_tab_pane.is-active {
+    display: block;
+}
+
+.xfdevs__resource__view_overview {
+    line-height: 1.6;
+}
+
+.xfdevs__resource__view_history {
+    padding: 0;
+}
+
+.xfdevs__resource__view_version {
+    padding: 16px;
+    border: 1px solid #e1e5e9;
+    border-radius: 8px;
+    background: #f8f9fa;
+}
+
+.xfdevs__resource__view_version_info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #d0d7de;
+}
+
+.xfdevs__resource__view_version_number {
+    font-weight: 600;
+    color: #1976d2;
+    font-size: 16px;
+}
+
+.xfdevs__resource__view_version_date {
+    color: #656d76;
+    font-size: 14px;
+}
+
+.xfdevs__resource__view_version_details p {
+    margin: 8px 0;
+    font-size: 14px;
+}
+
+.xfdevs__resource__view_version_notes {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #d0d7de;
+}
+
+.xfdevs__resource__view_discussion {
+    text-align: center;
+    padding: 20px;
+}
+
+.xfdevs__resource__view_discussion p {
+    margin-bottom: 16px;
+    color: #656d76;
+}
+
+/* Responsive adjustments for tabs */
+@media (max-width: 768px) {
+    .xfdevs__resource__view_tabs {
+        margin-top: 16px;
+    }
+    
+    .xfdevs__resource__view_version_info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+} ]]></template>
+  <template type="public" title="xfdevs_image_gallery_macro" version_id="100" version_string="1.0.0"><![CDATA[<xf:macro name="image_gallery" arg-attachments="">
+    <!-- Filter image attachments -->
+    <xf:set var="$imageAttachments" value="{{ [] }}" />
+    <xf:set var="$imageCount" value="0" />
+    <xf:set var="$firstImage" value="" />
+    <xf:foreach loop="$attachments" value="$attachment">
+        <xf:if is="$attachment.Data.type_grouping == 'image'">
+            <xf:set var="$imageAttachments" value="{{ array_merge($imageAttachments, [$attachment]) }}" />
+            <xf:set var="$imageCount" value="{{ $imageCount + 1 }}" />
+            <xf:if is="$imageCount == 1">
+                <xf:set var="$firstImage" value="{$attachment}" />
+            </xf:if>
+        </xf:if>
+    </xf:foreach>
+    
+    <xf:if is="$imageCount > 0">
+        <div class="xfdevs__gallery">
+            <!-- Main Image Display -->
+            <div class="xfdevs__gallery__main">
+                <div class="xfdevs__gallery__main-container" id="gallery-main-container">
+                    <img src="{{ link('attachments', $firstImage) }}" 
+                         alt="{$firstImage.filename}" 
+                         class="xfdevs__gallery__main-image"
+                         id="gallery-main-image"
+                         data-src="{{ link('attachments', $firstImage) }}"
+                         data-caption="{$firstImage.filename}">
+                </div>
+                <div class="xfdevs__gallery__main-overlay">
+                    <span class="xfdevs__gallery__counter">
+                        <span id="gallery-current">1</span> / <span id="gallery-total">{{ $imageCount }}</span>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Thumbnail Slider -->
+            <xf:if is="$imageCount > 1">
+                <div class="xfdevs__gallery__slider">
+                    <div class="xfdevs__gallery__slider-container">
+                        <button class="xfdevs__gallery__nav xfdevs__gallery__nav--prev" id="gallery-prev" disabled>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                            </svg>
+                        </button>
+                        
+                        <div class="xfdevs__gallery__thumbnails">
+                            <div class="xfdevs__gallery__thumbnails-track" id="gallery-track">
+                                <xf:foreach loop="$imageAttachments" value="$attachment" i="$i">
+                                    <div class="xfdevs__gallery__thumbnail {{ $i == 0 ? 'xfdevs__gallery__thumbnail--active' : '' }}" 
+                                         data-index="{$i}" 
+                                         data-src="{{ link('attachments', $attachment) }}"
+                                         data-alt="{$attachment.filename}">
+                                        <img src="{{ link('attachments', $attachment) }}" 
+                                             alt="{$attachment.filename}" 
+                                             class="xfdevs__gallery__thumbnail-image">
+                                    </div>
+                                </xf:foreach>
+                            </div>
+                        </div>
+                        
+                        <button class="xfdevs__gallery__nav xfdevs__gallery__nav--next" id="gallery-next" <xf:if is="$imageCount <= 4">disabled</xf:if>>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L13.17 12z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </xf:if>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var gallery = {
+                    mainImage: document.getElementById('gallery-main-image'),
+                    mainContainer: document.getElementById('gallery-main-container'),
+                    currentCounter: document.getElementById('gallery-current'),
+                    totalCounter: document.getElementById('gallery-total'),
+                    thumbnails: document.querySelectorAll('.xfdevs__gallery__thumbnail'),
+                    track: document.getElementById('gallery-track'),
+                    prevBtn: document.getElementById('gallery-prev'),
+                    nextBtn: document.getElementById('gallery-next'),
+                    currentIndex: 0,
+                    visibleThumbnails: 4,
+                    totalImages: {$imageCount},
+
+                    init: function() {
+                        this.bindEvents();
+                        this.updateNavigation();
+                        this.initFancybox();
+                    },
+
+                    initFancybox: function() {
+                        var self = this;
+                        // Make main image clickable for lightbox
+                        if (this.mainContainer) {
+                            this.mainContainer.addEventListener('click', function() {
+                                var currentSrc = self.mainImage.dataset.src;
+                                var currentCaption = self.mainImage.dataset.caption;
+                                
+                                // Open Fancybox with current image
+                                if (window.Fancybox) {
+                                    window.Fancybox.show([{
+                                        src: currentSrc,
+                                        caption: currentCaption,
+                                        type: 'image'
+                                    }]);
+                                }
+                            });
+                        }
+                    },
+
+                    bindEvents: function() {
+                        var self = this;
+                        // Thumbnail clicks
+                        for (var i = 0; i < this.thumbnails.length; i++) {
+                            (function(index) {
+                                self.thumbnails[index].addEventListener('click', function() {
+                                    self.selectImage(index);
+                                });
+                            })(i);
+                        }
+
+                        // Navigation buttons
+                        if (this.prevBtn) {
+                            this.prevBtn.addEventListener('click', function() {
+                                self.slideLeft();
+                            });
+                        }
+
+                        if (this.nextBtn) {
+                            this.nextBtn.addEventListener('click', function() {
+                                self.slideRight();
+                            });
+                        }
+
+                        // Keyboard navigation
+                        document.addEventListener('keydown', function(e) {
+                            if (e.key === 'ArrowLeft') {
+                                self.selectPrevious();
+                            } else if (e.key === 'ArrowRight') {
+                                self.selectNext();
+                            }
+                        });
+                    },
+
+                    selectImage: function(index) {
+                        var thumbnail = this.thumbnails[index];
+                        if (!thumbnail) return;
+
+                        // Update main image
+                        this.mainImage.src = thumbnail.dataset.src;
+                        this.mainImage.alt = thumbnail.dataset.alt;
+                        this.mainImage.dataset.src = thumbnail.dataset.src;
+                        this.mainImage.dataset.caption = thumbnail.dataset.alt;
+
+                        // Update active thumbnail
+                        for (var i = 0; i < this.thumbnails.length; i++) {
+                            this.thumbnails[i].classList.remove('xfdevs__gallery__thumbnail--active');
+                        }
+                        thumbnail.classList.add('xfdevs__gallery__thumbnail--active');
+
+                        // Update counter
+                        this.currentIndex = index;
+                        this.currentCounter.textContent = index + 1;
+                    },
+
+                    selectNext: function() {
+                        var nextIndex = (this.currentIndex + 1) % this.totalImages;
+                        this.selectImage(nextIndex);
+                    },
+
+                    selectPrevious: function() {
+                        var prevIndex = (this.currentIndex - 1 + this.totalImages) % this.totalImages;
+                        this.selectImage(prevIndex);
+                    },
+
+                    slideLeft: function() {
+                        if (this.track) {
+                            var currentTransform = parseInt(this.track.style.transform.replace('translateX(', '').replace('px)', '') || '0');
+                            var newTransform = Math.min(currentTransform + 120, 0);
+                            this.track.style.transform = 'translateX(' + newTransform + 'px)';
+                            this.updateNavigation();
+                        }
+                    },
+
+                    slideRight: function() {
+                        if (this.track) {
+                            var maxTransform = -((this.totalImages - this.visibleThumbnails) * 120);
+                            var currentTransform = parseInt(this.track.style.transform.replace('translateX(', '').replace('px)', '') || '0');
+                            var newTransform = Math.max(currentTransform - 120, maxTransform);
+                            this.track.style.transform = 'translateX(' + newTransform + 'px)';
+                            this.updateNavigation();
+                        }
+                    },
+
+                    updateNavigation: function() {
+                        if (!this.track) return;
+                        
+                        var currentTransform = parseInt(this.track.style.transform.replace('translateX(', '').replace('px)', '') || '0');
+                        var maxTransform = -((this.totalImages - this.visibleThumbnails) * 120);
+
+                        if (this.prevBtn) {
+                            this.prevBtn.disabled = currentTransform >= 0;
+                        }
+
+                        if (this.nextBtn) {
+                            this.nextBtn.disabled = currentTransform <= maxTransform || this.totalImages <= this.visibleThumbnails;
+                        }
+                    }
+                };
+
+                if (gallery.mainImage) {
+                    gallery.init();
+                }
+            });
+        </script>
+    </xf:if>
+</xf:macro> ]]></template>
+  <template type="public" title="xfdevs_resource_actions_macro" version_id="100" version_string="1.0.0"><![CDATA[<xf:macro name="resource_actions" arg-resource="!">
+    <div class="xfdevs__resource__view_actions">
+        <xf:if is="$resource.canRate(false) OR $resource.canRatePreReg()">
+            <xf:button href="{{ link('resources/rate', $resource) }}" class="xfdevs__resource__view_button xfdevs__resource__view_button__primary xfdevs__resource__view_button__small" overlay="true">
+                {{ phrase('leave_rating') }}
+            </xf:button>
+        </xf:if>
+        <xf:if is="$resource.canReleaseUpdate()">
+            <xf:button href="{{ link('resources/post-update', $resource) }}" class="xfdevs__resource__view_button xfdevs__resource__view_button__primary xfdevs__resource__view_button__small">
+                {{ phrase('xfrm_post_update') }}
+            </xf:button>
+        </xf:if>
+        <xf:if is="$resource.canUndelete() AND $resource.resource_state == 'deleted'">
+            <xf:button href="{{ link('resources/undelete', $resource) }}" class="xfdevs__resource__view_button xfdevs__resource__view_button__primary xfdevs__resource__view_button__small" overlay="true">
+                {{ phrase('undelete') }}
+            </xf:button>
+        </xf:if>
+        <xf:if is="$resource.canApproveUnapprove() AND $resource.resource_state == 'moderated'">
+            <xf:button href="{{ link('resources/approve', $resource) }}" class="xfdevs__resource__view_button xfdevs__resource__view_button__primary xfdevs__resource__view_button__small" overlay="true">
+                {{ phrase('approve') }}
+            </xf:button>
+        </xf:if>
+        <xf:if is="$resource.canWatch()">
+            <xf:button href="{{ link('resources/watch', $resource) }}" class="xfdevs__resource__view_button xfdevs__resource__view_button__primary xfdevs__resource__view_button__small"
+                data-xf-click="switch-overlay"
+                data-sk-watch="{{ phrase('watch') }}"
+                data-sk-unwatch="{{ phrase('unwatch') }}">
+
+                <xf:if is="{$resource.Watch.{$xf.visitor.user_id}}">
+                    {{ phrase('unwatch') }}
+                <xf:else />
+                    {{ phrase('watch') }}
+                </xf:if>
+            </xf:button>
+        </xf:if>
+        <xf:if is="$resource.canEdit() OR $resource.canEditIcon() OR $resource.canChangeResourceType() OR $resource.canLeaveTeam() OR $resource.canManageTeamMembers() OR $resource.canFeatureUnfeature() OR $resource.canMove() OR $resource.canReassign() OR $resource.canChangeDiscussionThread() OR $resource.canDelete('soft') OR $resource.canUseInlineModeration()">
+            <xf:button class="xfdevs__resource__view_button xfdevs__resource__view_button__primary xfdevs__resource__view_button__small" data-xf-click="menu" aria-expanded="false" aria-haspopup="true" title="{{ phrase('more_options') }}">&#8226;&#8226;&#8226;</xf:button>
+            <div class="menu" data-menu="menu" aria-hidden="true">
+                <div class="menu-content">
+                    <div class="menu-item">
+                        <xf:if is="$resource.canEdit()">
+                            <a href="{{ link('resources/edit', $resource) }}" class="menu-linkRow">{{ phrase('xfrm_edit_resource') }}</a>
+                        </xf:if>
+                        <xf:if is="$resource.canEditIcon()">
+                            <a href="{{ link('resources/edit-icon', $resource) }}" class="menu-linkRow" data-xf-click="overlay">{{ phrase('xfrm_edit_resource_icon') }}</a>
+                        </xf:if>
+                        <xf:if is="$resource.canChangeResourceType()">
+                            <a href="{{ link('resources/change-type', $resource) }}" class="menu-linkRow">{{ phrase('xfrm_change_resource_type') }}</a>
+                        </xf:if>
+                        <xf:if is="$resource.canLeaveTeam()">
+                            <a href="{{ link('resources/leave-team', $resource) }}" class="menu-linkRow" data-xf-click="overlay">
+                                {{ phrase('xfrm_leave_resource_team') }}
+                            </a>
+                        </xf:if>
+                        <xf:if is="$resource.canManageTeamMembers()">
+                            <a href="{{ link('resources/manage-team', $resource) }}" class="menu-linkRow" data-xf-click="overlay">
+                                {{ phrase('xfrm_manage_resource_team') }}
+                            </a>
+                        </xf:if>
+                        <xf:if is="$resource.canFeatureUnfeature()">
+                            <a href="{{ link('resources/feature', $resource) }}"
+                                class="menu-linkRow"
+                                data-xf-click="overlay">
+                                <xf:if is="$resource.isFeatured()">
+                                    {{ phrase('manage_feature') }}
+                                <xf:else />
+                                    {{ phrase('xfrm_feature_resource') }}
+                                </xf:if>
+                            </a>
+                        </xf:if>
+                        <xf:if is="$resource.canMove()">
+                            <a href="{{ link('resources/move', $resource) }}" data-xf-click="overlay" class="menu-linkRow">{{ phrase('xfrm_move_resource') }}</a>
+                        </xf:if>
+                        <xf:if is="$resource.canReassign()">
+                            <a href="{{ link('resources/reassign', $resource) }}" data-xf-click="overlay" class="menu-linkRow">{{ phrase('xfrm_reassign_resource') }}</a>
+                        </xf:if>
+                        <xf:if is="$resource.canChangeDiscussionThread()">
+                            <a href="{{ link('resources/change-thread', $resource) }}" data-xf-click="overlay" class="menu-linkRow">{{ phrase('xfrm_change_discussion_thread') }}</a>
+                        </xf:if>
+                        <xf:if is="$resource.canDelete('soft')">
+                            <a href="{{ link('resources/delete', $resource) }}" data-xf-click="overlay" class="menu-linkRow">{{ phrase('xfrm_delete_resource') }}</a>
+                        </xf:if>
+                        <xf:if is="$resource.canUseInlineModeration()">
+                            <div class="menu-footer"
+                                data-xf-init="inline-mod"
+                                data-type="resource"
+                                data-href="{{ link('inline-mod') }}"
+                                data-toggle=".js-resourceInlineModToggle">
+                                <xf:checkbox>
+                                    <xf:option class="js-resourceInlineModToggle" value="{$resource.resource_id}">{{ phrase('select_for_moderation') }}</xf:option>
+                                </xf:checkbox>
+                            </div>
+                            <xf:js src="xf/inline_mod.js" min="1" />
+                        </xf:if>
+                    </div>
+                </div>
+            </div>
+        </xf:if>
+    </div>
+</xf:macro> ]]></template>
+  <template type="public" title="xfdevs_resource_content_macro" version_id="100" version_string="1.0.0"><![CDATA[<xf:macro name="content_tabs" arg-resource="" arg-description="">
+  <!-- Navigation Tabs -->
+ <div class="xfdevs__resource__view_tabs">
+    <div class="tabs tabs--standalone">
+        <div class="hScroller" data-xf-init="h-scroller">
+            <span class="hScroller-scroll">
+                <a class="tabs-tab is-active" href="{{ link('resources', $resource) }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                    {{ phrase('overview') }}
+                </a>
+                <xf:if is="$resource.real_update_count">
+                    <a class="tabs-tab" href="{{ link('resources/updates', $resource) }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V7h10v2z"/>
+                        </svg>
+                        {{ phrase('xfrm_updates') }} {$resource.real_update_count|parens}
+                    </a>
+                </xf:if>
+                <xf:if is="$resource.real_review_count">
+                    <a class="tabs-tab" href="{{ link('resources/reviews', $resource) }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                        {{ phrase('xfrm_reviews') }} {$resource.real_review_count|parens}
+                    </a>
+                </xf:if>
+                <xf:if is="$resource.isVersioned()">
+                    <a class="tabs-tab" href="{{ link('resources/history', $resource) }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
+                        </svg>
+                        {{ phrase('history') }}
+                    </a>
+                </xf:if>
+                <xf:if is="$resource.hasViewableDiscussion()">
+                    <a class="tabs-tab" href="{{ link('threads', $resource.Discussion) }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4l4 4 4-4h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+                        </svg>
+                        {{ phrase('xfrm_discussion') }}
+                    </a>
+                </xf:if>
+            </span>
+        </div>
+    </div>
+</div>
+
+<!-- Content Section (Overview only - other tabs go to separate pages) -->
+<div class="xfdevs__resource__view_content">
+    <div class="xfdevs__resource__view_card">
+        <h3 class="xfdevs__resource__view_card_title">Resource Description</h3>
+        <div class="xfdevs__resource__view_overview">
+            {{ bb_code($description.message, 'resource_update', $description) }}
+        </div>
+    </div>
+</div>
+
+
+</xf:macro>]]></template>
+  <template type="public" title="xfdevs_resource_download_button" version_id="100" version_string="1.0.0"><![CDATA[<xf:macro id="download_button" arg-resource="!">
+    <xf:if is="$resource.isDownloadable()">
+        <div class="xfdevs__resource__view_download_action">
+            <xf:if is="$resource.canDownload()">
+                <xf:if is="$resource.isExternalDownload()">
+                    <xf:button href="{{ link('resources/download', $resource) }}" target="_blank"
+                        rel="noopener"
+                        data-xf-init="tooltip"
+                        class="xfdevs__resource__view_button xfdevs__resource__view_button__primary"
+                        title="{{ $resource.CurrentVersion.getExternalDownloadDomain() }}">
+                        <svg class="xfdevs__resource__view_icon" width="16" height="16" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M14 3v2h3.59l-9.83 9.83l1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2v7Z"/>
+                        </svg>
+                        {{ phrase('xfrm_go_to_download') }}
+                    </xf:button>
+                <xf:else />
+                    <xf:button href="{{ link('resources/download', $resource) }}" target="_blank"
+                        class="xfdevs__resource__view_button xfdevs__resource__view_button__primary"
+                        data-xf-click="{{ $resource.CurrentVersion.file_count > 1 ? 'overlay' : '' }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M12 11a1 1 0 0 1 1 1v6.584l1.293-1.292a1 1 0 0 1 1.414 1.416l-2.824 2.819c-.253.252-.5.473-.883.473c-.336 0-.566-.169-.788-.38l-2.919-2.912a1 1 0 0 1 1.414-1.416L11 18.584V12a1 1 0 0 1 1-1m-.5-9c2.784 0 5.16 1.75 6.086 4.212a6.003 6.003 0 0 1 .395 11.453a3 3 0 0 0-.858-1.785a3 3 0 0 0-1.914-.873L15 15v-3a3 3 0 0 0-5.995-.176L9 12v3a3 3 0 0 0-2.123.88a3 3 0 0 0-.875 2.02A5.002 5.002 0 0 1 5 8.416A6.5 6.5 0 0 1 11.5 2"/></g></svg>
+                        {{ phrase('download') }}
+                    </xf:button>
+                </xf:if>
+            <xf:else />
+                <span class="xfdevs__resource__view_button xfdevs__resource__view_button__disabled">
+                    {{ phrase('xfrm_no_permission_to_download') }}
+                </span>
+            </xf:if>
+        </div>
+    <xf:elseif is="$resource.isExternalPurchasable()" />
+        <div class="xfdevs__resource__view_download_action">
+            <xf:if is="$resource.canDownload()">
+                <xf:button href="{$resource.external_purchase_url}" 
+                    class="xfdevs__resource__view_button xfdevs__resource__view_button__primary" 
+                    target="_blank" rel="noopener">
+                    <svg class="xfdevs__resource__view_icon" width="16" height="16" viewBox="0 0 24 24">
+                        <path fill="currentColor" d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2zM1 2v2h2l3.6 7.59l-1.35 2.45c-.16.28-.25.61-.25.96c0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.42 1.75-1.03L21 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2s2-.9 2-2s-.9-2-2-2z"/>
+                    </svg>
+                    {{ phrase('xfrm_buy_for_x', {'price': $resource.price|currency($resource.currency)}) }}
+                </xf:button>
+            <xf:else />
+                <span class="xfdevs__resource__view_button xfdevs__resource__view_button__disabled">
+                    {{ phrase('xfrm_no_permission_to_buy_price_x', {'price': $resource.price|currency($resource.currency)}) }}
+                </span>
+            </xf:if>
+        </div>
+    </xf:if>
+</xf:macro> ]]></template>
+  <template type="public" title="xfdevs_resource_view.css" version_id="100" version_string="1.0.0"><![CDATA[.p-body-header, .p-breadcrumbs--container {
+    display: none;
+}
+
+.p-body-inner {
+    all: unset;
+}
+
+/* Main Container */
+
+.xfdevs__resource__view_container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header Section */
+.xfdevs__resource__view_header {
+    background: linear-gradient(to bottom right, #f8fafc, #eff6ff, #eef2ff);
+    border-bottom: 1px solid #e2e8f0;
+    color: #000000;
+    padding: 40px 0;
+}
+
+.xfdevs__resource__view_header_content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.xfdevs__resource__view_header_left {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.xfdevs__resource__view_title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-top: 10px;
+    line-height: 1.3;
+    font-weight: 700;
+}
+
+.xfdevs__resource__view_header_right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Badges */
+.xfdevs__resource__view_badge {
+    display: flex ;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.xfdevs__resource__view_badge__psd {
+    background-color: #4a90e2;
+    color: #fff;
+}
+
+.xfdevs__resource__view_badge__new {
+    background-color: #2ecc71;
+    color: #fff;
+}
+
+.xfdevs__resource__view_badge__outline {
+    border: 1px solid #ddd;
+    color: #666;
+}
+
+/* Views and Like */
+.xfdevs__resource__view_views {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #000;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.xfdevs__resource__view_count {
+    font-size: 14px;
+}
+
+.xfdevs__resource__view_like {
+    background: none;
+    border: none;
+    color: #ff6b6b;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+/* Breadcrumb */
+.xfdevs__resource__view_breadcrumbs {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.xfdevs__resource__view_breadcrumb {
+    padding: 0.75rem 0;
+}
+
+.xfdevs__resource__view_breadcrumb_nav {
+    font-size: 0.875rem;
+}
+
+.xfdevs__resource__view_breadcrumb_list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    gap: 0.25rem;
+}
+
+.xfdevs__resource__view_breadcrumb_item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.xfdevs__resource__view_breadcrumb_link {
+    color: #6b7280;
+    text-decoration: none;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.xfdevs__resource__view_breadcrumb_link:hover {
+    color: #3b82f6;
+    background-color: #f3f4f6;
+    text-decoration: none;
+}
+
+.xfdevs__resource__view_breadcrumb_icon {
+    width: 1rem;
+    height: 1rem;
+    opacity: 0.6;
+}
+
+.xfdevs__resource__view_breadcrumb_separator {
+    width: 0.875rem;
+    height: 0.875rem;
+    color: #9ca3af;
+    opacity: 0.5;
+}
+
+.xfdevs__resource__view_header_separator {
+    width: 2px;
+    height: 20px;
+    background-color: #ddd;
+    margin: 0 10px;
+}
+
+.xfdevs__resource__view_breadcrumb_current {
+    color: #374151;
+    font-weight: 500;
+    padding: 0.25rem 0.5rem;
+}
+
+.xfdevs__resource__view_breadcrumb_item--current {
+    color: #374151;
+}
+
+/* Grid Layout */
+.xfdevs__resource__view_grid {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+/* Separator */
+.xfdevs__resource__view_separator {
+    height: 2px;
+    background-color: #ddd;
+    margin: 20px 0;
+}
+
+/* Date */
+.xfdevs__resource__view_info_date_value {
+    font-weight: 600;
+    color: #000;
+}
+
+/* Cards */
+.xfdevs__resource__view_card {
+    background-color: #d5d5d5;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.xfdevs__resource__view_card_title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 20px 0;
+    color: #333;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+}
+
+/* Preview Section */
+.xfdevs__resource__view_preview {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.xfdevs__resource__view_image {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.xfdevs__resource__view_previews_grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.xfdevs__resource__view_no_preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    color: #666;
+    text-align: center;
+}
+
+.xfdevs__resource__view_no_preview svg {
+    margin-bottom: 15px;
+    opacity: 0.5;
+}
+
+.xfdevs__resource__view_no_preview p {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* Features */
+.xfdevs__resource__view_features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.xfdevs__resource__view_features span {
+    background-color: #f8f9fa;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #666;
+}
+
+.xfdevs__resource__view_edit_info {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: 600;
+    color: #666;
+}
+
+/* Product Info */
+.xfdevs__resource__view_info_header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #666;
+}
+
+.xfdevs__resource__view_info_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.xfdevs__resource__view_info_label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #666;
+}
+
+.xfdevs__resource__view_icon {
+    width: 16px;
+    height: 16px;
+}
+
+/* Reactions */
+.reaction.xfdevs__resource__view__reaction {
+    background-color: #e91a451c;
+    border: 2px solid #e91a45;
+    border-radius: 10px;
+    font-weight: 700;
+    padding: 0 20px;
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    height: 40px;
+    width: -moz-fit-content;
+    width: fit-content;
+}
+
+.reaction.xfdevs__resource__view__reaction:hover {
+    background-color: #e91a4526;
+}
+
+
+
+
+/* Buttons - High Specificity to Override XenForo Defaults */
+.xfdevs__resource__view_pricing .xfdevs__resource__view_button,
+.xfdevs__resource__view_pricing button.xfdevs__resource__view_button,
+.xfdevs__resource__view_pricing .button.xfdevs__resource__view_button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 10px 20px !important;
+    border-radius: 4px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.2s !important;
+    width: 100% !important;
+    margin-bottom: 10px !important;
+    text-decoration: none !important;
+    gap: 8px !important;
+}
+
+.xfdevs__resource__view_pricing .xfdevs__resource__view_button__primary,
+.xfdevs__resource__view_pricing button.xfdevs__resource__view_button__primary,
+.xfdevs__resource__view_pricing .button.xfdevs__resource__view_button__primary {
+    background-color: #4a90e2 !important;
+    color: #fff !important;
+    border: 1px solid #4a90e2 !important;
+}
+
+.xfdevs__resource__view_pricing .xfdevs__resource__view_button__primary:hover,
+.xfdevs__resource__view_pricing button.xfdevs__resource__view_button__primary:hover,
+.xfdevs__resource__view_pricing .button.xfdevs__resource__view_button__primary:hover {
+    background-color: #357abd !important;
+    border-color: #357abd !important;
+    color: #fff !important;
+    text-decoration: none !important;
+}
+
+.xfdevs__resource__view_pricing .xfdevs__resource__view_button__outline,
+.xfdevs__resource__view_pricing button.xfdevs__resource__view_button__outline,
+.xfdevs__resource__view_pricing .button.xfdevs__resource__view_button__outline {
+    background-color: transparent !important;
+    border: 1px solid #ddd !important;
+    color: #666 !important;
+}
+
+.xfdevs__resource__view_pricing .xfdevs__resource__view_button__outline:hover,
+.xfdevs__resource__view_pricing button.xfdevs__resource__view_button__outline:hover,
+.xfdevs__resource__view_pricing .button.xfdevs__resource__view_button__outline:hover {
+    background-color: #f8f9fa !important;
+    color: #666 !important;
+    text-decoration: none !important;
+}
+
+.xfdevs__resource__view_pricing .xfdevs__resource__view_button__small,
+.xfdevs__resource__view_pricing button.xfdevs__resource__view_button__small,
+.xfdevs__resource__view_pricing .button.xfdevs__resource__view_button__small {
+    padding: 5px 10px !important;
+    font-size: 12px !important;
+    width: auto !important;
+}
+
+.xfdevs__resource__view_pricing .xfdevs__resource__view_button__disabled {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 10px 20px !important;
+    border-radius: 4px !important;
+    font-weight: 600 !important;
+    width: 100% !important;
+    margin-bottom: 10px !important;
+    background-color: #f5f5f5 !important;
+    color: #999 !important;
+    border: 1px solid #ddd !important;
+    cursor: not-allowed !important;
+    opacity: 0.6 !important;
+    gap: 8px !important;
+}
+
+.xfdevs__resource__view_pricing .xfdevs__resource__view_button__info {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    padding: 10px 20px !important;
+    border-radius: 4px !important;
+    font-weight: 600 !important;
+    width: 100% !important;
+    margin-bottom: 10px !important;
+    background-color: #e3f2fd !important;
+    color: #1976d2 !important;
+    border: 1px solid #bbdefb !important;
+}
+
+/* Override XenForo button states */
+.xfdevs__resource__view_pricing .button:focus,
+.xfdevs__resource__view_pricing .button:active {
+    box-shadow: none !important;
+}
+
+.xfdevs__resource__view_pricing .button--cta.xfdevs__resource__view_button__primary {
+    background-color: #4a90e2 !important;
+    border-color: #4a90e2 !important;
+}
+
+.xfdevs__resource__view_pricing .button--cta.xfdevs__resource__view_button__primary:hover {
+    background-color: #357abd !important;
+    border-color: #357abd !important;
+}
+
+/* Pricing */
+.xfdevs__resource__view_pricing {
+    margin-top: 20px;
+    padding-top: 20px;
+}
+
+.xfdevs__resource__view_price_label {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.xfdevs__resource__view_price {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.xfdevs__resource__view_price_old {
+    color: #999;
+    text-decoration: line-through;
+}
+
+.xfdevs__resource__view_price_new {
+    font-size: 24px;
+    font-weight: 600;
+    color: #2ecc71;
+}
+
+.xfdevs__resource__view_payment_info {
+    text-align: center;
+    font-size: 12px;
+    color: #999;
+    margin-top: 10px;
+}
+
+/* Related Product */
+.xfdevs__resource__view_related {
+    display: flex;
+    gap: 1rem;
+}
+
+.xfdevs__resource__view_related a.avatar {
+    border-radius: 8px;
+}
+
+.xfdevs__resource__view_related_content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+}
+
+.xfdevs__resource__view_related_title {
+    font-size: 16px;
+    margin-bottom: 5px;
+    margin-block: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.xfdevs__resource__view_related_author {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.xfdevs__resource__view_related_footer {
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+}
+
+/* Small Button Variant */
+.xfdevs__resource__view_button__small,
+button.xfdevs__resource__view_button__small,
+.button.xfdevs__resource__view_button__small {
+    padding: 6px 12px !important;
+    font-size: 12px !important;
+    min-height: 28px !important;
+    line-height: 1.2 !important;
+    border-radius: 4px !important;
+    font-weight: 600 !important;
+}
+
+/* Primary Small Button */
+.xfdevs__resource__view_button__primary.xfdevs__resource__view_button__small,
+button.xfdevs__resource__view_button__primary.xfdevs__resource__view_button__small,
+.button.xfdevs__resource__view_button__primary.xfdevs__resource__view_button__small {
+    background-color: #4a90e2 !important;
+    color: #fff !important;
+    border: 1px solid #4a90e2 !important;
+}
+
+.button-text {
+    gap: .5rem;
+}
+
+.xfdevs__resource__view_button__primary.xfdevs__resource__view_button__small:hover,
+button.xfdevs__resource__view_button__primary.xfdevs__resource__view_button__small:hover,
+.button.xfdevs__resource__view_button__primary.xfdevs__resource__view_button__small:hover {
+    background-color: #357abd !important;
+    border-color: #357abd !important;
+    color: #fff !important;
+    text-decoration: none !important;
+}
+
+.xfdevs__resource__view_button__small:active,
+button.xfdevs__resource__view_button__small:active,
+.button.xfdevs__resource__view_button__small:active {
+    transform: translateY(0) !important;
+}
+
+.xfdevs__resource__view_button__small:focus,
+button.xfdevs__resource__view_button__small:focus,
+.button.xfdevs__resource__view_button__small:focus {
+    outline: none !important;
+}
+
+.xfdevs__resource__view_button__small .xfdevs__resource__view_icon {
+    width: 12px !important;
+    height: 12px !important;
+}
+
+/* Designer Info */
+.xfdevs__resource__view_designer_header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.xfdevs__resource__view_designer_avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.xfdevs__resource__view_designer_name {
+    font-size: 16px;
+    margin-bottom: 5px;
+    margin-block: 0;
+}
+
+.xfdevs__resource__view_designer_join {
+    font-size: 12px;
+    color: #666;
+}
+
+.xfdevs__resource__view_designer_description {
+    font-size: 14px;
+    color: #666;
+    line-height: 1.6;
+}
+
+.xfdevs__resource__view_designer_studio,
+.xfdevs__resource__view_designer_quality {
+    color: #4a90e2;
+    font-weight: 600;
+}
+
+/* Report */
+.xfdevs__resource__view_report {
+    display: inline-flex;
+    flex-wrap: wrap;
+    font-size: 14px;
+    justify-content: center;
+    align-items: center;
+    gap: .3rem;
+    text-align: center;
+}
+
+.xfdevs__report_button {
+    color: #ff345e;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .xfdevs__resource__view_grid {
+        grid-template-columns: 1fr;
+    }
+
+    .xfdevs__resource__view_sidebar {
+        order: -1;
+    }
+}
+
+@media (max-width: 768px) {
+    .xfdevs__resource__view_header_content {
+        flex-direction: column;
+    }
+
+    .xfdevs__resource__view_header_right {
+        margin-top: 20px;
+    }
+
+    .xfdevs__resource__view_title {
+        font-size: 20px;
+    }
+
+    /* Breadcrumb responsive adjustments */
+    .xfdevs__resource__view_breadcrumb_list {
+        gap: 0.125rem;
+    }
+    
+    .xfdevs__resource__view_breadcrumb_item {
+        gap: 0.25rem;
+    }
+    
+    .xfdevs__resource__view_breadcrumb_link,
+    .xfdevs__resource__view_breadcrumb_current {
+        padding: 0.125rem 0.25rem;
+        font-size: 0.8125rem;
+    }
+    
+    .xfdevs__resource__view_breadcrumb_icon {
+        width: 0.875rem;
+        height: 0.875rem;
+    }
+    
+    .xfdevs__resource__view_breadcrumb_separator {
+        width: 0.75rem;
+        height: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .xfdevs__resource__view_previews_grid {
+        grid-template-columns: 1fr;
+    }
+
+    .xfdevs__resource__view_info_header {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+/* Resource Tabs */
+.xfdevs__resource__view_tabs {
+    margin: 30px 0;
+}
+
+.xfdevs__resource__tabs {
+    position: relative;
+    display: flex;
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 8px;
+    gap: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e9ecef;
+}
+
+.xfdevs__resource__tab-bg {
+    position: absolute;
+    background: linear-gradient(to right, #3380F5, #B0CEFB);
+    border-radius: 8px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    z-index: 1;
+}
+
+.xfdevs__resource__tab {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #6c757d;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 120px;
+    justify-content: center;
+    text-decoration: none;
+    border: none;
+    background: none;
+    white-space: nowrap;
+}
+
+.xfdevs__resource__tab:hover {
+    color: #495057;
+    transform: translateY(-1px);
+}
+
+.xfdevs__resource__tab.active {
+    color: #ffffff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.xfdevs__resource__tab svg {
+    width: 18px;
+    height: 18px;
+    transition: all 0.3s ease;
+}
+
+.xfdevs__resource__tab:hover svg {
+    transform: scale(1.1);
+}
+
+.xfdevs__resource__tab.active svg {
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+}
+
+.xfdevs__resource__tab span {
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+/* Tab Content */
+.xfdevs__resource__view_tab_content {
+    position: relative;
+    min-height: 200px;
+}
+
+.xfdevs__resource__view_tab_pane {
+    display: none;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+}
+
+.xfdevs__resource__view_tab_pane.is-active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Overview specific styles */
+.xfdevs__resource__view_overview {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #495057;
+}
+
+.xfdevs__resource__view_overview p {
+    margin-bottom: 1rem;
+}
+
+.xfdevs__resource__view_overview p:last-child {
+    margin-bottom: 0;
+}
+
+/* History specific styles */
+.xfdevs__resource__view_history {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.xfdevs__resource__view_version {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    border-left: 4px solid #667eea;
+}
+
+.xfdevs__resource__view_version_info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.xfdevs__resource__view_version_number {
+    font-size: 18px;
+    font-weight: 700;
+    color: #667eea;
+}
+
+.xfdevs__resource__view_version_date {
+    font-size: 14px;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.xfdevs__resource__view_version_details {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.xfdevs__resource__view_version_details p {
+    margin-bottom: 8px;
+}
+
+.xfdevs__resource__view_version_details p:last-child {
+    margin-bottom: 0;
+}
+
+/* Discussion specific styles */
+.xfdevs__resource__view_discussion {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.xfdevs__resource__view_discussion p {
+    margin-bottom: 20px;
+    color: #6c757d;
+    font-size: 16px;
+}
+
+/* Responsive Design for Tabs */
+@media (max-width: 768px) {
+    .xfdevs__resource__tabs {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 6px;
+        gap: 4px;
+    }
+    
+    .xfdevs__resource__tab {
+        justify-content: flex-start;
+        padding: 12px 16px;
+        min-width: auto;
+    }
+    
+    .xfdevs__resource__view_version_info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .xfdevs__resource__tab {
+        padding: 10px 14px;
+        font-size: 13px;
+    }
+    
+    .xfdevs__resource__tab svg {
+        width: 16px;
+        height: 16px;
+    }
+    
+    .xfdevs__resource__view_version {
+        padding: 15px;
+    }
+    
+    .xfdevs__resource__view_version_number {
+        font-size: 16px;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .xfdevs__resource__view_breadcrumb_link {
+        color: #9ca3af;
+    }
+    
+    .xfdevs__resource__view_breadcrumb_link:hover {
+        color: #60a5fa;
+        background-color: #374151;
+    }
+    
+    .xfdevs__resource__view_breadcrumb_current {
+        color: #f3f4f6;
+    }
+    
+    .xfdevs__resource__view_breadcrumb_separator {
+        color: #6b7280;
+    }
+    
+    .xfdevs__resource__tabs {
+        background: #2d3748;
+        border-color: #4a5568;
+    }
+    
+    .xfdevs__resource__tab {
+        color: #a0aec0;
+    }
+    
+    .xfdevs__resource__tab:hover {
+        color: #e2e8f0;
+    }
+    
+    .xfdevs__resource__view_version {
+        background: #2d3748;
+        border-left-color: #667eea;
+    }
+    
+    .xfdevs__resource__view_version_info {
+        border-bottom-color: #4a5568;
+    }
+    
+    .xfdevs__resource__view_version_date,
+    .xfdevs__resource__view_discussion p {
+        color: #a0aec0;
+    }
+    
+    .xfdevs__resource__view_overview {
+        color: #e2e8f0;
+    }
+}
+]]></template>
+</templates>

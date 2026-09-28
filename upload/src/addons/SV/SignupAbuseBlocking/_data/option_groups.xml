@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<option_groups>
+  <group group_id="svSignupAbuseBlocking" icon="fa-shield" display_order="675" debug_only="0"/>
+  <group group_id="svSignupThrottling" icon="fa-shield" display_order="675" debug_only="0"/>
+</option_groups>
+ 		 		 	   	 	  		  				  	 	 		 	 	   	    	 	  	 	  	 	 	 			    	 				 		    			 	 	  		  		  	 	 			 	   		  	 	 	  	 	   	 	 	 

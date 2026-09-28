@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="public" title="olakunlevpn_ptld_countdown_timer" version_id="1000010" version_string="1.0.0"><![CDATA[<xf:macro name="countdown" arg-timeInfo="{{ null }}">
+	<xf:js src="olakunlevpn/postthreadlimitdaily/countdown.js" min="1" addon="Olakunlevpn/PostThreadLimitDaily" />
+	
+	<xf:js>
+		XF.extendObject(XF.phrases, {
+			olakunlevpn_ptld_days: "{{ phrase('olakunlevpn_ptld_days')|escape('js') }}",
+			olakunlevpn_ptld_hours: "{{ phrase('olakunlevpn_ptld_hours')|escape('js') }}",
+			olakunlevpn_ptld_minutes: "{{ phrase('olakunlevpn_ptld_minutes')|escape('js') }}",
+			olakunlevpn_ptld_seconds: "{{ phrase('olakunlevpn_ptld_seconds')|escape('js') }}",
+			olakunlevpn_ptld_can_post_again: "{{ phrase('olakunlevpn_ptld_can_post_again')|escape('js') }}"
+		});
+	</xf:js>
+
+    <xf:if is="is_array($timeInfo) && $timeInfo">
+        <span class="ptld-countdown-container">
+            {{ phrase('olakunlevpn_ptld_next_available_in') }}
+            <span class="js-ptld-countdown ptld-countdown-timer"
+                 data-xf-init="post-thread-limit-countdown"
+                 data-end-time="{{ $xf.time + $timeInfo.total_seconds }}">
+                <!-- Initial display before JS loads -->
+                <xf:if is="$timeInfo.days">
+                    <span class="ptld-time-unit ptld-days">{{ $timeInfo.days }} {{ phrase('olakunlevpn_ptld_days') }}</span>
+                </xf:if>
+                <xf:if is="$timeInfo.hours">
+                    <span class="ptld-time-unit ptld-hours">{{ $timeInfo.hours }} {{ phrase('olakunlevpn_ptld_hours') }}</span>
+                </xf:if>
+                <xf:if is="$timeInfo.minutes">
+                    <span class="ptld-time-unit ptld-minutes">{{ $timeInfo.minutes }} {{ phrase('olakunlevpn_ptld_minutes') }}</span>
+                </xf:if>
+                <xf:if is="$timeInfo.seconds">
+                    <span class="ptld-time-unit ptld-seconds">{{ $timeInfo.seconds }} {{ phrase('olakunlevpn_ptld_seconds') }}</span>
+                </xf:if>
+            </span>
+        </span>
+    </xf:if>
+</xf:macro>]]></template>
+</templates>

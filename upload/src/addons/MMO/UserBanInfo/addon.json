@@ -1,0 +1,19 @@
+{
+    "legacy_addon_id": "mmo_baninfo",
+    "title": "[MMO] User Ban Info",
+    "description": "Adds a label with information about blocking user",
+    "version_id": 2030030,
+    "version_string": "2.3.0 Beta",
+    "dev": "kick | Captain",
+    "dev_url": "https://mmo-dev.info",
+    "faq_url": "https://mmo-zone.info",
+    "support_url": "https://mmo-dev.info",
+    "extra_urls": [],
+    "require": {
+        "XF": [
+            2030032,
+            "XenForo 2.3.0 Beta 2+"
+        ]
+    },
+    "icon": "fa-ban"
+}

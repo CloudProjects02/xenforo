@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+/** 
+* @package [AL] Filter Framework
+* @author AddonsLab
+* @license https://addonslab.com/
+* @link https://addonslab.com/
+* @version 1.4.3
+This software is furnished under a license and may be used and copied
+only  in  accordance  with  the  terms  of such  license and with the
+inclusion of the above copyright notice.  This software  or any other
+copies thereof may not be provided or otherwise made available to any
+other person.  No title to and  ownership of the  software is  hereby
+transferred.                                                         
+                                                                     
+You may not reverse  engineer, decompile, defeat  license  encryption
+mechanisms, or  disassemble this software product or software product
+license.  AddonsLab may terminate this license if you don't comply with
+any of these terms and conditions.  In such event,  licensee  agrees 
+to return licensor  or destroy  all copies of software  upon termination 
+of the license.
+*/
+ -->
+
+<templates>
+  <template type="public" title="alff_field_form_element" version_id="1020572" version_string="1.2.5"><![CDATA[<xf:macro name="custom_fields_edit_select" arg-set="!" arg-definition="!" arg-editMode="!" arg-multi="" arg-namePrefix="custom_fields"
+          arg-enableFilterableLists="{{ false }}"
+>
+    <xf:if is="$enableFilterableLists">
+        <xf:macro name="alff_filterable_lists_macros::setup_edit_field" />
+    </xf:if>
+    <xf:set var="$choices" value="{{ $definition.getFacetData().getChoices($definition, $set, false) }}" />
+    <xf:set var="$allChoices" value="{{ $definition.field_choices }}" />
+    <xf:select name="{$namePrefix}[{$definition.field_id}]"
+               value="{{ $set.{$definition.field_id} === null ? '' : {$set.{$definition.field_id}} }}"
+               multiple="{$multi}"
+               size="{{$multi && $enableFilterableLists ? 1 : 0}}"
+               class="field_{$definition.field_id}"
+               data-use-ajax="{{ count($choices)<count($allChoices) ? '1' : '0' }}"
+    >
+        <xf:option value="" />
+        <xf:foreach loop="$choices" key="$key" value="$option">
+            <xf:option value="{$key}"
+                       labelclass="{$definition.getFacetData().getChoiceClass($definition, $key)}"
+            >{{$option|raw}}
+            </xf:option>
+        </xf:foreach>
+    </xf:select>
+</xf:macro>]]></template>
+  <template type="public" title="alff_filterable_lists_macros" version_id="1020572" version_string="1.2.5"><![CDATA[<xf:macro name="setup_edit_field">
+    <xf:if is="$xf.versionId < 2030000">
+        <xf:css src="select2.less"/>
+        <xf:css src="alff_select2.less"/>
+        <xf:js prod="xf/token_input-compiled.js" dev="vendor/select2/select2.full.min.js, xf/token_input.js"/>
+        <xf:js src="AL/FilterFramework/filterable-lists.js" min="0"/>
+
+        <xf:js>
+            jQuery.extend(XF.phrases, {
+            s2_error_loading: "{{ phrase('s2_error_loading')|escape('js') }}",
+            s2_input_too_long: "{{ phrase('s2_input_too_long')|escape('js') }}",
+            s2_input_too_short: "{{ phrase('s2_input_too_short')|escape('js') }}",
+            s2_loading_more: "{{ phrase('s2_loading_more')|escape('js') }}",
+            s2_maximum_selected: "{{ phrase('s2_maximum_selected')|escape('js') }}",
+            s2_no_results: "{{ phrase('s2_no_results')|escape('js') }}",
+            s2_searching: "{{ phrase('s2_searching')|escape('js') }}"
+            });
+        </xf:js>
+    </xf:if>
+</xf:macro>]]></template>
+  <template type="public" title="alff_select2.less" version_id="1020172" version_string="1.2.1"><![CDATA[.filterSelectionContainer {
+    span.select2-container {
+        margin-left: 0 !important;
+        -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Safari */
+        -khtml-user-select: none; /* Konqueror HTML */
+        -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+        user-select: none;
+    }
+
+    &.multipleSelectionContainer {
+        span.select2-container {
+            padding: 0 !important;
+        }
+    }
+
+    &.singleSelectionContainer {
+        span.select2-container.input {
+            padding-right: 1em !important;
+            background-size: 1em !important;
+            background-repeat: no-repeat !important;
+            -ltr-background-position: 100% !important;
+            white-space: nowrap;
+            word-wrap: normal;
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+            appearance: none !important;
+            -xf-select-gadget: xf-default(@xf-input--color, @xf-textColor);
+        }
+    }
+}
+
+.select2-dropdown.customFieldSelectionPopup {
+    .select2-results__options {
+        max-height: 300px;
+    }
+}
+
+.select2-dropdown.customFieldSelectionPopup {
+    .select2-search {
+        min-width: 180px !important;
+        display: block;
+        input {
+            width: 100%;
+        }
+    }
+
+    .select2-results__options {
+        max-width: 100%;
+
+    }
+}
+
+@media (max-width: @xf-formResponsive) {
+    span.input {
+        width: 100% !important;
+    }
+}
+]]></template>
+</templates>

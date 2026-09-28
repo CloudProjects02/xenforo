@@ -9,7 +9,6 @@ use DBTech\Credits\Repository\CurrencyRepository;
 use DBTech\Credits\Repository\EventTriggerRepository;
 use XF\Entity\Thread;
 use XF\InputFilterer;
-use XF\Mvc\Reply\Exception as ReplyException;
 use XF\Service\Thread\EditorService;
 
 /**
@@ -65,7 +64,7 @@ class ThreadController extends XFCP_ThreadController
 	 * @param array $extraWith
 	 *
 	 * @return \DBTech\Credits\XF\Entity\Thread
-	 * @throws ReplyException
+	 * @throws \XF\Mvc\Reply\Exception
 	 * @throws \Exception
 	 */
 	protected function assertViewableThread($threadId, array $extraWith = [])

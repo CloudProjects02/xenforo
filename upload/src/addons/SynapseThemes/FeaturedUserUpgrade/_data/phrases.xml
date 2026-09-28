@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="st_featured_user_upgrade" version_id="100" version_string="1.0.0"><![CDATA[Featured upgrade]]></phrase>
+  <phrase title="st_featured_user_upgrade_option" version_id="100" version_string="1.0.0"><![CDATA[Mark this user upgrade as featured ]]></phrase>
+</phrases>

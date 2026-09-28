@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="PAGE_CONTAINER" modification_key="bzmf_add_classes_elements" description="Adds classes and elements to support all MenuFlex options" execution_order="20" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:macro name="nav_entry"
+										arg-navId="{$navSection}"
+										arg-nav="{$navEntry}"
+										arg-selected="{{ $navSection == $pageSection }}"
+										arg-shortcut="{$i}" />]]></find>
+    <replace><![CDATA[<div class="p-navEl {{ $navSection == $pageSection ? 'is-selected' : ''}}" data-has-children="{{ $navEntry.children ? 'true' : '' }}">
+    <a href="{{ $navEntry.href ? link($navEntry.href) : '#' }}"
+       class="p-navEl-link {{ $navEntry.children ? 'p-navEl-link--splitMenu' : '' }}"
+       data-nav-id="{$navSection}"
+       data-icon-style="{{ $xf.options.bzmf_fontawesomestyle ?: 'duotone' }}">
+        {{ $navEntry.title|raw }}
+    </a>
+    <xf:if is="$navEntry.children">
+        <a data-xf-key="{$i}"
+           data-xf-click="menu"
+           data-menu-pos-ref="< .p-navEl"
+           class="p-navEl-splitTrigger"
+           role="button"
+           tabindex="0"
+           aria-label="{{ phrase('toggle_expanded')|for_attr }}"
+           aria-expanded="false"
+           aria-haspopup="true"></a>
+        <div class="menu menu--structural" data-menu="menu" aria-hidden="true">
+            <div class="menu-content">
+                <xf:foreach loop="$navEntry.children" key="$childNavId" value="$child">
+                    <div class="nav-popout">
+                        <div class="nav-container">
+                            <a href="{{ $child.href ? link($child.href) : '#' }}"
+                               class="menu-linkRow u-indentDepth0 js-offCanvasCopy {{ $childNavId == $pageSection ? 'is-selected' : '' }} {{ $child.children ? 'nav-has-children' : '' }}"
+                               data-nav-id="{$childNavId}"
+                               data-icon-style="{{ $xf.options.bzmf_fontawesomestyle ?: 'duotone' }}">
+                                {{ $child.title|raw }}
+                            </a>
+                            <xf:if is="{$child.children} && {$xf.options.bzmf_tieredmenus}">
+                                <a class="offCanvasMenu-link offCanvasMenu-link--splitToggle" data-xf-click="toggle" data-target="< :up :next" role="button" tabindex="0"></a>
+                            </xf:if>
+                        </div>
+                        <xf:if is="$child.children">
+                            <div class="nav-popout--menu" data-menu="menu" aria-hidden="true">
+                                <xf:foreach loop="$child.children" key="$grandChildNavId" value="$grandChild">
+                                    <div class="nav-popout">
+                                        <div class="nav-container">
+                                            <a href="{{ $grandChild.href ? link($grandChild.href) : '#' }}"
+                                               class="menu-linkRow u-indentDepth1 js-offCanvasCopy {{ $grandChildNavId == $pageSection ? 'is-selected' : '' }} {{ $grandChild.children ? 'nav-has-children' : '' }}"
+                                               data-nav-id="{$grandChildNavId}"
+                                               data-icon-style="{{ $xf.options.bzmf_fontawesomestyle ?: 'duotone' }}">
+                                                {{ $grandChild.title|raw }}
+                                            </a>
+                                            <xf:if is="{$grandChild.children} && {$xf.options.bzmf_tieredmenus}">
+                                                <a class="offCanvasMenu-link offCanvasMenu-link--splitToggle" data-xf-click="toggle" data-target="< :up :next" role="button" tabindex="0"></a>
+                                            </xf:if>
+                                        </div>
+                                        <xf:if is="$grandChild.children">
+                                            <div class="nav-popout--menu" data-menu="menu" aria-hidden="true">
+                                                <xf:foreach loop="$grandChild.children" key="$greatGrandChildNavId" value="$greatGrandChild">
+                                                    <div class="nav-popout">
+                                                        <div class="nav-container">
+                                                            <a href="{{ $greatGrandChild.href ? link($greatGrandChild.href) : '#' }}"
+                                                               class="menu-linkRow u-indentDepth2 js-offCanvasCopy {{ $greatGrandChildNavId == $pageSection ? 'is-selected' : '' }} {{ $greatGrandChild.children ? 'nav-has-children' : '' }}"
+                                                               data-nav-id="{$greatGrandChildNavId}"
+                                                               data-icon-style="{{ $xf.options.bzmf_fontawesomestyle ?: 'duotone' }}">
+                                                                {{ $greatGrandChild.title|raw }}
+                                                            </a>
+                                                            <xf:if is="{$greatGrandChild.children} && {$xf.options.bzmf_tieredmenus}">
+                                                                <a class="offCanvasMenu-link offCanvasMenu-link--splitToggle" data-xf-click="toggle" data-target="< :up :next" role="button" tabindex="0"></a>
+                                                            </xf:if>
+                                                        </div>
+                                                        <xf:if is="$greatGrandChild.children">
+                                                            <div class="nav-popout--menu" data-menu="menu" aria-hidden="true">
+                                                                <xf:foreach loop="$greatGrandChild.children" key="$greatGreatGrandChildNavId" value="$greatGreatGrandChild">
+                                                                    <div class="nav-popout">
+                                                                        <div class="nav-container">
+                                                                            <a href="{{ $greatGreatGrandChild.href ? link($greatGreatGrandChild.href) : '#' }}"
+                                                                               class="menu-linkRow u-indentDepth3 js-offCanvasCopy {{ $greatGreatGrandChildNavId == $pageSection ? 'is-selected' : '' }}"
+                                                                               data-nav-id="{$greatGreatGrandChildNavId}"
+                                                                               data-icon-style="{{ $xf.options.bzmf_fontawesomestyle ?: 'duotone' }}">
+                                                                                {{ $greatGreatGrandChild.title|raw }}
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </xf:foreach>
+                                                            </div>
+                                                            <hr class="menu-separator">
+                                                        </xf:if>
+                                                    </div>
+                                                </xf:foreach>
+                                            </div>
+                                            <hr class="menu-separator">
+                                        </xf:if>
+                                    </div>
+                                </xf:foreach>
+                            </div>
+                            <hr class="menu-separator">
+                        </xf:if>
+                    </div>
+                </xf:foreach>
+            </div>
+        </div>
+    </xf:if>
+</div>]]></replace>
+  </modification>
+  <modification type="public" template="PAGE_CONTAINER" modification_key="bzmf_inject_less_js" description="Injects custom LESS &amp; JavaScript dependent upon MenuFlex option selections" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[</head>]]></find>
+    <replace><![CDATA[<xf:if is="{$xf.options.bzmf_openmenusonhover} && {$xf.options.bzmf_tieredmenus}">
+	<xf:js addon="BZ/MenuFlex" src="bz/menuflex/bzmf_full.js" min="1" />
+<xf:elseif is="{$xf.options.bzmf_openmenusonhover}" />
+	<xf:js addon="BZ/MenuFlex" src="bz/menuflex/bzmf_openmenusonhover.js" min="1" />
+<xf:elseif is="{$xf.options.bzmf_tieredmenus}" />
+	<xf:js addon="BZ/MenuFlex" src="bz/menuflex/bzmf_tieredmenus.js" min="1" />
+</xf:if>
+<xf:if is="{$xf.options.bzmf_openmenusonhover} || {$xf.options.bzmf_tieredmenus} || {$xf.options.bzmf_fontawesome}">
+    <xf:css src="bzmf_final.less" />
+</xf:if>
+$0]]></replace>
+  </modification>
+  <modification type="public" template="PAGE_CONTAINER" modification_key="bzmf_searchbuttontarget" description="Add data-nav-id to Search button for Font Awesome icon targeting" execution_order="30" enabled="1" action="str_replace">
+    <find><![CDATA[<a href="{{ link('search') }}"
+								class="p-navgroup-link p-navgroup-link--iconic p-navgroup-link--search"
+								data-xf-click="menu"
+								data-xf-key="{{ phrase('shortcut.search_menu')|for_attr }}"
+								aria-label="{{ phrase('search')|for_attr }}"
+								aria-expanded="false"
+								aria-haspopup="true"
+								title="{{ phrase('search')|for_attr }}">
+								<i aria-hidden="true"></i>
+								<span class="p-navgroup-linkText">{{ phrase('search') }}</span>
+							</a>]]></find>
+    <replace><![CDATA[<a href="{{ link('search') }}"
+								class="p-navgroup-link p-navgroup-link--iconic p-navgroup-link--search"
+								data-nav-id="search"
+   								data-xf-click="menu"
+								data-xf-key="{{ phrase('shortcut.search_menu')|for_attr }}"
+								aria-label="{{ phrase('search')|for_attr }}"
+								aria-expanded="false"
+								aria-haspopup="true"
+								title="{{ phrase('search')|for_attr }}">
+								<xf:if is="!{$xf.options.bzmf_fontawesome.mainmenu}">
+        							<i aria-hidden="true"></i>
+    							</xf:if>
+								<span class="p-navgroup-linkText">{{ phrase('search') }}</span>
+							</a>]]></replace>
+  </modification>
+  <modification type="public" template="PAGE_CONTAINER" modification_key="bzmf_staffbar" description="Add data-nav-id to Staff Bar links for Font Awesome icon targeting" execution_order="40" enabled="1" action="str_replace">
+    <find><![CDATA[<a class="p-staffBar-link menuTrigger" data-xf-click="menu" data-xf-key="alt+m" role="button" tabindex="0" aria-expanded="false" aria-haspopup="true">{{ phrase('moderator') }}</a>
+							<div class="menu" data-menu="menu" aria-hidden="true">
+								<div class="menu-content">
+									<h4 class="menu-header">{{ phrase('moderator_tools') }}</h4>
+									<xf:contentcheck>
+										<!--[XF:mod_tools_menu:top]-->
+										<xf:if is="$xf.visitor.is_moderator">
+											<a href="{{ link('approval-queue') }}" class="menu-linkRow">{{ phrase('approval_queue') }}</a>
+										</xf:if>
+										<xf:if is="$xf.visitor.is_moderator && !$xf.options.reportIntoForumId">
+											<a href="{{ link('reports') }}" class="menu-linkRow" title="{{ $xf.session.reportCounts.lastBuilt ? phrase('last_report_update:')|for_attr . ' ' . date_time($xf.session.reportCounts.lastBuilt) : '' }}">{{ phrase('reports') }}</a>
+										</xf:if>
+										<!--[XF:mod_tools_menu:bottom]-->
+									</xf:contentcheck>
+								</div>
+							</div>
+						</xf:if>
+
+						<xf:if is="$xf.visitor.is_admin">
+							<a href="{{ base_url('admin.php') }}" class="p-staffBar-link" target="_blank">{{ phrase('admin') }}</a>]]></find>
+    <replace><![CDATA[<a class="p-staffBar-link menuTrigger" data-xf-click="menu" data-xf-key="alt+m" data-nav-id="staffmod" role="button" tabindex="0" aria-expanded="false" aria-haspopup="true">{{ phrase('moderator') }}</a>
+							<div class="menu" data-menu="menu" aria-hidden="true">
+								<div class="menu-content">
+									<h4 class="menu-header">{{ phrase('moderator_tools') }}</h4>
+									<xf:contentcheck>
+										<!--[XF:mod_tools_menu:top]-->
+										<xf:if is="$xf.visitor.is_moderator">
+											<a href="{{ link('approval-queue') }}" data-nav-id="staffmodqueue" class="menu-linkRow">{{ phrase('approval_queue') }}</a>
+										</xf:if>
+										<xf:if is="$xf.visitor.is_moderator && !$xf.options.reportIntoForumId">
+											<a href="{{ link('reports') }}" data-nav-id="staffmodreports" class="menu-linkRow" title="{{ $xf.session.reportCounts.lastBuilt ? phrase('last_report_update:')|for_attr . ' ' . date_time($xf.session.reportCounts.lastBuilt) : '' }}">{{ phrase('reports') }}</a>
+										</xf:if>
+										<!--[XF:mod_tools_menu:bottom]-->
+									</xf:contentcheck>
+								</div>
+							</div>
+						</xf:if>
+
+						<xf:if is="$xf.visitor.is_admin">
+							<a href="{{ base_url('admin.php') }}" data-nav-id="staffadmin" class="p-staffBar-link" target="_blank">{{ phrase('admin') }}</a>]]></replace>
+  </modification>
+</template_modifications>

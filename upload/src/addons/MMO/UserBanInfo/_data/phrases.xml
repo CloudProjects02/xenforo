@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="mubi_automatically_triggered" version_id="2010170" version_string="2.1.1"><![CDATA[Automatically triggered]]></phrase>
+  <phrase title="mubi_ban_info_message" version_id="2010170" version_string="2.1.1"><![CDATA[Please note, if you want to make a deal with this user, that it is blocked.]]></phrase>
+  <phrase title="mubi_baninfo_explain" version_id="2010170" version_string="2.1.1"><![CDATA[If you are planning a transaction with his participation, we strongly recommend that you do not make it before the end of the blockage. If the user has already deceived you in any way, please contact our arbitration office so that we can resolve the problem as soon as possible.]]></phrase>
+  <phrase title="mubi_baninfo_header" version_id="2010170" version_string="2.1.1"><![CDATA[The user {user} is blocked]]></phrase>
+  <phrase title="permission.general_mubi_viewBannedProfile" version_id="2010370" version_string="2.1.3"><![CDATA[View Banned Profile]]></phrase>
+</phrases>

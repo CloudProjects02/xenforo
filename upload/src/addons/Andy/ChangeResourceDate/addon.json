@@ -1,0 +1,17 @@
+{
+    "legacy_addon_id": "",
+    "title": "Change resource date",
+    "description": "Allows changing the date and time of a resource.",
+    "version_id": 15,
+    "version_string": "1.5",
+    "dev": "XF2 Addons",
+    "dev_url": "https://www.xf2addons.com/",
+    "faq_url": "",
+    "support_url": "",
+    "extra_urls": {
+        "NullForums": "https://nullforums.net",
+        "Download updates": "https://nullforums.net/resources/change-resource-date.11908"
+    },
+    "require": [],
+    "icon": "icon.jpg"
+}

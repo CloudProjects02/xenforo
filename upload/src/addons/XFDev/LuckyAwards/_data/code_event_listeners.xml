@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<code_event_listeners>
+  <listener event_id="entity_post_delete" execute_order="10" callback_class="XFDev\LuckyAwards\Listener" callback_method="entityAwardDelete" active="1" hint="AddonFlare\AwardSystem\Entity\Award" description="This Deletes Lucky Awards when its associated Award is Deleted"/>
+</code_event_listeners>

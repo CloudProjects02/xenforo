@@ -4,7 +4,6 @@ namespace DBTech\Shop\Entity;
 
 use XF\Entity\AbstractPrefixGroup;
 use XF\Mvc\Entity\Structure;
-use XF\Phrase;
 
 /**
  * COLUMNS
@@ -12,11 +11,11 @@ use XF\Phrase;
  * @property int $display_order
  *
  * GETTERS
- * @property-read Phrase|string $title
+ * @property \XF\Phrase|string $title
  *
  * RELATIONS
- * @property-read \XF\Entity\Phrase|null $MasterTitle
- * @property-read \XF\Mvc\Entity\AbstractCollection<\DBTech\Shop\Entity\ItemPrefix> $Prefixes
+ * @property \XF\Entity\Phrase $MasterTitle
+ * @property \XF\Mvc\Entity\AbstractCollection|\DBTech\Shop\Entity\ItemPrefix[] $Prefixes
  */
 class ItemPrefixGroup extends AbstractPrefixGroup
 {
@@ -27,7 +26,7 @@ class ItemPrefixGroup extends AbstractPrefixGroup
 	{
 		return 'DBTech\Shop:ItemPrefix';
 	}
-
+	
 	/**
 	 * @return string
 	 */
@@ -37,9 +36,9 @@ class ItemPrefixGroup extends AbstractPrefixGroup
 	}
 
 	/**
-	 * @param Structure $structure
+	 * @param \XF\Mvc\Entity\Structure $structure
 	 *
-	 * @return Structure
+	 * @return \XF\Mvc\Entity\Structure
 	 */
 	public static function getStructure(Structure $structure): Structure
 	{

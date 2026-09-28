@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="dbtech_shop_itemtype_description.shopusernameicon" version_id="1011370" version_string="1.1.13"><![CDATA[Shop Username Icon]]></phrase>
+  <phrase title="dbtech_shop_itemtype_title.shopusernameicon" version_id="1011370" version_string="1.1.13"><![CDATA[Shop Username Icon]]></phrase>
+  <phrase title="xfdev_shop_username_icon" version_id="1011370" version_string="1.1.13"><![CDATA[Shop Username Icons]]></phrase>
+  <phrase title="xfdev_shop_usernameicon_activate_one_at_a_time" version_id="1011370" version_string="1.1.13"><![CDATA[You can activate only one username icon at a time.]]></phrase>
+</phrases>

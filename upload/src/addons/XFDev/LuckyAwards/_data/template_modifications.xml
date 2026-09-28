@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="af_as_awards_wrapper" modification_key="xfdev_lucky_awards_category_in_awards_category" description="Adds Lucky Awards category in Awards Categories" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[</xf:if>
+		</xf:foreach>]]></find>
+    <replace><![CDATA[$0
+<li class="categoryList-item">
+			<div class="categoryList-itemRow">
+				<a href="{{ link('lucky-awards/list', null) }}" class="categoryList-link luckyawards-category icon category-lucky-award">
+					Lucky Awards
+				</a>
+			</div>
+		</li>
+]]></replace>
+  </modification>
+</template_modifications>

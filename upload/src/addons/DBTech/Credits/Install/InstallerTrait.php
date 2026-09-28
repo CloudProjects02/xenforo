@@ -6,7 +6,6 @@ use XF\AddOn\AddOn;
 use XF\Admin\App;
 use XF\Behavior\DevOutputWritable as DevOutputWritableBehavior;
 use XF\Db\AbstractAdapter;
-use XF\Db\Exception as DbException;
 use XF\Db\Schema\AbstractDdl;
 use XF\Db\Schema\Alter;
 use XF\Db\Schema\Column;
@@ -86,7 +85,7 @@ trait InstallerTrait
 	 * @param string $permissionId
 	 * @param int[] $userGroups
 	 *
-	 * @throws DbException
+	 * @throws \XF\Db\Exception
 	 */
 	protected function applyGlobalPermissionByGroup(string $groupId, string $permissionId, array $userGroups): void
 	{
@@ -105,7 +104,7 @@ trait InstallerTrait
 	 * @param string $applyPermissionId
 	 * @param int $userGroupId
 	 *
-	 * @throws DbException
+	 * @throws \XF\Db\Exception
 	 */
 	public function applyGlobalPermissionForGroup(string $applyGroupId, string $applyPermissionId, int $userGroupId): void
 	{
@@ -125,7 +124,7 @@ trait InstallerTrait
 	 * @param int $applyValue
 	 * @param int $userGroupId
 	 *
-	 * @throws DbException
+	 * @throws \XF\Db\Exception
 	 */
 	public function applyGlobalPermissionIntForGroup(
 		string $applyGroupId,
@@ -176,7 +175,7 @@ trait InstallerTrait
 	 * @param string $newGroupId
 	 * @param string $newPermissionId
 	 *
-	 * @throws DbException
+	 * @throws \XF\Db\Exception
 	 */
 	protected function renamePermission(
 		string $oldGroupId,
@@ -733,7 +732,7 @@ trait InstallerTrait
 	{
 		$es = Listener::getElasticsearchApi();
 
-		$configurer = \XF::app()->service(Configurer::class, $es);
+		$configurer = \XF::service(Configurer::class, $es);
 		$testError = null;
 		$isOptimizable = false;
 
@@ -747,7 +746,7 @@ trait InstallerTrait
 				{
 					if ($es->indexExists())
 					{
-						$optimizer = \XF::app()->service(Optimizer::class, $es);
+						$optimizer = \XF::service(Optimizer::class, $es);
 						$isOptimizable = $optimizer->isOptimizable();
 					}
 					else

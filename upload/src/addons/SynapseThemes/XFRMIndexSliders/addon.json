@@ -1,0 +1,14 @@
+{
+    "legacy_addon_id": "",
+    "title": "[SynapseThemes] XFRM: Index Sliders",
+    "description": "Adds two customizable resource slider widgets: Top Resources and Recent Resources for XenForo Resource Manager",
+    "version_id": 100,
+    "version_string": "1.0.0",
+    "dev": "Synapse-Themes",
+    "dev_url": "https://synapse-themes.cc",
+    "faq_url": "",
+    "support_url": "",
+    "extra_urls": [],
+    "require": [],
+    "icon": "fa-upload"
+}

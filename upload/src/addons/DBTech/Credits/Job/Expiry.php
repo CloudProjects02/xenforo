@@ -13,7 +13,7 @@ use XF\PrintableException;
 
 class Expiry extends AbstractRebuildJob
 {
-	/** @var AbstractCollection<Currency> */
+	/** @var \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Currency> */
 	protected AbstractCollection $currencies;
 
 

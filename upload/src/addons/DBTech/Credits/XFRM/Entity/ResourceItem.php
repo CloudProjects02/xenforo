@@ -5,8 +5,6 @@
 namespace DBTech\Credits\XFRM\Entity;
 
 use DBTech\Credits\Repository\EventTriggerRepository;
-use XF\Entity\Attachment;
-use XF\Mvc\Entity\AbstractCollection;
 use XF\Repository\AttachmentRepository;
 use XFRM\Finder\ResourceVersion;
 
@@ -34,7 +32,7 @@ class ResourceItem extends XFCP_ResourceItem
 			{
 				$attachRepo = \XF::app()->repository(AttachmentRepository::class);
 
-				/** @var AbstractCollection<Attachment> $attachments */
+				/** @var \XF\Mvc\Entity\AbstractCollection<\XF\Entity\Attachment> $attachments */
 				$attachments = $attachRepo->findAttachmentsByContent('resource_version', $this->current_version_id)
 					->with('Data')
 					->fetch()
@@ -80,7 +78,7 @@ class ResourceItem extends XFCP_ResourceItem
 			{
 				$attachRepo = \XF::app()->repository(AttachmentRepository::class);
 
-				/** @var AbstractCollection<Attachment> $attachments */
+				/** @var \XF\Mvc\Entity\AbstractCollection<\XF\Entity\Attachment> $attachments */
 				$attachments = $attachRepo->findAttachmentsByContent('resource_version', $this->current_version_id)
 					->with('Data')
 					->fetch()
@@ -136,7 +134,7 @@ class ResourceItem extends XFCP_ResourceItem
 
 			$attachRepo = \XF::app()->repository(AttachmentRepository::class);
 
-			/** @var AbstractCollection<Attachment> $attachments */
+			/** @var \XF\Mvc\Entity\AbstractCollection<\XF\Entity\Attachment> $attachments */
 			$attachments = $attachRepo->findAttachmentsByContent('resource_version', $firstVersion->resource_version_id)
 				->with('Data')
 				->fetch()
@@ -186,7 +184,7 @@ class ResourceItem extends XFCP_ResourceItem
 			{
 				$attachRepo = \XF::app()->repository(AttachmentRepository::class);
 
-				/** @var AbstractCollection<Attachment> $attachments */
+				/** @var \XF\Mvc\Entity\AbstractCollection<\XF\Entity\Attachment> $attachments */
 				$attachments = $attachRepo->findAttachmentsByContent(
 					'resource_version',
 					$firstVersion->resource_version_id

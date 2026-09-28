@@ -1,0 +1,20 @@
+{
+    "legacy_addon_id": "",
+    "title": "[MMO] Core Library",
+    "description": "A number of helper utilities",
+    "version_id": 2020770,
+    "version_string": "2.2.7",
+    "dev": "kick",
+    "dev_url": "https://mmo-dev.info",
+    "faq_url": "https://mmo-zone.info",
+    "support_url": "https://mmo-zone.info",
+    "extra_urls": [],
+    "require": {
+        "php": [
+            "7.3.0",
+            "PHP 7.3.0+"
+        ]
+    },
+    "icon": "fad fa-tools",
+    "composer_autoload": "_vendor/composer"
+}

@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="synapsethemes_xfrmindexsliders_widget_recent_resources_options" version_id="100" version_string="1.0.0"><![CDATA[<xf:formrow label="{{ phrase('limit') }}">
+    <xf:textbox name="options[limit]" value="{$options.limit}" type="number" min="1" max="20" step="1" />
+    <div class="inputExplain">{{ phrase('synapsethemes_xfrmindexsliders_widget_limit_hint') }}</div>
+</xf:formrow> ]]></template>
+  <template type="admin" title="synapsethemes_xfrmindexsliders_widget_top_resources_options" version_id="100" version_string="1.0.0"><![CDATA[<xf:formrow label="{{ phrase('limit') }}">
+    <xf:textbox name="options[limit]" value="{$options.limit}" type="number" min="1" max="20" step="1" />
+    <div class="inputExplain">{{ phrase('synapsethemes_xfrmindexsliders_widget_limit_hint') }}</div>
+</xf:formrow> ]]></template>
+  <template type="public" title="synapsethemes_resource_card.css" version_id="100" version_string="1.0.0"><![CDATA[/* Resource Cards */
+.xfdevs__resource__card {
+    background: #ebebeb;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    transition: all 0.3s;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    max-width: 384px;
+}
+
+
+/* Card padding */
+.xfdevs__resource__card_padding {
+    padding: 1rem;
+}
+
+/* Image container */
+.xfdevs__resource__image_container {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+	box-shadow: 0px 11px 20px 0px rgba(0, 0, 0, 0.12);
+}
+
+.xfdevs__resource__image_wrapper {
+    aspect-ratio: 16/9;
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+}
+
+.xfdevs__resource__card_image {
+    position: relative;
+    height: 12rem;
+    overflow: hidden;
+}
+
+.xfdevs__resource__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.xfdevs__resource__card:hover .xfdevs__resource__image {
+    transform: scale(1.05);
+}
+
+/* Overlay */
+.xfdevs__resource__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to top, #FFA2A2 0%, transparent 100%);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.xfdevs__resource__title {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.xfdevs__resource__location {
+    display: flex;
+    align-items: center;
+	justify-content: space-between;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.875rem;
+}
+
+.xfdevs__resource__location_icon {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.25rem;
+}
+
+.xfdevs__resource__image_overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.xfdevs__resource__menu_button {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 2rem;
+    height: 2rem;
+    background: rgba(0, 0, 0, 0.2);
+    border: none;
+    border-radius: 0.25rem;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.xfdevs__resource__menu_button:hover {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.xfdevs__resource__menu_icon {
+    width: 1rem;
+    height: 1rem;
+}
+
+.xfdevs__resource__card_overlay_content {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    right: 5rem;
+}
+
+.xfdevs__resource__card_title {
+    color: white;
+    font-weight: bold;
+    font-size: 1.125rem;
+    line-height: 1.25;
+    margin-bottom: 0.25rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.xfdevs__resource__card_category {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.875rem;
+}
+
+.xfdevs__resource__download_button {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    backdrop-filter: blur(4px);
+}
+
+.xfdevs__resource__download_button:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.xfdevs__resource__category {
+	display: flex;
+	align-items: center;
+	gap: .2rem;
+}
+
+/* Download button (new style) */
+
+.xfdevs__resource__download_btn {
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+    color: white;
+    border: none;
+    border-radius: 9999px;
+    padding: 0.5rem 1.5rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.xfdevs__resource__download_btn:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* More options button (new style) */
+.xfdevs__resource__more_btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(4px);
+    border: none;
+    border-radius: 50%;
+    padding: 0.5rem;
+    cursor: pointer;
+    color: white;
+    transition: background-color 0.2s;
+}
+
+.xfdevs__resource__more_btn:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.xfdevs__resource__more_icon {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+/* Details section (new style) */
+.xfdevs__resource__details {
+    padding: 1.25rem;
+}
+
+.xfdevs__resource__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+}
+
+.xfdevs__resource__info {
+    display: flex;
+    flex-direction: column;
+}
+
+.xfdevs__resource__difficulty {
+    font-size: 1.125rem;
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 0.25rem;
+}
+
+.xfdevs__resource__creator {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.xfdevs__resource__chart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.xfdevs__resource__card_content {
+    padding: 1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.xfdevs__resource__card_meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.xfdevs__resource__price_badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.xfdevs__resource__price_badge__free {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.xfdevs__resource__price_badge__paid {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.xfdevs__resource__rating {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.xfdevs__resource__star {
+    width: 0.75rem;
+    height: 0.75rem;
+    fill: #fbbf24;
+    color: #fbbf24;
+}
+
+.xfdevs__resource__author {
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+.xfdevs__resource__author span {
+    color: #111827;
+    font-weight: 500;
+}
+]]></template>
+  <template type="public" title="synapsethemes_xfrmindexsliders_widget_recent_resources" version_id="100" version_string="1.0.0"><![CDATA[<link rel="stylesheet" href="https://unpkg.com/swiper@11/swiper-bundle.min.css" />
+<script src="https://unpkg.com/swiper@11/swiper-bundle.min.js"></script>
+<xf:js>
+    // Initialize Swiper for Recent Resources
+    const recentSwiper = new Swiper('#recentSlider', {
+        slidesPerView: 'auto',
+        spaceBetween: 24,
+        navigation: {
+            nextEl: '#recentSlider .swiper-button-next',
+            prevEl: '#recentSlider .swiper-button-prev',
+        },
+        breakpoints: {
+            640: {
+                slidesPerView: 2,
+            },
+            768: {
+                slidesPerView: 3,
+            },
+            1024: {
+                slidesPerView: 3,
+            }
+        }
+    });
+</xf:js>
+<xf:css src="synapsethemes_resource_card.css" />
+<!-- Recent Uploads Slider -->
+
+<section class="xfdevs__resource__slider_section" data-xf-init="st-resource-slider">
+    <h2 class="xfdevs__resource__section_title">Recent Uploads</h2>
+    <div class="xfdevs__resource__slider swiper" id="recentSlider">
+        <div class="swiper-wrapper">
+            <!-- Resource Card 1: Modern Dark Theme Pro -->
+            <div class="swiper-slide">
+                <xf:foreach loop="$resources" value="$resource">
+                <div class="xfdevs__resource__card">
+                    <div class="xfdevs__resource__card_padding">
+                        <div class="xfdevs__resource__image_container">
+                            <div class="xfdevs__resource__image_wrapper">
+                                <xf:if is="$resource.icon_date">
+                                    <img src="{{ $resource.getIconUrl('xl') }}" 
+                                         alt="{{ $resource.title }}" 
+                                         class="xfdevs__resource__image">
+                                <xf:else />
+                                    <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?w=300&h=200&fit=crop&crop=center" 
+                                         alt="{{ $resource.title }}" 
+                                         class="xfdevs__resource__image">
+                                </xf:if>
+                            </div>
+
+                            <!-- Overlay content -->
+                            <div class="xfdevs__resource__overlay">
+                                <div class="xfdevs__resource__location">
+                                    <div class="xfdevs__resource__category">
+                                        <svg class="xfdevs__resource__location_icon" width="20" height="20" viewBox="0 0 640 512"><path fill="currentColor" d="M425.7 256c-16.9 0-32.8-9-41.4-23.4L320 126l-64.2 106.6c-8.7 14.5-24.6 23.5-41.5 23.5c-4.5 0-9-.6-13.3-1.9L64 215v178c0 14.7 10 27.5 24.2 31l216.2 54.1c10.2 2.5 20.9 2.5 31 0L551.8 424c14.2-3.6 24.2-16.4 24.2-31V215l-137 39.1c-4.3 1.3-8.8 1.9-13.3 1.9m212.6-112.2L586.8 41c-3.1-6.2-9.8-9.8-16.7-8.9L320 64l91.7 152.1c3.8 6.3 11.4 9.3 18.5 7.3l197.9-56.5c9.9-2.9 14.7-13.9 10.2-23.1M53.2 41L1.7 143.8c-4.6 9.2.3 20.2 10.1 23l197.9 56.5c7.1 2 14.7-1 18.5-7.3L320 64L69.8 32.1c-6.9-.8-13.5 2.7-16.6 8.9"/></svg>
+                                        <span>{{ $resource.Category.title }}</span>	
+                                    </div>
+
+                                    <!-- Download button -->
+                                    <div class="xfdevs__resource__download_container">
+                                        <a href="{{ link('resources', $resource) }}" class="xfdevs__resource__download_btn">
+                                            Download
+                                        </a>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom section with details -->
+                    <div class="xfdevs__resource__details">
+                        <div class="xfdevs__resource__header">
+                            <div class="xfdevs__resource__info">
+                                <h3 class="xfdevs__resource__difficulty">{{ $resource.title }}</h3>
+                                <p class="xfdevs__resource__creator">
+                                    <xf:if is="$resource.last_update > $resource.resource_date">
+                                        Updated by <xf:username user="$resource.User" />
+                                    <xf:else />
+                                        Uploaded by <xf:username user="$resource.User" />
+                                    </xf:if>
+                                </p>
+                            </div>
+                            <div class="xfdevs__resource__chart">
+                                <div class="xfdevs__resource__rating">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="m12 17.275l-4.15 2.5q-.275.175-.575.15t-.525-.2t-.35-.437t-.05-.588l1.1-4.725L3.775 10.8q-.25-.225-.312-.513t.037-.562t.3-.45t.55-.225l4.85-.425l1.875-4.45q.125-.3.388-.45t.537-.15t.537.15t.388.45l1.875 4.45l4.85.425q.35.05.55.225t.3.45t.038.563t-.313.512l-3.675 3.175l1.1 4.725q.075.325-.05.588t-.35.437t-.525.2t-.575-.15z"/></svg>
+                                    <span>{{ number($resource.rating_avg, 1) }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="xfdevs__resource__stats">
+                            <div class="xfdevs__resource__stat">
+                                <span class="xfdevs__resource__stat_value">{{ $resource.download_count|number_short }}</span>
+                                <span class="xfdevs__resource__stat_label">Downloads</span>
+                            </div>
+                            <div class="xfdevs__resource__stat">
+                                <span class="xfdevs__resource__stat_value">{$resource.CurrentVersion.version_string}</span>
+                                <span class="xfdevs__resource__stat_label">Version</span>
+                            </div>
+                            <div class="xfdevs__resource__stat">
+                                <span class="xfdevs__resource__stat_value">
+                                    <xf:if is="$resource.last_update > $resource.resource_date">
+                                        <xf:date time="$resource.last_update" />
+                                    <xf:else />
+                                        <xf:date time="$resource.resource_date" />
+                                    </xf:if>
+                                </span>
+                                <span class="xfdevs__resource__stat_label">
+                                    <xf:if is="$resource.last_update > $resource.resource_date">
+                                        Updated
+                                    <xf:else />
+                                        Uploaded
+                                    </xf:if>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </xf:foreach>   
+            </div>
+
+
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+</section>
+]]></template>
+  <template type="public" title="synapsethemes_xfrmindexsliders_widget_top_resources" version_id="100" version_string="1.0.0"><![CDATA[<link rel="stylesheet" href="https://unpkg.com/swiper@11/swiper-bundle.min.css" />
+<script src="https://unpkg.com/swiper@11/swiper-bundle.min.js"></script>
+<xf:js>
+    // Initialize Swiper for Recent Resources
+    const recentSwiper = new Swiper('#recentSlider', {
+        slidesPerView: 'auto',
+        spaceBetween: 24,
+        navigation: {
+            nextEl: '#recentSlider .swiper-button-next',
+            prevEl: '#recentSlider .swiper-button-prev',
+        },
+        breakpoints: {
+            640: {
+                slidesPerView: 2,
+            },
+            768: {
+                slidesPerView: 3,
+            },
+            1024: {
+                slidesPerView: 3,
+            }
+        }
+    });
+</xf:js>
+<xf:css src="synapsethemes_resource_card.css" />
+<!-- Recent Uploads Slider -->
+
+<section class="xfdevs__resource__slider_section" data-xf-init="st-resource-slider">
+    <h2 class="xfdevs__resource__section_title">Top Resources</h2>
+    <div class="xfdevs__resource__slider swiper" id="topSlider">
+        <div class="swiper-wrapper">
+            <!-- Resource Card 1: Modern Dark Theme Pro -->
+            <div class="swiper-slide">
+                <xf:foreach loop="$resources" value="$resource">
+                <div class="xfdevs__resource__card">
+                    <div class="xfdevs__resource__card_padding">
+                        <div class="xfdevs__resource__image_container">
+                            <div class="xfdevs__resource__image_wrapper">
+                                <xf:if is="$resource.icon_date">
+                                    <img src="{{ $resource.getIconUrl('m') }}" 
+                                         alt="{{ $resource.title }}" 
+                                         class="xfdevs__resource__image">
+                                <xf:else />
+                                    <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?w=300&h=200&fit=crop&crop=center" 
+                                         alt="{{ $resource.title }}" 
+                                         class="xfdevs__resource__image">
+                                </xf:if>
+                            </div>
+
+                            <!-- Overlay content -->
+                            <div class="xfdevs__resource__overlay">
+                                <div class="xfdevs__resource__location">
+                                    <div class="xfdevs__resource__category">
+                                        <svg class="xfdevs__resource__location_icon" width="20" height="20" viewBox="0 0 640 512"><path fill="currentColor" d="M425.7 256c-16.9 0-32.8-9-41.4-23.4L320 126l-64.2 106.6c-8.7 14.5-24.6 23.5-41.5 23.5c-4.5 0-9-.6-13.3-1.9L64 215v178c0 14.7 10 27.5 24.2 31l216.2 54.1c10.2 2.5 20.9 2.5 31 0L551.8 424c14.2-3.6 24.2-16.4 24.2-31V215l-137 39.1c-4.3 1.3-8.8 1.9-13.3 1.9m212.6-112.2L586.8 41c-3.1-6.2-9.8-9.8-16.7-8.9L320 64l91.7 152.1c3.8 6.3 11.4 9.3 18.5 7.3l197.9-56.5c9.9-2.9 14.7-13.9 10.2-23.1M53.2 41L1.7 143.8c-4.6 9.2.3 20.2 10.1 23l197.9 56.5c7.1 2 14.7-1 18.5-7.3L320 64L69.8 32.1c-6.9-.8-13.5 2.7-16.6 8.9"/></svg>
+                                        <span>{{ $resource.Category.title }}</span>	
+                                    </div>
+
+                                    <!-- Download button -->
+                                    <div class="xfdevs__resource__download_container">
+                                        <a href="{{ link('resources', $resource) }}" class="xfdevs__resource__download_btn">
+                                            Download
+                                        </a>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bottom section with details -->
+                    <div class="xfdevs__resource__details">
+                        <div class="xfdevs__resource__header">
+                            <div class="xfdevs__resource__info">
+                                <h3 class="xfdevs__resource__difficulty">{{ $resource.title }}</h3>
+                                <p class="xfdevs__resource__creator">
+                                    <xf:if is="$resource.last_update > $resource.resource_date">
+                                        Updated by <xf:username user="$resource.User" />
+                                    <xf:else />
+                                        Uploaded by <xf:username user="$resource.User" />
+                                    </xf:if>
+                                </p>
+                            </div>
+                            <div class="xfdevs__resource__chart">
+                                <div class="xfdevs__resource__rating">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="m12 17.275l-4.15 2.5q-.275.175-.575.15t-.525-.2t-.35-.437t-.05-.588l1.1-4.725L3.775 10.8q-.25-.225-.312-.513t.037-.562t.3-.45t.55-.225l4.85-.425l1.875-4.45q.125-.3.388-.45t.537-.15t.537.15t.388.45l1.875 4.45l4.85.425q.35.05.55.225t.3.45t.038.563t-.313.512l-3.675 3.175l1.1 4.725q.075.325-.05.588t-.35.437t-.525.2t-.575-.15z"/></svg>
+                                    <span>{{ number($resource.rating_avg, 1) }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="xfdevs__resource__stats">
+                            <div class="xfdevs__resource__stat">
+                                <span class="xfdevs__resource__stat_value">{{ $resource.download_count|number_short }}</span>
+                                <span class="xfdevs__resource__stat_label">Downloads</span>
+                            </div>
+                            <div class="xfdevs__resource__stat">
+                                <span class="xfdevs__resource__stat_value">{$resource.CurrentVersion.version_string}</span>
+                                <span class="xfdevs__resource__stat_label">Version</span>
+                            </div>
+                            <div class="xfdevs__resource__stat">
+                                <span class="xfdevs__resource__stat_value">
+                                    <xf:if is="$resource.last_update > $resource.resource_date">
+                                        <xf:date time="$resource.last_update" />
+                                    <xf:else />
+                                        <xf:date time="$resource.resource_date" />
+                                    </xf:if>
+                                </span>
+                                <span class="xfdevs__resource__stat_label">
+                                    <xf:if is="$resource.last_update > $resource.resource_date">
+                                        Updated
+                                    <xf:else />
+                                        Uploaded
+                                    </xf:if>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </xf:foreach>   
+            </div>
+
+
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+</section>
+]]></template>
+</templates>

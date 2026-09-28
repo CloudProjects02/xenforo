@@ -2,10 +2,13 @@
 
 namespace DBTech\Shop\Job;
 
-use DBTech\Shop\Service\Item\DeleteCleanUpService;
 use XF\Job\AbstractJob;
-use XF\Job\JobResult;
 
+/**
+ * Class ItemDeleteCleanUp
+ *
+ * @package DBTech\Shop\Job
+ */
 class ItemDeleteCleanUp extends AbstractJob
 {
 	/**
@@ -18,15 +21,15 @@ class ItemDeleteCleanUp extends AbstractJob
 		'currentStep' => 0,
 		'lastOffset' => null,
 
-		'start' => 0,
+		'start' => 0
 	];
-
+	
 	/**
 	 * @param $maxRunTime
 	 *
-	 * @return JobResult
+	 * @return \XF\Job\JobResult
 	 */
-	public function run($maxRunTime): JobResult
+	public function run($maxRunTime): \XF\Job\JobResult
 	{
 		$this->data['start']++;
 
@@ -35,8 +38,9 @@ class ItemDeleteCleanUp extends AbstractJob
 			return $this->complete();
 		}
 
-		$deleter = \XF::app()->service(
-			DeleteCleanUpService::class,
+		/** @var \DBTech\Shop\Service\Item\DeleteCleanUp $deleter */
+		$deleter = $this->app->service(
+			'DBTech\Shop:Item\DeleteCleanUp',
 			$this->data['itemId'],
 			$this->data['title']
 		);
@@ -47,14 +51,14 @@ class ItemDeleteCleanUp extends AbstractJob
 		{
 			return $this->complete();
 		}
-
+		
 		$continueData = $result->getContinueData();
 		$this->data['currentStep'] = $continueData['currentStep'];
 		$this->data['lastOffset'] = $continueData['lastOffset'];
-
+		
 		return $this->resume();
 	}
-
+	
 	/**
 	 * @return string
 	 */
@@ -64,7 +68,7 @@ class ItemDeleteCleanUp extends AbstractJob
 		$typePhrase = $this->data['title'];
 		return sprintf('%s... %s (%s)', $actionPhrase, $typePhrase, $this->data['start']);
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -72,7 +76,7 @@ class ItemDeleteCleanUp extends AbstractJob
 	{
 		return false;
 	}
-
+	
 	/**
 	 * @return bool
 	 */

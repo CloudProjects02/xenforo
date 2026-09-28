@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="option.quickSearchEnhancedSearch" version_id="37" version_string="3.7"><![CDATA[Enhanced search]]></phrase>
+  <phrase title="option.quickSearchExcludeForums" version_id="13" version_string="1.3"><![CDATA[Exclude forums]]></phrase>
+  <phrase title="option.quickSearchKeystrokeDelay" version_id="40" version_string="4.0"><![CDATA[Keystroke delay]]></phrase>
+  <phrase title="option.quickSearchMaximumResults" version_id="37" version_string="3.7"><![CDATA[Maximum results]]></phrase>
+  <phrase title="option.quickSearchMinimumCommonWordLength" version_id="37" version_string="3.7"><![CDATA[Minimum common word length]]></phrase>
+  <phrase title="option.quickSearchMultibyte" version_id="47" version_string="4.7"><![CDATA[Multibyte]]></phrase>
+  <phrase title="option.quickSearchNarrowHeight" version_id="46" version_string="4.6"><![CDATA[Narrow height]]></phrase>
+  <phrase title="option.quickSearchShowConversationList" version_id="47" version_string="4.7"><![CDATA[Show conversation list]]></phrase>
+  <phrase title="option.quickSearchShowForumList" version_id="12" version_string="1.2"><![CDATA[Show forum list]]></phrase>
+  <phrase title="option.quickSearchShowForumView" version_id="12" version_string="1.2"><![CDATA[Show forum view]]></phrase>
+  <phrase title="option.quickSearchShowResourceManager" version_id="17" version_string="1.7"><![CDATA[Show resource manager]]></phrase>
+  <phrase title="option.quickSearchShowThreadView" version_id="19" version_string="1.9"><![CDATA[Show thread view]]></phrase>
+  <phrase title="option.quickSearchStopWords" version_id="37" version_string="3.7"><![CDATA[Stop words]]></phrase>
+  <phrase title="option.quickSearchWideHeight" version_id="46" version_string="4.6"><![CDATA[Wide height]]></phrase>
+  <phrase title="option_explain.quickSearchEnhancedSearch" version_id="47" version_string="4.7"><![CDATA[Select to use Enhanced search. Enhanced search is used only for thread title searches.]]></phrase>
+  <phrase title="option_explain.quickSearchExcludeForums" version_id="21" version_string="2.1"><![CDATA[If you want to exclude the quick search box in any forum, select them here. Quick search results will also be excluded in these forums.]]></phrase>
+  <phrase title="option_explain.quickSearchKeystrokeDelay" version_id="40" version_string="4.0"><![CDATA[The number of milliseconds to delay before results are displayed. Default is 250.]]></phrase>
+  <phrase title="option_explain.quickSearchMaximumResults" version_id="46" version_string="4.6"><![CDATA[Limits results to this many rows. Default is 100.]]></phrase>
+  <phrase title="option_explain.quickSearchMinimumCommonWordLength" version_id="37" version_string="3.7"><![CDATA[Exclude words which are less than this many characters.]]></phrase>
+  <phrase title="option_explain.quickSearchMultibyte" version_id="47" version_string="4.7"><![CDATA[Include support for multibyte characters when enhanced search is enabled. Typically only used for Chinese, Japanese and Russian languages.]]></phrase>
+  <phrase title="option_explain.quickSearchNarrowHeight" version_id="46" version_string="4.6"><![CDATA[This determines the height of the quick search results block on narrow screens . It is also used for XFRM quick search results. Default is 238.]]></phrase>
+  <phrase title="option_explain.quickSearchShowConversationList" version_id="47" version_string="4.7"><![CDATA[Show quick search in conversation list.]]></phrase>
+  <phrase title="option_explain.quickSearchShowForumList" version_id="17" version_string="1.7"><![CDATA[Show quick search in forum list.]]></phrase>
+  <phrase title="option_explain.quickSearchShowForumView" version_id="17" version_string="1.7"><![CDATA[Show quick search in forum view.]]></phrase>
+  <phrase title="option_explain.quickSearchShowResourceManager" version_id="17" version_string="1.7"><![CDATA[Show quick search in resource manager]]></phrase>
+  <phrase title="option_explain.quickSearchShowThreadView" version_id="19" version_string="1.9"><![CDATA[Show quick search in thread view.]]></phrase>
+  <phrase title="option_explain.quickSearchStopWords" version_id="37" version_string="3.7"><![CDATA[Separate each word with a space.]]></phrase>
+  <phrase title="option_explain.quickSearchWideHeight" version_id="46" version_string="4.6"><![CDATA[This determines the height of the quick search results block on wide screens. Default is 290.]]></phrase>
+  <phrase title="option_group.quickSearch" version_id="10" version_string="1.0"><![CDATA[Quick search]]></phrase>
+  <phrase title="option_group_description.quickSearch" version_id="10" version_string="1.0"><![CDATA[Options here control the Quick search add-on.]]></phrase>
+  <phrase title="permission.quickSearch_view" version_id="10" version_string="1.0"><![CDATA[View]]></phrase>
+  <phrase title="permission_interface.quickSearch" version_id="10" version_string="1.0"><![CDATA[Quick search]]></phrase>
+  <phrase title="quicksearch_category" version_id="16" version_string="1.6"><![CDATA[Category]]></phrase>
+  <phrase title="quicksearch_conversation_starter" version_id="46" version_string="4.6"><![CDATA[Conversation starter]]></phrase>
+  <phrase title="quicksearch_date" version_id="10" version_string="1.0"><![CDATA[Date]]></phrase>
+  <phrase title="quicksearch_downloads" version_id="16" version_string="1.6"><![CDATA[Downloads]]></phrase>
+  <phrase title="quicksearch_forum" version_id="13" version_string="1.3"><![CDATA[Forum]]></phrase>
+  <phrase title="quicksearch_message" version_id="19" version_string="1.9"><![CDATA[Message]]></phrase>
+  <phrase title="quicksearch_post" version_id="19" version_string="1.9"><![CDATA[Post#]]></phrase>
+  <phrase title="quicksearch_post_author" version_id="19" version_string="1.9"><![CDATA[Post author]]></phrase>
+  <phrase title="quicksearch_quick_search" version_id="10" version_string="1.0"><![CDATA[Quick search]]></phrase>
+  <phrase title="quicksearch_recipients" version_id="46" version_string="4.6"><![CDATA[Recipients]]></phrase>
+  <phrase title="quicksearch_replies" version_id="10" version_string="1.0"><![CDATA[Replies]]></phrase>
+  <phrase title="quicksearch_thread_starter" version_id="10" version_string="1.0"><![CDATA[Thread starter]]></phrase>
+  <phrase title="quicksearch_title" version_id="10" version_string="1.0"><![CDATA[Title]]></phrase>
+  <phrase title="quicksearch_version" version_id="17" version_string="1.7"><![CDATA[Version]]></phrase>
+</phrases>

@@ -1,0 +1,25 @@
+{
+    "legacy_addon_id": "",
+    "title": "[EAE] Thread Count",
+    "description": "Stores the number of threads created by a user, and adds a thread count criterion, and 4 new permissions.",
+    "version_id": 1020370,
+    "version_string": "1.2.3",
+    "dev": "EAE Addons",
+    "dev_url": "https://eaeaddons.com/",
+    "faq_url": "",
+    "support_url": "https://eaeaddons.com/forums/xenforo-2-1-add-ons.4/",
+    "extra_urls": {
+       
+    },
+    "require": {
+        "XF": [
+            2010070,
+            "XenForo 2.1.0+"
+        ],
+        "php": [
+            "7.2",
+            "PHP 7.2+"
+        ]
+    },
+    "icon": "fa-sort-numeric-up"
+}

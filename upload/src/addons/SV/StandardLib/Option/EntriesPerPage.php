@@ -1,0 +1,60 @@
+<?php
+
+namespace SV\StandardLib\Option;
+
+use XF\Entity\Option;
+use XF\Option\AbstractOption;
+use function count;
+use function is_int;
+use function sort;
+
+abstract class EntriesPerPage extends AbstractOption
+{
+    public static function renderOption(Option $option, array $htmlParams): string
+    {
+        $choices = [];
+        foreach ($option->option_value as $perPage)
+        {
+            $choices[] = [
+                'value' => $perPage,
+            ];
+        }
+
+        return self::getTemplate(
+            'admin:option_template_svStandardLib_entriesPerPageChoices',
+            $option,
+            $htmlParams,
+            [
+                'choices'     => $choices,
+                'nextCounter' => count($choices),
+            ]
+        );
+    }
+
+    public static function verifyOption(array &$value): bool
+    {
+        $output = [];
+
+        foreach ($value as $perPage)
+        {
+            $val = is_int($perPage) ? $perPage : (int)($perPage['value'] ?? 0);
+            if ($val === 0)
+            {
+                continue;
+            }
+
+            $output[] = $val;
+        }
+
+        sort($output);
+
+        if (count($output) === 0)
+        {
+            $output = [25, 50];
+        }
+
+        $value = $output;
+
+        return true;
+    }
+}

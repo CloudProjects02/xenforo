@@ -1,0 +1,17 @@
+{
+    "legacy_addon_id": "",
+    "title": "[SynapseThemes] Years of Service",
+    "description": "Displays a service badge showing years or months of service based on user join date in postbit and profiles.",
+    "version_id": 1000015,
+    "version_string": "1.0.5",
+    "dev": "SynapseThemes",
+    "dev_url": "https://synapse-themes.cc",
+    "faq_url": "",
+    "support_url": "https://discord.gg/77c5BGgDfY",
+    "extra_urls": [],
+    "require": {
+        "XF": [2000010, "XenForo 2.0.0+"],
+        "php": ["7.2.0", "PHP 7.2.0+"]
+    },
+    "icon": "fa-calendar"
+}

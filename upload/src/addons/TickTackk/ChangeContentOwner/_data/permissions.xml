@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<permissions>
+  <permission permission_group_id="forum" permission_id="changePostDate" permission_type="flag" interface_group_id="forumModeratorPermissions" display_order="430"/>
+  <permission permission_group_id="forum" permission_id="changePostOwner" permission_type="flag" interface_group_id="forumModeratorPermissions" display_order="420"/>
+  <permission permission_group_id="forum" permission_id="changeThreadDate" permission_type="flag" interface_group_id="forumModeratorPermissions" display_order="410"/>
+  <permission permission_group_id="forum" permission_id="changeThreadOwner" permission_type="flag" interface_group_id="forumModeratorPermissions" display_order="400"/>
+  <permission permission_group_id="profilePost" permission_id="changeCommentDate" permission_type="flag" interface_group_id="profilePostModeratorPermissions" display_order="240"/>
+  <permission permission_group_id="profilePost" permission_id="changeCommentOwner" permission_type="flag" interface_group_id="profilePostModeratorPermissions" display_order="230"/>
+  <permission permission_group_id="profilePost" permission_id="changeProfilePostDate" permission_type="flag" interface_group_id="profilePostModeratorPermissions" display_order="220"/>
+  <permission permission_group_id="profilePost" permission_id="changeProfilePostOwner" permission_type="flag" interface_group_id="profilePostModeratorPermissions" display_order="200"/>
+  <permission permission_group_id="xfa_csvg" permission_id="changeGraphDate" permission_type="flag" interface_group_id="xfa_csvgModerator" display_order="120"/>
+  <permission permission_group_id="xfa_csvg" permission_id="changeGraphOwner" permission_type="flag" interface_group_id="xfa_csvgModerator" display_order="110"/>
+  <permission permission_group_id="xfmg" permission_id="changeAlbumDate" permission_type="flag" interface_group_id="xfmgAlbumModerator" display_order="210"/>
+  <permission permission_group_id="xfmg" permission_id="changeAlbumOwner" permission_type="flag" interface_group_id="xfmgAlbumModerator" display_order="200"/>
+  <permission permission_group_id="xfmg" permission_id="changeCommentDate" permission_type="flag" interface_group_id="xfmgCommentModerator" display_order="210"/>
+  <permission permission_group_id="xfmg" permission_id="changeCommentOwner" permission_type="flag" interface_group_id="xfmgCommentModerator" display_order="200"/>
+  <permission permission_group_id="xfmg" permission_id="changeMediaDate" permission_type="flag" interface_group_id="xfmgMediaModerator" display_order="210"/>
+  <permission permission_group_id="xfmg" permission_id="changeMediaOwner" permission_type="flag" interface_group_id="xfmgMediaModerator" display_order="200"/>
+</permissions>

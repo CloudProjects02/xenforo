@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cron>
+  <entry entry_id="hampelKnownBotsFetchBots" cron_class="Hampel\KnownBots\Cron\FetchBots" cron_method="fetchBots" active="1"><![CDATA[{"day_type":"dom","dom":[-1],"hours":[4],"minutes":[27]}]]></entry>
+  <entry entry_id="hampelKnownBotsPurgeAgent" cron_class="Hampel\KnownBots\Cron\SendAgents" cron_method="purgeAgents" active="1"><![CDATA[{"day_type":"dom","dom":[-1],"hours":[0],"minutes":[11]}]]></entry>
+  <entry entry_id="hampelKnownBotsUserAgents" cron_class="Hampel\KnownBots\Cron\SendAgents" cron_method="send" active="1"><![CDATA[{"day_type":"dow","dow":[-1],"hours":[8],"minutes":[10]}]]></entry>
+</cron>
+ 		 		   			      	 			   					  					 	 				    	 			   	   	   		 	 		    	  					       		  	 						 				  			 		    	 	   		 	 	

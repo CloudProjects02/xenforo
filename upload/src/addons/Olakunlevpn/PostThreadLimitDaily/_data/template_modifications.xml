@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="extra.less" modification_key="olakunlevpn_ptld_extra_css" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[/$/]]></find>
+    <replace><![CDATA[.ptld-countdown-container {
+    margin: 10px 0 5px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.ptld-countdown-timer {
+    display: inline-block;
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+.ptld-time-unit {
+    margin-right: 5px;
+}
+
+.ptld-days {
+    color: #d83e56;
+}
+
+.ptld-hours {
+    color: #e67e22;
+}
+
+.ptld-minutes {
+    color: #3498db;
+}
+
+.ptld-seconds {
+    color: #2ecc71;
+}
+
+.ptld-reset-message {
+    color: #2f9e41;
+    font-weight: bold;
+}
+
+.ptld-approaching-limit {
+    margin-top: 5px;
+    padding: 5px 8px;
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    border-radius: 3px;
+    color: #856404;
+    font-size: 13px;
+}
+
+.ptld-countdown-container {
+
+    padding-left: 21px;
+    margin-top: 2px;
+
+}
+.ptld-countdown-extra-margin{
+   margin: 0 5px 5px 0px;
+}
+
+.ptld-countdown-center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}]]></replace>
+  </modification>
+  <modification type="public" template="forum_post_quick_thread" modification_key="olakunlevpn_ptld_forum_view" description="Add thread limit information to forum view" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:if is="$attachmentData">
+			<xf:macro id="helper_attach_upload::uploaded_files_list"
+				arg-attachments="{$attachmentData.attachments}" />
+		</xf:if>
+
+		<div class="formButtonGroup">
+			<div class="formButtonGroup-primary">
+				<xf:button type="submit" class="button--primary" icon="write">
+					{{ $forum.TypeHandler.getTypeActionPhrase('submit') ?: phrase('post_thread') }}
+				</xf:button>
+
+				<xf:button type="submit" formnovalidate="formnovalidate" name="more-options" value="1"
+					title="{{ phrase('show_full_post_thread_editor') }}"
+					data-prevent-ajax="true"
+					data-xf-init="tooltip">{{ phrase('more_options...') }}</xf:button>
+
+				<xf:button type="reset" class="button--iconOnly" icon="cancel"
+					title="{{ phrase('button.cancel') }}"
+					data-xf-init="tooltip">
+					<span class="u-srOnly">{{ phrase('button.cancel') }}</span>
+				</xf:button>
+			</div>
+			<xf:if contentcheck="true">
+				<div class="formButtonGroup-extra">
+					<xf:contentcheck>
+						<xf:if is="$attachmentData">
+							<xf:macro id="helper_attach_upload::upload_link_from_data"
+								arg-attachmentData="{$attachmentData}" />
+						</xf:if>
+
+						<xf:if is="$xf.options.multiQuote">
+							<xf:macro id="multi_quote_macros::button"
+								arg-href="{{ link('threads/multi-quote', $thread) }}"
+								arg-messageSelector=".js-post"
+								arg-storageKey="multiQuoteThread" />
+						</xf:if>
+					</xf:contentcheck>
+				</div>
+			</xf:if>
+		</div>]]></find>
+    <replace><![CDATA[<xf:if is="$olakunlevpn_ptldRemainingThreads !== null">
+	<div class="block-outer-hint">
+		<xf:if is="$olakunlevpn_ptldThreadLimitReached">
+			<div class="block-outer block-outer--after">
+				<div class="block-outer-opposite blockStatus">
+					<div class="blockStatus-message blockStatus-message--locked">
+						<span class="button-text">{{ phrase('olakunlevpn_ptld_thread_limit_reached', {'limit': $olakunlevpn_ptldMaxThreads}) }}</span>
+						<xf:macro template="olakunlevpn_ptld_countdown_timer" name="countdown" arg-timeInfo="{{ $timeInfo }}" />
+					</div>
+				</div>
+			</div>
+			
+		<xf:else />
+			 $0
+		</xf:if>
+	</div>
+<xf:else />
+	$0
+</xf:if>
+]]></replace>
+  </modification>
+  <modification type="public" template="forum_post_thread" modification_key="olakunlevpn_ptld_modify_forum_post_thread" description="Modify forum_post_thread" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:submitrow submit="{{ $forum.TypeHandler.getTypeActionPhrase('submit') ?: phrase('post_thread') }}" icon="write" sticky="true" />]]></find>
+    <replace><![CDATA[<xf:if is="$olakunlevpn_ptldRemainingThreads !== null">
+	<div class="block-outer-hint">
+		<xf:if is="$olakunlevpn_ptldThreadLimitReached">
+			<div class="block-outer block-outer--after ptld-countdown-center">
+				<div class="block-outer-opposite blockStatus ptld-countdown-extra-margin">
+					<div class="blockStatus-message blockStatus-message--locked">
+						<span class="button-text">{{ phrase('olakunlevpn_ptld_thread_limit_reached', {'limit': $olakunlevpn_ptldMaxThreads}) }}</span>
+						<xf:macro template="olakunlevpn_ptld_countdown_timer" name="countdown" arg-timeInfo="{{ $timeInfo }}" />
+					</div>
+				</div>
+			</div>
+			
+		<xf:else />
+			 $0
+		</xf:if>
+	</div>
+<xf:else />
+	$0
+</xf:if>
+]]></replace>
+  </modification>
+  <modification type="public" template="thread_view" modification_key="olakunlevpn_ptld_thread_view" description="Add post limit information to thread view" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<div class="block-container">
+			<div class="block-body">
+				<xf:macro id="quick_reply_macros::body"
+					arg-message="{$thread.draft_reply.message}"
+					arg-attachmentData="{$attachmentData}"
+					arg-forceHash="{$thread.draft_reply.attachment_hash}"
+					arg-messageSelector=".js-post"
+					arg-multiQuoteHref="{{ link('threads/multi-quote', $thread) }}"
+					arg-multiQuoteStorageKey="multiQuoteThread"
+					arg-lastItemId="{$lastPost.post_id}"
+					arg-lastDate="{$lastPost.post_date}"
+					arg-lastKnownDate="{$thread.last_post_date}"
+					arg-loadExtra="{$isSimpleDateDisplay}"
+					arg-showGuestControls="{{ !$isPreRegReply }}"
+					arg-previewUrl="{{ link('threads/reply-preview', $thread) }}"/>
+			</div>
+		</div>]]></find>
+    <replace><![CDATA[$0
+<xf:if is="$olakunlevpn_ptldRemainingPosts !== null">
+	<div class="block-outer-hint">
+		<xf:if is="$olakunlevpn_ptldPostLimitReached">
+			<div class="block-outer block-outer--after">
+				<div class="block-outer-opposite blockStatus">
+					<div class="blockStatus-message blockStatus-message--locked">
+						<span class="button-text">{{ phrase('olakunlevpn_ptld_post_limit_reached', {'limit': $olakunlevpn_ptldMaxPosts}) }}</span>
+						<xf:macro template="olakunlevpn_ptld_countdown_timer" name="countdown" arg-timeInfo="{{ $timeInfo }}" />
+					</div>
+				</div>
+			</div>
+		</xf:if>
+	</div>
+</xf:if>]]></replace>
+  </modification>
+</template_modifications>

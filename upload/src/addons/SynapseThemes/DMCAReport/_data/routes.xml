@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<routes>
+  <route route_type="admin" route_prefix="dmca-reports" controller="SynapseThemes\DMCAReport\Admin\Controller\Report" context="dmcaReports"/>
+  <route route_type="admin" route_prefix="dmca-reports" sub_name="delete" format=":int&lt;report_id&gt;" controller="SynapseThemes\DMCAReport\Admin\Controller\Report" context="dmcaReports"/>
+  <route route_type="public" route_prefix="dmca" format=":action" controller="SynapseThemes\DMCAReport\XF\Pub\Controller\Dmca" context="public"/>
+</routes>

@@ -15,7 +15,7 @@ use XF\Mvc\Entity\Structure;
  * @property string $filename
  *
  * RELATIONS
- * @property-read \XF\Mvc\Entity\AbstractCollection<\DBTech\Shop\Entity\TradingCardCollection> $Collections
+ * @property \XF\Mvc\Entity\AbstractCollection|\DBTech\Shop\Entity\TradingCardCollection[] $Collections
  */
 class TradingCard extends Entity
 {
@@ -30,9 +30,9 @@ class TradingCard extends Entity
 	}
 
 	/**
-	 * @param Structure $structure
+	 * @param \XF\Mvc\Entity\Structure $structure
 	 *
-	 * @return Structure
+	 * @return \XF\Mvc\Entity\Structure
 	 */
 	public static function getStructure(Structure $structure): Structure
 	{
@@ -49,7 +49,7 @@ class TradingCard extends Entity
 		];
 		$structure->relations = [
 			'Collections' => [
-				'entity' => TradingCardCollection::class,
+				'entity' => 'DBTech\Shop:TradingCardCollection',
 				'type' => self::TO_MANY,
 				'conditions' => 'trading_card_id',
 			],

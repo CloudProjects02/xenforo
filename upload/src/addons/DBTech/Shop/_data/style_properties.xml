@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <style_properties>
-  <style_property property_name="dbtechShopEnableInfiniteScroll" group_name="dbtechShop" title="Enable Infinite Scroll" description="Toggles whether infinite scrolling is enabled for this style." property_type="value" value_type="boolean" has_variations="0" value_group="infiniteScroll" display_order="100">
+  <style_property property_name="dbtechShopEnableInfiniteScroll" group_name="dbtechShop" title="Enable Infinite Scroll" description="Toggles whether infinite scrolling is enabled for this style." property_type="value" value_type="boolean" value_group="infiniteScroll" display_order="100">
     <value>0</value>
   </style_property>
-  <style_property property_name="dbtechShopInfiniteScrollAfter" group_name="dbtechShop" title="Only require click after X pages" description="If you want to require click only after a certain amount of pages have loaded, set this here.&lt;br /&gt;&#10;0 = Always require click" property_type="value" value_type="number" has_variations="0" depends_on="dbtechShopInfiniteScrollClick" value_group="infiniteScroll" display_order="300">
+  <style_property property_name="dbtechShopInfiniteScrollAfter" group_name="dbtechShop" title="Only require click after X pages" description="If you want to require click only after a certain amount of pages have loaded, set this here.&lt;br /&gt;&#10;0 = Always require click" property_type="value" value_type="number" depends_on="dbtechShopInfiniteScrollClick" value_group="infiniteScroll" display_order="300">
     <value>0</value>
   </style_property>
-  <style_property property_name="dbtechShopInfiniteScrollClick" group_name="dbtechShop" title="Require click to load" description="Controls whether loading the next page happens automatically, or upon pressing a button." property_type="value" value_type="boolean" has_variations="0" depends_on="dbtechShopEnableInfiniteScroll" value_group="infiniteScroll" display_order="200">
+  <style_property property_name="dbtechShopInfiniteScrollClick" group_name="dbtechShop" title="Require click to load" description="Controls whether loading the next page happens automatically, or upon pressing a button." property_type="value" value_type="boolean" depends_on="dbtechShopEnableInfiniteScroll" value_group="infiniteScroll" display_order="200">
     <value>0</value>
   </style_property>
-  <style_property property_name="dbtechShopInfiniteScrollHistory" group_name="dbtechShop" title="Append to browser history" description="If selected, new pages loaded will also update the browser's history." property_type="value" value_type="boolean" has_variations="0" depends_on="dbtechShopEnableInfiniteScroll" value_group="infiniteScroll" display_order="400">
+  <style_property property_name="dbtechShopInfiniteScrollHistory" group_name="dbtechShop" title="Append to browser history" description="If selected, new pages loaded will also update the browser's history." property_type="value" value_type="boolean" depends_on="dbtechShopEnableInfiniteScroll" value_group="infiniteScroll" display_order="400">
     <value>0</value>
   </style_property>
-  <style_property property_name="dbtechShopItemListStyle" group_name="dbtechShop" title="Item list style" description="This only affects the category view and the main home page overview." property_type="value" value_type="radio" has_variations="0" value_group="itemList" display_order="1100">
+  <style_property property_name="dbtechShopItemListStyle" group_name="dbtechShop" title="Item list style" description="This only affects the category view and the main home page overview." property_type="value" value_type="radio" value_group="itemList" display_order="1100">
     <value_parameters>grid={{ phrase('dbtech_shop_grid') }}
 list={{ phrase('list') }}</value_parameters>
     <value>"list"</value>
   </style_property>
-  <style_property property_name="dbtechShopItemRatingCircleBarColor" group_name="dbtechShop" title="Item Rating Circle: Bar Color" description="The color of the rating circle bar." property_type="value" value_type="color" has_variations="0" value_group="itemInfo" display_order="1130">
+  <style_property property_name="dbtechShopItemRatingCircleBarColor" group_name="dbtechShop" title="Item Rating Circle: Bar Color" description="The color of the rating circle bar." property_type="value" value_type="color" value_group="itemInfo" display_order="1130">
     <value>"@xf-paletteColor3"</value>
   </style_property>
-  <style_property property_name="dbtechShopItemRatingCircleBarWidth" group_name="dbtechShop" title="Item Rating Circle: Bar Width" description="The width of the bar in the item rating circle" property_type="value" value_type="unit" has_variations="0" value_group="itemInfo" display_order="1110">
+  <style_property property_name="dbtechShopItemRatingCircleBarWidth" group_name="dbtechShop" title="Item Rating Circle: Bar Width" description="The width of the bar in the item rating circle" property_type="value" value_type="unit" value_group="itemInfo" display_order="1110">
     <value>"10px"</value>
   </style_property>
-  <style_property property_name="dbtechShopItemRatingCircleBgColor" group_name="dbtechShop" title="Item Rating Circle: Background Color" description="The background color for the item rating circle's bar." property_type="value" value_type="color" has_variations="0" value_group="itemInfo" display_order="1120">
+  <style_property property_name="dbtechShopItemRatingCircleBgColor" group_name="dbtechShop" title="Item Rating Circle: Background Color" description="The background color for the item rating circle's bar." property_type="value" value_type="color" value_group="itemInfo" display_order="1120">
     <value>"@xf-pageBg"</value>
   </style_property>
-  <style_property property_name="dbtechShopItemRatingStyle" group_name="dbtechShop" title="Item rating style" description="Toggles how an item's rating appears in the sidebar on the item information page." property_type="value" value_type="radio" has_variations="0" value_group="itemInfo" display_order="1100">
+  <style_property property_name="dbtechShopItemRatingStyle" group_name="dbtechShop" title="Item rating style" description="Toggles how an item's rating appears in the sidebar on the item information page." property_type="value" value_type="radio" value_group="itemInfo" display_order="1100">
     <value_parameters>circle={{ phrase('dbtech_shop_circle') }}
 stars={{ phrase('dbtech_shop_stars') }}</value_parameters>
     <value>"stars"</value>
   </style_property>
-  <style_property property_name="dbtechShopShowOwnerOverview" group_name="dbtechShop" title="Show item owner on overview list" property_type="value" value_type="boolean" has_variations="0" value_group="itemList" display_order="1000">
+  <style_property property_name="dbtechShopShowOwnerOverview" group_name="dbtechShop" title="Show item owner on overview list" property_type="value" value_type="boolean" value_group="itemList" display_order="1000">
     <value>1</value>
   </style_property>
-  <style_property property_name="dbtechShopTradePostCommentToggle" group_name="dbtechShop" title="Enable trade post comment input toggle" description="If enabled, the input for a trade post comment will only be displayed after the toggle is clicked." property_type="value" value_type="boolean" has_variations="0" display_order="10">
+  <style_property property_name="dbtechShopTradePostCommentToggle" group_name="dbtechShop" title="Enable trade post comment input toggle" description="If enabled, the input for a trade post comment will only be displayed after the toggle is clicked." property_type="value" value_type="boolean" display_order="10">
     <value>0</value>
   </style_property>
 </style_properties>

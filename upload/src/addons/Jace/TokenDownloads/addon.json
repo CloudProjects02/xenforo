@@ -1,0 +1,17 @@
+{
+    "legacy_addon_id": "",
+    "title": "[Jace] Token Downloads",
+    "description": "Download limit system for XenForo Resource Manager with purchasable packages",
+    "version_id": 1000020,
+    "version_string": "1.0.2",
+    "dev": "Jace",
+    "dev_url": "",
+    "faq_url": "",
+    "support_url": "",
+    "extra_urls": [],
+    "require": {
+        "XF": [2020000, "XenForo 2.2.0+"],
+        "XFRM": [2020000, "XenForo Resource Manager 2.2.0+"]
+    },
+    "icon": "fa-box-full"
+}

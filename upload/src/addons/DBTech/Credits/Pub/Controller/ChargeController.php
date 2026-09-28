@@ -6,7 +6,6 @@ use DBTech\Credits\Finder\ChargePurchaseFinder;
 use DBTech\Credits\Pub\View;
 use XF\Mvc\ParameterBag;
 use XF\Mvc\Reply\AbstractReply;
-use XF\Mvc\Reply\Exception as ReplyException;
 use XF\Pub\Controller\AbstractController;
 
 class ChargeController extends AbstractController
@@ -15,7 +14,7 @@ class ChargeController extends AbstractController
 	 * @param ParameterBag $params
 	 *
 	 * @return AbstractReply
-	 * @throws ReplyException
+	 * @throws \XF\Mvc\Reply\Exception
 	 * @throws \Exception
 	 */
 	public function actionUnlocked(ParameterBag $params): AbstractReply

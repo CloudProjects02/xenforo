@@ -2,18 +2,9 @@
 
 namespace DBTech\Shop\Entity;
 
-use DBTech\Credits\Entity\Event;
-use DBTech\Credits\Finder\EventFinder;
-use DBTech\Shop\Finder\CurrencyFinder;
-use DBTech\Shop\Repository\CurrencyRepository;
-use XF\Db\Exception;
-use XF\Db\Schema\Alter;
-use XF\Entity\User;
-use XF\Entity\ViewableInterface;
-use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
-use XF\PrintableException;
+use XF\Db\Schema\Alter;
 
 /**
  * COLUMNS
@@ -46,15 +37,15 @@ use XF\PrintableException;
  * @property int $credits_currency_id
  *
  * GETTERS
- * @property-read \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Event> $Events
+ * @property \DBTech\Credits\Entity\Event[]|\XF\Mvc\Entity\ArrayCollection $Events
  *
  * RELATIONS
- * @property-read \XF\Mvc\Entity\AbstractCollection<\DBTech\Shop\Entity\Bank> $Banked
- * @property-read \XF\Mvc\Entity\AbstractCollection<\DBTech\Shop\Entity\Lottery> $Lotteries
- * @property-read \XF\Mvc\Entity\AbstractCollection<\DBTech\Shop\Entity\Item> $Items
- * @property-read \XF\Mvc\Entity\AbstractCollection<\DBTech\Shop\Entity\Item> $BuyBackItems
+ * @property \XF\Mvc\Entity\AbstractCollection|\DBTech\Shop\Entity\Bank[] $Banked
+ * @property \XF\Mvc\Entity\AbstractCollection|\DBTech\Shop\Entity\Lottery[] $Lotteries
+ * @property \XF\Mvc\Entity\AbstractCollection|\DBTech\Shop\Entity\Item[] $Items
+ * @property \XF\Mvc\Entity\AbstractCollection|\DBTech\Shop\Entity\Item[] $BuyBackItems
  */
-class Currency extends Entity implements ViewableInterface
+class Currency extends Entity
 {
 	/**
 	 * @return bool
@@ -63,17 +54,17 @@ class Currency extends Entity implements ViewableInterface
 	{
 		return $this->active;
 	}
-
+	
 	/**
-	 * @param User|null $user
+	 * @param \XF\Entity\User|null $user
 	 *
 	 * @return bool
 	 */
-	public function canView(?User $user = null): bool
+	public function canView(?\XF\Entity\User $user = null): bool
 	{
 		/** @var \DBTech\Shop\XF\Entity\User $visitor */
 		$visitor = \XF::visitor();
-
+		
 		$user = $user ?: $visitor;
 
 		switch ($this->privacy)
@@ -88,8 +79,7 @@ class Currency extends Entity implements ViewableInterface
 			case 1:
 				if (!$visitor->hasPermission('dbtech_shop', 'special')
 					&& $user->user_id != $visitor->user_id
-				)
-				{
+				) {
 					return false;
 				}
 				break;
@@ -97,7 +87,7 @@ class Currency extends Entity implements ViewableInterface
 
 		return $this->isActive();
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -105,7 +95,7 @@ class Currency extends Entity implements ViewableInterface
 	{
 		return $this->can_bank;
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -118,7 +108,7 @@ class Currency extends Entity implements ViewableInterface
 			)
 		);
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -126,22 +116,22 @@ class Currency extends Entity implements ViewableInterface
 	{
 		return $this->can_trade;
 	}
-
+	
 	/**
-	 * @param User|null $userInfo
+	 * @param \XF\Entity\User|null $userInfo
 	 * @param bool $format
 	 *
-	 * @return string
+	 * @return mixed
 	 */
-	public function getValueFromUser(?User $userInfo = null, bool $format = true): string
+	public function getValueFromUser(?\XF\Entity\User $userInfo = null, bool $format = true)
 	{
 		/** @var \DBTech\Shop\XF\Entity\User $visitor */
 		$visitor = \XF::visitor();
-
+		
 		$userInfo = $userInfo ?: $visitor;
-
+		
 		$value = $userInfo->{$this->column};
-
+		
 		if ($format)
 		{
 			// We need to format the value
@@ -151,16 +141,16 @@ class Currency extends Entity implements ViewableInterface
 		{
 			$value = sprintf("%.{$this->decimals}f", $value);
 		}
-
+		
 		return $value;
 	}
-
+	
 	/**
 	 * @param float $value
 	 *
-	 * @return string
+	 * @return mixed
 	 */
-	public function getFormattedValue(float $value = 0.00): string
+	public function getFormattedValue(float $value = 0.00)
 	{
 		/*
 		if ($value < 0 && $this->negative == 1)
@@ -169,73 +159,73 @@ class Currency extends Entity implements ViewableInterface
 			$value = 0;
 		}
 		*/
-
+		
 		return \XF::language()->numberFormat($value, $this->decimals);
 	}
-
+	
 	/**
 	 * @param int $limit
 	 *
-	 * @return \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\XF\Entity\User>
+	 * @return \DBTech\Credits\XF\Entity\User[]|\XF\Mvc\Entity\AbstractCollection
 	 */
-	public function getRichestUsers(int $limit = 5): AbstractCollection
+	public function getRichestUsers(int $limit = 5)
 	{
-		return \XF::app()->repository(CurrencyRepository::class)
+		return $this->getCurrencyRepo()
 			->getRichestUsers($this, $limit)
 			->fetch()
-		;
+			;
 	}
-
+	
 	/**
 	 * @return bool
 	 */
 	public function isIntegrated(): bool
 	{
-		return (bool) $this->credits_currency_id;
+		return $this->credits_currency_id ? true : false;
 	}
-
+	
 	/**
-	 * @return \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Event>
+	 * @return \DBTech\Credits\Entity\Event[]|\XF\Mvc\Entity\ArrayCollection
 	 */
-	public function getEvents(): AbstractCollection
+	public function getEvents()
 	{
 		if (!$this->isIntegrated())
 		{
-			return \XF::app()->em()->getEmptyCollection();
+			return $this->_em->getEmptyCollection();
 		}
-
+		
 		$addOns = \XF::app()->container('addon.cache');
 		if (array_key_exists('DBTech/Credits', $addOns) && $addOns['DBTech/Credits'] >= 905010031)
 		{
-			/** @var \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Event> $events */
-			$events = \XF::app()->finder(EventFinder::class)
+			/** @var \DBTech\Credits\Entity\Event[] $events */
+			$events = $this->finder('DBTech\Credits:Event')
 				->where('currency_id', $this->credits_currency_id)
 				->fetch()
-				->filter(function (Event $event): ?Event
+				->filter(function (\DBTech\Credits\Entity\Event $event): ?\DBTech\Credits\Entity\Event
 				{
-					if (str_starts_with('dbtech_shop_', $event->event_trigger_id))
+					if (strpos('dbtech_shop_', $event->event_trigger_id) === 0)
 					{
 						return $event;
 					}
-
+					
 					return null;
 				})
 			;
-
+			
 			return $events;
 		}
-
-		return \XF::app()->em()->getEmptyCollection();
+		
+		return $this->_em->getEmptyCollection();
 	}
-
+	
 	/**
-	 * @param \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Event>|null $events
+	 * @param \DBTech\Credits\Entity\Event[]|\XF\Mvc\Entity\ArrayCollection|null $events
 	 */
-	public function setEvents(?AbstractCollection $events = null): void
+	public function setEvents(?\XF\Mvc\Entity\ArrayCollection $events = null)
 	{
 		$this->_getterCache['Events'] = $events;
 	}
-
+	
 	/**
 	 * @param string $column
 	 *
@@ -243,18 +233,19 @@ class Currency extends Entity implements ViewableInterface
 	 */
 	protected function verifySqlSafe(string &$column): bool
 	{
+		$column = strval($column);
 		if ($column === '')
 		{
 			// Invalid
 			return false;
 		}
-
+		
 		// Ensure this is valid
 		$column = preg_replace('/\W/i', '_', preg_quote($column));
-
+		
 		return true;
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -265,19 +256,20 @@ class Currency extends Entity implements ViewableInterface
 			$addOns = \XF::app()->container('addon.cache');
 			if (array_key_exists('DBTech/Credits', $addOns) && $addOns['DBTech/Credits'] >= 905010031)
 			{
-				$creditsCurrency = \XF::app()->em()->find(\DBTech\Credits\Entity\Currency::class, $this->credits_currency_id);
+				/** @var \DBTech\Credits\Entity\Currency $creditsCurrency */
+				$creditsCurrency = $this->_em->find('DBTech\Credits:Currency', $this->credits_currency_id);
 				if (!$creditsCurrency)
 				{
 					$this->error(\XF::phrase('please_enter_valid_value'), 'credits_currency_id');
 					return false;
 				}
-
+				
 				// Very common columns
 				$this->title = $creditsCurrency->title;
 				$this->description = $creditsCurrency->description;
 				$this->display_order = $creditsCurrency->display_order;
 				$this->active = $creditsCurrency->active;
-
+				
 				// Shared columns
 				$this->column = $creditsCurrency->column;
 				$this->decimals = $creditsCurrency->decimals;
@@ -285,7 +277,7 @@ class Currency extends Entity implements ViewableInterface
 				$this->prefix = $creditsCurrency->prefix;
 				$this->suffix = $creditsCurrency->suffix;
 				$this->is_display_currency = $creditsCurrency->is_display_currency;
-
+				
 				// These are handled by the Credits mod
 				$this->sidebar = false;
 				$this->postbit = false;
@@ -298,38 +290,37 @@ class Currency extends Entity implements ViewableInterface
 				return false;
 			}
 		}
-
+		
 		if (!$this->credits_currency_id)
 		{
 			$db = $this->db();
 			$sm = $db->getSchemaManager();
-
+			
 			$tableName = ($this->use_table_prefix ? 'xf_' : '') . $this->table;
-
+			
 			if (!$sm->tableExists($tableName))
 			{
 				// Invalid
 				$this->error(\XF::phrase('dbtech_currency_missing_table'), 'table');
 				return false;
 			}
-
+			
 			$columns = $sm->getTableColumnDefinitions($tableName);
-
+			
 			if (!array_key_exists($this->user_id_column, $columns))
 			{
 				// Invalid
 				$this->error(\XF::phrase('dbtech_currency_missing_user_column'), 'table');
 				return false;
 			}
-
+			
 			if (
 				$this->isInsert()
 				|| $this->isChanged('column')
-			)
-			{
+			) {
 				// deal with desired table column
 				$this->blacklist = isset($columns[$this->column]);
-
+				
 				if (!$this->blacklist)
 				{
 					// create or switch custom columns
@@ -337,8 +328,7 @@ class Currency extends Entity implements ViewableInterface
 						$this->isUpdate()
 						&& $this->isChanged('column')
 						&& !$this->getPreviousValue('blacklist')
-					)
-					{
+					) {
 						// Invalid
 						$sm->alterTable($tableName, function (Alter $table) use ($columns)
 						{
@@ -377,12 +367,11 @@ class Currency extends Entity implements ViewableInterface
 						});
 					}
 				}
-				else if (
+				elseif (
 					$this->isChanged('column')
 					&& $this->isUpdate()
 					&& !$this->getExistingValue('blacklist')
-				)
-				{
+				) {
 					$sm->alterTable($tableName, function (Alter $table)
 					{
 						$table->dropColumns([$this->getPreviousValue('column')]);
@@ -390,27 +379,26 @@ class Currency extends Entity implements ViewableInterface
 				}
 			}
 		}
-
-		/** @var Currency $existing */
+		
+		/** @var \DBTech\Shop\Entity\Currency $existing */
 		if (
 			$this->is_display_currency
-			&& $existing = \XF::app()->finder(CurrencyFinder::class)
+			&& $existing = $this->finder('DBTech\Shop:Currency')
 				->where('is_display_currency', 1)
 				->where('currency_id', '!=', $this->currency_id)
 				->fetchOne()
-		)
-		{
+		) {
 			// We're changing display currency
 			$existing->fastUpdate('is_display_currency', 0);
 		}
-
+		
 		return true;
 	}
-
+	
 	/**
-	 * @throws Exception
+	 * @throws \XF\Db\Exception
 	 */
-	protected function _postSave(): void
+	protected function _postSave()
 	{
 		if ($this->isInsert())
 		{
@@ -424,16 +412,16 @@ class Currency extends Entity implements ViewableInterface
 			');
 		}
 	}
-
+	
 	/**
-	 * @throws PrintableException
+	 * @throws \XF\PrintableException
 	 */
-	protected function _postDelete(): void
+	protected function _postDelete()
 	{
 		$sm = $this->db()->getSchemaManager();
-
+		
 		$tableName = ($this->use_table_prefix ? 'xf_' : '') . $this->table;
-
+		
 		if (!$this->blacklist)
 		{
 			$sm->alterTable($tableName, function (Alter $table)
@@ -442,16 +430,16 @@ class Currency extends Entity implements ViewableInterface
 			});
 		}
 
-		foreach ($this->Events AS $event)
+		foreach ($this->Events as $event)
 		{
 			$event->delete();
 		}
 	}
 
 	/**
-	 * @param Structure $structure
+	 * @param \XF\Mvc\Entity\Structure $structure
 	 *
-	 * @return Structure
+	 * @return \XF\Mvc\Entity\Structure
 	 */
 	public static function getStructure(Structure $structure): Structure
 	{
@@ -485,47 +473,47 @@ class Currency extends Entity implements ViewableInterface
 			'customshops'         => ['type' => self::BOOL, 'default' => true],
 			'per_reply'           => ['type' => self::UINT, 'default' => 1, 'min' => 0],
 			'per_thread'          => ['type' => self::UINT, 'default' => 5, 'min' => 0],
-			'credits_currency_id' => ['type' => self::UINT, 'default' => 0],
+			'credits_currency_id' => ['type' => self::UINT, 'default' => 0]
 		];
 		$structure->behaviors = [
-			'DBTech\Shop:Cacheable' => [],
+			'DBTech\Shop:Cacheable' => []
 		];
 		$structure->getters = [
-			'Events' => true,
+			'Events' => true
 		];
 		$structure->relations = [
 			'Banked' => [
-				'entity' => Bank::class,
+				'entity' => 'DBTech\Shop:Bank',
 				'type' => self::TO_MANY,
 				'conditions' => 'currency_id',
-				'cascadeDelete' => true,
+				'cascadeDelete' => true
 			],
 			'Lotteries' => [
-				'entity' => Lottery::class,
+				'entity' => 'DBTech\Shop:Lottery',
 				'type' => self::TO_MANY,
-				'conditions' => 'currency_id',
+				'conditions' => 'currency_id'
 			],
 			'Items' => [
-				'entity' => Item::class,
+				'entity' => 'DBTech\Shop:Item',
 				'type' => self::TO_MANY,
-				'conditions' => 'currency_id',
+				'conditions' => 'currency_id'
 			],
 			'BuyBackItems' => [
-				'entity' => Item::class,
+				'entity' => 'DBTech\Shop:Item',
 				'type' => self::TO_MANY,
 				'conditions' => [
-					['buyback_currency_id', '=', '$currency_id'],
-				],
+					['buyback_currency_id', '=', '$currency_id']
+				]
 			],
 		];
 
 		return $structure;
 	}
-
+	
 	/**
 	 *
 	 */
-	protected function _setupDefaults(): void
+	protected function _setupDefaults()
 	{
 		$this->active = true;
 		$this->display_order = 10;
@@ -547,5 +535,13 @@ class Currency extends Entity implements ViewableInterface
 		$this->customshops = true;
 		$this->per_reply = 1;
 		$this->per_thread = 5;
+	}
+	
+	/**
+	 * @return \DBTech\Shop\Repository\Currency|\XF\Mvc\Entity\Repository
+	 */
+	protected function getCurrencyRepo()
+	{
+		return $this->repository('DBTech\Shop:Currency');
 	}
 }

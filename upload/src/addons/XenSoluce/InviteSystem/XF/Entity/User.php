@@ -6,6 +6,26 @@ use XF\Mvc\Entity\Structure;
 
 class User extends XFCP_User
 {
+    public function canInvite()
+    {
+        if(!$this->hasPermission('xs_is', 'xs_is_can_invite_someone'))
+        {
+            return false;
+        }
+
+        if(!empty($this->InviteBan))
+        {
+            return false;
+        }
+
+        if($this->hasPermission('xs_is', 'xs_is_mtutis') > 0 && $this->hasPermission('xs_is', 'xs_is_mtutis') > $this->message_count)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     public static function getStructure(Structure $structure)
     {
         $structure = parent::getStructure($structure);
@@ -26,3 +46,4 @@ class User extends XFCP_User
         return $structure;
     }
 }
+ 		   	  		 		     				  		  		 	  	 	           		          	 	   	  								  		  				 	 		       	 		 					 		   				 	 		  	    

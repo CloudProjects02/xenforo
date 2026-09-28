@@ -1,0 +1,14 @@
+{
+    "legacy_addon_id": "",
+    "title": "[Jace] Latest Activity",
+    "description": "Fetch Activity from user",
+    "version_id": 20000200,
+    "version_string": "2.2.0",
+    "dev": "Jace",
+    "dev_url": "https://enxf.net/members/jace.10543/",
+    "faq_url": "",
+    "support_url": "",
+    "extra_urls": [],
+    "require": [],
+    "icon": "fa-random"
+}

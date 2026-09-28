@@ -16,7 +16,7 @@ class TransactionLog extends AbstractSearcher
 		'dateline' => 'date',
 	];
 
-	/** @var string[][]  */
+	/** @var \string[][]  */
 	protected $order = [['dateline', 'desc']];
 
 

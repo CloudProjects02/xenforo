@@ -3,6 +3,7 @@
 namespace DBTech\Credits\Entity;
 
 use XF\Entity\User;
+use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 
 /**
@@ -20,7 +21,7 @@ use XF\Mvc\Entity\Structure;
  * @property-read Event|null $Event
  * @property-read Currency|null $Currency
  */
-class TransferLog extends AbstractEntity
+class TransferLog extends Entity
 {
 	/**
 	 * @param Structure $structure
@@ -38,7 +39,7 @@ class TransferLog extends AbstractEntity
 			'transfer_date' => ['type' => self::UINT, 'default' => \XF::$time],
 			'event_id' => ['type' => self::UINT, 'required' => true],
 			'currency_id' => ['type' => self::UINT, 'required' => true],
-			'amount' => ['type' => self::FLOAT, 'required' => true, 'max' => PHP_INT_MAX, 'isDecimal' => true],
+			'amount' => ['type' => self::FLOAT, 'required' => true],
 			'message' => ['type' => self::STR, 'default' => ''],
 		];
 		$structure->getters = [];

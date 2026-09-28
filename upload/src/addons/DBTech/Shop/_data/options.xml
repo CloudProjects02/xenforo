@@ -10,7 +10,7 @@ add_post</sub_options>
     <relation group_id="dbtech_shop" display_order="1015"/>
   </option>
   <option option_id="dbtechShopDefaultItemOwner" edit_format="username" data_type="unsigned_integer" advanced="0">
-    <default_value></default_value>
+    <default_value>0</default_value>
     <relation group_id="dbtech_shop" display_order="1140"/>
   </option>
   <option option_id="dbtechShopEnableRate" edit_format="onoff" data_type="boolean" advanced="0">
@@ -101,7 +101,7 @@ display_order={{ phrase('display_order') }}</edit_format_params>
     <relation group_id="debug" display_order="5120"/>
   </option>
   <option option_id="dbtech_shop_confignotification_pm" edit_format="username" data_type="unsigned_integer" advanced="0">
-    <default_value></default_value>
+    <default_value>0</default_value>
     <relation group_id="dbtech_shop" display_order="3800"/>
   </option>
   <option option_id="dbtech_shop_enablegiftgiver" edit_format="onoff" data_type="boolean" advanced="0">
@@ -128,7 +128,7 @@ display_order={{ phrase('display_order') }}</edit_format_params>
     <relation group_id="dbtech_shop" display_order="3000"/>
   </option>
   <option option_id="dbtech_shop_licensekey" edit_format="textbox" data_type="string" advanced="0">
-    <default_value>L-XFSHOP-28524UAO197LCW2</default_value>
+    <default_value>ENXF-NET</default_value>
     <relation group_id="debug" display_order="10000"/>
   </option>
   <option option_id="dbtech_shop_lottery_enabled" edit_format="onoff" data_type="boolean" advanced="0">
@@ -197,7 +197,7 @@ right_text</sub_options>
     <relation group_id="dbtech_shop" display_order="2010"/>
   </option>
   <option option_id="dbtech_shop_purchasenotification_pm" edit_format="username" data_type="unsigned_integer" advanced="0">
-    <default_value></default_value>
+    <default_value>0</default_value>
     <relation group_id="dbtech_shop" display_order="3810"/>
   </option>
   <option option_id="dbtech_shop_smilies_maxheight" edit_format="spinbox" data_type="unsigned_integer" advanced="0">

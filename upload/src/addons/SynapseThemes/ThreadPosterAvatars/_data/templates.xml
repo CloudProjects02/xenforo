@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="option_template_xfdevs_threadPosters" version_id="100" version_string="1.0.0"><![CDATA[<xf:page option="$option">
+	<xf:if is="$option.option_id == 'xfdevs_threadPosters_enabled'">
+		<xf:checkbox>
+			<xf:option name="{$inputName}"
+					   selected="{$option.option_value}">
+				{$option.title}
+			</xf:option>
+		</xf:checkbox>
+	</xf:if>
+
+	<xf:if is="$option.option_id == 'xfdevs_threadPosters_limit'">
+		<xf:numberbox name="{$inputName}"
+					  value="{$option.option_value}"
+					  min="{$option.min_value}"
+					  max="{$option.max_value}"
+					  step="1" />
+	</xf:if>
+</xf:page> ]]></template>
+  <template type="public" title="st_thread_posters" version_id="100" version_string="1.0.0"><![CDATA[<xf:if is="$thread.TopPosters is not empty">
+    <div class="xfdevs__thread__item__author">
+        <div class="xfdevs__thread__item__avatars">
+            <xf:avatar user="{$thread.User}" 
+                    class="xfdevs__author__avatar" 
+                    size="l" 
+                    defaultname="{$thread.username}"
+                    href="{{ link('members', $thread.User) }}"
+                    data-xf-init="tooltip"
+                    title="{{ phrase('thread_starter') }}: {$thread.username}" />
+            
+            <xf:foreach loop="$thread.TopPosters" value="$user">
+                <xf:avatar user="$user" 
+                        class="xfdevs__poster__avatar" 
+                        size="s" 
+                        defaultname="{$user.username}"
+                        href="{{ link('members', $user) }}"
+                        data-xf-init="tooltip"
+                        title="{$user.username}" />
+            </xf:foreach>
+        </div>
+    </div>
+</xf:if> ]]></template>
+</templates>

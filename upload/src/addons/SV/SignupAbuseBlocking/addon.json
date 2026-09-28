@@ -1,0 +1,39 @@
+{
+    "legacy_addon_id": "",
+    "title": "Signup abuse detection and blocking",
+    "description": "From (simple) multiple accounts detection to isp/connection fingerprinting, these are very effective low-hanging fruit at reducing spam",
+    "version_id": 1760965770,
+    "version_string": "1.17.2",
+    "dev": "Xon",
+    "dev_url": "https://atelieraphelion.com",
+    "faq_url": "",
+    "support_url": "https://xenforo.com/community/resources/signup-abuse-detection-and-blocking.6812/",
+    "extra_urls": {
+        "License": "https://atelieraphelion.com/products/license-agreement/",
+        "Add-on site": "https://atelieraphelion.com/products/signup-abuse-detection-and-blocking.64/"
+    },
+    "require": {
+        "SV/StandardLib": [
+            2001220000,
+            "Standard Library by Xon v1.22.0+"
+        ],
+        "XF": [
+            "2.1.0",
+            "XenForo 2.1.0+"
+        ],
+        "php": [
+            "7.2.0",
+            "PHP 7.2.0+"
+        ]
+    },
+    "require-soft": {
+        "NF/Tickets": [
+            "2.4.1",
+            "NixFifty's Tickets v2.4.1+",
+            false
+        ]
+    },
+    "icon": "fa-shield",
+    "composer_autoload": "_vendor/composer"
+}
+ 		 		 	   	 	  		  				  	 	 		 	 	   	    	 	  	 	  	 	 	 			    	 				 		    			 	 	  		  		  	 	 			 	   		  	 	 	  	 	   	 	 	 

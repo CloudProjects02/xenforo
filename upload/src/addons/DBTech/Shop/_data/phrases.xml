@@ -117,6 +117,7 @@
   <phrase title="dbtech_shop_active_items_only_user" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Only include items the user has enabled in their inventory]]></phrase>
   <phrase title="dbtech_shop_active_purchases" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Active purchases]]></phrase>
   <phrase title="dbtech_shop_add" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Add]]></phrase>
+  <phrase title="dbtech_shop_add_bundle_item" version_id="906060170" version_string="6.6.1"><![CDATA[Add Item]]></phrase>
   <phrase title="dbtech_shop_add_category" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Add category]]></phrase>
   <phrase title="dbtech_shop_add_currency" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Add currency]]></phrase>
   <phrase title="dbtech_shop_add_item" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Add item]]></phrase>
@@ -214,6 +215,8 @@ Requires the <i>Can Upload Custom Avatar</i> Usergroup Permission enabled for al
   <phrase title="dbtech_shop_bold" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Bold]]></phrase>
   <phrase title="dbtech_shop_bonus_numbers" version_id="906010014" version_string="6.1.0 Alpha 4"><![CDATA[Bonus numbers]]></phrase>
   <phrase title="dbtech_shop_bulk_purchase_discount" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Bulk Purchase Discounts]]></phrase>
+  <phrase title="dbtech_shop_bundle_items" version_id="906060170" version_string="6.6.1"><![CDATA[Bundle Items]]></phrase>
+  <phrase title="dbtech_shop_bundle_items_hint" version_id="906060170" version_string="6.6.1"><![CDATA[Select the items that will be included in this bundle and specify quantities]]></phrase>
   <phrase title="dbtech_shop_buy_ticket" version_id="906010014" version_string="6.1.0 Alpha 4"><![CDATA[Buy ticket]]></phrase>
   <phrase title="dbtech_shop_buyback" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Buyback]]></phrase>
   <phrase title="dbtech_shop_buyback_price" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Sell-back value]]></phrase>
@@ -311,7 +314,6 @@ Useful for if this category is more exclusive than a "normal" category.</dfn>]]>
   <phrase title="dbtech_shop_configuration_glow_onoff" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Glow (On/Off)]]></phrase>
   <phrase title="dbtech_shop_configuration_italic" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Italic]]></phrase>
   <phrase title="dbtech_shop_configuration_notice_autobump" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[[B]Thread:[/B] [URL="{thread_url}"]{thread}[/URL]]]></phrase>
-  <phrase title="dbtech_shop_configuration_notice_avatarstyle" version_id="906070070" version_string="6.7.0"><![CDATA[[B]Shadow color:[/B] {shadow}]]></phrase>
   <phrase title="dbtech_shop_configuration_notice_createforum" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[[B]Forum:[/B] [URL="{forum_url}"]{forum}[/URL]
 [B]Parent forum:[/B] [URL="{parent_forum_url}"]{parent_forum}[/URL]
 [B]Description:[/B] {description}]]></phrase>
@@ -848,11 +850,13 @@ If the remaining stock is -1 (Unlimited), the maximum stock will automatically c
   <phrase title="dbtech_shop_item_stock_short" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Stock]]></phrase>
   <phrase title="dbtech_shop_item_tagline" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Item tagline]]></phrase>
   <phrase title="dbtech_shop_item_tagline_explain" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[A short blob (around 140 characters) that briefly explains the item. This will be displayed in the item list.]]></phrase>
-  <phrase title="dbtech_shop_item_thread_create" version_id="907000011" version_string="7.0.0 Alpha 1"><![CDATA[A new item is available: [url={item_link}][plain]{title}[/plain][/url] - [plain]{tag_line}[/plain]
+  <phrase title="dbtech_shop_item_thread_create" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[A new item is available: [url={item_link}][plain]{title}[/plain][/url] - [plain]{tag_line}[/plain]
 
 
-[HEADING=1][B]{title}[/B][/HEADING]
-[HEADING=2]Description[/HEADING]
+[SIZE=7][B]{title}[/B][/SIZE]
+
+[SIZE=6]Description[/SIZE]
+
 {description}
 
 
@@ -895,8 +899,7 @@ If the remaining stock is -1 (Unlimited), the maximum stock will automatically c
   <phrase title="dbtech_shop_itemtype_1" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[User-Created Items]]></phrase>
   <phrase title="dbtech_shop_itemtype_description.autobump" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Bumps a thread every X hours.]]></phrase>
   <phrase title="dbtech_shop_itemtype_description.avatarchange" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Purchase a custom avatar change.]]></phrase>
-  <phrase title="dbtech_shop_itemtype_description.avatarstyle" version_id="906070070" version_string="6.7.0"><![CDATA[Change the style of avatars.]]></phrase>
-  <phrase title="dbtech_shop_itemtype_description.avatarstyle2" version_id="906070070" version_string="6.7.0"><![CDATA[Purchase a pre-defined avatar style.]]></phrase>
+  <phrase title="dbtech_shop_itemtype_description.avatarframe" version_id="906060170" version_string="6.6.1"><![CDATA[Add avatar frame to the surrounding avatar.]]></phrase>
   <phrase title="dbtech_shop_itemtype_description.createforum" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Purchase the ability to create a forum.]]></phrase>
   <phrase title="dbtech_shop_itemtype_description.custom" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[An item that can be customised to fit many needs.]]></phrase>
   <phrase title="dbtech_shop_itemtype_description.customicon" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Purchase a custom icon for the postbit.]]></phrase>
@@ -907,6 +910,7 @@ If the remaining stock is -1 (Unlimited), the maximum stock will automatically c
   <phrase title="dbtech_shop_itemtype_description.forumpermission" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Purchase access to certain forums.]]></phrase>
   <phrase title="dbtech_shop_itemtype_description.immunity" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Immunity from various actions affecting user accounts.]]></phrase>
   <phrase title="dbtech_shop_itemtype_description.intpermission" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Value Flags]]></phrase>
+  <phrase title="dbtech_shop_itemtype_description.itembundle" version_id="906060170" version_string="6.6.1"><![CDATA[Allows users to purchase multiple items as a bundle]]></phrase>
   <phrase title="dbtech_shop_itemtype_description.moderateforum" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Purchase the ability to moderate a forum.]]></phrase>
   <phrase title="dbtech_shop_itemtype_description.movethread" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Purchase the ability to move a thread.]]></phrase>
   <phrase title="dbtech_shop_itemtype_description.permission" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Yes / No Permission Flags]]></phrase>
@@ -916,6 +920,7 @@ If the remaining stock is -1 (Unlimited), the maximum stock will automatically c
   <phrase title="dbtech_shop_itemtype_description.postbithighlight2" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Purchase the ability to highlight your postbit on show thread.]]></phrase>
   <phrase title="dbtech_shop_itemtype_description.poststyle" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Purchase the ability to change the style of your posts.]]></phrase>
   <phrase title="dbtech_shop_itemtype_description.poststyle2" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Purchase the ability to change the style of your posts to a pre-defined style.]]></phrase>
+  <phrase title="dbtech_shop_itemtype_description.profileeffects" version_id="906060170" version_string="6.6.1"><![CDATA[Add effect to your profile tooltip]]></phrase>
   <phrase title="dbtech_shop_itemtype_description.profilemusic" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Purchase an MP3 player with a custom MP3 file.]]></phrase>
   <phrase title="dbtech_shop_itemtype_description.signaturechange" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Purchase a custom signature change.]]></phrase>
   <phrase title="dbtech_shop_itemtype_description.smilie" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Purchase the ability to add/edit a smilie.]]></phrase>
@@ -932,6 +937,7 @@ If the remaining stock is -1 (Unlimited), the maximum stock will automatically c
   <phrase title="dbtech_shop_itemtype_description.threadtitlestyle2" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Purchase the ability to change thread title style to a pre-defined style.]]></phrase>
   <phrase title="dbtech_shop_itemtype_description.usergroupchange" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Change usergroups.]]></phrase>
   <phrase title="dbtech_shop_itemtype_description.usernamechange" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Change user names.]]></phrase>
+  <phrase title="dbtech_shop_itemtype_description.usernameitem" version_id="906060170" version_string="6.6.1"><![CDATA[Add username item next to the username]]></phrase>
   <phrase title="dbtech_shop_itemtype_description.usernamestyle" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Change the style of user names.]]></phrase>
   <phrase title="dbtech_shop_itemtype_description.usernamestyle2" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Purchase a pre-defined username style.]]></phrase>
   <phrase title="dbtech_shop_itemtype_description.usertitlechange" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Change user titles.]]></phrase>
@@ -940,8 +946,7 @@ If the remaining stock is -1 (Unlimited), the maximum stock will automatically c
   <phrase title="dbtech_shop_itemtype_description.usertitlestyle2" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Purchase a pre-defined user title style.]]></phrase>
   <phrase title="dbtech_shop_itemtype_title.autobump" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Automatic Thread Bump]]></phrase>
   <phrase title="dbtech_shop_itemtype_title.avatarchange" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Avatar Change]]></phrase>
-  <phrase title="dbtech_shop_itemtype_title.avatarstyle" version_id="906070070" version_string="6.7.0"><![CDATA[Avatar Style]]></phrase>
-  <phrase title="dbtech_shop_itemtype_title.avatarstyle2" version_id="906070070" version_string="6.7.0"><![CDATA[Avatar Style (Pre-Defined)]]></phrase>
+  <phrase title="dbtech_shop_itemtype_title.avatarframe" version_id="906060170" version_string="6.6.1"><![CDATA[Avatar Frame]]></phrase>
   <phrase title="dbtech_shop_itemtype_title.createforum" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Create Forum]]></phrase>
   <phrase title="dbtech_shop_itemtype_title.custom" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Custom Item]]></phrase>
   <phrase title="dbtech_shop_itemtype_title.customicon" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Custom Icon]]></phrase>
@@ -952,6 +957,7 @@ If the remaining stock is -1 (Unlimited), the maximum stock will automatically c
   <phrase title="dbtech_shop_itemtype_title.forumpermission" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Forum Access]]></phrase>
   <phrase title="dbtech_shop_itemtype_title.immunity" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Immunity]]></phrase>
   <phrase title="dbtech_shop_itemtype_title.intpermission" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Usergroup Permissions (Values)]]></phrase>
+  <phrase title="dbtech_shop_itemtype_title.itembundle" version_id="906060170" version_string="6.6.1"><![CDATA[Item Bundle]]></phrase>
   <phrase title="dbtech_shop_itemtype_title.moderateforum" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Moderate Forum]]></phrase>
   <phrase title="dbtech_shop_itemtype_title.movethread" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Move Thread]]></phrase>
   <phrase title="dbtech_shop_itemtype_title.permission" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Usergroup Permissions (Yes / No)]]></phrase>
@@ -961,6 +967,7 @@ If the remaining stock is -1 (Unlimited), the maximum stock will automatically c
   <phrase title="dbtech_shop_itemtype_title.postbithighlight2" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Postbit Highlight (Pre-Defined)]]></phrase>
   <phrase title="dbtech_shop_itemtype_title.poststyle" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Post Style]]></phrase>
   <phrase title="dbtech_shop_itemtype_title.poststyle2" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Post Style (Pre-Defined)]]></phrase>
+  <phrase title="dbtech_shop_itemtype_title.profileeffects" version_id="906060170" version_string="6.6.1"><![CDATA[Profile Effects]]></phrase>
   <phrase title="dbtech_shop_itemtype_title.profilemusic" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Profile Music]]></phrase>
   <phrase title="dbtech_shop_itemtype_title.signaturechange" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Signature Change]]></phrase>
   <phrase title="dbtech_shop_itemtype_title.smilie" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Upload Smilie]]></phrase>
@@ -977,6 +984,7 @@ If the remaining stock is -1 (Unlimited), the maximum stock will automatically c
   <phrase title="dbtech_shop_itemtype_title.threadtitlestyle2" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Thread Title Style (Pre-Defined)]]></phrase>
   <phrase title="dbtech_shop_itemtype_title.usergroupchange" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Usergroup Change]]></phrase>
   <phrase title="dbtech_shop_itemtype_title.usernamechange" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Username Change]]></phrase>
+  <phrase title="dbtech_shop_itemtype_title.usernameitem" version_id="906060170" version_string="6.6.1"><![CDATA[Username Item]]></phrase>
   <phrase title="dbtech_shop_itemtype_title.usernamestyle" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Username Style]]></phrase>
   <phrase title="dbtech_shop_itemtype_title.usernamestyle2" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Username Style (Pre-Defined)]]></phrase>
   <phrase title="dbtech_shop_itemtype_title.usertitlechange" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[User Title Change]]></phrase>
@@ -1400,6 +1408,7 @@ If this column does not exist on the above table, it will be added.]]></phrase>
   <phrase title="dbtech_shop_secondary_usergroup" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Secondary Usergroup]]></phrase>
   <phrase title="dbtech_shop_select_deselect_all_items" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Select / deselect all items]]></phrase>
   <phrase title="dbtech_shop_select_forum" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Select Forum]]></phrase>
+  <phrase title="dbtech_shop_select_item" version_id="906060170" version_string="6.6.1"><![CDATA[Select an item...]]></phrase>
   <phrase title="dbtech_shop_select_this_item" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Select this item]]></phrase>
   <phrase title="dbtech_shop_selected_items" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Selected Items]]></phrase>
   <phrase title="dbtech_shop_self_and_shop_managers_only" version_id="906010011" version_string="6.1.0 Alpha 1"><![CDATA[Self & Shop Managers Only]]></phrase>

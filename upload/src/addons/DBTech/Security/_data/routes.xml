@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<routes>
+  <route route_type="admin" route_prefix="dbtech-security" controller="DBTech\Security:IndexController" context="dbtechSecurity"/>
+  <route route_type="admin" route_prefix="dbtech-security" sub_name="breach-check" format="breach-check/" controller="DBTech\Security:BreachCheckController" context="dbtechSecBreachChk"/>
+  <route route_type="admin" route_prefix="dbtech-security" sub_name="country-block" format="country-block/" controller="DBTech\Security:CountryBlockController" context="dbtechSecCountry"/>
+  <route route_type="admin" route_prefix="dbtech-security" sub_name="login" format="login/" controller="DBTech\Security:LoginController"/>
+  <route route_type="admin" route_prefix="dbtech-security" sub_name="logs" format="logs/" controller="DBTech\Security:LogController" context="dbtechSecLogs"/>
+  <route route_type="admin" route_prefix="dbtech-security" sub_name="logs/account-recovery" format="logs/account-recovery/:int&lt;recovery_log_id&gt;/" controller="DBTech\Security:LogController" context="dbtechSecRecovLog" action_prefix="AccountRecovery"/>
+  <route route_type="admin" route_prefix="dbtech-security" sub_name="logs/admin-strikes" format="logs/admin-strikes/:int&lt;admin_strike_id&gt;/" controller="DBTech\Security:LogController" context="dbtechSecAdmStr" action_prefix="AdminStrikes"/>
+  <route route_type="admin" route_prefix="dbtech-security" sub_name="logs/bad-behavior" format="logs/bad-behavior/:int&lt;id&gt;/" controller="DBTech\Security:LogController" context="dbtechSecBadLog" action_prefix="BadBehavior"/>
+  <route route_type="admin" route_prefix="dbtech-security" sub_name="logs/changes" format="logs/changes/:int&lt;change_log_id&gt;/" controller="DBTech\Security:LogController" context="dbtechSecChgLog" action_prefix="changes"/>
+  <route route_type="admin" route_prefix="dbtech-security" sub_name="logs/compromised-accounts" format="logs/compromised-accounts/:int&lt;compromised_log_id&gt;/" controller="DBTech\Security:LogController" context="dbtechSecCompLog" action_prefix="CompromisedAccounts"/>
+  <route route_type="admin" route_prefix="dbtech-security" sub_name="logs/fingerprints" format="logs/fingerprints/:int&lt;fingerprint_log_id&gt;/" controller="DBTech\Security:LogController" context="dbtechSecurityFpLog" action_prefix="Fingerprints"/>
+  <route route_type="admin" route_prefix="dbtech-security" sub_name="logs/login-strikes" format="logs/login-strikes/:int&lt;login_strike_id&gt;/" controller="DBTech\Security:LogController" context="dbtechSecLoginStr" action_prefix="LoginStrikes"/>
+  <route route_type="admin" route_prefix="dbtech-security" sub_name="logs/watchers" format="logs/watchers/:int&lt;watcher_log_id&gt;/" controller="DBTech\Security:LogController" context="dbtechSecWatcherLog" action_prefix="Watchers"/>
+  <route route_type="admin" route_prefix="dbtech-security" sub_name="passwords/force-change" format="passwords/force-change/" controller="DBTech\Security:PasswordController" context="dbtechSecPwdChg" action_prefix="forceChange"/>
+  <route route_type="admin" route_prefix="dbtech-security" sub_name="passwords/force-reset" format="passwords/force-reset/" controller="DBTech\Security:PasswordController" context="dbtechSecPwdRs" action_prefix="forceReset"/>
+  <route route_type="admin" route_prefix="dbtech-security" sub_name="passwords/generator" format="passwords/generator/" controller="DBTech\Security:PasswordController" context="dbtechSecHtpwd" action_prefix="generator"/>
+  <route route_type="admin" route_prefix="dbtech-security" sub_name="search" format="search/" controller="DBTech\Security:SearchController" context="dbtechSecSearch"/>
+  <route route_type="admin" route_prefix="dbtech-security" sub_name="settings-backups" format="settings-backups/:int&lt;snapshot_id&gt;/" controller="DBTech\Security:SnapshotController" context="dbtechSecSnapshot"/>
+  <route route_type="admin" route_prefix="dbtech-security" sub_name="watchers" format="watchers/:int&lt;watcher_id&gt;/" controller="DBTech\Security:WatcherController" context="dbtechSecWatchers"/>
+  <route route_type="public" route_prefix="dbtech-security" controller="DBTech\Security:IndexController" context="forums"/>
+  <route route_type="public" route_prefix="dbtech-security" sub_name="account-lock" format="account-lock" controller="DBTech\Security:AccountLockController" context="forums"/>
+  <route route_type="public" route_prefix="dbtech-security" sub_name="device/forget" format="device/forget/" controller="DBTech\Security:DeviceController" action_prefix="forget"/>
+  <route route_type="public" route_prefix="dbtech-security" sub_name="fingerprint" format="fingerprint" controller="DBTech\Security:FingerprintController" context="forums"/>
+  <route route_type="public" route_prefix="dbtech-security" sub_name="login" format="login/" controller="DBTech\Security:LoginController" context="forums"/>
+  <route route_type="public" route_prefix="dbtech-security" sub_name="session/delete" format="session/delete/" controller="DBTech\Security:SessionController" action_prefix="delete"/>
+</routes>

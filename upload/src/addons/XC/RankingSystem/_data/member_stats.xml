@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<member_stats>
+  <member_stat member_stat_key="xc_ranking_system_level" sort_order="level" sort_direction="desc" show_value="1" user_limit="20" display_order="10" overview_display="1" active="1" cache_lifetime="60"><![CDATA[[]]]></member_stat>
+  <member_stat member_stat_key="xc_ranking_system_xp" callback_class="XC\RankingSystem\MemberStat\Formatter" callback_method="number" sort_order="total_points" sort_direction="desc" show_value="1" user_limit="20" display_order="10" overview_display="1" active="1" cache_lifetime="0"><![CDATA[[]]]></member_stat>
+</member_stats>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<admin_navigation>
+  <admin_navigation_entry navigation_id="xc_award_badge" parent_navigation_id="xc_ranking_system" display_order="2" link="badge" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="xc_experience_points" parent_navigation_id="xc_ranking_system" display_order="1" link="exp-point" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="xc_gerneral_options" parent_navigation_id="xc_ranking_system" display_order="3" link="options/groups/xc_ranking_system_general/" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="xc_ranking_levels" parent_navigation_id="xc_ranking_system" display_order="4" link="levels" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="xc_ranking_system" display_order="1" link="rank-system" icon="fa-arrow-up" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="xc_user_badges" parent_navigation_id="xc_ranking_system" display_order="5" link="award-badge/list" debug_only="0" development_only="0" hide_no_children="0"/>
+  <admin_navigation_entry navigation_id="xc_user_xp" parent_navigation_id="xc_ranking_system" display_order="6" link="award-xp/list" debug_only="0" development_only="0" hide_no_children="0"/>
+</admin_navigation>

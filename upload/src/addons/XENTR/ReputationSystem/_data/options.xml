@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="utf-8"?>
+<options>
+  <option option_id="ReputationDesign" edit_format="radio" data_type="string" advanced="0">
+    <default_value>SpeedRank</default_value>
+    <edit_format_params>StarRank={{ phrase('star_rank') }}
+SpeedRank={{ phrase('speed_rank') }}
+BarRank={{ phrase('bar_rank') }}
+AnimationBarRank={{ phrase('animation_bar_rank') }}</edit_format_params>
+    <relation group_id="xentrReputation" display_order="110"/>
+  </option>
+  <option option_id="ReputationType" edit_format="radio" data_type="string" advanced="0">
+    <default_value>ReactionScore</default_value>
+    <edit_format_params>ReactionScore={{ phrase('reaction_score') }}
+PostCount={{ phrase('post_count') }}
+SolutionCount={{ phrase('xtr_solution_count') }}
+PostorReaction={{ phrase('reaction_or_post_count') }}
+TrophyPoint={{ phrase('trophy_points') }}
+ResourceCount={{ phrase('xtr_resource_count') }}
+CreditCount={{ phrase('xtr_dragon_byte_credits_count') }}
+PostorResourceCount={{ phrase('xtr_resource_count_or_post_count') }}</edit_format_params>
+    <relation group_id="xentrReputation" display_order="105"/>
+  </option>
+  <option option_id="Reputation_system_enable" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="xentrReputation" display_order="100"/>
+  </option>
+  <option option_id="rank_completed" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>1300</default_value>
+    <relation group_id="xentrReputation" display_order="299"/>
+  </option>
+  <option option_id="rank_credit_completed" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>900</default_value>
+    <relation group_id="xentrReputation" display_order="799"/>
+  </option>
+  <option option_id="rank_credit_fullstar1" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>50</default_value>
+    <relation group_id="xentrReputation" display_order="705"/>
+  </option>
+  <option option_id="rank_credit_fullstar10" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>900</default_value>
+    <relation group_id="xentrReputation" display_order="795"/>
+  </option>
+  <option option_id="rank_credit_fullstar2" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>100</default_value>
+    <relation group_id="xentrReputation" display_order="715"/>
+  </option>
+  <option option_id="rank_credit_fullstar3" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>150</default_value>
+    <relation group_id="xentrReputation" display_order="725"/>
+  </option>
+  <option option_id="rank_credit_fullstar4" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>250</default_value>
+    <relation group_id="xentrReputation" display_order="735"/>
+  </option>
+  <option option_id="rank_credit_fullstar5" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>350</default_value>
+    <relation group_id="xentrReputation" display_order="745"/>
+  </option>
+  <option option_id="rank_credit_fullstar6" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>450</default_value>
+    <relation group_id="xentrReputation" display_order="755"/>
+  </option>
+  <option option_id="rank_credit_fullstar7" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>600</default_value>
+    <relation group_id="xentrReputation" display_order="765"/>
+  </option>
+  <option option_id="rank_credit_fullstar8" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>700</default_value>
+    <relation group_id="xentrReputation" display_order="775"/>
+  </option>
+  <option option_id="rank_credit_fullstar9" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>800</default_value>
+    <relation group_id="xentrReputation" display_order="785"/>
+  </option>
+  <option option_id="rank_credit_halfstar1" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>25</default_value>
+    <relation group_id="xentrReputation" display_order="700"/>
+  </option>
+  <option option_id="rank_credit_halfstar10" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>850</default_value>
+    <relation group_id="xentrReputation" display_order="790"/>
+  </option>
+  <option option_id="rank_credit_halfstar2" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>75</default_value>
+    <relation group_id="xentrReputation" display_order="710"/>
+  </option>
+  <option option_id="rank_credit_halfstar3" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>125</default_value>
+    <relation group_id="xentrReputation" display_order="720"/>
+  </option>
+  <option option_id="rank_credit_halfstar4" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>200</default_value>
+    <relation group_id="xentrReputation" display_order="730"/>
+  </option>
+  <option option_id="rank_credit_halfstar5" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>300</default_value>
+    <relation group_id="xentrReputation" display_order="740"/>
+  </option>
+  <option option_id="rank_credit_halfstar6" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>400</default_value>
+    <relation group_id="xentrReputation" display_order="750"/>
+  </option>
+  <option option_id="rank_credit_halfstar7" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>500</default_value>
+    <relation group_id="xentrReputation" display_order="760"/>
+  </option>
+  <option option_id="rank_credit_halfstar8" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>650</default_value>
+    <relation group_id="xentrReputation" display_order="770"/>
+  </option>
+  <option option_id="rank_credit_halfstar9" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>750</default_value>
+    <relation group_id="xentrReputation" display_order="780"/>
+  </option>
+  <option option_id="rank_fullstar1" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>50</default_value>
+    <relation group_id="xentrReputation" display_order="205"/>
+  </option>
+  <option option_id="rank_fullstar10" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>1200</default_value>
+    <relation group_id="xentrReputation" display_order="295"/>
+  </option>
+  <option option_id="rank_fullstar2" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>100</default_value>
+    <relation group_id="xentrReputation" display_order="215"/>
+  </option>
+  <option option_id="rank_fullstar3" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>150</default_value>
+    <relation group_id="xentrReputation" display_order="225"/>
+  </option>
+  <option option_id="rank_fullstar4" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>250</default_value>
+    <relation group_id="xentrReputation" display_order="235"/>
+  </option>
+  <option option_id="rank_fullstar5" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>350</default_value>
+    <relation group_id="xentrReputation" display_order="245"/>
+  </option>
+  <option option_id="rank_fullstar6" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>450</default_value>
+    <relation group_id="xentrReputation" display_order="255"/>
+  </option>
+  <option option_id="rank_fullstar7" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>600</default_value>
+    <relation group_id="xentrReputation" display_order="265"/>
+  </option>
+  <option option_id="rank_fullstar8" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>800</default_value>
+    <relation group_id="xentrReputation" display_order="275"/>
+  </option>
+  <option option_id="rank_fullstar9" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>1000</default_value>
+    <relation group_id="xentrReputation" display_order="285"/>
+  </option>
+  <option option_id="rank_halfstar1" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>25</default_value>
+    <relation group_id="xentrReputation" display_order="200"/>
+  </option>
+  <option option_id="rank_halfstar10" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>1100</default_value>
+    <relation group_id="xentrReputation" display_order="290"/>
+  </option>
+  <option option_id="rank_halfstar2" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>75</default_value>
+    <relation group_id="xentrReputation" display_order="210"/>
+  </option>
+  <option option_id="rank_halfstar3" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>125</default_value>
+    <relation group_id="xentrReputation" display_order="220"/>
+  </option>
+  <option option_id="rank_halfstar4" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>200</default_value>
+    <relation group_id="xentrReputation" display_order="230"/>
+  </option>
+  <option option_id="rank_halfstar5" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>300</default_value>
+    <relation group_id="xentrReputation" display_order="240"/>
+  </option>
+  <option option_id="rank_halfstar6" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>400</default_value>
+    <relation group_id="xentrReputation" display_order="250"/>
+  </option>
+  <option option_id="rank_halfstar7" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>500</default_value>
+    <relation group_id="xentrReputation" display_order="260"/>
+  </option>
+  <option option_id="rank_halfstar8" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>700</default_value>
+    <relation group_id="xentrReputation" display_order="270"/>
+  </option>
+  <option option_id="rank_halfstar9" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>900</default_value>
+    <relation group_id="xentrReputation" display_order="280"/>
+  </option>
+  <option option_id="rank_post_completed" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>1300</default_value>
+    <relation group_id="xentrReputation" display_order="399"/>
+  </option>
+  <option option_id="rank_post_fullstar1" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>50</default_value>
+    <relation group_id="xentrReputation" display_order="305"/>
+  </option>
+  <option option_id="rank_post_fullstar10" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>1200</default_value>
+    <relation group_id="xentrReputation" display_order="395"/>
+  </option>
+  <option option_id="rank_post_fullstar2" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>100</default_value>
+    <relation group_id="xentrReputation" display_order="315"/>
+  </option>
+  <option option_id="rank_post_fullstar3" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>150</default_value>
+    <relation group_id="xentrReputation" display_order="325"/>
+  </option>
+  <option option_id="rank_post_fullstar4" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>250</default_value>
+    <relation group_id="xentrReputation" display_order="335"/>
+  </option>
+  <option option_id="rank_post_fullstar5" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>350</default_value>
+    <relation group_id="xentrReputation" display_order="345"/>
+  </option>
+  <option option_id="rank_post_fullstar6" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>450</default_value>
+    <relation group_id="xentrReputation" display_order="355"/>
+  </option>
+  <option option_id="rank_post_fullstar7" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>600</default_value>
+    <relation group_id="xentrReputation" display_order="365"/>
+  </option>
+  <option option_id="rank_post_fullstar8" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>800</default_value>
+    <relation group_id="xentrReputation" display_order="375"/>
+  </option>
+  <option option_id="rank_post_fullstar9" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>1000</default_value>
+    <relation group_id="xentrReputation" display_order="385"/>
+  </option>
+  <option option_id="rank_post_halfstar1" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>25</default_value>
+    <relation group_id="xentrReputation" display_order="300"/>
+  </option>
+  <option option_id="rank_post_halfstar10" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>1100</default_value>
+    <relation group_id="xentrReputation" display_order="390"/>
+  </option>
+  <option option_id="rank_post_halfstar2" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>75</default_value>
+    <relation group_id="xentrReputation" display_order="310"/>
+  </option>
+  <option option_id="rank_post_halfstar3" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>125</default_value>
+    <relation group_id="xentrReputation" display_order="320"/>
+  </option>
+  <option option_id="rank_post_halfstar4" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>200</default_value>
+    <relation group_id="xentrReputation" display_order="330"/>
+  </option>
+  <option option_id="rank_post_halfstar5" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>300</default_value>
+    <relation group_id="xentrReputation" display_order="340"/>
+  </option>
+  <option option_id="rank_post_halfstar6" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>400</default_value>
+    <relation group_id="xentrReputation" display_order="350"/>
+  </option>
+  <option option_id="rank_post_halfstar7" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>500</default_value>
+    <relation group_id="xentrReputation" display_order="360"/>
+  </option>
+  <option option_id="rank_post_halfstar8" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>700</default_value>
+    <relation group_id="xentrReputation" display_order="370"/>
+  </option>
+  <option option_id="rank_post_halfstar9" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>900</default_value>
+    <relation group_id="xentrReputation" display_order="380"/>
+  </option>
+  <option option_id="rank_resource_completed" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>175</default_value>
+    <relation group_id="xentrReputation" display_order="599"/>
+  </option>
+  <option option_id="rank_resource_fullstar1" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>10</default_value>
+    <relation group_id="xentrReputation" display_order="505"/>
+  </option>
+  <option option_id="rank_resource_fullstar10" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>160</default_value>
+    <relation group_id="xentrReputation" display_order="595"/>
+  </option>
+  <option option_id="rank_resource_fullstar2" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>20</default_value>
+    <relation group_id="xentrReputation" display_order="515"/>
+  </option>
+  <option option_id="rank_resource_fullstar3" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>30</default_value>
+    <relation group_id="xentrReputation" display_order="525"/>
+  </option>
+  <option option_id="rank_resource_fullstar4" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>40</default_value>
+    <relation group_id="xentrReputation" display_order="535"/>
+  </option>
+  <option option_id="rank_resource_fullstar5" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>60</default_value>
+    <relation group_id="xentrReputation" display_order="545"/>
+  </option>
+  <option option_id="rank_resource_fullstar6" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>80</default_value>
+    <relation group_id="xentrReputation" display_order="555"/>
+  </option>
+  <option option_id="rank_resource_fullstar7" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>100</default_value>
+    <relation group_id="xentrReputation" display_order="565"/>
+  </option>
+  <option option_id="rank_resource_fullstar8" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>120</default_value>
+    <relation group_id="xentrReputation" display_order="575"/>
+  </option>
+  <option option_id="rank_resource_fullstar9" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>140</default_value>
+    <relation group_id="xentrReputation" display_order="585"/>
+  </option>
+  <option option_id="rank_resource_halfstar1" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>5</default_value>
+    <relation group_id="xentrReputation" display_order="500"/>
+  </option>
+  <option option_id="rank_resource_halfstar10" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>150</default_value>
+    <relation group_id="xentrReputation" display_order="590"/>
+  </option>
+  <option option_id="rank_resource_halfstar2" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>15</default_value>
+    <relation group_id="xentrReputation" display_order="510"/>
+  </option>
+  <option option_id="rank_resource_halfstar3" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>25</default_value>
+    <relation group_id="xentrReputation" display_order="520"/>
+  </option>
+  <option option_id="rank_resource_halfstar4" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>35</default_value>
+    <relation group_id="xentrReputation" display_order="530"/>
+  </option>
+  <option option_id="rank_resource_halfstar5" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>50</default_value>
+    <relation group_id="xentrReputation" display_order="540"/>
+  </option>
+  <option option_id="rank_resource_halfstar6" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>70</default_value>
+    <relation group_id="xentrReputation" display_order="550"/>
+  </option>
+  <option option_id="rank_resource_halfstar7" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>90</default_value>
+    <relation group_id="xentrReputation" display_order="560"/>
+  </option>
+  <option option_id="rank_resource_halfstar8" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>110</default_value>
+    <relation group_id="xentrReputation" display_order="570"/>
+  </option>
+  <option option_id="rank_resource_halfstar9" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>130</default_value>
+    <relation group_id="xentrReputation" display_order="580"/>
+  </option>
+  <option option_id="rank_solution_completed" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>100</default_value>
+    <relation group_id="xentrReputation" display_order="699"/>
+  </option>
+  <option option_id="rank_solution_fullstar1" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>5</default_value>
+    <relation group_id="xentrReputation" display_order="605"/>
+  </option>
+  <option option_id="rank_solution_fullstar10" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>95</default_value>
+    <relation group_id="xentrReputation" display_order="695"/>
+  </option>
+  <option option_id="rank_solution_fullstar2" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>15</default_value>
+    <relation group_id="xentrReputation" display_order="615"/>
+  </option>
+  <option option_id="rank_solution_fullstar3" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>25</default_value>
+    <relation group_id="xentrReputation" display_order="625"/>
+  </option>
+  <option option_id="rank_solution_fullstar4" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>35</default_value>
+    <relation group_id="xentrReputation" display_order="635"/>
+  </option>
+  <option option_id="rank_solution_fullstar5" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>45</default_value>
+    <relation group_id="xentrReputation" display_order="645"/>
+  </option>
+  <option option_id="rank_solution_fullstar6" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>55</default_value>
+    <relation group_id="xentrReputation" display_order="655"/>
+  </option>
+  <option option_id="rank_solution_fullstar7" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>65</default_value>
+    <relation group_id="xentrReputation" display_order="665"/>
+  </option>
+  <option option_id="rank_solution_fullstar8" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>75</default_value>
+    <relation group_id="xentrReputation" display_order="675"/>
+  </option>
+  <option option_id="rank_solution_fullstar9" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>85</default_value>
+    <relation group_id="xentrReputation" display_order="685"/>
+  </option>
+  <option option_id="rank_solution_halfstar1" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="xentrReputation" display_order="600"/>
+  </option>
+  <option option_id="rank_solution_halfstar10" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>90</default_value>
+    <relation group_id="xentrReputation" display_order="690"/>
+  </option>
+  <option option_id="rank_solution_halfstar2" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>10</default_value>
+    <relation group_id="xentrReputation" display_order="610"/>
+  </option>
+  <option option_id="rank_solution_halfstar3" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>20</default_value>
+    <relation group_id="xentrReputation" display_order="620"/>
+  </option>
+  <option option_id="rank_solution_halfstar4" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>30</default_value>
+    <relation group_id="xentrReputation" display_order="630"/>
+  </option>
+  <option option_id="rank_solution_halfstar5" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>40</default_value>
+    <relation group_id="xentrReputation" display_order="640"/>
+  </option>
+  <option option_id="rank_solution_halfstar6" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>50</default_value>
+    <relation group_id="xentrReputation" display_order="650"/>
+  </option>
+  <option option_id="rank_solution_halfstar7" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>60</default_value>
+    <relation group_id="xentrReputation" display_order="660"/>
+  </option>
+  <option option_id="rank_solution_halfstar8" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>70</default_value>
+    <relation group_id="xentrReputation" display_order="670"/>
+  </option>
+  <option option_id="rank_solution_halfstar9" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>80</default_value>
+    <relation group_id="xentrReputation" display_order="680"/>
+  </option>
+  <option option_id="rank_trophy_completed" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>800</default_value>
+    <relation group_id="xentrReputation" display_order="499"/>
+  </option>
+  <option option_id="rank_trophy_fullstar1" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>10</default_value>
+    <relation group_id="xentrReputation" display_order="405"/>
+  </option>
+  <option option_id="rank_trophy_fullstar10" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>700</default_value>
+    <relation group_id="xentrReputation" display_order="495"/>
+  </option>
+  <option option_id="rank_trophy_fullstar2" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>20</default_value>
+    <relation group_id="xentrReputation" display_order="415"/>
+  </option>
+  <option option_id="rank_trophy_fullstar3" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>30</default_value>
+    <relation group_id="xentrReputation" display_order="425"/>
+  </option>
+  <option option_id="rank_trophy_fullstar4" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>50</default_value>
+    <relation group_id="xentrReputation" display_order="435"/>
+  </option>
+  <option option_id="rank_trophy_fullstar5" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>100</default_value>
+    <relation group_id="xentrReputation" display_order="445"/>
+  </option>
+  <option option_id="rank_trophy_fullstar6" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>150</default_value>
+    <relation group_id="xentrReputation" display_order="455"/>
+  </option>
+  <option option_id="rank_trophy_fullstar7" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>250</default_value>
+    <relation group_id="xentrReputation" display_order="465"/>
+  </option>
+  <option option_id="rank_trophy_fullstar8" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>350</default_value>
+    <relation group_id="xentrReputation" display_order="475"/>
+  </option>
+  <option option_id="rank_trophy_fullstar9" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>500</default_value>
+    <relation group_id="xentrReputation" display_order="485"/>
+  </option>
+  <option option_id="rank_trophy_halfstar1" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>5</default_value>
+    <relation group_id="xentrReputation" display_order="400"/>
+  </option>
+  <option option_id="rank_trophy_halfstar10" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>600</default_value>
+    <relation group_id="xentrReputation" display_order="490"/>
+  </option>
+  <option option_id="rank_trophy_halfstar2" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>15</default_value>
+    <relation group_id="xentrReputation" display_order="410"/>
+  </option>
+  <option option_id="rank_trophy_halfstar3" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>25</default_value>
+    <relation group_id="xentrReputation" display_order="420"/>
+  </option>
+  <option option_id="rank_trophy_halfstar4" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>40</default_value>
+    <relation group_id="xentrReputation" display_order="430"/>
+  </option>
+  <option option_id="rank_trophy_halfstar5" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>75</default_value>
+    <relation group_id="xentrReputation" display_order="440"/>
+  </option>
+  <option option_id="rank_trophy_halfstar6" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>125</default_value>
+    <relation group_id="xentrReputation" display_order="450"/>
+  </option>
+  <option option_id="rank_trophy_halfstar7" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>200</default_value>
+    <relation group_id="xentrReputation" display_order="460"/>
+  </option>
+  <option option_id="rank_trophy_halfstar8" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>300</default_value>
+    <relation group_id="xentrReputation" display_order="470"/>
+  </option>
+  <option option_id="rank_trophy_halfstar9" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>400</default_value>
+    <relation group_id="xentrReputation" display_order="480"/>
+  </option>
+  <option option_id="xtr_bar_style_color" edit_format="radio" data_type="string" advanced="0">
+    <default_value>rankGreen</default_value>
+    <edit_format_params>rankGreen={{ phrase('rank_green') }}
+rankRed={{ phrase('rank_red') }}
+rankYellow={{ phrase('rank_yellow') }}</edit_format_params>
+    <relation group_id="xentrReputation" display_order="115"/>
+  </option>
+</options>
+ 		    		   	 	 		  			  	  	  	 			   			 	 	 	 		 			 		 		 	 		  	  	  	  		 	  		 	  		 	 	  	 	 					 	  	 	 	 	 	 	 	 		 	 			

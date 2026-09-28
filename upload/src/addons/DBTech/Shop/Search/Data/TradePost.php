@@ -2,16 +2,17 @@
 
 namespace DBTech\Shop\Search\Data;
 
-use DBTech\Shop\XF\Entity\User;
-use XF\Http\Request;
-use XF\Mvc\Entity\Entity;
-use XF\Repository\UserRepository;
 use XF\Search\Data\AbstractData;
+use XF\Mvc\Entity\Entity;
 use XF\Search\IndexRecord;
 use XF\Search\MetadataStructure;
-use XF\Search\Query\Query;
 use XF\Util\Arr;
 
+/**
+ * Class TradePost
+ *
+ * @package DBTech\Shop\Search\Data
+ */
 class TradePost extends AbstractData
 {
 	/**
@@ -29,7 +30,7 @@ class TradePost extends AbstractData
 
 		return $get;
 	}
-
+	
 	/**
 	 * @param Entity $entity
 	 *
@@ -50,7 +51,7 @@ class TradePost extends AbstractData
 			'date' => $entity->post_date,
 			'user_id' => $entity->user_id,
 			'discussion_id' => $entity->trade_post_id,
-			'metadata' => $this->getMetaData($entity),
+			'metadata' => $this->getMetaData($entity)
 		]);
 
 		if (!$entity->isVisible())
@@ -60,7 +61,7 @@ class TradePost extends AbstractData
 
 		return $index;
 	}
-
+	
 	/**
 	 * @param \DBTech\Shop\Entity\TradePost $entity
 	 *
@@ -74,15 +75,15 @@ class TradePost extends AbstractData
 
 		return $metadata;
 	}
-
+	
 	/**
 	 * @param MetadataStructure $structure
 	 */
-	public function setupMetadataStructure(MetadataStructure $structure): void
+	public function setupMetadataStructure(MetadataStructure $structure)
 	{
 		$structure->addField('trade_owner', MetadataStructure::INT);
 	}
-
+	
 	/**
 	 * @param Entity $entity
 	 *
@@ -93,7 +94,7 @@ class TradePost extends AbstractData
 		/** @var \DBTech\Shop\Entity\TradePost $entity */
 		return $entity->post_date;
 	}
-
+	
 	/**
 	 * @return array
 	 */
@@ -101,7 +102,7 @@ class TradePost extends AbstractData
 	{
 		return ['dbtech_shop_trade_post', 'dbtech_shop_trade_comment'];
 	}
-
+	
 	/**
 	 * @param Entity $entity
 	 * @param array $options
@@ -112,16 +113,16 @@ class TradePost extends AbstractData
 	{
 		return [
 			'tradePost' => $entity,
-			'options' => $options,
+			'options' => $options
 		];
 	}
-
+	
 	/**
 	 * @return array|null
 	 */
 	public function getSearchFormTab(): ?array
 	{
-		/** @var User $visitor */
+		/** @var \DBTech\Shop\XF\Entity\User $visitor */
 		$visitor = \XF::visitor();
 		if (!$visitor->canViewDbtechShopTradePosts())
 		{
@@ -130,10 +131,10 @@ class TradePost extends AbstractData
 
 		return [
 			'title' => \XF::phrase('dbtech_shop_search_trade_posts'),
-			'order' => 1000,
+			'order' => 1000
 		];
 	}
-
+	
 	/**
 	 * @return string|null
 	 */
@@ -141,13 +142,13 @@ class TradePost extends AbstractData
 	{
 		return 'dbtechShop';
 	}
-
+	
 	/**
-	 * @param Query $query
-	 * @param Request $request
+	 * @param \XF\Search\Query\Query $query
+	 * @param \XF\Http\Request $request
 	 * @param array $urlConstraints
 	 */
-	public function applyTypeConstraintsFromInput(Query $query, Request $request, array &$urlConstraints): void
+	public function applyTypeConstraintsFromInput(\XF\Search\Query\Query $query, \XF\Http\Request $request, array &$urlConstraints)
 	{
 		$tradeOwner = $request->filter('c.trade_owners', 'str');
 		if ($tradeOwner)
@@ -155,7 +156,8 @@ class TradePost extends AbstractData
 			$users = Arr::stringToArray($tradeOwner, '/,\s*/');
 			if ($users)
 			{
-				$userRepo = \XF::app()->repository(UserRepository::class);
+				/** @var \XF\Repository\User $userRepo */
+				$userRepo = \XF::repository('XF:User');
 				$matchedUsers = $userRepo->getUsersByNames($users, $notFound);
 				if ($notFound)
 				{
@@ -172,7 +174,7 @@ class TradePost extends AbstractData
 			}
 		}
 	}
-
+	
 	/**
 	 * @param Entity $entity
 	 * @param null $error

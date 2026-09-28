@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="eae_tc_member_list" version_id="1020070" version_string="1.2.0"><![CDATA[Member list]]></phrase>
+  <phrase title="eae_tc_member_profile" version_id="1020070" version_string="1.2.0"><![CDATA[Member profile]]></phrase>
+  <phrase title="eae_tc_message_user_info_elements" version_id="1020070" version_string="1.2.0"><![CDATA[Message user info elements (post bit)]]></phrase>
+  <phrase title="eae_tc_rebuild_user_thread_counts" version_id="1000011" version_string="1.0.0 Alpha 1"><![CDATA[Rebuild user thread counts]]></phrase>
+  <phrase title="eae_tc_thread_count" version_id="1000011" version_string="1.0.0 Alpha 1"><![CDATA[Thread count]]></phrase>
+  <phrase title="eae_tc_thread_count_between" version_id="1000011" version_string="1.0.0 Alpha 1"><![CDATA[Thread count between]]></phrase>
+  <phrase title="eae_tc_thread_counts" version_id="1000011" version_string="1.0.0 Alpha 1"><![CDATA[Thread counts]]></phrase>
+  <phrase title="eae_tc_total_threads" version_id="1010070" version_string="1.1.0"><![CDATA[Total threads]]></phrase>
+  <phrase title="eae_tc_user_has_created_at_least_x_threads" version_id="1000011" version_string="1.0.0 Alpha 1"><![CDATA[User has created at least X threads]]></phrase>
+  <phrase title="eae_tc_user_has_created_no_more_than_x_threads" version_id="1000011" version_string="1.0.0 Alpha 1"><![CDATA[User has created no more than X threads]]></phrase>
+  <phrase title="eae_tc_visitor_panel" version_id="1020070" version_string="1.2.0"><![CDATA[Visitor panel]]></phrase>
+  <phrase title="eae_tc_you_need_x_threads_to_reply" version_id="1010070" version_string="1.1.0"><![CDATA[You need {count} more thread(s) to reply to this topic.]]></phrase>
+  <phrase title="eae_tc_you_need_x_threads_to_start_topic" version_id="1010070" version_string="1.1.0"><![CDATA[You need {count} more thread(s) to start a topic in this forum.]]></phrase>
+  <phrase title="eae_tc_you_need_x_threads_to_view_threads_by_others" version_id="1010070" version_string="1.1.0"><![CDATA[You need {count} more thread(s) to view threads by others.]]></phrase>
+  <phrase title="member_stat.eae_tc_most_threads" version_id="1000011" version_string="1.0.0 Alpha 1"><![CDATA[Most threads]]></phrase>
+  <phrase title="option.eaetcFaIcon" version_id="1020070" version_string="1.2.0"><![CDATA[Thread count fa-icon]]></phrase>
+  <phrase title="option.eaetcUseIcon" version_id="1020070" version_string="1.2.0"><![CDATA[Use an fa-icon for]]></phrase>
+  <phrase title="option_explain.eaetcFaIcon" version_id="1020070" version_string="1.2.0"><![CDATA[Font awesome icon to replace the phrase <i>thread</i> in select areas.]]></phrase>
+  <phrase title="option_explain.eaetcUseIcon" version_id="1020070" version_string="1.2.0"><![CDATA[Select the areas to replace the word <i>thread</i> with the thread count fa-icon option. If the fa-icon is left blank, a default icon will be used (fa-sort-numeric-up).]]></phrase>
+  <phrase title="option_group.eaetcThreadCount" version_id="1020070" version_string="1.2.0"><![CDATA[[EAE] Thread count]]></phrase>
+  <phrase title="option_group_description.eaetcThreadCount" version_id="1020070" version_string="1.2.0"><![CDATA[Options for the thread count add-on.]]></phrase>
+  <phrase title="permission.forum_createThreadCount" version_id="1000011" version_string="1.0.0 Alpha 1"><![CDATA[Minimum number of threads to create thread]]></phrase>
+  <phrase title="permission.forum_replyThreadCount" version_id="1010370" version_string="1.1.3"><![CDATA[Minimum number of threads to reply to threads by others]]></phrase>
+  <phrase title="permission.forum_viewNodeThreadCount" version_id="1000011" version_string="1.0.0 Alpha 1"><![CDATA[Minimum number of threads to view node]]></phrase>
+  <phrase title="permission.forum_viewOthersThreadCount" version_id="1000011" version_string="1.0.0 Alpha 1"><![CDATA[Minimum number of threads to view threads by others]]></phrase>
+  <phrase title="permission_interface.eaeThreadCountPermissions" version_id="1000011" version_string="1.0.0 Alpha 1"><![CDATA[[EAE] Thread count forum permissions]]></phrase>
+</phrases>

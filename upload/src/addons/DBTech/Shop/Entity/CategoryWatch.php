@@ -2,7 +2,6 @@
 
 namespace DBTech\Shop\Entity;
 
-use XF\Entity\User;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 
@@ -16,15 +15,15 @@ use XF\Mvc\Entity\Structure;
  * @property bool $include_children
  *
  * RELATIONS
- * @property-read Category|null $Category
- * @property-read User|null $User
+ * @property \DBTech\Shop\Entity\Category $Category
+ * @property \XF\Entity\User $User
  */
 class CategoryWatch extends Entity
 {
 	/**
-	 * @param Structure $structure
+	 * @param \XF\Mvc\Entity\Structure $structure
 	 *
-	 * @return Structure
+	 * @return \XF\Mvc\Entity\Structure
 	 */
 	public static function getStructure(Structure $structure): Structure
 	{
@@ -35,25 +34,25 @@ class CategoryWatch extends Entity
 			'user_id' => ['type' => self::UINT, 'required' => true],
 			'category_id' => ['type' => self::UINT, 'required' => true],
 			'notify_on' => ['type' => self::STR, 'default' => '',
-				'allowedValues' => ['', 'item'],
+				'allowedValues' => ['', 'item']
 			],
 			'send_alert' => ['type' => self::BOOL, 'default' => false],
 			'send_email' => ['type' => self::BOOL, 'default' => false],
-			'include_children' => ['type' => self::BOOL, 'default' => false],
+			'include_children' => ['type' => self::BOOL, 'default' => false]
 		];
 		$structure->getters = [];
 		$structure->relations = [
 			'Category' => [
-				'entity' => Category::class,
+				'entity' => 'DBTech\Shop:Category',
 				'type' => self::TO_ONE,
 				'conditions' => 'category_id',
-				'primary' => true,
+				'primary' => true
 			],
 			'User' => [
-				'entity' => User::class,
+				'entity' => 'XF:User',
 				'type' => self::TO_ONE,
 				'conditions' => 'user_id',
-				'primary' => true,
+				'primary' => true
 			],
 		];
 

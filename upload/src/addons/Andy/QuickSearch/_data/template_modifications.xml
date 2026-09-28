@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="conversation_list" modification_key="QuickSearch_conversation_list" description="QuickSearch_conversation_list" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<div class="block-container">]]></find>
+    <replace><![CDATA[<xf:if is="{{ $xf.visitor.hasPermission('quickSearch', 'view') }} AND {$xf.options.quickSearchShowConversationList}">
+<xf:css src="andy_quicksearch.less" />
+<div class="block-container quicksearch">
+	<div class="block-body">
+		<input type="text" class="input js-filterInput" 
+			aria-label="{{ phrase('quicksearch_quick_search') }}"
+			autocomplete="off" 
+			data-no-auto-focus="true" 
+			disabled="disabled"
+			id="quickSearchTitle" 
+			name="quickSearchTitle" 
+			onsubmit="return handle()" 
+			placeholder="{{ phrase('quicksearch_quick_search...') }}" 
+			style="border:none;" 
+		/>
+	</div>
+</div>
+<xf:js>
+!function($, window, document, _undefined)
+{
+	$(document).ready(function()
+	{
+		var width = $(window).width();
+		var pathname = '{$xf.options.boardUrl}';
+		var n = pathname.charAt(pathname.length-1);		
+		var keystrokeDelay = '{$xf.options.quickSearchKeystrokeDelay}';
+		
+		$("#quickSearchTitle").prop('disabled', false);
+
+		if (n != '/')
+		{
+			var url = pathname + '/conversations/quicksearch';
+		}
+		else
+		{
+			var url = pathname + 'conversations/quicksearch';
+		}
+
+		$("#quickSearchTitle").keyup(delay(function (e)
+		{
+			currentTitle = $('#quickSearchTitle').val();
+			$.ajax(
+			{
+				type: "POST",
+				url: url,
+				data: { 
+					'title': currentTitle,
+					_xfToken: XF.config.csrf
+				},
+				dataType: "html",
+				timeout: 5000,
+				success: function(data) 
+				{
+					if (width >= 600) 
+					{
+						$(data).find('.quicksearch-wrapper-wide').each(function()
+						{
+							$('#quicksearch-result').empty();
+							$('#quicksearch-result').append($(this).html());
+							$('#quicksearch-result').slideDown("slow");
+						});
+					}
+					else 
+					{
+						$(data).find('.quicksearch-wrapper-narrow').each(function()
+						{
+							$('#quicksearch-result').empty();
+							$('#quicksearch-result').append($(this).html());
+							$('#quicksearch-result').slideDown("slow");
+						});
+					}
+				},
+				error: function(request, status, err) 
+				{
+					if (status != "success") {
+						$('#quicksearch-result').slideUp("slow");
+						$('#quicksearch-result').empty();
+					}
+				}
+			});
+		}, keystrokeDelay));
+	});	
+}
+(jQuery, this, document);
+function quickSearchClose() 
+{
+	$('#quicksearch-result').slideUp("slow");
+	$('#quicksearch-result').empty();
+	$('#quickSearchTitle').val("");
+}
+function delay(callback, ms) 
+{
+	var timer = 0;
+	return function() 
+	{
+		var context = this, args = arguments;
+		clearTimeout(timer);
+		timer = setTimeout(function () 
+		{
+			callback.apply(context, args);
+		}, ms || 0);
+	};
+}
+</xf:js>
+<div id="quicksearch-result"></div>
+</xf:if>
+$0]]></replace>
+  </modification>
+  <modification type="public" template="forum_list" modification_key="QuickSearch_forum_list" description="QuickSearch_forum_list" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:widgetpos id="forum_list_above_nodes" />]]></find>
+    <replace><![CDATA[$0
+<xf:if is="{{ $xf.visitor.hasPermission('quickSearch', 'view') }} AND {$xf.options.quickSearchShowForumList}">
+<xf:css src="andy_quicksearch.less" />
+<div class="block-container quicksearch">
+	<div class="block-body">
+		<input type="text" class="input js-filterInput" 
+			aria-label="{{ phrase('quicksearch_quick_search') }}"
+			autocomplete="off" 
+			data-no-auto-focus="true" 
+			disabled="disabled"
+			id="quickSearchTitle" 
+			name="quickSearchTitle" 
+			onsubmit="return handle()" 
+			placeholder="{{ phrase('quicksearch_quick_search...') }}" 
+			style="border:none;" 
+		/>
+	</div>
+</div>
+<xf:js>
+!function($, window, document, _undefined)
+{
+	$(document).ready(function()
+	{
+		var width = $(window).width();
+		var pathname = '{$xf.options.boardUrl}';
+		var n = pathname.charAt(pathname.length-1);		
+		var keystrokeDelay = '{$xf.options.quickSearchKeystrokeDelay}';
+		
+		$("#quickSearchTitle").prop('disabled', false);
+
+		if (n != '/')
+		{
+			var url = pathname + '/quicksearch';
+		}
+		else
+		{
+			var url = pathname + 'quicksearch';
+		}
+
+		$("#quickSearchTitle").keyup(delay(function (e)
+		{
+			currentTitle = $('#quickSearchTitle').val();
+			$.ajax(
+			{
+				type: "POST",
+				url: url,
+				data: { 
+					'title': currentTitle,
+					_xfToken: XF.config.csrf
+				},
+				dataType: "html",
+				timeout: 5000,
+				success: function(data) 
+				{
+					if (width >= 600) 
+					{
+						$(data).find('.quicksearch-wrapper-wide').each(function()
+						{
+							$('#quicksearch-result').empty();
+							$('#quicksearch-result').append($(this).html());
+							$('#quicksearch-result').slideDown("slow");
+						});
+					}
+					else 
+					{
+						$(data).find('.quicksearch-wrapper-narrow').each(function()
+						{
+							$('#quicksearch-result').empty();
+							$('#quicksearch-result').append($(this).html());
+							$('#quicksearch-result').slideDown("slow");
+						});
+					}
+				},
+				error: function(request, status, err) 
+				{
+					if (status != "success") {
+						$('#quicksearch-result').slideUp("slow");
+						$('#quicksearch-result').empty();
+					}
+				}
+			});
+		}, keystrokeDelay));
+	});	
+}
+(jQuery, this, document);
+function quickSearchClose() 
+{
+	$('#quicksearch-result').slideUp("slow");
+	$('#quicksearch-result').empty();
+	$('#quickSearchTitle').val("");
+}
+function delay(callback, ms) 
+{
+	var timer = 0;
+	return function() 
+	{
+		var context = this, args = arguments;
+		clearTimeout(timer);
+		timer = setTimeout(function () 
+		{
+			callback.apply(context, args);
+		}, ms || 0);
+	};
+}
+</xf:js>
+<div id="quicksearch-result"></div>
+</xf:if>]]></replace>
+  </modification>
+  <modification type="public" template="forum_view" modification_key="QuickSearch_forum_view" description="QuickSearch_forum_view" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:ad position="forum_view_above_thread_list" arg-forum="{$forum}" />]]></find>
+    <replace><![CDATA[<xf:if is="{{ $xf.visitor.hasPermission('quickSearch', 'view') }} AND {$xf.options.quickSearchShowForumView}">
+<xf:if is="!in_array($forum.node_id, $xf.options.quickSearchExcludeForums)">
+<xf:css src="andy_quicksearch.less" />	
+<div class="block-container quicksearch">
+	<div class="block-body">
+		<input type="text" class="input js-filterInput" 
+			aria-label="{{ phrase('quicksearch_quick_search') }}"
+			autocomplete="off" 
+			data-no-auto-focus="true" 
+			disabled="disabled" 
+			id="quickSearchTitle" 
+			name="quickSearchTitle" 
+			onsubmit="return handle()" 
+			placeholder="{{ phrase('quicksearch_quick_search...') }}" 
+			style="border:none;" 
+		/>
+	</div>
+</div>
+<xf:js>
+!function($, window, document, _undefined)
+{
+	$(document).ready(function()
+	{
+		var width = $(window).width();
+		var pathname = window.location.href;
+		pathname = pathname.split('?')[0];
+		var n = pathname.charAt(pathname.length-1);
+		var keystrokeDelay = '{$xf.options.quickSearchKeystrokeDelay}';
+
+		$("#quickSearchTitle").prop('disabled', false);
+
+		if (n != '/')
+		{
+			var url = pathname + '/quicksearch';
+		}
+		else
+		{
+			var url = pathname + 'quicksearch' ;
+		}
+
+		$("#quickSearchTitle").keyup(delay(function (e) 
+		{
+			currentTitle = $('#quickSearchTitle').val();
+			$.ajax(
+			{
+				type: "POST",
+				url: url,
+				data: { 
+					'title': currentTitle,
+					_xfToken: XF.config.csrf
+				},
+				dataType: "html",
+				timeout: 5000,
+				success: function(data) 
+				{
+					if (width >= 600) 
+					{
+						$(data).find('.quicksearch-wrapper-wide').each(function()
+						{
+							$('#quicksearch-result').empty();
+							$('#quicksearch-result').append($(this).html());
+							$('#quicksearch-result').slideDown("slow");
+						});
+					}
+					else
+					{
+						$(data).find('.quicksearch-wrapper-narrow').each(function()
+						{
+							$('#quicksearch-result').empty();
+							$('#quicksearch-result').append($(this).html());
+							$('#quicksearch-result').slideDown("slow");
+						});
+					}
+				},
+				error: function(request, status, err) 
+				{
+					if (status != "success") {
+						$('#quicksearch-result').slideUp("slow");
+						$('#quicksearch-result').empty();
+					}
+				}
+			});
+		}, keystrokeDelay));
+	});	
+}
+(jQuery, this, document);
+function quickSearchClose() 
+{
+	$('#quicksearch-result').slideUp("slow");
+	$('#quicksearch-result').empty();
+	$('#quickSearchTitle').val("");
+}
+function delay(callback, ms) 
+{
+	var timer = 0;
+	return function() 
+	{
+		var context = this, args = arguments;
+		clearTimeout(timer);
+		timer = setTimeout(function () 
+		{
+			callback.apply(context, args);
+		}, ms || 0);
+	};
+}
+</xf:js>
+<div id="quicksearch-result"></div>	
+</xf:if>
+</xf:if>
+$0]]></replace>
+  </modification>
+  <modification type="public" template="thread_view" modification_key="QuickSearch_thread_view" description="QuickSearch_thread_view" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:ad position="thread_view_above_messages" arg-thread="{$thread}" />]]></find>
+    <replace><![CDATA[<xf:if is="{{ $xf.visitor.hasPermission('quickSearch', 'view') }} AND {$xf.options.quickSearchShowThreadView}">
+<xf:if is="!in_array($forum.node_id, $xf.options.quickSearchExcludeForums)">
+<xf:css src="andy_quicksearch.less" />
+<div class="block-container quicksearch">
+	<div class="block-body">
+		<input type="text" class="input js-filterInput" 
+			aria-label="{{ phrase('quicksearch_quick_search') }}"
+			autocomplete="off" 
+			data-no-auto-focus="true" 
+			disabled="disabled" 
+			id="quickSearchTitle" 
+			name="quickSearchTitle" 
+			onsubmit="return handle()" 
+			placeholder="{{ phrase('quicksearch_quick_search...') }}" 
+			style="border:none;" 
+		/>
+	</div>
+</div>
+<xf:js>
+!function($, window, document, _undefined)
+{
+	$(document).ready(function()
+	{
+		var width = $(window).width();
+		var pathname = $(location).attr('href');;
+		var n = pathname.charAt(pathname.length-1);
+		var keystrokeDelay = '{$xf.options.quickSearchKeystrokeDelay}';
+		
+		$("#quickSearchTitle").prop('disabled', false);
+
+		if (n != '/')
+		{
+			var url = pathname + '/quicksearch';
+		}
+		else
+		{
+			var url = pathname + 'quicksearch';
+		}
+
+		$("#quickSearchTitle").keyup(delay(function (e) 
+		{
+			currentTitle = $('#quickSearchTitle').val();
+			$.ajax(
+			{
+				type: "POST",
+				url: url,
+				data: { 
+					'title': currentTitle,
+					_xfToken: XF.config.csrf
+				},
+				dataType: "html",
+				timeout: 5000,
+				success: function(data) 
+				{
+					if (width >= 600) 
+					{
+						$(data).find('.quicksearch-wrapper-wide').each(function()
+						{
+							$('#quicksearch-result').empty();
+							$('#quicksearch-result').append($(this).html());
+							$('#quicksearch-result').slideDown("slow");
+						});
+					}
+					else
+					{
+						$(data).find('.quicksearch-wrapper-narrow').each(function()
+						{
+							$('#quicksearch-result').empty();
+							$('#quicksearch-result').append($(this).html());
+							$('#quicksearch-result').slideDown("slow");
+						});
+					}
+				},
+				error: function(request, status, err) 
+				{
+					if (status != "success") {
+						$('#quicksearch-result').slideUp("slow");
+						$('#quicksearch-result').empty();
+					}
+				}
+			});
+		}, keystrokeDelay));
+	});	
+}
+(jQuery, this, document);
+function quickSearchClose() 
+{
+	$('#quicksearch-result').slideUp("slow");
+	$('#quicksearch-result').empty();
+	$('#quickSearchTitle').val("");
+}
+function delay(callback, ms) 
+{
+	var timer = 0;
+	return function() 
+	{
+		var context = this, args = arguments;
+		clearTimeout(timer);
+		timer = setTimeout(function () 
+		{
+			callback.apply(context, args);
+		}, ms || 0);
+	};
+}
+</xf:js>
+<div id="quicksearch-result"></div>	
+</xf:if>
+</xf:if>
+$0]]></replace>
+  </modification>
+  <modification type="public" template="xfrm_category_view" modification_key="QuickSearch_xfrm_category_view" description="QuickSearch_xfrm_category_view" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:pageaction if="$category.canAddResource()">
+	<xf:button href="{{ link('resources/categories/add', $category) }}" class="button--cta" icon="write">{{ phrase('xfrm_add_resource') }}</xf:button>
+</xf:pageaction>]]></find>
+    <replace><![CDATA[$0
+<xf:if is="{{ $xf.visitor.hasPermission('quickSearch', 'view') }} AND {$xf.options.quickSearchShowResourceManager}">
+<xf:if is="!in_array($category.resource_category_id, $excludeResourceCategoryArray)">
+<xf:css src="andy_quicksearch.less" />
+<div class="block-container quicksearch">
+	<div class="block-body">
+		<input type="text" class="input js-filterInput" 
+			aria-label="{{ phrase('quicksearch_quick_search') }}"
+			autocomplete="off" 
+			data-no-auto-focus="true" 
+			disabled="disabled" 
+			id="quickSearchTitle" 
+			name="quickSearchTitle" 
+			onsubmit="return handle()" 
+			placeholder="{{ phrase('quicksearch_quick_search...') }}" 
+			style="border:none;" 
+		/>
+	</div>
+</div>
+<xf:js>
+!function($, window, document, _undefined)
+{
+	$(document).ready(function()
+	{
+		var width = $(window).width();
+		var pathname = '{$xf.options.boardUrl}';
+		var n = pathname.charAt(pathname.length-1);
+		var keystrokeDelay = '{$xf.options.quickSearchKeystrokeDelay}';
+		
+		$("#quickSearchTitle").prop('disabled', false);
+
+		if (n != '/')
+		{
+			var url = pathname + '/resources/categories/quicksearch?category_id={$category.resource_category_id}';
+		}
+		else
+		{
+			var url = pathname + 'resources/categories/quicksearch?category_id={$category.resource_category_id}';
+		}
+
+		$("#quickSearchTitle").keyup(delay(function (e) 
+		{
+			currentTitle = $('#quickSearchTitle').val();
+			$.ajax(
+			{
+				type: "POST",
+				url: url,
+				data: { 
+					'title': currentTitle,
+					_xfToken: XF.config.csrf
+				},
+				dataType: "html",
+				timeout: 5000,
+				success: function(data) 
+				{
+					if (width >= 600) 
+					{
+						$(data).find('.quicksearch-wrapper-wide').each(function()
+						{
+							$('#quicksearch-result').empty();
+							$('#quicksearch-result').append($(this).html());
+							$('#quicksearch-result').slideDown("slow");
+						});
+					}
+					else 
+					{
+						$(data).find('.quicksearch-wrapper-narrow').each(function()
+						{
+							$('#quicksearch-result').empty();
+							$('#quicksearch-result').append($(this).html());
+							$('#quicksearch-result').slideDown("slow");
+						});
+					}
+				},
+				error: function(request, status, err) 
+				{
+					if (status != "success") {
+						$('#quicksearch-result').slideUp("slow");
+						$('#quicksearch-result').empty();
+					}
+				}
+			});
+		}, keystrokeDelay));
+	});	
+}
+(jQuery, this, document);
+function quickSearchClose() 
+{
+	$('#quicksearch-result').slideUp("slow");
+	$('#quicksearch-result').empty();
+	$('#quickSearchTitle').val("");
+}
+function delay(callback, ms) 
+{
+	var timer = 0;
+	return function() 
+	{
+		var context = this, args = arguments;
+		clearTimeout(timer);
+		timer = setTimeout(function () 
+		{
+			callback.apply(context, args);
+		}, ms || 0);
+	};
+}
+</xf:js>
+<div id="quicksearch-result"></div>
+</xf:if>
+</xf:if>]]></replace>
+  </modification>
+  <modification type="public" template="xfrm_overview" modification_key="QuickSearch_xfrm_overview" description="QuickSearch_xfrm_overview" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:widgetpos id="xfrm_overview_above_resources" />]]></find>
+    <replace><![CDATA[$0
+<xf:if is="{{ $xf.visitor.hasPermission('quickSearch', 'view') }} AND {$xf.options.quickSearchShowResourceManager}">
+<xf:css src="andy_quicksearch.less" />
+<div class="block-container quicksearch">
+	<div class="block-body">
+		<input type="text" class="input js-filterInput" 
+			aria-label="{{ phrase('quicksearch_quick_search') }}"
+			autocomplete="off" 
+			data-no-auto-focus="true" 
+			disabled="disabled" 
+			id="quickSearchTitle" 
+			name="quickSearchTitle" 
+			onsubmit="return handle()" 
+			placeholder="{{ phrase('quicksearch_quick_search...') }}" 
+			style="border:none;" 
+		/>
+	</div>
+</div>
+<xf:js>
+!function($, window, document, _undefined)
+{
+	$(document).ready(function()
+	{
+		var width = $(window).width();
+		var pathname = '{$xf.options.boardUrl}';
+		var n = pathname.charAt(pathname.length-1);
+		var keystrokeDelay = '{$xf.options.quickSearchKeystrokeDelay}';
+		
+		$("#quickSearchTitle").prop('disabled', false);
+
+		if (n != '/')
+		{
+			var url = pathname + '/resources/quicksearch';
+		}
+		else
+		{
+			var url = pathname + 'resources/quicksearch';
+		}
+
+		$("#quickSearchTitle").keyup(delay(function (e) 
+		{
+			currentTitle = $('#quickSearchTitle').val();
+			$.ajax(
+			{
+				type: "POST",
+				url: url,
+				data: { 
+					'title': currentTitle,
+					_xfToken: XF.config.csrf
+				},
+				dataType: "html",
+				timeout: 5000,
+				success: function(data) 
+				{
+					if (width >= 600) 
+					{
+						$(data).find('.quicksearch-wrapper-wide').each(function()
+						{
+							$('#quicksearch-result').empty();
+							$('#quicksearch-result').append($(this).html());
+							$('#quicksearch-result').slideDown("slow");
+						});
+					}
+					else 
+					{
+						$(data).find('.quicksearch-wrapper-narrow').each(function()
+						{
+							$('#quicksearch-result').empty();
+							$('#quicksearch-result').append($(this).html());
+							$('#quicksearch-result').slideDown("slow");
+						});
+					}
+				},
+				error: function(request, status, err) 
+				{
+					if (status != "success") {
+						$('#quicksearch-result').slideUp("slow");
+						$('#quicksearch-result').empty();
+					}
+				}
+			});
+		}, keystrokeDelay));
+	});	
+}
+(jQuery, this, document);
+function quickSearchClose() 
+{
+	$('#quicksearch-result').slideUp("slow");
+	$('#quicksearch-result').empty();
+	$('#quickSearchTitle').val("");
+}
+function delay(callback, ms) 
+{
+	var timer = 0;
+	return function() 
+	{
+		var context = this, args = arguments;
+		clearTimeout(timer);
+		timer = setTimeout(function () 
+		{
+			callback.apply(context, args);
+		}, ms || 0);
+	};
+}
+</xf:js>
+<div id="quicksearch-result"></div>
+</xf:if>]]></replace>
+  </modification>
+</template_modifications>

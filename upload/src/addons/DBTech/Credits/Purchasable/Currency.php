@@ -9,7 +9,6 @@ use XF\Entity\PaymentProfile;
 use XF\Entity\User;
 use XF\Http\Request;
 use XF\InputFilterer;
-use XF\Mvc\Entity\AbstractCollection;
 use XF\Payment\CallbackState;
 use XF\Phrase;
 use XF\Purchasable\AbstractPurchasable;
@@ -311,7 +310,7 @@ class Currency extends AbstractPurchasable
 	{
 		$purchasables = [];
 
-		/** @var AbstractCollection<Event> $events */
+		/** @var \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Event> $events */
 		$events = \XF::app()->finder(EventFinder::class)
 			->fetch()
 		;

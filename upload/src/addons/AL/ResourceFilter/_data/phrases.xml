@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+/** 
+* @package [AddonsLab] Resource Filter
+* @author AddonsLab
+* @license https://addonslab.com/
+* @link https://addonslab.com/
+* @version 3.6.1
+This software is furnished under a license and may be used and copied
+only  in  accordance  with  the  terms  of such  license and with the
+inclusion of the above copyright notice.  This software  or any other
+copies thereof may not be provided or otherwise made available to any
+other person.  No title to and  ownership of the  software is  hereby
+transferred.                                                         
+                                                                     
+You may not reverse  engineer, decompile, defeat  license  encryption
+mechanisms, or  disassemble this software product or software product
+license.  AddonsLab may terminate this license if you don't comply with
+any of these terms and conditions.  In such event,  licensee  agrees 
+to return licensor  or destroy  all copies of software  upon termination 
+of the license.
+*/
+ -->
+
+<phrases>
+  <phrase title="alrf_" version_id="3000070" version_string="3.0.0"><![CDATA[]]></phrase>
+  <phrase title="alrf_above_created_by" version_id="1010173" version_string="1.1.1"><![CDATA[Before "Created By"]]></phrase>
+  <phrase title="alrf_above_prefixes" version_id="1010173" version_string="1.1.1"><![CDATA[Before "Prefixes"]]></phrase>
+  <phrase title="alrf_above_resource_list" version_id="1010173" version_string="1.1.1"><![CDATA[Above resource list]]></phrase>
+  <phrase title="alrf_above_sort_by" version_id="1010173" version_string="1.1.1"><![CDATA[Before "Sort By"]]></phrase>
+  <phrase title="alrf_above_type" version_id="1010173" version_string="1.1.1"><![CDATA[Before "Type"]]></phrase>
+  <phrase title="alrf_additional_filters" version_id="1000071" version_string="1.0.0"><![CDATA[Additional Filters]]></phrase>
+  <phrase title="alrf_address_or_zip_code" version_id="3020670" version_string="3.2.6"><![CDATA[From address or ZIP Code]]></phrase>
+  <phrase title="alrf_all_fields" version_id="2010070" version_string="2.1.0"><![CDATA[All fields]]></phrase>
+  <phrase title="alrf_allow_filter" version_id="1000071" version_string="1.0.0"><![CDATA[Allow Filter]]></phrase>
+  <phrase title="alrf_allow_filter_explain" version_id="1000071" version_string="1.0.0"><![CDATA[If enable, the users will be able to filter resource lists by the value of this field, and the filter will be shown in the Filters popup on resource list page.]]></phrase>
+  <phrase title="alrf_allow_search" version_id="1000071" version_string="1.0.0"><![CDATA[Allow Search]]></phrase>
+  <phrase title="alrf_allow_search_explain" version_id="1000070" version_string="1.0.0"><![CDATA[If enabled, the filter will be shown in Resource Search page. Only fields available in the category being searched will be shown.]]></phrase>
+  <phrase title="alrf_allow_sorting" version_id="1010173" version_string="1.1.1"><![CDATA[Allow Sorting]]></phrase>
+  <phrase title="alrf_allow_sorting_explain" version_id="1010173" version_string="1.1.1"><![CDATA[If enabled, the field will be available in Resource Sorting options.]]></phrase>
+  <phrase title="alrf_alrf_km" version_id="3000070" version_string="3.0.0"><![CDATA[Kilometers]]></phrase>
+  <phrase title="alrf_alrf_mile" version_id="3000070" version_string="3.0.0"><![CDATA[Miles]]></phrase>
+  <phrase title="alrf_alrf_within_distance_unit" version_id="3000070" version_string="3.0.0"><![CDATA[within {distance} {unit} from {address}]]></phrase>
+  <phrase title="alrf_as_a_metadata" version_id="1000070" version_string="1.0.0"><![CDATA[As metadata (under the title)]]></phrase>
+  <phrase title="alrf_as_a_prefix" version_id="1000070" version_string="1.0.0"><![CDATA[As a prefix]]></phrase>
+  <phrase title="alrf_as_a_separate_column" version_id="1000070" version_string="1.0.0"><![CDATA[As a separate column]]></phrase>
+  <phrase title="alrf_below_sort_by" version_id="1010173" version_string="1.1.1"><![CDATA[After "Sort By"]]></phrase>
+  <phrase title="alrf_choice_label" version_id="3020670" version_string="3.2.6"><![CDATA[{choice} <span class="label label--subtle">{count}</span>]]></phrase>
+  <phrase title="alrf_choice_label_select" version_id="3020670" version_string="3.2.6"><![CDATA[{choice} ({count})]]></phrase>
+  <phrase title="alrf_clear_all" version_id="2000070" version_string="2.0.0"><![CDATA[Clear all]]></phrase>
+  <phrase title="alrf_default_match_type" version_id="1050171" version_string="1.5.1"><![CDATA[Default match type]]></phrase>
+  <phrase title="alrf_default_match_type_explain" version_id="1050171" version_string="1.5.1"><![CDATA[For fields with multiple-choice options, users will get an additional selection field to choose, if they want to find results matching ALL their choices or ANY of the choices. This option controls which value should be selected by default for this field. Users can still change it in the filter form.]]></phrase>
+  <phrase title="alrf_distance" version_id="3020670" version_string="3.2.6"><![CDATA[Distance]]></phrase>
+  <phrase title="alrf_do_not_filter" version_id="1000071" version_string="1.0.0"><![CDATA[Do not allow filtering]]></phrase>
+  <phrase title="alrf_do_now_allow_searching" version_id="1000071" version_string="1.0.0"><![CDATA[Do not allow searching by this field]]></phrase>
+  <phrase title="alrf_equal_to_x" version_id="1000071" version_string="1.0.0"><![CDATA[{x}]]></phrase>
+  <phrase title="alrf_equal_to_x_date" version_id="1000071" version_string="1.0.0"><![CDATA[at {x}]]></phrase>
+  <phrase title="alrf_fade" version_id="3000071" version_string="3.0.0"><![CDATA[Fade]]></phrase>
+  <phrase title="alrf_field_columns" version_id="1030072" version_string="1.3.0"><![CDATA[Show in Resource List]]></phrase>
+  <phrase title="alrf_field_columns_explain" version_id="1000070" version_string="1.0.0"><![CDATA[The fields selected will be shown in the locations chosen.]]></phrase>
+  <phrase title="alrf_field_operator_is_undefined" version_id="1000071" version_string="1.0.0"><![CDATA[Field operator is not defined]]></phrase>
+  <phrase title="alrf_filter_location" version_id="1000073" version_string="1.0.0"><![CDATA[Filter Location]]></phrase>
+  <phrase title="alrf_filter_location_explain" version_id="1000073" version_string="1.0.0"><![CDATA[Choose Inherit to use the location configured board-wide in Resource Filter setting or the location setup for any parent node.]]></phrase>
+  <phrase title="alrf_from" version_id="1000071" version_string="1.0.0"><![CDATA[From...]]></phrase>
+  <phrase title="alrf_hide" version_id="3000071" version_string="3.0.0"><![CDATA[Hide]]></phrase>
+  <phrase title="alrf_in_category_view" version_id="1000070" version_string="1.0.0"><![CDATA[In category/home view]]></phrase>
+  <phrase title="alrf_in_filter_popup" version_id="1000071" version_string="1.0.0"><![CDATA[Show in Filters popup]]></phrase>
+  <phrase title="alrf_in_search_results" version_id="1000070" version_string="1.0.0"><![CDATA[In search results]]></phrase>
+  <phrase title="alrf_in_separate_form_above" version_id="1000071" version_string="1.0.0"><![CDATA[In a separate form above resource list]]></phrase>
+  <phrase title="alrf_in_separate_form_below" version_id="1000071" version_string="1.0.0"><![CDATA[In a separate form below resource list]]></phrase>
+  <phrase title="alrf_inherit" version_id="1000073" version_string="1.0.0"><![CDATA[Inherit]]></phrase>
+  <phrase title="alrf_items_found" version_id="3000071" version_string="3.0.0"><![CDATA[Resources found]]></phrase>
+  <phrase title="alrf_km" version_id="3020670" version_string="3.2.6"><![CDATA[Kilometers]]></phrase>
+  <phrase title="alrf_less_than_x" version_id="1000071" version_string="1.0.0"><![CDATA[< {x}]]></phrase>
+  <phrase title="alrf_less_than_x_date" version_id="1000071" version_string="1.0.0"><![CDATA[before {x}]]></phrase>
+  <phrase title="alrf_match_text" version_id="1000071" version_string="1.0.0"><![CDATA[{string}]]></phrase>
+  <phrase title="alrf_mile" version_id="3020670" version_string="3.2.6"><![CDATA[Miles]]></phrase>
+  <phrase title="alrf_more_than_x" version_id="1000071" version_string="1.0.0"><![CDATA[> {x}]]></phrase>
+  <phrase title="alrf_more_than_x_date" version_id="1000071" version_string="1.0.0"><![CDATA[after {x}]]></phrase>
+  <phrase title="alrf_next_to_search_icon" version_id="2010072" version_string="2.1.0"><![CDATA[Next to the search icon]]></phrase>
+  <phrase title="alrf_popup_default" version_id="1000073" version_string="1.0.0"><![CDATA[Popup (XenForo Default)]]></phrase>
+  <phrase title="alrf_quick_lookup_placeholder" version_id="2020072" version_string="2.2.0"><![CDATA[]]></phrase>
+  <phrase title="alrf_rebuild_resource_fields" version_id="1000071" version_string="1.0.0"><![CDATA[Rebuild Resource Fields]]></phrase>
+  <phrase title="alrf_remove_all_filters" version_id="2000070" version_string="2.0.0"><![CDATA[Remove all filters]]></phrase>
+  <phrase title="alrf_replace_filter_link" version_id="2010072" version_string="2.1.0"><![CDATA[Replace Filters link above resource list]]></phrase>
+  <phrase title="alrf_resource_field_cache" version_id="1000071" version_string="1.0.0"><![CDATA[Resource field cache]]></phrase>
+  <phrase title="alrf_resource_fields" version_id="1000071" version_string="1.0.0"><![CDATA[Resource Fields]]></phrase>
+  <phrase title="alrf_resource_filter_options" version_id="1000071" version_string="1.0.0"><![CDATA[Resource Filter options]]></phrase>
+  <phrase title="alrf_results_matching_all_options" version_id="1030370" version_string="1.3.3"><![CDATA[Match all options]]></phrase>
+  <phrase title="alrf_results_matching_any_option" version_id="1030370" version_string="1.3.3"><![CDATA[Match any option]]></phrase>
+  <phrase title="alrf_search_title_and_message" version_id="1030070" version_string="1.3.0"><![CDATA[Search title and message]]></phrase>
+  <phrase title="alrf_shared_fields_only" version_id="2010070" version_string="2.1.0"><![CDATA[Shared fields only]]></phrase>
+  <phrase title="alrf_show_filter_as" version_id="1000071" version_string="1.0.0"><![CDATA[Show in filter form as]]></phrase>
+  <phrase title="alrf_show_filter_as_explain" version_id="1000071" version_string="1.0.0"><![CDATA[Choose what kind of form element should be used to allow users to filter/search resources by this field. ]]></phrase>
+  <phrase title="alrf_show_in_search" version_id="1000071" version_string="1.0.0"><![CDATA[Search page filter]]></phrase>
+  <phrase title="alrf_show_in_search_explain" version_id="1000070" version_string="1.0.0"><![CDATA[If enabled, the filter will be shown in Resource Search page if searching a category where the field is available.]]></phrase>
+  <phrase title="alrf_show_normally" version_id="3000071" version_string="3.0.0"><![CDATA[Show normally]]></phrase>
+  <phrase title="alrf_show_on_advanced_search_page" version_id="1000071" version_string="1.0.0"><![CDATA[Show on advanced search page]]></phrase>
+  <phrase title="alrf_sidebar" version_id="1000073" version_string="1.0.0"><![CDATA[Sidebar]]></phrase>
+  <phrase title="alrf_to" version_id="1000071" version_string="1.0.0"><![CDATA[To...]]></phrase>
+  <phrase title="alrf_value_between_x_y" version_id="1000071" version_string="1.0.0"><![CDATA[between {x} and {y}]]></phrase>
+  <phrase title="alrf_value_between_x_y_date" version_id="1000071" version_string="1.0.0"><![CDATA[between {x} and {y}]]></phrase>
+  <phrase title="alrf_within_distance_unit" version_id="3020670" version_string="3.2.6"><![CDATA[within {distance} {unit} from {address}]]></phrase>
+  <phrase title="cron_entry.alrf_hourly_cron" version_id="1000071" version_string="1.0.0"><![CDATA[Resource Filter - Hourly Cron]]></phrase>
+  <phrase title="option.alrf_auto_hide_if_empty" version_id="3000070" version_string="3.0.0"><![CDATA[Empty filters]]></phrase>
+  <phrase title="option.alrf_auto_reload" version_id="1000073" version_string="1.0.0"><![CDATA[Auto Reload]]></phrase>
+  <phrase title="option.alrf_cache_ttl" version_id="2000070" version_string="2.0.0"><![CDATA[Cache TTL (seconds)]]></phrase>
+  <phrase title="option.alrf_color_similarity_index" version_id="1000073" version_string="1.0.0"><![CDATA[Color Difference Index]]></phrase>
+  <phrase title="option.alrf_custom_field_location" version_id="1010173" version_string="1.1.1"><![CDATA[Custom Fields in Filters]]></phrase>
+  <phrase title="option.alrf_default_distance_unit" version_id="3000071" version_string="3.0.0"><![CDATA[Default distance unit]]></phrase>
+  <phrase title="option.alrf_disable_default_filter_field" version_id="2000070" version_string="2.0.0"><![CDATA[Disable default filter fields
+]]></phrase>
+  <phrase title="option.alrf_faceted_search" version_id="3000070" version_string="3.0.0"><![CDATA[Enable faceted search]]></phrase>
+  <phrase title="option.alrf_filter_icon_location" version_id="2010072" version_string="2.1.0"><![CDATA[Filter Icon Location]]></phrase>
+  <phrase title="option.alrf_filter_location" version_id="1000073" version_string="1.0.0"><![CDATA[Filter Location]]></phrase>
+  <phrase title="option.alrf_filterable_lists" version_id="3050070" version_string="3.5.0"><![CDATA[Enable filterable drop down lists]]></phrase>
+  <phrase title="option.alrf_hide_distance_unit" version_id="3020670" version_string="3.2.6"><![CDATA[Hide distance unit]]></phrase>
+  <phrase title="option.alrf_keyword_search" version_id="1030070" version_string="1.3.0"><![CDATA[Keyword Search]]></phrase>
+  <phrase title="option.alrf_license_key" version_id="1000071" version_string="1.0.0"><![CDATA[License Key]]></phrase>
+  <phrase title="option.alrf_max_limit" version_id="1030070" version_string="1.3.0"><![CDATA[Maximum result count]]></phrase>
+  <phrase title="option.alrf_multi_category_field_mode" version_id="2010070" version_string="2.1.0"><![CDATA[Multiple category search mode]]></phrase>
+  <phrase title="option.alrf_multi_prefix_search" version_id="2000070" version_string="2.0.0"><![CDATA[Multiple Prefix Search]]></phrase>
+  <phrase title="option.alrf_number_formatting_exclusion_list" version_id="3010071" version_string="3.1.0"><![CDATA[Number Formatting Exclusion List]]></phrase>
+  <phrase title="option.alrf_off_canvas_filter" version_id="2010072" version_string="2.1.0"><![CDATA[Off-Canvas Menu for Mobile]]></phrase>
+  <phrase title="option.alrf_tag_search" version_id="1030070" version_string="1.3.0"><![CDATA[Tag Search]]></phrase>
+  <phrase title="option.alrf_total_count_indicator" version_id="3000070" version_string="3.0.0"><![CDATA[Total count indicator]]></phrase>
+  <phrase title="option_explain.alrf_auto_hide_if_empty" version_id="3000070" version_string="3.0.0"><![CDATA[If faceted search is enabled, it is possible to hide or fade out the custom fields or their individual options which don't match any results.]]></phrase>
+  <phrase title="option_explain.alrf_auto_reload" version_id="1000073" version_string="1.0.0"><![CDATA[If enabled, list of resources will be automatically reloaded with each change of filter form.]]></phrase>
+  <phrase title="option_explain.alrf_cache_ttl" version_id="2000070" version_string="2.0.0"><![CDATA[The number of seconds to cache the search results. The cache is invalidated whenever a new entry matching the search result is created or an entry is updated, so this setting usually should not be changed unless instructed otherwise. Set to 0 to disable the cache.]]></phrase>
+  <phrase title="option_explain.alrf_color_similarity_index" version_id="1000073" version_string="1.0.0"><![CDATA[The index controls color search similarity algorithm. Index of 0 means exact color match, index of 1 is the minimum detectable change for human eye. The difference between white and black is about 440.]]></phrase>
+  <phrase title="option_explain.alrf_custom_field_location" version_id="1010173" version_string="1.1.1"><![CDATA[Choose where to put the custom fields in Filters form.]]></phrase>
+  <phrase title="option_explain.alrf_default_distance_unit" version_id="3000071" version_string="3.0.0"><![CDATA[The default unit used in location-related form elements. Applies only if <b>[AL] Location field</b> add-on is installed.]]></phrase>
+  <phrase title="option_explain.alrf_disable_default_filter_field" version_id="2000070" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.alrf_faceted_search" version_id="3000070" version_string="3.0.0"><![CDATA[If enabled, selection-type custom fields will show the number of items matching the option, dynamically updating the number of items available each time filters change.]]></phrase>
+  <phrase title="option_explain.alrf_filter_icon_location" version_id="2010072" version_string="2.1.0"><![CDATA[When off-canvas menu is enabled, an icon will be added using which users can open the menu.]]></phrase>
+  <phrase title="option_explain.alrf_filter_location" version_id="1000070" version_string="1.0.0"><![CDATA[Sets the default setting for filter location for all resource categories. The setting can be modified for each category separately.]]></phrase>
+  <phrase title="option_explain.alrf_filterable_lists" version_id="3050070" version_string="3.5.0"><![CDATA[If enabled, the custom fields of "Multiple-choice drop down" and "Drop down selection" will allow filtering the list by keywords. Useful for larger lists but may be not optimal on mobile devices.]]></phrase>
+  <phrase title="option_explain.alrf_hide_distance_unit" version_id="3020670" version_string="3.2.6"><![CDATA[If checked, the distance unit will not be shown to users in the forms.]]></phrase>
+  <phrase title="option_explain.alrf_keyword_search" version_id="1030070" version_string="1.3.0"><![CDATA[If enabled, users will be able to search resource title and message for keywords along with filtering the resources by custom fields in the same form. Uses XenForo search engine to execute the search.]]></phrase>
+  <phrase title="option_explain.alrf_license_key" version_id="1000071" version_string="1.0.0"><![CDATA[The license key you got from us when purchasing the product. Please check Licensing Details page in your Services if you don't have your license key.]]></phrase>
+  <phrase title="option_explain.alrf_max_limit" version_id="1030070" version_string="1.3.0"><![CDATA[The number of resources to show in filtered views. Bigger limits may have performance impact on large boards. Default value is 10000. Put 0 for unlimited.]]></phrase>
+  <phrase title="option_explain.alrf_multi_category_field_mode" version_id="2010070" version_string="2.1.0"><![CDATA[The setting defines, if the forms on Resource index and Search pages should show the custom fields which are common by all categories(shared), or all custom fields that are available in all categories being searched .]]></phrase>
+  <phrase title="option_explain.alrf_multi_prefix_search" version_id="2000070" version_string="2.0.0"><![CDATA[If enabled, users will be able to filter the resources based on multiple prefixes.]]></phrase>
+  <phrase title="option_explain.alrf_number_formatting_exclusion_list" version_id="3010071" version_string="3.1.0"><![CDATA[Custom fields, which should not be formatted as a number (e.g. a numeric field representing years). List custom field IDs separated by a comma.]]></phrase>
+  <phrase title="option_explain.alrf_off_canvas_filter" version_id="2010072" version_string="2.1.0"><![CDATA[If enabled, mobile views will have a filter icon next to the search icon or replacing the default Filters link clicking which will open an off-canvas menu with the filter form. All other forms (above resource list, sidebar, popup) will automatically disappear in the mobile view.]]></phrase>
+  <phrase title="option_explain.alrf_tag_search" version_id="1030070" version_string="1.3.0"><![CDATA[If enabled, users will be able to filter the resources based on tags along with filtering the resources by custom fields. XenForo search engine is used to execute the search.]]></phrase>
+  <phrase title="option_explain.alrf_total_count_indicator" version_id="3000070" version_string="3.0.0"><![CDATA[If enabled, the filter form will show the total number of items matching with each change of the form.]]></phrase>
+  <phrase title="option_group.alrf_main" version_id="1000071" version_string="1.0.0"><![CDATA[Resource Filter by AddonsLab]]></phrase>
+  <phrase title="option_group_description.alrf_main" version_id="1000071" version_string="1.0.0"><![CDATA[Performance-optimized resource filter and search based on custom fields]]></phrase>
+  <phrase title="widget_def.alrf_filter_widget" version_id="1000073" version_string="1.0.0"><![CDATA[Resource Filter Widget]]></phrase>
+  <phrase title="widget_def.alrf_quick_lookup_widget" version_id="2020072" version_string="2.2.0"><![CDATA[Resources quick lookup]]></phrase>
+  <phrase title="widget_def_desc.alrf_filter_widget" version_id="1000073" version_string="1.0.0"><![CDATA[A widget to allow filtering the current category by custom fields]]></phrase>
+  <phrase title="widget_def_desc.alrf_quick_lookup_widget" version_id="2020072" version_string="2.2.0"><![CDATA[Quick Lookup widget for Resources]]></phrase>
+</phrases>

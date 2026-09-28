@@ -2,14 +2,9 @@
 
 namespace DBTech\Shop\Entity;
 
-use XF\Db\Exception;
-use XF\Entity\ConversationMaster;
 use XF\Entity\LinkableInterface;
-use XF\Entity\User;
-use XF\Entity\ViewableInterface;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
-use XF\Phrase;
 
 /**
  * COLUMNS
@@ -26,21 +21,21 @@ use XF\Phrase;
  * @property int $conversation_id
  *
  * GETTERS
- * @property-read Phrase $title
- * @property-read string $other_username
+ * @property \XF\Phrase $title
+ * @property string $other_username
  *
  * RELATIONS
- * @property-read \XF\Mvc\Entity\AbstractCollection<\DBTech\Shop\Entity\TradeOffer> $Offers
- * @property-read User|null $Creator
- * @property-read User|null $Recipient
- * @property-read ConversationMaster|null $Conversation
+ * @property \XF\Mvc\Entity\AbstractCollection|\DBTech\Shop\Entity\TradeOffer[] $Offers
+ * @property \XF\Entity\User $Creator
+ * @property \XF\Entity\User $Recipient
+ * @property \XF\Entity\ConversationMaster $Conversation
  */
-class Trade extends Entity implements LinkableInterface, ViewableInterface
+class Trade extends Entity implements LinkableInterface
 {
 	/**
-	 * @return Phrase
+	 * @return \XF\Phrase
 	 */
-	public function getTitle(): Phrase
+	public function getTitle(): \XF\Phrase
 	{
 		return \XF::phrase('dbtech_shop_trade_x_y_with_z', [
 			'tradeId' => $this->trade_id,
@@ -48,7 +43,7 @@ class Trade extends Entity implements LinkableInterface, ViewableInterface
 			'recipient' => $this->Recipient->username,
 		]);
 	}
-
+	
 	/**
 	 * @return string
 	 */
@@ -59,7 +54,7 @@ class Trade extends Entity implements LinkableInterface, ViewableInterface
 			: $this->creator_username
 		);
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -67,7 +62,7 @@ class Trade extends Entity implements LinkableInterface, ViewableInterface
 	{
 		return $this->isParticipant();
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -78,7 +73,7 @@ class Trade extends Entity implements LinkableInterface, ViewableInterface
 			&& $this->trade_state != 'accepted'
 		);
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
@@ -91,16 +86,16 @@ class Trade extends Entity implements LinkableInterface, ViewableInterface
 			$error = \XF::phraseDeferred('dbtech_shop_trade_not_pending');
 			return false;
 		}
-
+		
 		if ($this->recipient_user_id != \XF::visitor()->user_id)
 		{
 			$error = \XF::phraseDeferred('dbtech_shop_not_your_trade_to_accept_invite');
 			return false;
 		}
-
+		
 		return true;
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
@@ -113,16 +108,16 @@ class Trade extends Entity implements LinkableInterface, ViewableInterface
 			$error = \XF::phraseDeferred('dbtech_shop_trade_not_awaiting_accept');
 			return false;
 		}
-
+		
 		if (!$this->isParticipant())
 		{
 			$error = \XF::phraseDeferred('dbtech_shop_not_your_trade_to_accept');
 			return false;
 		}
-
+		
 		return true;
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
@@ -135,16 +130,16 @@ class Trade extends Entity implements LinkableInterface, ViewableInterface
 			$error = \XF::phraseDeferred('dbtech_shop_not_your_trade_to_cancel');
 			return false;
 		}
-
+		
 		if (in_array($this->trade_state, ['accepted', 'cancelled']))
 		{
 			$error = \XF::phraseDeferred('dbtech_shop_trade_finalised');
 			return false;
 		}
-
+		
 		return true;
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
@@ -154,7 +149,7 @@ class Trade extends Entity implements LinkableInterface, ViewableInterface
 	{
 		return $this->isParticipant() && \XF::visitor()->hasPermission('dbtechShopTradePost', 'view');
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -162,7 +157,7 @@ class Trade extends Entity implements LinkableInterface, ViewableInterface
 	{
 		return \XF::visitor()->hasPermission('dbtechShopTradePost', 'viewDeleted');
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -170,33 +165,33 @@ class Trade extends Entity implements LinkableInterface, ViewableInterface
 	{
 		return \XF::visitor()->hasPermission('dbtechShopTradePost', 'viewModerated');
 	}
-
+	
 	/**
 	 * @return bool
 	 */
 	public function canPostInTrade(): bool
 	{
 		$visitor = \XF::visitor();
-
+		
 		return ($visitor->user_id
 			&& $visitor->hasPermission('dbtechShopTradePost', 'view')
 			&& $visitor->hasPermission('dbtechShopTradePost', 'post')
 			&& $this->isParticipant()
 		);
 	}
-
+	
 	/**
 	 * @return bool
 	 */
 	public function isParticipant(): bool
 	{
 		$visitor = \XF::visitor();
-
+		
 		return ($this->creator_user_id == $visitor->user_id
 			|| $this->recipient_user_id == $visitor->user_id
 		);
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -207,7 +202,7 @@ class Trade extends Entity implements LinkableInterface, ViewableInterface
 			: $this->recipient_accepted
 		);
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -217,7 +212,7 @@ class Trade extends Entity implements LinkableInterface, ViewableInterface
 			&& $this->recipient_accepted
 		);
 	}
-
+	
 	/**
 	 * @param string $contentType
 	 * @param int $contentId
@@ -228,27 +223,28 @@ class Trade extends Entity implements LinkableInterface, ViewableInterface
 	 */
 	public function getNewTradeOffer(string $contentType, int $contentId, int $quantity = 1): TradeOffer
 	{
-		$tradeOffer = \XF::app()->em()->create(TradeOffer::class);
-
+		/** @var \DBTech\Shop\Entity\TradeOffer $tradeOffer */
+		$tradeOffer = $this->_em->create('DBTech\Shop:TradeOffer');
+		
 		$tradeOffer->trade_id = $this->trade_id;
 		$tradeOffer->hydrateRelation('Trade', $this);
-
+		
 		$tradeOffer->user_id = \XF::visitor()->user_id;
 		$tradeOffer->content_type = $contentType;
 		$tradeOffer->content_id = $contentId;
 		$tradeOffer->quantity = $quantity;
-
+		
 		return $tradeOffer;
 	}
-
+	
 	/**
 	 * @return TradePost|Entity
 	 */
-	public function getNewTradePost(): Entity|TradePost
+	public function getNewTradePost()
 	{
-		$tradePost = \XF::app()->em()->create(TradePost::class);
+		$tradePost = $this->_em->create('DBTech\Shop:TradePost');
 		$tradePost->trade_id = $this->trade_id;
-
+		
 		return $tradePost;
 	}
 
@@ -257,12 +253,12 @@ class Trade extends Entity implements LinkableInterface, ViewableInterface
 	 * @param array $extraParams
 	 * @param null $hash
 	 *
-	 * @return string
+	 * @return mixed|string
 	 */
 	public function getContentUrl(bool $canonical = false, array $extraParams = [], $hash = null): string
 	{
 		$route = $canonical ? 'canonical:dbtech-shop/trades' : 'dbtech-shop/trades';
-		return \XF::app()->router('public')->buildLink($route, $this, $extraParams, $hash);
+		return $this->app()->router('public')->buildLink($route, $this, $extraParams, $hash);
 	}
 
 	/**
@@ -276,26 +272,26 @@ class Trade extends Entity implements LinkableInterface, ViewableInterface
 	/**
 	 * @param string $context
 	 *
-	 * @return Phrase
+	 * @return string|\XF\Phrase
 	 */
-	public function getContentTitle(string $context = ''): Phrase
+	public function getContentTitle(string $context = '')
 	{
 		return \XF::phrase('dbtech_shop_trade_x', ['title' => $this->trade_id]);
 	}
-
+	
 	/**
 	 * @param int $amount
 	 * @param int|null $userId
 	 *
-	 * @throws Exception
+	 * @throws \XF\Db\Exception
 	 */
-	protected function adjustUserPendingTradeCountIfNeeded(int $amount, ?int $userId = null): void
+	protected function adjustUserPendingTradeCountIfNeeded(int $amount, ?int $userId = null)
 	{
 		if ($userId === null)
 		{
 			$userId = $this->creator_user_id;
 		}
-
+		
 		if ($userId)
 		{
 			$this->db()->query('
@@ -305,24 +301,23 @@ class Trade extends Entity implements LinkableInterface, ViewableInterface
 			', [$amount, $userId]);
 		}
 	}
-
+	
 	/**
 	 *
 	 */
-	protected function _preSave(): void
+	protected function _preSave()
 	{
 		if ($this->isUpdate()
 			&& !$this->isChanged('updated_date')
-		)
-		{
+		) {
 			$this->updated_date = \XF::$time;
 		}
 	}
-
+	
 	/**
-	 * @throws Exception
+	 * @throws \XF\Db\Exception
 	 */
-	protected function _postSave(): void
+	protected function _postSave()
 	{
 		if ($this->isInsert())
 		{
@@ -334,13 +329,13 @@ class Trade extends Entity implements LinkableInterface, ViewableInterface
 			// check for entering accepted/cancelled
 			$acceptedChange = $this->isStateChanged('trade_state', 'accepted');
 			$cancelledChange = $this->isStateChanged('trade_state', 'cancelled');
-
+			
 			if ($acceptedChange == 'enter')
 			{
 				$this->adjustUserPendingTradeCountIfNeeded(-1, $this->creator_user_id);
 				$this->adjustUserPendingTradeCountIfNeeded(-1, $this->recipient_user_id);
 			}
-			else if ($cancelledChange == 'enter')
+			elseif ($cancelledChange == 'enter')
 			{
 				$this->adjustUserPendingTradeCountIfNeeded(-1, $this->creator_user_id);
 				$this->adjustUserPendingTradeCountIfNeeded(-1, $this->recipient_user_id);
@@ -349,9 +344,9 @@ class Trade extends Entity implements LinkableInterface, ViewableInterface
 	}
 
 	/**
-	 * @param Structure $structure
+	 * @param \XF\Mvc\Entity\Structure $structure
 	 *
-	 * @return Structure
+	 * @return \XF\Mvc\Entity\Structure
 	 */
 	public static function getStructure(Structure $structure): Structure
 	{
@@ -369,7 +364,7 @@ class Trade extends Entity implements LinkableInterface, ViewableInterface
 			'trade_state'             => [
 				'type'          => self::STR,
 				'default'       => 'pending',
-				'allowedValues' => ['pending', 'open', 'awaiting_accept', 'accepted', 'cancelled'],
+				'allowedValues' => ['pending', 'open', 'awaiting_accept', 'accepted', 'cancelled']
 			],
 			'creator_accepted'   => ['type' => self::BOOL, 'default' => false],
 			'recipient_accepted' => ['type' => self::BOOL, 'default' => false],
@@ -381,32 +376,32 @@ class Trade extends Entity implements LinkableInterface, ViewableInterface
 		];
 		$structure->relations = [
 			'Offers' => [
-				'entity' => TradeOffer::class,
+				'entity' => 'DBTech\Shop:TradeOffer',
 				'type' => self::TO_MANY,
 				'conditions' => 'trade_id',
-				'with' => ['Trade', 'User'],
+				'with' => ['Trade', 'User']
 			],
 			'Creator' => [
-				'entity' => User::class,
+				'entity' => 'XF:User',
 				'type' => self::TO_ONE,
 				'conditions' => [
-					['user_id', '=', '$creator_user_id'],
+					['user_id', '=', '$creator_user_id']
 				],
-				'primary' => true,
+				'primary' => true
 			],
 			'Recipient' => [
-				'entity' => User::class,
+				'entity' => 'XF:User',
 				'type' => self::TO_ONE,
 				'conditions' => [
-					['user_id', '=', '$recipient_user_id'],
+					['user_id', '=', '$recipient_user_id']
 				],
-				'primary' => true,
+				'primary' => true
 			],
 			'Conversation' => [
-				'entity' => ConversationMaster::class,
+				'entity' => 'XF:ConversationMaster',
 				'type' => self::TO_ONE,
 				'conditions' => 'conversation_id',
-				'primary' => true,
+				'primary' => true
 			],
 		];
 

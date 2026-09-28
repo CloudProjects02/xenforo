@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="account_connected_associate" modification_key="svSignupAbuseBlocking_account_connected_associate" description="Add form-timer detection code" execution_order="6812" enabled="1" action="str_replace">
+    <find><![CDATA[</xf:form>]]></find>
+    <replace><![CDATA[$0
+<xf:include template="svSignupBlocking_signup_code" />]]></replace>
+  </modification>
+  <modification type="public" template="approval_item_user" modification_key="svSADB_approval_item_user_registration_logs2_xf22" description="Show user registration logs in approval queue (XF 2.2)" execution_order="6812" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:macro template="approval_queue_macros" name="item_message_type"]]></find>
+    <replace><![CDATA[$0
+	arg-svContentType="user"]]></replace>
+  </modification>
+  <modification type="public" template="approval_item_user" modification_key="svSADB_approval_item_user_registration_logs2_xf23" description="Show user registration logs in approval queue (XF 2.3)" execution_order="6812" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:macro id="approval_queue_macros::item_message_type"]]></find>
+    <replace><![CDATA[$0
+arg-svContentType="user"]]></replace>
+  </modification>
+  <modification type="public" template="approval_item_user" modification_key="svSignupAbuseBlocking_approval_item_user" description="Add &quot;Ban email domain&quot; and &quot;Ban ASN&quot; checkboxes" execution_order="6812" enabled="1" action="preg_replace">
+    <find><![CDATA[#(<xf:option value="reject".*?label=").*?(".*?title=").*?(".*?>.*?)((<xf:textbox.*?)(\/>))(.*?)(<\/xf:html>)#si]]></find>
+    <replace><![CDATA[$1{{ phrase('reject') }}$2{{ phrase('svSignupAbuseBlocking_rejected_users_will_not_be_deleted_but_rejected') }}$3
+<xf:dependent>
+	<xf:checkbox name="more_reject_actions[{$unapprovedItem.content_type}][{$unapprovedItem.content_id}]">
+		<xf:if is="$xf.visitor.canBanEmailDomain() && !$user.isEmailDomainKnownForSvSignupAbuseBlocking()">			
+			<xf:option value="sv_ban_email_domain"
+					   label="{{ phrase('svSignupAbuseBlocking_ban_email_domain') }}"
+					   />
+		</xf:if>
+		
+		<xf:if is="$xf.visitor.canBanAsn() && $user.hasBannableASN()">
+			<xf:option value="sv_ban_asn"
+					   label="{{ phrase('svSignupAbuseBlocking_ban_asn') }}"
+					   />
+		</xf:if>
+	</xf:checkbox>
+	$5 data-xf-init="tooltip" title="{{ phrase('svSignupAbuseBlocking_the_reason_for_reject_if_entered_will_be_displayed_when_they_next_log_in') }}">$7$8</xf:textbox>
+</xf:dependent>]]></replace>
+  </modification>
+  <modification type="public" template="approval_item_user" modification_key="sv_multiple_account_approval_item_user" description="Add &quot;Require email confirmation (always notifies)&quot; and &quot;Allow email domain&quot; checkboxes under &quot;Approve&quot;" execution_order="6812" enabled="1" action="preg_replace">
+    <find><![CDATA[#(<xf:option value="approve".*?)(\/>)#si]]></find>
+    <replace><![CDATA[$1>
+			<xf:dependent>
+				<xf:set var="$requireEmailConfirm" value="{{ $user.isRequireEmailConfirmationFromApprovalQueue() }}" />
+				<xf:checkbox name="more_approve_actions[{$unapprovedItem.content_type}][{$unapprovedItem.content_id}]">
+					<xf:option value="sv_require_email_confirm" 
+							   label="{{ phrase('sv_require_email_confirmation') }}"
+							   checked="{{ $requireEmailConfirm ? '1' : '' }}"
+							   hint="{{ $requireEmailConfirm ? phrase('svSignupAbuseBlocking_requireEmailConfirm') : ''}}"
+							   />
+					
+					<xf:if is="$xf.visitor.canApproveEmailDomain() && !$user.isEmailDomainKnownForSvSignupAbuseBlocking()">
+						<xf:option value="sv_allow_email_domain"
+								   label="{{ phrase('svSignupAbuseBlocking_allow_email_domain') }}"
+								   />
+					</xf:if>
+				</xf:checkbox>
+			</xf:dependent>
+		</xf:option>]]></replace>
+  </modification>
+  <modification type="public" template="approval_queue" modification_key="svSignupAbuseBlocking_approval_queue" description="Add data-content-type attribute to approval queue item block" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[#(<xf:foreach loop="\$unapprovedItems" value="\$unapprovedItem".*?>)(.*?class="block.*?)(>)#si]]></find>
+    <replace><![CDATA[$1
+				<xf:if is="$unapprovedItem.content_type === 'user'">
+					<xf:css src="svSignupAbuseBlocking_approval_queue.less" />
+				</xf:if>
+
+$2 data-content-type="{$unapprovedItem.content_type}">]]></replace>
+  </modification>
+  <modification type="public" template="approval_queue_macros" modification_key="svSABD_approval_queue_macros_shrink" description="At option to disable click-to-expand" execution_order="6812" enabled="1" action="str_replace">
+    <find><![CDATA[message-expandWrapper js-expandWatch]]></find>
+    <replace><![CDATA[{{ {$xf.options.svSignupApprovalQueueSkipAutoShrink.{$svContentType}} ? '' : '$0' }}]]></replace>
+  </modification>
+  <modification type="public" template="approval_queue_macros" modification_key="svSADB_approval_queue_macros_last_activity" description="Show last activity of the user" execution_order="6812" enabled="1" action="preg_replace">
+    <find><![CDATA[#(<span class="message-attribution-opposite.*?".*?>)(.*?)(<\/span>)#s]]></find>
+    <replace><![CDATA[<xf:if contentcheck="true">
+	$1
+	<ul class="listInline listInline--comma listInline--selfInline">
+		<li>$2</li>
+		<li>{{ phrase('last_seen:') }} <xf:contentcheck><xf:trim><xf:if is="$svContentType === 'user'"><xf:if contentcheck="true">
+					<xf:contentcheck><xf:trim><xf:useractivity user="$user" /></xf:trim></xf:contentcheck>
+				<xf:elseif is="$user.last_activity" />
+					<xf:date time="$user.last_activity" />
+				</xf:if></xf:if></xf:trim></xf:contentcheck></li>
+	</ul>
+<xf:else />
+	$1$2$3
+</xf:if>]]></replace>
+  </modification>
+  <modification type="public" template="approval_queue_macros" modification_key="svSADB_approval_queue_macros_user_reg_xf22" description="Show user registration logs in approval queue (XF 2.2)" execution_order="6812" enabled="1" action="preg_replace">
+    <find><![CDATA[#(<xf:macro name="item_message_type")(.*?)([\t ]+<xf:if is="\$spamDetails is not empty">.*?</xf:if>)#si]]></find>
+    <replace><![CDATA[$1
+arg-svContentType=""
+$2
+<xf:set var="$originalSpamRecord">
+$3
+</xf:set>
+<xf:if is="$svContentType == 'user'">
+<xf:include template="svSADB_approval_item_user_registration_logs" />
+<xf:else />
+{$originalSpamRecord|raw}
+</xf:if>]]></replace>
+  </modification>
+  <modification type="public" template="approval_queue_macros" modification_key="svSADB_approval_queue_macros_user_reg_xf23" description="Show user registration logs in approval queue (XF 2.3)" execution_order="6812" enabled="1" action="preg_replace">
+    <find><![CDATA[#(<xf:macro id="item_message_type")(.*?)([\t ]+<xf:if is="\$spamDetails is not empty">.*?</xf:if>)#si]]></find>
+    <replace><![CDATA[$1
+arg-svContentType=""
+$2
+<xf:set var="$originalSpamRecord">
+$3
+</xf:set>
+<xf:if is="$svContentType == 'user'">
+<xf:include template="svSADB_approval_item_user_registration_logs" />
+<xf:else />
+{$originalSpamRecord|raw}
+</xf:if>]]></replace>
+  </modification>
+  <modification type="public" template="editor" modification_key="editor" description="Inject javascript to extract timezone" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[#$#si]]></find>
+    <replace><![CDATA[$0
+<xf:if is="$xf.visitor.user_id && $xf.options.svTimezoneCheckActionOnNotMatch !== 'accept' && $xf.visitor.isSpamCheckRequired()">
+<xf:js src="xf/login_signup.js" min="1" />
+<xf:hiddenval name="timezone" value="" data-xf-init="auto-timezone" />
+</xf:if>]]></replace>
+  </modification>
+  <modification type="public" template="error" modification_key="svSignupAbuseBlocking_error_is_banned" description="Inject logout link on error page if reported as banned" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[#(<xf:if is="\$error">.*?\$error.*?)(\s*<xf:else)#si]]></find>
+    <replace><![CDATA[$1
+<xf:include template="svSignupAbuseBlocking_error_is_banned" />
+$2]]></replace>
+  </modification>
+  <modification type="admin" template="index" modification_key="svSignupThrottling_index" description="Add throttling information to the dashboard" execution_order="1" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:if is="$logCounts]]></find>
+    <replace><![CDATA[<xf:macro name="svSignupThrottlingMacros::dashboard" />
+$0]]></replace>
+  </modification>
+  <modification type="public" template="member_view" modification_key="svSignupBlocking_member_view_tab_panes" description="Add multi-account logs tab pane" execution_order="6812" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:tab_panes:end]-->]]></find>
+    <replace><![CDATA[<xf:include template="svSignupBlocking_member_view_tab_panes" />
+$0]]></replace>
+  </modification>
+  <modification type="public" template="member_view" modification_key="svSignupBlocking_member_view_tabs" description="Add multi-account logs tab" execution_order="6812" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:tabs:end]-->]]></find>
+    <replace><![CDATA[<xf:include template="svSignupBlocking_member_view_tabs" />
+$0]]></replace>
+  </modification>
+  <modification type="public" template="nf_tickets_ticket_approve_user" modification_key="svSADB_nf_tickets_ticket_approve_user" description="Add &quot;Require email confirmation (always notifies)&quot; and &quot;Allow email domain&quot; checkboxes under &quot;Approve&quot;" execution_order="6812" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:approve_options]-->]]></find>
+    <replace><![CDATA[$0
+<xf:set var="$requireEmailConfirm" value="{{ $user.isRequireEmailConfirmationFromApprovalQueue() }}" />
+<xf:option name="more_approve_actions[user][{$user.user_id}][]"
+		   value="sv_require_email_confirm" 
+           label="{{ phrase('sv_require_email_confirmation') }}"
+           checked="{{ $requireEmailConfirm ? '1' : '' }}"
+           hint="{{ $requireEmailConfirm ? phrase('svSignupAbuseBlocking_requireEmailConfirm') : ''}}"
+           />
+
+<xf:if is="$xf.visitor.canApproveEmailDomain() && !$user.isEmailDomainKnownForSvSignupAbuseBlocking()">
+    <xf:option name="more_approve_actions[user][{$user.user_id}][]"
+			   value="sv_allow_email_domain"
+               label="{{ phrase('svSignupAbuseBlocking_allow_email_domain') }}"
+               />
+</xf:if>]]></replace>
+  </modification>
+  <modification type="public" template="nf_tickets_ticket_message_macros" modification_key="svSADB_nf_tickets_ticket_message_macros" description="Inject multi-account tracking" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:if is="$xf.options.nfTicketsIncludeSignature">]]></find>
+    <replace><![CDATA[<xf:if is="$message.isFirstMessage() && $xf.visitor.canViewMultiAccountReport()">
+	<xf:macro name="sv_multiple_account_list_macros::ticket"
+			  arg-ticket="{$ticket}"
+			  />
+</xf:if>
+$0]]></replace>
+  </modification>
+  <modification type="public" template="nf_tickets_ticket_reject_user" modification_key="svSADB_nf_tickets_ticket_reject_user" description="Add &quot;Ban email domain&quot; and &quot;Ban ASN&quot; checkboxes" execution_order="6812" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:reject_options]-->]]></find>
+    <replace><![CDATA[$0
+<xf:if is="$xf.visitor.canBanEmailDomain() && !$user.isEmailDomainKnownForSvSignupAbuseBlocking()">
+	<xf:option name="more_reject_actions[user][{$user.user_id}][]"
+			   value="sv_ban_email_domain"
+			   label="{{ phrase('svSignupAbuseBlocking_ban_email_domain') }}"
+			   />
+</xf:if>
+<xf:if is="$xf.visitor.canBanAsn() && $user.hasBannableASN(false)">
+	<xf:option name="more_reject_actions[user][{$user.user_id}][]"
+			   value="sv_ban_asn"
+			   label="{{ phrase('svSignupAbuseBlocking_ban_asn') }}"
+			   />
+</xf:if>]]></replace>
+  </modification>
+  <modification type="public" template="register_connected_account" modification_key="svSignupAbuseBlocking_register_connected_account" description="Add form-timer detection code" execution_order="6812" enabled="1" action="str_replace">
+    <find><![CDATA[</xf:form>]]></find>
+    <replace><![CDATA[$0
+<xf:include template="svSignupBlocking_signup_code" />]]></replace>
+  </modification>
+  <modification type="public" template="register_form" modification_key="svSignupAbuseBlocking_register_form" description="Add form-timer detection code" execution_order="6812" enabled="1" action="str_replace">
+    <find><![CDATA[</xf:form>]]></find>
+    <replace><![CDATA[$0
+<xf:include template="svSignupBlocking_signup_code" />]]></replace>
+  </modification>
+  <modification type="public" template="register_form" modification_key="svSignupAbuseBlocking_register_form_b_xf22" description="Show optional website field when allowed (XF 2.2)" execution_order="6812" enabled="1" action="preg_replace">
+    <find><![CDATA[#<xf:macro template="register_macros" name="custom_fields".*?<xf:captcha#si]]></find>
+    <replace><![CDATA[<xf:if is="$xf.options.svSADAB_requestWebsiteOnSignup">
+	<xf:textboxrow name="website" type="url"
+				   maxlength="{{ max_length($xf.visitor.Profile, 'website') }}"
+				   label="{{ phrase('website') }}" />
+</xf:if>
+
+$0]]></replace>
+  </modification>
+  <modification type="public" template="register_form" modification_key="svSignupAbuseBlocking_register_form_b_xf23" description="Show optional website field when allowed (XF 2.3)" execution_order="6812" enabled="1" action="preg_replace">
+    <find><![CDATA[#<xf:macro id="register_macros::custom_fields".*?<xf:captcha#si]]></find>
+    <replace><![CDATA[<xf:if is="$xf.options.svSADAB_requestWebsiteOnSignup">
+	<xf:textboxrow name="website" type="url"
+				   maxlength="{{ max_length($xf.visitor.Profile, 'website') }}"
+				   label="{{ phrase('website') }}" />
+</xf:if>
+
+$0]]></replace>
+  </modification>
+  <modification type="public" template="report_view" modification_key="sv_multiple_account_report_view" description="Prevent normal user record from displaying for multiple accounts (see report_content_multiple_account for injecting lists)" execution_order="6812" enabled="1" action="preg_replace">
+    <find><![CDATA[#[\t ]*<div class="block-row block-row--separated block-row--alt">.*?<\/div>#si]]></find>
+    <replace><![CDATA[<xf:if is="$report.content_type !== 'multiple_account'">
+$0
+</xf:if>]]></replace>
+  </modification>
+  <modification type="public" template="thread_view" modification_key="svSignupAbuseBlocking_thread_view_reply" description="Inject no-reply reason" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[phrase('no_permission_to_reply')]]></find>
+    <replace><![CDATA[((callable($thread, 'getReplyDeniedReason') ? $thread.getReplyDeniedReason() : 0 ) ?: $0)]]></replace>
+  </modification>
+  <modification type="admin" template="user_batch_update_confirm" modification_key="svSignupAbuseBlocking_user_batch_update_confirm" description="Make ban user option more flexible" execution_order="1" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:option name="actions[ban]">{{ phrase('ban_users_permanently') }}</xf:option>]]></find>
+    <replace><![CDATA[<xf:option name="actions[ban]" label="{{ phrase('svSignupAbuseBlocking_ban_users') }}">
+	<xf:dependent><xf:macro name="svSignupAbuseBlocking_user_batch_update_confirm::ban_user"/></xf:dependent>
+</xf:option>]]></replace>
+  </modification>
+  <modification type="admin" template="user_edit" modification_key="sv_multiple_account_user_edit" description="Add multiple accounts &amp; registration logs" execution_order="6812" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:tabs:end]-->]]></find>
+    <replace><![CDATA[$0
+<xf:if is="$user.user_id">
+	<xf:if is="$user.HasLoginRecords">
+		<a class="tabs-tab" role="tab" tabindex="0" aria-controls="sv-user-logins">{{ phrase('svSignupAbuseBlocking_user_logins') }}</a>
+	</xf:if>
+	<xf:if is="$user.HasMultiAccounts">
+		<a class="tabs-tab" role="tab" tabindex="0" aria-controls="user-multiple-accounts">{{ phrase('sv_multiple_accounts') }}</a>
+	</xf:if>
+	<xf:if is="$user.HasRegistrationLogs">
+		<a class="tabs-tab" role="tab" tabindex="0" aria-controls="user-registration-log">{{ phrase('sv_registration_log') }}</a>
+	</xf:if>
+</xf:if>]]></replace>
+  </modification>
+  <modification type="admin" template="user_edit" modification_key="sv_multiple_account_user_edit_action" description="Add suppress options in action menu" execution_order="6812" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:actions_menu:bottom]-->]]></find>
+    <replace><![CDATA[$0
+<xf:if is="$user.HasMultiAccounts">
+	<a href="{{ link('anti-spam/multi-accounts/events', null, {'user_id': $user.user_id}) }}" class="menu-linkRow">{{ phrase('sv_multiple_accounts_detection_events') }}</a>
+</xf:if>
+<xf:if is="$user.canChangeUserMultiAccountAlerting()">
+	<a href="{{ link_type('public','members/multiaccount-toggle-user-alerting', $user) }}"
+	   class="menu-linkRow"
+	   data-xf-click="switch"
+	   data-sk-enable="{{ phrase('sv_multiple_account_alerting.user_disable') }}"
+	   data-sk-disable="{{ phrase('sv_multiple_account_alerting.user_enable') }}"
+	   data-menu-closer="true">
+		{{ $user.Profile.multiple_account_detection_alertable ? phrase('sv_multiple_account_alerting.user_disable') : phrase('sv_multiple_account_alerting.user_enable') }}
+	</a>
+</xf:if>]]></replace>
+  </modification>
+  <modification type="admin" template="user_edit" modification_key="sv_multiple_account_user_edit_tab_panel" description="Add multiple accounts tab panel content &amp; registration logs" execution_order="6812" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:tab_panes:end]-->]]></find>
+    <replace><![CDATA[$0
+<xf:if is="$user.user_id">
+	<xf:if is="$user.HasLoginRecords">
+		<li data-href="{{ link('users/sv-logins', $user) }}" role="tabpanel" id="user-multiple-accounts">
+			<div class="block-body block-row">{{ phrase('loading...') }}</div>
+		</li>
+	</xf:if>
+	<xf:if is="$user.HasMultiAccounts">
+		<li data-href="{{ link('users/multiple-accounts', $user) }}" role="tabpanel" id="user-multiple-accounts">
+			<div class="block-body block-row">{{ phrase('loading...') }}</div>
+		</li>
+	</xf:if>
+	<xf:if is="$user.HasRegistrationLogs">
+		<li data-href="{{ link('users/registration-log', $user) }}" role="tabpanel" id="user-registration-log">
+			<div class="block-body block-row">{{ phrase('loading...') }}</div>
+		</li>
+	</xf:if>
+</xf:if>]]></replace>
+  </modification>
+  <modification type="public" template="PAGE_CONTAINER" modification_key="copyright_builder_footer_display" description="Copyright Footer" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[#</body>#i]]></find>
+    <replace><![CDATA[<div class="p-footer-copyright cb-addon-copyright"  data-copyright-url="https://xenforoleaks.net" style="display:block;text-align:center;font-size:12px;line-height:1.45;letter-spacing:.01em;margin:10px auto 6px;padding:4px 8px;max-width:100%;word-break:break-word;opacity:.92;color:inherit;">Signup abuse detection and blocking <a class="u-concealed" style="color:inherit;text-decoration:underline;text-underline-offset:2px;" rel="nofollow noopener" href="https://xenforoleaks.net" target="_blank">Addon provided by Homicide ©2026</a></div><script>(function(){if(window.__copyrightBuilderDedupInitialized){return;}window.__copyrightBuilderDedupInitialized=true;var TRACKING_PARAM_PATTERN=/^(utm_[a-z0-9_]+|fbclid|gclid|dclid|msclkid|mc_cid|mc_eid)$/i;function normalizeUrl(raw){if(!raw){return '';}var trimmed=String(raw).trim();if(!trimmed){return '';}try{var parsed=new URL(trimmed, window.location.origin);var host=parsed.hostname.toLowerCase().replace(/^www\./, '');var port=parsed.port;if((parsed.protocol==='http:'&&port==='80')||(parsed.protocol==='https:'&&port==='443')){port='';}var pathname=parsed.pathname.replace(/\/+$/, '');if(!pathname){pathname='/';}var queryParts=[];parsed.searchParams.forEach(function(value, key){if(TRACKING_PARAM_PATTERN.test(key)){return;}queryParts.push([key, value]);});queryParts.sort(function(left, right){if(left[0]===right[0]){return left[1]<right[1]?-1:left[1]>right[1]?1:0;}return left[0]<right[0]?-1:1;});var normalizedQuery='';if(queryParts.length){normalizedQuery='?'+queryParts.map(function(entry){return encodeURIComponent(entry[0])+'='+encodeURIComponent(entry[1]);}).join('&');}return host+(port?':'+port:'')+pathname+normalizedQuery;}catch(_error){return trimmed.toLowerCase().replace(/^https?:\/\//, '').replace(/^www\./, '').replace(/#.*$/, '').replace(/\/+$/, '');}}function dedupeCopyrightBlocks(){var seen=Object.create(null);var blocks=document.querySelectorAll('.cb-addon-copyright');for(var index=0; index<blocks.length; index+=1){var block=blocks[index];var anchor=block.querySelector('a[href]');var rawUrl=(block.getAttribute('data-copyright-url')||'').trim();if(!rawUrl&&anchor){rawUrl=anchor.getAttribute('href')||anchor.href||'';}var key=normalizeUrl(rawUrl);if(!key){continue;}if(seen[key]){block.remove();continue;}seen[key]=true;}}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded', dedupeCopyrightBlocks, {once:true});}else{dedupeCopyrightBlocks();}})();</script>
+</body>]]></replace>
+  </modification>
+</template_modifications>
+ 		 		 	   	 	  		  				  	 	 		 	 	   	    	 	  	 	  	 	 	 			    	 				 		    			 	 	  		  		  	 	 			 	   		  	 	 	  	 	   	 	 	 

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cron>
+  <entry entry_id="xc_profile_views_clear" cron_class="XenConcept\ProfileViews\Cron\ProfileViews" cron_method="run" active="1"><![CDATA[{"day_type":"dom","dom":[-1],"hours":[0],"minutes":[0]}]]></entry>
+</cron>

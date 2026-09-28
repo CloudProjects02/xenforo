@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="public" title="al_core_filter_macros" version_id="1050670" version_string="1.5.6"><![CDATA[<xf:macro name="filter_bar" arg-route="!" arg-form="!" arg-filterParams="!" arg-routeData="{{ null }}">
+    <xf:set var="$fields" value="{$form.getPublicFilters()}"/>
+    <xf:set var="$filters" value="{$filterParams.getArrayCopy()}"/>
+    <xf:if is="$fields is not empty">
+        <div class="block-filterBar">
+            <div class="filterBar">
+                <xf:if contentcheck="true">
+                    <ul class="filterBar-filters">
+                        <xf:contentcheck>
+                            <xf:foreach loop="$fields" key="$fieldId" value="$field">
+                                <xf:if is="{$filters.{$fieldId}}">
+                                    <li>
+                                        <a href="{{ link($route, $routeData, $filters|replace($fieldId, null)) }}"
+                                           class="filterBar-filterToggle" data-xf-init="tooltip"
+                                           title="{{ phrase('remove_this_filter')|for_attr }}">
+                                            <span class="filterBar-filterToggle-label">{{ $field.getLabel() }}</span>
+                                            {$form.getFieldValue($fieldId,$filters)}</a>
+                                    </li>
+                                </xf:if>
+                            </xf:foreach>
+                        </xf:contentcheck>
+                    </ul>
+                </xf:if>
+
+                <a class="filterBar-menuTrigger" data-xf-click="menu" role="button" tabindex="0" aria-expanded="false"
+                   aria-haspopup="true">{{ phrase('filters') }}</a>
+                <div class="menu" data-menu="menu" aria-hidden="true">
+                    <div class="menu-content">
+                        <h4 class="menu-header">{{ phrase('show_only:') }}</h4>
+                        <xf:form action="{{ link($route, $routeData) }}">
+                            <xf:foreach loop="$fields" key="$id" value="$field">
+                                <xf:set var="$field_name" value="{$form.getNamePrefix()}[{$id}]"/>
+                                <xf:set var="$field_value" value="{$filters.{$field.getId()}}"/>
+
+                                <div class="menu-row menu-row--separated">
+                                    <label for="ctrl_{$field.getId()}">{{ $field.getLabel() }}</label>
+                                    <div class="u-inputSpacer">
+                                        <xf:if is="$field.getType()==='username'">
+                                            <xf:textbox name="{$field_name}"
+                                                        value="{$field_value}"
+                                                        ac="single" autocomplete="off"
+                                                        maxlength="{{ max_length($xf.visitor, 'username') }}"
+                                            />
+                                            <xf:elseif is="$field.getType()==='select'"/>
+                                            <xf:select name="{$field_name}" value="{$field_value}">
+                                                <xf:foreach loop="{$form.getFieldOptions($id)}"
+                                                            key="$optionId" value="$optionValue">
+                                                    <xf:option value="{$optionId}"
+                                                               label="{{ is_array($optionValue) ? $optionValue.label : $optionValue }}"
+                                                               hint="{{ is_array($optionValue) ? $optionValue.hint : '' }}"
+                                                               data-hide="{{ is_array($optionValue) ? $optionValue.data-hide : false }}"
+                                                               data-xf-init="{{ is_array($optionValue) ? $optionValue.data-xf-init : '' }}"
+                                                               data-container="{{ is_array($optionValue) ? $optionValue.data-container : '' }}"
+                                                    />
+                                                </xf:foreach>
+                                            </xf:select>
+                                            <xf:else/>
+                                            {$field.getType()} is not implemented in al_core_filter_macros template.
+                                        </xf:if>
+                                    </div>
+                                </div>
+                            </xf:foreach>
+                            <div class="menu-footer">
+                                <span class="menu-footer-controls">
+                                    <xf:button type="submit" class="button--primary">{{ phrase('filter') }}</xf:button>
+                                </span>
+                            </div>
+                            <xf:hiddenval name="apply">1</xf:hiddenval>
+                        </xf:form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </xf:if>
+</xf:macro>]]></template>
+</templates>

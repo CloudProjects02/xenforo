@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<class_extensions>
+  <extension from_class="XF\BbCode\Renderer\EmailHtml" to_class="XenConcept\HideBBCode\XF\BbCode\Renderer\EmailHtml" execute_order="11" active="1"/>
+  <extension from_class="XF\BbCode\Renderer\Html" to_class="XenConcept\HideBBCode\XF\BbCode\Renderer\Html" execute_order="10" active="1"/>
+  <extension from_class="XF\Pub\Controller\Member" to_class="XenConcept\HideBBCode\XF\Pub\Controller\Member" execute_order="10" active="1"/>
+  <extension from_class="XF\Pub\Controller\Post" to_class="XenConcept\HideBBCode\XF\Pub\Controller\Post" execute_order="10" active="1"/>
+  <extension from_class="XF\Service\Message\Preparer" to_class="XenConcept\HideBBCode\XF\Service\Message\Preparer" execute_order="10" active="1"/>
+  <extension from_class="XF\Str\Formatter" to_class="XenConcept\HideBBCode\XF\Str\Formatter" execute_order="10" active="1"/>
+  <extension from_class="XF\SubContainer\BbCode" to_class="XenConcept\HideBBCode\XF\SubContainer\BbCode" execute_order="10" active="1"/>
+  <extension from_class="XF\Template\Templater" to_class="XenConcept\HideBBCode\XF\Template\Templater" execute_order="10" active="1"/>
+</class_extensions>

@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="st_dmca_report_delete" version_id="100" version_string="1.0.0"><![CDATA[<xf:title>{{ phrase('delete_dmca_report') }}</xf:title>
+
+<xf:form action="admin.php?dmca-reports/{{ $report.report_id }}/delete" class="block">
+    <div class="block-container">
+        <div class="block-body">
+            <div class="block-row">
+                {{ phrase('confirm_deletion_of_x') }}
+            </div>
+        </div>
+        <xf:submitrow submit="{{ phrase('delete') }}" />
+    </div>
+</xf:form> ]]></template>
+  <template type="admin" title="st_dmca_report_list" version_id="100" version_string="1.0.0"><![CDATA[<xf:title>{{ phrase('dmca_reports') }}</xf:title>
+
+<xf:pageaction>
+    <div class="buttonGroup">
+        <a href="admin.php?dmca-reports" class="button button--link">
+            <xf:fa icon="fa-sync" /> {{ phrase('refresh') }}
+        </a>
+    </div>
+</xf:pageaction>
+
+<div class="block">
+    <div class="block-outer">
+        <xf:macro template="filter_macros" name="quick_filter" arg-key="dmca-reports" arg-class="block-outer-opposite" />
+    </div>
+    <div class="block-container">
+        <div class="block-body">
+            <xf:if is="$reports is empty">
+                <div class="block-row">{{ phrase('no_items_have_been_created_yet') }}</div>
+            <xf:else />
+                <xf:datalist data-xf-init="responsive-data-list">
+                    <colgroup>
+                        <col style="width: 30%">
+                        <col style="width: 15%">
+                        <col style="width: 15%">
+                        <col style="width: 20%">
+                        <col style="width: 10%">
+                        <col style="width: 10%">
+                    </colgroup>
+                    <thead>
+                        <xf:datarow rowtype="header">
+                            <xf:cell>{{ phrase('title') }}</xf:cell>
+                            <xf:cell>{{ phrase('submitted_by') }}</xf:cell>
+                            <xf:cell>{{ phrase('dmca_type') }}</xf:cell>
+                            <xf:cell>{{ phrase('submission_date') }}</xf:cell>
+                            <xf:cell>{{ phrase('status') }}</xf:cell>
+                            <xf:cell></xf:cell>
+                        </xf:datarow>
+                    </thead>
+                    <tbody>
+                        <xf:foreach loop="$reports" value="$report">
+                            <xf:datarow rowclass="{{ $report.status == 'pending' ? 'dataList-row--highlighted' : '' }}">
+                                <xf:cell>
+                                    <a href="admin.php?dmca-reports/{{ $report.report_id }}/view" data-xf-click="overlay">
+                                        {{ $report.title ?: phrase('untitled_report') }}
+                                    </a>
+                                </xf:cell>
+                                <xf:cell>
+                                    <xf:if is="$report.user_id">
+                                        <xf:username user="$report.User" />
+                                    <xf:else />
+                                        {{ $report.email }}
+                                    </xf:if>
+                                </xf:cell>
+                                <xf:cell>
+                                    <xf:if is="$report.dmca_type == 'copyright'">
+                                        {{ phrase('dmca_type_copyright') }}
+                                    <xf:elseif is="$report.dmca_type == 'trademark'" />
+                                        {{ phrase('dmca_type_trademark') }}
+                                    <xf:elseif is="$report.dmca_type == 'patent'" />
+                                        {{ phrase('dmca_type_patent') }}
+                                    </xf:if>
+                                </xf:cell>
+                                <xf:cell>
+                                    <div>{{ date_time($report.submit_date) }}</div>
+                                    <xf:if is="$report.review_date">
+                                        <div class="u-muted">{{ phrase('reviewed') }}: {{ date_time($report.review_date) }}</div>
+                                    </xf:if>
+                                </xf:cell>
+                                <xf:cell>
+                                    <span class="label label--{{ $report.status == 'pending' ? 'warning' : ($report.status == 'approved' ? 'success' : 'error') }}">
+                                        <xf:if is="$report.status == 'pending'">
+                                            {{ phrase('dmca_report_status_pending') }}
+                                        <xf:elseif is="$report.status == 'approved'" />
+                                            {{ phrase('dmca_report_status_approved') }}
+                                        <xf:elseif is="$report.status == 'rejected'" />
+                                            {{ phrase('dmca_report_status_rejected') }}
+                                        </xf:if>
+                                    </span>
+                                </xf:cell>
+                                <xf:cell class="dataList-cell--action">
+                                    <div class="dataList-blockLink">
+                                        <a href="admin.php?dmca-reports/{{ $report.report_id }}/view" class="menu-linkRow" data-xf-click="overlay">
+                                            {{ phrase('view') }}
+                                        </a>
+                                        <a href="admin.php?dmca-reports/{{ $report.report_id }}/delete" class="menu-linkRow" data-xf-click="overlay">
+                                            {{ phrase('delete') }}
+                                        </a>
+                                    </div>
+                                </xf:cell>
+                            </xf:datarow>
+                        </xf:foreach>
+                    </tbody>
+                </xf:datalist>
+            </xf:if>
+        </div>
+    </div>
+    
+    <div class="block-outer block-outer--after">
+        <xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}" link="dmca-reports" />
+    </div>
+</div> ]]></template>
+  <template type="admin" title="st_dmca_report_view" version_id="100" version_string="1.0.0"><![CDATA[<xf:title>{{ phrase('view_dmca_report') }}</xf:title>
+
+<xf:pageaction>
+    <div class="buttonGroup">
+        <a href="admin.php?dmca-reports" class="button button--link">{{ phrase('back_to_list') }}</a>
+        <a href="admin.php?dmca-reports/{{ $report.report_id }}/delete" class="button button--link button--icon button--delete" data-xf-click="overlay">{{ phrase('delete') }}</a>
+    </div>
+</xf:pageaction>
+
+<xf:form action="admin.php?dmca-reports/{{ $report.report_id }}/view" ajax="true" class="block">
+    <div class="block-container">
+        <div class="block-body">
+            <h2 class="block-header">{{ phrase('report_details') }}</h2>
+
+            <xf:formrow label="{{ phrase('submitted_by') }}">
+                <xf:if is="$report.user_id">
+                    <xf:username user="$report.User" />
+                <xf:else />
+                    {{ $report.email }}
+                </xf:if>
+            </xf:formrow>
+
+            <xf:formrow label="{{ phrase('submission_date') }}">
+                {{ date_time($report.submit_date) }}
+            </xf:formrow>
+
+            <xf:formrow label="{{ phrase('ip_address') }}">
+                {{ $report.ip_address }}
+            </xf:formrow>
+
+            <xf:formrow label="{{ phrase('copyright_owner') }}">
+                {{ $report.copyright_owner }}
+            </xf:formrow>
+
+            <xf:formrow label="{{ phrase('dmca_type') }}">
+                <xf:if is="$report.dmca_type == 'copyright'">
+                    {{ phrase('dmca_type_copyright') }}
+                <xf:elseif is="$report.dmca_type == 'trademark'" />
+                    {{ phrase('dmca_type_trademark') }}
+                <xf:elseif is="$report.dmca_type == 'patent'" />
+                    {{ phrase('dmca_type_patent') }}
+                </xf:if>
+            </xf:formrow>
+
+            <xf:formrow label="{{ phrase('infringing_content_urls') }}">
+                <ul class="listPlain">
+                    <xf:foreach loop="{{ $report.getContentUrls() }}" value="$url">
+                        <li><a href="{{ $url }}" target="_blank" class="u-concealed">{{ $url }}</a></li>
+                    </xf:foreach>
+                </ul>
+            </xf:formrow>
+
+            <xf:formrow label="{{ phrase('original_content_urls') }}">
+                <ul class="listPlain">
+                    <xf:foreach loop="{{ $report.getOriginalContentUrls() }}" value="$url">
+                        <li><a href="{{ $url }}" target="_blank" class="u-concealed">{{ $url }}</a></li>
+                    </xf:foreach>
+                </ul>
+            </xf:formrow>
+
+            <xf:formrow label="{{ phrase('description') }}">
+                {{ $report.content_description }}
+            </xf:formrow>
+
+            <h2 class="block-header">{{ phrase('admin_response') }}</h2>
+
+            <xf:if is="$report.reviewer_id">
+                <xf:formrow label="{{ phrase('reviewed_by') }}">
+                    <xf:username user="$report.Reviewer" />
+                    <span class="formRow-explain">{{ phrase('reviewed_on', {'date': date_time($report.review_date)}) }}</span>
+                </xf:formrow>
+            </xf:if>
+
+            <xf:selectrow name="status" value="{{ $report.status }}" label="{{ phrase('status') }}">
+                <xf:option value="pending">{{ phrase('dmca_report_status_pending') }}</xf:option>
+                <xf:option value="approved">{{ phrase('dmca_report_status_approved') }}</xf:option>
+                <xf:option value="rejected">{{ phrase('dmca_report_status_rejected') }}</xf:option>
+            </xf:selectrow>
+
+            <xf:textarearow name="admin_notes" value="{{ $report.admin_notes }}" rows="5"
+                label="{{ phrase('admin_notes') }}"
+                explain="{{ phrase('admin_notes_explain') }}" />
+        </div>
+
+        <xf:submitrow sticky="true" icon="save" />
+    </div>
+</xf:form> ]]></template>
+  <template type="email" title="dmca_report_approved" version_id="100" version_string="1.0.0"><![CDATA[<mail:subject>{{ phrase('email_dmca_report_approved_subject') }}</mail:subject>
+
+Dear <xf:if is="$report.user_id">{{ $report.User.username }}</xf:if><xf:if is="!$report.user_id">{{ $report.email }}</xf:if>,
+
+<p>Your DMCA report regarding the following content has been reviewed and approved:</p>
+
+<p><strong>Infringing Content URLs:</strong></p>
+<ul>
+<xf:foreach loop="$report.content_urls" value="$url">
+    <li><a href="{{ $url }}">{{ $url }}</a></li>
+</xf:foreach>
+</ul>
+
+<p><strong>Original Content URLs:</strong></p>
+<ul>
+<xf:foreach loop="$report.original_content_urls" value="$url">
+    <li><a href="{{ $url }}">{{ $url }}</a></li>
+</xf:foreach>
+</ul>
+
+<p>The reported content has been removed in accordance with our DMCA policy. Thank you for bringing this to our attention.</p>
+
+<p>Best regards,<br/>
+{{ $xf.options.boardTitle }}</p>
+
+<mail:text>
+Dear <xf:if is="$report.user_id">{{ $report.User.username }}</xf:if><xf:if is="!$report.user_id">{{ $report.email }}</xf:if>,
+
+Your DMCA report regarding the following content has been reviewed and approved:
+
+Infringing Content URLs:
+<xf:foreach loop="$report.content_urls" value="$url">
+- {{ $url }}
+</xf:foreach>
+
+Original Content URLs:
+<xf:foreach loop="$report.original_content_urls" value="$url">
+- {{ $url }}
+</xf:foreach>
+
+The reported content has been removed in accordance with our DMCA policy. Thank you for bringing this to our attention.
+
+Best regards,
+{{ $xf.options.boardTitle }}
+</mail:text>
+]]></template>
+  <template type="public" title="alert_st_dmca_report_new_report" version_id="100" version_string="1.0.0"><![CDATA[{{ phrase('st_dmca_report_new_report_alert', {
+    'user': $alert.User ? username_link($alert.User, false, {'defaultname': $alert.username}) : "Someone",
+    'title': $extra.title,
+    'dmca_type': $extra.dmca_type,
+    'link': $extra.link
+}) }}
+]]></template>
+  <template type="public" title="st_dmca_index" version_id="100" version_string="1.0.0"><![CDATA[<xf:title>DMCA Takedown Request</xf:title>
+
+<div class="block">
+    <div class="block-container">
+        <div class="block-body">
+            <div class="block-row">
+                <h2>What is DMCA?</h2>
+                <p>The Digital Millennium Copyright Act (DMCA) is a United States copyright law that implements two 1996 treaties of the World Intellectual Property Organization (WIPO). It criminalizes production and dissemination of technology, devices, or services intended to circumvent measures that control access to copyrighted works.</p>
+                
+                <h3>When to file a DMCA takedown request?</h3>
+                <p>You should file a DMCA takedown request if:</p>
+                <ul>
+                    <li>You own the copyright to the content in question</li>
+                    <li>You are authorized to act on behalf of the copyright owner</li>
+                    <li>You believe your copyrighted work is being used without permission</li>
+                </ul>
+
+                <h3>What happens after filing?</h3>
+                <p>Once you submit a DMCA takedown request:</p>
+                <ul>
+                    <li>Our team will review your request</li>
+                    <li>If valid, the content will be removed</li>
+                    <li>The content poster will be notified and may file a counter-notice</li>
+                    <li>You will be notified of any actions taken</li>
+                </ul>
+            </div>
+        </div>
+        <div class="block-footer">
+            <a href="{{ link('dmca/report') }}" class="button button--primary">File a DMCA Report</a>
+        </div>
+    </div>
+</div> ]]></template>
+  <template type="public" title="st_dmca_report_form" version_id="101" version_string="1.0.1"><![CDATA[<xf:title>{{ phrase('submit_dmca_report') }}</xf:title>
+
+<xf:form action="{{ link('dmca/report') }}" class="block" ajax="true">
+    <div class="block-container">
+        <div class="block-body">
+            <xf:textboxrow name="title" value="{{ $report.title }}"
+                label="{{ phrase('report_title') }}"
+                required="required"
+                explain="{{ phrase('dmca_report_title_explain') }}" />
+
+            <xf:textboxrow name="copyright_owner" value="{{ $report.copyright_owner }}"
+                label="{{ phrase('copyright_owner') }}"
+                required="required"
+                explain="{{ phrase('copyright_owner_explain') }}" />
+
+            <xf:if is="!$xf.visitor.user_id">
+                <xf:textboxrow name="email" value="{{ $report.email }}"
+                    type="email"
+                    label="{{ phrase('email') }}"
+                    required="required"
+                    explain="{{ phrase('email_explain') }}" />
+            </xf:if>                
+
+            <xf:selectrow name="dmca_type" value="{{ $report.dmca_type }}"
+                label="{{ phrase('dmca_type') }}"
+                required="required"
+                explain="{{ phrase('dmca_type_explain') }}">
+                <xf:option value="copyright">{{ phrase('dmca_type_copyright') }}</xf:option>
+                <xf:option value="trademark">{{ phrase('dmca_type_trademark') }}</xf:option>
+                <xf:option value="patent">{{ phrase('dmca_type_patent') }}</xf:option>
+            </xf:selectrow>
+
+            <xf:textarearow name="content_urls" value="{{ $report.content_urls }}" rows="3"
+                label="{{ phrase('infringing_content_urls') }}"
+                required="required"
+                explain="{{ phrase('dmca_urls_explain') }}" />
+
+            <xf:textarearow name="original_content_urls" value="{{ $report.original_content_urls }}" rows="3"
+                label="{{ phrase('original_content_urls') }}"
+                required="required"
+                explain="{{ phrase('dmca_urls_explain') }}" />
+
+            <xf:textarearow name="content_description" value="{{ $report.content_description }}" rows="5"
+                label="{{ phrase('description') }}"
+                required="required"
+                explain="{{ phrase('content_description_explain') }}" />
+        </div>
+
+        <xf:submitrow icon="submit" />
+    </div>
+</xf:form> ]]></template>
+  <template type="public" title="st_dmca_success" version_id="100" version_string="1.0.0"><![CDATA[<xf:title>DMCA Report Submitted</xf:title>
+
+<div class="blockMessage blockMessage--success">
+    <h2>Thank you for your report</h2>
+    <p>Your DMCA takedown request has been successfully submitted. Our team will review your report and take appropriate action.</p>
+    <p>You will be notified via email about any updates regarding your report.</p>
+    
+    <div class="block-row">
+        <a href="{{ link('index') }}" class="button">Return to Homepage</a>
+    </div>
+</div> ]]></template>
+</templates>

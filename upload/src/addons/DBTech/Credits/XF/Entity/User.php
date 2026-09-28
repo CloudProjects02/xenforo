@@ -6,7 +6,6 @@ namespace DBTech\Credits\XF\Entity;
 
 use DBTech\Credits\Entity\Currency;
 use DBTech\Credits\Repository\EventTriggerRepository;
-use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 
@@ -14,10 +13,10 @@ use XF\Mvc\Entity\Structure;
  * @extends \XF\Entity\User
  *
  * COLUMNS
- * @property int $dbtech_credits_lastdaily
- * @property int $dbtech_credits_lastinterest
- * @property int $dbtech_credits_lastpaycheck
- * @property int $dbtech_credits_lasttaxation
+ * @property int dbtech_credits_lastdaily
+ * @property int dbtech_credits_lastinterest
+ * @property int dbtech_credits_lastpaycheck
+ * @property int dbtech_credits_lasttaxation
  */
 class User extends XFCP_User
 {
@@ -189,7 +188,7 @@ class User extends XFCP_User
 		$container = \XF::app()->container();
 		if (isset($container['dbtechCredits.currencies']) && $currencies = $container['dbtechCredits.currencies'])
 		{
-			/** @var AbstractCollection<Currency> $currencies */
+			/** @var \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Currency> $currencies */
 			foreach ($currencies AS $currencyId => $currency)
 			{
 				// Add all currencies matching

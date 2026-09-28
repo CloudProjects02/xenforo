@@ -2,22 +2,25 @@
 
 namespace DBTech\Shop\Cron;
 
-use DBTech\Shop\Repository\LotteryRepository;
-use XF\PrintableException;
-
+/**
+ * Class Lottery
+ *
+ * @package DBTech\Shop\Cron
+ */
 class Lottery
 {
 	/**
-	 * @throws PrintableException
+	 * @throws \XF\PrintableException
 	 */
-	public static function draw(): void
+	public static function draw()
 	{
 		if (!\XF::options()->dbtech_shop_lottery_enabled)
 		{
 			return;
 		}
-
-		$lotteryRepo = \XF::app()->repository(LotteryRepository::class);
+		
+		/** @var \DBTech\Shop\Repository\Lottery $lotteryRepo */
+		$lotteryRepo = \XF::repository('DBTech\Shop:Lottery');
 		$lotteryRepo->drawLotteries();
 	}
 }

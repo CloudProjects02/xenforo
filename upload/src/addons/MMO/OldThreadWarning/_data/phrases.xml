@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="motw_confirm" version_id="2000070" version_string="2.0.0"><![CDATA[I understand this is an old thread, but want to reply anyway]]></phrase>
+  <phrase title="motw_date_ceil" version_id="2020170" version_string="2.2.1"><![CDATA[The remaining units are summed and if they are > 0 of the last unit of the diff, this unit will be rounded to the upper value.]]></phrase>
+  <phrase title="motw_date_floor" version_id="2020170" version_string="2.2.1"><![CDATA[The last diff unit is rounded down]]></phrase>
+  <phrase title="motw_date_round" version_id="2020170" version_string="2.2.1"><![CDATA[The remaining units are summed and if they are >= 0.5 of the last unit of the diff, this unit will be rounded to the upper value]]></phrase>
+  <phrase title="motw_no_zero_diff" version_id="2020170" version_string="2.2.1"><![CDATA[Turns empty diff into 1 second]]></phrase>
+  <phrase title="motw_note_x_days" version_id="2020170" version_string="2.2.1"><![CDATA[<strong>Warning!</strong> This thread is more than {days} old. <br/>
+It's likely that no further discussion is required, in which case we recommend starting a new thread. If however you feel your response is required you can still do so.]]></phrase>
+  <phrase title="option.motwDateFormat" version_id="2020170" version_string="2.2.1"><![CDATA[Date diff options]]></phrase>
+  <phrase title="option.motwDaysCutoff" version_id="2020170" version_string="2.2.1"><![CDATA[Number of days to warn]]></phrase>
+  <phrase title="option.motwEnableWarning" version_id="2020170" version_string="2.2.1"><![CDATA[Enable Old Thread Warnings]]></phrase>
+  <phrase title="option.motwShortDays" version_id="2020170" version_string="2.2.1"><![CDATA[Displays short format of time units]]></phrase>
+  <phrase title="option_explain.motwDateFormat" version_id="2020170" version_string="2.2.1"><![CDATA[]]></phrase>
+  <phrase title="option_explain.motwDaysCutoff" version_id="2020170" version_string="2.2.1"><![CDATA[]]></phrase>
+  <phrase title="option_explain.motwEnableWarning" version_id="2020170" version_string="2.2.1"><![CDATA[Tick to enable the Old Thread Warnings system.]]></phrase>
+  <phrase title="option_explain.motwShortDays" version_id="2020170" version_string="2.2.1"><![CDATA[Displays in full or short form]]></phrase>
+  <phrase title="option_group.motwThreadWarning" version_id="2020170" version_string="2.2.1"><![CDATA[[MMO] Old Thread Warning]]></phrase>
+  <phrase title="option_group_description.motwThreadWarning" version_id="2020170" version_string="2.2.1"><![CDATA[]]></phrase>
+</phrases>
+ 		 				  			 					  		 	  	  	 		   	  			 		 					  		 				   		 	  	  	  		 			  		    	 	    	  				  	   		   					 				 		  		

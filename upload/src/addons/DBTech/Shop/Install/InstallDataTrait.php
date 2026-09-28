@@ -2,24 +2,16 @@
 
 namespace DBTech\Shop\Install;
 
-use DBTech\Shop\Repository\ItemFieldRepository;
-use DBTech\Shop\Repository\ItemPrefixRepository;
-use XF\AddOn\AddOn;
-use XF\App;
-use XF\Db\AbstractAdapter;
 use XF\Db\Schema\Alter;
-use XF\Db\Schema\Column;
 use XF\Db\Schema\Create;
-use XF\Db\SchemaManager;
-use XF\Service\RebuildNestedSetService;
 
 /**
- * @property AddOn addOn
- * @property App app
+ * @property \XF\AddOn\AddOn addOn
+ * @property \XF\App app
  *
- * @method AbstractAdapter db()
- * @method SchemaManager schemaManager()
- * @method Column addOrChangeColumn($table, $name, $type = null, $length = null)
+ * @method \XF\Db\AbstractAdapter db()
+ * @method \XF\Db\SchemaManager schemaManager()
+ * @method \XF\Db\Schema\Column addOrChangeColumn($table, $name, $type = null, $length = null)
  */
 trait InstallDataTrait
 {
@@ -536,9 +528,21 @@ trait InstallDataTrait
 			$table->addKey('recipient_user_id');
 		};
 
+		$tables['xf_dbtech_shop_item_usergroup_discount'] = function ($table)
+		{
+			/** @var Create|Alter $table */
+			$this->addOrChangeColumn($table, 'item_id', 'int')->autoIncrement();
+			$this->addOrChangeColumn($table, 'user_group_id', 'int');
+			$this->addOrChangeColumn($table, 'discount_type', 'varchar', 50)->setDefault('');
+			$this->addOrChangeColumn($table, 'discount_value', 'float', '')->setDefault(0);
+			$table->addPrimaryKey(['item_id', 'user_group_id']);
+		};
+
+
+		
 		return $tables;
 	}
-
+	
 	/**
 	 * @return array
 	 */
@@ -550,7 +554,7 @@ trait InstallDataTrait
 					'type'    => 'decimal',
 					'length'  => '65,8',
 					'unsigned' => false,
-					'default' => 0,
+					'default' => 0
 				],
 				'dbtech_shop_purchase' => [
 					'type'     => 'mediumblob',
@@ -559,33 +563,33 @@ trait InstallDataTrait
 				'dbtech_shop_purchases' => [
 					'type'    => 'int',
 					'length'  => null,
-					'default' => 0,
+					'default' => 0
 				],
 				'dbtech_shop_immunity' => [
 					'type'    => 'int',
 					'length'  => null,
-					'default' => 0,
+					'default' => 0
 				],
 				'dbtech_shop_pendingtrades' => [
 					'type'    => 'int',
 					'length'  => null,
-					'default' => 0,
+					'default' => 0
 				],
 				'dbtech_shop_item_count' => [
 					'type'    => 'int',
 					'length'  => null,
-					'default' => 0,
+					'default' => 0
 				],
 			],
 			'keys' => [
 				// indexname => columns
-				'dbtech_shop_item_count' => ['dbtech_shop_item_count'],
-			],
+				'dbtech_shop_item_count' => ['dbtech_shop_item_count']
+			]
 		];
 
 		return $definitions;
 	}
-
+	
 	/**
 	 * @return string[]
 	 */
@@ -651,7 +655,7 @@ trait InstallDataTrait
 
 		return true;
 	}
-
+	
 	/**
 	 * @return \Closure[]
 	 */
@@ -667,9 +671,9 @@ trait InstallDataTrait
 					'dbtech_shop_profilemusic',
 					[
 						'positions' => [
-							'member_view_sidebar' => 100,
+							'member_view_sidebar' => 100
 						],
-						'options' => $options,
+						'options' => $options
 					]
 				);
 			},
@@ -690,7 +694,7 @@ trait InstallDataTrait
 							'dbtech_shop_trade_sidebar' => 100,
 							'dbtech_shop_steal_sidebar' => 100,
 						],
-						'options' => $options,
+						'options' => $options
 					],
 					'Wallet'
 				);
@@ -706,9 +710,9 @@ trait InstallDataTrait
 						'positions' => [
 							'dbtech_shop_overview_sidenav' => 100,
 							'dbtech_shop_category_sidenav' => 100,
-							'dbtech_shop_item_sidebar' => 100,
+							'dbtech_shop_item_sidebar' => 100
 						],
-						'options' => $options,
+						'options' => $options
 					],
 					'Cart'
 				);
@@ -726,7 +730,7 @@ trait InstallDataTrait
 							'dbtech_shop_overview_sidenav' => 100,
 							'dbtech_shop_category_sidenav' => 100,
 						],
-						'options' => $options,
+						'options' => $options
 					]
 				);
 			},
@@ -739,14 +743,14 @@ trait InstallDataTrait
 					'dbt_shop_latest_reviews',
 					[
 						'positions' => ['dbtech_shop_overview_sidenav' => 200],
-						'options' => $options,
+						'options' => $options
 					]
 				);
 			},
 			'dbtech_shop_overview_top_authors' => function ($key, array $options = [])
 			{
 				$options = array_replace([
-					'member_stat_key' => 'dbtech_shop_most_items',
+					'member_stat_key' => 'dbtech_shop_most_items'
 				], $options);
 
 				$this->createWidget(
@@ -754,7 +758,7 @@ trait InstallDataTrait
 					'member_stat',
 					[
 						'positions' => ['dbtech_shop_overview_sidenav' => 300],
-						'options' => $options,
+						'options' => $options
 					]
 				);
 			},
@@ -762,7 +766,7 @@ trait InstallDataTrait
 			{
 				$options = array_replace([
 					'limit' => 10,
-					'style' => 'full',
+					'style' => 'full'
 				], $options);
 
 				$this->createWidget(
@@ -770,7 +774,7 @@ trait InstallDataTrait
 					'dbt_shop_new_items',
 					[
 						'positions' => ['whats_new_overview' => 200],
-						'options' => $options,
+						'options' => $options
 					]
 				);
 			},
@@ -784,32 +788,35 @@ trait InstallDataTrait
 					[
 						'positions' => [
 							'forum_list_sidebar' => 38,
-							'forum_new_posts_sidebar' => 28,
+							'forum_new_posts_sidebar' => 28
 						],
-						'options' => $options,
+						'options' => $options
 					]
 				);
 			},
 		];
 	}
-
+	
 	/**
 	 *
 	 */
 	protected function runPostInstallActions(): void
 	{
-		$service = \XF::service(RebuildNestedSetService::class, 'DBTech\Shop:Category', [
-			'parentField' => 'parent_category_id',
+		/** @var \XF\Service\RebuildNestedSet $service */
+		$service = \XF::service('XF:RebuildNestedSet', 'DBTech\Shop:Category', [
+			'parentField' => 'parent_category_id'
 		]);
 		$service->rebuildNestedSetInfo();
 
-		$itemPrefixRepo = \XF::repository(ItemPrefixRepository::class);
+		/** @var \DBTech\Shop\Repository\ItemPrefix $itemPrefixRepo */
+		$itemPrefixRepo = \XF::repository('DBTech\Shop:ItemPrefix');
 		$itemPrefixRepo->rebuildPrefixCache();
 
-		$itemFieldRepo = \XF::repository(ItemFieldRepository::class);
+		/** @var \DBTech\Shop\Repository\ItemField $itemFieldRepo */
+		$itemFieldRepo = \XF::repository('DBTech\Shop:ItemField');
 		$itemFieldRepo->rebuildFieldCache();
 	}
-
+	
 	/**
 	 * @return string[]
 	 */
@@ -817,7 +824,7 @@ trait InstallDataTrait
 	{
 		return [];
 	}
-
+	
 	/**
 	 * @return string[]
 	 */
@@ -826,10 +833,10 @@ trait InstallDataTrait
 		return [
 			'dbtechShop',
 			'dbtechShopAdmin',
-			'dbtechShopTradePost',
+			'dbtechShopTradePost'
 		];
 	}
-
+	
 	/**
 	 * @return string[]
 	 */
@@ -846,7 +853,7 @@ trait InstallDataTrait
 			'dbtech_shop_trade_post',
 		];
 	}
-
+	
 	/**
 	 * @return string[]
 	 */
@@ -859,7 +866,7 @@ trait InstallDataTrait
 			'dbtShopItems',
 			'dbtShopPrefixes',
 			'dbtShopUserNameStyle',
-			'dbtShopUserTitleStyle',
+			'dbtShopUserTitleStyle'
 		];
 	}
 }

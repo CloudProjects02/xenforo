@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<permissions>
+  <permission permission_group_id="forum" permission_id="bypassHideAge" permission_type="flag" interface_group_id="xc_hide_bbcode_moderator" display_order="74"/>
+  <permission permission_group_id="forum" permission_id="bypassHideGuest" permission_type="flag" interface_group_id="xc_hide_bbcode_moderator" display_order="72"/>
+  <permission permission_group_id="forum" permission_id="bypassHidePost" permission_type="flag" interface_group_id="xc_hide_bbcode_moderator" display_order="20"/>
+  <permission permission_group_id="forum" permission_id="bypassHideReact" permission_type="flag" interface_group_id="xc_hide_bbcode_moderator" display_order="30"/>
+  <permission permission_group_id="forum" permission_id="bypassHideReactScore" permission_type="flag" interface_group_id="xc_hide_bbcode_moderator" display_order="90"/>
+  <permission permission_group_id="forum" permission_id="bypassHideReply" permission_type="flag" interface_group_id="xc_hide_bbcode_moderator" display_order="10"/>
+  <permission permission_group_id="forum" permission_id="bypassHideReplyOrReact" permission_type="flag" interface_group_id="xc_hide_bbcode_moderator" display_order="50"/>
+  <permission permission_group_id="forum" permission_id="bypassHideReplyReact" permission_type="flag" interface_group_id="xc_hide_bbcode_moderator" display_order="40"/>
+  <permission permission_group_id="forum" permission_id="bypassHideReplyThanks" permission_type="flag" interface_group_id="xc_hide_bbcode_moderator" display_order="24"/>
+  <permission permission_group_id="forum" permission_id="bypassHideShowtogroups" permission_type="flag" interface_group_id="xc_hide_bbcode_moderator" display_order="60"/>
+  <permission permission_group_id="forum" permission_id="bypassHideThanks" permission_type="flag" interface_group_id="xc_hide_bbcode_moderator" display_order="22"/>
+  <permission permission_group_id="forum" permission_id="bypassHideTrophy" permission_type="flag" interface_group_id="xc_hide_bbcode_moderator" display_order="80"/>
+  <permission permission_group_id="forum" permission_id="bypassHideUser" permission_type="flag" interface_group_id="xc_hide_bbcode_moderator" display_order="70"/>
+  <permission permission_group_id="forum" permission_id="bypassHideUserGroups" permission_type="flag" interface_group_id="xc_hide_bbcode_moderator" display_order="58"/>
+  <permission permission_group_id="forum" permission_id="useHideAge" permission_type="flag" interface_group_id="xc_hide_bbcode" display_order="74"/>
+  <permission permission_group_id="forum" permission_id="useHideDefault" permission_type="flag" interface_group_id="xc_hide_bbcode" display_order="10"/>
+  <permission permission_group_id="forum" permission_id="useHideGuest" permission_type="flag" interface_group_id="xc_hide_bbcode" display_order="72"/>
+  <permission permission_group_id="forum" permission_id="useHidePosts" permission_type="flag" interface_group_id="xc_hide_bbcode" display_order="30"/>
+  <permission permission_group_id="forum" permission_id="useHideReact" permission_type="flag" interface_group_id="xc_hide_bbcode" display_order="40"/>
+  <permission permission_group_id="forum" permission_id="useHideReactScore" permission_type="flag" interface_group_id="xc_hide_bbcode" display_order="90"/>
+  <permission permission_group_id="forum" permission_id="useHideReply" permission_type="flag" interface_group_id="xc_hide_bbcode" display_order="20"/>
+  <permission permission_group_id="forum" permission_id="useHideReplyOrReact" permission_type="flag" interface_group_id="xc_hide_bbcode" display_order="55"/>
+  <permission permission_group_id="forum" permission_id="useHideReplyReact" permission_type="flag" interface_group_id="xc_hide_bbcode" display_order="50"/>
+  <permission permission_group_id="forum" permission_id="useHideReplyThanks" permission_type="flag" interface_group_id="xc_hide_bbcode" display_order="34"/>
+  <permission permission_group_id="forum" permission_id="useHideShowtogroups" permission_type="flag" interface_group_id="xc_hide_bbcode" display_order="60"/>
+  <permission permission_group_id="forum" permission_id="useHideThanks" permission_type="flag" interface_group_id="xc_hide_bbcode" display_order="32"/>
+  <permission permission_group_id="forum" permission_id="useHideTrophy" permission_type="flag" interface_group_id="xc_hide_bbcode" display_order="80"/>
+  <permission permission_group_id="forum" permission_id="useHideUser" permission_type="flag" interface_group_id="xc_hide_bbcode" display_order="70"/>
+  <permission permission_group_id="forum" permission_id="useHideUserGroups" permission_type="flag" interface_group_id="xc_hide_bbcode" display_order="58"/>
+</permissions>

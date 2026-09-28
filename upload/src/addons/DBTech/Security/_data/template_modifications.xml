@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="PAGE_CONTAINER" modification_key="dbtech_security_copyright_footer_display" description="Copyright Footer" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:copyright />]]></find>
+    <replace><![CDATA[$0
+				<xf:callback class="DBTech\Security\Template\Callback\Copyright" method="getCopyrightText"></xf:callback>]]></replace>
+  </modification>
+  <modification type="public" template="account_security" modification_key="dbtech_security_account_security_errors" description="Display error messages regarding a person's password" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<div class="block-body">]]></find>
+    <replace><![CDATA[$0
+
+<xf:include template="dbtech_security_password_errors" />]]></replace>
+  </modification>
+  <modification type="public" template="account_security" modification_key="dbtech_security_account_security_password" description="Modify password to use our new element handler" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:passwordboxrow name="password"]]></find>
+    <replace><![CDATA[$0 data-xf-init="dbtech-security-password-rules" data-container=".js-submitDisable"]]></replace>
+  </modification>
+  <modification type="public" template="account_security" modification_key="dbtech_security_account_security_sessions" description="Add remembered sessions to the end of the template" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[/$/]]></find>
+    <replace><![CDATA[
+<xf:include template="dbtech_security_remembered_logins" />]]></replace>
+  </modification>
+  <modification type="public" template="account_security" modification_key="dbtech_security_passwordrules" description="Create password rules" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:submitrow icon="save" />]]></find>
+    <replace><![CDATA[<xf:submitrow icon="save" rowclass="js-submitDisable" />
+			<xf:include template="dbtech_security_passwordrules" />]]></replace>
+  </modification>
+  <modification type="public" template="account_two_step" modification_key="dbtech_security_two_step" description="Creates a proper list of two-step trusted devices" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:if is="$hasOtherTrusted">]]></find>
+    <replace><![CDATA[<xf:if is="$hasOtherTrusted">
+					<xf:foreach loop="$otherDevices" value="$device">
+						<div class="block-row block-row--separated">
+							{{ phrase('dbtech_security_device_trusted_until_x_disable_desc', {'device': '<b>' . ($device.dbtech_security_user_agent ?: phrase('n_a')) . '</b>', 'until': '<b>' . date($device.trusted_until) . '</b>'}) }}
+							<xf:form action="{{ link('account/two-step/trusted-disable-by-id') }}">
+								<xf:button type="submit">{{ phrase('stop_trusting_this_device') }}</xf:button>
+								<xf:hiddenval name="trusted_id">{$device.tfa_trusted_id}</xf:hiddenval>
+								<xf:hiddenval name="provider">{$provider.provider_id}</xf:hiddenval>
+							</xf:form>
+						</div>
+					</xf:foreach>
+					</xf:if>
+				<xf:if is="$null">]]></replace>
+  </modification>
+  <modification type="public" template="helper_js_global" modification_key="dbtech_security_fingerprint" description="Insert fingerprint JS" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--XF:JS-->]]></find>
+    <replace><![CDATA[<xf:include template="dbtech_security_fingerprint" />
+	$0]]></replace>
+  </modification>
+  <modification type="public" template="helper_js_global" modification_key="dbtech_security_fingerprint_xf_options" description="Inject dbtechSecurity object into XF.config" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[// <!--[XF:js_global:xf_extend_start]-->]]></find>
+    <replace><![CDATA[$0
+				dbtechSecurity: {
+					excludeVideoCard: <xf:if is="!$xf.options.dbtechSecurityFingerprinting.includeWebGL">true<xf:else />false</xf:if>,
+					excludeFonts: true
+				},]]></replace>
+  </modification>
+  <modification type="admin" template="helper_user_search_criteria" modification_key="dbtech_security_helper_user_search_criteria" description="Insert search options" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:checkboxrow name="criteria[is_staff]" readonly="{$readOnly}"]]></find>
+    <replace><![CDATA[<xf:include template="dbtech_security_helper_user_search_criteria" />
+
+$0]]></replace>
+  </modification>
+  <modification type="admin" template="login_form" modification_key="dbtech_security_admin_login_form" description="Add captcha to admin login form where needed" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<div class="adminLogin-row adminLogin-row--submit">]]></find>
+    <replace><![CDATA[<xf:if is="$captcha">
+	<div class="adminLogin-row adminLogin-row--capatcha">
+		<xf:captcha label="{{ phrase('verification') }}" force="true" force-visible="true" />
+	</div>
+</xf:if>
+ 
+$0]]></replace>
+  </modification>
+  <modification type="public" template="login_two_step" modification_key="dbtech_security_permtrust" description="Adds the Permanent Trust option" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[hint="{{ phrase('trust_device_desc') }}" />]]></find>
+    <replace><![CDATA[hint="{{ phrase('trust_device_desc') }}">
+					<xf:dependent>
+						<xf:checkbox>
+							<xf:option name="trust_permanent" value="1" checked="{$trustChecked}"
+									   label="{{ phrase('dbtech_security_trust_device_permanent') }}"
+									   hint="{{ phrase('dbtech_security_trust_device_permanent_desc') }}" />
+						</xf:checkbox>
+					</xf:dependent>
+				</xf:option>]]></replace>
+  </modification>
+  <modification type="public" template="register_form" modification_key="dbtech_security_register_macros_password" description="Modify password to use our new element handler" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:passwordboxrow name="{{ $regForm.getFieldName('password') }}"]]></find>
+    <replace><![CDATA[$0 data-xf-init="dbtech-security-password-rules" data-container=".js-submitDisable"]]></replace>
+  </modification>
+  <modification type="public" template="register_macros" modification_key="dbtech_security_passwordrules_registration" description="Create password rules (registration form)" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:submitrow>]]></find>
+    <replace><![CDATA[<xf:include template="dbtech_security_passwordrules" />
+	<xf:submitrow rowclass="js-submitDisable">]]></replace>
+  </modification>
+  <modification type="admin" template="tools_rebuild" modification_key="dbtech_security_tools_rebuild" description="Append Security rebuilds to the end of the rebuild caches system." execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:rebuild_bottom]-->]]></find>
+    <replace><![CDATA[$0
+<xf:include template="dbtech_security_tools_rebuild" />]]></replace>
+  </modification>
+  <modification type="admin" template="user_batch_update_confirm" modification_key="dbtech_security_user_batch_update_confirm" description="Add actions to user batch update" execution_order="1" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:option name="actions[remove_avatar]">{{ phrase('remove_avatars') }}</xf:option>]]></find>
+    <replace><![CDATA[<xf:option name="actions[dbtech_security_force_password_change]" label="{{ phrase('dbtech_security_reset_password') }}">
+					<xf:checkbox>
+						<xf:option name="actions[dbtech_security_force_password_change_exclude_tfa]">
+							<xf:label>{{ phrase('dbtech_security_exclude_tfa_users') }}</xf:label>
+						</xf:option>
+					</xf:checkbox>
+				</xf:option>
+				<xf:option name="actions[dbtech_security_reset_password]" label="{{ phrase('dbtech_security_reset_password') }}">
+					<xf:checkbox>
+						<xf:option name="actions[dbtech_security_reset_password_exclude_tfa]">
+							<xf:label>{{ phrase('dbtech_security_exclude_tfa_users') }}</xf:label>
+						</xf:option>
+					</xf:checkbox>
+				</xf:option>
+				<xf:option name="actions[dbtech_security_set_user_lock]" label="{{ phrase('dbtech_security_user_locked') }}" hint="{{ phrase('dbtech_security_user_locked_hint') }}">
+					<xf:checkbox>
+						<xf:option name="actions[dbtech_security_set_user_lock_exclude_tfa]">
+							<xf:label>{{ phrase('dbtech_security_exclude_tfa_users') }}</xf:label>
+						</xf:option>
+					</xf:checkbox>
+				</xf:option>
+				$0]]></replace>
+  </modification>
+  <modification type="admin" template="user_edit" modification_key="dbtech_security_user_edit" description="Add account lock checkboxes" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:option name="option[is_discouraged]" selected="$user.Option.is_discouraged"]]></find>
+    <replace><![CDATA[<xf:option name="option[dbtech_security_is_user_locked]" selected="$user.Option.dbtech_security_is_user_locked"
+							hint="{{ phrase('dbtech_security_user_locked_hint') }}">{{ phrase('dbtech_security_user_locked') }}</xf:option>
+						<xf:option name="option[dbtech_security_is_admin_locked]" selected="$user.Option.dbtech_security_is_admin_locked"
+							hint="{{ phrase('dbtech_security_admin_locked_hint') }}">{{ phrase('dbtech_security_admin_locked') }}</xf:option>
+						$0]]></replace>
+  </modification>
+</template_modifications>

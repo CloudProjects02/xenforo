@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+/** 
+* @package [AddonsLab] Resource Filter
+* @author AddonsLab
+* @license https://addonslab.com/
+* @link https://addonslab.com/
+* @version 3.6.1
+This software is furnished under a license and may be used and copied
+only  in  accordance  with  the  terms  of such  license and with the
+inclusion of the above copyright notice.  This software  or any other
+copies thereof may not be provided or otherwise made available to any
+other person.  No title to and  ownership of the  software is  hereby
+transferred.                                                         
+                                                                     
+You may not reverse  engineer, decompile, defeat  license  encryption
+mechanisms, or  disassemble this software product or software product
+license.  AddonsLab may terminate this license if you don't comply with
+any of these terms and conditions.  In such event,  licensee  agrees 
+to return licensor  or destroy  all copies of software  upon termination 
+of the license.
+*/
+ -->
+
+<options>
+  <option option_id="alrf_auto_hide_if_empty" edit_format="radio" data_type="string" advanced="0">
+    <default_value>fade</default_value>
+    <edit_format_params>fade={{ phrase('alrf_fade') }}
+hide={{ phrase('alrf_hide') }}
+show={{ phrase('alrf_show_normally') }}</edit_format_params>
+    <relation group_id="alrf_main" display_order="95"/>
+  </option>
+  <option option_id="alrf_auto_reload" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="alrf_main" display_order="50"/>
+  </option>
+  <option option_id="alrf_cache_ttl" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>3600</default_value>
+    <relation group_id="alrf_main" display_order="70"/>
+  </option>
+  <option option_id="alrf_color_similarity_index" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>5</default_value>
+    <relation group_id="alrf_main" display_order="20"/>
+  </option>
+  <option option_id="alrf_custom_field_location" edit_format="radio" data_type="string" advanced="0">
+    <default_value>above_sort_by</default_value>
+    <edit_format_params>above_type={{ phrase('alrf_above_type') }}
+above_prefixes={{ phrase('alrf_above_prefixes') }}
+above_created_by={{ phrase('alrf_above_created_by') }}
+above_sort_by={{ phrase('alrf_above_sort_by') }}
+below_sort_by={{ phrase('alrf_below_sort_by') }}</edit_format_params>
+    <relation group_id="alrf_main" display_order="35"/>
+  </option>
+  <option option_id="alrf_default_distance_unit" edit_format="radio" data_type="string" advanced="0">
+    <default_value>km</default_value>
+    <edit_format_params>km={{ phrase('alrf_km') }}
+mile={{ phrase('alrf_mile') }}</edit_format_params>
+    <relation group_id="alrf_main" display_order="1000"/>
+  </option>
+  <option option_id="alrf_disable_default_filter_field" edit_format="checkbox" data_type="array" advanced="0">
+    <default_value>{"created_by":"0","sorted_by":"0"}</default_value>
+    <edit_format_params>created_by={{phrase('created_by')}}
+sorted_by={{phrase('sort_by')}}</edit_format_params>
+    <sub_options>created_by
+sorted_by</sub_options>
+    <relation group_id="alrf_main" display_order="37"/>
+  </option>
+  <option option_id="alrf_faceted_search" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="alrf_main" display_order="90"/>
+  </option>
+  <option option_id="alrf_filter_icon_location" edit_format="radio" data_type="string" advanced="0">
+    <default_value>replace_filter</default_value>
+    <edit_format_params>replace_filter={{ phrase('alrf_replace_filter_link') }}
+search_icon={{ phrase('alrf_next_to_search_icon') }}</edit_format_params>
+    <relation group_id="alrf_main" display_order="34"/>
+  </option>
+  <option option_id="alrf_filter_location" edit_format="radio" data_type="string" advanced="0">
+    <default_value>popup</default_value>
+    <edit_format_params>popup={{ phrase('alrf_popup_default') }}
+sidebar={{ phrase('alrf_sidebar') }}
+above_resource_list={{ phrase('alrf_above_resource_list') }}</edit_format_params>
+    <relation group_id="alrf_main" display_order="30"/>
+  </option>
+  <option option_id="alrf_filterable_lists" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="alrf_main" display_order="80"/>
+  </option>
+  <option option_id="alrf_hide_distance_unit" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="alrf_main" display_order="1005"/>
+  </option>
+  <option option_id="alrf_keyword_search" edit_format="radio" data_type="string" advanced="0">
+    <default_value>disabled</default_value>
+    <edit_format_params>disabled={{ phrase('disabled') }}
+titles_only={{ phrase('search_titles_only') }}
+everything={{ phrase('alrf_search_title_and_message') }}</edit_format_params>
+    <relation group_id="alrf_main" display_order="40"/>
+  </option>
+  <option option_id="alrf_license_key" edit_format="callback" data_type="string" advanced="0">
+    <default_value></default_value>
+    <edit_format_params>AL\ResourceFilter\Licensing\Engine\Xf2::renderLicenseOption</edit_format_params>
+    <relation group_id="alrf_main" display_order="10"/>
+  </option>
+  <option option_id="alrf_max_limit" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>10000</default_value>
+    <relation group_id="alrf_main" display_order="60"/>
+  </option>
+  <option option_id="alrf_multi_category_field_mode" edit_format="radio" data_type="string" advanced="0">
+    <default_value>shared</default_value>
+    <edit_format_params>shared={{ phrase('alrf_shared_fields_only') }}
+all={{ phrase('alrf_all_fields') }}</edit_format_params>
+    <relation group_id="alrf_main" display_order="47"/>
+  </option>
+  <option option_id="alrf_multi_prefix_search" edit_format="radio" data_type="string" advanced="0">
+    <default_value>disabled</default_value>
+    <edit_format_params>disabled={{ phrase('disabled') }}
+enabled={{ phrase('enabled') }}</edit_format_params>
+    <relation group_id="alrf_main" display_order="45"/>
+  </option>
+  <option option_id="alrf_number_formatting_exclusion_list" edit_format="textbox" data_type="string" advanced="0">
+    <default_value></default_value>
+    <relation group_id="alrf_main" display_order="100"/>
+  </option>
+  <option option_id="alrf_off_canvas_filter" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="alrf_main" display_order="33"/>
+  </option>
+  <option option_id="alrf_tag_search" edit_format="radio" data_type="string" advanced="0">
+    <default_value>disabled</default_value>
+    <edit_format_params>disabled={{ phrase('disabled') }}
+enabled={{ phrase('enabled') }}</edit_format_params>
+    <relation group_id="alrf_main" display_order="45"/>
+  </option>
+  <option option_id="alrf_total_count_indicator" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="alrf_main" display_order="55"/>
+  </option>
+</options>

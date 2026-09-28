@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<routes>
+  <route route_type="admin" route_prefix="token-downloads" sub_name="packages" format=":int&lt;package_id&gt;" controller="Jace\TokenDownloads:Package" context="jace_token_downloads_list"/>
+  <route route_type="public" route_prefix="token-downloads" format=":int&lt;package_id&gt;" controller="Jace\TokenDownloads\Pub\Controller\Tokens" context="jace_account_token"/>
+</routes>

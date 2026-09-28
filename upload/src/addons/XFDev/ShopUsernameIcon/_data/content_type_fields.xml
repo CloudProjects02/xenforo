@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<content_type_fields>
+  <field content_type="shopusernameicon" field_name="dbtech_shop_itemtype_handler_class">XFDev\ShopUsernameIcon\ItemType\ShopUsernameIcon</field>
+</content_type_fields>

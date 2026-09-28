@@ -1,0 +1,28 @@
+{
+    "legacy_addon_id": "",
+    "title": "[MMO] Old Thread Warning",
+    "description": "Warning about old threads",
+    "version_id": 2030031,
+    "version_string": "2.4.0 Beta",
+    "dev": "kick",
+    "dev_url": "https://mmo-dev.info",
+    "faq_url": "https://mmo-zone.info",
+    "support_url": "https://mmo-zone.info",
+    "extra_urls": [],
+    "require": {
+        "XF": [
+            2030031,
+            "XenForo 2.3.0 Beta 1+"
+        ],
+        "MMO/CoreLib": [
+            2020070,
+            "[MMO] Core Library 2.2.0+"
+        ],
+        "SV/StandardLib": [
+            1040100,
+            "Standard Library by Xon v1.4.1+"
+        ]
+    },
+    "icon": "fa-exclamation-triangle"
+}
+ 		 				  			 					  		 	  	  	 		   	  			 		 					  		 				   		 	  	  	  		 			  		    	 	    	  				  	   		   					 				 		  		

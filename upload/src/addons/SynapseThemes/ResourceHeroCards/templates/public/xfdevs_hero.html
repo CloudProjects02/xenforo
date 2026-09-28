@@ -1,0 +1,43 @@
+<!-- Make sure XenForo debug mode is enabled in src/config.php ($config['debug'] = true;) for dump() to output -->
+{{dump($resources)}}
+
+<xf:if is="$resources is not empty">
+    <div class="block">
+        <div class="block-container">
+            <h3 class="block-minorHeader">Featured Resources</h3>
+            <ul class="block-body">
+                <xf:foreach loop="$resources" value="$resource">
+                    <li class="block-row block-row--separated">
+                        <div class="contentRow">
+                            <span class="contentRow-figure">
+                                <xf:if is="$resource.getIconUrl()">
+                                    <a href="{{ link('resources', $resource) }}">
+                                        <img src="{$resource.getIconUrl()}" alt="{$resource.title}" style="width: 36px; height: 36px; object-fit: cover; border-radius: 4px;" />
+                                    </a>
+                                <xf:else />
+                                    <xf:avatar user="$resource.User" size="s" defaultname="{$resource.username}" />
+                                </xf:if>
+                            </span>
+                            <div class="contentRow-main contentRow-main--close">
+                                <a href="{{ link('resources', $resource) }}" class="contentRow-title">{$resource.title}</a>
+                                <div class="contentRow-snippet">{$resource.tag_line}</div>
+                                <div class="contentRow-minor contentRow-minor--hideLinks">
+                                    <ul class="listInline listInline--bullet">
+                                        <li><xf:username user="$resource.User" /></li>
+                                        <li><xf:date time="{$resource.resource_date}" /></li>
+                                        <li>{$resource.Category.title}</li>
+                                        <li><xf:fa icon="fa-eye" /> {$resource.view_count}</li>
+                                        <li><xf:fa icon="fa-download" /> {$resource.download_count}</li>
+                                        <li><xf:fa icon="fa-thumbs-up" /> {$resource.reaction_score}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </xf:foreach>
+            </ul>
+        </div>
+    </div>
+<xf:else />
+    <div class="blockMessage">No resources to display.</div>
+</xf:if>

@@ -2,13 +2,14 @@
 
 namespace DBTech\Shop\Permission;
 
-use DBTech\Shop\Repository\CategoryRepository;
-use XF\Entity\Permission;
 use XF\Mvc\Entity\Entity;
 use XF\Permission\TreeContentPermissions;
-use XF\Phrase;
-use XF\Tree;
 
+/**
+ * Class CategoryPermissions
+ *
+ * @package DBTech\Shop\Permission
+ */
 class CategoryPermissions extends TreeContentPermissions
 {
 	/**
@@ -18,49 +19,50 @@ class CategoryPermissions extends TreeContentPermissions
 	{
 		return 'dbtech_shop_category';
 	}
-
+	
 	/**
-	 * @return Phrase
+	 * @return \XF\Phrase
 	 */
-	public function getAnalysisTypeTitle(): Phrase
+	public function getAnalysisTypeTitle(): \XF\Phrase
 	{
 		return \XF::phrase('dbtech_shop_category_permissions');
 	}
-
+	
 	/**
 	 * @param Entity $entity
 	 *
 	 * @return mixed|null
 	 */
-	public function getContentTitle(Entity $entity): mixed
+	public function getContentTitle(Entity $entity)
 	{
 		return $entity->title;
 	}
-
+	
 	/**
-	 * @param Permission $permission
+	 * @param \XF\Entity\Permission $permission
 	 *
 	 * @return bool
 	 */
-	public function isValidPermission(Permission $permission): bool
+	public function isValidPermission(\XF\Entity\Permission $permission): bool
 	{
 		return ($permission->permission_group_id == 'dbtech_shop' && !in_array($permission->permission_id, [
-			'bank',
-			'steal',
-			'viewLottery',
-			'trade',
-		]));
+				'bank',
+				'steal',
+				'viewLottery',
+				'trade'
+			]));
 	}
-
+	
 	/**
-	 * @return Tree
+	 * @return \XF\Tree
 	 */
-	public function getContentTree(): Tree
+	public function getContentTree(): \XF\Tree
 	{
-		$categoryRepo = $this->builder->em()->getRepository(CategoryRepository::class);
+		/** @var \DBTech\Shop\Repository\Category $categoryRepo */
+		$categoryRepo = $this->builder->em()->getRepository('DBTech\Shop:Category');
 		return $categoryRepo->createCategoryTree($categoryRepo->findCategoryList()->fetch());
 	}
-
+	
 	/**
 	 * @param $contentId
 	 * @param array $calculated
@@ -84,7 +86,7 @@ class CategoryPermissions extends TreeContentPermissions
 
 		return $final;
 	}
-
+	
 	/**
 	 * @param $contentId
 	 * @param array $calculated

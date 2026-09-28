@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="account_wrapper" modification_key="xen_staff_account_nav" description="Adds a 'Staff profile' link in the account sidebar for staff members" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:settings_links:bottom]-->]]></find>
+    <replace><![CDATA[<xf:if is="$xf.visitor.user_id && $xf.visitor.hasPermission('xenStaff', 'editProfile')">
+	<a class="blockLink {{ $pageSelected == 'xs-staff-profile' ? 'is-selected' : '' }}" href="{{ link('account/xs-staff-profile') }}">
+		{{ phrase('xen_staff_profile_edit_title') }}
+	</a>
+</xf:if>
+$0]]></replace>
+  </modification>
+</template_modifications>

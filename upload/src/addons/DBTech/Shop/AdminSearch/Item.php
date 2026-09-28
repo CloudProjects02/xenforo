@@ -2,12 +2,14 @@
 
 namespace DBTech\Shop\AdminSearch;
 
-use DBTech\Shop\Finder\ItemFinder;
 use XF\AdminSearch\AbstractHandler;
-use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
-use XF\Mvc\Router;
 
+/**
+ * Class Item
+ *
+ * @package DBTech\Shop\AdminSearch
+ */
 class Item extends AbstractHandler
 {
 	/**
@@ -23,11 +25,11 @@ class Item extends AbstractHandler
 	 * @param int $limit
 	 * @param array $previousMatchIds
 	 *
-	 * @return AbstractCollection
+	 * @return \XF\Mvc\Entity\AbstractCollection
 	 */
-	public function search($text, $limit, array $previousMatchIds = []): AbstractCollection
+	public function search($text, $limit, array $previousMatchIds = []): \XF\Mvc\Entity\AbstractCollection
 	{
-		$finder = \XF::app()->finder(ItemFinder::class);
+		$finder = $this->app->finder('DBTech\Shop:Item');
 
 		$conditions = [
 			['title', 'like', $finder->escapeLike($text, '%?%')],
@@ -47,18 +49,18 @@ class Item extends AbstractHandler
 	}
 
 	/**
-	 * @param Entity $record
+	 * @param \XF\Mvc\Entity\Entity $record
 	 *
 	 * @return array
 	 */
 	public function getTemplateData(Entity $record): array
 	{
-		/** @var Router $router */
-		$router = \XF::app()->container('router.admin');
+		/** @var \XF\Mvc\Router $router */
+		$router = $this->app->container('router.admin');
 
 		return [
 			'link' => $router->buildLink('dbtech-shop/items/edit', $record),
-			'title' => $record->title,
+			'title' => $record->title
 		];
 	}
 

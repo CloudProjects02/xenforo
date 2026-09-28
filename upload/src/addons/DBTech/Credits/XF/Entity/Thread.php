@@ -18,7 +18,7 @@ use XF\Mvc\Entity\Structure;
  * @property int $dbtech_credits_access_currency_id
  *
  * RELATIONS
- * @property AbstractCollection<ContentAccessPurchase> $ContentAccessPurchases
+ * @property AbstractCollection|\DBTech\Credits\Entity\ContentAccessPurchase[] $ContentAccessPurchases
  * @property Currency $ContentAccessCurrency
  */
 class Thread extends XFCP_Thread

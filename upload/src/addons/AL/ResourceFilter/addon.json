@@ -1,0 +1,27 @@
+{
+    "legacy_addon_id": "",
+    "title": "[AddonsLab] Resource Filter",
+    "description": "",
+    "version_id": 3060170,
+    "version_string": "3.6.1",
+    "dev": "AddonsLab",
+    "dev_url": "https://addonslab.com/",
+    "faq_url": "",
+    "support_url": "",
+    "extra_urls": [],
+    "require": {
+        "XFRM": [
+            2000070,
+            "XenForo Resource Manager 2.0.0+"
+        ],
+        "AL/Core": [
+            1060570,
+            "[AL] Core Package 1.6.5+"
+        ],
+        "AL/FilterFramework": [
+            1010071,
+            "[AL] Filter Framework 1.1.0+"
+        ]
+    },
+    "icon": "icon.png"
+}

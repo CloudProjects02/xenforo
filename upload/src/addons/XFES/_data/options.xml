@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<options>
+  <option option_id="xfesConfig" edit_format="template" data_type="array" advanced="1">
+    <default_value>{"host":"","port":"","https":false,"username":"","password":"","index":"","singleType":true,"maxClauseCount":1024,"maxClauseCountChecked":0}</default_value>
+    <edit_format_params>option_template_uneditable</edit_format_params>
+    <sub_options>host
+port
+https
+username
+password
+index
+singleType
+maxClauseCount
+maxClauseCountChecked
+*</sub_options>
+    <relation group_id="debug" display_order="110"/>
+  </option>
+  <option option_id="xfesEnabled" edit_format="onoff" data_type="boolean" advanced="1">
+    <default_value>0</default_value>
+    <relation group_id="debug" display_order="100"/>
+  </option>
+  <option option_id="xfesRecencyRelevance" edit_format="template" data_type="array" advanced="1">
+    <default_value>{"enabled":true,"halfLife":"365"}</default_value>
+    <edit_format_params>option_template_uneditable</edit_format_params>
+    <sub_options>enabled
+halfLife</sub_options>
+    <relation group_id="debug" display_order="120"/>
+  </option>
+  <option option_id="xfesSimilarThreads" edit_format="template" data_type="array" advanced="1">
+    <default_value>{"suggestionsEnabled":true,"widgetEnabled":true,"maxResults":5,"forumBoost":1.5}</default_value>
+    <edit_format_params>option_template_uneditable</edit_format_params>
+    <sub_options>suggestionsEnabled
+widgetEnabled
+maxResults
+forumBoost
+*</sub_options>
+    <relation group_id="debug" display_order="140"/>
+  </option>
+  <option option_id="xfesSimilarThreadsExcludedForums" edit_format="template" data_type="array" advanced="1">
+    <default_value>[]</default_value>
+    <edit_format_params>option_template_uneditable</edit_format_params>
+    <sub_options>*</sub_options>
+    <relation group_id="debug" display_order="150"/>
+  </option>
+</options>

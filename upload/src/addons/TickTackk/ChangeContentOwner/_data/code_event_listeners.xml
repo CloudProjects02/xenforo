@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<code_event_listeners>
+  <listener event_id="addon_post_install" execute_order="10" callback_class="TickTackk\ChangeContentOwner\SetupListener" callback_method="addOnPostInstall" active="1" hint="XFMG" description="When supported add-ons are installed, set default permissions for their supported content types"/>
+  <listener event_id="inline_mod_actions" execute_order="10" callback_class="TickTackk\ChangeContentOwner\Listener" callback_method="inlineModActions" active="1" hint="xfmg_album" description="Add &quot;Change album owner&quot; to inline mod tools for media/album (XenForo Media Gallery)"/>
+  <listener event_id="inline_mod_actions" execute_order="10" callback_class="TickTackk\ChangeContentOwner\Listener" callback_method="inlineModActions" active="1" hint="thread" description="Add &quot;Change thread author&quot; to inline mod tools"/>
+  <listener event_id="inline_mod_actions" execute_order="10" callback_class="TickTackk\ChangeContentOwner\Listener" callback_method="inlineModActions" active="1" hint="xfmg_media" description="Add &quot;Change media author&quot; to inline mod tools (XenForo Media Gallery)"/>
+  <listener event_id="inline_mod_actions" execute_order="10" callback_class="TickTackk\ChangeContentOwner\Listener" callback_method="inlineModActions" active="1" hint="post" description="Add &quot;Change post author&quot; to inline mod tools"/>
+  <listener event_id="inline_mod_actions" execute_order="10" callback_class="TickTackk\ChangeContentOwner\Listener" callback_method="inlineModActions" active="1" hint="profile_post" description="Add &quot;Change profile post author&quot; to inline mod tools"/>
+  <listener event_id="inline_mod_actions" execute_order="10" callback_class="TickTackk\ChangeContentOwner\Listener" callback_method="inlineModActions" active="1" hint="xfmg_comment" description="Add &quot;Change comment author&quot; to inline mod tools (XenForo Media Gallery)"/>
+</code_event_listeners>

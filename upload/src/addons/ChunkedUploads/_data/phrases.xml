@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="option.chunkedUploadsChunkSize" version_id="1000270" version_string="1.0.2"><![CDATA[Chunk size]]></phrase>
+  <phrase title="option.chunkedUploadsIncreaseMaxFileSize" version_id="1000270" version_string="1.0.2"><![CDATA[Virtually increase maximum attachment file size]]></phrase>
+  <phrase title="option.chunkedUploadsSimultaneousUploads" version_id="1000270" version_string="1.0.2"><![CDATA[Simultaneous Uploads]]></phrase>
+  <phrase title="option_explain.chunkedUploadsChunkSize" version_id="1000270" version_string="1.0.2"><![CDATA[The size in kilobytes (KB) of each uploaded chunk of data. The last uploaded chunk will be at least this size. This value shouldn't be over <b>{serverMaxFileSize}</b> KB.]]></phrase>
+  <phrase title="option_explain.chunkedUploadsIncreaseMaxFileSize" version_id="1000270" version_string="1.0.2"><![CDATA[If you activate this option, you will be able to increase the maximum attachment file size up to 128GB regardless of server configuration.<br />
+<br />
+Use this option carefully and take into account your server and file system limits.]]></phrase>
+  <phrase title="option_explain.chunkedUploadsSimultaneousUploads" version_id="1000270" version_string="1.0.2"><![CDATA[Number of simultaneous uploads]]></phrase>
+</phrases>

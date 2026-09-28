@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<content_type_fields>
+  <field content_type="multiple_account" field_name="report_handler_class">\SV\SignupAbuseBlocking\Report\MultipleAccount</field>
+  <field content_type="svAntiSpamOption" field_name="admin_search_class">SV\SignupAbuseBlocking\AdminSearch\AntiSpamOption</field>
+</content_type_fields>
+ 		 		 	   	 	  		  				  	 	 		 	 	   	    	 	  	 	  	 	 	 			    	 				 		    			 	 	  		  		  	 	 			 	   		  	 	 	  	 	   	 	 	 

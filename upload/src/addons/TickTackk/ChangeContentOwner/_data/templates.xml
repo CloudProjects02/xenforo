@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="option_template_tckChangeContentOwner_defaultBumpBy" version_id="2001370" version_string="2.0.13"><![CDATA[<xf:formrow rowtype="input"
+	label="{$option.title}"
+	hint="{$hintHtml}"
+	explain="{$explainHtml}"
+	html="{$listedHtml}">
+
+	<div class="inputGroup inputGroup--numbers">
+		<xf:numberbox name="{$inputName}[hours]" value="{{ $option.option_value.hours ?: 0 }}"
+					  min="0"
+					  units="{{ phrase('units_hours') }}" />
+		<span class="inputGroup-splitter"></span>
+		
+		<xf:numberbox name="{$inputName}[minutes]" value="{{ $option.option_value.minutes ?: 0 }}"
+					  min="0"
+					  units="{{ phrase('units_minutes') }}" />
+		<span class="inputGroup-splitter"></span>
+		
+		<xf:numberbox name="{$inputName}[seconds]" value="{{ $option.option_value.seconds ?: 0 }}"
+					  min="0"
+					  units="{{ phrase('units_seconds') }}" />
+	</div>
+</xf:formrow>]]></template>
+  <template type="admin" title="option_template_tckChangeContentOwner_defaultNewDateTimeInterval" version_id="2001370" version_string="2.0.13"><![CDATA[<xf:formrow rowtype="input"
+	label="{$option.title}"
+	hint="{$hintHtml}"
+	explain="{$explainHtml}"
+	html="{$listedHtml}">
+
+	<div class="inputGroup inputGroup--numbers">
+		<xf:numberbox name="{$inputName}[hours]" value="{{ $option.option_value.hours ?: 0 }}"
+					  min="0"
+					  units="{{ phrase('units_hours') }}" />
+		<span class="inputGroup-splitter"></span>
+		
+		<xf:numberbox name="{$inputName}[minutes]" value="{{ $option.option_value.minutes ?: 0 }}"
+					  min="0"
+					  units="{{ phrase('units_minutes') }}" />
+		<span class="inputGroup-splitter"></span>
+		
+		<xf:numberbox name="{$inputName}[seconds]" value="{{ $option.option_value.seconds ?: 0 }}"
+					  min="0"
+					  units="{{ phrase('units_seconds') }}" />
+	</div>
+</xf:formrow>]]></template>
+  <template type="public" title="inline_mod_content_change_owner" version_id="2001370" version_string="2.0.13"><![CDATA[<xf:title><xf:trim>
+	<xf:if is="$canChangeOwner && $canChangeDate">
+		{{ phrase('tckChangeContentOwner_inline_moderation_change_owner_or_date') }}
+	<xf:elseif is="$canChangeOwner" />
+		{{ phrase('tckChangeContentOwner_inline_moderation_change_owner') }}
+	<xf:elseif is="$canChangeDate" />
+		{{ phrase('tckChangeContentOwner_inline_moderation_change_date') }}
+	</xf:if>
+</xf:trim></xf:title>
+
+<xf:form action="{{ link('inline-mod') }}" class="block" ajax="true">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:inforow rowtype="confirm">
+				<xf:trim>
+					<xf:if is="$canChangeOwner && $canChangeDate">
+						{{ phrase('tckChangeContentOwner_you_sure_you_want_to_change_owner_or_date_x_contents', {'count': $total, 'content_type_singular': $contentTypeSingular}) }}
+					<xf:elseif is="$canChangeOwner" />
+						{{ phrase('tckChangeContentOwner_you_sure_you_want_to_change_owner_x_contents', {'count': $total, 'content_type_singular': $contentTypeSingular}) }}
+					<xf:elseif is="$canChangeDate" />
+						{{ phrase('tckChangeContentOwner_you_sure_you_want_to_change_date_x_contents', {'count': $total, 'content_type_singular': $contentTypeSingular}) }}
+					</xf:if>
+				</xf:trim>
+			</xf:inforow>
+
+			<xf:if is="$canChangeOwner">
+				<xf:macro template="tckChangeContentOwner_macros"
+						  name="change_owner_row" />
+			</xf:if>
+			
+			<xf:if is="$canChangeDate">
+				<xf:macro template="tckChangeContentOwner_macros"
+						  name="change_date_row"
+						  arg-showTimeIntervals="{{ count($contents) > 1 }}" />
+			</xf:if>
+		</div>
+		<xf:submitrow icon="confirm" />
+	</div>
+
+	<xf:foreach loop="$contents" value="$content">
+		<xf:hiddenval name="ids[]">{$content.getEntityId()}</xf:hiddenval>
+	</xf:foreach>
+
+	<xf:hiddenval name="type">{$contentType}</xf:hiddenval>
+	<xf:hiddenval name="action">change_owner</xf:hiddenval>
+	<xf:hiddenval name="confirmed">1</xf:hiddenval>
+
+	<xf:redirect url="{$redirect}" />
+</xf:form>]]></template>
+  <template type="public" title="tckChangeContentOwner_change_content_owner" version_id="2001370" version_string="2.0.13"><![CDATA[<xf:title><xf:trim>
+	<xf:if is="$content.canChangeOwner() && $content.canChangeDate()">
+		{{ phrase('tckChangeContentOwner_change_owner_or_date') }}
+	<xf:elseif is="$content.canChangeOwner()" />
+		{{ phrase('tckChangeContentOwner_change_owner') }}
+	<xf:elseif is="$content.canChangeDate()" />
+		{{ phrase('tckChangeContentOwner_change_date') }}
+	</xf:if>
+</xf:trim></xf:title>
+
+<xf:breadcrumb source="{$breadcrumbs}" />
+
+<xf:form action="{$changeOwnerLink}" ajax="true" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:macro template="tckChangeContentOwner_macros" name="change_rows"
+					  arg-handler="{$handler}"
+					  arg-content="{$content}" />
+		</div>
+
+		<xf:submitrow rowtype="simple" icon="save" />
+	</div>
+</xf:form>]]></template>
+  <template type="public" title="tckChangeContentOwner_macros" version_id="2001870" version_string="2.0.18"><![CDATA[<xf:macro name="action_link" arg-content="!" arg-route="!" arg-supportsActionBarMenu="{{ true }}">
+	<xf:if contentcheck="true">
+		<xf:contentcheck>
+			<xf:if is="$content.canChangeOwner() && $content.canChangeDate()">
+				<a href="{{ link($route . '/change-owner', $content) }}"
+				   class="actionBar-action actionBar-action--changeOwnerAndDate actionBar-action--menuItem"
+				   data-xf-click="overlay">{{ phrase('tckChangeContentOwner_change_owner_or_date') }}</a>
+			<xf:elseif is="$content.canChangeOwner()" />
+				<a href="{{ link($route . '/change-owner', $content) }}"
+				   class="actionBar-action actionBar-action--changeOwner actionBar-action--menuItem"
+				   data-xf-click="overlay">{{ phrase('tckChangeContentOwner_change_owner') }}</a>
+			<xf:elseif is="$content.canChangeDate()" />
+				<a href="{{ link($route . '/change-owner', $content) }}"
+				   class="actionBar-action actionBar-action--changeDate actionBar-action--menuItem"
+				   data-xf-click="overlay">{{ phrase('tckChangeContentOwner_change_date') }}</a>
+			</xf:if>
+		</xf:contentcheck>
+		<xf:if is="$supportsActionBarMenu">
+			<xf:set var="$hasActionBarMenu" value="{{ true }}" />
+		</xf:if>
+	</xf:if>
+</xf:macro>
+
+<xf:macro name="menu_link_row" arg-content="!" arg-route="!">
+	<xf:if is="$content.canChangeOwner() && $content.canChangeDate()">
+		<a href="{{ link($route . '/change-owner', $content) }}"
+		   class="menu-linkRow"
+		   data-xf-click="overlay">{{ phrase('tckChangeContentOwner_change_owner_or_date') }}</a>
+	<xf:elseif is="$content.canChangeOwner()" />
+		<a href="{{ link($route . '/change-owner', $content) }}"
+		   class="menu-linkRow"
+		   data-xf-click="overlay">{{ phrase('tckChangeContentOwner_change_owner') }}</a>
+	<xf:elseif is="$content.canChangeDate()" />
+		<a href="{{ link($route . '/change-owner', $content) }}"
+		   class="menu-linkRow"
+		   data-xf-click="overlay">{{ phrase('tckChangeContentOwner_change_date') }}</a>
+	</xf:if>
+</xf:macro>
+
+<xf:macro name="change_owner_row" arg-fullWidth="{{ false }}">
+	<xf:textboxrow rowclass="{{ ($fullWidth ? 'formRow--fullWidth' : '') }}" name="username"
+				   label="{{ phrase('tckChangeContentOwner_new_owner') }}"
+				   explain="{{ phrase('tckChangeContentOwner_new_owner_name_explain') }}"
+				   ac="true"
+				   data-single="true" />
+</xf:macro>
+
+<xf:macro name="change_date_row" arg-contentDate="{{ null }}" arg-contentTime="{{ null }}" arg-showApplyTimeInterval="{{ true }}" arg-fullWidth="{{ false }}">
+	<xf:css src="tckChangeContentOwner_macros_change_date_row.less" />
+	
+	<xf:checkboxrow rowclass="{{ ($fullWidth ? 'formRow--fullWidth' : '') }}"
+					label="{{ phrase('tckChangeContentOwner_change_date') }}">
+		<xf:option name="change_date" label="{{ phrase('tckChangeContentOwner_new_date') }}" data-hide="true">
+			<xf:dependent>
+				<input type="date" name="new_date"
+					   class="input input--date input--inline input--autoSize"
+					   value="{$contentDate}" />
+			</xf:dependent>
+		</xf:option>
+		<xf:option name="change_time" label="{{ phrase('tckChangeContentOwner_new_time') }}" data-hide="true">
+			<xf:dependent>
+				<input type="time" name="new_time" step="1"
+					   class="input input--time input--inline input--autoSize"
+					   value="{$contentTime.hour}:{$contentTime.minute}:{$contentTime.second}" />
+			</xf:dependent>
+		</xf:option>
+		<xf:if is="$showApplyTimeInterval">
+			<xf:option name="apply_time_interval" label="{{ phrase('tckChangeContentOwner_time_interval') }}" data-hide="true">
+				<xf:dependent>
+					<xf:set var="$option" value="{{ $xf.options.tckChangeContentOwner_defaultTimeInterval }}" />
+
+					<div class="inputGroup-container">
+						<div class="inputGroup inputGroup--numbers inputGroup--inline">
+							<xf:numberbox name="time_interval[hour]" value="{{ $option.hours ?: 0 }}"
+										  min="0"
+										  units="{{ phrase('units_hours') }}"  class="input--inline input--numberNarrow" />
+						</div>
+						
+						<div class="inputGroup inputGroup--numbers inputGroup--inline">
+							<xf:numberbox name="time_interval[minute]" value="{{ $option.minutes ?: 0 }}"
+										  min="0"
+										  units="{{ phrase('units_minutes') }}"  class="input--inline input--numberNarrow" />
+						</div>
+						
+						<div class="inputGroup inputGroup--numbers inputGroup--inline">
+							<xf:numberbox name="time_interval[second]" value="{{ $option.seconds ?: 0 }}"
+										  min="0"
+										  units="{{ phrase('units_seconds') }}"  class="input--inline input--numberNarrow" />
+						</div>
+					</div>
+
+					<p class="formRow-explain">{{ phrase('tckChangeContentOwner_bump_time_explain') }}</p>
+				</xf:dependent>
+			</xf:option>
+		</xf:if>
+	</xf:checkboxrow>
+</xf:macro>
+
+<xf:macro name="change_rows" arg-handler="!" arg-content="!" arg-showApplyTimeInterval="{{ true }}" arg-fullWidth="{{ false }}">
+	<xf:if is="$handler AND $content">
+		<xf:if is="$handler.canChangeOwner($content)">
+			<xf:macro template="tckChangeContentOwner_macros" name="change_owner_row" arg-fullWidth="{$fullWidth}" />
+		</xf:if>
+		
+		<xf:if is="$handler.canChangeDate($content)">
+			<xf:set var="$contentDate" value="{{ $handler.getOldDate($content, true) }}" />
+			<xf:set var="$contentTime" value="{{ $handler.getOldTime($content, true) }}" />
+
+			<xf:macro template="tckChangeContentOwner_macros"
+					  name="change_date_row"
+					  arg-contentDate="{{ $contentDate.year . '-' . $contentDate.month . '-' . $contentDate.day }}"
+					  arg-contentTime="{{ $contentTime }}"
+					  arg-showApplyTimeInterval="{{ $showApplyTimeInterval }}"
+					  arg-fullWidth="{$fullWidth}" />
+		</xf:if>
+	</xf:if>
+</xf:macro>]]></template>
+  <template type="public" title="tckChangeContentOwner_macros_change_date_row.less" version_id="2001670" version_string="2.0.16"><![CDATA[.input
+{
+	&.input--date,
+	&.input--time
+	{
+		height: 2.4em;
+		position: relative;
+
+		&::-webkit-calendar-picker-indicator
+		{
+			right: @xf-paddingMedium;
+			position: absolute;
+		}
+	}
+	
+	&.input--time
+	{
+		min-width: 125px;
+	}
+}]]></template>
+</templates>

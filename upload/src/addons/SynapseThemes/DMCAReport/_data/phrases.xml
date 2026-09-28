@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="admin_navigation.dmcaReports" version_id="100" version_string="1.0.0"><![CDATA[DMCA Reports]]></phrase>
+  <phrase title="admin_navigation.dmcaReportsList" version_id="100" version_string="1.0.0"><![CDATA[Reports]]></phrase>
+  <phrase title="admin_notes" version_id="101" version_string="1.0.1"><![CDATA[Admin Notes ]]></phrase>
+  <phrase title="admin_notes_explain" version_id="101" version_string="1.0.1"><![CDATA[Internal notes about this report and actions taken. ]]></phrase>
+  <phrase title="admin_permission.dmcaReport" version_id="101" version_string="1.0.1"><![CDATA[Manage DMCA Reports ]]></phrase>
+  <phrase title="admin_response" version_id="101" version_string="1.0.1"><![CDATA[Admin Response ]]></phrase>
+  <phrase title="back_to_list" version_id="101" version_string="1.0.1"><![CDATA[Back to list]]></phrase>
+  <phrase title="confirm_deletion_of_x" version_id="101" version_string="1.0.1"><![CDATA[Are you sure you want to delete this DMCA report? ]]></phrase>
+  <phrase title="content" version_id="101" version_string="1.0.1"><![CDATA[Content ]]></phrase>
+  <phrase title="content_description_explain" version_id="101" version_string="1.0.1"><![CDATA[Provide a detailed description of the infringement. Explain how the content infringes your intellectual property rights and include any additional information that would help us understand and verify your claim. Be specific about which parts of the content are infringing. ]]></phrase>
+  <phrase title="copyright_owner" version_id="101" version_string="1.0.1"><![CDATA[Copyright owner]]></phrase>
+  <phrase title="copyright_owner_explain" version_id="101" version_string="1.0.1"><![CDATA[Enter the name of the person or company that owns the intellectual property rights. This should be the legal owner of the copyright, trademark, or patent being infringed. ]]></phrase>
+  <phrase title="delete_dmca_report" version_id="101" version_string="1.0.1"><![CDATA[Delete DMCA Report ]]></phrase>
+  <phrase title="description" version_id="101" version_string="1.0.1"><![CDATA[Description ]]></phrase>
+  <phrase title="dmca_declaration" version_id="101" version_string="1.0.1"><![CDATA[I declare, under penalty of perjury, that: ]]></phrase>
+  <phrase title="dmca_declaration_1" version_id="101" version_string="1.0.1"><![CDATA[I am the owner, or authorized to act on behalf of the owner, of the copyright or of an exclusive right that is allegedly infringed. ]]></phrase>
+  <phrase title="dmca_declaration_2" version_id="101" version_string="1.0.1"><![CDATA[I have a good faith belief that the use of the material in the manner complained of is not authorized by the copyright owner, its agent, or the law. ]]></phrase>
+  <phrase title="dmca_declaration_3" version_id="101" version_string="1.0.1"><![CDATA[The information in this notification is accurate. ]]></phrase>
+  <phrase title="dmca_report_status_approved" version_id="101" version_string="1.0.1"><![CDATA[Approved - Content Removed ]]></phrase>
+  <phrase title="dmca_report_status_pending" version_id="101" version_string="1.0.1"><![CDATA[Pending Review ]]></phrase>
+  <phrase title="dmca_report_status_rejected" version_id="101" version_string="1.0.1"><![CDATA[Rejected ]]></phrase>
+  <phrase title="dmca_report_title_explain" version_id="101" version_string="1.0.1"><![CDATA[Enter a brief, descriptive title for your DMCA report. This will help identify the report in the system. ]]></phrase>
+  <phrase title="dmca_reports" version_id="101" version_string="1.0.1"><![CDATA[DMCA Reports ]]></phrase>
+  <phrase title="dmca_type" version_id="101" version_string="1.0.1"><![CDATA[Type]]></phrase>
+  <phrase title="dmca_type_copyright" version_id="101" version_string="1.0.1"><![CDATA[Copyright Infringement ]]></phrase>
+  <phrase title="dmca_type_explain" version_id="101" version_string="1.0.1"><![CDATA[Select the type of intellectual property right that is being infringed. Choose 'Copyright' for content copying, 'Trademark' for brand/logo misuse, or 'Patent' for unauthorized use of patented technology. ]]></phrase>
+  <phrase title="dmca_type_patent" version_id="101" version_string="1.0.1"><![CDATA[Patent Infringement ]]></phrase>
+  <phrase title="dmca_type_trademark" version_id="101" version_string="1.0.1"><![CDATA[Trademark Infringement ]]></phrase>
+  <phrase title="dmca_urls_explain" version_id="101" version_string="1.0.1"><![CDATA[Enter each URL on a new line.]]></phrase>
+  <phrase title="email" version_id="101" version_string="1.0.1"><![CDATA[Email Address ]]></phrase>
+  <phrase title="email_dmca_report_approved_subject" version_id="101" version_string="1.0.1"><![CDATA[Your DMCA Report Has Been Removed ]]></phrase>
+  <phrase title="email_explain" version_id="101" version_string="1.0.1"><![CDATA[Please provide a valid email address where we can contact you regarding this DMCA report. ]]></phrase>
+  <phrase title="infringing_content_urls" version_id="101" version_string="1.0.1"><![CDATA[Infringing Content URLs ]]></phrase>
+  <phrase title="ip_address" version_id="101" version_string="1.0.1"><![CDATA[IP Address ]]></phrase>
+  <phrase title="managing_dmca_reports" version_id="101" version_string="1.0.1"><![CDATA[Managing DMCA Reports ]]></phrase>
+  <phrase title="original_content_urls" version_id="101" version_string="1.0.1"><![CDATA[Original Content URLs ]]></phrase>
+  <phrase title="permission.st_dmcaReport_canViewDMCAReport" version_id="100" version_string="1.0.0"><![CDATA[Can view DMCA Report page]]></phrase>
+  <phrase title="permission.st_dmcareport" version_id="101" version_string="1.0.1"><![CDATA[Submit DMCA reports ]]></phrase>
+  <phrase title="permission.st_dmcareportmanage" version_id="101" version_string="1.0.1"><![CDATA[Manage DMCA reports ]]></phrase>
+  <phrase title="permission.st_dmcareportview" version_id="101" version_string="1.0.1"><![CDATA[View DMCA reports ]]></phrase>
+  <phrase title="permission_interface.st_dmca_reports" version_id="100" version_string="1.0.0"><![CDATA[[SynapseThemes] DMCA Reports]]></phrase>
+  <phrase title="permission_interface.st_dmcareport" version_id="101" version_string="1.0.1"><![CDATA[DMCA Reports ]]></phrase>
+  <phrase title="refresh" version_id="101" version_string="1.0.1"><![CDATA[Refresh ]]></phrase>
+  <phrase title="report_details" version_id="101" version_string="1.0.1"><![CDATA[Report Details ]]></phrase>
+  <phrase title="report_title" version_id="101" version_string="1.0.1"><![CDATA[Report Title ]]></phrase>
+  <phrase title="reviewed" version_id="101" version_string="1.0.1"><![CDATA[Reviewed ]]></phrase>
+  <phrase title="reviewed_by" version_id="101" version_string="1.0.1"><![CDATA[Reviewed by ]]></phrase>
+  <phrase title="reviewed_on" version_id="101" version_string="1.0.1"><![CDATA[Reviewed on {date} ]]></phrase>
+  <phrase title="st_dmca_report_new_report_alert" version_id="101" version_string="1.0.1"><![CDATA[{user} submitted a new DMCA {dmca_type} report titled "{title}". <a href="{link}">View report details</a> ]]></phrase>
+  <phrase title="status" version_id="101" version_string="1.0.1"><![CDATA[Status ]]></phrase>
+  <phrase title="submission_date" version_id="101" version_string="1.0.1"><![CDATA[Submission date]]></phrase>
+  <phrase title="submit_dmca_report" version_id="101" version_string="1.0.1"><![CDATA[Submit DMCA Report ]]></phrase>
+  <phrase title="submitted" version_id="101" version_string="1.0.1"><![CDATA[Submitted ]]></phrase>
+  <phrase title="submitted_by" version_id="101" version_string="1.0.1"><![CDATA[Submitted by]]></phrase>
+  <phrase title="untitled_report" version_id="101" version_string="1.0.1"><![CDATA[Untitled Report ]]></phrase>
+  <phrase title="view_dmca_report" version_id="101" version_string="1.0.1"><![CDATA[View DMCA Report ]]></phrase>
+</phrases>

@@ -3,9 +3,12 @@
 namespace DBTech\Shop\Job;
 
 use XF\Job\AbstractRebuildJob;
-use XF\Phrase;
-use XF\PrintableException;
 
+/**
+ * Class Category
+ *
+ * @package DBTech\Shop\Job
+ */
 class Category extends AbstractRebuildJob
 {
 	/**
@@ -16,7 +19,7 @@ class Category extends AbstractRebuildJob
 	 */
 	protected function getNextIds($start, $batch): array
 	{
-		$db = \XF::app()->db();
+		$db = $this->app->db();
 
 		return $db->fetchAllColumn($db->limit(
 			'
@@ -28,28 +31,29 @@ class Category extends AbstractRebuildJob
 			$batch
 		), $start);
 	}
-
+	
 	/**
 	 * @param $id
 	 *
 	 * @throws \LogicException
 	 * @throws \Exception
-	 * @throws PrintableException
+	 * @throws \XF\PrintableException
 	 */
-	protected function rebuildById($id): void
+	protected function rebuildById($id)
 	{
-		$category = \XF::app()->em()->find(\DBTech\Shop\Entity\Category::class, $id);
+		/** @var \DBTech\Shop\Entity\Category $category */
+		$category = $this->app->em()->find('DBTech\Shop:Category', $id);
 		if ($category)
 		{
 			$category->rebuildCounters();
 			$category->save();
 		}
 	}
-
+	
 	/**
-	 * @return Phrase
+	 * @return \XF\Phrase
 	 */
-	protected function getStatusType(): Phrase
+	protected function getStatusType(): \XF\Phrase
 	{
 		return \XF::phrase('dbtech_shop_shop_categories');
 	}

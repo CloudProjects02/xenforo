@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<options>
+  <option option_id="xc_hide_bbcode_allow_hide_buttons_create_thread" edit_format="callback" data_type="array" advanced="0">
+    <default_value>[]</default_value>
+    <edit_format_params>XenConcept\HideBBCode\Option\Hide::renderSelectMultiple</edit_format_params>
+    <sub_options>*</sub_options>
+    <relation group_id="xc_hide_bbcode" display_order="100"/>
+  </option>
+  <option option_id="xc_hide_bbcode_allow_hide_buttons_reply_thread" edit_format="callback" data_type="array" advanced="0">
+    <default_value>[]</default_value>
+    <edit_format_params>XenConcept\HideBBCode\Option\Hide::renderSelectMultiple</edit_format_params>
+    <sub_options>*</sub_options>
+    <relation group_id="xc_hide_bbcode" display_order="110"/>
+  </option>
+  <option option_id="xc_hide_bbcode_disabled_hide_help_page" edit_format="callback" data_type="array" advanced="0">
+    <default_value>[]</default_value>
+    <edit_format_params>XenConcept\HideBBCode\Option\Hide::renderSelectMultiple</edit_format_params>
+    <sub_options>*</sub_options>
+    <relation group_id="xc_hide_bbcode" display_order="30"/>
+  </option>
+  <option option_id="xc_hide_bbcode_hideMappedTo" edit_format="callback" data_type="string" advanced="0">
+    <default_value>xcHideReply</default_value>
+    <edit_format_params>XenConcept\HideBBCode\Option\Hide::renderHideMappedTo</edit_format_params>
+    <relation group_id="xc_hide_bbcode" display_order="10"/>
+  </option>
+  <option option_id="xc_hide_bbcode_hideReactMappedTo" edit_format="callback" data_type="string" advanced="0">
+    <default_value>default</default_value>
+    <edit_format_params>XenConcept\HideBBCode\Option\Hide::renderHideReactMappedTo</edit_format_params>
+    <relation group_id="xc_hide_bbcode" display_order="12"/>
+  </option>
+  <option option_id="xc_hide_bbcode_usableReactions" edit_format="template" data_type="array" advanced="0">
+    <default_value>[1,2,3]</default_value>
+    <edit_format_params>xc_hide_bbcode_option_template_usableReactions</edit_format_params>
+    <sub_options>*</sub_options>
+    <relation group_id="xc_hide_bbcode" display_order="20"/>
+  </option>
+</options>

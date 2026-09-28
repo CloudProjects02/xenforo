@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="member_view" modification_key="member_view_synapseYearsOfService_profile" description="Add Years of Service badge to member profile" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<div class="memberHeader-main">]]></find>
+    <replace><![CDATA[<div class="memberHeader-main">
+	<xf:if is="$xf.options.synapseYearsOfService_displayProfile AND $user.serviceBadgeData">
+		<div class="service-badge service-badge--profile" data-years="{$user.serviceBadgeData.years}" data-months="{$user.serviceBadgeData.totalMonths}">
+			<div class="service-badge__background-number">{$user.serviceBadgeData.years}</div>
+			<div class="service-badge__years">{$user.serviceBadgeData.years}</div>
+			<div class="service-badge__text">
+				<div class="service-badge__label">{$user.serviceBadgeData.yearsPhrase}</div>
+			</div>
+		</div>
+	</xf:if>]]></replace>
+  </modification>
+  <modification type="public" template="message_macros" modification_key="message_macros_synapseYearsOfService_postbit" description="Add Years of Service badge to postbit" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[		<span class="message-userArrow"></span>]]></find>
+    <replace><![CDATA[	<xf:css src="public:synapseYearsOfService.less" />
+	<xf:if is="$xf.options.synapseYearsOfService_displayPostbit AND $user.serviceBadgeData">
+		<xf:if is="$user.serviceBadgeData.years > 0">
+			<div class="service-badge" data-years="{$user.serviceBadgeData.years}">
+				<span class="service-badge__background-number">{$user.serviceBadgeData.years}</span>
+				<div class="service-badge__text">
+					<span class="service-badge__label">{$user.serviceBadgeData.yearsPhrase}</span>
+				</div>
+			</div>
+		<xf:elseif is="$user.serviceBadgeData.months > 0" />
+			<div class="service-badge" data-months="{$user.serviceBadgeData.months}">
+				<span class="service-badge__background-number">{$user.serviceBadgeData.months}</span>
+				<div class="service-badge__text">
+					<span class="service-badge__label">{$user.serviceBadgeData.monthsPhrase}</span>
+				</div>
+			</div>
+		</xf:if>
+	</xf:if>
+		<span class="message-userArrow"></span>]]></replace>
+  </modification>
+</template_modifications>

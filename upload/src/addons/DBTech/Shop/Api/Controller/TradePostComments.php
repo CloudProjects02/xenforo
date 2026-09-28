@@ -2,19 +2,15 @@
 
 namespace DBTech\Shop\Api\Controller;
 
-use DBTech\Shop\Entity\TradePost;
-use DBTech\Shop\Entity\TradePostComment;
-use DBTech\Shop\Service\TradePostComment\CreatorService;
 use XF\Api\Controller\AbstractController;
 use XF\Mvc\ParameterBag;
-use XF\Mvc\Reply\AbstractReply;
 
 /**
  * @api-group Trade posts
  */
 class TradePostComments extends AbstractController
 {
-	protected function preDispatchController($action, ParameterBag $params): void
+	protected function preDispatchController($action, ParameterBag $params)
 	{
 		$this->assertApiScopeByRequestMethod('dbtech_shop_trade_post');
 	}
@@ -28,21 +24,21 @@ class TradePostComments extends AbstractController
 	 * @api-out true $success
 	 * @api-out TradePostComment $comment
 	 *
-	 * @param ParameterBag $params
+	 * @param \XF\Mvc\ParameterBag $params
 	 *
-	 * @return AbstractReply
+	 * @return \XF\Api\Mvc\Reply\ApiResult|\XF\Mvc\Reply\AbstractReply|\XF\Mvc\Reply\Error|\XF\Mvc\Reply\View
 	 * @throws \XF\Mvc\Reply\Exception
 	 * @throws \Exception
 	 */
-	public function actionPost(ParameterBag $params): AbstractReply
+	public function actionPost(ParameterBag $params)
 	{
 		$this->assertRequiredApiInput(['trade_post_id', 'message']);
 		$this->assertRegisteredUser();
 
 		$tradePostId = $this->filter('trade_post_id', 'uint');
 
-		/** @var TradePost $tradePost */
-		$tradePost = $this->assertViewableApiRecord(TradePost::class, $tradePostId);
+		/** @var \DBTech\Shop\Entity\TradePost $tradePost */
+		$tradePost = $this->assertViewableApiRecord('DBTech\Shop:TradePost', $tradePostId);
 
 		if (\XF::isApiCheckingPermissions() && !$tradePost->canComment($error))
 		{
@@ -61,23 +57,24 @@ class TradePostComments extends AbstractController
 			return $this->error($errors);
 		}
 
-		/** @var TradePostComment $comment */
+		/** @var \DBTech\Shop\Entity\TradePostComment $comment */
 		$comment = $creator->save();
 		$this->finalizeNewTradePostComment($creator);
 
 		return $this->apiSuccess([
-			'comment' => $comment->toApiResult(),
+			'comment' => $comment->toApiResult()
 		]);
 	}
 
 	/**
-	 * @param TradePost $tradePost
+	 * @param \DBTech\Shop\Entity\TradePost $tradePost
 	 *
-	 * @return CreatorService
+	 * @return \DBTech\Shop\Service\TradePostComment\Creator
 	 */
-	protected function setupNewTradePostComment(TradePost $tradePost): CreatorService
+	protected function setupNewTradePostComment(\DBTech\Shop\Entity\TradePost $tradePost): \DBTech\Shop\Service\TradePostComment\Creator
 	{
-		$creator = \XF::app()->service(CreatorService::class, $tradePost);
+		/** @var \DBTech\Shop\Service\TradePostComment\Creator $creator */
+		$creator = $this->service('DBTech\Shop:TradePostComment\Creator', $tradePost);
 
 		$message = $this->filter('message', 'str');
 		$creator->setContent($message);
@@ -86,11 +83,11 @@ class TradePostComments extends AbstractController
 	}
 
 	/**
-	 * @param CreatorService $creator
+	 * @param \DBTech\Shop\Service\TradePostComment\Creator $creator
 	 *
 	 * @throws \Exception
 	 */
-	protected function finalizeNewTradePostComment(CreatorService $creator): void
+	protected function finalizeNewTradePostComment(\DBTech\Shop\Service\TradePostComment\Creator $creator)
 	{
 		$creator->sendNotifications();
 	}

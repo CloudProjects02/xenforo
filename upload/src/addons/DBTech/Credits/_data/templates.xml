@@ -3,7 +3,7 @@
   <template type="admin" title="dbtech_credits" version_id="906000011" version_string="6.0.0 Alpha 1"><![CDATA[<xf:title>{{ phrase('admin_navigation.dbtechCredits') }}</xf:title>
 
 <xf:macro id="section_nav_macros::section_nav" arg-section="dbtechCredits" />]]></template>
-  <template type="admin" title="dbtech_credits_currency_edit" version_id="906000170" version_string="6.0.1"><![CDATA[<xf:if is="$currency.isInsert()">
+  <template type="admin" title="dbtech_credits_currency_edit" version_id="906000011" version_string="6.0.0 Alpha 1"><![CDATA[<xf:if is="$currency.isInsert()">
 	<xf:title>{{ phrase('dbtech_credits_add_currency') }}</xf:title>
 <xf:else />
 	<xf:title>{{ phrase('dbtech_credits_edit_currency:') }} {$currency.title}</xf:title>
@@ -94,7 +94,7 @@
 			</span>
 		</h3>
 		<div class="block-body block-body--collapsible">
-			<xf:numberboxrow name="earnmax" value="{$currency.earnmax}" min="0" step="0.01"
+			<xf:numberboxrow name="earnmax" value="{$currency.earnmax}" min="0" step="any"
 							 label="{{ phrase('dbtech_credits_currency_earnmax') }}"
 							 explain="{{ phrase('dbtech_credits_currency_earnmax_explain') }}" />
 
@@ -102,7 +102,7 @@
 							 label="{{ phrase('dbtech_credits_currency_maxtime') }}"
 							 explain="{{ phrase('dbtech_credits_currency_maxtime_explain') }}" />
 
-			<xf:numberboxrow name="value" value="{$currency.value}" step="0.01"
+			<xf:numberboxrow name="value" value="{$currency.value}" step="any"
 							 label="{{ phrase('dbtech_credits_currency_value') }}"
 							 explain="{{ phrase('dbtech_credits_currency_value_explain') }}" />
 
@@ -222,7 +222,7 @@
 	<xf:redirect />
 
 </xf:form>]]></template>
-  <template type="admin" title="dbtech_credits_event_edit" version_id="906000170" version_string="6.0.1"><![CDATA[<xf:if is="$event.isInsert()">
+  <template type="admin" title="dbtech_credits_event_edit" version_id="906000031" version_string="6.0.0 Beta 1"><![CDATA[<xf:if is="$event.isInsert()">
 	<xf:title>{{ phrase('dbtech_credits_add_event') }}</xf:title>
 <xf:else />
 	<xf:title>{{ phrase('dbtech_credits_edit_event:') }} {$event.title}</xf:title>
@@ -308,27 +308,27 @@
 			</xf:checkboxrow>
 
 			<xf:if is="$multiplier == 3">
-				<xf:numberboxrow name="main_add" value="{$event.main_add}" step="0.01"
+				<xf:numberboxrow name="main_add" value="{$event.main_add}" step="any"
 								 label="{{ phrase('dbtech_credits_event_main_add_currency') }}"
 								 explain="{{ phrase('dbtech_credits_event_main_add_currency_explain') }}" />
 			<xf:else />
-				<xf:numberboxrow name="main_add" value="{$event.main_add}" step="0.01"
+				<xf:numberboxrow name="main_add" value="{$event.main_add}" step="any"
 								 label="{{ phrase('dbtech_credits_event_main_add_nocurrency') }}"
 								 explain="{{ phrase('dbtech_credits_event_main_add_nocurrency_explain') }}" />
 
 			</xf:if>
 
-			<xf:numberboxrow name="upperrand" value="{$event.upperrand}" step="0.01"
+			<xf:numberboxrow name="upperrand" value="{$event.upperrand}" step="any"
 							 label="{{ phrase('dbtech_credits_event_upperrand') }}"
 							 explain="{{ phrase('dbtech_credits_event_upperrand_explain') }}" />
 
 			<xf:if is="$eventTrigger.getOption('canRevert')">
 				<xf:if is="$multiplier == 3">
-					<xf:numberboxrow name="main_sub" value="{$event.main_sub}" step="0.01"
+					<xf:numberboxrow name="main_sub" value="{$event.main_sub}" step="any"
 									 label="{{ phrase('dbtech_credits_event_main_sub_currency') }}"
 									 explain="{{ phrase('dbtech_credits_event_main_sub_currency_explain') }}" />
 				<xf:else />
-					<xf:numberboxrow name="main_sub" value="{$event.main_sub}" step="0.01"
+					<xf:numberboxrow name="main_sub" value="{$event.main_sub}" step="any"
 									 label="{{ phrase('dbtech_credits_event_main_sub_nocurrency') }}"
 									 explain="{{ phrase('dbtech_credits_event_main_sub_nocurrency_explain') }}" />
 
@@ -337,22 +337,22 @@
 
 			<xf:if is="$multiplier">
 				<xf:if is="$multiplier == 3">
-					<xf:numberboxrow name="mult_add" value="{$event.mult_add}" step="0.01"
+					<xf:numberboxrow name="mult_add" value="{$event.mult_add}" step="any"
 									 label="{{ phrase('dbtech_credits_event_mult_add_currency') }}"
 									 explain="{{ phrase('dbtech_credits_event_mult_add_currency_explain') }}" />
 				<xf:else />
-					<xf:numberboxrow name="mult_add" value="{$event.mult_add}" step="0.01"
+					<xf:numberboxrow name="mult_add" value="{$event.mult_add}" step="any"
 									 label="{$eventTriggerLabels.multiplier_addition}"
 									 explain="{$eventTriggerLabels.multiplier_addition_explain}" />
 				</xf:if>
 
 				<xf:if is="$eventTrigger.getOption('canRevert')">
 					<xf:if is="$multiplier == 3">
-						<xf:numberboxrow name="mult_sub" value="{$event.mult_sub}" step="0.01"
+						<xf:numberboxrow name="mult_sub" value="{$event.mult_sub}" step="any"
 										 label="{{ phrase('dbtech_credits_event_mult_sub_currency') }}"
 										 explain="{{ phrase('dbtech_credits_event_mult_sub_currency_explain') }}" />
 					<xf:else />
-						<xf:numberboxrow name="mult_sub" value="{$event.mult_sub}" step="0.01"
+						<xf:numberboxrow name="mult_sub" value="{$event.mult_sub}" step="any"
 										 label="{$eventTriggerLabels.multiplier_negation}"
 										 explain="{$eventTriggerLabels.multiplier_negation_explain}" />
 					</xf:if>
@@ -368,11 +368,11 @@
 						<xf:option value="2">{{ phrase('dbtech_credits_event_curtarget_2') }}</xf:option>
 					</xf:radiorow>
 
-					<xf:numberboxrow name="multmin" value="{$event.multmin}" step="0.01"
+					<xf:numberboxrow name="multmin" value="{$event.multmin}" step="any"
 									 label="{{ phrase('dbtech_credits_event_multmin_currency') }}"
 									 explain="{{ phrase('dbtech_credits_event_multmin_explain') }}" />
 
-					<xf:numberboxrow name="multmax" value="{$event.multmax}" step="0.01"
+					<xf:numberboxrow name="multmax" value="{$event.multmax}" step="any"
 									 label="{{ phrase('dbtech_credits_event_multmax_currency') }}"
 									 explain="{{ phrase('dbtech_credits_event_multmax_explain') }}" />
 
@@ -385,11 +385,11 @@
 						<xf:option value="2">{{ $eventTrigger.getOption('canCancel') ? phrase('dbtech_credits_event_minaction_2_cancel') : phrase('dbtech_credits_event_minaction_2_nocancel') }}</xf:option>
 					</xf:radiorow>
 				<xf:else />
-					<xf:numberboxrow name="multmin" value="{$event.multmin}" step="0.01"
+					<xf:numberboxrow name="multmin" value="{$event.multmin}" step="any"
 									 label="{$eventTriggerLabels.minimum_amount}"
 									 explain="{{ phrase('dbtech_credits_event_multmin_explain') }}" />
 
-					<xf:numberboxrow name="multmax" value="{$event.multmax}" step="0.01"
+					<xf:numberboxrow name="multmax" value="{$event.multmax}" step="any"
 									 label="{$eventTriggerLabels.maximum_amount}"
 									 explain="{{ phrase('dbtech_credits_event_multmax_explain') }}" />
 
@@ -508,15 +508,15 @@
   <template type="admin" title="dbtech_credits_event_edit_post" version_id="905010031" version_string="5.1.0 Beta 1"><![CDATA[<xf:textboxrow name="settings[threadid]" value="{$event.settings.threadid}"
 			   label="{{ phrase('dbtech_credits_event_threadid') }}"
 			   explain="{{ phrase('dbtech_credits_event_threadid_explain') }}" />]]></template>
-  <template type="admin" title="dbtech_credits_event_edit_purchase" version_id="906000170" version_string="6.0.1"><![CDATA[<xf:textarearow name="settings[purchase_description]" value="{$event.settings.purchase_description}" autosize="true"
+  <template type="admin" title="dbtech_credits_event_edit_purchase" version_id="906000031" version_string="6.0.0 Beta 1"><![CDATA[<xf:textarearow name="settings[purchase_description]" value="{$event.settings.purchase_description}" autosize="true"
 				label="{{ phrase('description') }}"
 				hint="{{ phrase('you_may_use_bb_code') }}" />
 
-<xf:numberboxrow name="settings[purchase_cost]" value="{$event.settings.purchase_cost}" step="0.01"
+<xf:numberboxrow name="settings[purchase_cost]" value="{$event.settings.purchase_cost}" step="any"
 				 label="{{ phrase('cost') }}"
 				 explain="{{ phrase('dbtech_credits_event_purchase_cost_explain') }}" />
 
-<xf:numberboxrow name="settings[purchase_amount]" value="{$event.settings.purchase_amount}" step="0.01"
+<xf:numberboxrow name="settings[purchase_amount]" value="{$event.settings.purchase_amount}" step="any"
 				 label="{{ phrase('dbtech_credits_event_purchase_amount') }}"
 				 explain="{{ phrase('dbtech_credits_event_purchase_amount_explain') }}" />
 
@@ -553,7 +553,7 @@
 	</xf:foreach>
 
 </xf:selectrow>]]></template>
-  <template type="admin" title="dbtech_credits_event_edit_redeem" version_id="906000170" version_string="6.0.1"><![CDATA[<xf:numberboxrow name="settings[redeem_amount]" value="{$event.settings.redeem_amount}" step="0.01"
+  <template type="admin" title="dbtech_credits_event_edit_redeem" version_id="905010031" version_string="5.1.0 Beta 1"><![CDATA[<xf:numberboxrow name="settings[redeem_amount]" value="{$event.settings.redeem_amount}" step="any"
 				 label="{{ phrase('dbtech_credits_event_redeem_amount') }}"
 				 explain="{{ phrase('dbtech_credits_event_redeem_amount_explain') }}" />
 
@@ -624,7 +624,7 @@
   <template type="admin" title="dbtech_credits_event_edit_visit" version_id="905010031" version_string="5.1.0 Beta 1"><![CDATA[<xf:checkboxrow>
 	<xf:option name="settings[apply_guest]" value="1" selected="$event.settings.apply_guest">{{ phrase('dbtech_credits_event_apply_guest') }}</xf:option>
 </xf:checkboxrow>]]></template>
-  <template type="admin" title="dbtech_credits_event_list" version_id="906000370" version_string="6.0.3"><![CDATA[<xf:title>{{ phrase('dbtech_credits_events') }}</xf:title>
+  <template type="admin" title="dbtech_credits_event_list" version_id="906000011" version_string="6.0.0 Alpha 1"><![CDATA[<xf:title>{{ phrase('dbtech_credits_events') }}</xf:title>
 
 <xf:pageaction>
 	<xf:button href="{{ link('dbtech-credits/events/add') }}" overlay="true" icon="add">{{ phrase('dbtech_credits_add_new_event') }}</xf:button>
@@ -654,7 +654,7 @@
 							</xf:hint>
 							<xf:explain>
 								<ul class="listInline listInline--bullet">
-									<li>{{ $event.main_add|number($event.Currency.decimals) }}</li>
+									<li>{$event.main_add}</li>
 									<li>{{ $event.charge ? phrase('dbtech_credits_event_charged') : phrase('dbtech_credits_not_charged') }}</li>
 									<li>{{ $event.moderate ? phrase('dbtech_credits_event_moderated') : phrase('dbtech_credits_event_not_moderated') }}</li>
 								</ul>
@@ -674,16 +674,16 @@
 		</div>
 	</div>
 </xf:form>]]></template>
-  <template type="admin" title="dbtech_credits_helper_user_search_criteria" version_id="906000170" version_string="6.0.1"><![CDATA[<xf:if contentcheck="true">
+  <template type="admin" title="dbtech_credits_helper_user_search_criteria" version_id="906000031" version_string="6.0.0 Beta 1"><![CDATA[<xf:if contentcheck="true">
 	<xf:contentcheck>
 		<xf:foreach loop="$xf.app.em.getRepository('DBTech\Credits:CurrencyRepository').findCurrenciesForList().fetch()" key="$currencyId" value="$currency" if="$currency.active">
 			<xf:formrow rowtype="input"
 						label="{{ phrase('dbtech_credits_currency_amount_between', {'currency': $currency.title}) }}">
 
 				<div class="inputGroup">
-					<xf:numberbox name="criteria[{$currency.column}][start]" value="{$criteria.{$currency.column}.start}" step="0.01" size="15" readonly="{$readOnly}" />
+					<xf:numberbox name="criteria[{$currency.column}][start]" value="{$criteria.{$currency.column}.start}" step="any" size="15" readonly="{$readOnly}" />
 					<span class="inputGroup-text">-</span>
-					<xf:numberbox name="criteria[{$currency.column}][end]" value="{$criteria.{$currency.column}.end}" step="0.01" size="15" readonly="{$readOnly}" />
+					<xf:numberbox name="criteria[{$currency.column}][end]" value="{$criteria.{$currency.column}.end}" step="any" size="15" readonly="{$readOnly}" />
 				</div>
 			</xf:formrow>
 		</xf:foreach>
@@ -998,27 +998,27 @@
 			  arg-header="DragonByte Credits: Daily Credits"
 			  arg-job="DBTech\Credits:DailyCredits" />
 </xf:if>]]></template>
-  <template type="admin" title="dbtech_credits_user_criteria" version_id="906000170" version_string="6.0.1"><![CDATA[<xf:set var="$currencies" value="{$xf.app.em.getRepository('DBTech\Credits:CurrencyRepository').getCurrencies()}" />
+  <template type="admin" title="dbtech_credits_user_criteria" version_id="906000031" version_string="6.0.0 Beta 1"><![CDATA[<xf:set var="$currencies" value="{$xf.app.em.getRepository('DBTech\Credits:CurrencyRepository').getCurrencies()}" />
 
 <xf:checkboxrow label="{{ phrase('dbtech_credits_credits_long') }}">
 	<xf:foreach loop="$currencies" key="$currencyId" value="$currency">
 		<xf:option label="{{ phrase('dbtech_credits_less_than_x_y:', {'param1': $currency.title}) }}" name="user_criteria[dbtech_credits_currency_{$currencyId}_less][rule]" value="dbtech_credits_currency_{$currencyId}_less" selected="{{ $currency.isCriteriaSelected($criteria, 'less') }}">
-			<xf:numberbox name="user_criteria[dbtech_credits_currency_{$currencyId}_less][data][amount]" value="{{ $currency.getCriteriaValue($criteria, 'less') }}" step="0.01" />
+			<xf:numberbox name="user_criteria[dbtech_credits_currency_{$currencyId}_less][data][amount]" value="{{ $currency.getCriteriaValue($criteria, 'less') }}" step="any" />
 		</xf:option>
 
 		<xf:option label="{{ phrase('dbtech_credits_more_than_x_y:', {'param1': $currency.title}) }}" name="user_criteria[dbtech_credits_currency_{$currencyId}_more][rule]" value="dbtech_credits_currency_{$currencyId}_more" selected="{{ $currency.isCriteriaSelected($criteria, 'more') }}">
-			<xf:numberbox name="user_criteria[dbtech_credits_currency_{$currencyId}_more][data][amount]" value="{{ $currency.getCriteriaValue($criteria, 'more') }}" step="0.01" />
+			<xf:numberbox name="user_criteria[dbtech_credits_currency_{$currencyId}_more][data][amount]" value="{{ $currency.getCriteriaValue($criteria, 'more') }}" step="any" />
 		</xf:option>
 	</xf:foreach>
 </xf:checkboxrow>
 
 <hr class="formRowSep" />]]></template>
-  <template type="admin" title="dbtech_credits_user_edit_pane" version_id="906000170" version_string="6.0.1"><![CDATA[<xf:set var="$currencies" value="{$xf.app.em.getRepository('DBTech\Credits:CurrencyRepository').getCurrencies()}" />
+  <template type="admin" title="dbtech_credits_user_edit_pane" version_id="906000031" version_string="6.0.0 Beta 1"><![CDATA[<xf:set var="$currencies" value="{$xf.app.em.getRepository('DBTech\Credits:CurrencyRepository').getCurrencies()}" />
 
 <li role="tabpanel" id="dbtech-credits">
 	<div class="block-body">
 		<xf:foreach loop="$currencies" value="$currency">
-			<xf:numberboxrow label="{$currency.title}" name="credits[{$currency.currency_id}]" value="{{ $user.getDbtechCreditsCurrency($currency) }}" step="0.01" />
+			<xf:numberboxrow label="{$currency.title}" name="credits[{$currency.currency_id}]" value="{{ $user.getDbtechCreditsCurrency($currency) }}" step="any" />
 		</xf:foreach>
 	</div>
 </li>]]></template>
@@ -1066,12 +1066,12 @@
 
 	<xf:html>{$listedHtml}</xf:html>
 </xf:radiorow>]]></template>
-  <template type="admin" title="payment_profile_dbtech_credits" version_id="906000170" version_string="6.0.1"><![CDATA[<xf:selectrow label="{{ phrase('dbtech_credits_currency') }}" name="options[currency_id]" value="{{ $profile.options.currency_id ?: '' }}">
+  <template type="admin" title="payment_profile_dbtech_credits" version_id="905050031" version_string="5.5.0 Beta 1"><![CDATA[<xf:selectrow label="{{ phrase('dbtech_credits_currency') }}" name="options[currency_id]" value="{{ $profile.options.currency_id ?: '' }}">
 	<xf:option value="">&nbsp;</xf:option>
 	<xf:options source="$currencies" />
 </xf:selectrow>
 
-<xf:numberboxrow label="{{ phrase('dbtech_credits_exchange_rate') }}" name="options[exchange_rate]" value="{{ $profile.options.exchange_rate ?: 1 }}" min="0" step="0.01">
+<xf:numberboxrow label="{{ phrase('dbtech_credits_exchange_rate') }}" name="options[exchange_rate]" value="{{ $profile.options.exchange_rate ?: 1 }}" min="0" step="any">
 	<xf:explain>{{ phrase('dbtech_credits_exchange_rate_explain') }}</xf:explain>
 </xf:numberboxrow>]]></template>
   <template type="admin" title="widget_def_options_dbtech_credits_richest" version_id="905080070" version_string="5.8.0"><![CDATA[<hr class="formRowSep" />
@@ -1370,7 +1370,7 @@
 	</div>
 	<xf:redirect />
 </xf:form>]]></template>
-  <template type="public" title="dbtech_credits_currency" version_id="906000170" version_string="6.0.1"><![CDATA[<xf:title>{$currency.title}</xf:title>
+  <template type="public" title="dbtech_credits_currency" version_id="906000011" version_string="6.0.0 Alpha 1"><![CDATA[<xf:title>{$currency.title}</xf:title>
 
 <xf:head option="metaNoindex"><meta name="robots" content="noindex" /></xf:head>
 
@@ -1417,7 +1417,7 @@
 									   placeholder="{{ phrase('dbtech_credits_user_to_donate_to...') }}"
 									   label="{{ phrase('user_name') }}" />
 
-						<xf:numberboxrow name="amount" min="0" step="0.01"
+						<xf:numberboxrow name="amount" min="0" step="any"
 										 placeholder="{{ phrase('dbtech_credits_amount_to_donate', {'param1': $currency.useramount}) }}"
 										 label="{{ phrase('dbtech_credits_amount') }}"
 										 explain="{{ phrase('dbtech_credits_donate_amount_descr') }}" />
@@ -1442,7 +1442,7 @@
 					<xf:form class="block" action="{{ link('dbtech-credits/currency/adjust', $currency) }}" ajax="true" data-redirect="off" data-reset-complete="true">
 						<xf:textboxrow label="{{ phrase('user_name') }}" ac="single" name="username" placeholder="{{ phrase('dbtech_credits_user_to_adjust...') }}" value="{{ $user ? $user.username : ''}}" />
 
-						<xf:numberboxrow name="amount" min="0" step="0.01"
+						<xf:numberboxrow name="amount" min="0" step="any"
 										 placeholder="{{ phrase('dbtech_credits_amount') }}"
 										 label="{{ phrase('dbtech_credits_amount') }}"
 										 explain="{{ phrase('dbtech_credits_adjust_amount_descr') }}" />
@@ -1509,7 +1509,7 @@
 							</xf:foreach>
 						</xf:selectrow>
 
-						<xf:numberboxrow name="amount" min="0" step="0.01"
+						<xf:numberboxrow name="amount" min="0" step="any"
 										 placeholder="{{ phrase('dbtech_credits_amount_to_transfer') }}"
 										 label="{{ phrase('dbtech_credits_amount') }}"
 										 explain="{{ phrase('dbtech_credits_transfer_amount_descr') }}" />
@@ -1689,12 +1689,12 @@
 		<xf:submitrow rowtype="simple" icon="purchase" />
 	</div>
 </xf:form>]]></template>
-  <template type="public" title="dbtech_credits_editor_dialog_charge" version_id="906000170" version_string="6.0.1"><![CDATA[<xf:title>{{ phrase('dbtech_credits_charge_for_content') }}</xf:title>
+  <template type="public" title="dbtech_credits_editor_dialog_charge" version_id="905010051" version_string="5.1.0 Release Candidate 1"><![CDATA[<xf:title>{{ phrase('dbtech_credits_charge_for_content') }}</xf:title>
 
 <form class="block" id="editor_dbtech_credits_charge_form">
 	<div class="block-container">
 		<div class="block-body">
-			<xf:numberboxrow id="editor_dbtech_credits_charge_title" min="0" step="0.01"
+			<xf:numberboxrow id="editor_dbtech_credits_charge_title" min="0" step="any"
 				label="{{ phrase('dbtech_credits_enter_charge_amount') }}"
 				explain="{{ phrase('dbtech_credits_enter_charge_amount_explain', {'currency': $currency.title}) }}" />
 		</div>

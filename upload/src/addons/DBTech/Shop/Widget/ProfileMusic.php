@@ -2,46 +2,47 @@
 
 namespace DBTech\Shop\Widget;
 
-use DBTech\Shop\Entity\Purchase;
-use DBTech\Shop\Repository\PurchaseRepository;
-use XF\Entity\User;
 use XF\Widget\AbstractWidget;
-use XF\Widget\WidgetRenderer;
 
+/**
+ * Class ProfileMusic
+ *
+ * @package DBTech\Shop\Widget
+ */
 class ProfileMusic extends AbstractWidget
 {
 	/** @var array */
 	protected $defaultOptions = [
 		'autoplay' => false,
 	];
-
+	
 	/**
-	 * @return WidgetRenderer
+	 * @return \XF\Widget\WidgetRenderer
 	 */
-	public function render(): WidgetRenderer
+	public function render(): \XF\Widget\WidgetRenderer
 	{
 		$mp3url = '';
 
-		if (!empty($this->contextParams['user']) && ($this->contextParams['user'] instanceof User))
+		if (!empty($this->contextParams['user']) && ($this->contextParams['user'] instanceof \XF\Entity\User))
 		{
 			/** @var \DBTech\Shop\XF\Entity\User $user */
 			$user = $this->contextParams['user'];
-
-			/** @var \XF\Mvc\Entity\AbstractCollection<\DBTech\Shop\Entity\Purchase> $purchases */
-			$purchases = \XF::app()->repository(PurchaseRepository::class)
+			
+			/** @var \DBTech\Shop\Entity\Purchase[]|\XF\Mvc\Entity\ArrayCollection $purchases */
+			$purchases = $this->repository('DBTech\Shop:Purchase')
 				->filterActivePurchasesForUser($user)
-				->filter(function (Purchase $purchase): ?Purchase
+				->filter(function (\DBTech\Shop\Entity\Purchase $purchase): ?\DBTech\Shop\Entity\Purchase
 				{
 					if ($purchase->Item->item_type_id != 'profilemusic')
 					{
 						return null;
 					}
-
+					
 					return $purchase;
 				})
 			;
 
-			foreach ($purchases AS $purchase)
+			foreach ($purchases as $purchase)
 			{
 				if ($mp3url = $purchase->getConfiguration('url'))
 				{

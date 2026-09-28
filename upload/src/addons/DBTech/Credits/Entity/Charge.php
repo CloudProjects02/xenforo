@@ -5,7 +5,6 @@ namespace DBTech\Credits\Entity;
 use DBTech\Credits\EventTrigger\AbstractHandler;
 use DBTech\Credits\Repository\CurrencyRepository;
 use DBTech\Credits\Repository\EventTriggerRepository;
-use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XF\PrintableException;
@@ -22,9 +21,9 @@ use XF\PrintableException;
  * @property-read null|Entity $Content
  *
  * RELATIONS
- * @property-read AbstractCollection<ChargePurchase> $Purchases
+ * @property-read \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\ChargePurchase> $Purchases
  */
-class Charge extends AbstractEntity
+class Charge extends Entity
 {
 	/**
 	 * @return null|Entity
@@ -89,7 +88,7 @@ class Charge extends AbstractEntity
 			'content_type' => ['type' => self::STR, 'maxLength' => 25, 'required' => true],
 			'content_id'   => ['type' => self::UINT, 'required' => true],
 			'content_hash' => ['type' => self::STR, 'required' => true],
-			'cost'         => ['type' => self::FLOAT, 'required' => true, 'default' => 0.0, 'max' => PHP_INT_MAX, 'isDecimal' => true],
+			'cost'         => ['type' => self::FLOAT, 'required' => true, 'default' => 0.0],
 		];
 		$structure->getters = [
 			'Currency' => true,

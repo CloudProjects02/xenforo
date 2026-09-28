@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="limit" version_id="100" version_string="1.0.0"><![CDATA[Limit ]]></phrase>
+  <phrase title="synapsethemes_xfrmindexsliders_recent_resources" version_id="100" version_string="1.0.0"><![CDATA[Recent Resources ]]></phrase>
+  <phrase title="synapsethemes_xfrmindexsliders_top_resources" version_id="100" version_string="1.0.0"><![CDATA[Top Resources ]]></phrase>
+  <phrase title="synapsethemes_xfrmindexsliders_widget_limit_hint" version_id="100" version_string="1.0.0"><![CDATA[Number of resources to display in the slider (1-20) ]]></phrase>
+  <phrase title="widget_def.st_xfrm_recent_resources" version_id="100" version_string="1.0.0"><![CDATA[[SynapseThemes] Recent Resources Slider]]></phrase>
+  <phrase title="widget_def.st_xfrm_top_resources" version_id="100" version_string="1.0.0"><![CDATA[[SynapseThemes] Top Resources Slider]]></phrase>
+  <phrase title="widget_def.synapsethemes_xfrmindexsliders_recent_resources" version_id="100" version_string="1.0.0"><![CDATA[[SynapseThemes] Recent Resources Slider ]]></phrase>
+  <phrase title="widget_def.synapsethemes_xfrmindexsliders_top_resources" version_id="100" version_string="1.0.0"><![CDATA[[SynapseThemes] Top Resources Slider ]]></phrase>
+  <phrase title="widget_def_desc.st_xfrm_recent_resources" version_id="100" version_string="1.0.0"><![CDATA[Displays a slider on the XFRM Index with recent resources.]]></phrase>
+  <phrase title="widget_def_desc.st_xfrm_top_resources" version_id="100" version_string="1.0.0"><![CDATA[Displays a slider on the XFRM Index with top resources.]]></phrase>
+</phrases>

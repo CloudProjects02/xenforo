@@ -1,0 +1,834 @@
+<?xml version="1.0" encoding="utf-8"?>
+<options>
+  <option option_id="svAllowBannedLogout" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="svSignupAbuseBlocking" display_order="10"/>
+  </option>
+  <option option_id="svAllowRejectedLogout" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="svSignupAbuseBlocking" display_order="13"/>
+  </option>
+  <option option_id="svAlwaysSockCheckBanned" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="svSignupAbuseBlocking" display_order="1000"/>
+  </option>
+  <option option_id="svAsnCheckActionOnNotMatch" edit_format="radio" data_type="string" advanced="0">
+    <default_value>allowed</default_value>
+    <edit_format_params>allowed={{ phrase('sv_reg_status.allowed') }}
+moderated={{ phrase('sv_reg_status.moderated') }}
+denied={{ phrase('sv_reg_status.denied') }}</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="7200"/>
+  </option>
+  <option option_id="svAsnInfoUrl" edit_format="textbox" data_type="string" advanced="0">
+    <default_value>https://www.peeringdb.com/advanced_search?reftag=org&amp;asn={asn}</default_value>
+    <relation group_id="spam" display_order="540"/>
+    <relation group_id="svSignupAbuseBlocking" display_order="96"/>
+  </option>
+  <option option_id="svGeoIpCheckActionOnNotMatch" edit_format="radio" data_type="string" advanced="0">
+    <default_value>moderated</default_value>
+    <edit_format_params>allowed={{ phrase('sv_reg_status.allowed') }}
+moderated={{ phrase('sv_reg_status.moderated') }}
+denied={{ phrase('sv_reg_status.denied') }}</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="7210"/>
+  </option>
+  <option option_id="svKnownSockUserGroupId" edit_format="callback" data_type="integer" advanced="0">
+    <default_value>0</default_value>
+    <edit_format_params>XF\Option\UserGroup::renderSelect</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="2040"/>
+  </option>
+  <option option_id="svLanguageCheckActionOnNotMatch" edit_format="radio" data_type="string" advanced="0">
+    <default_value>allowed</default_value>
+    <edit_format_params>allowed={{ phrase('sv_reg_status.allowed') }}
+moderated={{ phrase('sv_reg_status.moderated') }}
+denied={{ phrase('sv_reg_status.denied') }}</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="7220"/>
+  </option>
+  <option option_id="svLinkSpamCheckerAllowedList" edit_format="textbox" data_type="string" advanced="0">
+    <default_value></default_value>
+    <edit_format_params>rows=6</edit_format_params>
+    <relation group_id="spam" display_order="127"/>
+    <relation group_id="svSignupAbuseBlocking" display_order="7127"/>
+  </option>
+  <option option_id="svLinkSpamCheckerDefaultAction" edit_format="radio" data_type="string" advanced="1">
+    <default_value>allowed</default_value>
+    <edit_format_params>allowed={{ phrase('sv_reg_status.allowed') }}
+moderated={{ phrase('sv_reg_status.moderated') }}
+denied={{ phrase('sv_reg_status.denied') }}</edit_format_params>
+    <relation group_id="spam" display_order="125"/>
+    <relation group_id="svSignupAbuseBlocking" display_order="7125"/>
+  </option>
+  <option option_id="svLinkSpamCheckerDefaultActionByContentType" edit_format="callback" data_type="array" validation_class="SV\SignupAbuseBlocking\Option\DefaultLinkAction" validation_method="verifyOption" advanced="0">
+    <default_value>[]</default_value>
+    <edit_format_params>SV\SignupAbuseBlocking\Option\DefaultLinkAction::renderOption</edit_format_params>
+    <sub_options>*</sub_options>
+    <relation group_id="spam" display_order="126"/>
+    <relation group_id="svSignupAbuseBlocking" display_order="7126"/>
+  </option>
+  <option option_id="svLinkSpamCheckerModerateList" edit_format="textbox" data_type="string" advanced="0">
+    <default_value></default_value>
+    <edit_format_params>rows=6</edit_format_params>
+    <relation group_id="spam" display_order="128"/>
+    <relation group_id="svSignupAbuseBlocking" display_order="7128"/>
+  </option>
+  <option option_id="svLinkSpamCheckerRegistrationDefaultAction" edit_format="radio" data_type="string" advanced="0">
+    <default_value>allowed</default_value>
+    <edit_format_params>allowed={{ phrase('sv_reg_status.allowed') }}
+moderated={{ phrase('sv_reg_status.moderated') }}
+denied={{ phrase('sv_reg_status.denied') }}</edit_format_params>
+    <relation group_id="spam" display_order="124"/>
+    <relation group_id="svSignupAbuseBlocking" display_order="7124"/>
+  </option>
+  <option option_id="svLinkSpamCheckerRejectList" edit_format="textbox" data_type="string" advanced="0">
+    <default_value></default_value>
+    <edit_format_params>rows=6</edit_format_params>
+    <relation group_id="spam" display_order="129"/>
+    <relation group_id="svSignupAbuseBlocking" display_order="7129"/>
+  </option>
+  <option option_id="svLinkSpamCheckerStructuredTextTypes" edit_format="textbox" data_type="string" advanced="1">
+    <default_value>media
+album
+xfmg_note
+resource_rating</default_value>
+    <edit_format_params>rows=6</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="7199"/>
+  </option>
+  <option option_id="svLogReportReopenReason" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="svSignupAbuseBlocking" display_order="2415"/>
+  </option>
+  <option option_id="svLoginFloodLimit" edit_format="spinbox" data_type="integer" advanced="0">
+    <default_value>0</default_value>
+    <edit_format_params>min=0
+units={{ phrase('seconds') }}</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="190"/>
+  </option>
+  <option option_id="svMaxMultiAccountGraphExpansions" edit_format="textbox" data_type="integer" advanced="0">
+    <default_value>20</default_value>
+    <edit_format_params>min=0</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="1090"/>
+  </option>
+  <option option_id="svProjectHoneyPotExtendedConfig" edit_format="template" data_type="array" advanced="0">
+    <default_value>{"cutOff":60,"score10to20":1,"score80to100":6}</default_value>
+    <edit_format_params>option_template_signup_blocking_honeypot</edit_format_params>
+    <sub_options>*</sub_options>
+    <relation group_id="svSignupAbuseBlocking" display_order="3500"/>
+  </option>
+  <option option_id="svRegSpamPhrases" edit_format="template" data_type="array" advanced="0">
+    <default_value>{"phrases":"","action":"moderate"}</default_value>
+    <edit_format_params>option_template_spamPhrases</edit_format_params>
+    <sub_options>phrases
+action</sub_options>
+    <relation group_id="spam" display_order="123"/>
+    <relation group_id="svSignupAbuseBlocking" display_order="7123"/>
+  </option>
+  <option option_id="svSADAB_requestWebsiteOnSignup" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="svSignupAbuseBlocking" display_order="90"/>
+    <relation group_id="usersAndRegistration" display_order="14"/>
+  </option>
+  <option option_id="svSFSExtendedConfig" edit_format="template" data_type="array" advanced="0">
+    <default_value>{"username":2,"email":4,"ip":3}</default_value>
+    <edit_format_params>option_template_signup_blocking_sfs</edit_format_params>
+    <sub_options>*</sub_options>
+    <relation group_id="svSignupAbuseBlocking" display_order="3400"/>
+  </option>
+  <option option_id="svShowDateOfBirthInApprovalQueue" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="svSignupAbuseBlocking" display_order="610"/>
+  </option>
+  <option option_id="svSignupAbuseBlockingDnsQueryCacheTime" edit_format="spinbox" data_type="integer" advanced="0">
+    <default_value>15</default_value>
+    <edit_format_params>min=0
+units={{ phrase('units_minutes') }}</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="20"/>
+  </option>
+  <option option_id="svSignupAbuseBlockingFullDeleteForGDPR" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="svSignupAbuseBlocking" display_order="5"/>
+  </option>
+  <option option_id="svSignupAbuseBlockingMaxMindApiKey" edit_format="textbox" data_type="string" validation_class="SV\SignupAbuseBlocking\Option\MaxMind" validation_method="verifyOption" advanced="0">
+    <default_value></default_value>
+    <relation group_id="svSignupAbuseBlocking" display_order="4020"/>
+  </option>
+  <option option_id="svSignupAbuseBlockingMaxMindUpdate" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="svSignupAbuseBlocking" display_order="4019"/>
+  </option>
+  <option option_id="svSignupAbuseBlockingQueryCacheTime" edit_format="spinbox" data_type="integer" advanced="0">
+    <default_value>720</default_value>
+    <edit_format_params>min=0
+units={{ phrase('units_minutes') }}</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="15"/>
+  </option>
+  <option option_id="svSignupAbuseBlocking_nonAllowedEmailAction" edit_format="template" data_type="string" advanced="0">
+    <default_value>0</default_value>
+    <edit_format_params>option_template_signup_basic_score</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="5130"/>
+  </option>
+  <option option_id="svSignupAbuseBlocking_preregaction_moderate" edit_format="template" data_type="string" advanced="0">
+    <default_value>moderate</default_value>
+    <edit_format_params>option_template_signup_basic_score</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="5150"/>
+  </option>
+  <option option_id="svSignupAbuseBlocking_preregaction_reject" edit_format="template" data_type="string" advanced="0">
+    <default_value>moderate</default_value>
+    <edit_format_params>option_template_signup_basic_score</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="5140"/>
+  </option>
+  <option option_id="svSignupAbuseSearchUrl" edit_format="textbox" data_type="string" advanced="0">
+    <default_value>https://duckduckgo.com/?q={url}</default_value>
+    <relation group_id="serviceProviders" display_order="120"/>
+    <relation group_id="spam" display_order="530"/>
+    <relation group_id="svSignupAbuseBlocking" display_order="95"/>
+  </option>
+  <option option_id="svSignupAddToGroup" edit_format="callback" data_type="unsigned_integer" advanced="0">
+    <default_value>0</default_value>
+    <edit_format_params>XF\Option\UserGroup::renderSelect</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="940"/>
+  </option>
+  <option option_id="svSignupAddToGroupThreshold" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>0</default_value>
+    <edit_format_params>min=0</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="920"/>
+  </option>
+  <option option_id="svSignupApprovalQueueSkipAutoShrink" edit_format="callback" data_type="array" validation_class="SV\SignupAbuseBlocking\Option\ApprovalQueue" validation_method="verifyOption" advanced="0">
+    <default_value>{"user":1,"username_change":1,"unc":1}</default_value>
+    <edit_format_params>SV\SignupAbuseBlocking\Option\ApprovalQueue::renderOption</edit_format_params>
+    <sub_options>*</sub_options>
+    <relation group_id="svSignupAbuseBlocking" display_order="600"/>
+  </option>
+  <option option_id="svSignupAsnBlockingConfig" edit_format="template" data_type="array" advanced="0">
+    <default_value>{"cymru":1,"ripe":1,"maxMind":1}</default_value>
+    <edit_format_params>option_template_signup_blocking_asn</edit_format_params>
+    <sub_options>*</sub_options>
+    <relation group_id="svSignupAbuseBlocking" display_order="4000"/>
+  </option>
+  <option option_id="svSignupAsnBlockingRule" edit_format="textbox" data_type="string" advanced="0">
+    <default_value>+3|VERSAWEB-ASN
++3|SINGLEHOP-INC
++3|OVH*
++3|STEEPHOST*
++3|36352
++3|AS-COLOCROSSING
++3|AS-CENTARRA
++3|SERVERHUB*
++3|BANKINFORM-AS
++3|AFNCA-ASN
++3|CDC-LMB?
++3|QUERY-FOUNDRY
++3|CANTV
++30|INCERO
++3|BLCC*
++3|EMPIRE
++3|PLI-AS
++3|AS-CHOOPA
++3|WII-KC
++3|UKSERVERS-AS
++3|ECATEL-AS
++3|STEADFAST
++3|SWIFTWAY-AS
++3|ASEVERHOST
++3|RAMNODE
++3|BESTHOSTING-AS
++3|ENZUINC-*
++3|40676
++3|SERVERYOU
++3|DIMENOC
++3|DATASHACK
++3|IOFLOOD
++3|FDCSERVERS
++3|RICAWEBSERVICES
++3|PEGTECHINC
++3|WOWRACK
++3|SERVER-MANIA
++3|COLO-AT-55-LLC
++3|SERVERIUS-AS
++3|ABSTATION
++3|IPTELLIGENT
++3|PEER1
++3|GORILLASERVERS
++3|WEBEXXPURTS
++3|REDSTATION
++3|VIRPUS
++3|SSASN?
++3|*QUADRANET*
++3|*VPLSNET*
++3|57858
++3|5577
++3|53889
++3|*COGENT*
++3|9808
++3|63008
++3|18403
++3|IPG-AS-AP
++3|PKTELECOM-AS-PK*
++3|WORLDCALL-AS-KHI*
++3|AIRTELBROADBAND-AS-AP*
++3|46805
++3|*SoftLayer*
++3|*LEASEWEB*
++3|PSWITCH-HK
++3|UK2NET-AS
++3|ATLANTIC-NET
++3|DIGITALOCEAN*
++3|AS-GTT-4436
++3|HVC-AS*
++3|CODERO-AS*
++3|9441
++3|16637
++3|29614
++3|AMANAHA*
++3|VOXILITY*
++3|IWEB-AS
++3|IOMART*
++3|17858
++3|45671
++3|12260
++3|54945
++3|17639
++3|37340
++3|32780
++3|29791
++3|17974
++3|17139
++3|46562
++3|11776
++3|ZSCALER*
++3|3464
++3|54334
++3|59432
++3|38676
++3|60118
++3|48159
++3|12586
++3|13285
++3|45904
++3|45899
++3|28642
++3|6939
++3|10685
++3|8560
++3|12876
++3|21069
++3|9044
++3|21321
++3|11831
++3|LINODE*
++3|49453
++3|16345
++3|40245
++3|PARAD-*
++3|13213
++3|3356
++3|198605
++3|200088
++3|AVAST*
++3|PHMGMT*
++3|TWTC*
++3|12576
++3|INTERGRID*
++3|MTN-*
++3|36912
++3|29854
++3|4761
++3|9341
++3|ZETTAGRID*
++3|24961
++3|15169
++3|21159
++3|50896
++3|55410
++3|23655
++3|38793
++3|20473
++3|21837
++3|31252
++3|12989
++3|43350
++3|12025
++3|ZAYO*
++3|AMAZON*
++3|1488
++3|9009
++3|4766
++3|19310
++3|15305
++3|263179
++3|32181
++3|262287
++3|HETZNER*
++3|63023
++3|51167
++3|21581
++3|39832
++3|46421
++3|46261
++3|395111
++3|58964
++3|51765
++3|19084
++3|61317
++3|44050
++3|37148
++3|OVH*
++3|15497
++3|8075
++3|54500
++3|30633
++3|*hosting*
++3|59642
++3|786
++3|60068
++3|136557
++3|2152
++3|31454
++3|202015
++3|46790
++3|37693
++3|25697
++3|396507
++3|21794
++3|22923
++3|46844
++3|25369
++3|25100
++3|53667
++3|6724
++3|204601
++3|30083
++3|10796
++3|33438
++3|54104
++3|11990
++3|8893
++3|23033
++3|27589
++3|30500
++3|46841
++3|24940
++3|64286
++3|Logicweb*
++3|29066
++3|35913
++3|62240
++3|49981
++3|3737
++3|6830
++3|8953
++3|52048
++3|4818
++3|37705
++3|55836
++3|23860
++3|9534
++3|21928
++3|62904
++3|7040
++3|210273
++3|396356
++3|18978
++3|22773
++3|55536
++3|19844
++3|15003
++3|50710
++3|202422
++3|25780
++3|137409
++3|209854
++3|41032
++3|203020
++3|18229
++3|212238
++3|8334
++3|7713
++3|62579
++3|50520
++3|55720
++3|20278
++3|13335
++3|50673
++3|136787
++3|6189
++3|4657
++3|55430
++3|6167
++3|42473
++3|42708
++3|16276
++3|397423
++3|140952
++3|6697
++3|57172
++3|141039
++3|*Packethub*
++3|206092
++3|31898
++3|25591
++3|205226
++3|29632
++3|205016
++3|23155
++3|39351
++3|15964
++3|54113
++3|22394
++3|11067
++3|18916
++3|55256
++3|63213
++3|13768
++3|29119
++3|54203
++3|30036
++3|55081
++3|43289
++3|43513
++3|11878
++3|197706
++3|6908
++3|datahop*
++3|63473
++3|397373
++3|42831
++3|21859
++3|55799
++3|63949
++3|36492
++3|396982
++3|45102
++3|23959
++3|37963
++3|212027
++3|138997
++3|36183
++3|22911
++3|12849
++3|136907
++3|63018
++3|209181
++3|328580
++3|136189
++3|29838
++3|36947
++3|36231
++3|8100
++3|51088
++3|xtom*
++3|211101
++3|*vpn*
++3|37113
++3|62874
++3|41564
++3|46475
++3|18345
++3|328383
++3|23858
++3|35537
++3|62805
++3|3214
++3|9312
++3|4785
++3|949
++3|36828
++3|8888
++3|3258
++3|43959
++3|6233
++3|3204
++3|9123</default_value>
+    <edit_format_params>rows=6</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="4110"/>
+  </option>
+  <option option_id="svSignupCountryBlockingRule" edit_format="textbox" data_type="string" advanced="0">
+    <default_value>+1|CN
++1|IN
++1|BD
++1|PK
++1|TH
++1|PH
++1|VN
++1|VE
++1|UA
++1|RU
+moderate|XX
+moderate|UNDEFINED</default_value>
+    <edit_format_params>rows=6</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="4110"/>
+  </option>
+  <option option_id="svSignupEmailBlockingRule" edit_format="textbox" data_type="string" advanced="0">
+    <default_value>+1|*.info
+moderate|*.*.*.*.*@*
+reject|*@trashmail.ws
+moderate|*@free*
+reject|*@trbvm.com
+reject|*@fleckens.hu</default_value>
+    <edit_format_params>rows=6</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="5120"/>
+  </option>
+  <option option_id="svSignupFastRegFill" edit_format="spinbox" data_type="string" advanced="0">
+    <default_value>20</default_value>
+    <edit_format_params>min=5</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="6800"/>
+  </option>
+  <option option_id="svSignupFastRegFillScore" edit_format="template" data_type="string" advanced="0">
+    <default_value>1</default_value>
+    <edit_format_params>option_template_signup_basic_score</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="6810"/>
+  </option>
+  <option option_id="svSignupGeoIPConfig" edit_format="template" data_type="array" advanced="0">
+    <default_value>{"cloudflare":1,"maxMind":1}</default_value>
+    <edit_format_params>option_template_signup_blocking_geoip</edit_format_params>
+    <sub_options>*</sub_options>
+    <relation group_id="svSignupAbuseBlocking" display_order="4010"/>
+  </option>
+  <option option_id="svSignupGetIpIntelRule" edit_format="template" data_type="array" advanced="0">
+    <default_value>{"enable":0,"email":"","url":"https:\/\/check.getipintel.net\/check.php","lowScore":3,"lowScoreThreshold":0.95,"highScore":"reject","highScoreThreshold":0.99,"flags":"b"}</default_value>
+    <edit_format_params>option_template_signup_blocking_getipintel</edit_format_params>
+    <sub_options>*</sub_options>
+    <relation group_id="svSignupAbuseBlocking" display_order="3700"/>
+  </option>
+  <option option_id="svSignupHostnameBlockingRule" edit_format="textbox" data_type="string" advanced="0">
+    <default_value>+2|*vpn*
++2|*vps*
++2|*dedi*
+-1|*.gov
+-1|*.mil
++2|*.rdns.ubiquity.io
++2|*.rdns.ubiquityservers.com
++2|*.hostwindsdns.com
++2|*.dedibox.fr
++2|*.linode.com
++3|.
++3|*.zenmate.com
++2|*proxy*</default_value>
+    <edit_format_params>rows=6</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="6500"/>
+  </option>
+  <option option_id="svSignupLanguageBlockingRule" edit_format="textbox" data_type="string" advanced="0">
+    <default_value></default_value>
+    <edit_format_params>rows=6</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="6900"/>
+  </option>
+  <option option_id="svSignupLogsOnProfileTab" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="svSignupAbuseBlocking" display_order="40"/>
+  </option>
+  <option option_id="svSignupModerateScoreThreshold" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>3</default_value>
+    <edit_format_params>min=0</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="900"/>
+  </option>
+  <option option_id="svSignupNoJsScore" edit_format="template" data_type="string" advanced="0">
+    <default_value>2</default_value>
+    <edit_format_params>option_template_signup_basic_score</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="6700"/>
+  </option>
+  <option option_id="svSignupOpenPortBlockingRule" edit_format="textbox" data_type="string" advanced="0">
+    <default_value>+1|http
++2|8080
++1|1080
++1|smtp
++1|ssh
++1|ftp</default_value>
+    <edit_format_params>rows=6</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="6600"/>
+  </option>
+  <option option_id="svSignupOpenPortScanEnable" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="svSignupAbuseBlocking" display_order="97"/>
+  </option>
+  <option option_id="svSignupOpenPortScanProxy" edit_format="textbox" data_type="string" advanced="0">
+    <default_value></default_value>
+    <relation group_id="svSignupAbuseBlocking" display_order="98"/>
+  </option>
+  <option option_id="svSignupRejectScoreThreshold" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>6</default_value>
+    <edit_format_params>min=0</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="910"/>
+  </option>
+  <option option_id="svSignupThrottleTypes" edit_format="template" data_type="array" advanced="0">
+    <default_value>["country","asn"]</default_value>
+    <edit_format_params>option_template_signup_throttling_types</edit_format_params>
+    <sub_options>*</sub_options>
+    <relation group_id="svSignupThrottling" display_order="40"/>
+  </option>
+  <option option_id="svSignupThrottling" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="svSignupThrottling" display_order="10"/>
+  </option>
+  <option option_id="svSignupThrottlingCutOff" edit_format="template" data_type="array" advanced="0">
+    <default_value>{"type":"dynamic","fixedValue":10,"dynamicMin":5,"dynamicMax":100}</default_value>
+    <edit_format_params>option_template_signup_throttling_cutoff</edit_format_params>
+    <sub_options>*</sub_options>
+    <relation group_id="svSignupThrottling" display_order="30"/>
+  </option>
+  <option option_id="svSignupThrottlingWindow" edit_format="template" data_type="array" advanced="0">
+    <default_value>{"value":1,"unit":3600}</default_value>
+    <edit_format_params>option_template_signup_throttling_window</edit_format_params>
+    <sub_options>*</sub_options>
+    <relation group_id="svSignupThrottling" display_order="20"/>
+  </option>
+  <option option_id="svSignupTimezoneBlockingRule" edit_format="textbox" data_type="string" advanced="0">
+    <default_value></default_value>
+    <edit_format_params>rows=6</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="6930"/>
+  </option>
+  <option option_id="svSignupTorBlockingConfig" edit_format="template" data_type="array" advanced="0">
+    <default_value>{"score":6,"serverIp":"","cloudflare":1}</default_value>
+    <edit_format_params>option_template_signup_blocking_tor</edit_format_params>
+    <sub_options>*</sub_options>
+    <relation group_id="svSignupAbuseBlocking" display_order="3600"/>
+  </option>
+  <option option_id="svSignupUnknownLanguageRule" edit_format="template" data_type="string" advanced="0">
+    <default_value>0</default_value>
+    <edit_format_params>option_template_signup_basic_score</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="6910"/>
+  </option>
+  <option option_id="svSignupUnknownLanguageScoreOnce" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="svSignupAbuseBlocking" display_order="6905"/>
+  </option>
+  <option option_id="svSignupUnknownTimezoneRule" edit_format="template" data_type="string" advanced="0">
+    <default_value>0</default_value>
+    <edit_format_params>option_template_signup_basic_score</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="6940"/>
+  </option>
+  <option option_id="svSignupUsernameBlockingRule" edit_format="textbox" data_type="string" advanced="0">
+    <default_value>+1|*cheap*
++1|*free*
++1|*card*
++1|*sale*</default_value>
+    <edit_format_params>rows=6</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="5110"/>
+  </option>
+  <option option_id="svSkipSavingRejectedUsersOnSignup" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="svSignupAbuseBlocking" display_order="60"/>
+  </option>
+  <option option_id="svSockDedupeFilter" edit_format="template" data_type="array" advanced="0">
+    <default_value>{"seenFilter":1,"cutOff":2}</default_value>
+    <edit_format_params>option_template_signup_sock_dedupe_filter</edit_format_params>
+    <sub_options>*</sub_options>
+    <relation group_id="svSignupAbuseBlocking" display_order="2010"/>
+  </option>
+  <option option_id="svSockSignupAccountCookie" edit_format="textbox" data_type="string" advanced="0">
+    <default_value>userinit</default_value>
+    <edit_format_params>max=10</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="1210"/>
+  </option>
+  <option option_id="svSockSignupAccountCookieLifeSpan" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>24</default_value>
+    <relation group_id="svSignupAbuseBlocking" display_order="1220"/>
+  </option>
+  <option option_id="svSockSignupCheckCookie" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="svSignupAbuseBlocking" display_order="1200"/>
+  </option>
+  <option option_id="svSockSignupCheckDefaultConvMsg" edit_format="textbox" data_type="string" advanced="0">
+    <default_value></default_value>
+    <edit_format_params>rows=4</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="510"/>
+  </option>
+  <option option_id="svSockSignupCheckDefaultConvTitle" edit_format="textbox" data_type="string" advanced="0">
+    <default_value>Multiple accounts</default_value>
+    <relation group_id="svSignupAbuseBlocking" display_order="500"/>
+  </option>
+  <option option_id="svSockSignupCheckDupeReports" edit_format="checkbox" data_type="array" advanced="0">
+    <default_value>{"open":false,"assigned":false,"resolved":false,"rejected":true}</default_value>
+    <edit_format_params>open={{ phrase('report_state.open') }}
+assigned={{ phrase('report_state.assigned') }}
+resolved={{ phrase('report_state.resolved') }}
+rejected={{ phrase('report_state.rejected') }}</edit_format_params>
+    <sub_options>open
+assigned
+resolved
+rejected</sub_options>
+    <relation group_id="svSignupAbuseBlocking" display_order="2410"/>
+  </option>
+  <option option_id="svSockSignupCheckIpAllowedList" edit_format="textbox" data_type="string" advanced="0">
+    <default_value></default_value>
+    <edit_format_params>rows=3</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="1310"/>
+  </option>
+  <option option_id="svSockSignupCheckMatchingIps" edit_format="template" data_type="array" advanced="0">
+    <default_value>{"checkIp":1,"minTime":15}</default_value>
+    <edit_format_params>sv_multiple_account_option_ipcheck</edit_format_params>
+    <sub_options>checkIp
+minTime</sub_options>
+    <relation group_id="svSignupAbuseBlocking" display_order="1300"/>
+  </option>
+  <option option_id="svSockSignupCheckRegMode" edit_format="template" data_type="string" advanced="0">
+    <default_value>0</default_value>
+    <edit_format_params>option_template_signup_basic_score</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="6130"/>
+  </option>
+  <option option_id="svSockSignupCheckRegModeGroup" edit_format="template" data_type="string" advanced="0">
+    <default_value>moderate</default_value>
+    <edit_format_params>option_template_signup_basic_score</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="6140"/>
+  </option>
+  <option option_id="svSockSignupCheckRegModeGroupIds" edit_format="textbox" data_type="string" advanced="0">
+    <default_value></default_value>
+    <relation group_id="svSignupAbuseBlocking" display_order="6150"/>
+  </option>
+  <option option_id="svSockSignupCheckRegModePerms" edit_format="textbox" data_type="string" advanced="0">
+    <default_value>general:view:deny
+general:viewNode:deny</default_value>
+    <edit_format_params>rows=6</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="6160"/>
+  </option>
+  <option option_id="svSockSignupCheckReport" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="svSignupAbuseBlocking" display_order="2400"/>
+  </option>
+  <option option_id="svSockSignupCheckReportConv" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="svSignupAbuseBlocking" display_order="2610"/>
+  </option>
+  <option option_id="svSockSignupCheckReportConvTo" edit_format="username" data_type="array" advanced="0">
+    <default_value>[]</default_value>
+    <sub_options>*</sub_options>
+    <relation group_id="svSignupAbuseBlocking" display_order="2620"/>
+  </option>
+  <option option_id="svSockSignupCheckReportForum" edit_format="callback" data_type="unsigned_integer" advanced="0">
+    <default_value>0</default_value>
+    <edit_format_params>XF\Option\Forum::renderSelect</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="2510"/>
+  </option>
+  <option option_id="svSockSignupCheckReportThread" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="svSignupAbuseBlocking" display_order="2500"/>
+  </option>
+  <option option_id="svSockSignupCheckReportingUser" edit_format="username" data_type="unsigned_integer" validation_class="SV\SignupAbuseBlocking\Option\ValidUser" validation_method="validUserId" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="svSignupAbuseBlocking" display_order="2090"/>
+  </option>
+  <option option_id="svSockSignupCheckShowMethods" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="svSignupAbuseBlocking" display_order="2000"/>
+  </option>
+  <option option_id="svSockSignupCookieFormat" edit_format="checkbox" data_type="array" advanced="0">
+    <default_value>[]</default_value>
+    <edit_format_params>legacy1={{ phrase('svReportEss_legacy_cookie.legacy1') }}
+legacy2={{ phrase('svReportEss_legacy_cookie.legacy2') }}</edit_format_params>
+    <sub_options>*</sub_options>
+    <relation group_id="svSignupAbuseBlocking" display_order="1230"/>
+  </option>
+  <option option_id="svSockSignupIncludeRawInfo" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <relation group_id="svSignupAbuseBlocking" display_order="2030"/>
+  </option>
+  <option option_id="svSpamCheckModeratedPosts" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="svSignupAbuseBlocking" display_order="80"/>
+  </option>
+  <option option_id="svTimezoneCheckActionOnNotMatch" edit_format="radio" data_type="string" advanced="0">
+    <default_value>allowed</default_value>
+    <edit_format_params>allowed={{ phrase('sv_reg_status.allowed') }}
+moderated={{ phrase('sv_reg_status.moderated') }}
+denied={{ phrase('sv_reg_status.denied') }}</edit_format_params>
+    <relation group_id="svSignupAbuseBlocking" display_order="7220"/>
+  </option>
+</options>
+ 		 		 	   	 	  		  				  	 	 		 	 	   	    	 	  	 	  	 	 	 			    	 				 		    			 	 	  		  		  	 	 			 	   		  	 	 	  	 	   	 	 	 

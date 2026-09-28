@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<routes>
+  <route route_type="admin" route_prefix="lucky-awards" format=":int&lt;lucky_award_id,lucky_award_title&gt;/" controller="XFDev\LuckyAwards:LuckyAward" context="addonFlareAwardSystem"/>
+  <route route_type="public" route_prefix="lucky-awards" controller="XFDev\LuckyAwards:LuckyAwards" context="addonFlarePubAwards"/>
+</routes>

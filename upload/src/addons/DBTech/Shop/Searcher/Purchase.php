@@ -2,11 +2,13 @@
 
 namespace DBTech\Shop\Searcher;
 
-use DBTech\Shop\Repository\ItemRepository;
-use XF\Mvc\Entity\Finder;
 use XF\Searcher\AbstractSearcher;
-use XF\Util\Ip;
+use XF\Mvc\Entity\Finder;
 
+/**
+ * Class Purchase
+ * @package DBTech\Shop\Searcher
+ */
 class Purchase extends AbstractSearcher
 {
 	/** @var array */
@@ -17,8 +19,8 @@ class Purchase extends AbstractSearcher
 		'username' => 'like',
 		'dateline' => 'date',
 		'Item' => [
-			'title' => 'like',
-		],
+			'title' => 'like'
+		]
 	];
 
 	/** @var array */
@@ -49,7 +51,7 @@ class Purchase extends AbstractSearcher
 
 		return $orders;
 	}
-
+	
 	/**
 	 * @param Finder $finder
 	 * @param $key
@@ -63,13 +65,13 @@ class Purchase extends AbstractSearcher
 	{
 		if ($key == 'ip')
 		{
-			$parsed = Ip::parseIpRangeString($value);
-
+			$parsed = \XF\Util\Ip::parseIpRangeString($value);
+			
 			if (!$parsed)
 			{
 				return true;
 			}
-
+			
 			if ($parsed['isRange'])
 			{
 				$finder->where('Ip.ip', '>=', $parsed['startRange']);
@@ -79,13 +81,13 @@ class Purchase extends AbstractSearcher
 			{
 				$finder->where('Ip.ip', $parsed['startRange']);
 			}
-
+			
 			return true;
 		}
-
+		
 		return false;
 	}
-
+	
 	/**
 	 * @return array
 	 */
@@ -93,7 +95,7 @@ class Purchase extends AbstractSearcher
 	{
 		return [];
 	}
-
+	
 	/**
 	 * @return array
 	 * @throws \Exception
@@ -101,7 +103,7 @@ class Purchase extends AbstractSearcher
 	public function getFormDefaults(): array
 	{
 		return [
-			'item_type_ids' => array_keys(\XF::app()->repository(ItemRepository::class)->getItemTypeTitlePairs(true)),
+			'item_type_ids' => array_keys($this->em->getRepository('DBTech\Shop:Item')->getItemTypeTitlePairs(true))
 		];
 	}
 }

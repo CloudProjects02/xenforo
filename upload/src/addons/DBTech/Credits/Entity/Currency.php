@@ -10,6 +10,7 @@ use XF\Entity\LinkableInterface;
 use XF\Entity\User;
 use XF\Entity\ViewableInterface;
 use XF\Mvc\Entity\AbstractCollection;
+use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XF\Phrase;
 use XF\PrintableException;
@@ -44,13 +45,13 @@ use XF\PrintableException;
  * @property bool $outbound
  *
  * GETTERS
- * @property-read AbstractCollection<\DBTech\Credits\XF\Entity\User> $RichestUsers
+ * @property-read \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\XF\Entity\User> $RichestUsers
  *
  * RELATIONS
- * @property-read AbstractCollection<Event> $Events
- * @property-read AbstractCollection<Transaction> $Transactions
+ * @property-read \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Event> $Events
+ * @property-read \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Transaction> $Transactions
  */
-class Currency extends AbstractEntity implements LinkableInterface, ViewableInterface
+class Currency extends Entity implements LinkableInterface, ViewableInterface
 {
 	/**
 	 * @return bool
@@ -135,7 +136,7 @@ class Currency extends AbstractEntity implements LinkableInterface, ViewableInte
 	/**
 	 * @param int $limit
 	 *
-	 * @return AbstractCollection<\DBTech\Credits\XF\Entity\User>
+	 * @return \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\XF\Entity\User>
 	 */
 	public function getRichestUsers(int $limit = 5): AbstractCollection
 	{
@@ -492,8 +493,8 @@ class Currency extends AbstractEntity implements LinkableInterface, ViewableInte
 			'postbit' 				=> ['type' => self::BOOL, 'default' => true],
 			'negative' 				=> ['type' => self::UINT, 'max' => 2, 'default' => 2],
 			'maxtime' 				=> ['type' => self::UINT, 'default' => 0],
-			'earnmax' 				=> ['type' => self::FLOAT, 'default' => 0.0, 'max' => PHP_INT_MAX, 'isDecimal' => true],
-			'value' 				=> ['type' => self::FLOAT, 'default' => 1.0, 'max' => PHP_INT_MAX, 'isDecimal' => true],
+			'earnmax' 				=> ['type' => self::FLOAT, 'default' => 0.0],
+			'value' 				=> ['type' => self::FLOAT, 'default' => 1.0],
 			'inbound' 				=> ['type' => self::BOOL, 'default' => true],
 			'outbound' 				=> ['type' => self::BOOL, 'default' => true],
 		];

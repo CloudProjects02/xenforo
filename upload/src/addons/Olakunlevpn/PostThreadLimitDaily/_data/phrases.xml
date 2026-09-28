@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="olakunlevpn_ptld_approaching_limit" version_id="1000010" version_string="1.0.0"><![CDATA[You are approaching your daily limit. Time until reset:
+]]></phrase>
+  <phrase title="olakunlevpn_ptld_can_post_again" version_id="1000010" version_string="1.0.0"><![CDATA[You can post again
+]]></phrase>
+  <phrase title="olakunlevpn_ptld_days" version_id="1000010" version_string="1.0.0"><![CDATA[days
+]]></phrase>
+  <phrase title="olakunlevpn_ptld_hours" version_id="1000010" version_string="1.0.0"><![CDATA[hours
+]]></phrase>
+  <phrase title="olakunlevpn_ptld_minutes" version_id="1000010" version_string="1.0.0"><![CDATA[minutes
+]]></phrase>
+  <phrase title="olakunlevpn_ptld_next_available_in" version_id="1000010" version_string="1.0.0"><![CDATA[Please wait till 
+]]></phrase>
+  <phrase title="olakunlevpn_ptld_post_limit_reached" version_id="1000010" version_string="1.0.0"><![CDATA[You have reached your daily limit of {limit} posts.
+]]></phrase>
+  <phrase title="olakunlevpn_ptld_remaining_posts" version_id="1000010" version_string="1.0.0"><![CDATA[You have {remaining} out of {total} posts remaining today.
+]]></phrase>
+  <phrase title="olakunlevpn_ptld_remaining_threads" version_id="1000010" version_string="1.0.0"><![CDATA[You have {remaining} out of {total} threads remaining today.
+]]></phrase>
+  <phrase title="olakunlevpn_ptld_seconds" version_id="1000010" version_string="1.0.0"><![CDATA[seconds
+]]></phrase>
+  <phrase title="olakunlevpn_ptld_thread_limit_reached" version_id="1000010" version_string="1.0.0"><![CDATA[You have reached your daily limit of {limit} threads.
+]]></phrase>
+  <phrase title="option.olakunlevpn_ptld_excludeAdminsMods" version_id="1000010" version_string="1.0.0"><![CDATA[Exclude Administrators and Moderators
+]]></phrase>
+  <phrase title="option.olakunlevpn_ptld_excludedUserGroups" version_id="1000010" version_string="1.0.0"><![CDATA[Excluded User Groups
+]]></phrase>
+  <phrase title="option.olakunlevpn_ptld_excludedUserIds" version_id="1000010" version_string="1.0.0"><![CDATA[Excluded User IDs
+]]></phrase>
+  <phrase title="option.olakunlevpn_ptld_maxPostsPerDay" version_id="1000010" version_string="1.0.0"><![CDATA[Maximum Posts Per Day
+]]></phrase>
+  <phrase title="option.olakunlevpn_ptld_maxThreadsPerDay" version_id="1000010" version_string="1.0.0"><![CDATA[Maximum Threads Per Day
+]]></phrase>
+  <phrase title="option.olakunlevpn_ptld_postLimitEnabled" version_id="1000010" version_string="1.0.0"><![CDATA[Enable Post Limit
+]]></phrase>
+  <phrase title="option.olakunlevpn_ptld_threadLimitEnabled" version_id="1000010" version_string="1.0.0"><![CDATA[Enable Thread Limit
+]]></phrase>
+  <phrase title="option_explain.olakunlevpn_ptld_excludeAdminsMods" version_id="1000010" version_string="1.0.0"><![CDATA[If enabled, administrators and moderators will not be subject to daily thread and post limits.
+]]></phrase>
+  <phrase title="option_explain.olakunlevpn_ptld_excludedUserGroups" version_id="1000010" version_string="1.0.0"><![CDATA[Enter user group IDs to exclude from daily limits. To enter more than one ID, separate each ID with a comma.
+]]></phrase>
+  <phrase title="option_explain.olakunlevpn_ptld_excludedUserIds" version_id="1000010" version_string="1.0.0"><![CDATA[Enter user IDs to exclude from daily limits. To enter more than one ID, separate each ID with a comma.
+]]></phrase>
+  <phrase title="option_explain.olakunlevpn_ptld_maxPostsPerDay" version_id="1000010" version_string="1.0.0"><![CDATA[The maximum number of posts a user can create per day. Set to 0 to disable the limit.
+]]></phrase>
+  <phrase title="option_explain.olakunlevpn_ptld_maxThreadsPerDay" version_id="1000010" version_string="1.0.0"><![CDATA[The maximum number of threads a user can create per day. Set to 0 to disable the limit.
+]]></phrase>
+  <phrase title="option_explain.olakunlevpn_ptld_postLimitEnabled" version_id="1000010" version_string="1.0.0"><![CDATA[If enabled, users will be limited to a maximum number of posts per day.
+]]></phrase>
+  <phrase title="option_explain.olakunlevpn_ptld_threadLimitEnabled" version_id="1000010" version_string="1.0.0"><![CDATA[If enabled, users will be limited to a maximum number of threads per day.
+]]></phrase>
+  <phrase title="option_group.olakunlevpn_postThreadLimitDaily" version_id="1000010" version_string="1.0.0"><![CDATA[Olakunlevpn Post Thread Limit Daily]]></phrase>
+  <phrase title="option_group_description.olakunlevpn_postThreadLimitDaily" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_group_olakunlevpn_postThreadLimitDaily" version_id="1000010" version_string="1.0.0"><![CDATA[Post Thread Limit Daily
+]]></phrase>
+  <phrase title="option_group_olakunlevpn_postThreadLimitDaily_description" version_id="1000010" version_string="1.0.0"><![CDATA[Configure daily limits for threads and posts created by users.
+]]></phrase>
+</phrases>

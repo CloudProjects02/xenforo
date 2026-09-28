@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="PAGE_CONTAINER" modification_key="svStandardLib_PAGE_CONTAINER" description="XF2.1/XF2.2/XF2.3 Rewrite logout link to use link-post" execution_order="2147483640" enabled="1" action="str_replace">
+    <find><![CDATA[href="{{ link('logout', null, {'t': csrf_token()}) }}"]]></find>
+    <replace><![CDATA[href="{{ link('logout') }}" data-xf-click="link-post"]]></replace>
+  </modification>
+  <modification type="public" template="account_visitor_menu" modification_key="svStandardLib_account_visitor_menu" description="XF2.1/XF2.2/XF2.3 Rewrite logout link to use link-post" execution_order="2147483640" enabled="1" action="str_replace">
+    <find><![CDATA[href="{{ link('logout', null, {'t': csrf_token()}) }}"]]></find>
+    <replace><![CDATA[href="{{ link('logout') }}" data-xf-click="link-post"]]></replace>
+  </modification>
+  <modification type="public" template="account_wrapper" modification_key="svStandardLib_account_wrapper" description="XF2.1/XF2.2/XF2.3 Rewrite logout link to use link-post" execution_order="2147483640" enabled="1" action="str_replace">
+    <find><![CDATA[href="{{ link('logout', null, {'t': csrf_token()}) }}"]]></find>
+    <replace><![CDATA[href="{{ link('logout') }}" data-xf-click="link-post"]]></replace>
+  </modification>
+  <modification type="public" template="helper_js_global" modification_key="svStandardLib_helper_js_global" description="Add time related phrases required relative time handler" execution_order="7915" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:js_global:xf_phrase_start]-->]]></find>
+    <replace><![CDATA[$0
+"time.day": "{{ phrase('time.day')|escape('js') }}",
+"time.days": "{{ phrase('time.days')|escape('js') }}",
+"time.hour": "{{ phrase('time.hour')|escape('js') }}",
+"time.hours": "{{ phrase('time.hours')|escape('js') }}",
+"time.minute": "{{ phrase('time.minute')|escape('js') }}",
+"time.minutes": "{{ phrase('time.minutes')|escape('js') }}",
+"time.month": "{{ phrase('time.month')|escape('js') }}",
+"time.months": "{{ phrase('time.months')|escape('js') }}",
+"time.second": "{{ phrase('time.second')|escape('js') }}",
+"time.seconds": "{{ phrase('time.seconds')|escape('js') }}",
+"time.week": "{{ phrase('time.week')|escape('js') }}",
+"time.weeks": "{{ phrase('time.weeks')|escape('js') }}",
+"time.year": "{{ phrase('time.year')|escape('sj') }}",
+"time.years": "{{ phrase('time.years')|escape('sj') }}",]]></replace>
+  </modification>
+  <modification type="public" template="helper_js_global" modification_key="svStandardLib_helper_js_global_post_click" description="XF2.1/XF2.2/XF2.3 - Inject backported link-post handler" execution_order="2147483640" enabled="1" action="preg_replace">
+    <find><![CDATA[#<xf:macro (?:id|name)="head".*?>#sim]]></find>
+    <replace><![CDATA[$0
+<xf:if is="$xf.versionId < 2040000">
+<xf:js src="sv/lib/link-post.js" addon="SV/StandardLib" min="1" />
+</xf:if>]]></replace>
+  </modification>
+  <modification type="public" template="language_chooser" modification_key="svStandardLib_language_chooser" description="XF2.1/XF2.2/XF2.3 Rewrite link to use link-post" execution_order="2147483640" enabled="1" action="preg_replace">
+    <find><![CDATA[#(href="{{ link\(.*?, {.*?)(?:,\s*'_xfRedirect':[^,]+)?(?:,)?\s*'t': csrf_token\(\)\s*(}\)\s*}}\s*")#msi]]></find>
+    <replace><![CDATA[$1$2 data-xf-click="link-post"]]></replace>
+  </modification>
+  <modification type="public" template="misc_cookies" modification_key="svStandardLib_misc_cookies" description="XF2.1/XF2.2/XF2.3 Rewrite link to use link-post" execution_order="2147483640" enabled="1" action="preg_replace">
+    <find><![CDATA[#(href="{{ link\(.*?, {.*?)(?:,\s*'_xfRedirect':[^,]+)?(?:,)?\s*'t': csrf_token\(\)\s*(}\)\s*}}\s*")#msi]]></find>
+    <replace><![CDATA[$1$2 data-xf-click="link-post"]]></replace>
+  </modification>
+  <modification type="public" template="misc_cookies" modification_key="svStandardLib_misc_cookies2" description="XF2.2/XF2.3 Rewrite link to use link-post" execution_order="2147483641" enabled="1" action="str_replace">
+    <find><![CDATA[data-xf-click="cookie-consent"]]></find>
+    <replace><![CDATA[data-xf-click="link-post"]]></replace>
+  </modification>
+  <modification type="public" template="style_chooser" modification_key="svStandardLib_style_chooser" description="XF2.1/XF2.2/XF2.3 Rewrite link to use link-post" execution_order="2147483640" enabled="1" action="preg_replace">
+    <find><![CDATA[#(href="{{ link\(.*?, {.*?)(?:,\s*'_xfRedirect':[^,]+)?(?:,)?\s*'t': csrf_token\(\)\s*(}\)\s*}}\s*")#msi]]></find>
+    <replace><![CDATA[$1$2 data-xf-click="link-post"]]></replace>
+  </modification>
+  <modification type="public" template="style_variation_macros" modification_key="svStandardLib_style_variation_macros1" description="XF2.3 Remove token from link (for non-live)" execution_order="2147483640" enabled="1" action="preg_replace">
+    <find><![CDATA[#(?:,\s*)?'t': csrf_token\(\)(?:\s*,\s*'_xfRedirect'\s*:.*?(\s*}\)))?#msi]]></find>
+    <replace><![CDATA[$1]]></replace>
+  </modification>
+  <modification type="public" template="style_variation_macros" modification_key="svStandardLib_style_variation_macros2" description="XF2.3 Rewrite link to use link-post (for non-live)" execution_order="2147483641" enabled="1" action="str_replace">
+    <find><![CDATA[$live ? 'style-variation' : '']]></find>
+    <replace><![CDATA[$live ? 'style-variation' : 'link-post']]></replace>
+  </modification>
+  <modification type="public" template="svSignupAbuseBlocking_error_is_banned" modification_key="svStandardLib_svSignupAbuseBlocking_error_is_banne" description="XF2.1/XF2.2/XF2.3 Rewrite logout link to use link-post" execution_order="2147483640" enabled="1" action="str_replace">
+    <find><![CDATA[href="{{ link('login/logout', null, {'t': csrf_token()}) }}"]]></find>
+    <replace><![CDATA[href="{{ link('login/logout') }}" data-xf-click="link-post"]]></replace>
+  </modification>
+  <modification type="admin" template="template_edit" modification_key="svStandardLib_template_edit" description="Add &quot;View X template modifications&quot; link" execution_order="7915" enabled="1" action="preg_replace">
+    <find><![CDATA[#[\t ]*<xf:codeeditorrow name="template"#]]></find>
+    <replace><![CDATA[<xf:if is="1 || $svModificationCount > 0">
+	<xf:formrow rowtype="fullWidth">
+		<a href="{{ link('templates/view-modifications', $template, {'style_id': $style.style_id}) }}" target="_blank">{{ phrase('svStandardLib_view_x_template_modifications', {'count': $svModificationCount|number}) }}</a>
+	</xf:formrow>
+</xf:if>
+$0]]></replace>
+  </modification>
+</template_modifications>

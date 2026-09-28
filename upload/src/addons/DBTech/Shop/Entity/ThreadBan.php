@@ -2,8 +2,6 @@
 
 namespace DBTech\Shop\Entity;
 
-use XF\Entity\Thread;
-use XF\Entity\User;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 
@@ -13,15 +11,15 @@ use XF\Mvc\Entity\Structure;
  * @property int $user_id
  *
  * RELATIONS
- * @property-read Thread|null $Thread
- * @property-read User|null $User
+ * @property \XF\Entity\Thread $Thread
+ * @property \XF\Entity\User $User
  */
 class ThreadBan extends Entity
 {
 	/**
-	 * @param Structure $structure
+	 * @param \XF\Mvc\Entity\Structure $structure
 	 *
-	 * @return Structure
+	 * @return \XF\Mvc\Entity\Structure
 	 */
 	public static function getStructure(Structure $structure): Structure
 	{
@@ -34,17 +32,17 @@ class ThreadBan extends Entity
 		];
 		$structure->relations = [
 			'Thread' => [
-				'entity' => Thread::class,
+				'entity' => 'XF:Thread',
 				'type' => self::TO_ONE,
 				'conditions' => 'thread_id',
-				'primary' => true,
+				'primary' => true
 			],
 			'User' => [
-				'entity' => User::class,
+				'entity' => 'XF:User',
 				'type' => self::TO_ONE,
 				'conditions' => 'user_id',
-				'primary' => true,
-			],
+				'primary' => true
+			]
 		];
 		return $structure;
 	}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<routes>
+  <route route_type="admin" route_prefix="hide-bb-codes" format=":str&lt;bb_code_id&gt;/" controller="XenConcept\AdvancedHideBbCode:Hide" context="hideBbCode"/>
+</routes>

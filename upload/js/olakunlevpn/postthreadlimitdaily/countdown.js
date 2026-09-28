@@ -1,0 +1,104 @@
+/**
+ * Post Thread Limit Daily - Countdown Timer
+ */
+
+(function(window, document)
+{
+    'use strict';
+
+    // Define the countdown timer functionality
+    XF.PostThreadLimitCountdown = XF.Element.newHandler({
+        options: {
+            endTime: null
+        },
+
+        init: function() {
+            this.endTime = parseInt(this.options.endTime, 10);
+            this.target.style.visibility = 'hidden';
+
+            if (this.arePhrasesDefined()) {
+                this.startCountdown();
+            } else {
+                this.waitForPhrases();
+            }
+
+            return true;
+        },
+
+        arePhrasesDefined: function() {
+            return XF.phrase('olakunlevpn_ptld_days') !== 'olakunlevpn_ptld_days' &&
+                XF.phrase('olakunlevpn_ptld_hours') !== 'olakunlevpn_ptld_hours' &&
+                XF.phrase('olakunlevpn_ptld_minutes') !== 'olakunlevpn_ptld_minutes' &&
+                XF.phrase('olakunlevpn_ptld_seconds') !== 'olakunlevpn_ptld_seconds' &&
+                XF.phrase('olakunlevpn_ptld_can_post_again') !== 'olakunlevpn_ptld_can_post_again';
+        },
+
+        waitForPhrases: function() {
+            var self = this;
+            var checkInterval = setInterval(function() {
+                if (self.arePhrasesDefined()) {
+                    clearInterval(checkInterval);
+                    self.startCountdown();
+                }
+            }, 100);
+
+            setTimeout(function() {
+                clearInterval(checkInterval);
+                self.startCountdown();
+            }, 5000);
+        },
+
+        startCountdown: function() {
+            this.updateCountdown();
+            this.target.style.visibility = 'visible';
+            this.interval = setInterval(XF.proxy(this.updateCountdown, this), 1000);
+        },
+
+        updateCountdown: function() {
+            const now = Math.floor(Date.now() / 1000);
+            let timeLeft = this.endTime - now;
+
+            if (timeLeft <= 0) {
+                clearInterval(this.interval);
+                this.target.innerHTML = '<span class="ptld-reset">' + XF.phrase('olakunlevpn_ptld_can_post_again') + '</span>';
+
+                setTimeout(function() {
+                    window.location.reload();
+                }, 3000);
+
+                return;
+            }
+
+            const days = Math.floor(timeLeft / 86400);
+            timeLeft %= 86400;
+
+            const hours = Math.floor(timeLeft / 3600);
+            timeLeft %= 3600;
+
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+
+            let html = '';
+
+            if (days > 0) {
+                html += '<span class="ptld-time-unit ptld-days">' + days + ' ' + XF.phrase('olakunlevpn_ptld_days') + '</span> ';
+            }
+
+            if (hours > 0 || days > 0) {
+                html += '<span class="ptld-time-unit ptld-hours">' + hours + ' ' + XF.phrase('olakunlevpn_ptld_hours') + '</span> ';
+            }
+
+            if (minutes > 0 || hours > 0 || days > 0) {
+                html += '<span class="ptld-time-unit ptld-minutes">' + minutes + ' ' + XF.phrase('olakunlevpn_ptld_minutes') + '</span> ';
+            }
+
+            html += '<span class="ptld-time-unit ptld-seconds">' + seconds + ' ' + XF.phrase('olakunlevpn_ptld_seconds') + '</span>';
+
+            this.target.innerHTML = html;
+        }
+    });
+
+    // Register the handler with XenForo
+    XF.Element.register('post-thread-limit-countdown', 'XF.PostThreadLimitCountdown');
+
+})(window, document);

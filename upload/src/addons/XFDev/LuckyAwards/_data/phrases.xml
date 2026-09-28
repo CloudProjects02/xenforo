@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="admin_navigation.xfdev_lucky_awards" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Lucky Awards]]></phrase>
+  <phrase title="admin_navigation.xfdev_lucky_awards_manage" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Manage Lucky Awards]]></phrase>
+  <phrase title="admin_navigation.xfdev_lucky_awards_settings" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Lucky Awards Settings]]></phrase>
+  <phrase title="admin_navigation.xfdev_lucky_awards_users" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Lucky Award Winners]]></phrase>
+  <phrase title="lucky_award_dependent" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Depends on Lucky Award]]></phrase>
+  <phrase title="lucky_awards_dependent_explain" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Select Lucky Awards which user must win before winning this Lucky award]]></phrase>
+  <phrase title="option.xfdev_lucky_awards_enabled" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Enable Lucky Awards]]></phrase>
+  <phrase title="option.xfdev_lucky_awards_exclude_forums" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Excluded Forums]]></phrase>
+  <phrase title="option_explain.xfdev_lucky_awards_enabled" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Enable/Disable Lucky Awards System]]></phrase>
+  <phrase title="option_explain.xfdev_lucky_awards_exclude_forums" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Selects Forums to exclude form Receiving Lucky Awards]]></phrase>
+  <phrase title="option_group.xfdev_lucky_awards_options" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[XFDev - Lucky Awards]]></phrase>
+  <phrase title="option_group_description.xfdev_lucky_awards_options" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Configuration for Lucky Awards system]]></phrase>
+  <phrase title="xfdev_chances" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Chances]]></phrase>
+  <phrase title="xfdev_invalid_lucky_awards_specified" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Invalid Lucky Award Specified]]></phrase>
+  <phrase title="xfdev_lucky_award" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Lucky Award]]></phrase>
+  <phrase title="xfdev_lucky_award_active" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Enable Lucky Award]]></phrase>
+  <phrase title="xfdev_lucky_award_active_explain" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Check/Uncheck this box to enable/disable Lucky Award]]></phrase>
+  <phrase title="xfdev_lucky_award_award" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Select Award]]></phrase>
+  <phrase title="xfdev_lucky_award_award_explain" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Select Award which user will get on the Winning Chance]]></phrase>
+  <phrase title="xfdev_lucky_award_confirm_deletion" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Deleting Lucky Award will only delete the records of Lucky Award and Wining History, User will still own the Award he won through Lucky Awards]]></phrase>
+  <phrase title="xfdev_lucky_award_reason" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Reason of Winning]]></phrase>
+  <phrase title="xfdev_lucky_award_reason_explain" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Reason of Winning this Lucky Award]]></phrase>
+  <phrase title="xfdev_lucky_award_title" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Title]]></phrase>
+  <phrase title="xfdev_lucky_award_title_explain" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Enter Title for Lucky Award]]></phrase>
+  <phrase title="xfdev_lucky_awards" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Lucky Awards]]></phrase>
+  <phrase title="xfdev_lucky_awards_add" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Add Lucky Award]]></phrase>
+  <phrase title="xfdev_lucky_awards_chances_explain" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Enter Chances of Winning this Lucky Award]]></phrase>
+  <phrase title="xfdev_lucky_awards_edit" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Edit Lucky Award]]></phrase>
+  <phrase title="xfdev_lucky_awards_manage" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Manage Lucky Awards]]></phrase>
+  <phrase title="xfdev_lucky_awards_received_on" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Award Received On]]></phrase>
+  <phrase title="xfdev_lucky_awards_view_all_awards" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[View All Awards]]></phrase>
+  <phrase title="xfdev_lucky_awards_winners_list" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Lucky Award Winners]]></phrase>
+  <phrase title="xfedv_lucky_awards_chances" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[Chances of Winning]]></phrase>
+</phrases>

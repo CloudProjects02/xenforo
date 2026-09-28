@@ -1,0 +1,614 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="siropu_easy_user_ban_option_template_reasonOptions" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[<xf:formrow label="{$option.title}" explain="{$explainHtml}" hint="{$editHtml}" rowtype="input" hint="{$hintHtml}">
+	<ul class="listPlain inputGroup-container">
+		<xf:foreach loop="$option.option_value" value="$value">
+			<li class="inputGroup">
+				<xf:textbox name="{$inputName}[]" value="{$value}" />
+			</li>
+		</xf:foreach>
+		<li class="inputGroup" data-xf-init="field-adder" data-increment-format="{$inputName}[]">
+			<xf:textbox name="{$inputName}[]" rows="3" />
+		</li>
+	</ul>
+
+	{$listedHtml}
+</xf:formrow>]]></template>
+  <template type="admin" title="widget_def_options_siropu_eub_expiring_bans" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[<hr class="formRowSep" />
+
+<xf:numberboxrow name="options[limit]" value="{$options.limit}" min="1"
+	label="{{ phrase('siropu_easy_user_ban_limit') }}"
+	explain="{{ phrase('siropu_easy_user_ban_limit_explain') }}" />]]></template>
+  <template type="admin" title="widget_def_options_siropu_eub_recent_bans" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[<hr class="formRowSep" />
+
+<xf:numberboxrow name="options[limit]" value="{$options.limit}" min="1"
+	label="{{ phrase('siropu_easy_user_ban_limit') }}"
+	explain="{{ phrase('siropu_easy_user_ban_limit_explain') }}" />]]></template>
+  <template type="public" title="siropu_easy_user_ban_expiring_bans_widget" version_id="2010270" version_string="2.1.2"><![CDATA[<xf:css src="siropu_easy_user_ban_user_ban_list.less" />
+<xf:js src="siropu/eub/moderator.js" min="1" />
+
+<div class="block">
+	<div class="block-container">
+		<h3 class="block-header">{$title}</h3>
+		<ol class="block-body">
+			<xf:if is="$userBans is not empty">
+				<xf:foreach loop="$userBans" value="$ban">
+					<li class="block-row block-row--separated siropuEasyUserBanWidgetItem">
+						<xf:macro id="member_list_macros::item" arg-user="{$ban.User}" />
+						<xf:macro id="siropu_easy_user_ban_user_ban_list::ban_details" arg-ban="{$ban}" />
+					</li>
+				</xf:foreach>
+			<xf:else />
+				<div class="block-row">{{ phrase('siropu_easy_user_ban_no_expiring_bans') }}</div>
+			</xf:if>
+		</ol>
+	</div>
+</div>]]></template>
+  <template type="public" title="siropu_easy_user_ban_forum_bans" version_id="2010270" version_string="2.1.2"><![CDATA[<xf:if is="$forum is not empty">
+	<xf:title>{{ phrase('siropu_easy_user_ban_forum_bans:') }} {$forum.title}</xf:title>
+<xf:else />
+	<xf:title>{{ phrase('siropu_easy_user_ban_forum_bans') }}</xf:title>
+</xf:if>
+
+<xf:css src="siropu_easy_user_ban_user_ban_list.less" />
+<xf:js src="siropu/eub/moderator.js" min="1" />
+
+<xf:form action="{{ link('forums/user-bans') }}" class="block">
+	<div class="block-container">
+		<div class="block-body block-row">
+			<xf:textbox type="search" name="username" placeholder="{{ phrase('user_name...') }}" value="{$username}" class="input--inline" data-xf-init="auto-complete" data-single="true" />
+			<xf:button type="submit" icon="search">{{ phrase('find') }}</xf:button>
+		</div>
+	</div>
+</xf:form>
+
+<div class="block">
+	<div class="block-container">
+		<xf:macro id="siropu_easy_user_ban_macros::user_ban_type_tab" arg-type="forum" />
+		<ol class="block-body siropuEasyUserBan">
+			<xf:foreach loop="$bans" value="$ban">
+				<xf:set var="$extraData">
+					<xf:macro id="siropu_easy_user_ban_user_ban_list::ban_details" arg-ban="{$ban}" arg-type="forum" arg-forum="{$forum}" />
+				</xf:set>
+				<li class="block-row block-row--separated">
+					<xf:macro id="member_list_macros::item"
+							  arg-user="{$ban.User}"
+							  arg-extraData="{$extraData}"
+							  arg-extraDataBig="{{ true }}" />
+				</li>
+				<xf:else />
+				<li class="block-row">{{ phrase('there_no_banned_users') }}</li>
+			</xf:foreach>
+		</ol>
+	</div>
+	<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}" link="forums/user-bans" params="{$params}" wrapperclass="block-outer block-outer--after" />
+</div>]]></template>
+  <template type="public" title="siropu_easy_user_ban_ip_ban" version_id="2010070" version_string="2.1.0"><![CDATA[<xf:title>{{ phrase('add_ip_ban') }}</xf:title>
+
+<xf:form action="{{ link('members/ban-ip') }}" ajax="true" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:textboxrow name="ip" value="{$ip.ip|ip}"
+				label="{{ phrase('ip_to_ban') }}"
+				explain="{{ phrase('you_may_enter_partial_ip_v4_v6') }}"
+				dir="ltr" />
+			<xf:textboxrow name="reason" maxlength="{{ max_length($ip, 'reason') }}"
+				label="{{ phrase('reason') }}"
+				hint="{{ phrase('optional') }}" />
+		</div>
+		<xf:submitrow icon="save" />
+	</div>
+</xf:form>]]></template>
+  <template type="public" title="siropu_easy_user_ban_macros" version_id="2010270" version_string="2.1.2"><![CDATA[<xf:macro id="ban_options">
+	<hr class="formRowSep" />
+
+	<xf:radiorow name="ban_length" value="perm" label="{{ phrase('ban_length') }}">
+		<xf:option value="perm">{{ phrase('permanent') }}</xf:option>
+		<xf:option value="temp" label="{{ phrase('temporary') }}" data-hide="true">
+			<xf:dependent>
+				<div class="inputGroup" style="margin-bottom: 5px;">
+					<xf:numberbox name="length_value" min="1" />
+					<span class="inputGroup-splitter"></span>
+					<xf:select name="length_unit" value="hours" class="input--autoSize">
+						<xf:option value="minutes" style="display: none;">{{ phrase('units_minutes') }}</xf:option>
+						<xf:option value="hours">{{ phrase('units_hours') }}</xf:option>
+						<xf:option value="days">{{ phrase('units_days') }}</xf:option>
+						<xf:option value="months">{{ phrase('units_months') }}</xf:option>
+					</xf:select>
+				</div>
+				<xf:dateinput name="end_date" placeholder="{{ phrase('until...') }}" class="input--autoSize" />
+			</xf:dependent>
+		</xf:option>
+	</xf:radiorow>
+
+	<xf:formrow label="{{ phrase('reason_for_banning') }}">
+		<xf:if is="$xf.options.siropuEasyUserBanReasonOptions is not empty">
+			<xf:radio name="reason" data-xf-init="siropu-easy-user-ban-reason-options" style="margin-bottom: 10px;">
+				<xf:foreach loop="$xf.options.siropuEasyUserBanReasonOptions" value="$reason">
+					<xf:option value="{$reason}">{$reason}</xf:option>
+				</xf:foreach>
+			</xf:radio>
+		</xf:if>
+
+		<xf:textbox name="ban_reason" required="{{ $xf.options.siropuEasyUserBanRequireReason ? 'required' : '' }}" />
+	</xf:formrow>
+	<xf:if is="$xf.visitor.hasPermission('siropuEasyUserBanMod', 'banIps')">
+		<xf:checkboxrow>
+			<xf:option name="ban_ip" value="1">{{ phrase('siropu_easy_user_ban_ban_ips') }}</xf:option>
+		</xf:checkboxrow>
+	</xf:if>
+</xf:macro>
+
+<xf:macro id="action_link" arg-user="!" arg-thread="" arg-post="" arg-cssClass="actionBar-action"><xf:trim>
+	<xf:if is="!$user AND $post AND $xf.visitor.hasPermission('siropuEasyUserBanMod', 'banIps')">
+		<a href="{{ link('members/ban-ip', '', {'ip_id': $post.ip_id}) }}" class="{$cssClass}" data-xf-click="overlay">{{ phrase('siropu_easy_user_ban_ban_ip') }}</a>
+	<xf:elseif is="!$user.is_admin AND $user.user_id != $xf.visitor.user_id" />
+		<xf:set var="$canUnban" value="{$xf.visitor.hasPermission('siropuEasyUserBanMod', 'unban')}" />
+		<xf:set var="$attributes">data-eub-user-id="{$user.user_id}"<xf:if is="$thread"> data-eub-thread-id="{$thread.thread_id}"</xf:if></xf:set>
+		<xf:if is="$canUnban AND $user.is_banned">
+			<a href="{{ $thread ? link('members/quick-unban', $user, {'thread_id': $thread.thread_id, 'ban_type': 'board'}) : link('members/quick-unban', $user) }}" class="{$cssClass}" data-xf-click="overlay" {$attributes} data-cache="false">{{ phrase('lift_ban') }}</a>
+		<xf:elseif is="$canUnban AND $thread AND $user AND $user.isForumIdBanned($thread.node_id)" />
+			<a href="{{ link('members/quick-unban', $user, {'node_id': $thread.node_id, 'ban_type': 'forum'}) }}" class="{$cssClass}" data-xf-click="overlay" {$attributes} data-cache="false">{{ phrase('lift_ban') }}</a>
+		<xf:elseif is="$canUnban AND $thread AND $user AND $user.isThreadIdBanned($thread.thread_id)" />
+			<a href="{{ link('members/quick-unban', $user, {'thread_id': $thread.thread_id, 'ban_type': 'thread'}) }}" class="{$cssClass}" data-xf-click="overlay" {$attributes} data-cache="false">{{ phrase('lift_ban') }}</a>
+		<xf:elseif is="$xf.visitor.hasPermission('siropuEasyUserBanMod', 'ban')" />
+			<a href="{{ $thread ? link('members/quick-ban', $user, {'thread_id': $thread.thread_id}) : link('members/quick-ban', $user) }}" class="{$cssClass}" data-xf-click="overlay" {$attributes} data-cache="false">{{ phrase('ban') }}</a>
+		</xf:if>
+	</xf:if>
+</xf:trim></xf:macro>
+
+<xf:macro id="ban_notice"><xf:trim>
+	<xf:if is="$xf.visitor.is_banned AND $xf.options.siropuEasyUserBanNotice">
+		<div class="blockMessage blockMessage--important">
+			{$xf.options.siropuEasyUserBanNotice|raw}
+		</div>
+	</xf:if>
+</xf:trim></xf:macro>
+
+<xf:macro id="post_banned_user" arg-post="!" arg-thread="!">
+	<xf:css src="message.less" />
+	<div class="message message--banned message--post{{ $post.isIgnored() ? ' is-ignored' : '' }}{{ $post.isUnread() ? ' is-unread' : '' }} js-post js-inlineModContainer"
+		data-author="{{ $post.User.username ?: $post.username }}"
+		data-content="post-{$post.post_id}">
+
+		<span class="u-anchorTarget" id="post-{$post.post_id}"></span>
+		<div class="message-inner">
+			<div class="message-cell message-cell--user">
+				<xf:macro template="message_macros" name="user_info_simple" arg-user="{$post.User}" arg-fallbackName="{$post.username}" />
+			</div>
+			<div class="message-cell message-cell--main">
+				<div class="message-attribution">
+					<ul class="listInline listInline--bullet message-attribution-main">
+						<li><a href="{{ link('threads/post', $thread, {'post_id': $post.post_id}) }}" class="u-concealed" rel="nofollow"><xf:date time="{$post.post_date}" /></a></li>
+						<li><xf:username user="$post.User" default="$post.username" class="u-concealed" /></li>
+					</ul>
+				</div>
+
+				<div class="messageNotice messageNotice--ignored">
+					<ul class="listInline listInline--bullet listInline--selfInline">
+						<li>
+							{{ phrase('siropu_easy_user_ban_post_hidden_due_to_ban') }}
+							<xf:if is="$xf.visitor.hasPermission('siropuEasyUserBan', 'viewPostContent')">
+								<a href="{{ link('posts/show', $post) }}" class="u-jsOnly" data-xf-click="inserter" data-replace="[data-content=post-{$post.post_id}]">{{ phrase('show...') }}</a>
+							</xf:if>
+						</li>
+					</ul>
+
+					<xf:if is="$post.canUseInlineModeration()">
+						<span style="display: none">
+							<!-- this can be actioned on the full post -->
+							<xf:checkbox standalone="true">
+								<xf:option value="{$post.post_id}" class="js-inlineModToggle"
+									hiddenlabel="true" />
+							</xf:checkbox>
+						</span>
+					</xf:if>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<xf:ad position="post_below_container" arg-post="{$post}" />
+</xf:macro>
+
+<xf:macro id="user_ban_type_tab" arg-type="!">
+	<xf:if is="$xf.visitor.hasPermission('siropuEasyUserBan', 'viewForumBans') AND $xf.visitor.hasPermission('siropuEasyUserBan', 'viewThreadBans')">
+		<h2 class="block-tabHeader tabs">
+			<a href="{{ link('forums/user-bans') }}" class="tabs-tab{{ $type == 'forum' ? ' is-active' : '' }}">{{ phrase('siropu_easy_user_ban_forum_bans') }}</a>
+			<a href="{{ link('threads/user-bans') }}" class="tabs-tab{{ $type == 'thread' ? ' is-active' : '' }}">{{ phrase('siropu_easy_user_ban_thread_bans') }}</a>
+		</h2>
+	</xf:if>
+</xf:macro>]]></template>
+  <template type="public" title="siropu_easy_user_ban_manage_bans" version_id="2010270" version_string="2.1.2"><![CDATA[<xf:title>{{ phrase('siropu_easy_user_ban_manage_bans') }}</xf:title>
+
+<xf:js src="siropu/eub/moderator.js" min="1" />
+
+<xf:if is="$xf.visitor.hasPermission('siropuEasyUserBanMod', 'viewLog')">
+	<xf:pageaction>
+		<xf:button href="{{ link('members/moderator-log') }}" fa="fa-arrow-right">{{ phrase('moderator_log') }}</xf:button>
+	</xf:pageaction>
+</xf:if>
+
+<xf:form action="{{ link('members/manage-bans') }}" class="block" ajax="true" data-force-flash-message="true">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:textboxrow name="username" label="{{ phrase('user_name') }}"
+						   explain="{{ phrase('siropu_easy_user_ban_username_explain') }}"
+						   data-xf-init="auto-complete"
+						   required="required" />
+
+			<xf:radiorow name="action" value="ban" label="{{ phrase('action') }}" data-xf-init="siropu-easy-user-ban-action">
+				<xf:option value="ban">{{ phrase('ban') }}</xf:option>
+				<xf:option value="unban">{{ phrase('lift_ban') }}</xf:option>
+			</xf:radiorow>
+
+			<div id="seubBanOptions">
+				<xf:macro id="siropu_easy_user_ban_macros::ban_options" />
+			</div>
+		</div>
+		<xf:hiddenval name="ban_type">board</xf:hiddenval>
+		<xf:submitrow icon="submit" />
+	</div>
+</xf:form>]]></template>
+  <template type="public" title="siropu_easy_user_ban_moderator_log" version_id="2010270" version_string="2.1.2"><![CDATA[<xf:title>{{ phrase('moderator_log') }}</xf:title>
+
+<xf:pageaction>
+	<xf:button href="{{ link('members/manage-bans') }}" fa="fa-arrow-left">{{ phrase('siropu_easy_user_ban_manage_bans') }}</xf:button>
+</xf:pageaction>
+
+<xf:if is="$entries is not empty || $linkParams is not empty">
+	<xf:form action="{{ link('members/moderator-log') }}" class="block">
+		<div class="block-container">
+			<div class="block-body block-row">
+				<span>
+					{{ phrase('filter_by_user:') }}
+					<xf:select name="user_id" value="{$userId}" class="input--inline">
+						<xf:option value="0">{{ phrase('any') }}</xf:option>
+						<xf:options source="$logUsers" />
+					</xf:select>
+				</span>
+
+				<xf:button type="submit">{{ phrase('filter') }}</xf:button>
+			</div>
+		</div>
+	</xf:form>
+
+	<div class="block">
+		<div class="block-container">
+			<div class="block-body">
+				<xf:datalist data-xf-init="responsive-data-list">
+					<xf:datarow rowtype="header">
+						<xf:cell>{{ phrase('date') }}</xf:cell>
+						<xf:cell>{{ phrase('type') }}</xf:cell>
+						<xf:cell>{{ phrase('action') }}</xf:cell>
+						<xf:cell>{{ phrase('ban_length') }}</xf:cell>
+						<xf:cell>{{ phrase('banned_ip_addresses') }}</xf:cell>
+						<xf:cell></xf:cell>
+					</xf:datarow>
+					<xf:foreach loop="$entries" value="$entry">
+						<xf:datarow>
+							<xf:cell><xf:date time="$entry.date" /></xf:cell>
+							<xf:cell>{$entry.ban_type_phrase}</xf:cell>
+							<xf:cell>
+								<xf:macro name="log_action" arg-entry="{$entry}" />
+								<xf:if is="$entry.isForumBan()">
+									<div class="u-smaller">
+										<xf:if is="$entry.Forum">
+											<a href="{{ link('forums', $entry.Forum) }}">{$entry.Forum.title}</a>
+										<xf:else />
+											{{ phrase('n_a') }}
+										</xf:if>
+									</div>
+								<xf:elseif is="$entry.isThreadBan()" />
+									<div class="u-smaller">
+										<xf:if is="$entry.Thread">
+											<a href="{{ link('threads', $entry.Thread) }}">{$entry.Thread.title}</a>
+										<xf:else />
+											{{ phrase('n_a') }}
+										</xf:if>
+									</div>
+								</xf:if>
+							</xf:cell>
+							<xf:cell>{$entry.ban_length}</xf:cell>
+							<xf:cell>{$entry.ban_ips}</xf:cell>
+							<xf:if is="$xf.visitor.hasPermission('siropuEasyUserBanMod', 'deleteLogs')">
+								<xf:delete href="{{ link('members/moderator-log/delete', $entry) }}" overlay="true" />
+							</xf:if>
+						</xf:datarow>
+					</xf:foreach>
+				</xf:datalist>
+			</div>
+			<div class="block-footer">
+				<span class="block-footer-counter">{{ display_totals($entries, $total) }}</span>
+			</div>
+		</div>
+
+		<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+			link="members/moderator-log" params="{$linkParams}"
+			wrapperclass="block-outer block-outer--after" />
+	</div>
+<xf:else />
+	<div class="blockMessage">{{ phrase('no_entries_have_been_logged') }}</div>
+</xf:if>
+
+<xf:macro id="log_action" arg-entry="!">
+	<xf:if is="$entry.isBan()">
+		{{ phrase('siropu_easy_user_ban_log_action_ban', {
+			'moderator': username_link($entry.Moderator),
+			'user': username_link($entry.User),
+			'reason': '<span class="u-muted">' . $entry.ban_reason . '</span>'
+		}) }}
+	<xf:else />
+		{{ phrase('siropu_easy_user_ban_log_action_unban', {
+			'moderator': username_link($entry.Moderator),
+			'user': username_link($entry.User)
+		}) }}
+	</xf:if>
+</xf:macro>]]></template>
+  <template type="public" title="siropu_easy_user_ban_moderator_log_delete" version_id="2010270" version_string="2.1.2"><![CDATA[<xf:title>{{ phrase('confirm_action') }}</xf:title>
+
+<xf:form action="{{ link('members/moderator-log/delete', $entry) }}" ajax="true" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:inforow rowtype="confirm">
+				{{ phrase('please_confirm_that_you_want_to_delete_following:') }}
+				<strong><xf:macro id="siropu_easy_user_ban_moderator_log::log_action" arg-entry="{$entry}" /></strong>
+			</xf:inforow>
+		</div>
+		<xf:submitrow rowtype="simple" icon="delete" />
+	</div>
+</xf:form>]]></template>
+  <template type="public" title="siropu_easy_user_ban_quick_ban" version_id="2010270" version_string="2.1.2"><![CDATA[<xf:title>{{ phrase('ban:') }} {$user.username}</xf:title>
+
+<xf:js src="siropu/eub/moderator.js" min="1" />
+
+<xf:form action="{{ link('members/quick-ban', $user) }}" class="block" ajax="true" data-force-flash-message="true" data-xf-init="siropu-easy-user-ban-quick-action">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:if is="($xf.options.siropuEasyUserBanThread || $xf.options.siropuEasyUserBanForum) AND $thread is not empty">
+				<xf:radiorow name="ban_type" label="{{ phrase('siropu_easy_user_ban_type') }}" value="board">
+					<xf:option value="board">{{ phrase('siropu_easy_user_ban_board') }} <br><span class="u-muted u-smaller">{{ phrase('siropu_easy_user_ban_global') }}</span></xf:option>
+					<xf:if is="$xf.options.siropuEasyUserBanForum">
+						<xf:option value="forum">{{ phrase('forum') }} <br><span class="u-muted u-smaller">{$thread.Forum.title}</span></xf:option>
+					</xf:if>
+					<xf:if is="$xf.options.siropuEasyUserBanThread">
+						<xf:option value="thread">{{ phrase('thread') }} <br><span class="u-muted u-smaller">{$thread.title}</span></xf:option>
+					</xf:if>
+				</xf:radiorow>
+				<xf:hiddenval name="node_id">{$thread.Forum.node_id}</xf:hiddenval>
+				<xf:hiddenval name="thread_id">{$thread.thread_id}</xf:hiddenval>
+			<xf:else />
+				<xf:hiddenval name="ban_type">board</xf:hiddenval>
+			</xf:if>
+			<xf:macro id="siropu_easy_user_ban_macros::ban_options" />
+		</div>
+		<xf:submitrow submit="{{ phrase('ban') }}" />
+	</div>
+</xf:form>]]></template>
+  <template type="public" title="siropu_easy_user_ban_quick_unban" version_id="2010070" version_string="2.1.0"><![CDATA[<xf:title>{{ phrase('lift_ban:') }} {$userBan.User.username}</xf:title>
+
+<xf:js src="siropu/eub/moderator.js" min="1" />
+
+<xf:form action="{{ link('members/quick-unban', $userBan.User) }}" class="block" ajax="true" data-force-flash-message="true" data-xf-init="siropu-easy-user-ban-quick-action">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:inforow rowtype="confirm">
+				{{ phrase('please_confirm_that_you_want_to_lift_ban_on_following_user:') }}
+				<strong>{$userBan.User.username}</strong>
+			</xf:inforow>
+			<xf:if is="$thread is not empty">
+				<xf:if is="$banType == 'thread'">
+					<xf:formrow label="{{ phrase('thread') }}">
+						<a href="{{ link('threads', $thread) }}">{$thread.title}</a>
+					</xf:formrow>
+				</xf:if>
+				<xf:hiddenval name="thread_id">{$thread.thread_id}</xf:hiddenval>
+			<xf:elseif is="$forum is not empty AND $banType == 'forum'" />
+				<xf:formrow label="{{ phrase('forum') }}">
+					<a href="{{ link('forums', $forum) }}">{$forum.title}</a>
+				</xf:formrow>
+				<xf:hiddenval name="node_id">{$forum.node_id}</xf:hiddenval>
+			</xf:if>
+			<xf:formrow label="{{ phrase('banned_by') }}">
+				<xf:username user="$userBan.BanUser" rich="true" />
+			</xf:formrow>
+			<xf:formrow label="{{ phrase('ban_started') }}">{{ date_time($userBan.ban_date) }}</xf:formrow>
+			<xf:formrow label="{{ phrase('ban_ends') }}">
+				{{ $userBan.end_date ? date_time($userBan.end_date) : phrase('never') }}
+			</xf:formrow>
+
+			<xf:if is="$userBan.user_reason">
+				<xf:formrow label="{{ phrase('reason_for_ban') }}">
+					{$userBan.user_reason}
+				</xf:formrow>
+			</xf:if>
+		</div>
+		<xf:hiddenval name="ban_type">{$banType}</xf:hiddenval>
+		<xf:submitrow submit="{{ phrase('lift_ban') }}" rowtype="simple" />
+	</div>
+</xf:form>]]></template>
+  <template type="public" title="siropu_easy_user_ban_recent_bans_widget" version_id="2010270" version_string="2.1.2"><![CDATA[<xf:css src="siropu_easy_user_ban_user_ban_list.less" />
+<xf:js src="siropu/eub/moderator.js" min="1" />
+
+<div class="block">
+	<div class="block-container">
+		<h3 class="block-header">{$title}</h3>
+		<ol class="block-body">
+			<xf:if is="$userBans is not empty">
+				<xf:foreach loop="$userBans" value="$ban">
+					<li class="block-row block-row--separated siropuEasyUserBanWidgetItem">
+						<xf:macro id="member_list_macros::item" arg-user="{$ban.User}" />
+						<xf:macro id="siropu_easy_user_ban_user_ban_list::ban_details" arg-ban="{$ban}" />
+					</li>
+				</xf:foreach>
+			<xf:else />
+				<div class="block-row">{{ phrase('siropu_easy_user_ban_no_recent_bans') }}</div>
+			</xf:if>
+		</ol>
+	</div>
+</div>]]></template>
+  <template type="public" title="siropu_easy_user_ban_thread_bans" version_id="2010270" version_string="2.1.2"><![CDATA[<xf:if is="$thread is not empty">
+	<xf:title>{{ phrase('siropu_easy_user_ban_thread_bans:') }} {$thread.title}</xf:title>
+<xf:else />
+	<xf:title>{{ phrase('siropu_easy_user_ban_thread_bans') }}</xf:title>
+</xf:if>
+
+<xf:css src="siropu_easy_user_ban_user_ban_list.less" />
+<xf:js src="siropu/eub/moderator.js" min="1" />
+
+<xf:form action="{{ link('threads/user-bans') }}" class="block">
+	<div class="block-container">
+		<div class="block-body block-row">
+			<xf:textbox type="search" name="username" placeholder="{{ phrase('user_name...') }}" value="{$username}" class="input--inline" data-xf-init="auto-complete" data-single="true" />
+			<xf:button type="submit" icon="search">{{ phrase('find') }}</xf:button>
+		</div>
+	</div>
+</xf:form>
+
+<div class="block">
+	<div class="block-container">
+		<xf:macro id="siropu_easy_user_ban_macros::user_ban_type_tab" arg-type="thread" />
+		<ol class="block-body siropuEasyUserBan">
+			<xf:foreach loop="$bans" value="$ban">
+				<xf:set var="$extraData">
+					<xf:macro id="siropu_easy_user_ban_user_ban_list::ban_details" arg-ban="{$ban}" arg-type="thread" arg-thread="{$thread}" />
+				</xf:set>
+				<li class="block-row block-row--separated">
+					<xf:macro id="member_list_macros::item"
+							  arg-user="{$ban.User}"
+							  arg-extraData="{$extraData}"
+							  arg-extraDataBig="{{ true }}" />
+				</li>
+				<xf:else />
+				<li class="block-row">{{ phrase('there_no_banned_users') }}</li>
+			</xf:foreach>
+		</ol>
+	</div>
+	<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}" link="threads/user-bans" params="{$params}" wrapperclass="block-outer block-outer--after" />
+</div>]]></template>
+  <template type="public" title="siropu_easy_user_ban_thread_notification_ban" version_id="2010270" version_string="2.1.2"><![CDATA[<xf:trim><xf:if is="$ban.BanUser">
+	{{ phrase('siropu_easy_user_ban_user_x_has_been_banned_by_x', {'user': '[USER=' . $ban.user_id . ']' . $ban.User.username . '[/USER]', 'moderator': '[USER=' . $ban.ban_user_id . ']' . $ban.BanUser.username . '[/USER]'}) }}
+<xf:else />
+	{{ phrase('siropu_easy_user_ban_user_x_has_been_banned_by_warning', {'user': '[USER=' . $ban.user_id . ']' . $ban.User.username . '[/USER]'}) }}
+</xf:if></xf:trim>
+<xf:trim><xf:if is="$ban.getBanType() == 'thread'">
+	[QUOTE][B]{{ phrase('thread:') }}[/B] [URL='{{ link('canonical:threads', $ban.Thread) }}']{$ban.Thread.title}[/URL][/QUOTE]
+<xf:elseif is="$ban.getBanType() == 'forum'" />
+	[QUOTE][B]{{ phrase('forum:') }}[/B] [URL='{{ link('canonical:forums', $ban.Forum) }}']{$ban.Forum.title}[/URL][/QUOTE]
+</xf:if></xf:trim>
+	[QUOTE][B]{{ phrase('ban_started:') }}[/B] {{ date_time($ban.ban_date, 'absolute') }}[/QUOTE]
+	[QUOTE][B]{{ phrase('ban_ends:') }}[/B] {{ $ban.end_date ? date_time($ban.end_date, 'absolute') : phrase('never') }}[/QUOTE]
+<xf:trim><xf:if is="$ban.user_reason">
+	[QUOTE][B]{{ phrase('reason_for_ban:') }}[/B] {$ban.user_reason}[/QUOTE]
+</xf:if></xf:trim>]]></template>
+  <template type="public" title="siropu_easy_user_ban_thread_notification_unban" version_id="2010070" version_string="2.1.0"><![CDATA[<xf:trim><xf:if is="!$ban.end_date || $ban.end_date > $xf.time">
+	{{ phrase('siropu_easy_user_ban_user_x_has_been_unbanned_by_x', {'user': '[USER=' . $ban.user_id . ']' . $ban.User.username . '[/USER]', 'moderator': '[USER=' . $xf.visitor.user_id . ']' . $xf.visitor.username . '[/USER]'}) }}
+<xf:else />
+	{{ phrase('siropu_easy_user_ban_user_x_has_been_unbanned_by_the_system', {'user': '[USER=' . $ban.user_id . ']' . $ban.User.username . '[/USER]'}) }}
+</xf:if></xf:trim>
+<xf:trim><xf:if is="$ban.getBanType() == 'thread'">
+	[QUOTE][B]{{ phrase('thread:') }}[/B] [URL='{{ link('canonical:threads', $ban.Thread) }}']{$ban.Thread.title}[/URL][/QUOTE]
+<xf:elseif is="$ban.getBanType() == 'forum'" />
+	[QUOTE][B]{{ phrase('forum:') }}[/B] [URL='{{ link('canonical:forums', $ban.Forum) }}']{$ban.Forum.title}[/URL][/QUOTE]
+</xf:if></xf:trim>]]></template>
+  <template type="public" title="siropu_easy_user_ban_user_ban_list" version_id="2010270" version_string="2.1.2"><![CDATA[<xf:title>{{ phrase('banned_users') }}</xf:title>
+
+<xf:css src="siropu_easy_user_ban_user_ban_list.less" />
+<xf:js src="siropu/eub/moderator.js" min="1" />
+
+<xf:pageaction>
+	<div class="buttonGroup">
+		<div class="buttonGroup-buttonWrapper">
+			<xf:button href="{{ link('forums/user-bans') }}" class="button--primary"><xf:fa icon="far fa-arrow-right" /> {{ phrase('siropu_easy_user_ban_forum_bans') }}</xf:button>
+			<xf:button href="{{ link('threads/user-bans') }}" class="button--primary"><xf:fa icon="far fa-arrow-right" /> {{ phrase('siropu_easy_user_ban_thread_bans') }}</xf:button>
+		</div>
+	</div>
+</xf:pageaction>
+
+<xf:form action="{{ link('members/banned', '', {'type': $banType}) }}" class="block">
+	<div class="block-container">
+		<div class="block-body block-row">
+			<xf:textbox type="search" name="username" placeholder="{{ phrase('user_name...') }}" value="{$username}" class="input--inline" />
+			<xf:button type="submit" icon="search">{{ phrase('find') }}</xf:button>
+		</div>
+	</div>
+</xf:form>
+
+<div clas="block">
+	<div class="block-container">
+		<h2 class="block-tabHeader tabs">
+			<a href="{{ link('members/banned') }}" class="tabs-tab{{ $banType == '' ? ' is-active' : '' }}">{{ phrase('all') }}</a>
+			<a href="{{ link('members/banned', '', {'type': 'temp'}) }}" class="tabs-tab{{ $banType == 'temp' ? ' is-active' : '' }}">{{ phrase('temporary') }}</a>
+			<a href="{{ link('members/banned', '', {'type': 'perm'}) }}" class="tabs-tab{{ $banType == 'perm' ? ' is-active' : '' }}">{{ phrase('permanent') }}</a>
+		</h2>
+		<ol class="block-body siropuEasyUserBan">
+			<xf:foreach loop="$userBans" value="$ban">
+				<xf:set var="$extraData">
+					<xf:macro id="ban_details" arg-ban="{$ban}" />
+				</xf:set>
+				<li class="block-row block-row--separated">
+					<xf:macro id="member_list_macros::item"
+							  arg-user="{$ban.User}"
+							  arg-extraData="{$extraData}"
+							  arg-extraDataBig="{{ true }}" />
+				</li>
+				<xf:else />
+				<li class="block-row">{{ phrase('there_no_banned_users') }}</li>
+			</xf:foreach>
+		</ol>
+	</div>
+
+	<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}" link="members/banned" wrapperclass="block-outer block-outer--after" />
+</div>
+
+<xf:widgetpos id="siropu_easy_user_ban_list_sidebar" position="sidebar" />
+
+<xf:macro id="ban_details" arg-ban="!" arg-type="board" arg-thread="" arg-forum="">
+	<xf:if contentcheck="true">
+		<div class="siropuEasyUserBanBanDetails">
+			<xf:contentcheck>
+				<xf:if is="$xf.options.siropuEasyUserBanDisplayBanDetails">
+					<xf:if is="$type == 'thread' AND $thread is empty">
+						<b>{{ phrase('thread:') }}</b> <a href="{{ link('threads', $ban.Thread) }}" class="u-concealed">{$ban.Thread.title}</a><br>
+					<xf:elseif is="$type == 'forum' AND $forum is empty" />
+						<b>{{ phrase('forum:') }}</b> <a href="{{ link('forums', $ban.Forum) }}" class="u-concealed">{$ban.Forum.title}</a><br>
+					</xf:if>
+					<b>{{ phrase('ban_ends:') }}</b> {{ $ban.end_date ? date_time($ban.end_date) : phrase('never') }}
+					<br>
+					<b>{{ phrase('banned_by:') }}</b> <xf:username user="$ban.BanUser" rich="true" class="u-concealed" />, <xf:date time="$ban.ban_date" />
+					<xf:if is="$ban.user_reason AND $xf.visitor.hasPermission('siropuEasyUserBan', 'viewBanReason')">
+						<br>
+						<b>{{ phrase('reason_for_banning:') }}</b> <a role="button" data-xf-click="siropu-easy-user-ban-toggle-reason" class="u-concealed">{{ phrase('view') }}</a>
+						<div class="siropuEasyUserBanBanReason">{$ban.user_reason}</div>
+					</xf:if>
+				</xf:if>
+				<xf:if is="$xf.visitor.hasPermission('siropuEasyUserBanMod', 'unban')">
+					<br>
+					<a href="{{ link('members/quick-unban', $ban.User, $ban.getLinkParams()) }}" data-xf-click="overlay">{{ phrase('lift_ban') }}</a>
+				</xf:if>
+			</xf:contentcheck>
+		</div>
+	</xf:if>
+</xf:macro>]]></template>
+  <template type="public" title="siropu_easy_user_ban_user_ban_list.less" version_id="2000031" version_string="2.0.0 Beta 1"><![CDATA[.siropuEasyUserBan .contentRow-extra--largest
+{
+	text-align: right;
+}
+.siropuEasyUserBanBanDetails
+{
+	font-size: 12px;
+	font-weight: normal;
+	
+	.siropuEasyUserBanWidgetItem &
+	{
+		margin-top: 10px;
+	}
+}
+.siropuEasyUserBanBanReason
+{
+	display: none;
+	margin-top: 5px;
+	max-width: 400px;
+}]]></template>
+</templates>
+ 		  	   				  		 	 	  	  	  		 	  	   			   	  		 			 		 				  		 				   		 				 		  	 	 	   		  			   	 		 	  		 		  	 	 	  		  	 

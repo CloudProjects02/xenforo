@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="mrd_xfrm_resource_view_download_list" version_id="2010370" version_string="2.1.3"><![CDATA[<xf:title>{{ phrase('attachment_browser') }}</xf:title>
+
+<xf:form action="{{ link('resource-manager/downloads') }}" class="block">
+	<div class="block-container">
+        <div class="block-body block-row">
+			<span>
+				{{ phrase('filter_by_user:') }}
+				<xf:textbox name="username" value="{{ $linkFilters.user_id ? $linkFilters.username : '' }}" ac="single"
+                            maxlength="{{ max_length($xf.visitor, 'username') }}" class="input" style="width: 240px; display:inline-block" />
+			</span>
+
+            <span>
+				{{ phrase('mrd_filter_by_resource:') }}
+				<xf:select name="resource_id" value="{$linkFilters.resource_id}" class="input--inline">
+					<xf:option value="0">{{ phrase('any') }}</xf:option>
+					<xf:options source="$resources" />
+				</xf:select>
+			</span>
+
+            <xf:button type="submit">{{ phrase('filter') }}</xf:button>
+        </div>
+    </div>
+</xf:form>
+
+<xf:if is="$downloads is not empty">
+    <div class="block">
+        <div class="block-outer">
+            <xf:macro template="filter_macros" name="quick_filter" arg-class="block-outer-opposite" />
+        </div>
+
+        <div class="block-container">
+            <div class="block-body">
+                <xf:datalist data-xf-init="responsive-data-list">
+                    <xf:datarow rowtype="header">
+						<xf:cell>{{ phrase('xfrm_resource') }}</xf:cell>
+                        <xf:cell>{{ phrase('mrd_xfrm_resource_username') }}</xf:cell>
+						<xf:cell>{{ phrase('xfrm_version_number') }}</xf:cell>
+                        <xf:cell>{{ phrase('date') }}</xf:cell>
+                    </xf:datarow>
+                    <xf:foreach loop="$downloads" value="$download">
+                        <xf:datarow>
+							<xf:cell><a href="{{ link_type('public', 'resources', $download.Resource) }}">{$download.Resource.title}</a></xf:cell>
+                            <xf:cell><xf:username user="$download.User" href="{{ link('users/edit', $download.User) }}" /></xf:cell>
+                            <xf:cell>{{$download.Version.version_string}}</xf:cell>
+							<xf:cell><xf:date time="{$download.last_download_date}" /></xf:cell>
+                        </xf:datarow>
+                    </xf:foreach>
+                </xf:datalist>
+            </div>
+            <div class="block-footer">
+                <span class="block-footer-counter">{{ display_totals($downloads, $total) }}</span>
+            </div>
+        </div>
+        <xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+                    link="resource-manager/downloads" params="{$linkFilters}"
+                    wrapperclass="block-outer block-outer--after" />
+    </div>
+    <xf:else />
+    <div class="blockMessage">{{ phrase('no_entries_have_been_logged') }}</div>
+</xf:if>]]></template>
+  <template type="public" title="mrd_downloader_view" version_id="2010370" version_string="2.1.3"><![CDATA[<xf:title page="{$page}">{{ phrase('mrd_resources_download_by_x', {'name': $user.username}) }}</xf:title>
+
+<xf:if is="$resources is not empty">
+	<div class="block">
+		<div class="block-outer">
+			<xf:trim>
+				<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+							link="resources/resource-downloaded" data="{$user}"
+							wrapperclass="block-outer-main" />
+			</xf:trim>
+		</div>
+		<div class="block-container">
+			<div class="block-body">
+				<div class="structItemContainer">
+					<xf:foreach loop="$resources" value="$resource">						
+						<xf:macro template="xfrm_resource_list_macros" name="resource"
+								  arg-allowInlineMod="{{ false }}"
+								  arg-resource="{$resource.Resource}"
+								  arg-extraInfo="{{ phrase('mrd_last_download_in_x', {'time':date_time($resource.last_download_date)}) }}" />
+					</xf:foreach>
+				</div>
+			</div>
+		</div>
+		<div class="block-outer block-outer--after">
+			<xf:pagenav
+				page="{$page}" perpage="{$perPage}" total="{$total}"
+				link="resources/resource-downloaded" data="{$user}"
+				wrapperclass="block-outer-main" />
+			
+			<xf:showignored wrapperclass="block-outer-opposite" />
+		</div>
+	</div>
+	<xf:else />
+		<div class="blockMessage">
+			<xf:if is="$user.user_id == $xf.visitor.user_id">
+				{{ phrase('mrd_you_have_not_download_any_resources_yet') }}
+			<xf:else />
+				{{ phrase('mrd_x_has_not_download_any_resources_yet', {'name': $user.username}) }}
+			</xf:if>
+		</div>
+</xf:if>]]></template>
+  <template type="public" title="mrd_resource_downloaders_tab_member_view" version_id="2010370" version_string="2.1.3"><![CDATA[<xf:if is="$xf.visitor.canViewWhoDownloadedResource()">
+	<a href="{{ link('resources/resource-downloaded', $user) }}"
+	   class="tabs-tab"
+	   id="resourceDownloaders"
+	   role="tab">{{ phrase('mrd_downloaded_resources') }}</a>
+</xf:if>]]></template>
+  <template type="public" title="mrd_resource_downloaders_tab_panes_member_view" version_id="2010370" version_string="2.1.3"><![CDATA[<xf:if is="$xf.visitor.canViewWhoDownloadedResource()">
+	<li data-href="{{ link('resources/resource-downloaded', $user) }}" role="tabpanel" aria-labelledby="resourceDownloaders">
+		<div class="blockMessage">{{ phrase('loading...') }}</div>
+	</li>
+</xf:if>]]></template>
+  <template type="public" title="mrd_xfrm_resource_view_downloaders" version_id="2010370" version_string="2.1.3"><![CDATA[<xf:title page="{$page}">{{ phrase('mrd_members_who_downloaded_resource', {'title': $resource.title}) }}</xf:title>
+<xf:h1>{{ phrase('mrd_members_who_downloaded_resource', {'title': $resource.title}) }}</xf:h1>
+
+<xf:breadcrumb source="$resource.Category.getBreadcrumbs()" />
+
+<xf:macro template="xfrm_resource_wrapper_macros" name="header"
+		  arg-resource="{$resource}"
+		  arg-titleHtml="{$originalH1}"
+		  arg-metaHtml="{$originalDescription}" />
+
+<xf:macro template="xfrm_resource_wrapper_macros" name="tabs"
+		  arg-resource="{$resource}"
+		  arg-selected="downloaders" />
+
+<xf:macro template="xfrm_resource_wrapper_macros" name="status"
+	arg-resource="{$resource}" />
+
+<div class="block">
+	<div class="block-outer">
+		<xf:trim>
+			<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+						link="resources/downloaders" data="{$resource}"
+						wrapperclass="block-outer-main" />
+		</xf:trim>
+	</div>
+	
+	<div class="block-container">
+		<div class="block-body">
+			<xf:foreach loop="$downloaders" value="$downloader">
+				<div class="block-row block-row--separated">
+					<xf:macro template="member_list_macros" name="item" arg-user="{$downloader.User}" arg-extraData="{{ date_time($downloader.last_download_date) }}" />
+				</div>
+			<xf:else />					
+				<li class="block-row">{{ phrase('mrd_no_resource_downloaders') }}</li>
+			</xf:foreach>
+		</div>
+	</div>
+	
+	<div class="block-outer block-outer--after">
+		<xf:pagenav
+			page="{$page}" perpage="{$perPage}" total="{$total}"
+			link="resources/downloaders" data="{$resource}"
+			wrapperclass="block-outer-main" />
+
+		<xf:showignored wrapperclass="block-outer-opposite" />
+	</div>
+</div>]]></template>
+  <template type="public" title="mrd_xfrm_resource_view_version_downloaders" version_id="2010370" version_string="2.1.3"><![CDATA[<xf:title page="{$page}">{{ phrase('mrd_members_download_this_version', {'title': $resource.title}) }}</xf:title>
+<xf:h1>
+	{{ phrase('mrd_members_who_downloaded_resource', {'title': $resource.title}) }}
+</xf:h1>
+
+<xf:macro template="xfrm_resource_wrapper_macros" name="header"
+		  arg-resource="{$resource}"
+		  arg-titleHtml="{$originalH1}"
+		  arg-metaHtml="{$originalDescription}" />
+
+<xf:macro template="xfrm_resource_wrapper_macros" name="tabs"
+		  arg-resource="{$resource}"
+		  arg-selected="history" />
+
+<div class="block">
+	<div class="block-outer">
+		<xf:trim>
+			<xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+						link="resources/version/downloaders" data="{$version}"
+						wrapperclass="block-outer-main" />
+		</xf:trim>
+	</div>
+	
+	<div class="block-container">
+		<div class="block-body">
+			<xf:foreach loop="$downloaders" value="$downloader">
+				<div class="block-row block-row--separated">
+					<xf:macro template="member_list_macros" name="item" arg-user="{$downloader.User}" arg-extraData="{{ date_time($downloader.last_download_date) }}" />
+				</div>
+			<xf:else />					
+				<li class="block-row">{{ phrase('mrd_no_resource_downloaders') }}</li>
+			</xf:foreach>
+		</div>
+	</div>
+	
+	<div class="block-outer block-outer--after">
+		<xf:pagenav
+			page="{$page}" perpage="{$perPage}" total="{$total}"
+			link="resources/version/downloaders" data="{$version}"
+			wrapperclass="block-outer-main" />
+
+		<xf:showignored wrapperclass="block-outer-opposite" />
+	</div>
+</div>]]></template>
+  <template type="public" title="mrd_xfrm_resource_wrapper_macros" version_id="2010370" version_string="2.1.3"><![CDATA[<xf:if is="{{ $resource.resource_type == 'download' && $xf.visitor.canViewWhoDownloadedResource() }}">
+	<a class="tabs-tab {{ $selected == 'downloaders' ? 'is-active' : '' }}" href="{{ link('resources/downloaders', $resource) }}">{{ phrase('mrd_resource_downloaders') }}</a>
+</xf:if>]]></template>
+</templates>
+ 		    	 			 									    		 		   	 	  		 		 	    				 		 	  	 				  	 		 	  	 			 	 		    		 		    		   	 	 		   				 					 					 	

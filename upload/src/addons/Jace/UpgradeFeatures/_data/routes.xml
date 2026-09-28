@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<routes>
+  <route route_type="admin" route_prefix="upgrade-feature-categories" format=":int&lt;category_id&gt;" controller="Jace\UpgradeFeatures:UpgradeFeatureCategory" context="upgrade_feature_categories"/>
+  <route route_type="admin" route_prefix="upgrade-features" format=":int&lt;feature_id&gt;" controller="Jace\UpgradeFeatures:AdminFeature" context="jace_upgrade_features"/>
+</routes>

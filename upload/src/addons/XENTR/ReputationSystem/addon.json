@@ -1,0 +1,20 @@
+{
+  "legacy_addon_id": "",
+  "title": "[XTR] Reputation System",
+  "description": "This add-on allows you to adding a reputation system to your site based on reaction score, post count etc.",
+  "version_id": 1000470,
+  "version_string": "1.0.4",
+  "dev": "XENTR | XenForo Add-ons - Styles",
+  "dev_url": "https://xentr.net",
+  "faq_url": "",
+  "support_url": "https://xentr.net",
+  "extra_urls": {
+    "🔰 Download More Resources 🔰": "https://XenBD.com/"
+  },
+  "require": {
+    "XF": [2020070, "XenForo 2.2.0"],
+    "php": ["7.0.0", "PHP 7.0.0+"]
+  },
+  "icon": "icon.png"
+}
+ 		    		   	 	 		  			  	  	  	 			   			 	 	 	 		 			 		 		 	 		  	  	  	  		 	  		 	  		 	 	  	 	 					 	  	 	 	 	 	 	 	 		 	 			

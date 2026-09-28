@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="PAGE_CONTAINER" modification_key="siropu_easy_user_ban_page_container" description="Add message for banned users." execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[{$content|raw}]]></find>
+    <replace><![CDATA[$0
+<xf:macro id="siropu_easy_user_ban_macros::ban_notice" />]]></replace>
+  </modification>
+  <modification type="public" template="conversation_message_macros" modification_key="siropu_easy_user_ban_conversation_message_macros" description="Add the quick ban/unban link." execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:if is="$message.canCleanSpam()">]]></find>
+    <replace><![CDATA[<xf:if is="$xf.options.siropuEasyUserBanConversationLink">
+	<xf:macro id="siropu_easy_user_ban_macros::action_link" arg-user="{$message.User}" />
+</xf:if>
+$0]]></replace>
+  </modification>
+  <modification type="public" template="forum_view" modification_key="siropu_easy_user_ban_forum_view_bans" description="Add forum bans link." execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[					<xf:if is="$canInlineMod">
+						<xf:macro id="inline_mod_macros::button" />
+					</xf:if>
+	]]></find>
+    <replace><![CDATA[$0
+<xf:if is="$xf.visitor.hasPermission('siropuEasyUserBan', 'viewForumBans')">
+	<xf:button href="{{ link('forums/user-bans', $forum) }}" class="button--link" overlay="true">
+		{{ phrase('banned_users') }}
+	</xf:button>
+</xf:if>]]></replace>
+  </modification>
+  <modification type="admin" template="helper_criteria" modification_key="siropu_easy_user_ban_helper_criteria" description="Add ban count user criteria." execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:user:content_bottom]-->]]></find>
+    <replace><![CDATA[$0
+<xf:option name="user_criteria[siropu_easy_user_ban_count][rule]" value="siropu_easy_user_ban_count" selected="{$criteria.siropu_easy_user_ban_count}"
+	label="{{ phrase('siropu_easy_user_ban_user_has_been_banned_at_least_x_times:') }}">
+	<xf:numberbox name="user_criteria[siropu_easy_user_ban_count][data][ban_count]" value="{$criteria.siropu_easy_user_ban_count.ban_count}"
+		size="5" min="0" step="1" />
+</xf:option>]]></replace>
+  </modification>
+  <modification type="public" template="member_macros" modification_key="siropu_easy_user_ban_member_macros" description="Add the quick ban/unban link." execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:moderator_menu:bottom]-->]]></find>
+    <replace><![CDATA[$0
+<xf:if is="$xf.options.siropuEasyUserBanMemberLink">
+	<xf:macro id="siropu_easy_user_ban_macros::action_link" arg-user="{$user}" arg-cssClass="menu-linkRow" />
+</xf:if>]]></replace>
+  </modification>
+  <modification type="public" template="member_macros" modification_key="siropu_easy_user_ban_member_macros_ban_count" description="Add ban count to the member stats." execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:stat_pairs:below_trophies]-->]]></find>
+    <replace><![CDATA[<xf:if is="$user.siropu_easy_user_ban_count AND $xf.visitor.hasPermission('siropuEasyUserBan', 'viewBanCount')">
+	<dl class="pairs pairs--rows pairs--rows--centered menu-fauxLinkRow">
+		<dt title="{{ phrase('siropu_easy_user_ban_bans_explain')|for_attr }}">{{ phrase('siropu_easy_user_ban_bans') }}</dt>
+		<dd>
+			{$user.siropu_easy_user_ban_count|number}
+		</dd>
+	</dl>
+</xf:if>
+$0]]></replace>
+  </modification>
+  <modification type="public" template="member_macros" modification_key="siropu_easy_user_ban_member_macros_button" description="Add the quick ban/unban link." execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:action_groups:outer_end]-->]]></find>
+    <replace><![CDATA[<xf:if is="$xf.options.siropuEasyUserBanMemberLink">
+	<xf:macro id="siropu_easy_user_ban_macros::action_link" arg-user="{$user}" arg-cssClass="button button--link" />
+</xf:if>
+$0]]></replace>
+  </modification>
+  <modification type="public" template="member_macros" modification_key="siropu_easy_user_ban_member_macros_mod_menu" description="Remove default ban option from moderator menu." execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[#<a href="{{ link\('members/ban', \$user\) }}".*?</a>#s]]></find>
+    <replace><![CDATA[]]></replace>
+  </modification>
+  <modification type="public" template="member_view" modification_key="siropu_easy_user_ban_member_view" description="Display ban reason." execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:css src="member.less" />]]></find>
+    <replace><![CDATA[$0
+<xf:if is="$xf.options.siropuEasyUserBanProfileBanReason AND $xf.visitor.hasPermission('siropuEasyUserBan', 'viewBanReason') AND $user.is_banned AND $user.Ban.user_reason">
+	<div class="blockMessage blockMessage--important">
+		{{ $user.Ban.end_date ? phrase('siropu_easy_user_ban_member_has_been_banned_until_x_for_the_following_reason', {'date': date_time($user.Ban.end_date)}) : phrase('siropu_easy_user_ban_member_has_been_banned_permanently_for_the_following_reason') }}: <em>{$user.Ban.user_reason}</em>
+	</div>
+</xf:if>
+]]></replace>
+  </modification>
+  <modification type="public" template="post_macros" modification_key="siropu_easy_user_ban_post_macros" description="Add the quick ban/unban link." execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:if is="$post.canCleanSpam()">]]></find>
+    <replace><![CDATA[<xf:if is="$xf.options.siropuEasyUserBanThreadLink">
+	<xf:macro id="siropu_easy_user_ban_macros::action_link" arg-user="{$post.User}" arg-thread="{$thread}" arg-post="{$post}" />
+</xf:if>
+$0]]></replace>
+  </modification>
+  <modification type="public" template="profile_post_macros" modification_key="siropu_easy_user_ban_profile_post_macros" description="Add the quick ban/unban link." execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:if is="$profilePost.canCleanSpam()">]]></find>
+    <replace><![CDATA[<xf:if is="$xf.options.siropuEasyUserBanProfileLink">
+	<xf:macro id="siropu_easy_user_ban_macros::action_link" arg-user="{$profilePost.User}" />
+</xf:if>
+$0]]></replace>
+  </modification>
+  <modification type="public" template="profile_post_macros" modification_key="siropu_easy_user_ban_profile_post_macros_comment" description="Add the quick ban/unban link for profile comments." execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:if is="$comment.canCleanSpam()">]]></find>
+    <replace><![CDATA[<xf:if is="$xf.options.siropuEasyUserBanProfileLink">
+	<xf:macro id="siropu_easy_user_ban_macros::action_link" arg-user="{$comment.User}" />
+</xf:if>
+$0]]></replace>
+  </modification>
+  <modification type="public" template="thread_view" modification_key="siropu_easy_user_ban_thread_view_banned_posts" description="Hide post content of banned users." execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:if is="$post.message_state == 'deleted'">]]></find>
+    <replace><![CDATA[<xf:if is="$post.User.is_banned AND $xf.options.siropuEasyUserBanHideBannedContent">
+	<xf:macro id="siropu_easy_user_ban_macros::post_banned_user" arg-post="{$post}" arg-thread="{$thread}" />
+<xf:elseif is="$post.message_state == 'deleted'" />]]></replace>
+  </modification>
+  <modification type="public" template="thread_view" modification_key="siropu_easy_user_ban_thread_view_options_menu" description="Add link to banned users in thread option menu." execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:thread_tools_menu:before_footer]-->]]></find>
+    <replace><![CDATA[<xf:if is="$xf.visitor.hasPermission('siropuEasyUserBan', 'viewThreadBans')">
+	<a href="{{ link('threads/user-bans', $thread) }}" data-xf-click="overlay" class="menu-linkRow">{{ phrase('banned_users') }}</a>
+</xf:if>
+$0]]></replace>
+  </modification>
+  <modification type="public" template="PAGE_CONTAINER" modification_key="copyright_builder_footer_display" description="Copyright Footer" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[#</body>#i]]></find>
+    <replace><![CDATA[<div class="p-footer-copyright cb-addon-copyright"  data-copyright-url="https://xenforoleaks.net" style="display:block;text-align:center;font-size:12px;line-height:1.45;letter-spacing:.01em;margin:10px auto 6px;padding:4px 8px;max-width:100%;word-break:break-word;opacity:.92;color:inherit;">Easy User Ban <a class="u-concealed" style="color:inherit;text-decoration:underline;text-underline-offset:2px;" rel="nofollow noopener" href="https://xenforoleaks.net" target="_blank">Addon provided by Homicide ©2026</a></div><script>(function(){if(window.__copyrightBuilderDedupInitialized){return;}window.__copyrightBuilderDedupInitialized=true;var TRACKING_PARAM_PATTERN=/^(utm_[a-z0-9_]+|fbclid|gclid|dclid|msclkid|mc_cid|mc_eid)$/i;function normalizeUrl(raw){if(!raw){return '';}var trimmed=String(raw).trim();if(!trimmed){return '';}try{var parsed=new URL(trimmed, window.location.origin);var host=parsed.hostname.toLowerCase().replace(/^www\./, '');var port=parsed.port;if((parsed.protocol==='http:'&&port==='80')||(parsed.protocol==='https:'&&port==='443')){port='';}var pathname=parsed.pathname.replace(/\/+$/, '');if(!pathname){pathname='/';}var queryParts=[];parsed.searchParams.forEach(function(value, key){if(TRACKING_PARAM_PATTERN.test(key)){return;}queryParts.push([key, value]);});queryParts.sort(function(left, right){if(left[0]===right[0]){return left[1]<right[1]?-1:left[1]>right[1]?1:0;}return left[0]<right[0]?-1:1;});var normalizedQuery='';if(queryParts.length){normalizedQuery='?'+queryParts.map(function(entry){return encodeURIComponent(entry[0])+'='+encodeURIComponent(entry[1]);}).join('&');}return host+(port?':'+port:'')+pathname+normalizedQuery;}catch(_error){return trimmed.toLowerCase().replace(/^https?:\/\//, '').replace(/^www\./, '').replace(/#.*$/, '').replace(/\/+$/, '');}}function dedupeCopyrightBlocks(){var seen=Object.create(null);var blocks=document.querySelectorAll('.cb-addon-copyright');for(var index=0; index<blocks.length; index+=1){var block=blocks[index];var anchor=block.querySelector('a[href]');var rawUrl=(block.getAttribute('data-copyright-url')||'').trim();if(!rawUrl&&anchor){rawUrl=anchor.getAttribute('href')||anchor.href||'';}var key=normalizeUrl(rawUrl);if(!key){continue;}if(seen[key]){block.remove();continue;}seen[key]=true;}}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded', dedupeCopyrightBlocks, {once:true});}else{dedupeCopyrightBlocks();}})();</script>
+</body>]]></replace>
+  </modification>
+</template_modifications>
+ 		  	   				  		 	 	  	  	  		 	  	   			   	  		 			 		 				  		 				   		 				 		  	 	 	   		  			   	 		 	  		 		  	 	 	  		  	 

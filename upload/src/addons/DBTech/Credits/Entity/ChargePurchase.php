@@ -7,6 +7,7 @@ use DBTech\Credits\Repository\CurrencyRepository;
 use DBTech\Credits\Repository\EventTriggerRepository;
 use XF\Entity\Post;
 use XF\Entity\User;
+use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 use XF\PrintableException;
 
@@ -25,7 +26,7 @@ use XF\PrintableException;
  * @property-read Post|null $Post
  * @property-read User|null $User
  */
-class ChargePurchase extends AbstractEntity
+class ChargePurchase extends Entity
 {
 	/**
 	 * @return AbstractHandler|null

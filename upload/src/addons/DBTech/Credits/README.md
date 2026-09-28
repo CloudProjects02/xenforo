@@ -63,8 +63,8 @@ Permissions
 - Adjust currencies
 - View any transaction log entry
 - View unapproved transactions
-- Bypass currency privacy
 - Bypass "Charge" tags
+- Bypass currency privacy
 - Approve / unapprove transactions
 
 Admin Permissions

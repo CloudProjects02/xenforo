@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<permissions>
+  <permission permission_group_id="st_dmcaReport" permission_id="canViewDMCAReport" permission_type="flag" interface_group_id="st_dmca_reports" display_order="2"/>
+</permissions>

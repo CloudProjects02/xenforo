@@ -10,15 +10,13 @@ use XF\Admin\Controller\AbstractController;
 use XF\InputFilterer;
 use XF\Mvc\ParameterBag;
 use XF\Mvc\Reply\AbstractReply;
-use XF\Mvc\Reply\Exception as ReplyException;
 
 class LogController extends AbstractController
 {
 	/**
 	 * @param $action
 	 * @param ParameterBag $params
-	 *
-	 * @throws ReplyException
+	 * @throws \XF\Mvc\Reply\Exception
 	 */
 	protected function preDispatchController($action, ParameterBag $params): void
 	{
@@ -40,7 +38,7 @@ class LogController extends AbstractController
 	 * @param ParameterBag $params
 	 *
 	 * @return AbstractReply
-	 * @throws ReplyException
+	 * @throws \XF\Mvc\Reply\Exception
 	 * @throws \Exception
 	 */
 	public function actionTransaction(ParameterBag $params): AbstractReply
@@ -153,7 +151,7 @@ class LogController extends AbstractController
 	 * @param null|string $phraseKey
 	 *
 	 * @return Transaction
-	 * @throws ReplyException
+	 * @throws \XF\Mvc\Reply\Exception
 	 */
 	protected function assertTransactionLogExists(?int $id, array $with = [], ?string $phraseKey = null): Transaction
 	{

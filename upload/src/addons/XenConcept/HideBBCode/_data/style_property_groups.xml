@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style_property_groups>
+  <style_property_group group_name="xc_hide_bbcode" title="[XenConcept] Hide BBCode" description="Basic settings for HTML hide bbcode styling are included here." display_order="3700"/>
+</style_property_groups>

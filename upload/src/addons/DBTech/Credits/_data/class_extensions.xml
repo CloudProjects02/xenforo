@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <class_extensions>
-  <extension from_class="XFMG\Entity\Comment" to_class="DBTech\Credits\XFMG\Entity\Comment" execute_order="10" active="1"/>
-  <extension from_class="XFMG\Entity\MediaItem" to_class="DBTech\Credits\XFMG\Entity\MediaItem" execute_order="10" active="1"/>
-  <extension from_class="XFMG\Entity\Rating" to_class="DBTech\Credits\XFMG\Entity\Rating" execute_order="10" active="1"/>
-  <extension from_class="XFMG\Service\Comment\Creator" to_class="DBTech\Credits\XFMG\Service\Comment\Creator" execute_order="10" active="1"/>
-  <extension from_class="XFMG\Service\Media\Creator" to_class="DBTech\Credits\XFMG\Service\Media\Creator" execute_order="10" active="1"/>
-  <extension from_class="XFRM\Entity\ResourceItem" to_class="DBTech\Credits\XFRM\Entity\ResourceItem" execute_order="10" active="1"/>
-  <extension from_class="XFRM\Entity\ResourceRating" to_class="DBTech\Credits\XFRM\Entity\ResourceRating" execute_order="10" active="1"/>
-  <extension from_class="XFRM\Entity\ResourceUpdate" to_class="DBTech\Credits\XFRM\Entity\ResourceUpdate" execute_order="10" active="1"/>
-  <extension from_class="XFRM\Repository\ResourceVersion" to_class="DBTech\Credits\XFRM\Repository\ResourceVersion" execute_order="10" active="1"/>
   <extension from_class="XF\Admin\Controller\UserController" to_class="DBTech\Credits\XF\Admin\Controller\UserController" execute_order="10" active="1"/>
   <extension from_class="XF\Attachment\PostHandler" to_class="DBTech\Credits\XF\Attachment\PostHandler" execute_order="10" active="1"/>
   <extension from_class="XF\BbCode\Renderer\ApiHtml" to_class="DBTech\Credits\XF\BbCode\Renderer\ApiHtml" execute_order="10" active="1"/>
@@ -43,4 +34,13 @@
   <extension from_class="XF\Service\User\MergeService" to_class="DBTech\Credits\XF\Service\User\MergeService" execute_order="10" active="1"/>
   <extension from_class="XF\Service\User\RegistrationCompleteService" to_class="DBTech\Credits\XF\Service\User\RegistrationCompleteService" execute_order="10" active="1"/>
   <extension from_class="XF\Str\Formatter" to_class="DBTech\Credits\XF\Str\Formatter" execute_order="10" active="1"/>
+  <extension from_class="XFMG\Entity\Comment" to_class="DBTech\Credits\XFMG\Entity\Comment" execute_order="10" active="1"/>
+  <extension from_class="XFMG\Entity\MediaItem" to_class="DBTech\Credits\XFMG\Entity\MediaItem" execute_order="10" active="1"/>
+  <extension from_class="XFMG\Entity\Rating" to_class="DBTech\Credits\XFMG\Entity\Rating" execute_order="10" active="1"/>
+  <extension from_class="XFMG\Service\Comment\Creator" to_class="DBTech\Credits\XFMG\Service\Comment\Creator" execute_order="10" active="1"/>
+  <extension from_class="XFMG\Service\Media\Creator" to_class="DBTech\Credits\XFMG\Service\Media\Creator" execute_order="10" active="1"/>
+  <extension from_class="XFRM\Entity\ResourceItem" to_class="DBTech\Credits\XFRM\Entity\ResourceItem" execute_order="10" active="1"/>
+  <extension from_class="XFRM\Entity\ResourceRating" to_class="DBTech\Credits\XFRM\Entity\ResourceRating" execute_order="10" active="1"/>
+  <extension from_class="XFRM\Entity\ResourceUpdate" to_class="DBTech\Credits\XFRM\Entity\ResourceUpdate" execute_order="10" active="1"/>
+  <extension from_class="XFRM\Repository\ResourceVersion" to_class="DBTech\Credits\XFRM\Repository\ResourceVersion" execute_order="10" active="1"/>
 </class_extensions>

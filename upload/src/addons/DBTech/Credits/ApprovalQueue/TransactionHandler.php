@@ -31,7 +31,7 @@ class TransactionHandler extends AbstractHandler
 	 */
 	protected function canActionContent(Entity $content, &$error = null): bool
 	{
-		/** @var Transaction $content */
+		/** @var $content \DBTech\Credits\Entity\Transaction */
 		return $content->canApproveUnapprove($error);
 	}
 

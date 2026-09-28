@@ -111,7 +111,7 @@ class Overview extends AbstractPlugin
 	}
 
 	/**
-	 * @param AbstractCollection<Transaction> $transactions
+	 * @param \XF\Mvc\Entity\AbstractCollection<\DBTech\Credits\Entity\Transaction> $transactions
 	 */
 	public function addContentToResults(AbstractCollection $transactions): void
 	{

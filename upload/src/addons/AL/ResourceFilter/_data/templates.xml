@@ -1,0 +1,970 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+/** 
+* @package [AddonsLab] Resource Filter
+* @author AddonsLab
+* @license https://addonslab.com/
+* @link https://addonslab.com/
+* @version 3.6.1
+This software is furnished under a license and may be used and copied
+only  in  accordance  with  the  terms  of such  license and with the
+inclusion of the above copyright notice.  This software  or any other
+copies thereof may not be provided or otherwise made available to any
+other person.  No title to and  ownership of the  software is  hereby
+transferred.                                                         
+                                                                     
+You may not reverse  engineer, decompile, defeat  license  encryption
+mechanisms, or  disassemble this software product or software product
+license.  AddonsLab may terminate this license if you don't comply with
+any of these terms and conditions.  In such event,  licensee  agrees 
+to return licensor  or destroy  all copies of software  upon termination 
+of the license.
+*/
+ -->
+
+<templates>
+  <template type="admin" title="alrf_filter_location" version_id="1000070" version_string="1.0.0"><![CDATA[<xf:if is="$availableFields is not empty">
+    <xf:checkboxrow name="field_column_cache" value="{$category.field_column_cache}"
+                    listclass="listColumns fieldColumnSelector"
+                    label="{{ phrase('alrf_field_columns') }}"
+                    explain="{{ phrase('alrf_field_columns_explain') }}">
+
+        <xf:foreach loop="$availableFields" key="$fieldId" value="$fieldTitle">
+            <xf:set var="$field" value="{$fieldCache.{$fieldId}}"></xf:set>
+            <xf:option name="field_column_cache[{$fieldId}][enabled]" value="1" label="{$field.title}" data-hide="true"
+                       checked="{{ {$category.field_column_cache.{$fieldId}} && {$category.field_column_cache.{$fieldId}.enabled} }}">
+                <xf:dependent>
+                    <xf:macro name="location_option"
+                              arg-fieldCache="{$category.field_column_cache}"
+                              arg-fieldId="{$fieldId}"
+                              arg-location="category_view"
+                              arg-label="{{ phrase('alrf_in_category_view') }}"></xf:macro>
+                    <xf:macro name="location_option"
+                              arg-fieldCache="{$category.field_column_cache}"
+                              arg-fieldId="{$fieldId}"
+                              arg-location="search" arg-column="{{ false }}"
+                              arg-label="{{ phrase('alrf_in_search_results') }}"></xf:macro>
+                </xf:dependent>
+            </xf:option>
+        </xf:foreach>
+
+        <xf:hint>
+            <xf:checkbox standalone="true">
+                <xf:option check-all=".listColumns.fieldColumnSelector">{{ phrase('select_all') }}</xf:option>
+            </xf:checkbox>
+        </xf:hint>
+    </xf:checkboxrow>
+</xf:if>
+
+<xf:radiorow name="filter_location" value="{$category.filter_location}"
+             label="{{ phrase('alrf_filter_location') }}"
+             explain="{{ phrase('alrf_filter_location_explain') }}">
+    <xf:option value="" label="{{ phrase('alrf_inherit') }}"/>
+    <xf:option value="popup" label="{{ phrase('alrf_popup_default') }}"/>
+    <xf:option value="sidebar" label="{{ phrase('alrf_sidebar') }}"/>
+    <xf:option value="above_resource_list" label="{{ phrase('alrf_above_resource_list') }}"/>
+</xf:radiorow>
+
+<xf:macro name="location_option" arg-fieldCache="!" arg-fieldId="!" arg-location="!" arg-label="!"
+          arg-column="{{ true }}">
+    <xf:checkbox>
+        <xf:option name="field_column_cache[{$fieldId}][{$location}][enabled]" value="1"
+                   checked="{{ {$fieldCache.{$fieldId}} && {$fieldCache.{$fieldId}.{$location}} && {$fieldCache.{$fieldId}.{$location}.enabled} }}"
+                   label="{$label}" data-hide="true">
+            <xf:dependent>
+                <xf:checkbox>
+                    <xf:if is="$column">
+                        <xf:option name="field_column_cache[{$fieldId}][{$location}][column]" value="1"
+                                   checked="{{ {$fieldCache.{$fieldId}} && {$fieldCache.{$fieldId}.{$location}} && {$fieldCache.{$fieldId}.{$location}.column} }}"
+                                   label="{{ phrase('alrf_as_a_separate_column') }}"/>
+                    </xf:if>
+                    <xf:option name="field_column_cache[{$fieldId}][{$location}][metadata]" value="1"
+                               checked="{{ {$fieldCache.{$fieldId}} && {$fieldCache.{$fieldId}.{$location}} && {$fieldCache.{$fieldId}.{$location}.metadata} }}"
+                               label="{{ phrase('alrf_as_a_metadata') }}"/>
+                    <xf:option name="field_column_cache[{$fieldId}][{$location}][prefix]" value="1"
+                               checked="{{ {$fieldCache.{$fieldId}} && {$fieldCache.{$fieldId}.{$location}} && {$fieldCache.{$fieldId}.{$location}.prefix} }}"
+                               label="{{ phrase('alrf_as_a_prefix') }}"/>
+                </xf:checkbox>
+            </xf:dependent>
+        </xf:option>
+    </xf:checkbox>
+</xf:macro>]]></template>
+  <template type="admin" title="alrf_rebuild_resource_fields" version_id="1000071" version_string="1.0.0"><![CDATA[<xf:set var="$resourceFieldBody">
+</xf:set>
+<xf:macro template="tools_rebuild" name="rebuild_job"
+          arg-header="{{ phrase('alrf_rebuild_resource_fields') }}"
+          arg-body="{$resourceFieldBody}"
+          arg-job="AL\ResourceFilter:ResourceField"/>]]></template>
+  <template type="admin" title="alrf_resource_field_choice_options" version_id="3000071" version_string="3.0.0"><![CDATA[<xf:if is="{$fieldTypes.{$field.field_type}.options}==='choice' OR !{$field.field_id}">
+    <xf:radiorow name="filter_template" value="{$field.FieldData.filter_template}" label="{{ phrase('alrf_show_filter_as') }}" explain="{{ phrase('alrf_show_filter_as_explain') }}">
+        <xf:option value="checkbox">{{ phrase('check_boxes') }}</xf:option>
+        <xf:option value="multiselect">{{ phrase('multiple_choice_drop_down_selection') }}</xf:option>
+        <xf:option value="select">{{ phrase('drop_down_selection') }}</xf:option>
+        <xf:option value="radio">{{ phrase('radio_buttons') }}</xf:option>
+    </xf:radiorow>
+
+    <xf:radiorow name="default_match_type" value="{$field.FieldData.default_match_type}" label="{{ phrase('alrf_default_match_type') }}" explain="{{ phrase('alrf_default_match_type_explain')}}">
+        <xf:option value="OR">{{ phrase('alrf_results_matching_any_option')}}</xf:option>
+        <xf:option value="AND">{{ phrase('alrf_results_matching_all_options')}}</xf:option>
+    </xf:radiorow>
+
+</xf:if>]]></template>
+  <template type="admin" title="alrf_resource_field_display_options" version_id="1010173" version_string="1.1.1"><![CDATA[<xf:checkboxrow label="{{ phrase('alrf_resource_filter_options') }}">
+    <xf:option name="allow_filter" selected="$field.FieldData.allow_filter"
+               label="{{ phrase('alrf_allow_filter') }}"
+               hint="{{ phrase('alrf_allow_filter_explain') }}"/>
+    <xf:option name="allow_search" selected="$field.FieldData.allow_search"
+               label="{{ phrase('alrf_allow_search') }}"
+               hint="{{ phrase('alrf_allow_search_explain') }}"/>
+    <xf:if is="{$field.is_sortable}">
+        <xf:option name="allow_sorting" selected="$field.FieldData.allow_sorting"
+                   label="{{ phrase('alrf_allow_sorting') }}"
+                   hint="{{ phrase('alrf_allow_sorting_explain') }}"/>
+    </xf:if>
+</xf:checkboxrow>]]></template>
+  <template type="admin" title="widget_def_options_alrf_filter_widget" version_id="1000073" version_string="1.0.0"><![CDATA[]]></template>
+  <template type="admin" title="widget_def_options_alrf_quick_lookup_widget" version_id="2020072" version_string="2.2.0"><![CDATA[]]></template>
+  <template type="public" title="alrf_above_resource_filter_container" version_id="3050070" version_string="3.5.0"><![CDATA[<xf:if is="{$filter_location}==='above_resource_list'">
+    <xf:css src="alrf_above_resource_filter_container.less"/>
+    <div class="block filterAboveResourceList">
+        <div class="block-outer">
+            <div class="block-container">
+                <h3 class="block-minorHeader block-filterBar">{{ phrase('filters') }}</h3>
+                <xf:comment>Call filter setup macro manually</xf:comment>
+                <xf:macro template="alrf_resource_filter_form_macros" name="field_form_setup"/>
+                <div class="block-body">
+                    <xf:include template="xfrm_filters"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</xf:if>]]></template>
+  <template type="public" title="alrf_above_resource_filter_container.less" version_id="3000071" version_string="3.0.0"><![CDATA[@media (min-width: @xf-responsiveNarrow) {
+    .filterAboveResourceList > form {
+        column-count: 2;
+        column-gap: 40px;
+
+        .menu-row.menu-row--separated {
+            display: inline-block;
+            width: 100%;
+        }
+
+        .menu-footer {
+            background: inherit !important;
+        }
+    }
+}]]></template>
+  <template type="public" title="alrf_active_filter.less" version_id="2000070" version_string="2.0.0"><![CDATA[.filter-field-stars {
+    white-space: nowrap;
+
+    .br-theme-fontawesome-stars .br-widget a {
+        font-size: 15px !important;
+    }
+
+    div {
+        display: inline !important;
+    }
+}
+
+.filter-match-color {
+    .color-block {
+        padding: 2px 6px;
+    }
+}
+
+@media (max-width: @xf-responsiveMedium) {
+    .filter-match-number {
+        .filterBar-filterToggle-label {
+            display: inline;
+        }
+    }
+}
+
+.filterButtonPlaceholder {
+    visibility: hidden;
+}
+]]></template>
+  <template type="public" title="alrf_auto_reload_configurator" version_id="2000070" version_string="2.0.0"><![CDATA[<xf:css src="alrf_active_filter.less"/>
+<xf:if is="{$xf.options.alrf_auto_reload}">
+    <xf:comment>
+        CSS files used in list of resources should be loaded in all cases
+        to avoid broken layout when the page with no resources reloads
+        and shows some resources
+    </xf:comment>
+    <xf:css src="structured_list.less"/>
+    <xf:css src="xfrm.less"/>
+
+    <xf:js src="AL/FilterFramework/filter_reload.js" min="0"/>
+    <li style="display: none" data-xf-init="activeFilterContainer" data-reload-target=".block[data-type='resource']"></li>
+</xf:if>
+]]></template>
+  <template type="public" title="alrf_category_view_active_filters" version_id="3030171" version_string="3.3.1"><![CDATA[<xf:css src="alrf_active_filter.less"/>
+
+<xf:set var="$additionalFieldInfo" value="{$__globals.additionalFieldInfo}"/>
+<xf:if is="$additionalFieldInfo">
+    <xf:foreach loop="$additionalFieldInfo" key="$fieldId" value="$activeFilterInfo">
+        <xf:set var="$fieldId" value="{{ $activeFilterInfo.field_name ? $activeFilterInfo.field_name : $fieldId}}"/>
+        <li class="filter-field-{$activeFilterInfo.field_type} filter-match-{$activeFilterInfo.match_type}">
+            <a href="{{ link($baseLinkPath, $category, $filters|rf_array_sub_replace('rf', $fieldId, null, $activeFilterInfo.sub_item_id)) }}"
+               class="filterBar-filterToggle" data-xf-init="tooltip"
+               title="{{ phrase('remove_this_filter')|for_attr }}">
+                <xf:if is="{$activeFilterInfo.showLabel}">
+                    <span class="filterBar-filterToggle-label">{{$activeFilterInfo.title}}</span>
+                </xf:if>
+                <xf:macro name="filter_value" arg-info="{$activeFilterInfo}"/>
+            </a>
+        </li>
+    </xf:foreach>
+</xf:if>
+
+<xf:macro name="filter_value" arg-info="!">
+    <xf:if is="{$info.phrase_text}">
+        {{$info.phrase_text}}
+        <xf:elseif is="{$info.phrase}"/>
+        {{$info.phrase->render('raw')|raw}}
+    </xf:if>
+    <xf:if is="{$info.template}">
+        <xf:macro name="filter_value_{$info.template}" arg-info="{$info}"/>
+    </xf:if>
+</xf:macro>
+<xf:macro name="filter_value_location" arg-info="!">
+    <xf:macro template="allf_custom_fields_macros" name="filter_value_location" arg-info="{$info}"/>
+</xf:macro>
+<xf:macro name="filter_value_color" arg-info="!">
+    <span class="color-block"
+          style="color: {$info.templateParams.color}; background-color: {$info.templateParams.backgroundColor};">{$info.title}</span>
+</xf:macro>
+<xf:macro name="filter_value_stars" arg-info="!">
+    <xf:macro template="rating_macros" name="rating"
+              arg-readOnly="true"
+              arg-currentRating="{$info.templateParams.stars}"
+              arg-deselectable="false"
+              arg-row="{{ false }}"
+    />
+</xf:macro>
+<xf:macro name="filter_value_selection" arg-info="!">
+    <ul class="listInline listInline--comma listInline--selfInline">
+        <xf:foreach loop="{$info.templateParams.options}" value="$selection">
+            <li>{{ $selection }}</li>
+        </xf:foreach>
+    </ul>
+</xf:macro>]]></template>
+  <template type="public" title="alrf_clear_active_filters" version_id="2000070" version_string="2.0.0"><![CDATA[<li class="clearAllLink">
+    <a href="{{ link($baseLinkPath, $category) }}" class="filterBar-filterToggle" data-xf-init="tooltip" title="{{ phrase('alrf_remove_all_filters')|for_attr }}">
+        {{ phrase('alrf_clear_all') }}
+    </a>
+</li>
+]]></template>
+  <template type="public" title="alrf_clear_button" version_id="3030171" version_string="3.3.1"><![CDATA[<div class="inputGroup u-inputSpacer">
+	<button type="submit" class="button--primary button">
+		<span class="button-text">{{ phrase('filter') }}</span>
+	</button>
+	<xf:if is="$filters">
+		<xf:button href="{{ link($baseLinkPathClearButton, $category) }}" class="button--primary button--clear-filter button" >
+			<span class="button-text">{{ phrase('clear') }}</span>
+		</xf:button>
+	</xf:if>
+</div>]]></template>
+  <template type="public" title="alrf_filter_icon_replace_filter" version_id="2010072" version_string="2.1.0"><![CDATA[<xf:if is="{$xf.options.alrf_off_canvas_filter} && {$xf.options.alrf_filter_icon_location}==='replace_filter'">
+    <xf:css src="alrf_filter_mobile.less"/>
+    <a class="p-navgroup-link p-navgroup-link--iconic p-navgroup-link--filter" data-xf-click="off-canvas"
+       data-menu=".js-headerOffCanvasFilter" role="button" tabindex="0">
+        <i aria-hidden="true"></i>
+        <span class="p-navgroup-linkText">{{phrase('filters')}}</span>
+    </a>
+</xf:if>]]></template>
+  <template type="public" title="alrf_filter_icon_search" version_id="2010072" version_string="2.1.0"><![CDATA[<xf:if is="{$xf.options.alrf_off_canvas_filter} && {$rf_active} && {$xf.options.alrf_filter_icon_location}==='search_icon'">
+    <xf:css src="alrf_filter_mobile.less"/>
+    <a class="p-navgroup-link p-navgroup-link--iconic p-navgroup-link--filter" data-xf-click="off-canvas"
+       data-menu=".js-headerOffCanvasFilter" role="button" tabindex="0">
+        <i aria-hidden="true"></i>
+        <span class="p-navgroup-linkText">{{phrase('filters')}}</span>
+    </a>
+</xf:if>]]></template>
+  <template type="public" title="alrf_filter_mobile" version_id="3050070" version_string="3.5.0"><![CDATA[<xf:if is="{$xf.options.alrf_off_canvas_filter} && {$rf_active}">
+    <xf:css src="alrf_filter_mobile.less"/>
+    <div class="offCanvasMenu offCanvasMenu--nav js-headerOffCanvasFilter" data-menu="menu" aria-hidden="true"
+         data-ocm-builder="navigation">
+        <div class="offCanvasMenu-backdrop" data-menu-close="true"></div>
+        <div class="offCanvasMenu-content">
+            <div class="offCanvasMenu-header">
+                {{phrase('filters')}}
+                <a class="offCanvasMenu-closer" data-menu-close="true" role="button" tabindex="0"
+                   aria-label="{{ phrase('close') }}"></a>
+            </div>
+            <xf:comment>
+                We don't call the setup macro here, as the main filter location (above content, in the sidebar) will call it:
+                template="alrf_resource_filter_form_macros" name="field_form_setup"
+            </xf:comment>
+            <xf:include template="xfrm_filters"/>
+        </div>
+    </div>
+</xf:if>]]></template>
+  <template type="public" title="alrf_filter_mobile.less" version_id="3030171" version_string="3.3.1"><![CDATA[.p-navgroup-link {
+  &.p-navgroup-link--filter {
+    display: none;
+
+    i:after {
+      .m-faContent(@fa-var-filter, .5em);
+    }
+  }
+}
+
+@media (max-width: @xf-publicNavCollapseWidth) {
+  .has-js {
+    .p-navgroup-link {
+      &.p-navgroup-link--filter {
+        display: inline-block;
+      }
+    }
+
+    .offCanvasMenu--nav .offCanvasMenu-content a.button--clear-filter {
+      color: @xf-buttonPrimary--color;
+    }
+
+    .block.filterAboveResourceList,
+    .block.filterSideBar {
+      display: none;
+    }
+
+    .block-filterBar {
+      .filterBar-menuTrigger {
+        overflow: hidden;
+        visibility: hidden;
+        display: block;
+        width: 0;
+      }
+
+      .p-navgroup-link {
+        border-left: none;
+        float: right;
+        padding: 0;
+      }
+    }
+  }
+}
+
+.js-headerOffCanvasFilter {
+  .menu-footer {
+    background: inherit !important;
+  }
+}]]></template>
+  <template type="public" title="alrf_list_metadata" version_id="1060171" version_string="1.6.1"><![CDATA[<xf:css src="alrf_resource_field_column_list.less"/>
+
+<xf:if contentcheck="true">
+    <div class="structItem-minor structItem-minor--fieldList">
+        <ul class="structItem-parts">
+            <xf:contentcheck>
+                <xf:foreach loop="{$columnList}" key="$fieldId" value="$fieldDefinition">
+                    <xf:if contentcheck="true">
+                        <li class="fieldContainer--{$fieldId}">
+                            {$fieldDefinition.title}:
+                            <xf:contentcheck>
+                                <xf:macro template="alrf_resource_field_column_list" name="custom_field_value"
+                                          arg-definition="{$fieldDefinition}"
+                                          arg-value="{$fieldData.{$fieldId}}"/>
+                            </xf:contentcheck>
+                        </li>
+                    </xf:if>
+                </xf:foreach>
+            </xf:contentcheck>
+        </ul>
+    </div>
+</xf:if>
+]]></template>
+  <template type="public" title="alrf_list_prefix" version_id="1030070" version_string="1.3.0"><![CDATA[<xf:css src="alrf_resource_field_column_list.less"/>
+<xf:if contentcheck="true">
+    <xf:comment>Any wrapper html can go here</xf:comment>
+    <xf:contentcheck>
+        <xf:foreach loop="{$columnList}" key="$fieldId" value="$fieldDefinition">
+            <xf:if contentcheck="true">
+                <xf:set var="$labelClass">label label--primary</xf:set>
+                <xf:if is="$fieldDefinition.match_type == 'color'">
+                    <xf:set var="$labelClass">label label--color</xf:set>
+                </xf:if>
+                <span class="{$labelClass} fieldContainer--{$fieldId}">
+                    <xf:contentcheck>
+                        <xf:macro template="alrf_resource_field_column_list" name="custom_field_value"
+                                  arg-definition="{$fieldDefinition}"
+                                  arg-value="{$fieldData.{$fieldId}}"/>
+                    </xf:contentcheck>
+                </span>
+            </xf:if>
+        </xf:foreach>
+    </xf:contentcheck>
+    <xf:comment>Close wrapping html here</xf:comment>
+</xf:if>]]></template>
+  <template type="public" title="alrf_quick_lookup_widget" version_id="2020072" version_string="2.2.0"><![CDATA[<div class="block" {{ widget_data($widget) }}>
+    <xf:form
+            action="{{ link('resources/filters') }}"
+            class="block-container"
+    >
+        <h3 class="block-minorHeader">
+            <a href="{$link}" rel="nofollow">{$title}</a>
+        </h3>
+        <div class="block-body">
+            <div class="block-row">
+                <xf:textbox name="rf[__keywords]"
+                            ac="single"
+                            data-acurl="{{ link_type('public', 'misc/rf-item-auto-complete') }}"
+                            placeholder="{{ phrase('alrf_quick_lookup_placeholder') }}"
+                />
+            </div>
+            <div class="block-footer">
+                    <span class="block-footer-controls">
+                        <xf:button type="submit" class="button--primary button--small" icon="search"/>
+                    </span>
+            </div>
+        </div>
+        <xf:hiddenval name="apply">1</xf:hiddenval>
+    </xf:form>
+</div>
+]]></template>
+  <template type="public" title="alrf_resource_field.less" version_id="3050070" version_string="3.5.0"><![CDATA[.resourceFieldContainer {
+  .input--date {
+    width: 100% !important;
+  }
+  .multipleChoiceConfigureContainer {
+    display: none;
+  }
+}
+
+.customFieldContainer {
+    &--faded {
+        opacity: 0.5;
+    }
+
+    // Add fixed height to the multiple selection lists that should be converted to a select2 popup
+    // via JS to prevent page flickering
+    &.filterTemplate--multiselect.customFieldContainer--hasFilterableList {
+        &:not(.multipleSelectionContainer) {
+            text-decoration-color: #00FF00;
+            select[multiple] {
+                height: 36px;
+            }
+        }
+    }
+}
+
+.totalCountIndicator {
+  span {
+    font-style: italic;
+    font-weight: bold;
+  }
+}]]></template>
+  <template type="public" title="alrf_resource_field_column_list" version_id="2000070" version_string="2.0.0"><![CDATA[<xf:css src="alrf_resource_field_column_list.less"/>
+
+<xf:if contentcheck="true">
+    <div class="structItem-cell structItem-cell--fieldColumn">
+        <dl class="pairs pairs--justified fieldContainer">
+            <xf:contentcheck>
+                <xf:foreach loop="{$columnList}" key="$fieldId" value="$fieldDefinition">
+                    <xf:if contentcheck="true">
+                        <dt class="fieldLabel--{$fieldId}">
+                            {$fieldDefinition.title}
+                        </dt>
+                        <dd class="fieldValue--{$fieldId}">
+                            <xf:contentcheck>
+                                <xf:macro name="custom_field_value"
+                                          arg-definition="{$fieldDefinition}"
+                                          arg-value="{$fieldData.{$fieldId}}"/>
+                            </xf:contentcheck>
+                        </dd>
+                    </xf:if>
+                </xf:foreach>
+            </xf:contentcheck>
+        </dl>
+    </div>
+</xf:if>
+
+<xf:macro name="custom_field_value" arg-definition="!" arg-value="!">
+    <xf:if is="$definition.field_type == 'stars'">
+        <xf:macro template="rating_macros" name="stars" arg-rating="{{ !empty($value) ? $value : 0 }}"/>
+        <xf:else/>
+        <xf:if is="$definition.match_type == 'date'">
+            <xf:macro template="custom_fields_macros" name="custom_field_value_date" arg-date="{$value}"/>
+            <xf:elseif is="$definition.match_type == 'color'"/>
+            <xf:macro template="custom_fields_macros" name="custom_field_value_color" arg-color="{$value}"/>
+            <xf:else/>
+            {$definition.getFormattedValueForColumn($value)|raw}
+        </xf:if>
+    </xf:if>
+</xf:macro>
+]]></template>
+  <template type="public" title="alrf_resource_field_column_list.less" version_id="2000070" version_string="2.0.0"><![CDATA[div.structItem-cell {
+    &.structItem-cell--fieldColumn {
+        width: 120px;
+        dd {
+            div {
+                display: inline;
+            }
+        }
+    }
+
+    .structItem-minor.structItem-minor--fieldList {
+        float: none;
+
+        .structItem-parts {
+            display: block;
+        }
+    }
+}
+
+.contentRow-minor--hideLinks {
+    li {
+        .colorChip {
+            .color-field-fix;
+        }
+    }
+}
+
+.label.label--color {
+    .colorChip {
+        .color-field-fix;
+    }
+}
+
+@media (max-width: @xf-responsiveWide) {
+    div.structItem-cell {
+        &.structItem-cell--fieldColumn {
+            font-size: @xf-fontSizeSmaller;
+        }
+    }
+}
+
+@media (max-width: @xf-responsiveMedium) {
+    div.structItem-cell {
+        &.structItem-cell--fieldColumn {
+            display: block;
+            width: 100%;
+            float: none;
+            padding-top: 0;
+            padding-left: 0;
+            color: @xf-textColorMuted;
+            .pairs {
+                > dt,
+                > dd {
+                    display: inline;
+                    float: none;
+                    margin: 0;
+
+                    .colorChip {
+                        top: 4px;
+                        position: relative;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.color-field-fix() {
+    top: 4px;
+    position: relative;
+}
+]]></template>
+  <template type="public" title="alrf_resource_field_form_element" version_id="3060070" version_string="3.6.0"><![CDATA[<xf:macro name="filter_element" arg-set="!" arg-definition="!" arg-editMode="!" arg-namePrefix="!">
+    <xf:comment>Select2 loading is moved to a top-level macro</xf:comment>
+    <xf:if is="in_array($definition.field_type, ['textbox', 'textarea', 'bbcode'])">
+        <xf:macro name="alrf_custom_fields_edit_textbox" arg-set="{$set}" arg-definition="{$definition}" arg-editMode="{$editMode}" arg-namePrefix="{$namePrefix}"/>
+
+        <xf:elseif is="{$definition.field_type}==='stars'"/>
+            <xf:macro template="rating_macros" name="rating"
+                      arg-name="{$namePrefix}[{$definition.field_id}]"
+                      arg-currentRating="{$set.{$definition.field_id}}"
+                      arg-deselectable="true"
+                      arg-row="{{ false }}"/>
+
+        <xf:elseif is="in_array($definition.field_type, ['location'])"/>
+        <xf:macro name="alrf_custom_fields_edit_location" arg-set="{$set}" arg-definition="{$definition}" arg-editMode="{$editMode}" arg-namePrefix="{$namePrefix}"/>
+
+        <xf:elseif is="in_array($definition.FieldData.filter_template, ['checkbox', 'select', 'radio', 'multiselect'])"/>
+        <xf:macro name="custom_fields_edit_{$definition.FieldData.filter_template}" arg-set="{$set}" arg-definition="{$definition}" arg-editMode="{$editMode}" arg-namePrefix="{$namePrefix}"/>
+
+        <xf:else/>
+        <xf:macro template="custom_fields_macros" name="custom_fields_edit_{$definition.FieldData.filter_template}" arg-set="{$set}" arg-definition="{$definition}" arg-editMode="{$editMode}" arg-namePrefix="{$namePrefix}"/>
+
+    </xf:if>
+</xf:macro>
+
+<xf:comment>Multiselect macro that loads the select macro</xf:comment>
+<xf:macro name="custom_fields_edit_multiselect" arg-set="!" arg-definition="!" arg-editMode="!" arg-namePrefix="custom_fields">
+    <xf:macro name="custom_fields_edit_select"
+              arg-set="{$set}"
+              arg-definition="{$definition}"
+              arg-editMode="!"
+              arg-multi="1"
+              arg-namePrefix="{$namePrefix}"/>
+</xf:macro>
+
+<xf:macro name="custom_fields_edit_select" arg-set="!" arg-definition="!" arg-editMode="!" arg-multi="" arg-namePrefix="custom_fields">
+    <xf:select name="{$namePrefix}[{$definition.field_id}]"
+               value="{{ $set.{$definition.field_id} === null ? '' : {$set.{$definition.field_id}} }}"
+               multiple="{$multi}"
+               size="{{$multi && $xf.options.alrf_filterable_lists ? 1 : 0}}"
+               class="field_{$definition.field_id}">
+        <xf:option value=""/>
+        <xf:foreach loop="$definition.getFacetData().getChoices($definition, $set, false)" key="$key" value="$option">
+            <xf:option value="{$key}"
+                       labelclass="{$definition.getFacetData().getChoiceClass($definition, $key)}"
+            >{{$option|raw}}
+            </xf:option>
+        </xf:foreach>
+    </xf:select>
+</xf:macro>
+
+<xf:macro name="custom_fields_edit_radio" arg-set="!" arg-definition="!" arg-editMode="!" arg-namePrefix="custom_fields">
+    <xf:radio name="{$namePrefix}[{$definition.field_id}]"
+              value="{{ $set.{$definition.field_id} === null ? '' : {$set.{$definition.field_id}} }}"
+              required="{{ $definition.isRequired($editMode) ? 'required' : '' }}"
+              class="field_{$definition.field_id}"
+              listclass="listColumns">
+        <xf:if is="!$definition.isRequired($editMode)">
+            <xf:option value="">{{ phrase('no_selection') }}</xf:option>
+        </xf:if>
+        <xf:foreach loop="$definition.getFacetData().getChoices($definition, $set)" key="$key" value="$option">
+            <xf:option value="{$key}"
+                       labelclass="{$definition.getFacetData().getChoiceClass($definition, $key)}"
+            >{{$option|raw}}
+            </xf:option>
+        </xf:foreach>
+    </xf:radio>
+</xf:macro>
+
+<xf:macro name="custom_fields_edit_checkbox" arg-set="!" arg-definition="!" arg-editMode="!" arg-namePrefix="custom_fields">
+    <xf:checkbox name="{$namePrefix}[{$definition.field_id}]" value="{$set.{$definition.field_id}}"
+                 required="{{ $definition.isRequired($editMode) ? 'required' : '' }}"
+                 listclass="field_{$definition.field_id} listColumns">
+        <xf:foreach loop="$definition.getFacetData().getChoices($definition, $set)" key="$key" value="$option">
+            <xf:option value="{$key}"
+                       labelclass="{$definition.getFacetData().getChoiceClass($definition, $key)}"
+            >{{$option|raw}}
+            </xf:option>
+        </xf:foreach>
+    </xf:checkbox>
+</xf:macro>
+
+<xf:macro name="alrf_custom_fields_edit_location" arg-set="!" arg-definition="!" arg-editMode="!" arg-namePrefix="custom_fields">
+    <xf:macro
+        template="allf_custom_fields_macros"
+        name="custom_fields_filter_location"
+        arg-set="{$set}"
+        arg-definition="{$definition}"
+        arg-editMode="{$editMode}"
+        arg-defaultDistanceUnit="{$xf.options.alrf_default_distance_unit}"
+        arg-namePrefix="{$namePrefix}"
+        arg-customFieldContainerType="resources"
+        arg-hideDistanceUnit="{$xf.options.alrf_hide_distance_unit}"
+    />
+    <xf:comment>@see EnhancedSet::getCustomFieldContainerType()</xf:comment>
+</xf:macro>
+
+<xf:macro name="alrf_custom_fields_edit_textbox" arg-set="!" arg-definition="!" arg-editMode="!" arg-namePrefix="custom_fields">
+    <xf:if is="$definition.match_type == 'date'">
+
+        <xf:dateinput name="{$namePrefix}[{$definition.field_id}][from]" value="{$set.{$definition.field_id}.from}"
+                      data-field="{$definition.field_id}"
+                      maxlength="{{ $definition.max_length ? $definition.max_length : '' }}"
+                      required="{{ $definition.isRequired($editMode) ? 'required' : '' }}"
+                      class="field_{$definition.field_id}"
+                      placeholder=" {{ phrase('alrf_from') }} "
+        />
+
+        <span class="inputGroup-splitter"></span>
+
+        <xf:dateinput name="{$namePrefix}[{$definition.field_id}][to]" value="{$set.{$definition.field_id}.to}"
+                      data-field="{$definition.field_id}"
+                      maxlength="{{ $definition.max_length ? $definition.max_length : '' }}"
+                      required="{{ $definition.isRequired($editMode) ? 'required' : '' }}"
+                      class="field_{$definition.field_id}"
+                      placeholder=" {{ phrase('alrf_to') }} "
+        />
+
+
+        <xf:elseif is="$definition.match_type == 'color'"/>
+
+        <xf:macro template="color_picker_macros" name="color_picker"
+                  arg-name="{$namePrefix}[{$definition.field_id}]"
+                  arg-value="{$set.{$definition.field_id}}"
+                  arg-mapName=""
+                  arg-row="{{ false }}"
+                  arg-required="{$definition.isRequired($editMode)}"/>
+
+        <xf:else/>
+
+        <xf:if is="$definition.match_type == 'number'">
+
+            <xf:set var="$type" value="number"/>
+            <xf:set var="$step" value="1"/>
+
+            <xf:if is="$definition.match_params.number_integer">
+                <xf:if is="$definition.match_params.number_min >= 0">
+                    <xf:set var="$pattern" value="\d*"/>
+                </xf:if>
+                <xf:else/>
+                <xf:set var="$step" value="any"/>
+            </xf:if>
+            <xf:if is="$definition.match_params.number_min !== ''">
+                <xf:set var="$min" value="{$definition.match_params.number_min}"/>
+            </xf:if>
+            <xf:if is="$definition.match_params.number_max !== ''">
+                <xf:set var="$max" value="{$definition.match_params.number_max}"/>
+            </xf:if>
+
+            <xf:elseif is="in_array($definition.match_type, ['regex', 'alphanumeric'])"/>
+
+            <xf:set var="$type" value="text"/>
+            <xf:set var="$pattern" value="{{ $definition.match_type == 'regex' ? $definition.match_params.regex : '\w+' }}"/>
+            <xf:set var="$title">{{ phrase('please_enter_value_that_matches_required_format') }}</xf:set>
+
+            <xf:elseif is="in_array($definition.match_type, ['date', 'email', 'url', 'color'])"/>
+
+            <xf:set var="$type" value="{$definition.match_type}"/>
+
+            <xf:else/>
+
+            <xf:set var="$type" value="text"/>
+
+        </xf:if>
+
+        <xf:if is="$type==='number'">
+            <xf:textbox name="{$namePrefix}[{$definition.field_id}][from]" value="{$set.{$definition.field_id}.from}"
+                        type="{$type}"
+                        maxlength="{{ $definition.max_length ? $definition.max_length : '' }}"
+                        pattern="{$pattern}"
+                        title="{$title}"
+                        min="{$min}"
+                        max="{$max}"
+                        step="{$step}"
+                        required="{{ $definition.isRequired($editMode) ? 'required' : '' }}"
+                        class="field_{$definition.field_id}"
+                        placeholder=" {{ phrase('alrf_from') }} "
+            />
+
+            <span class="inputGroup-splitter"></span>
+
+            <xf:textbox name="{$namePrefix}[{$definition.field_id}][to]" value="{$set.{$definition.field_id}.to}"
+                        type="{$type}"
+                        maxlength="{{ $definition.max_length ? $definition.max_length : '' }}"
+                        pattern="{$pattern}"
+                        title="{$title}"
+                        min="{$min}"
+                        max="{$max}"
+                        step="{$step}"
+                        required="{{ $definition.isRequired($editMode) ? 'required' : '' }}"
+                        class="field_{$definition.field_id}"
+                        placeholder=" {{ phrase('alrf_to') }} "
+            />
+            <xf:else/>
+            <xf:textbox name="{$namePrefix}[{$definition.field_id}]" value="{$set.{$definition.field_id}}"
+                        type="{$type}"
+                        maxlength="{{ $definition.max_length ? $definition.max_length : '' }}"
+                        pattern="{$pattern}"
+                        title="{$title}"
+                        min="{$min}"
+                        max="{$max}"
+                        step="{$step}"
+                        required="{{ $definition.isRequired($editMode) ? 'required' : '' }}"
+                        class="field_{$definition.field_id}"/>
+        </xf:if>
+    </xf:if>
+</xf:macro>
+]]></template>
+  <template type="public" title="alrf_resource_field_search_list" version_id="1000070" version_string="1.0.0"><![CDATA[<xf:css src="alrf_resource_field_column_list.less"/>
+<xf:if contentcheck="true">
+    <div class="contentRow-minor contentRow-minor--hideLinks">
+        <ul class="listInline listInline--bullet">
+            <xf:contentcheck>
+                <xf:foreach loop="{$columnList}" key="$fieldId" value="$fieldDefinition">
+                    <xf:if contentcheck="true">
+                        <li>
+                            {$fieldDefinition.title}:
+                            <xf:contentcheck>
+                                <xf:macro template="alrf_resource_field_column_list" name="custom_field_value"
+                                          arg-definition="{$fieldDefinition}"
+                                          arg-value="{$fieldData.{$fieldId}}"/>
+                            </xf:contentcheck>
+                        </li>
+                    </xf:if>
+                </xf:foreach>
+            </xf:contentcheck>
+        </ul>
+    </div>
+</xf:if>]]></template>
+  <template type="public" title="alrf_resource_filter_form_macros" version_id="3060170" version_string="3.6.1"><![CDATA[<xf:macro name="select2_setup">
+    <xf:comment>A dedicated macro just for loading select2 dependencies</xf:comment>
+    <xf:css src="select2.less"/>
+    <xf:css src="alrf_select2.less"/>
+    <xf:js prod="xf/token_input-compiled.js" dev="vendor/select2/select2.full.min.js, xf/token_input.js"/>
+
+    <xf:js>
+        jQuery.extend(XF.phrases, {
+        s2_error_loading: "{{ phrase('s2_error_loading')|escape('js') }}",
+        s2_input_too_long: "{{ phrase('s2_input_too_long')|escape('js') }}",
+        s2_input_too_short: "{{ phrase('s2_input_too_short')|escape('js') }}",
+        s2_loading_more: "{{ phrase('s2_loading_more')|escape('js') }}",
+        s2_maximum_selected: "{{ phrase('s2_maximum_selected')|escape('js') }}",
+        s2_no_results: "{{ phrase('s2_no_results')|escape('js') }}",
+        s2_searching: "{{ phrase('s2_searching')|escape('js') }}"
+        });
+    </xf:js>
+</xf:macro>
+
+<xf:macro name="field_form_setup">
+    <xf:comment>A dedicated macro for initializing filter dependencies. Should be called only once per page.</xf:comment>
+    <xf:css src="alrf_filter_setup.less"/>
+    <xf:css src="alrf_resource_field.less"/>
+    <xf:js src="AL/FilterFramework/filter_reload.js" min="0"/>
+    <xf:js src="AL/FilterFramework/column_fix.js" min="0"/>
+    <xf:if is="$xf.options.alrf_filterable_lists">
+        <xf:macro name="select2_setup"/>
+    </xf:if>
+</xf:macro>
+<xf:macro name="field_form" arg-fields="!" arg-set="!" arg-reloadTarget="" arg-namePrefix="rf">
+    <xf:css src="alrf_select2.less"/>
+    <xf:css src="alrf_resource_field.less"/>
+    <xf:js src="AL/FilterFramework/filter_reload.js" min="0"/>
+    <div data-xf-init="filterFormContainer" data-reload-target="{$reloadTarget}"
+         data-auto-reload="{$xf.options.alrf_auto_reload}"  data-total-count-indicator="{$xf.options.alrf_total_count_indicator}"
+         data-filterable-lists="{$xf.options.alrf_filterable_lists}"
+         data-filterable-list-api="{{ link('resources/categories/load-selection-options') }}"
+    ></div>
+    <xf:if is="{$xf.options.alrf_keyword_search} !== 'disabled'">
+        <div class="menu-row menu-row--separated">
+            <label for="ctrl_keywords">{{ phrase('keywords:') }}</label>
+            <div class="u-inputSpacer">
+                <xf:textbox name="{$namePrefix}[__keywords]"
+                            value="{{ $set.__keywords }}"
+                            ac="single"
+                            data-acurl="{{ link_type('public', 'misc/rf-item-auto-complete') }}"
+                />
+            </div>
+        </div>
+    </xf:if>
+    <xf:if is="{$xf.options.alrf_tag_search} !== 'disabled'">
+        <div class="menu-row menu-row--separated">
+            <label for="ctrl_tags">{{ phrase('tags:') }}</label>
+            <div class="u-inputSpacer">
+                <xf:tokeninput name="{$namePrefix}[__tags]" value="{{ $set.__tags}}"
+                               href="{{ link('misc/tag-auto-complete') }}"
+                               min-length="{$xf.options.tagLength.min}"
+                               max-length="{$xf.options.tagLength.max}"
+                               max-tokens="{$xf.options.maxContentTags}"
+                >
+                </xf:tokeninput>
+            </div>
+        </div>
+    </xf:if>
+    <xf:foreach loop="$fields" key="$fieldId" value="$fieldDefinition">
+        <div class="menu-row menu-row--separated customFieldContainer customFieldContainer--{$fieldDefinition.field_type} {$fieldDefinition.getFacetData().getContainerClass($fieldDefinition)} resourceFieldContainer filterTemplate--{$fieldDefinition.FieldData.filter_template} {{ $xf.options.alrf_filterable_lists ? 'customFieldContainer--hasFilterableList' : '' }}">
+            {$fieldDefinition.title}:
+            <div class="inputGroup u-inputSpacer">
+                <xf:macro template="alrf_resource_field_form_element" name="filter_element" arg-set="{$set}"
+                          arg-definition="{$fieldDefinition}" arg-editMode="1" arg-namePrefix="{$namePrefix}"/>
+            </div>
+
+            <xf:if is="
+                in_array($fieldDefinition.FieldData.filter_template, ['multiselect', 'checkbox'])
+                && in_array($fieldDefinition.field_type, ['checkbox', 'multiselect'])
+            ">
+                <xf:js src="AL/FilterFramework/multiple_choice_configure.js"/>
+                <div class="u-inputSpacer multipleChoiceConfigureContainer" data-xf-init="multipleChoiceConfigure">
+                    <xf:select
+                            name="{$namePrefix}[__config][{$fieldDefinition.field_id}][match_type]"
+                            value="{{ $set.__config.{$fieldDefinition.field_id}.match_type ? $set.__config.{$fieldDefinition.field_id}.match_type : $fieldDefinition.FieldData.default_match_type }}"
+                    >
+                        <xf:option value="OR">{{ phrase('alrf_results_matching_any_option') }}</xf:option>
+                        <xf:option value="AND">{{ phrase('alrf_results_matching_all_options') }}</xf:option>
+                    </xf:select>
+                </div>
+            </xf:if>
+        </div>
+    </xf:foreach>
+</xf:macro>
+]]></template>
+  <template type="public" title="alrf_resource_filter_popup_form" version_id="3030170" version_string="3.3.1"><![CDATA[<xf:macro template="alrf_resource_filter_form_macros" name="field_form" arg-fields="{$fields}"
+          arg-set="{$filterSet}"
+          arg-reloadTarget=".block[data-type='resource']"
+          arg-namePrefix="rf"/>]]></template>
+  <template type="public" title="alrf_search_form" version_id="1010173" version_string="1.1.1"><![CDATA[<xf:js src="AL/FilterFramework/search_form.js" min="0"/>
+<div id="itemFilterContainer" data-preload="{$input|json}" data-api="{{ link('search/load-resource-filter') }}"></div>]]></template>
+  <template type="public" title="alrf_search_form_content" version_id="3050070" version_string="3.5.0"><![CDATA[<xf:if is="{$fields}">
+    <xf:formrow rowtype="input" label="{{ phrase('alrf_additional_filters') }}">
+        <xf:comment>This template loads separate, not included via forum_filters, therefore needs to call the setup macro itself.</xf:comment>
+        <xf:macro template="alrf_resource_filter_form_macros" name="field_form_setup" />
+        <xf:macro template="alrf_resource_filter_form_macros" name="field_form" arg-fields="{$fields}" arg-set="{$filterSet}" arg-namePrefix="c[rf]"/>
+    </xf:formrow>
+</xf:if>]]></template>
+  <template type="public" title="alrf_select2.less" version_id="3050070" version_string="3.5.0"><![CDATA[.filterSelectionContainer {
+  span.select2-container {
+    margin-left: 0 !important;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none;
+  }
+
+  &.multipleSelectionContainer {
+    span.select2-container {
+      padding: 0 !important;
+    }
+  }
+
+  &.singleSelectionContainer {
+    span.select2-container.input {
+      padding-right: 1em !important;
+      background-size: 1em !important;
+      background-repeat: no-repeat !important;
+      -ltr-background-position: 100% !important;
+      white-space: nowrap;
+      word-wrap: normal;
+      -webkit-appearance: none !important;
+      -moz-appearance: none !important;
+      appearance: none !important;
+      -xf-select-gadget: xf-default(@xf-input--color, @xf-textColor);
+    }
+  }
+}
+
+.select2-dropdown.customFieldSelectionPopup {
+  .select2-results__options {
+    max-height: 300px;
+  }
+}
+
+.select2-dropdown.customFieldSelectionPopup {
+  .select2-search {
+    min-width: 180px !important;
+    display: block;
+    input {
+      width: 100%;
+    }
+  }
+
+  .select2-results__options {
+    max-width: 100%;
+
+  }
+}
+
+@media (max-width: @xf-formResponsive) {
+  span.input {
+    width: 100% !important;
+  }
+}
+]]></template>
+  <template type="public" title="alrf_sidebar_filter_container" version_id="3050070" version_string="3.5.0"><![CDATA[<div class="block filterSideBar" {{ widget_data($widget) }}>
+    <div class="block-container">
+        <h3 class="block-minorHeader">{$title}</h3>
+        <div class="block-body">
+            <xf:comment>Call filter setup macro manually</xf:comment>
+            <xf:macro template="alrf_resource_filter_form_macros" name="field_form_setup"/>
+            <xf:include template="xfrm_filters" />
+        </div>
+    </div>
+</div>]]></template>
+  <template type="public" title="alrf_total_count_indicator" version_id="3000271" version_string="3.0.2"><![CDATA[<span class="totalCountIndicator">{{ phrase('alrf_items_found') }}: <span>{$total}</span></span>
+]]></template>
+</templates>

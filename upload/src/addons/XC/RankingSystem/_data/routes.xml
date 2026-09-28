@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<routes>
+  <route route_type="admin" route_prefix="award-badge" format=":int&lt;award_badge_id&gt;/" controller="XC\RankingSystem:AwardBadge" context="xc_user_badges"/>
+  <route route_type="admin" route_prefix="award-xp" format=":int&lt;award_xp_id&gt;/" controller="XC\RankingSystem:AwardXp" context="xc_user_xp"/>
+  <route route_type="admin" route_prefix="badge" format=":int&lt;badge_id&gt;/" controller="XC\RankingSystem:Badge" context="xc_award_badge"/>
+  <route route_type="admin" route_prefix="exp-point" format=":int&lt;xp_id&gt;/" controller="XC\RankingSystem:ExperiencePoint" context="xc_experience_points"/>
+  <route route_type="admin" route_prefix="levels" format=":int&lt;level_id&gt;/" controller="XC\RankingSystem:Levels" context="xc_ranking_levels"/>
+</routes>

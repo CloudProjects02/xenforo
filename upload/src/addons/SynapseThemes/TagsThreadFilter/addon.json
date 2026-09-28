@@ -1,0 +1,17 @@
+{
+    "legacy_addon_id": "",
+    "title": "[SynapseThemes] Tags Thread Filter",
+    "description": "Displays thread tags on forum and thread lists, allowing users to filter threads by a selected tag.",
+    "version_id": 1000070,
+    "version_string": "1.0.0",
+    "dev": "Synapse Themes",
+    "dev_url": "https://example.com",
+    "faq_url": "",
+    "support_url": "",
+    "extra_urls": [],
+    "require": {
+        "XF": [2000070, "XenForo 2.0.0+"],
+        "php": ["7.0.0", "PHP 7.0.0+"]
+    },
+    "icon": "fa-tags"
+}

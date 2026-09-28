@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<options>
+  <option option_id="xfdevs_threadPosters_enabled" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="xfdevs_threadPosters" display_order="1"/>
+  </option>
+  <option option_id="xfdevs_threadPosters_limit" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>3</default_value>
+    <relation group_id="xfdevs_threadPosters" display_order="1"/>
+  </option>
+</options>

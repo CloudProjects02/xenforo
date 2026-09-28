@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="public" title="_synapsethemes_tags_thread_filter.less" version_id="100" version_string="1.0.0"><![CDATA[.block-container--tagsFilter {
+    margin-bottom: @xf-paddingMedium;
+
+    .block-body {
+        padding: @xf-paddingSmall;
+    }
+
+    .tagItem--menuItem {
+        display: inline-block;
+        padding: @xf-paddingSmall / 2 @xf-paddingSmall;
+        border: 1px solid @xf-borderColorFeature;
+        border-radius: @xf-borderRadiusMedium;
+        background-color: @xf-contentBg;
+        color: @xf-textColor;
+        text-decoration: none;
+
+        &:hover {
+            background-color: @xf-borderColorFeature;
+            color: @xf-textColorFeature;
+        }
+    }
+
+    ul.listInline--separated > li:not(:last-child):after {
+        content: ''; // Remove default separator if any, or customize
+        margin: 0 @xf-paddingSmall / 2;
+    }
+}]]></template>
+  <template type="public" title="_synapsethemes_tags_thread_filter_tags_list" version_id="1000070" version_string="1.0.0"><![CDATA[<xf:js src="js/SynapseThemes/TagsThreadFilter/filter.js" addon="SynapseThemes/TagsThreadFilter" />
+
+<xf:if is="$synapseThreadTags is not empty">
+    <div class="block-container block-container--tagsFilter">
+        <div class="block-body">
+            <ul class="listInline listInline--separated">
+                <xf:foreach loop="$synapseThreadTags" value="$tag">
+                    <li>
+                        <xf:if is="$forum">
+                            <a href="{{ link('canonical:forums', $forum, {'tag_filter': $tag.tag_url}) }}" 
+                               class="tagItem {{ ($activeTagFilter && $activeTagFilter.tag_id == $tag.tag_id) ? 'is-active' : '' }}"
+                               data-xf-init="tag-filter" 
+                               data-tag-url="{$tag.tag_url}" 
+                               data-forum-id="{$forum.node_id}">{$tag.tag}</a>
+                            <xf:else />
+                            <a href="{{ link('tags', $tag) }}" class="tagItem">{$tag.tag}</a>
+                        </xf:if>
+                    </li>
+                </xf:foreach>
+                <xf:if is="$forum && !empty($activeTagFilter)">
+                    <li>
+                        <a href="{{ link('canonical:forums', $forum) }}" 
+                           class="tagItem tagItem--clear"
+                           data-xf-init="tag-filter" 
+                           data-tag-url="" 
+                           data-forum-id="{$forum.node_id}">{{ phrase('clear_filter') }}</a>
+                    </li>
+                </xf:if>
+            </ul>
+        </div>
+    </div>
+</xf:if>
+
+<xf:css src="_synapsethemes_tags_thread_filter.less" />
+]]></template>
+</templates>

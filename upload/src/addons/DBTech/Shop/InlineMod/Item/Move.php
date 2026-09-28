@@ -2,33 +2,35 @@
 
 namespace DBTech\Shop\InlineMod\Item;
 
-use DBTech\Shop\Entity\Category;
-use DBTech\Shop\Entity\Item;
-use DBTech\Shop\Finder\ItemPrefixFinder;
-use DBTech\Shop\Repository\CategoryRepository;
-use DBTech\Shop\Service\Item\MoveService;
 use XF\Http\Request;
 use XF\InlineMod\AbstractAction;
-use XF\Mvc\Controller;
 use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Entity;
-use XF\Mvc\Reply\AbstractReply;
-use XF\Phrase;
-use XF\PrintableException;
 
+/**
+ * Class Move
+ *
+ * @package DBTech\Shop\InlineMod\Item
+ */
 class Move extends AbstractAction
 {
-	protected ?Category $targetCategory = null;
-	protected ?int $targetCategoryId = null;
-
 	/**
-	 * @return Phrase
+	 * @var
 	 */
-	public function getTitle(): Phrase
+	protected $targetCategory;
+	/**
+	 * @var
+	 */
+	protected $targetCategoryId;
+	
+	/**
+	 * @return \XF\Phrase
+	 */
+	public function getTitle(): \XF\Phrase
 	{
 		return \XF::phrase('dbtech_shop_move_items...');
 	}
-
+	
 	/**
 	 * @param AbstractCollection $entities
 	 * @param array $options
@@ -40,7 +42,7 @@ class Move extends AbstractAction
 	protected function canApplyInternal(AbstractCollection $entities, array $options, &$error): bool
 	{
 		$result = parent::canApplyInternal($entities, $options, $error);
-
+		
 		if ($result && $options['target_category_id'])
 		{
 			$category = $this->getTargetCategory($options['target_category_id']);
@@ -48,25 +50,25 @@ class Move extends AbstractAction
 			{
 				return false;
 			}
-
+			
 			if ($options['check_category_viewable'] && !$category->canView($error))
 			{
 				return false;
 			}
-
+			
 			if ($options['check_all_same_category'])
 			{
 				$allSame = true;
 				foreach ($entities AS $entity)
 				{
-					/** @var Item $entity */
+					/** @var \DBTech\Shop\Entity\Item $entity */
 					if ($entity->category_id != $options['target_category_id'])
 					{
 						$allSame = false;
 						break;
 					}
 				}
-
+				
 				if ($allSame)
 				{
 					$error = \XF::phrase('dbtech_shop_all_selected_items_already_in_destination_category_select_another');
@@ -74,10 +76,10 @@ class Move extends AbstractAction
 				}
 			}
 		}
-
+		
 		return $result;
 	}
-
+	
 	/**
 	 * @param Entity $entity
 	 * @param array $options
@@ -87,10 +89,10 @@ class Move extends AbstractAction
 	 */
 	protected function canApplyToEntity(Entity $entity, array $options, &$error = null): bool
 	{
-		/** @var Item $entity */
+		/** @var \DBTech\Shop\Entity\Item $entity */
 		return $entity->canMove($error);
 	}
-
+	
 	/**
 	 * @param Entity $entity
 	 * @param array $options
@@ -98,9 +100,9 @@ class Move extends AbstractAction
 	 * @throws \LogicException
 	 * @throws \InvalidArgumentException
 	 * @throws \Exception
-	 * @throws PrintableException
+	 * @throws \XF\PrintableException
 	 */
-	protected function applyToEntity(Entity $entity, array $options): void
+	protected function applyToEntity(Entity $entity, array $options)
 	{
 		$category = $this->getTargetCategory($options['target_category_id']);
 		if (!$category)
@@ -108,7 +110,8 @@ class Move extends AbstractAction
 			throw new \InvalidArgumentException('No target specified');
 		}
 
-		$mover = \XF::app()->service(MoveService::class, $entity);
+		/** @var \DBTech\Shop\Service\Item\Move $mover */
+		$mover = $this->app()->service('DBTech\Shop:Item\Move', $entity);
 
 		if ($options['alert'])
 		{
@@ -121,7 +124,7 @@ class Move extends AbstractAction
 			$mover->setNotifyWatchers();
 		}
 		*/
-
+		
 		if ($options['prefix_id'] !== null)
 		{
 			$mover->setPrefix($options['prefix_id']);
@@ -129,9 +132,9 @@ class Move extends AbstractAction
 
 		$mover->move($category);
 
-		$this->returnUrl = \XF::app()->router()->buildLink('dbtech-shop/categories', $category);
+		$this->returnUrl = $this->app()->router()->buildLink('dbtech-shop/categories', $category);
 	}
-
+	
 	/**
 	 * @return array
 	 */
@@ -144,23 +147,24 @@ class Move extends AbstractAction
 			'prefix_id' => null,
 			'notify_watchers' => false,
 			'alert' => false,
-			'alert_reason' => '',
+			'alert_reason' => ''
 		];
 	}
-
+	
 	/**
 	 * @param AbstractCollection $entities
-	 * @param Controller $controller
+	 * @param \XF\Mvc\Controller $controller
 	 *
-	 * @return AbstractReply
+	 * @return \XF\Mvc\Reply\AbstractReply
 	 */
-	public function renderForm(AbstractCollection $entities, Controller $controller): AbstractReply
+	public function renderForm(AbstractCollection $entities, \XF\Mvc\Controller $controller): \XF\Mvc\Reply\AbstractReply
 	{
-		$prefixes = \XF::app()->finder(ItemPrefixFinder::class)
+		$prefixes = $this->app()->finder('DBTech\Shop:ItemPrefix')
 			->order('materialized_order')
 			->fetch();
-
-		$categoryRepo = \XF::app()->repository(CategoryRepository::class);
+		
+		/** @var \DBTech\Shop\Repository\Category $categoryRepo */
+		$categoryRepo = $this->app()->repository('DBTech\Shop:Category');
 		$categories = $categoryRepo->getViewableCategories();
 
 		$viewParams = [
@@ -168,11 +172,11 @@ class Move extends AbstractAction
 			'prefixes' => $prefixes->groupBy('prefix_group_id'),
 			'total' => count($entities),
 			'categoryTree' => $categoryRepo->createCategoryTree($categories),
-			'first' => $entities->first(),
+			'first' => $entities->first()
 		];
 		return $controller->view('DBTech\Shop:Public:InlineMod\Item\Move', 'inline_mod_dbtech_shop_item_move', $viewParams);
 	}
-
+	
 	/**
 	 * @param AbstractCollection $entities
 	 * @param Request $request
@@ -186,7 +190,7 @@ class Move extends AbstractAction
 			'prefix_id' => $request->filter('prefix_id', 'uint'),
 			'notify_watchers' => $request->filter('notify_watchers', 'bool'),
 			'alert' => $request->filter('author_alert', 'bool'),
-			'alert_reason' => $request->filter('author_alert_reason', 'str'),
+			'alert_reason' => $request->filter('author_alert_reason', 'str')
 		];
 		if (!$request->filter('apply_prefix', 'bool'))
 		{
@@ -195,14 +199,14 @@ class Move extends AbstractAction
 
 		return $options;
 	}
-
+	
 	/**
 	 * @param int $categoryId
 	 *
-	 * @return null|Category
+	 * @return null|\DBTech\Shop\Entity\Category
 	 * @throws \InvalidArgumentException
 	 */
-	protected function getTargetCategory(int $categoryId): ?Category
+	protected function getTargetCategory(int $categoryId): ?\DBTech\Shop\Entity\Category
 	{
 		if ($this->targetCategoryId && $this->targetCategoryId == $categoryId)
 		{
@@ -213,7 +217,8 @@ class Move extends AbstractAction
 			return null;
 		}
 
-		$category = \XF::app()->em()->find(Category::class, $categoryId);
+		/** @var \DBTech\Shop\Entity\Category $category */
+		$category = $this->app()->em()->find('DBTech\Shop:Category', $categoryId);
 		if (!$category)
 		{
 			throw new \InvalidArgumentException("Invalid target category ($categoryId)");

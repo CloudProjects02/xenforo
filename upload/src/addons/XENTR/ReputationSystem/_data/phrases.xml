@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="animation_bar_rank" version_id="1000010" version_string="1.0.0"><![CDATA[Animation Bar Rank]]></phrase>
+  <phrase title="bar_rank" version_id="1000010" version_string="1.0.0"><![CDATA[Bar Rank]]></phrase>
+  <phrase title="option.ReputationDesign" version_id="1000010" version_string="1.0.0"><![CDATA[Reputation Rank Style]]></phrase>
+  <phrase title="option.ReputationType" version_id="1000010" version_string="1.0.0"><![CDATA[Select Reputation Type]]></phrase>
+  <phrase title="option.Reputation_system_enable" version_id="1000170" version_string="1.0.1"><![CDATA[Enable Reputation Progress System]]></phrase>
+  <phrase title="option.rank_completed" version_id="1000010" version_string="1.0.0"><![CDATA[Reaction Score Rank Full Completed]]></phrase>
+  <phrase title="option.rank_credit_completed" version_id="1000270" version_string="1.0.2"><![CDATA[Credit Count Rank Full Completed]]></phrase>
+  <phrase title="option.rank_credit_fullstar1" version_id="1000270" version_string="1.0.2"><![CDATA[Credit Count Rank Level-1 Full]]></phrase>
+  <phrase title="option.rank_credit_fullstar10" version_id="1000270" version_string="1.0.2"><![CDATA[Credit Count Rank Level-10 Full]]></phrase>
+  <phrase title="option.rank_credit_fullstar2" version_id="1000270" version_string="1.0.2"><![CDATA[Credit Count Rank Level-2 Full]]></phrase>
+  <phrase title="option.rank_credit_fullstar3" version_id="1000270" version_string="1.0.2"><![CDATA[Credit Count Rank Level-3 Full]]></phrase>
+  <phrase title="option.rank_credit_fullstar4" version_id="1000270" version_string="1.0.2"><![CDATA[Credit Count Rank Level-4 Full]]></phrase>
+  <phrase title="option.rank_credit_fullstar5" version_id="1000270" version_string="1.0.2"><![CDATA[Credit Count Rank Level-5 Full]]></phrase>
+  <phrase title="option.rank_credit_fullstar6" version_id="1000270" version_string="1.0.2"><![CDATA[Credit Count Rank Level-6 Full]]></phrase>
+  <phrase title="option.rank_credit_fullstar7" version_id="1000270" version_string="1.0.2"><![CDATA[Credit Count Rank Level-7 Full]]></phrase>
+  <phrase title="option.rank_credit_fullstar8" version_id="1000270" version_string="1.0.2"><![CDATA[Credit Count Rank Level-8 Full]]></phrase>
+  <phrase title="option.rank_credit_fullstar9" version_id="1000270" version_string="1.0.2"><![CDATA[Credit Count Rank Level-9 Full]]></phrase>
+  <phrase title="option.rank_credit_halfstar1" version_id="1000270" version_string="1.0.2"><![CDATA[Credit Count Rank Level-1 Half]]></phrase>
+  <phrase title="option.rank_credit_halfstar10" version_id="1000270" version_string="1.0.2"><![CDATA[Credit Count Rank Level-10 Half]]></phrase>
+  <phrase title="option.rank_credit_halfstar2" version_id="1000270" version_string="1.0.2"><![CDATA[Credit Count Rank Level-2 Half]]></phrase>
+  <phrase title="option.rank_credit_halfstar3" version_id="1000270" version_string="1.0.2"><![CDATA[Credit Count Rank Level-3 Half]]></phrase>
+  <phrase title="option.rank_credit_halfstar4" version_id="1000270" version_string="1.0.2"><![CDATA[Credit Count Rank Level-4 Half]]></phrase>
+  <phrase title="option.rank_credit_halfstar5" version_id="1000270" version_string="1.0.2"><![CDATA[Credit Count Rank Level-5 Half]]></phrase>
+  <phrase title="option.rank_credit_halfstar6" version_id="1000270" version_string="1.0.2"><![CDATA[Credit Count Rank Level-6 Half]]></phrase>
+  <phrase title="option.rank_credit_halfstar7" version_id="1000270" version_string="1.0.2"><![CDATA[Credit Count Rank Level-7 Half]]></phrase>
+  <phrase title="option.rank_credit_halfstar8" version_id="1000270" version_string="1.0.2"><![CDATA[Credit Count Rank Level-8 Half]]></phrase>
+  <phrase title="option.rank_credit_halfstar9" version_id="1000270" version_string="1.0.2"><![CDATA[Credit Count Rank Level-9 Half]]></phrase>
+  <phrase title="option.rank_fullstar1" version_id="1000010" version_string="1.0.0"><![CDATA[Reaction Score Rank Level-1 Full]]></phrase>
+  <phrase title="option.rank_fullstar10" version_id="1000010" version_string="1.0.0"><![CDATA[Reaction Score Rank Level-10 Full]]></phrase>
+  <phrase title="option.rank_fullstar2" version_id="1000010" version_string="1.0.0"><![CDATA[Reaction Score Rank Level-2 Full]]></phrase>
+  <phrase title="option.rank_fullstar3" version_id="1000010" version_string="1.0.0"><![CDATA[Reaction Score Rank Level-3 Full]]></phrase>
+  <phrase title="option.rank_fullstar4" version_id="1000010" version_string="1.0.0"><![CDATA[Reaction Score Rank Level-4 Full]]></phrase>
+  <phrase title="option.rank_fullstar5" version_id="1000010" version_string="1.0.0"><![CDATA[Reaction Score Rank Level-5 Full]]></phrase>
+  <phrase title="option.rank_fullstar6" version_id="1000010" version_string="1.0.0"><![CDATA[Reaction Score Rank Level-6 Full]]></phrase>
+  <phrase title="option.rank_fullstar7" version_id="1000010" version_string="1.0.0"><![CDATA[Reaction Score Rank Level-7 Full]]></phrase>
+  <phrase title="option.rank_fullstar8" version_id="1000010" version_string="1.0.0"><![CDATA[Reaction Score Rank Level-8 Full]]></phrase>
+  <phrase title="option.rank_fullstar9" version_id="1000010" version_string="1.0.0"><![CDATA[Reaction Score Rank Level-9 Full]]></phrase>
+  <phrase title="option.rank_halfstar1" version_id="1000010" version_string="1.0.0"><![CDATA[Reaction Score Rank Level-1 Half]]></phrase>
+  <phrase title="option.rank_halfstar10" version_id="1000010" version_string="1.0.0"><![CDATA[Reaction Score Rank Level-10 Half]]></phrase>
+  <phrase title="option.rank_halfstar2" version_id="1000010" version_string="1.0.0"><![CDATA[Reaction Score Rank Level-2 Half]]></phrase>
+  <phrase title="option.rank_halfstar3" version_id="1000010" version_string="1.0.0"><![CDATA[Reaction Score Rank Level-3 Half]]></phrase>
+  <phrase title="option.rank_halfstar4" version_id="1000010" version_string="1.0.0"><![CDATA[Reaction Score Rank Level-4 Half]]></phrase>
+  <phrase title="option.rank_halfstar5" version_id="1000010" version_string="1.0.0"><![CDATA[Reaction Score Rank Level-5 Half]]></phrase>
+  <phrase title="option.rank_halfstar6" version_id="1000010" version_string="1.0.0"><![CDATA[Reaction Score Rank Level-6 Half]]></phrase>
+  <phrase title="option.rank_halfstar7" version_id="1000010" version_string="1.0.0"><![CDATA[Reaction Score Rank Level-7 Half]]></phrase>
+  <phrase title="option.rank_halfstar8" version_id="1000010" version_string="1.0.0"><![CDATA[Reaction Score Rank Level-8 Half]]></phrase>
+  <phrase title="option.rank_halfstar9" version_id="1000010" version_string="1.0.0"><![CDATA[Reaction Score Rank Level-9 Half]]></phrase>
+  <phrase title="option.rank_post_completed" version_id="1000010" version_string="1.0.0"><![CDATA[Post Count Rank Full Completed]]></phrase>
+  <phrase title="option.rank_post_fullstar1" version_id="1000010" version_string="1.0.0"><![CDATA[Post Count Rank Level-1 Full]]></phrase>
+  <phrase title="option.rank_post_fullstar10" version_id="1000010" version_string="1.0.0"><![CDATA[Post Count Rank Level-10 Full]]></phrase>
+  <phrase title="option.rank_post_fullstar2" version_id="1000010" version_string="1.0.0"><![CDATA[Post Count Rank Level-2 Full]]></phrase>
+  <phrase title="option.rank_post_fullstar3" version_id="1000010" version_string="1.0.0"><![CDATA[Post Count Rank Level-3 Full]]></phrase>
+  <phrase title="option.rank_post_fullstar4" version_id="1000010" version_string="1.0.0"><![CDATA[Post Count Rank Level-4 Full]]></phrase>
+  <phrase title="option.rank_post_fullstar5" version_id="1000010" version_string="1.0.0"><![CDATA[Post Count Rank Level-5 Full]]></phrase>
+  <phrase title="option.rank_post_fullstar6" version_id="1000010" version_string="1.0.0"><![CDATA[Post Count Rank Level-6 Full]]></phrase>
+  <phrase title="option.rank_post_fullstar7" version_id="1000010" version_string="1.0.0"><![CDATA[Post Count Rank Level-7 Full]]></phrase>
+  <phrase title="option.rank_post_fullstar8" version_id="1000010" version_string="1.0.0"><![CDATA[Post Count Rank Level-8 Full]]></phrase>
+  <phrase title="option.rank_post_fullstar9" version_id="1000010" version_string="1.0.0"><![CDATA[Post Count Rank Level-9 Full]]></phrase>
+  <phrase title="option.rank_post_halfstar1" version_id="1000010" version_string="1.0.0"><![CDATA[Post Count Rank Level-1 Half]]></phrase>
+  <phrase title="option.rank_post_halfstar10" version_id="1000010" version_string="1.0.0"><![CDATA[Post Count Rank Level-10 Half]]></phrase>
+  <phrase title="option.rank_post_halfstar2" version_id="1000010" version_string="1.0.0"><![CDATA[Post Count Rank Level-2 Half]]></phrase>
+  <phrase title="option.rank_post_halfstar3" version_id="1000010" version_string="1.0.0"><![CDATA[Post Count Rank Level-3 Half]]></phrase>
+  <phrase title="option.rank_post_halfstar4" version_id="1000010" version_string="1.0.0"><![CDATA[Post Count Rank Level-4 Half]]></phrase>
+  <phrase title="option.rank_post_halfstar5" version_id="1000010" version_string="1.0.0"><![CDATA[Post Count Rank Level-5 Half]]></phrase>
+  <phrase title="option.rank_post_halfstar6" version_id="1000010" version_string="1.0.0"><![CDATA[Post Count Rank Level-6 Half]]></phrase>
+  <phrase title="option.rank_post_halfstar7" version_id="1000010" version_string="1.0.0"><![CDATA[Post Count Rank Level-7 Half]]></phrase>
+  <phrase title="option.rank_post_halfstar8" version_id="1000010" version_string="1.0.0"><![CDATA[Post Count Rank Level-8 Half]]></phrase>
+  <phrase title="option.rank_post_halfstar9" version_id="1000010" version_string="1.0.0"><![CDATA[Post Count Rank Level-9 Half]]></phrase>
+  <phrase title="option.rank_resource_completed" version_id="1000010" version_string="1.0.0"><![CDATA[Resource Count Rank Full Completed]]></phrase>
+  <phrase title="option.rank_resource_fullstar1" version_id="1000010" version_string="1.0.0"><![CDATA[Resource Count Rank Level-1 Full]]></phrase>
+  <phrase title="option.rank_resource_fullstar10" version_id="1000010" version_string="1.0.0"><![CDATA[Resource Count Rank Level-10 Full]]></phrase>
+  <phrase title="option.rank_resource_fullstar2" version_id="1000010" version_string="1.0.0"><![CDATA[Resource Count Rank Level-2 Full]]></phrase>
+  <phrase title="option.rank_resource_fullstar3" version_id="1000010" version_string="1.0.0"><![CDATA[Resource Count Rank Level-3 Full]]></phrase>
+  <phrase title="option.rank_resource_fullstar4" version_id="1000010" version_string="1.0.0"><![CDATA[Resource Count Rank Level-4 Full]]></phrase>
+  <phrase title="option.rank_resource_fullstar5" version_id="1000010" version_string="1.0.0"><![CDATA[Resource Count Rank Level-5 Full]]></phrase>
+  <phrase title="option.rank_resource_fullstar6" version_id="1000010" version_string="1.0.0"><![CDATA[Resource Count Rank Level-6 Full]]></phrase>
+  <phrase title="option.rank_resource_fullstar7" version_id="1000010" version_string="1.0.0"><![CDATA[Resource Count Rank Level-7 Full]]></phrase>
+  <phrase title="option.rank_resource_fullstar8" version_id="1000010" version_string="1.0.0"><![CDATA[Resource Count Rank Level-8 Full]]></phrase>
+  <phrase title="option.rank_resource_fullstar9" version_id="1000010" version_string="1.0.0"><![CDATA[Resource Count Rank Level-9 Full]]></phrase>
+  <phrase title="option.rank_resource_halfstar1" version_id="1000010" version_string="1.0.0"><![CDATA[Resource Count Rank Level-1 Half]]></phrase>
+  <phrase title="option.rank_resource_halfstar10" version_id="1000010" version_string="1.0.0"><![CDATA[Resource Count Rank Level-10 Half]]></phrase>
+  <phrase title="option.rank_resource_halfstar2" version_id="1000010" version_string="1.0.0"><![CDATA[Resource Count Rank Level-2 Half]]></phrase>
+  <phrase title="option.rank_resource_halfstar3" version_id="1000010" version_string="1.0.0"><![CDATA[Resource Count Rank Level-3 Half]]></phrase>
+  <phrase title="option.rank_resource_halfstar4" version_id="1000010" version_string="1.0.0"><![CDATA[Resource Count Rank Level-4 Half]]></phrase>
+  <phrase title="option.rank_resource_halfstar5" version_id="1000010" version_string="1.0.0"><![CDATA[Resource Count Rank Level-5 Half]]></phrase>
+  <phrase title="option.rank_resource_halfstar6" version_id="1000010" version_string="1.0.0"><![CDATA[Resource Count Rank Level-6 Half]]></phrase>
+  <phrase title="option.rank_resource_halfstar7" version_id="1000010" version_string="1.0.0"><![CDATA[Resource Count Rank Level-7 Half]]></phrase>
+  <phrase title="option.rank_resource_halfstar8" version_id="1000010" version_string="1.0.0"><![CDATA[Resource Count Rank Level-8 Half]]></phrase>
+  <phrase title="option.rank_resource_halfstar9" version_id="1000010" version_string="1.0.0"><![CDATA[Resource Count Rank Level-9 Half]]></phrase>
+  <phrase title="option.rank_solution_completed" version_id="1000170" version_string="1.0.1"><![CDATA[Solution Count Rank Full Completed]]></phrase>
+  <phrase title="option.rank_solution_fullstar1" version_id="1000170" version_string="1.0.1"><![CDATA[Solution Count Rank Level-1 Full]]></phrase>
+  <phrase title="option.rank_solution_fullstar10" version_id="1000170" version_string="1.0.1"><![CDATA[Solution Count Rank Level-10 Full]]></phrase>
+  <phrase title="option.rank_solution_fullstar2" version_id="1000170" version_string="1.0.1"><![CDATA[Solution Count Rank Level-2 Full]]></phrase>
+  <phrase title="option.rank_solution_fullstar3" version_id="1000170" version_string="1.0.1"><![CDATA[Solution Count Rank Level-3 Full]]></phrase>
+  <phrase title="option.rank_solution_fullstar4" version_id="1000170" version_string="1.0.1"><![CDATA[Solution Count Rank Level-4 Full]]></phrase>
+  <phrase title="option.rank_solution_fullstar5" version_id="1000170" version_string="1.0.1"><![CDATA[Solution Count Rank Level-5 Full]]></phrase>
+  <phrase title="option.rank_solution_fullstar6" version_id="1000170" version_string="1.0.1"><![CDATA[Solution Count Rank Level-6 Full]]></phrase>
+  <phrase title="option.rank_solution_fullstar7" version_id="1000170" version_string="1.0.1"><![CDATA[Solution Count Rank Level-7 Full]]></phrase>
+  <phrase title="option.rank_solution_fullstar8" version_id="1000170" version_string="1.0.1"><![CDATA[Solution Count Rank Level-8 Full]]></phrase>
+  <phrase title="option.rank_solution_fullstar9" version_id="1000170" version_string="1.0.1"><![CDATA[Solution Count Rank Level-9 Full]]></phrase>
+  <phrase title="option.rank_solution_halfstar1" version_id="1000170" version_string="1.0.1"><![CDATA[Solution Count Rank Level-1 Half]]></phrase>
+  <phrase title="option.rank_solution_halfstar10" version_id="1000170" version_string="1.0.1"><![CDATA[Solution Count Rank Level-10 Half]]></phrase>
+  <phrase title="option.rank_solution_halfstar2" version_id="1000170" version_string="1.0.1"><![CDATA[Solution Count Rank Level-2 Half]]></phrase>
+  <phrase title="option.rank_solution_halfstar3" version_id="1000170" version_string="1.0.1"><![CDATA[Solution Count Rank Level-3 Half]]></phrase>
+  <phrase title="option.rank_solution_halfstar4" version_id="1000170" version_string="1.0.1"><![CDATA[Solution Count Rank Level-4 Half]]></phrase>
+  <phrase title="option.rank_solution_halfstar5" version_id="1000170" version_string="1.0.1"><![CDATA[Solution Count Rank Level-5 Half]]></phrase>
+  <phrase title="option.rank_solution_halfstar6" version_id="1000170" version_string="1.0.1"><![CDATA[Solution Count Rank Level-6 Half]]></phrase>
+  <phrase title="option.rank_solution_halfstar7" version_id="1000170" version_string="1.0.1"><![CDATA[Solution Count Rank Level-7 Half]]></phrase>
+  <phrase title="option.rank_solution_halfstar8" version_id="1000170" version_string="1.0.1"><![CDATA[Solution Count Rank Level-8 Half]]></phrase>
+  <phrase title="option.rank_solution_halfstar9" version_id="1000170" version_string="1.0.1"><![CDATA[Solution Count Rank Level-9 Half]]></phrase>
+  <phrase title="option.rank_trophy_completed" version_id="1000010" version_string="1.0.0"><![CDATA[Trophy Point Rank Full Completed]]></phrase>
+  <phrase title="option.rank_trophy_fullstar1" version_id="1000010" version_string="1.0.0"><![CDATA[Trophy Point Rank Level-1 Full]]></phrase>
+  <phrase title="option.rank_trophy_fullstar10" version_id="1000010" version_string="1.0.0"><![CDATA[Trophy Point Rank Level-10 Full]]></phrase>
+  <phrase title="option.rank_trophy_fullstar2" version_id="1000010" version_string="1.0.0"><![CDATA[Trophy Point Rank Level-2 Full]]></phrase>
+  <phrase title="option.rank_trophy_fullstar3" version_id="1000010" version_string="1.0.0"><![CDATA[Trophy Point Rank Level-3 Full]]></phrase>
+  <phrase title="option.rank_trophy_fullstar4" version_id="1000010" version_string="1.0.0"><![CDATA[Trophy Point Rank Level-4 Full]]></phrase>
+  <phrase title="option.rank_trophy_fullstar5" version_id="1000010" version_string="1.0.0"><![CDATA[Trophy Point Rank Level-5 Full]]></phrase>
+  <phrase title="option.rank_trophy_fullstar6" version_id="1000010" version_string="1.0.0"><![CDATA[Trophy Point Rank Level-6 Full]]></phrase>
+  <phrase title="option.rank_trophy_fullstar7" version_id="1000010" version_string="1.0.0"><![CDATA[Trophy Point Rank Level-7 Full]]></phrase>
+  <phrase title="option.rank_trophy_fullstar8" version_id="1000010" version_string="1.0.0"><![CDATA[Trophy Point Rank Level-8 Full]]></phrase>
+  <phrase title="option.rank_trophy_fullstar9" version_id="1000010" version_string="1.0.0"><![CDATA[Trophy Point Rank Level-9 Full]]></phrase>
+  <phrase title="option.rank_trophy_halfstar1" version_id="1000010" version_string="1.0.0"><![CDATA[Trophy Point Rank Level-1 Half]]></phrase>
+  <phrase title="option.rank_trophy_halfstar10" version_id="1000010" version_string="1.0.0"><![CDATA[Trophy Point Rank Level-10 Half]]></phrase>
+  <phrase title="option.rank_trophy_halfstar2" version_id="1000010" version_string="1.0.0"><![CDATA[Trophy Point Rank Level-2 Half]]></phrase>
+  <phrase title="option.rank_trophy_halfstar3" version_id="1000010" version_string="1.0.0"><![CDATA[Trophy Point Rank Level-3 Half]]></phrase>
+  <phrase title="option.rank_trophy_halfstar4" version_id="1000010" version_string="1.0.0"><![CDATA[Trophy Point Rank Level-4 Half]]></phrase>
+  <phrase title="option.rank_trophy_halfstar5" version_id="1000010" version_string="1.0.0"><![CDATA[Trophy Point Rank Level-5 Half]]></phrase>
+  <phrase title="option.rank_trophy_halfstar6" version_id="1000010" version_string="1.0.0"><![CDATA[Trophy Point Rank Level-6 Half]]></phrase>
+  <phrase title="option.rank_trophy_halfstar7" version_id="1000010" version_string="1.0.0"><![CDATA[Trophy Point Rank Level-7 Half]]></phrase>
+  <phrase title="option.rank_trophy_halfstar8" version_id="1000010" version_string="1.0.0"><![CDATA[Trophy Point Rank Level-8 Half]]></phrase>
+  <phrase title="option.rank_trophy_halfstar9" version_id="1000010" version_string="1.0.0"><![CDATA[Trophy Point Rank Level-9 Half]]></phrase>
+  <phrase title="option.xtr_bar_style_color" version_id="1000010" version_string="1.0.0"><![CDATA[Bar Style Color]]></phrase>
+  <phrase title="option_explain.ReputationDesign" version_id="1000170" version_string="1.0.1"><![CDATA[Choose reputation rank style.]]></phrase>
+  <phrase title="option_explain.ReputationType" version_id="1000270" version_string="1.0.2"><![CDATA[Do not select "Resource count or post count" option if you don't have a XFRM Add-on.]]></phrase>
+  <phrase title="option_explain.Reputation_system_enable" version_id="1000170" version_string="1.0.1"><![CDATA[This option is enable or disable "Reputation Progress System" add-on.]]></phrase>
+  <phrase title="option_explain.rank_completed" version_id="1000010" version_string="1.0.0"><![CDATA[The completed star or bar rank is shown when equal or more than this value.]]></phrase>
+  <phrase title="option_explain.rank_credit_completed" version_id="1000270" version_string="1.0.2"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_credit_fullstar1" version_id="1000270" version_string="1.0.2"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_credit_fullstar10" version_id="1000270" version_string="1.0.2"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_credit_fullstar2" version_id="1000270" version_string="1.0.2"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_credit_fullstar3" version_id="1000270" version_string="1.0.2"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_credit_fullstar4" version_id="1000270" version_string="1.0.2"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_credit_fullstar5" version_id="1000270" version_string="1.0.2"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_credit_fullstar6" version_id="1000270" version_string="1.0.2"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_credit_fullstar7" version_id="1000270" version_string="1.0.2"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_credit_fullstar8" version_id="1000270" version_string="1.0.2"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_credit_fullstar9" version_id="1000270" version_string="1.0.2"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_credit_halfstar1" version_id="1000270" version_string="1.0.2"><![CDATA[The empty star or bar rank is shown when less than this value.]]></phrase>
+  <phrase title="option_explain.rank_credit_halfstar10" version_id="1000270" version_string="1.0.2"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_credit_halfstar2" version_id="1000270" version_string="1.0.2"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_credit_halfstar3" version_id="1000270" version_string="1.0.2"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_credit_halfstar4" version_id="1000270" version_string="1.0.2"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_credit_halfstar5" version_id="1000270" version_string="1.0.2"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_credit_halfstar6" version_id="1000270" version_string="1.0.2"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_credit_halfstar7" version_id="1000270" version_string="1.0.2"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_credit_halfstar8" version_id="1000270" version_string="1.0.2"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_credit_halfstar9" version_id="1000270" version_string="1.0.2"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_fullstar1" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_fullstar10" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_fullstar2" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_fullstar3" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_fullstar4" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_fullstar5" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_fullstar6" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_fullstar7" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_fullstar8" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_fullstar9" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_halfstar1" version_id="1000010" version_string="1.0.0"><![CDATA[The empty star or bar rank is shown when less than this value.]]></phrase>
+  <phrase title="option_explain.rank_halfstar10" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_halfstar2" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_halfstar3" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_halfstar4" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_halfstar5" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_halfstar6" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_halfstar7" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_halfstar8" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_halfstar9" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_post_completed" version_id="1000010" version_string="1.0.0"><![CDATA[The completed star or bar rank is shown when equal or more than this value.]]></phrase>
+  <phrase title="option_explain.rank_post_fullstar1" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_post_fullstar10" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_post_fullstar2" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_post_fullstar3" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_post_fullstar4" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_post_fullstar5" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_post_fullstar6" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_post_fullstar7" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_post_fullstar8" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_post_fullstar9" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_post_halfstar1" version_id="1000010" version_string="1.0.0"><![CDATA[The empty star or bar rank is shown when less than this value.]]></phrase>
+  <phrase title="option_explain.rank_post_halfstar10" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_post_halfstar2" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_post_halfstar3" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_post_halfstar4" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_post_halfstar5" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_post_halfstar6" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_post_halfstar7" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_post_halfstar8" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_post_halfstar9" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_resource_completed" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_resource_fullstar1" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_resource_fullstar10" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_resource_fullstar2" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_resource_fullstar3" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_resource_fullstar4" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_resource_fullstar5" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_resource_fullstar6" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_resource_fullstar7" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_resource_fullstar8" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_resource_fullstar9" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_resource_halfstar1" version_id="1000010" version_string="1.0.0"><![CDATA[The empty star or bar rank is shown when less than this value.]]></phrase>
+  <phrase title="option_explain.rank_resource_halfstar10" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_resource_halfstar2" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_resource_halfstar3" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_resource_halfstar4" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_resource_halfstar5" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_resource_halfstar6" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_resource_halfstar7" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_resource_halfstar8" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_resource_halfstar9" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_solution_completed" version_id="1000170" version_string="1.0.1"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_solution_fullstar1" version_id="1000170" version_string="1.0.1"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_solution_fullstar10" version_id="1000170" version_string="1.0.1"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_solution_fullstar2" version_id="1000170" version_string="1.0.1"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_solution_fullstar3" version_id="1000170" version_string="1.0.1"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_solution_fullstar4" version_id="1000170" version_string="1.0.1"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_solution_fullstar5" version_id="1000170" version_string="1.0.1"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_solution_fullstar6" version_id="1000170" version_string="1.0.1"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_solution_fullstar7" version_id="1000170" version_string="1.0.1"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_solution_fullstar8" version_id="1000170" version_string="1.0.1"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_solution_fullstar9" version_id="1000170" version_string="1.0.1"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_solution_halfstar1" version_id="1000170" version_string="1.0.1"><![CDATA[The empty star or bar rank is shown when less than this value.]]></phrase>
+  <phrase title="option_explain.rank_solution_halfstar10" version_id="1000170" version_string="1.0.1"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_solution_halfstar2" version_id="1000170" version_string="1.0.1"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_solution_halfstar3" version_id="1000170" version_string="1.0.1"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_solution_halfstar4" version_id="1000170" version_string="1.0.1"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_solution_halfstar5" version_id="1000170" version_string="1.0.1"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_solution_halfstar6" version_id="1000170" version_string="1.0.1"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_solution_halfstar7" version_id="1000170" version_string="1.0.1"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_solution_halfstar8" version_id="1000170" version_string="1.0.1"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_solution_halfstar9" version_id="1000170" version_string="1.0.1"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_trophy_completed" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_trophy_fullstar1" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_trophy_fullstar10" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_trophy_fullstar2" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_trophy_fullstar3" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_trophy_fullstar4" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_trophy_fullstar5" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_trophy_fullstar6" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_trophy_fullstar7" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_trophy_fullstar8" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_trophy_fullstar9" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_trophy_halfstar1" version_id="1000010" version_string="1.0.0"><![CDATA[The empty star or bar rank is shown when less than this value.]]></phrase>
+  <phrase title="option_explain.rank_trophy_halfstar10" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_trophy_halfstar2" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_trophy_halfstar3" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_trophy_halfstar4" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_trophy_halfstar5" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_trophy_halfstar6" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_trophy_halfstar7" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_trophy_halfstar8" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.rank_trophy_halfstar9" version_id="1000010" version_string="1.0.0"><![CDATA[]]></phrase>
+  <phrase title="option_explain.xtr_bar_style_color" version_id="1000270" version_string="1.0.2"><![CDATA[Choose reputation bar style color. Bar style color is only available for bar ranks.]]></phrase>
+  <phrase title="option_group.xentrReputation" version_id="1000170" version_string="1.0.1"><![CDATA[[XTR] Reputation System]]></phrase>
+  <phrase title="option_group_description.xentrReputation" version_id="1000170" version_string="1.0.1"><![CDATA[This add-on allows you to adding a reputation system to your site based on reaction score, post count and trophy point.]]></phrase>
+  <phrase title="permission.xtrReputation_viewLevel" version_id="1000170" version_string="1.0.1"><![CDATA[Can view user reputation progress level]]></phrase>
+  <phrase title="permission_interface.xtrReputation" version_id="1000170" version_string="1.0.1"><![CDATA[[XTR] Reputation System]]></phrase>
+  <phrase title="post_count" version_id="1000010" version_string="1.0.0"><![CDATA[Post count]]></phrase>
+  <phrase title="rank_green" version_id="1000010" version_string="1.0.0"><![CDATA[Green Bar]]></phrase>
+  <phrase title="rank_red" version_id="1000010" version_string="1.0.0"><![CDATA[Red Bar]]></phrase>
+  <phrase title="rank_yellow" version_id="1000010" version_string="1.0.0"><![CDATA[Yellow Bar]]></phrase>
+  <phrase title="reaction_or_post_count" version_id="1000010" version_string="1.0.0"><![CDATA[Reaction score or post count]]></phrase>
+  <phrase title="reputation_score" version_id="1000010" version_string="1.0.0"><![CDATA[Reputation:]]></phrase>
+  <phrase title="speed_rank" version_id="1000010" version_string="1.0.0"><![CDATA[Speed Rank]]></phrase>
+  <phrase title="star_rank" version_id="1000010" version_string="1.0.0"><![CDATA[Star Rank]]></phrase>
+  <phrase title="style_prop.rankWidth" version_id="1000270" version_string="1.0.2"><![CDATA[Style rank width]]></phrase>
+  <phrase title="style_prop_desc.rankWidth" version_id="1000270" version_string="1.0.2"><![CDATA[]]></phrase>
+  <phrase title="xentr_and" version_id="1000010" version_string="1.0.0"><![CDATA[and]]></phrase>
+  <phrase title="xentr_full_reputation_master" version_id="1000010" version_string="1.0.0"><![CDATA[full reputation master]]></phrase>
+  <phrase title="xentr_messages" version_id="1000010" version_string="1.0.0"><![CDATA[Messages]]></phrase>
+  <phrase title="xtr_credit_count" version_id="1000270" version_string="1.0.2"><![CDATA[Credit count]]></phrase>
+  <phrase title="xtr_dragon_byte_credits_count" version_id="1000370" version_string="1.0.3"><![CDATA[DragonByte credits count]]></phrase>
+  <phrase title="xtr_resource_count" version_id="1000010" version_string="1.0.0"><![CDATA[Resource count]]></phrase>
+  <phrase title="xtr_resource_count_or_post_count" version_id="1000010" version_string="1.0.0"><![CDATA[Resource count or post count]]></phrase>
+  <phrase title="xtr_solution_count" version_id="1000170" version_string="1.0.1"><![CDATA[Solution count]]></phrase>
+</phrases>
+ 		    		   	 	 		  			  	  	  	 			   			 	 	 	 		 			 		 		 	 		  	  	  	  		 	  		 	  		 	 	  	 	 					 	  	 	 	 	 	 	 	 		 	 			

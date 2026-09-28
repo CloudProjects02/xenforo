@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cron>
+  <entry entry_id="dbtSecCountryUpdate" cron_class="DBTech\Security\Cron\UpdateCountries" cron_method="runUpdate" active="1"><![CDATA[{"day_type":"dom","dom":[1],"hours":[3],"minutes":[0]}]]></entry>
+  <entry entry_id="dbtechSecurityCountryIp" cron_class="DBTech\Security\Cron\UpdateCountries" cron_method="runIpUpdate" active="1"><![CDATA[{"day_type":"dow","dow":[3],"hours":[0],"minutes":[0]}]]></entry>
+  <entry entry_id="dbtech_security_backup" cron_class="DBTech\Security\Cron\Security" cron_method="backupOptions" active="1"><![CDATA[{"day_type":"dom","dom":[-1],"hours":[0],"minutes":[45]}]]></entry>
+  <entry entry_id="dbtech_security_logprune" cron_class="DBTech\Security\Cron\Security" cron_method="pruneLogs" active="1"><![CDATA[{"day_type":"dom","dom":[-1],"hours":[0],"minutes":[0]}]]></entry>
+  <entry entry_id="dbtech_security_sessprune" cron_class="DBTech\Security\Cron\Security" cron_method="pruneSessions" active="1"><![CDATA[{"day_type":"dom","dom":[-1],"hours":[-1],"minutes":[0]}]]></entry>
+  <entry entry_id="dbtech_security_tornodes" cron_class="DBTech\Security\Cron\Security" cron_method="updateTorNodes" active="1"><![CDATA[{"day_type":"dom","dom":[-1],"hours":[5],"minutes":[0]}]]></entry>
+</cron>

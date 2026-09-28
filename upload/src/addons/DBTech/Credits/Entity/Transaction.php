@@ -3,7 +3,7 @@
 namespace DBTech\Credits\Entity;
 
 use DBTech\Credits\Repository\TransactionRepository;
-use XF\Db\Exception as DbException;
+use XF\Db\Exception;
 use XF\Entity\ApprovalQueue;
 use XF\Entity\Forum;
 use XF\Entity\LinkableInterface;
@@ -52,7 +52,7 @@ use XF\Repository\UserRepository;
  * @property-read Forum|null $Forum
  * @property-read ApprovalQueue|null $ApprovalQueue
  */
-class Transaction extends AbstractEntity implements ViewableInterface
+class Transaction extends Entity implements ViewableInterface
 {
 	/**
 	 * @return bool
@@ -174,7 +174,7 @@ class Transaction extends AbstractEntity implements ViewableInterface
 	}
 
 	/**
-	 * @throws DbException
+	 * @throws Exception
 	 * @throws PrintableException
 	 */
 	protected function _postSave(): void
@@ -271,7 +271,7 @@ class Transaction extends AbstractEntity implements ViewableInterface
 
 	/**
 	 * @throws PrintableException
-	 * @throws DbException
+	 * @throws Exception
 	 */
 	protected function _postDelete(): void
 	{
@@ -376,19 +376,19 @@ class Transaction extends AbstractEntity implements ViewableInterface
 					'skipped_maximum',
 				],
 			],
-			'amount'            => ['type' => self::FLOAT, 'required' => true, 'max' => PHP_INT_MAX, 'isDecimal' => true],
+			'amount'            => ['type' => self::FLOAT, 'required' => true],
 			'reference_id'      => ['type' => self::STR, 'default' => ''],
 			'content_type'      => ['type' => self::STR, 'maxLength' => 25, 'default' => ''],
 			'content_id'        => ['type' => self::UINT, 'default' => 0],
 			'node_id'           => ['type' => self::UINT, 'default' => 0],
 			'owner_id'          => ['type' => self::UINT, 'default' => 0],
-			'multiplier'        => ['type' => self::INT, 'default' => 0, 'max' => PHP_INT_MAX],
+			'multiplier'        => ['type' => self::INT, 'default' => 0],
 			'currency_id'       => ['type' => self::UINT, 'required' => true],
 			'negate'            => ['type' => self::BOOL, 'default' => false],
 			'message'           => ['type' => self::STR, 'default' => '', 'censor' => true],
 			'is_disputed'       => ['type' => self::BOOL, 'default' => false],
 			'expiry_date'       => ['type' => self::UINT, 'default' => 0],
-			'balance'           => ['type' => self::FLOAT, 'default' => 0, 'isDecimal' => true],
+			'balance'           => ['type' => self::FLOAT, 'default' => 0],
 		];
 		$structure->getters = [
 			'Content' => true,

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="xfrm_resource_wrapper_macros" modification_key="ChangeResourceDate_xfrm_resource_wrapper_macros" description="ChangeResourceDate_xfrm_resource_wrapper_macros" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:resource_tools_menu:before_footer]-->]]></find>
+    <replace><![CDATA[<xf:if is="{{ $xf.visitor.hasPermission('changeResourceDate', 'view') }}">
+	<a href="{{ link('resources/change-resource-date', $resource) }}" data-xf-click="overlay" class="menu-linkRow">{{ phrase('changeresourcedate_change_resource_date') }}</a>
+</xf:if>
+$0]]></replace>
+  </modification>
+</template_modifications>

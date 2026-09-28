@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<content_type_fields>
+  <field content_type="award_badge" field_name="alert_handler_class">XC\RankingSystem\Alert\Badge</field>
+  <field content_type="award_badge" field_name="entity">XC\RankingSystem:Badge</field>
+  <field content_type="experience_point" field_name="alert_handler_class">XC\RankingSystem\Alert\ExperiencePoint</field>
+  <field content_type="experience_point" field_name="entity">XC\RankingSystem:ExperiencePoint</field>
+</content_type_fields>

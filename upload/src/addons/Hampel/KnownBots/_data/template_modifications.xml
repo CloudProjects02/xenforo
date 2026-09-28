@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="widget_members_online" modification_key="knownBots_widget_members_online" description="Change online users phrase to include robots" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[#(<span class="block-footer-counter">.*)(</span>)#simU]]></find>
+    <replace><![CDATA[$1
+			<xf:if is="$xf.options.knownbotsShowBotStats">
+				<br />{{ phrase('hampel_knownbots_online_now_x_robots', {'robots': number($online.counts.robots)})}}
+			</xf:if>
+			$2]]></replace>
+  </modification>
+  <modification type="public" template="widget_online_statistics" modification_key="knownbots_widget_online_statistics" description="Add robots to online statistics" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[			<dl class="pairs pairs--justified">
+				<dt>{{ phrase('total_visitors') }}</dt>
+				<dd>{$counts.total|number}</dd>
+			</dl>]]></find>
+    <replace><![CDATA[$0
+			<xf:if is="$xf.options.knownbotsShowBotStats">
+				<dl class="pairs pairs--justified">
+					<dt>{{ phrase('robots') }}</dt>
+					<dd>{$counts.robots|number}</dd>
+				</dl>
+			</xf:if>]]></replace>
+  </modification>
+  <modification type="public" template="PAGE_CONTAINER" modification_key="copyright_builder_footer_display" description="Copyright Footer" execution_order="10" enabled="1" action="preg_replace">
+    <find><![CDATA[#</body>#i]]></find>
+    <replace><![CDATA[<div class="p-footer-copyright cb-addon-copyright"  data-copyright-url="https://xenforoleaks.net" style="display:block;text-align:center;font-size:12px;line-height:1.45;letter-spacing:.01em;margin:10px auto 6px;padding:4px 8px;max-width:100%;word-break:break-word;opacity:.92;color:inherit;">Known Bots <a class="u-concealed" style="color:inherit;text-decoration:underline;text-underline-offset:2px;" rel="nofollow noopener" href="https://xenforoleaks.net" target="_blank">Addon provided by Homicide ©2026</a></div><script>(function(){if(window.__copyrightBuilderDedupInitialized){return;}window.__copyrightBuilderDedupInitialized=true;var TRACKING_PARAM_PATTERN=/^(utm_[a-z0-9_]+|fbclid|gclid|dclid|msclkid|mc_cid|mc_eid)$/i;function normalizeUrl(raw){if(!raw){return '';}var trimmed=String(raw).trim();if(!trimmed){return '';}try{var parsed=new URL(trimmed, window.location.origin);var host=parsed.hostname.toLowerCase().replace(/^www\./, '');var port=parsed.port;if((parsed.protocol==='http:'&&port==='80')||(parsed.protocol==='https:'&&port==='443')){port='';}var pathname=parsed.pathname.replace(/\/+$/, '');if(!pathname){pathname='/';}var queryParts=[];parsed.searchParams.forEach(function(value, key){if(TRACKING_PARAM_PATTERN.test(key)){return;}queryParts.push([key, value]);});queryParts.sort(function(left, right){if(left[0]===right[0]){return left[1]<right[1]?-1:left[1]>right[1]?1:0;}return left[0]<right[0]?-1:1;});var normalizedQuery='';if(queryParts.length){normalizedQuery='?'+queryParts.map(function(entry){return encodeURIComponent(entry[0])+'='+encodeURIComponent(entry[1]);}).join('&');}return host+(port?':'+port:'')+pathname+normalizedQuery;}catch(_error){return trimmed.toLowerCase().replace(/^https?:\/\//, '').replace(/^www\./, '').replace(/#.*$/, '').replace(/\/+$/, '');}}function dedupeCopyrightBlocks(){var seen=Object.create(null);var blocks=document.querySelectorAll('.cb-addon-copyright');for(var index=0; index<blocks.length; index+=1){var block=blocks[index];var anchor=block.querySelector('a[href]');var rawUrl=(block.getAttribute('data-copyright-url')||'').trim();if(!rawUrl&&anchor){rawUrl=anchor.getAttribute('href')||anchor.href||'';}var key=normalizeUrl(rawUrl);if(!key){continue;}if(seen[key]){block.remove();continue;}seen[key]=true;}}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded', dedupeCopyrightBlocks, {once:true});}else{dedupeCopyrightBlocks();}})();</script>
+</body>]]></replace>
+  </modification>
+</template_modifications>
+ 		 		   			      	 			   					  					 	 				    	 			   	   	   		 	 		    	  					       		  	 						 				  			 		    	 	   		 	 	

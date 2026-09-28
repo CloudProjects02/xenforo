@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<code_event_listeners>
+  <listener event_id="app_setup" execute_order="10" callback_class="AL\Core\Listener\AppSetup" callback_method="listen" active="1"/>
+  <listener event_id="templater_global_data" execute_order="10" callback_class="AL\Core\Listener\TemplaterGlobalData" callback_method="listen" active="1"/>
+  <listener event_id="templater_setup" execute_order="10" callback_class="AL\Core\Listener\TemplaterSetup" callback_method="listen" active="1"/>
+</code_event_listeners>

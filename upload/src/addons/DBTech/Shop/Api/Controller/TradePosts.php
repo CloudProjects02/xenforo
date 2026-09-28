@@ -2,20 +2,15 @@
 
 namespace DBTech\Shop\Api\Controller;
 
-use DBTech\Shop\Entity\Trade;
-use DBTech\Shop\Entity\TradePost;
-use DBTech\Shop\Service\TradePost\CreatorService;
 use XF\Api\Controller\AbstractController;
-use XF\Api\Mvc\Reply\ApiResult;
 use XF\Mvc\ParameterBag;
-use XF\Mvc\Reply\Error;
 
 /**
  * @api-group Trade posts
  */
 class TradePosts extends AbstractController
 {
-	protected function preDispatchController($action, ParameterBag $params): void
+	protected function preDispatchController($action, ParameterBag $params)
 	{
 		$this->assertApiScopeByRequestMethod('dbtech_shop_trade_post');
 	}
@@ -26,21 +21,21 @@ class TradePosts extends AbstractController
 	 * @api-in int $trade)id <req> The ID of the trade this will be posted on.
 	 * @api-int str $message <req>
 	 *
-	 * @param ParameterBag $params
+	 * @param \XF\Mvc\ParameterBag $params
 	 *
-	 * @return ApiResult|Error
+	 * @return \XF\Api\Mvc\Reply\ApiResult|\XF\Mvc\Reply\Error
 	 * @throws \XF\Mvc\Reply\Exception
 	 * @throws \Exception
 	 */
-	public function actionPost(ParameterBag $params): ApiResult|Error
+	public function actionPost(ParameterBag $params)
 	{
 		$this->assertRequiredApiInput(['trade_id', 'message']);
 		$this->assertRegisteredUser();
 
 		$tradeId = $this->filter('trade_id', 'uint');
 
-		/** @var Trade $trade */
-		$trade = $this->assertRecordExists(Trade::class, $tradeId);
+		/** @var \DBTech\Shop\Entity\Trade $trade */
+		$trade = $this->assertRecordExists('DBTech\Shop:Trade', $tradeId);
 
 		if (\XF::isApiCheckingPermissions())
 		{
@@ -62,23 +57,24 @@ class TradePosts extends AbstractController
 			return $this->error($errors);
 		}
 
-		/** @var TradePost $tradePost */
+		/** @var \DBTech\Shop\Entity\TradePost $tradePost */
 		$tradePost = $creator->save();
 		$this->finalizeNewTradePost($creator);
 
 		return $this->apiSuccess([
-			'trade_post' => $tradePost->toApiResult(),
+			'trade_post' => $tradePost->toApiResult()
 		]);
 	}
 
 	/**
-	 * @param Trade $trade
+	 * @param \DBTech\Shop\Entity\Trade $trade
 	 *
-	 * @return CreatorService
+	 * @return \DBTech\Shop\Service\TradePost\Creator
 	 */
-	protected function setupNewTradePost(Trade $trade): CreatorService
+	protected function setupNewTradePost(\DBTech\Shop\Entity\Trade $trade): \DBTech\Shop\Service\TradePost\Creator
 	{
-		$creator = \XF::app()->service(CreatorService::class, $trade);
+		/** @var \DBTech\Shop\Service\TradePost\Creator $creator */
+		$creator = $this->service('DBTech\Shop:TradePost\Creator', $trade);
 
 		$message = $this->filter('message', 'str');
 		$creator->setContent($message);
@@ -87,11 +83,11 @@ class TradePosts extends AbstractController
 	}
 
 	/**
-	 * @param CreatorService $creator
+	 * @param \DBTech\Shop\Service\TradePost\Creator $creator
 	 *
 	 * @throws \Exception
 	 */
-	protected function finalizeNewTradePost(CreatorService $creator): void
+	protected function finalizeNewTradePost(\DBTech\Shop\Service\TradePost\Creator $creator)
 	{
 		$creator->sendNotifications();
 	}

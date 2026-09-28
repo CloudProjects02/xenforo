@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="active" version_id="1000010" version_string="1.0.2 Alpha"><![CDATA[Active]]></phrase>
+  <phrase title="add_upgrade_feature" version_id="1000010" version_string="1.0.2 Alpha"><![CDATA[Add Feature]]></phrase>
+  <phrase title="add_upgrade_feature_category" version_id="1000010" version_string="1.0.2 Alpha"><![CDATA[Add New Category]]></phrase>
+  <phrase title="admin_navigation.jace_upgrade_features" version_id="1000010" version_string="1.0.0 Alpha"><![CDATA[User Upgrade Features]]></phrase>
+  <phrase title="edit_upgrade_feature" version_id="1000010" version_string="1.0.2 Alpha"><![CDATA[Edit Feature]]></phrase>
+  <phrase title="feature_type" version_id="1000010" version_string="1.0.2 Alpha"><![CDATA[Feature Type]]></phrase>
+  <phrase title="no_upgrade_features_in_category" version_id="1000010" version_string="1.0.2 Alpha"><![CDATA[No upgrade features in this category.]]></phrase>
+  <phrase title="save_changes" version_id="1000010" version_string="1.0.2 Alpha"><![CDATA[Save]]></phrase>
+  <phrase title="upgrade_feature_type_boolean" version_id="1000010" version_string="1.0.2 Alpha"><![CDATA[Boolean (Yes/No)]]></phrase>
+  <phrase title="upgrade_feature_type_icon" version_id="1000010" version_string="1.0.2 Alpha"><![CDATA[Icon]]></phrase>
+  <phrase title="upgrade_feature_type_numeric" version_id="1000010" version_string="1.0.2 Alpha"><![CDATA[Numbers]]></phrase>
+  <phrase title="upgrade_feature_type_userbar" version_id="1000010" version_string="1.0.2 Alpha"><![CDATA[Userbar]]></phrase>
+  <phrase title="upgrade_features" version_id="1000010" version_string="1.0.2 Alpha"><![CDATA[Upgrade Features]]></phrase>
+  <phrase title="upgrade_features.current_icon" version_id="1000010" version_string="1.0.2 Alpha"><![CDATA[Current Icon]]></phrase>
+  <phrase title="upgrade_features.enabled" version_id="1000010" version_string="1.0.2 Alpha"><![CDATA[Enabled]]></phrase>
+  <phrase title="upgrade_features.featured_upgrade" version_id="1000010" version_string="1.0.2 Alpha"><![CDATA[Featured Upgrade]]></phrase>
+  <phrase title="upgrade_features.icon_replace_hint" version_id="1000010" version_string="1.0.2 Alpha"><![CDATA[You may upload to replace the current icon.]]></phrase>
+  <phrase title="upgrade_features_cat_desc.1" version_id="1000010" version_string="1.0.2 Alpha"><![CDATA[For Category A]]></phrase>
+  <phrase title="upgrade_features_cat_display_mode_hidden" version_id="1000010" version_string="1.0.2 Alpha"><![CDATA[Hidden]]></phrase>
+  <phrase title="upgrade_features_cat_display_mode_step" version_id="1000010" version_string="1.0.2 Alpha"><![CDATA[Step]]></phrase>
+  <phrase title="upgrade_features_cat_display_mode_visible" version_id="1000010" version_string="1.0.2 Alpha"><![CDATA[Visible]]></phrase>
+  <phrase title="upgrade_features_cat_title.1" version_id="1000010" version_string="1.0.2 Alpha"><![CDATA[Test Category A]]></phrase>
+  <phrase title="upgrade_features_cat_title.uncategorized" version_id="1000010" version_string="1.0.2 Alpha"><![CDATA[Uncategorized]]></phrase>
+  <phrase title="upgrade_features_display_mode" version_id="1000010" version_string="1.0.2 Alpha"><![CDATA[Display Mode]]></phrase>
+  <phrase title="upgrade_features_overwrite" version_id="1000010" version_string="1.0.2 Alpha"><![CDATA[Overwrite]]></phrase>
+  <phrase title="upgrade_features_overwrite_explain" version_id="1000010" version_string="1.0.2 Alpha"><![CDATA[Overwrite the features.]]></phrase>
+</phrases>

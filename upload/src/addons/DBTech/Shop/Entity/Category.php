@@ -2,18 +2,9 @@
 
 namespace DBTech\Shop\Entity;
 
-use DBTech\Shop\Finder\ItemFinder;
-use DBTech\Shop\Finder\ItemPrefixFinder;
-use DBTech\Shop\Finder\PurchaseFinder;
-use DBTech\Shop\Repository\CategoryRepository;
 use XF\Entity\AbstractCategoryTree;
-use XF\Entity\Forum;
 use XF\Entity\LinkableInterface;
-use XF\Entity\User;
-use XF\Entity\ViewableInterface;
-use XF\Mvc\Entity\AbstractCollection;
 use XF\Mvc\Entity\Structure;
-use XF\Phrase;
 
 /**
  * COLUMNS
@@ -23,7 +14,6 @@ use XF\Phrase;
  * @property int $item_count
  * @property int $last_update
  * @property string $last_item_title
- * @property string $last_item_title_
  * @property int $last_item_id
  * @property array $prefix_cache
  * @property array $field_cache
@@ -54,20 +44,23 @@ use XF\Phrase;
  * @property array $breadcrumb_data
  *
  * GETTERS
- * @property-read AbstractCollection $prefixes
+ * @property \XF\Mvc\Entity\AbstractCollection $prefixes
  *
  * RELATIONS
- * @property-read Forum|null $ThreadForum
- * @property-read User|null $Beneficiary
- * @property-read Item|null $LatestSale
- * @property-read User|null $LatestCustomer
- * @property-read \XF\Mvc\Entity\AbstractCollection<\DBTech\Shop\Entity\CategoryWatch> $Watch
- * @property-read \XF\Mvc\Entity\AbstractCollection<\XF\Entity\PermissionCacheContent> $Permissions
+ * @property \XF\Entity\Forum $ThreadForum
+ * @property \XF\Entity\User $Beneficiary
+ * @property \DBTech\Shop\Entity\Item $LatestSale
+ * @property \XF\Entity\User $LatestCustomer
+ * @property \XF\Mvc\Entity\AbstractCollection|\DBTech\Shop\Entity\CategoryWatch[] $Watch
+ * @property \XF\Mvc\Entity\AbstractCollection|\XF\Entity\PermissionCacheContent[] $Permissions
  */
-class Category extends AbstractCategoryTree implements LinkableInterface, ViewableInterface
+class Category extends AbstractCategoryTree implements LinkableInterface
 {
-	protected array $_viewableDescendants = [];
-
+	/**
+	 * @var array
+	 */
+	protected $_viewableDescendants = [];
+	
 	/**
 	 * @param null $error
 	 *
@@ -77,7 +70,7 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 	{
 		return $this->hasPermission('view');
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -85,7 +78,7 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 	{
 		return $this->hasPermission('viewDeleted');
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -93,22 +86,22 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 	{
 		return $this->hasPermission('viewModerated');
 	}
-
+	
 	/**
 	 * @param Item|null $item
 	 * @param null $error
 	 *
 	 * @return bool
 	 */
-	public function canEditTags(?Item $item = null, &$error = null): bool
+	public function canEditTags(Item $item = null, &$error = null): bool
 	{
-		if (!\XF::app()->options()->enableTagging)
+		if (!$this->app()->options()->enableTagging)
 		{
 			return false;
 		}
-
+		
 		$visitor = \XF::visitor();
-
+		
 		// if no item, assume will be owned by this person
 		if (!$item || $item->user_id == $visitor->user_id)
 		{
@@ -117,13 +110,13 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 				return true;
 			}
 		}
-
+		
 		return (
 			$this->hasPermission('tagAnyItem')
 			|| $this->hasPermission('manageAnyTag')
 		);
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
@@ -133,7 +126,7 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 	{
 		return $this->hasPermission('inlineMod');
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
@@ -143,7 +136,7 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 	{
 		return \XF::visitor()->user_id && $this->hasPermission('add');
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
@@ -153,7 +146,7 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 	{
 		return \XF::visitor()->user_id && $this->hasPermission('purchase');
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
@@ -161,9 +154,9 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 	 */
 	public function canWatch(&$error = null): bool
 	{
-		return (bool) \XF::visitor()->user_id;
+		return (bool)\XF::visitor()->user_id;
 	}
-
+	
 	/**
 	 * @param string $permission
 	 *
@@ -175,37 +168,38 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 		$visitor = \XF::visitor();
 		return $visitor->hasDbtechShopCategoryPermission($this->category_id, $permission);
 	}
-
+	
 	/**
 	 * @return mixed
 	 */
-	public function getViewableDescendants(): mixed
+	public function getViewableDescendants()
 	{
 		$userId = \XF::visitor()->user_id;
 		if (!isset($this->_viewableDescendants[$userId]))
 		{
-			$categoryRepos = \XF::app()->repository(CategoryRepository::class);
+			/** @var \DBTech\Shop\Repository\Category $categoryRepos */
+			$categoryRepos = $this->repository('DBTech\Shop:Category');
 			$viewable = $categoryRepos->getViewableCategories($this);
 			$this->_viewableDescendants[$userId] = $viewable->toArray();
 		}
-
+		
 		return $this->_viewableDescendants[$userId];
 	}
-
+	
 	/**
 	 * @param array $descendents
 	 * @param null $userId
 	 */
-	public function cacheViewableDescendents(array $descendents, $userId = null): void
+	public function cacheViewableDescendents(array $descendents, $userId = null)
 	{
 		if ($userId === null)
 		{
 			$userId = \XF::visitor()->user_id;
 		}
-
+		
 		$this->_viewableDescendants[$userId] = $descendents;
 	}
-
+	
 	/**
 	 * @param null $forcePrefix
 	 *
@@ -214,7 +208,7 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 	public function getUsablePrefixes($forcePrefix = null): array
 	{
 		$prefixes = $this->prefixes;
-
+		
 		if ($forcePrefix instanceof ItemPrefix)
 		{
 			$forcePrefix = $forcePrefix->prefix_id;
@@ -228,66 +222,64 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 			}
 			return $this->isPrefixUsable($prefix);
 		});
-
+		
 		return $prefixes->groupBy('prefix_group_id');
 	}
-
+	
 	/**
-	 * @return array
+	 * @return mixed
 	 */
-	public function getPrefixesGrouped(): array
+	public function getPrefixesGrouped()
 	{
 		return $this->prefixes->groupBy('prefix_group_id');
 	}
-
+	
 	/**
-	 * @return AbstractCollection
+	 * @return \XF\Mvc\Entity\AbstractCollection
 	 */
-	public function getPrefixes(): AbstractCollection
+	public function getPrefixes(): \XF\Mvc\Entity\AbstractCollection
 	{
 		if (!$this->prefix_cache)
 		{
-			return \XF::app()->em()->getEmptyCollection();
+			return $this->_em->getEmptyCollection();
 		}
 
-		return \XF::app()->finder(ItemPrefixFinder::class)
+		return $this->finder('DBTech\Shop:ItemPrefix')
 			->where('prefix_id', $this->prefix_cache)
 			->order('materialized_order')
 			->fetch()
-		;
+			;
 	}
-
+	
 	/**
-	 * @param ItemPrefix|int $prefix
-	 * @param User|null $user
+	 * @param mixed $prefix
+	 * @param \XF\Entity\User|null $user
 	 *
 	 * @return bool
-	 * @noinspection PhpMissingParamTypeInspection
 	 */
-	public function isPrefixUsable($prefix, ?User $user = null): bool
+	public function isPrefixUsable($prefix, \XF\Entity\User $user = null): bool
 	{
 		if (!$this->isPrefixValid($prefix))
 		{
 			return false;
 		}
-
+		
 		if (!($prefix instanceof ItemPrefix))
 		{
-			$prefix = \XF::app()->em()->find(ItemPrefix::class, $prefix);
+			$prefix = $this->em()->find('DBTech\Shop:ItemPrefix', $prefix);
 			if (!$prefix)
 			{
 				return false;
 			}
 		}
-
+		
 		return $prefix->isUsableByUser($user);
 	}
-
+	
 	/**
-	 * @param ItemPrefix|int $prefix
+	 * @param mixed $prefix
 	 *
 	 * @return bool
-	 * @noinspection PhpMissingParamTypeInspection
 	 */
 	public function isPrefixValid($prefix): bool
 	{
@@ -295,10 +287,10 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 		{
 			$prefix = $prefix->prefix_id;
 		}
-
+		
 		return (!$prefix || isset($this->prefix_cache[$prefix]));
 	}
-
+	
 	/**
 	 * @param string $itemType
 	 *
@@ -308,41 +300,41 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 	public function getNewItem(string $itemType): Item
 	{
 		/** @var Item $item */
-		$item = \XF::app()->em()->create(Item::class);
+		$item = $this->_em->create('DBTech\Shop:Item');
 		$item->item_type_id = $itemType;
 		$item->category_id = $this->category_id;
 		$item->hydrateRelation('Category', $this);
-
+		
 		return $item;
 	}
-
+	
 	/**
 	 * @param Item|null $item
 	 *
 	 * @return string
 	 */
-	public function getNewContentState(?Item $item = null): string
+	public function getNewContentState(Item $item = null): string
 	{
 		$visitor = \XF::visitor();
-
+		
 		if ($visitor->user_id && $this->hasPermission('approveUnapprove'))
 		{
 			return 'visible';
 		}
-
+		
 		if (!$this->hasPermission('addWithoutApproval'))
 		{
 			return 'moderated';
 		}
-
+		
 		if ($item)
 		{
 			return $this->always_moderate_update ? 'moderated' : 'visible';
 		}
-
+		
 		return $this->always_moderate_create ? 'moderated' : 'visible';
 	}
-
+	
 	/**
 	 * @param bool $includeSelf
 	 * @param string $linkType
@@ -351,10 +343,17 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 	 */
 	public function getBreadcrumbs(bool $includeSelf = true, string $linkType = 'public'): array
 	{
-		$link = 'dbtech-shop/categories';
+		if ($linkType == 'public')
+		{
+			$link = 'dbtech-shop/categories';
+		}
+		else
+		{
+			$link = 'dbtech-shop/categories';
+		}
 		return $this->_getBreadcrumbs($includeSelf, $linkType, $link);
 	}
-
+	
 	/**
 	 * @return array
 	 */
@@ -364,17 +363,17 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 			'item_count' => $this->item_count,
 			'last_update' => $this->last_update,
 			'last_item_title' => $this->last_item_title,
-			'last_item_id' => $this->last_item_id,
+			'last_item_id' => $this->last_item_id
 		];
 	}
-
+	
 	/**
 	 * @param Item $item
 	 */
-	public function itemAdded(Item $item): void
+	public function itemAdded(Item $item)
 	{
 		$this->item_count++;
-
+		
 		if ($item->last_update >= $this->last_update)
 		{
 			$this->last_update = $item->last_update;
@@ -382,13 +381,13 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 			$this->last_item_id = $item->item_id;
 		}
 	}
-
+	
 	/**
 	 * @param Item $item
 	 *
 	 * @throws \InvalidArgumentException
 	 */
-	public function itemDataChanged(Item $item): void
+	public function itemDataChanged(Item $item)
 	{
 		if ($item->isChanged(['last_update', 'title']))
 		{
@@ -398,26 +397,26 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 				$this->last_item_title = $item->title;
 				$this->last_item_id = $item->item_id;
 			}
-			else if ($item->getExistingValue('last_update') == $this->last_update)
+			elseif ($item->getExistingValue('last_update') == $this->last_update)
 			{
 				$this->rebuildLastItem();
 			}
 		}
 	}
-
+	
 	/**
 	 * @param Item $item
 	 */
-	public function itemRemoved(Item $item): void
+	public function itemRemoved(Item $item)
 	{
 		$this->item_count--;
-
+		
 		if ($item->last_update == $this->last_update)
 		{
 			$this->rebuildLastItem();
 		}
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -427,38 +426,38 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 		$this->rebuildLastItem();
 		$this->rebuildLastSale();
 		$this->rebuildRating();
-		//		$this->rebuildSalesAmounts();
-
+//		$this->rebuildSalesAmounts();
+		
 		return true;
 	}
-
+	
 	/**
 	 * @return int
 	 */
 	public function rebuildItemCount(): int
 	{
-		$this->item_count = (int) $this->db()->fetchOne("
+		$this->item_count = (int)$this->db()->fetchOne("
 			SELECT COUNT(*)
 			FROM xf_dbtech_shop_item
 			WHERE category_id = ?
 				AND item_state = 'visible'
 		", $this->category_id);
-
+		
 		return $this->item_count;
 	}
-
+	
 	/**
 	 *
 	 */
-	public function rebuildLastItem(): void
+	public function rebuildLastItem()
 	{
-		/** @var Item $item */
-		$item = \XF::app()->finder(ItemFinder::class)
+		/** @var \DBTech\Shop\Entity\Item $item */
+		$item = $this->finder('DBTech\Shop:Item')
 			->where('category_id', $this->category_id)
 			->where('item_state', 'visible')
 			->order('last_update', 'desc')
 			->fetchOne();
-
+		
 		if ($item)
 		{
 			$this->last_update = $item->last_update;
@@ -472,23 +471,23 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 			$this->last_item_id = 0;
 		}
 	}
-
+	
 	/**
 	 *
 	 */
-	public function rebuildLastSale(): void
+	public function rebuildLastSale()
 	{
-		$finder = \XF::app()->finder(PurchaseFinder::class);
-
+		$finder = $this->finder('DBTech\Shop:Purchase');
+		
 		$finder->where($finder->expression('
 			item_id IN(SELECT item_id FROM xf_dbtech_shop_item WHERE category_id = ' . $this->category_id . ')
 		'));
-
-		/** @var Purchase $purchase */
+		
+		/** @var \DBTech\Shop\Entity\Purchase $purchase */
 		$purchase = $finder->order('dateline', 'desc')
 			->fetchOne()
 		;
-
+		
 		if ($purchase)
 		{
 			$this->latest_customer_id = $purchase->buyer_user_id;
@@ -500,7 +499,7 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 			$this->latest_sale_id = 0;
 		}
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -512,7 +511,7 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 			LEFT JOIN xf_dbtech_shop_item AS item USING(item_id)
 			WHERE item.category_id = ?
 		", $this->category_id);
-
+		
 		$totalPositive = $this->db()->fetchOne("
 			SELECT COUNT(item_rating_id)
 			FROM xf_dbtech_shop_item_rating AS rating
@@ -520,7 +519,7 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 			WHERE item.category_id = ?
 				AND rating >= 4
 		", $this->category_id);
-
+		
 		$totalNegative = $this->db()->fetchOne("
 			SELECT COUNT(item_rating_id)
 			FROM xf_dbtech_shop_item_rating AS rating
@@ -528,7 +527,7 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 			WHERE item.category_id = ?
 				AND rating <= 2
 		", $this->category_id);
-
+		
 		$averageRating = $this->db()->fetchOne("
 			SELECT AVG(rating)
 			FROM xf_dbtech_shop_item_rating AS rating
@@ -536,16 +535,16 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 			WHERE item.category_id = ?
 				AND rating <= 2
 		", $this->category_id);
-
+		
 		$this->num_ratings = $ratings;
 		$this->average_rating = round($averageRating, 2);
 		$this->positive_percent = $ratings ? round(($totalPositive / $ratings) * 100, 2) : 0;
 		$this->negative_percent = $ratings ? round(($totalNegative / $ratings) * 100, 2) : 0;
 		$this->neutral_percent = $ratings ? round((($ratings - $totalNegative - $totalPositive) / $ratings) * 100, 2) : 0;
-
+		
 		return true;
 	}
-
+	
 	/**
 	 * @param int $itemId
 	 *
@@ -553,9 +552,9 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 	 */
 	protected function verifyItemId(int &$itemId): bool
 	{
-		return \XF::app()->em()->find(Item::class, $itemId) !== null;
+		return $this->_em->find('DBTech\Shop:Item', $itemId) !== null;
 	}
-
+	
 	/**
 	 * @param int $userId
 	 *
@@ -567,10 +566,10 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 		{
 			return true;
 		}
-
-		return \XF::app()->em()->find(User::class, $userId) !== null;
+		
+		return $this->_em->find('XF:User', $userId) !== null;
 	}
-
+	
 	/**
 	 * @param int $userId
 	 *
@@ -583,8 +582,8 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 			// 0 or -1 is valid in this case
 			return true;
 		}
-
-		return \XF::app()->em()->find(User::class, $userId) !== null;
+		
+		return $this->_em->find('XF:User', $userId) !== null;
 	}
 
 	/**
@@ -592,12 +591,12 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 	 * @param array $extraParams
 	 * @param null $hash
 	 *
-	 * @return string
+	 * @return mixed|string
 	 */
 	public function getContentUrl(bool $canonical = false, array $extraParams = [], $hash = null): string
 	{
 		$route = $canonical ? 'canonical:dbtech-shop/categories' : 'dbtech-shop/categories';
-		return \XF::app()->router('public')->buildLink($route, $this, $extraParams, $hash);
+		return $this->app()->router('public')->buildLink($route, $this, $extraParams, $hash);
 	}
 
 	/**
@@ -611,9 +610,9 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 	/**
 	 * @param string $context
 	 *
-	 * @return Phrase
+	 * @return string|\XF\Phrase
 	 */
-	public function getContentTitle(string $context = ''): Phrase
+	public function getContentTitle(string $context = '')
 	{
 		return \XF::phrase('dbtech_shop_category_x', ['title' => $this->title]);
 	}
@@ -621,7 +620,7 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 	/**
 	 *
 	 */
-	protected function _preSave(): void
+	protected function _preSave()
 	{
 		if ($this->isChanged(['thread_node_id', 'thread_prefix_id']))
 		{
@@ -636,31 +635,31 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 					$this->thread_node_id = 0;
 					$this->thread_prefix_id = 0;
 				}
-				else if ($this->thread_prefix_id && !$this->ThreadForum->isPrefixValid($this->thread_prefix_id))
+				elseif ($this->thread_prefix_id && !$this->ThreadForum->isPrefixValid($this->thread_prefix_id))
 				{
 					$this->thread_prefix_id = 0;
 				}
 			}
 		}
 	}
-
+	
 	/**
 	 *
 	 */
-	protected function _postDelete(): void
+	protected function _postDelete()
 	{
 		if ($this->getOption('delete_items'))
 		{
-			\XF::app()->jobManager()->enqueueUnique('dbtechShopCategoryDelete' . $this->category_id, 'DBTech\Shop:CategoryDelete', [
-				'category_id' => $this->category_id,
+			$this->app()->jobManager()->enqueueUnique('dbtechShopCategoryDelete' . $this->category_id, 'DBTech\Shop:CategoryDelete', [
+				'category_id' => $this->category_id
 			]);
 		}
 	}
 
 	/**
-	 * @param Structure $structure
+	 * @param \XF\Mvc\Entity\Structure $structure
 	 *
-	 * @return Structure
+	 * @return \XF\Mvc\Entity\Structure
 	 */
 	public static function getStructure(Structure $structure): Structure
 	{
@@ -673,7 +672,7 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 			'title'                  => [
 				'type'      => self::STR,
 				'maxLength' => 100,
-				'required'  => 'please_enter_valid_title',
+				'required'  => 'please_enter_valid_title'
 			],
 			'description'            => ['type' => self::STR, 'default' => ''],
 			'item_count'             => ['type' => self::UINT, 'default' => 0, 'forced' => true],
@@ -682,7 +681,7 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 				'type'      => self::STR,
 				'default'   => '',
 				'maxLength' => 100,
-				'censor'    => true,
+				'censor'    => true
 			],
 			'last_item_id'           => ['type' => self::UINT, 'default' => 0],
 			'prefix_cache'           => ['type' => self::JSON_ARRAY, 'default' => []],
@@ -694,7 +693,7 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 			'item_update_notify'     => [
 				'type'          => self::STR,
 				'default'       => 'thread',
-				'allowedValues' => ['thread', 'reply'],
+				'allowedValues' => ['thread', 'reply']
 			],
 			'always_moderate_create' => ['type' => self::BOOL, 'default' => false],
 			'always_moderate_update' => ['type' => self::BOOL, 'default' => false],
@@ -717,51 +716,59 @@ class Category extends AbstractCategoryTree implements LinkableInterface, Viewab
 		];
 		$structure->relations = [
 			'ThreadForum' => [
-				'entity' => Forum::class,
+				'entity' => 'XF:Forum',
 				'type' => self::TO_ONE,
 				'conditions' => [
-					['node_id', '=', '$thread_node_id'],
+					['node_id', '=', '$thread_node_id']
 				],
 				'primary' => true,
-				'with' => 'Node',
+				'with' => 'Node'
 			],
 			'Beneficiary' => [
-				'entity' => User::class,
+				'entity' => 'XF:User',
 				'type' => self::TO_ONE,
 				'conditions' => [
-					['user_id', '=', '$beneficiary'],
+					['user_id', '=', '$beneficiary']
 				],
-				'primary' => true,
+				'primary' => true
 			],
 			'LatestSale' => [
-				'entity' => Item::class,
+				'entity' => 'DBTech\Shop:Item',
 				'type' => self::TO_ONE,
 				'conditions' => [
-					['item_id', '=', '$latest_sale_id'],
+					['item_id', '=', '$latest_sale_id']
 				],
-				'primary' => true,
+				'primary' => true
 			],
 			'LatestCustomer' => [
-				'entity' => User::class,
+				'entity' => 'XF:User',
 				'type' => self::TO_ONE,
 				'conditions' => [
-					['user_id', '=', '$latest_customer_id'],
+					['user_id', '=', '$latest_customer_id']
 				],
-				'primary' => true,
+				'primary' => true
 			],
 			'Watch' => [
-				'entity' => CategoryWatch::class,
+				'entity' => 'DBTech\Shop:CategoryWatch',
 				'type' => self::TO_MANY,
 				'conditions' => 'category_id',
-				'key' => 'user_id',
-			],
+				'key' => 'user_id'
+			]
 		];
 		$structure->options = [
-			'delete_items' => true,
+			'delete_items' => true
 		];
-
+		
 		static::addCategoryTreeStructureElements($structure);
-
+		
 		return $structure;
+	}
+	
+	/**
+	 * @return \DBTech\Shop\Repository\Category|\XF\Mvc\Entity\Repository
+	 */
+	protected function getCategoryRepo()
+	{
+		return $this->repository('DBTech\Shop:Category');
 	}
 }

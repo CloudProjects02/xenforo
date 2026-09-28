@@ -1,0 +1,64 @@
+<xf:title>{$item.title} - Owned by</xf:title>
+
+<style>
+
+    .structItem-cell.structItem-cell--itemMeta > * {
+        padding: 2px;
+    }
+
+    .itemList-item.structItem.structItem--item.js-inlineModContainer.js-itemListItem-4{
+        margin-top: 10px;
+    }
+
+    span.avatar.avatar--s.avatar--separated.structItem-secondaryIcon{
+        display: none;
+    }
+
+
+    .structItem .structItem-cell {
+        color: gray;
+        padding: 0;
+    }
+
+    .block-header {
+        background: rgba(19, 19, 19) !important;
+    }
+
+    ul.structItem-parts.structItem-parts--item{
+        display: none !important;
+    }
+	.structItem {
+    border-top: none;
+}
+
+	.contentRow {
+	display: flex;
+    align-items: center !important;
+	}
+	.xfdev_shop_item-icon {
+		display: none;
+	}
+</style>
+
+<div class="block">
+
+    <div class="block-container">
+
+        <div class="block-body">
+            <xf:foreach loop="$members" value="$member">
+                <div class="itemList-item structItem structItem--item">
+                    <div class="structItem-cell structItem-cell--main" data-xf-init="touch-proxy" style="padding:10px;">
+                        <div class="structItem-title">
+                            <xf:macro template="member_list_macros" name="item" arg-user="{$member.User}"/>
+                        </div>
+                    </div>
+                </div>
+            </xf:foreach>
+        </div>
+    </div>
+    <div class="block-outer block-outer--after">
+        <xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
+                    link="dbtech-shop/members" data="{$item}"
+                    wrapperclass="block-outer-main"/>
+    </div>
+</div>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <template_modifications>
     <modification addon_id="CloudCheats/HomeLock"
+                  type="public"
                   template="PAGE_CONTAINER"
                   modification_key="cloudcheats_footer_replace"
                   description="Replace default XenForo footer with CloudCheats footer"

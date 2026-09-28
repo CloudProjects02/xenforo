@@ -2,27 +2,26 @@
 
 namespace DBTech\Shop\Widget;
 
-use DBTech\Shop\Entity\ItemRating;
-use DBTech\Shop\Finder\ItemRatingFinder;
-use DBTech\Shop\Repository\ItemRatingRepository;
-use DBTech\Shop\XF\Entity\User;
-use XF\Http\Request;
 use XF\Widget\AbstractWidget;
-use XF\Widget\WidgetRenderer;
 
+/**
+ * Class LatestReviews
+ *
+ * @package DBTech\Shop\Widget
+ */
 class LatestReviews extends AbstractWidget
 {
 	/** @var array  */
 	protected $defaultOptions = [
-		'limit' => 5,
+		'limit' => 5
 	];
-
+	
 	/**
-	 * @return string|WidgetRenderer
+	 * @return string|\XF\Widget\WidgetRenderer
 	 */
-	public function render(): string|WidgetRenderer
+	public function render()
 	{
-		/** @var User $visitor */
+		/** @var \DBTech\Shop\XF\Entity\User $visitor */
 		$visitor = \XF::visitor();
 		if (!method_exists($visitor, 'canViewDbtechShopItems') || !$visitor->canViewDbtechShopItems())
 		{
@@ -32,11 +31,11 @@ class LatestReviews extends AbstractWidget
 		$options = $this->options;
 		$limit = $options['limit'];
 
-		/** @var ItemRatingFinder $finder */
-		$finder = \XF::app()->repository(ItemRatingRepository::class)->findLatestReviews();
+		/** @var \DBTech\Shop\Finder\ItemRating $finder */
+		$finder = $this->repository('DBTech\Shop:ItemRating')->findLatestReviews();
 		$reviews = $finder->fetch(max($limit * 2, 10));
 
-		/** @var ItemRating $review */
+		/** @var \DBTech\Shop\Entity\ItemRating $review */
 		foreach ($reviews AS $id => $review)
 		{
 			if (!$review->canView() || $review->isIgnored() || $review->Item->isIgnored())
@@ -48,28 +47,28 @@ class LatestReviews extends AbstractWidget
 		$total = $reviews->count();
 		$reviews = $reviews->slice(0, $limit);
 
-		$link = \XF::app()->router('public')->buildLink('dbtech-shop/latest-reviews');
+		$link = $this->app->router('public')->buildLink('dbtech-shop/latest-reviews');
 
 		$viewParams = [
 			'title' => $this->getTitle(),
 			'link' => $link,
 			'reviews' => $reviews,
-			'hasMore' => $total > $reviews->count(),
+			'hasMore' => $total > $reviews->count()
 		];
 		return $this->renderer('dbtech_shop_widget_latest_reviews', $viewParams);
 	}
-
+	
 	/**
-	 * @param Request $request
+	 * @param \XF\Http\Request $request
 	 * @param array $options
 	 * @param null $error
 	 *
 	 * @return bool
 	 */
-	public function verifyOptions(Request $request, array &$options, &$error = null): bool
+	public function verifyOptions(\XF\Http\Request $request, array &$options, &$error = null): bool
 	{
 		$options = $request->filter([
-			'limit' => 'uint',
+			'limit' => 'uint'
 		]);
 		if ($options['limit'] < 1)
 		{

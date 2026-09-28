@@ -3,19 +3,22 @@
 namespace DBTech\Shop\MemberStat;
 
 use XF\Entity\MemberStat;
-use XF\Entity\User;
-use XF\Finder\UserFinder;
-use XF\Mvc\Entity\ArrayCollection;
+use XF\Finder\User;
 
+/**
+ * Class Formatter
+ *
+ * @package DBTech\Shop\MemberStat
+ */
 class Formatter
 {
 	/**
 	 * @param MemberStat $memberStat
-	 * @param UserFinder $finder
+	 * @param User $finder
 	 *
-	 * @return array|ArrayCollection
+	 * @return array|\XF\Mvc\Entity\ArrayCollection
 	 */
-	public static function number(MemberStat $memberStat, UserFinder $finder): ArrayCollection|array
+	public static function number(MemberStat $memberStat, User $finder)
 	{
 		if ($memberStat->show_value)
 		{
@@ -26,9 +29,9 @@ class Formatter
 		{
 			$valueField = null;
 		}
-
+		
 		$results = $finder->fetch($memberStat->user_limit * 3);
-
+		
 		if ($valueField)
 		{
 			$results = $results->pluckNamed($valueField, 'user_id');
@@ -39,7 +42,7 @@ class Formatter
 		}
 		else
 		{
-			$results = $results->pluck(function (User $user): array
+			$results = $results->pluck(function (\XF\Entity\User $user): array
 			{
 				return [$user->user_id, null];
 			}, false);

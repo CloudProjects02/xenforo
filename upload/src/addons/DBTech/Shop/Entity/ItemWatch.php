@@ -2,7 +2,6 @@
 
 namespace DBTech\Shop\Entity;
 
-use XF\Entity\User;
 use XF\Mvc\Entity\Entity;
 use XF\Mvc\Entity\Structure;
 
@@ -13,15 +12,15 @@ use XF\Mvc\Entity\Structure;
  * @property bool $email_subscribe
  *
  * RELATIONS
- * @property-read Item|null $Item
- * @property-read User|null $User
+ * @property \DBTech\Shop\Entity\Item $Item
+ * @property \XF\Entity\User $User
  */
 class ItemWatch extends Entity
 {
 	/**
-	 * @param Structure $structure
+	 * @param \XF\Mvc\Entity\Structure $structure
 	 *
-	 * @return Structure
+	 * @return \XF\Mvc\Entity\Structure
 	 */
 	public static function getStructure(Structure $structure): Structure
 	{
@@ -31,21 +30,21 @@ class ItemWatch extends Entity
 		$structure->columns = [
 			'user_id' => ['type' => self::UINT, 'required' => true],
 			'item_id' => ['type' => self::UINT, 'required' => true],
-			'email_subscribe' => ['type' => self::BOOL, 'default' => false],
+			'email_subscribe' => ['type' => self::BOOL, 'default' => false]
 		];
 		$structure->getters = [];
 		$structure->relations = [
 			'Item' => [
-				'entity' => Item::class,
+				'entity' => 'DBTech\Shop:Item',
 				'type' => self::TO_ONE,
 				'conditions' => 'item_id',
-				'primary' => true,
+				'primary' => true
 			],
 			'User' => [
-				'entity' => User::class,
+				'entity' => 'XF:User',
 				'type' => self::TO_ONE,
 				'conditions' => 'user_id',
-				'primary' => true,
+				'primary' => true
 			],
 		];
 

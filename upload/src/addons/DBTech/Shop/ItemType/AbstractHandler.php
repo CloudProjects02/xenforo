@@ -4,34 +4,49 @@ namespace DBTech\Shop\ItemType;
 
 use DBTech\Shop\Entity\Item;
 use DBTech\Shop\Entity\Purchase;
-use DBTech\Shop\Repository\PurchaseRepository;
-use XF\App;
-use XF\Mvc\Entity\Manager;
-use XF\Phrase;
-use XF\PreEscaped;
-use XF\PrintableException;
-use XF\Repository\UserRepository;
 
+/**
+ * Class AbstractHandler
+ *
+ * @package DBTech\Shop\ItemType
+ */
 abstract class AbstractHandler
 {
-	protected array $defaultAdminConfig = [];
-	protected array $defaultUserConfig = [];
-	protected array $listeners = [];
-	protected bool $logIp = true;
-	protected bool $performValidations = true;
-	protected string $contentType;
-	protected ?Item $item = null;
-	protected ?Purchase $purchase = null;
+	/** @var array */
+	protected $defaultAdminConfig = [];
 
+	/** @var array */
+	protected $defaultUserConfig = [];
 
+	/** @var array */
+	protected $listeners = [];
+
+	/** @var bool */
+	protected $logIp = true;
+	
+	/** @var bool */
+	protected $performValidations = true;
+	
+	/** @var string */
+	protected $contentType;
+	
+	/** @var Item */
+	protected $item;
+	
+	/** @var Purchase */
+	protected $purchase;
+	
+	
 	/**
+	 * AbstractHandler constructor.
+	 *
 	 * @param string $contentType
 	 */
 	public function __construct(string $contentType)
 	{
 		$this->contentType = $contentType;
 	}
-
+	
 	/**
 	 * @return string
 	 */
@@ -39,7 +54,7 @@ abstract class AbstractHandler
 	{
 		return $this->contentType;
 	}
-
+	
 	/**
 	 * @param Item $item
 	 * @param Purchase|null $purchase
@@ -50,10 +65,10 @@ abstract class AbstractHandler
 	{
 		$this->setItem($item);
 		$this->setPurchase($purchase);
-
+		
 		return $this;
 	}
-
+	
 	/**
 	 * @return Item
 	 */
@@ -61,7 +76,7 @@ abstract class AbstractHandler
 	{
 		return $this->item;
 	}
-
+	
 	/**
 	 * @param Item $item
 	 *
@@ -73,12 +88,12 @@ abstract class AbstractHandler
 		{
 			$item->code = array_replace_recursive($this->defaultAdminConfig, $item->code);
 		}
-
+		
 		$this->item = $item;
-
+		
 		return $this;
 	}
-
+	
 	/**
 	 * @return Purchase
 	 */
@@ -86,7 +101,7 @@ abstract class AbstractHandler
 	{
 		return $this->purchase;
 	}
-
+	
 	/**
 	 * @param Purchase|null $purchase
 	 *
@@ -102,28 +117,28 @@ abstract class AbstractHandler
 			}
 			$purchase->configuration = array_replace($this->defaultUserConfig, $purchase->configuration);
 		}
-
+		
 		$this->purchase = $purchase;
-
+		
 		return $this;
 	}
-
+	
 	/**
-	 * @return Phrase
+	 * @return \XF\Phrase
 	 */
-	public function getTitle(): Phrase
+	public function getTitle(): \XF\Phrase
 	{
 		return \XF::phrase('dbtech_shop_itemtype_title.' . $this->contentType);
 	}
-
+	
 	/**
-	 * @return Phrase
+	 * @return \XF\Phrase
 	 */
-	public function getDescription(): Phrase
+	public function getDescription(): \XF\Phrase
 	{
 		return \XF::phrase('dbtech_shop_itemtype_description.' . $this->contentType);
 	}
-
+	
 	/**
 	 * @param Item|null $item
 	 *
@@ -136,24 +151,24 @@ abstract class AbstractHandler
 		{
 			$item = $this->item;
 		}
-
+		
 		if ($item === null)
 		{
 			// We didn't set an item in the global config either
 			throw new \LogicException("No item context passed and no item context set.");
 		}
-
+		
 		$templateName = $this->getAdminConfigTemplate();
 		if (!$templateName)
 		{
 			return '';
 		}
-		return \XF::app()->templater()->renderTemplate(
+		return $this->app()->templater()->renderTemplate(
 			$templateName,
 			array_merge($this->getDefaultTemplateParams('admin_config'), ['item' => $item])
 		);
 	}
-
+	
 	/**
 	 * @return string|null
 	 */
@@ -161,7 +176,7 @@ abstract class AbstractHandler
 	{
 		return 'public:dbtech_shop_admin_config_' . $this->contentType;
 	}
-
+	
 	/**
 	 * @param array $config
 	 *
@@ -171,7 +186,7 @@ abstract class AbstractHandler
 	{
 		return $config;
 	}
-
+	
 	/**
 	 * @param Purchase|null $purchase
 	 *
@@ -184,19 +199,19 @@ abstract class AbstractHandler
 		{
 			$purchase = $this->purchase;
 		}
-
+		
 		if ($purchase === null)
 		{
 			// We didn't set a purchase in the global config either
 			throw new \LogicException("No purchase context passed and no purchase context set.");
 		}
-
+		
 		$templateName = $this->getUserConfigTemplate();
 		if (!$templateName)
 		{
 			return '';
 		}
-		return \XF::app()->templater()->renderTemplate(
+		return $this->app()->templater()->renderTemplate(
 			$templateName,
 			array_merge($this->getDefaultTemplateParams('user_config'), [
 				'purchase' => $purchase,
@@ -204,15 +219,15 @@ abstract class AbstractHandler
 			])
 		);
 	}
-
+	
 	/**
-	 * @return string
+	 * @return string|null
 	 */
-	public function getUserConfigTemplate(): string
+	public function getUserConfigTemplate(): ?string
 	{
 		return 'public:dbtech_shop_user_config_' . $this->contentType;
 	}
-
+	
 	/**
 	 * @param Purchase|null $purchase
 	 *
@@ -225,13 +240,13 @@ abstract class AbstractHandler
 		{
 			$purchase = $this->purchase;
 		}
-
+		
 		if ($purchase === null)
 		{
 			// We didn't set a purchase in the global config either
 			throw new \LogicException("No purchase context passed and no purchase context set.");
 		}
-
+		
 		/*
 		 * Pre-defined configuration items should still display the configuration
 		if (!$purchase->canConfigure())
@@ -239,13 +254,13 @@ abstract class AbstractHandler
 			return '';
 		}
 		*/
-
+		
 		$templateName = $this->getUserConfigViewTemplate();
 		if (!$templateName)
 		{
 			return '';
 		}
-		return \XF::app()->templater()->renderTemplate(
+		return $this->app()->templater()->renderTemplate(
 			$templateName,
 			array_merge($this->getDefaultTemplateParams('user_config_view'), [
 				'purchase' => $purchase,
@@ -253,7 +268,7 @@ abstract class AbstractHandler
 			])
 		);
 	}
-
+	
 	/**
 	 * @return string
 	 */
@@ -261,15 +276,15 @@ abstract class AbstractHandler
 	{
 		return 'public:dbtech_shop_user_config_view_' . $this->contentType;
 	}
-
+	
 	/**
-	 * @return PreEscaped|string
+	 * @return string
 	 */
-	public function getConfigurationForConversation(): PreEscaped|string
+	public function getConfigurationForConversation(): string
 	{
 		return '';
 	}
-
+	
 	/**
 	 * @param string $context
 	 *
@@ -281,7 +296,7 @@ abstract class AbstractHandler
 			'title' => $this->getTitle(),
 		];
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -290,7 +305,7 @@ abstract class AbstractHandler
 		// Return false if the change is permanent, such as username change
 		return true;
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -302,7 +317,7 @@ abstract class AbstractHandler
 	/**
 	 * @param bool $logIp
 	 *
-	 * @return AbstractHandler
+	 * @return \DBTech\Shop\ItemType\AbstractHandler
 	 */
 	public function logIp(bool $logIp): AbstractHandler
 	{
@@ -314,7 +329,7 @@ abstract class AbstractHandler
 	/**
 	 * @param bool $perform
 	 *
-	 * @return AbstractHandler
+	 * @return \DBTech\Shop\ItemType\AbstractHandler
 	 */
 	public function setPerformValidations(bool $perform): AbstractHandler
 	{
@@ -322,7 +337,7 @@ abstract class AbstractHandler
 
 		return $this;
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -330,7 +345,7 @@ abstract class AbstractHandler
 	{
 		return $this->performValidations;
 	}
-
+	
 	/**
 	 * @return bool
 	 */
@@ -341,27 +356,27 @@ abstract class AbstractHandler
 			// Item is not configurable
 			return false;
 		}
-
+		
 		return true;
 	}
-
+	
 	/**
-	 * @throws PrintableException
+	 * @throws \XF\PrintableException
 	 */
-	public function afterPurchase(): void
+	public function afterPurchase()
 	{
 		if (!$this->purchase)
 		{
 			// We didn't set a purchase in the global config
 			throw new \LogicException("Cannot activate a purchase without a purchase context set.");
 		}
-
+		
 		if (!$this->item)
 		{
 			// We didn't set an item in the global config
 			throw new \LogicException("Cannot activate a purchase without an item context set.");
 		}
-
+		
 		if ($this->purchase->isActive())
 		{
 			if ($this->performValidations)
@@ -371,70 +386,70 @@ abstract class AbstractHandler
 					return;
 				}
 			}
-
+			
 			$this->activate();
 		}
 	}
-
+	
 	/**
 	 * @param array $configuration
 	 *
-	 * @throws PrintableException
+	 * @throws \XF\PrintableException
 	 */
-	public function configure(array $configuration = []): void
+	public function configure(array $configuration = [])
 	{
 		if (!$this->purchase)
 		{
 			// We didn't set a purchase in the global config
 			throw new \LogicException("Cannot configure a purchase without a purchase context set.");
 		}
-
+		
 		if (!$this->item)
 		{
 			// We didn't set an item in the global config
 			throw new \LogicException("Cannot configure a purchase without an item context set.");
 		}
-
+		
 		$purchase = $this->purchase;
 		$item = $this->item;
-
+		
 		if (!($this instanceof ConfigurableInterface))
 		{
 			// Item is not configurable
 			throw new \LogicException("The item {$this->item->title} does not implement ConfigurableInterface.");
 		}
-
+		
 		if ($purchase->configured && $this->canRevertConfiguration())
 		{
 			// Revert the old configuration, if we have configured previously, and we *can* deactivate
 			$this->_deactivate();
 		}
-
+		
 		$purchase->configuration = $configuration;
-
+		
 		$wasConfigured = $purchase->configured;
 		$hadConfigurationChanges = $purchase->isChanged('configuration');
-
+		
 		$purchase->configured = true;
 		$purchase->active = true;
 		$purchase->saveIfChanged();
-
+		
 		if ($hadConfigurationChanges)
 		{
 			// Only run post-configure action if we actually changed configuration
 			$this->afterConfiguration($wasConfigured);
 		}
-
+		
 		$this->activateAlways();
-
+		
 		if ($hadConfigurationChanges)
 		{
 			// Only send configuration notice if we had actual configuration changes
-			\XF::app()->repository(PurchaseRepository::class)
+			$this->getPurchaseRepo()
 				->sendConfigurationNotifications($item, $purchase)
 			;
 		}
-
+		
 		if (!$item->canReConfigure() && $item->getFlag('auto_discard'))
 		{
 			$this->setPerformValidations(false)
@@ -443,12 +458,12 @@ abstract class AbstractHandler
 			;
 		}
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
 	 * @return bool
-	 * @throws PrintableException
+	 * @throws \XF\PrintableException
 	 */
 	public function activate(&$error = null): bool
 	{
@@ -457,16 +472,16 @@ abstract class AbstractHandler
 			// We didn't set a purchase in the global config
 			throw new \LogicException("Cannot activate a purchase without a purchase context set.");
 		}
-
+		
 		if (!$this->item)
 		{
 			// We didn't set an item in the global config
 			throw new \LogicException("Cannot activate a purchase without an item context set.");
 		}
-
+		
 		$item = $this->item;
 		$purchase = $this->purchase;
-
+		
 		if ($this->performValidations)
 		{
 			if ($item->isOnlyGiftable() && !$purchase->gifted)
@@ -474,23 +489,23 @@ abstract class AbstractHandler
 				$error = \XF::phraseDeferred('dbtech_shop_item_only_giftable_has_not_been_gifted');
 				return false;
 			}
-
+			
 			if ($purchase->isExpired())
 			{
 				$error = \XF::phraseDeferred('dbtech_shop_cannot_activate_expired_purchase');
 				return false;
 			}
 		}
-
+		
 		$this->activateAlways();
-
-		$db = \XF::app()->db();
-
+		
+		$db = $this->app()->db();
+		
 		$db->beginTransaction();
-
+		
 		$purchase = $this->purchase;
 		$purchase->active = true;
-
+		
 		if (!$purchase->preSave())
 		{
 			$error = $purchase->getErrors();
@@ -498,33 +513,33 @@ abstract class AbstractHandler
 			$db->rollback();
 			return false;
 		}
-
+		
 		$purchase->save(true, false);
-
+		
 		$db->commit();
-
+		
 		return true;
 	}
-
+	
 	/**
 	 * @param bool $wasConfigured
 	 */
 	protected function afterConfiguration(bool $wasConfigured = false)
 	{
 	}
-
+	
 	/**
 	 *
 	 */
 	protected function activateAlways()
 	{
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
 	 * @return bool
-	 * @throws PrintableException
+	 * @throws \XF\PrintableException
 	 */
 	public function deactivate(&$error = null): bool
 	{
@@ -533,26 +548,26 @@ abstract class AbstractHandler
 			// We didn't set a purchase in the global config
 			throw new \LogicException("Cannot deactivate a purchase without a purchase context set.");
 		}
-
+		
 		if (!$this->item)
 		{
 			// We didn't set an item in the global config
 			throw new \LogicException("Cannot deactivate a purchase without an item context set.");
 		}
-
+		
 		$this->_deactivate($error);
 		if (!empty($error))
 		{
 			return false;
 		}
-
-		$db = \XF::app()->db();
-
+		
+		$db = $this->app()->db();
+		
 		$db->beginTransaction();
-
+		
 		$purchase = $this->purchase;
 		$purchase->active = false;
-
+		
 		if (!$purchase->preSave())
 		{
 			$error = $purchase->getErrors();
@@ -560,27 +575,27 @@ abstract class AbstractHandler
 			$db->rollback();
 			return false;
 		}
-
+		
 		$purchase->save(true, false);
-
+		
 		$db->commit();
-
+		
 		return true;
 	}
-
+	
 	/**
 	 * @param null $error
 	 */
 	protected function _deactivate(&$error = null)
 	{
 	}
-
+	
 	/**
 	 * @param null $error
 	 * @param string $reason
 	 *
 	 * @return bool
-	 * @throws PrintableException
+	 * @throws \XF\PrintableException
 	 */
 	public function discard(&$error = null, string $reason = 'manual'): bool
 	{
@@ -589,13 +604,13 @@ abstract class AbstractHandler
 			// We didn't set a purchase in the global config
 			throw new \LogicException("Cannot discard a purchase without a purchase context set.");
 		}
-
+		
 		if (!$this->item)
 		{
 			// We didn't set an item in the global config
 			throw new \LogicException("Cannot discard a purchase without an item context set.");
 		}
-
+		
 		if ($this->performValidations && $this->purchase->isActive())
 		{
 			$retval = $this->deactivate($error);
@@ -604,17 +619,17 @@ abstract class AbstractHandler
 				return false;
 			}
 		}
-
+		
 		$retval = $this->_discard($error);
 		if ($retval === false)
 		{
 			return false;
 		}
-
-		$db = \XF::app()->db();
-
+		
+		$db = $this->app()->db();
+		
 		$db->beginTransaction();
-
+		
 		$purchase = $this->purchase;
 		if ($purchase->hasChanges())
 		{
@@ -625,14 +640,14 @@ abstract class AbstractHandler
 				$db->rollback();
 				return false;
 			}
-
+			
 			$purchase->save(true, false);
 		}
-
-		$user = $purchase->User ?: \XF::app()->repository(UserRepository::class)->getGuestUser();
-
+		
+		$user = $purchase->User ?: $this->repository('XF:User')->getGuestUser();
+		
 		// If we're not performing validations, we also don't want to log IPs
-		\XF::app()->repository(PurchaseRepository::class)
+		$this->getPurchaseRepo()
 			->logTransaction(
 				$purchase,
 				'discard',
@@ -643,7 +658,7 @@ abstract class AbstractHandler
 				['reason' => $reason]
 			)
 		;
-
+		
 		if (!$purchase->preDelete())
 		{
 			$error = $purchase->getErrors();
@@ -651,14 +666,14 @@ abstract class AbstractHandler
 			$db->rollback();
 			return false;
 		}
-
+		
 		$purchase->delete(true, false);
-
+		
 		$db->commit();
-
+		
 		return true;
 	}
-
+	
 	/**
 	 * @param null $error
 	 *
@@ -668,7 +683,7 @@ abstract class AbstractHandler
 	{
 		return true;
 	}
-
+	
 	/**
 	 * @param string $event
 	 * @param array $args
@@ -679,29 +694,29 @@ abstract class AbstractHandler
 	public function fire(string $event, array $args = [], ?string $hint = null): bool
 	{
 		$listeners = $this->listeners;
-
+		
 		if (empty($listeners[$event]))
 		{
 			return true;
 		}
-
-		if (!empty($listeners[$event]['_']))
+		
+		if ($hint !== null)
 		{
-			foreach ($listeners[$event]['_'] AS $callback)
+			if (!empty($listeners[$event]['_']))
 			{
-				if (is_callable($callback))
+				foreach ($listeners[$event]['_'] AS $callback)
 				{
-					$return = call_user_func_array($callback, $args);
-					if ($return === false)
+					if (is_callable($callback))
 					{
-						return false;
+						$return = call_user_func_array($callback, $args);
+						if ($return === false)
+						{
+							return false;
+						}
 					}
 				}
 			}
-		}
-
-		if ($hint !== null)
-		{
+			
 			if ($hint !== '_' && !empty($listeners[$event][$hint]))
 			{
 				foreach ($listeners[$event][$hint] AS $callback)
@@ -717,27 +732,61 @@ abstract class AbstractHandler
 				}
 			}
 		}
-
+		else
+		{
+			// If we passed no hint, only fire global events so as to not accidentally trigger single use items
+			if (!empty($listeners[$event]['_']))
+			{
+				foreach ($listeners[$event]['_'] AS $callback)
+				{
+					if (is_callable($callback))
+					{
+						$return = call_user_func_array($callback, $args);
+						if ($return === false)
+						{
+							return false;
+						}
+					}
+				}
+			}
+		}
+		
 		return true;
 	}
-
+	
 	/**
 	 * @param string $event
 	 * @param \Closure $callback
 	 * @param string|null $hint
 	 */
-	public function addListener(string $event, \Closure $callback, ?string $hint = '_'): void
+	public function addListener(string $event, \Closure $callback, ?string $hint = '_')
 	{
 		$this->listeners[$event][$hint][] = $callback;
 	}
-
+	
 	/**
 	 *
 	 */
 	public function addListeners()
 	{
 	}
-
+	
+	/**
+	 * @return \DBTech\Shop\Repository\Item|\XF\Mvc\Entity\Repository
+	 */
+	protected function getItemRepo()
+	{
+		return \XF::repository('DBTech\Shop:Item');
+	}
+	
+	/**
+	 * @return \DBTech\Shop\Repository\Purchase|\XF\Mvc\Entity\Repository
+	 */
+	protected function getPurchaseRepo()
+	{
+		return \XF::repository('DBTech\Shop:Purchase');
+	}
+	
 	/**
 	 * @return \ArrayObject
 	 */
@@ -745,19 +794,49 @@ abstract class AbstractHandler
 	{
 		return \XF::app()->options();
 	}
-
+	
 	/**
-	 * @return Manager
+	 * @param string $identifier
+	 *
+	 * @return \XF\Mvc\Entity\Finder
 	 */
-	protected function em(): Manager
+	public function finder(string $identifier): \XF\Mvc\Entity\Finder
+	{
+		return \XF::app()->finder($identifier);
+	}
+	
+	/**
+	 * @param string $identifier
+	 *
+	 * @return \XF\Mvc\Entity\Repository
+	 */
+	public function repository(string $identifier): \XF\Mvc\Entity\Repository
+	{
+		return \XF::app()->em()->getRepository($identifier);
+	}
+	
+	/**
+	 * @param string $class
+	 *
+	 * @return \XF\Service\AbstractService
+	 */
+	public function service(string $class): \XF\Service\AbstractService
+	{
+		return call_user_func_array([$this->app(), 'service'], func_get_args());
+	}
+	
+	/**
+	 * @return \XF\Mvc\Entity\Manager
+	 */
+	protected function em(): \XF\Mvc\Entity\Manager
 	{
 		return \XF::app()->em();
 	}
-
+	
 	/**
-	 * @return App
+	 * @return \XF\App
 	 */
-	protected function app(): App
+	protected function app(): \XF\App
 	{
 		return \XF::app();
 	}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<code_event_listeners>
+  <listener event_id="template_post_render" execute_order="10" callback_class="SynapseThemes\YearsOfService\Listener" callback_method="templatePostRender" active="1" hint="Injects service badge data into templates" description="Adds years/months of service data to postbit and profile templates"/>
+</code_event_listeners>
