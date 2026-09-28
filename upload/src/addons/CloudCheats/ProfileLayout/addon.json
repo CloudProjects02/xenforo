@@ -1,0 +1,19 @@
+{
+    "addon_id": "CloudCheats/ProfileLayout",
+    "title": "Profile Layout",
+    "description": "Redesigns the member profile page with a two-column sidebar layout matching the vacban.wtf aesthetic.",
+    "version_id": 1000010,
+    "version_string": "1.0.0",
+    "dev": "CloudCheats",
+    "dev_url": "",
+    "faq_url": "",
+    "support_url": "",
+    "extra_urls": [],
+    "require": {
+        "XF": [
+            2030000,
+            "XenForo 2.3.0+"
+        ]
+    },
+    "icon": ""
+}

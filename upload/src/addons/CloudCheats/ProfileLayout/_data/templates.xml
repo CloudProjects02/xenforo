@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="public" title="cc_profile.less" version_id="1000010" version_string="1.0.0" addon_id="CloudCheats/ProfileLayout"><![CDATA[// CloudCheats Profile Layout
+
+.cc-profile-wrap {
+    max-width: 100%;
+}
+
+.cc-profile-cover {
+    position: relative;
+    overflow: hidden;
+    border-radius: @xf-borderRadius;
+    margin-bottom: 0;
+}
+
+.cc-profile-banner-bg {
+    position: relative;
+    min-height: 200px;
+    background: linear-gradient(135deg, hsl(230, 38%, 13%) 0%, hsl(222, 30%, 15%) 60%, hsl(215, 45%, 18%) 100%);
+    display: block;
+}
+
+.cc-profile-banner-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 30%, rgba(0,0,0,.6) 100%);
+    pointer-events: none;
+}
+
+.cc-profile-header {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+    padding: 16px 20px 20px;
+    flex-wrap: wrap;
+}
+
+.cc-profile-avatar {
+    flex-shrink: 0;
+    margin-bottom: -8px;
+}
+
+.cc-profile-avatar .avatarWrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.cc-profile-avatar .avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 8px !important;
+    border: 3px solid rgba(255,255,255,.85);
+    display: block;
+    object-fit: cover;
+}
+
+.cc-profile-header-info {
+    flex: 1;
+    min-width: 200px;
+    padding-bottom: 4px;
+}
+
+.cc-profile-username {
+    font-size: 1.6em;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0,0,0,.5);
+    margin: 0 0 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.cc-profile-username .username,
+.cc-profile-username a {
+    color: inherit !important;
+    text-shadow: inherit;
+}
+
+.cc-profile-blurb {
+    color: rgba(255,255,255,.75);
+    font-size: 0.9em;
+    margin-bottom: 8px;
+}
+
+.cc-profile-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 6px;
+}
+
+.cc-profile-admin-row {
+    margin-top: 4px;
+}
+
+.cc-profile-body {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 0 0;
+}
+
+@media (max-width: 700px) {
+    .cc-profile-body { flex-direction: column; }
+    .cc-profile-sidebar { width: 100%; }
+}
+
+.cc-profile-sidebar {
+    width: 220px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.cc-sidebar-card {
+    background: @xf-contentBg;
+    border: 1px solid @xf-borderColor;
+    border-radius: @xf-borderRadius;
+    padding: 12px;
+}
+
+.cc-status-card {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 0.85em;
+    padding: 10px 14px;
+}
+
+.cc-status-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.cc-status--online {
+    color: #22c55e;
+}
+
+.cc-status--online .cc-status-dot {
+    background: #22c55e;
+    box-shadow: 0 0 6px rgba(34,197,94,.7);
+}
+
+.cc-status--offline {
+    color: @xf-textColorMuted;
+}
+
+.cc-status--offline .cc-status-dot {
+    background: @xf-textColorMuted;
+}
+
+.cc-yos-sidebar-card {
+    padding: 12px;
+}
+
+.cc-yos-sidebar-card .dp-service-badge-profile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: 700;
+    width: 100%;
+    box-sizing: border-box;
+    justify-content: center;
+}
+
+.cc-yos-sidebar-card .dp-service-badge-icon {
+    position: relative;
+    width: 27px;
+    height: 19px;
+    flex-shrink: 0;
+}
+
+.cc-yos-sidebar-card .dp-service-badge-icon .service-badge-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 27px;
+    height: 19px;
+}
+
+.cc-yos-sidebar-card .dp-service-badge-icon .service-badge-svg-bg {
+    display: none;
+}
+
+.cc-yos-sidebar-card .dp-service-badge-duration {
+    font-size: 1.3em;
+    font-weight: 800;
+}
+
+.cc-yos-sidebar-card .dp-service-badge-title {
+    font-size: 0.8em;
+    opacity: .85;
+}
+
+.cc-yos-sidebar-card.year-1 .dp-service-badge-profile { background: rgba(180,140,100,.15); color: #b48c64; border: 1px solid #b48c64; }
+.cc-yos-sidebar-card.year-2 .dp-service-badge-profile { background: rgba(160,160,170,.15); color: #a0a0aa; border: 1px solid #a0a0aa; }
+.cc-yos-sidebar-card.year-3 .dp-service-badge-profile { background: rgba(255,215, 0,.15); color: #ffd700; border: 1px solid #ffd700; }
+.cc-yos-sidebar-card.year-4 .dp-service-badge-profile { background: rgba(180,235,255,.15); color: #b4ebff; border: 1px solid #b4ebff; }
+.cc-yos-sidebar-card.year-5 .dp-service-badge-profile { background: rgba(255,165, 0,.15); color: #ffa500; border: 1px solid #ffa500; }
+.cc-yos-sidebar-card.year-6 .dp-service-badge-profile { background: rgba(160,200,255,.15); color: #a0c8ff; border: 1px solid #a0c8ff; }
+.cc-yos-sidebar-card.year-7 .dp-service-badge-profile { background: rgba(220,160,255,.15); color: #dca0ff; border: 1px solid #dca0ff; }
+.cc-yos-sidebar-card.year-8 .dp-service-badge-profile { background: rgba(255,100,100,.15); color: #ff6464; border: 1px solid #ff6464; }
+.cc-yos-sidebar-card.year-9 .dp-service-badge-profile { background: rgba( 80,200,120,.15); color: #50c878; border: 1px solid #50c878; }
+.cc-yos-sidebar-card.year-10 .dp-service-badge-profile { background: rgba(255,215,0,.2); color: #ffd700; border: 2px solid #ffd700; box-shadow: 0 0 12px rgba(255,215,0,.4); }
+
+.cc-info-card {
+    padding: 8px 12px;
+}
+
+.cc-info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 6px;
+    padding: 5px 0;
+    border-bottom: 1px solid @xf-borderColorFaint;
+    font-size: 0.82em;
+}
+
+.cc-info-row:last-child {
+    border-bottom: none;
+}
+
+.cc-info-label {
+    color: @xf-textColorMuted;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.cc-info-val {
+    text-align: right;
+    word-break: break-word;
+}
+
+.cc-profile-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.cc-stats-card {
+    background: @xf-contentBg;
+    border: 1px solid @xf-borderColor;
+    border-radius: @xf-borderRadius;
+    padding: 8px;
+    overflow: hidden;
+}
+
+.cc-stats-grid .pairJustifier {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cc-stats-grid dl.pairs {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex: 1 1 90px;
+    padding: 12px 8px;
+    border-right: 1px solid @xf-borderColor;
+    border-bottom: 1px solid @xf-borderColor;
+    margin: 0;
+    min-width: 80px;
+}
+
+.cc-stats-grid dl.pairs:last-child {
+    border-right: none;
+}
+
+.cc-stats-grid dl.pairs dd {
+    font-size: 1.3em;
+    font-weight: 700;
+    margin: 0 0 2px;
+}
+
+.cc-stats-grid dl.pairs dd a {
+    font-size: inherit;
+    font-weight: inherit;
+    color: inherit;
+}
+
+.cc-stats-grid dl.pairs dt {
+    font-size: 0.7em;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: @xf-textColorMuted;
+}
+
+.cc-banners-card {
+    background: @xf-contentBg;
+    border: 1px solid @xf-borderColor;
+    border-radius: @xf-borderRadius;
+    padding: 10px 14px;
+    text-align: center;
+}
+
+.cc-banners-card .memberTooltip-banners,
+.cc-banners-card .userBanners {
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.cc-profile-content .block-tabHeader.tabs {
+    margin-bottom: 0;
+    border-radius: @xf-borderRadius @xf-borderRadius 0 0;
+}
+
+.cc-profile-content .block {
+    border-radius: 0 0 @xf-borderRadius @xf-borderRadius;
+    margin-top: 0;
+}
+
+.cc-profile-content .tabPanes {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.cc-profile-content .p-adPlaceholder {
+    margin: 0;
+}]]></template>
+</templates>
