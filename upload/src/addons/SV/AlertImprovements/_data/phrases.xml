@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="option.svAlertPreferences" version_id="1683779540" version_string="2.10.0 Alpha 6"><![CDATA[Alerting preference defaults]]></phrase>
+  <phrase title="option.svAlertsGroupByDate" version_id="2080800" version_string="2.8.8"><![CDATA[Group alerts]]></phrase>
+  <phrase title="option.svAlertsSummarize" version_id="2080800" version_string="2.8.8"><![CDATA[Alert summarization]]></phrase>
+  <phrase title="option.svAlertsSummarizeFlood" version_id="2080800" version_string="2.8.8"><![CDATA[Alert resummarize flood check]]></phrase>
+  <phrase title="option.svAlertsSummerizeLimit" version_id="2080800" version_string="2.8.8"><![CDATA[Alert summarize limit]]></phrase>
+  <phrase title="option.svMarkReadPromptOptout" version_id="1723557305" version_string="2.12.1"><![CDATA[Mark-read prompt opt-out]]></phrase>
+  <phrase title="option.svUnreadAlertsAfterReadAlerts" version_id="2040700" version_string="2.4.7"><![CDATA[Display unread alerts above read alerts in pop-up]]></phrase>
+  <phrase title="option.svUnviewedAlertExpiryDays" version_id="2080800" version_string="2.8.8"><![CDATA[Days to retain unviewed alerts]]></phrase>
+  <phrase title="option_explain.svAlertPreferences" version_id="1683779540" version_string="2.10.0 Alpha 6"><![CDATA[Allows individual alert/push & auto-read/mark-as-read behaviour defaults to be configured]]></phrase>
+  <phrase title="option_explain.svAlertsGroupByDate" version_id="2080800" version_string="2.8.8"><![CDATA[Allows grouping of alerts by alert date.]]></phrase>
+  <phrase title="option_explain.svAlertsSummarize" version_id="1685244822" version_string="2.10.1"><![CDATA[Allows grouping of alerts by content type or user to reduce clutter when a user receives a high numbers of alerts.<br/>
+This feature currently only works with a limited set of alerts:<ul>
+<li>reactions</li>
+<li>post quotes</li>
+<li>user follow</li>
+</ul>]]></phrase>
+  <phrase title="option_explain.svAlertsSummarizeFlood" version_id="2080800" version_string="2.8.8"><![CDATA[Time in seconds between successive calls to alert re-summarize<br/>
+0 to disable the flood-check]]></phrase>
+  <phrase title="option_explain.svAlertsSummerizeLimit" version_id="2090100" version_string="2.9.1"><![CDATA[The maximum number of alerts to check for summarization<br/>0 to have no limit]]></phrase>
+  <phrase title="option_explain.svMarkReadPromptOptout" version_id="1723557305" version_string="2.12.1"><![CDATA[Allow users to opt-out of the prompt to confirm mark all alerts as read.]]></phrase>
+  <phrase title="option_explain.svUnreadAlertsAfterReadAlerts" version_id="2040700" version_string="2.4.7"><![CDATA[]]></phrase>
+  <phrase title="option_explain.svUnviewedAlertExpiryDays" version_id="2080800" version_string="2.8.8"><![CDATA[User alerts will disappear from the alerts list this many days without being viewed from their creation]]></phrase>
+  <phrase title="option_group.AlertImprovements" version_id="2000071" version_string="2.0.0"><![CDATA[Alert Improvements]]></phrase>
+  <phrase title="option_group_description.AlertImprovements" version_id="2000071" version_string="2.0.0"><![CDATA[]]></phrase>
+  <phrase title="permission.general_svCustomizeAdvAlertPrefs" version_id="1695628233" version_string="2.10.10"><![CDATA[[Alert Improvements] Can customize advanced alert preferences]]></phrase>
+  <phrase title="style_prop.svAlertImprovJustReadAlertFlag" version_id="1742271165" version_string="2.13.0"><![CDATA[Show "just toggled read alert" icon on alert]]></phrase>
+  <phrase title="style_prop.svAlertImprovJustReadAlertIcon" version_id="1742271165" version_string="2.13.0"><![CDATA[Just toggled read alert icon]]></phrase>
+  <phrase title="style_prop.svAlertImprovJustReadAlertIconColor" version_id="1742271165" version_string="2.13.0"><![CDATA[Just toggled read alert icon color]]></phrase>
+  <phrase title="style_prop.svAlertImprovRecentAlertFlag" version_id="1742271165" version_string="2.13.0"><![CDATA[Show "recent read alert" icon on alert]]></phrase>
+  <phrase title="style_prop.svAlertImprovRecentAlertIcon" version_id="1685245433" version_string="2.10.1"><![CDATA[Recent alert icon]]></phrase>
+  <phrase title="style_prop.svAlertImprovRecentAlertIconColor" version_id="2080800" version_string="2.8.8"><![CDATA[Recent alert icon color]]></phrase>
+  <phrase title="style_prop.svAlertImprovUnreadAlertFlag" version_id="1742271165" version_string="2.13.0"><![CDATA[Show "unread alert" icon on alert]]></phrase>
+  <phrase title="style_prop.svAlertImprovUnreadAlertIcon" version_id="1685245433" version_string="2.10.1"><![CDATA[Unread alert icon]]></phrase>
+  <phrase title="style_prop.svAlertImprovUnreadAlertIconColor" version_id="1685245433" version_string="2.10.1"><![CDATA[Unread alert icon color]]></phrase>
+  <phrase title="style_prop.svFadeJustReadDelay" version_id="2090003" version_string="2.9.0 Alpha 3"><![CDATA[Just-read alert transition delay]]></phrase>
+  <phrase title="style_prop.svFadeJustReadDuration" version_id="2090003" version_string="2.9.0 Alpha 3"><![CDATA[Just-read alert transition duration]]></phrase>
+  <phrase title="style_prop.svFadeJustReadToRead" version_id="2090003" version_string="2.9.0 Alpha 3"><![CDATA[Fade 'just read alerts' in alert popup into 'read alerts']]></phrase>
+  <phrase title="style_prop.svIncludeStockStylingForAlerts" version_id="2090003" version_string="2.9.0 Alpha 3"><![CDATA[Include stock styling for read/unread/recently-read alerts]]></phrase>
+  <phrase title="style_prop.svReadAlerts" version_id="2090003" version_string="2.9.0 Alpha 3"><![CDATA[Read alerts]]></phrase>
+  <phrase title="style_prop.svRecentlyReadAlerts" version_id="2090003" version_string="2.9.0 Alpha 3"><![CDATA[Recently read alerts]]></phrase>
+  <phrase title="style_prop.svStockMarkAlertsRead" version_id="1705220282" version_string="2.10.12"><![CDATA[Use stock UI for marking alerts as read]]></phrase>
+  <phrase title="style_prop.svStyleJustReadAsUnread" version_id="2090003" version_string="2.9.0 Alpha 3"><![CDATA[Style just-read alerts as unread alerts]]></phrase>
+  <phrase title="style_prop.svUnreadAlerts" version_id="2090003" version_string="2.9.0 Alpha 3"><![CDATA[Unread alerts]]></phrase>
+  <phrase title="style_prop.svUnreadAlertsSeperator" version_id="2090003" version_string="2.9.0 Alpha 3"><![CDATA[Unread seperator]]></phrase>
+  <phrase title="style_prop_desc.svAlertImprovJustReadAlertFlag" version_id="1742271165" version_string="2.13.0"><![CDATA[When toggling the alert's read status to read]]></phrase>
+  <phrase title="style_prop_desc.svAlertImprovJustReadAlertIcon" version_id="1742237225" version_string="2.12.3"><![CDATA[The icon users for the recent alert]]></phrase>
+  <phrase title="style_prop_desc.svAlertImprovJustReadAlertIconColor" version_id="1742237225" version_string="2.12.3"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.svAlertImprovRecentAlertFlag" version_id="1742271165" version_string="2.13.0"><![CDATA[For alerts which where viewed in the last 10 minutes and are read]]></phrase>
+  <phrase title="style_prop_desc.svAlertImprovRecentAlertIcon" version_id="1685245433" version_string="2.10.1"><![CDATA[The icon users for the recent alert]]></phrase>
+  <phrase title="style_prop_desc.svAlertImprovRecentAlertIconColor" version_id="2080800" version_string="2.8.8"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.svAlertImprovUnreadAlertFlag" version_id="1685245433" version_string="2.10.1"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.svAlertImprovUnreadAlertIcon" version_id="1685245433" version_string="2.10.1"><![CDATA[The icon users for the unread alerts]]></phrase>
+  <phrase title="style_prop_desc.svAlertImprovUnreadAlertIconColor" version_id="1685245433" version_string="2.10.1"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.svFadeJustReadDelay" version_id="2090003" version_string="2.9.0 Alpha 3"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.svFadeJustReadDuration" version_id="2090003" version_string="2.9.0 Alpha 3"><![CDATA[Duration the transition to fade the is-just-read before removing it.<br/>
+0 to fade immediately]]></phrase>
+  <phrase title="style_prop_desc.svFadeJustReadToRead" version_id="2090003" version_string="2.9.0 Alpha 3"><![CDATA[Remove the 'is-just-read' class name to allow styling to transition from unread to read]]></phrase>
+  <phrase title="style_prop_desc.svIncludeStockStylingForAlerts" version_id="2090003" version_string="2.9.0 Alpha 3"><![CDATA[The "extra" section support only pure LESS, which prevents use of <i>.xf-contentHighlightBase();</i>/<i>.xf-contentAltBase();</i> in the style property. As such, these are included in the template and this option controls if they are used.]]></phrase>
+  <phrase title="style_prop_desc.svReadAlerts" version_id="2090003" version_string="2.9.0 Alpha 3"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.svRecentlyReadAlerts" version_id="2090003" version_string="2.9.0 Alpha 3"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.svStockMarkAlertsRead" version_id="1705220282" version_string="2.10.12"><![CDATA[Instead of an explicit mark read/unread link, use a floating dot]]></phrase>
+  <phrase title="style_prop_desc.svStyleJustReadAsUnread" version_id="2090003" version_string="2.9.0 Alpha 3"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.svUnreadAlerts" version_id="2090003" version_string="2.9.0 Alpha 3"><![CDATA[]]></phrase>
+  <phrase title="style_prop_desc.svUnreadAlertsSeperator" version_id="2090003" version_string="2.9.0 Alpha 3"><![CDATA[]]></phrase>
+  <phrase title="style_prop_group.svAlertImprovements" version_id="2090003" version_string="2.9.0 Alpha 3"><![CDATA[Alert Improvements]]></phrase>
+  <phrase title="style_prop_group_desc.svAlertImprovements" version_id="2090003" version_string="2.9.0 Alpha 3"><![CDATA[]]></phrase>
+  <phrase title="svAlertImprov_alert_marked_as_read" version_id="2080800" version_string="2.8.8"><![CDATA[Alert marked as read.]]></phrase>
+  <phrase title="svAlertImprov_alert_marked_as_unread" version_id="2080800" version_string="2.8.8"><![CDATA[Alert marked as unread.]]></phrase>
+  <phrase title="svAlertImprov_alert_none" version_id="1683779540" version_string="2.10.0 Alpha 6"><![CDATA[No alerts]]></phrase>
+  <phrase title="svAlertImprov_alert_popup_options" version_id="1683812804" version_string="2.10.0 Alpha 7"><![CDATA[Alert pop-up options]]></phrase>
+  <phrase title="svAlertImprov_alert_preferences" version_id="2081100" version_string="2.8.11"><![CDATA[Alert preferences]]></phrase>
+  <phrase title="svAlertImprov_alert_preferences_header" version_id="1695694020" version_string="2.10.11"><![CDATA[Alert Preferences]]></phrase>
+  <phrase title="svAlertImprov_alert_types.alert" version_id="1683779540" version_string="2.10.0 Alpha 6"><![CDATA[Alert]]></phrase>
+  <phrase title="svAlertImprov_alert_types.autoRead" version_id="1694737851" version_string="2.10.9"><![CDATA[Pop-up auto-read]]></phrase>
+  <phrase title="svAlertImprov_alert_types.discord" version_id="1683779540" version_string="2.10.0 Alpha 6"><![CDATA[Discord]]></phrase>
+  <phrase title="svAlertImprov_alert_types.push" version_id="1683779540" version_string="2.10.0 Alpha 6"><![CDATA[Push]]></phrase>
+  <phrase title="svAlertImprov_alerting_preferences" version_id="1683779540" version_string="2.10.0 Alpha 6"><![CDATA[Alerting preferences]]></phrase>
+  <phrase title="svAlertImprov_alerting_preferences_explain" version_id="1695694020" version_string="2.10.11"><![CDATA[The "Pop-up auto-read" option controls if the alerts will be marked as read when the alert bell is opened.]]></phrase>
+  <phrase title="svAlertImprov_alerts_page_options" version_id="1683812804" version_string="2.10.0 Alpha 7"><![CDATA[Alerts page options]]></phrase>
+  <phrase title="svAlertImprov_alerts_use_custom" version_id="1683779540" version_string="2.10.0 Alpha 6"><![CDATA[Use custom]]></phrase>
+  <phrase title="svAlertImprov_alerts_use_defaults" version_id="1683779540" version_string="2.10.0 Alpha 6"><![CDATA[Use defaults]]></phrase>
+  <phrase title="svAlertImprov_autoread" version_id="1685245433" version_string="2.10.1"><![CDATA[Pop-up auto-read]]></phrase>
+  <phrase title="svAlertImprov_date.today" version_id="2081100" version_string="2.8.11"><![CDATA[Today]]></phrase>
+  <phrase title="svAlertImprov_date.yesterday" version_id="2081100" version_string="2.8.11"><![CDATA[Yesterday]]></phrase>
+  <phrase title="svAlertImprov_just_read_alert" version_id="1742237225" version_string="2.12.3"><![CDATA[Just read alert]]></phrase>
+  <phrase title="svAlertImprov_mark_alert_read" version_id="2080800" version_string="2.8.8"><![CDATA[Mark alert read]]></phrase>
+  <phrase title="svAlertImprov_mark_alert_unread" version_id="2080800" version_string="2.8.8"><![CDATA[Mark alert unread]]></phrase>
+  <phrase title="svAlertImprov_mark_all_alerts_read" version_id="2080800" version_string="2.8.8"><![CDATA[Mark all alerts read]]></phrase>
+  <phrase title="svAlertImprov_mark_read" version_id="2080800" version_string="2.8.8"><![CDATA[Mark read]]></phrase>
+  <phrase title="svAlertImprov_mark_unread" version_id="2080800" version_string="2.8.8"><![CDATA[Mark unread]]></phrase>
+  <phrase title="svAlertImprov_please_confirm_that_you_want_to_mark_all_alerts_read" version_id="2080800" version_string="2.8.8"><![CDATA[Please confirm that you want to mark all alerts read.]]></phrase>
+  <phrase title="svAlertImprov_please_confirm_that_you_want_to_mark_this_alert_read" version_id="2080800" version_string="2.8.8"><![CDATA[Please confirm that you want to mark this alert read.]]></phrase>
+  <phrase title="svAlertImprov_please_confirm_that_you_want_to_mark_this_alert_unread" version_id="2080800" version_string="2.8.8"><![CDATA[Please confirm that you want to mark this alert unread.]]></phrase>
+  <phrase title="svAlertImprov_please_confirm_that_you_want_to_unsummarize_this_alert" version_id="2081100" version_string="2.8.11"><![CDATA[Please confirm that you want to unsummarize this alert.]]></phrase>
+  <phrase title="svAlertImprov_please_select_at_least_one_alert_to_update" version_id="2080800" version_string="2.8.8"><![CDATA[Please select at least one alert to update.]]></phrase>
+  <phrase title="svAlertImprov_please_select_valid_action_to_perform" version_id="2080800" version_string="2.8.8"><![CDATA[Please select a valid action to perform.]]></phrase>
+  <phrase title="svAlertImprov_post_quote_summary" version_id="1683779540" version_string="2.10.0 Alpha 6"><![CDATA[<a {contentLinkParams}>Your post</a> in the thread {title} has been quoted <a {unsummarizeAlertLinkAttributes}>{quoteSummary}</a>.]]></phrase>
+  <phrase title="svAlertImprov_read_on" version_id="2080800" version_string="2.8.8"><![CDATA[Read]]></phrase>
+  <phrase title="svAlertImprov_receive_notification_when_someone" version_id="1683929203" version_string="2.10.0 Alpha 8"><![CDATA[Settings by notification category: When someone]]></phrase>
+  <phrase title="svAlertImprov_recent_alert" version_id="2090005" version_string="2.9.0 Alpha 5"><![CDATA[Recent alert]]></phrase>
+  <phrase title="svAlertImprov_reset_alert" version_id="1683779540" version_string="2.10.0 Alpha 6"><![CDATA[Reset]]></phrase>
+  <phrase title="svAlertImprov_resummarize_alerts" version_id="2081100" version_string="2.8.11"><![CDATA[Resummarize alerts]]></phrase>
+  <phrase title="svAlertImprov_select_all_for" version_id="2081100" version_string="2.8.11"><![CDATA[Select all for {x}]]></phrase>
+  <phrase title="svAlertImprov_select_for_bulk_update" version_id="2080800" version_string="2.8.8"><![CDATA[Select for bulk update]]></phrase>
+  <phrase title="svAlertImprov_selected_alerts_have_been_updated" version_id="2080800" version_string="2.8.8"><![CDATA[Selected alerts have been updated]]></phrase>
+  <phrase title="svAlertImprov_summarized_alerts" version_id="2081100" version_string="2.8.11"><![CDATA[Summarized Alerts]]></phrase>
+  <phrase title="svAlertImprov_unread" version_id="2080800" version_string="2.8.8"><![CDATA[Unread]]></phrase>
+  <phrase title="svAlertImprov_unread_alert" version_id="2090005" version_string="2.9.0 Alpha 5"><![CDATA[Unread alert]]></phrase>
+  <phrase title="svAlertImprov_unsummarize_alert" version_id="1683779540" version_string="2.10.0 Alpha 6"><![CDATA[Unsummarize]]></phrase>
+  <phrase title="svAlertImprov_user_following_summary" version_id="1683779540" version_string="2.10.0 Alpha 6"><![CDATA[<a {unsummarizeAlertLinkAttributes}>{usersCount} users</a> are now following you.]]></phrase>
+  <phrase title="svAlertImprov_user_quote_summary" version_id="1683779540" version_string="2.10.0 Alpha 6"><![CDATA[{name} quoted you <a {unsummarizeAlertLinkAttributes}>{count} times</a>.]]></phrase>
+  <phrase title="svAlertImprov_x_quotes" version_id="1683779540" version_string="2.10.0 Alpha 6"><![CDATA[{quotes} times]]></phrase>
+  <phrase title="svAlertImprov_x_quotes_by_y_users" version_id="1683779540" version_string="2.10.0 Alpha 6"><![CDATA[{quotes} times by {users} users]]></phrase>
+  <phrase title="svAlertPopUpReadBehavior.AlwaysMarkRead" version_id="1685245433" version_string="2.10.1"><![CDATA[Always mark alerts as read]]></phrase>
+  <phrase title="svAlertPopUpReadBehavior.NeverMarkRead" version_id="1685245433" version_string="2.10.1"><![CDATA[Never mark alerts as read]]></phrase>
+  <phrase title="svAlertPopUpReadBehavior.PerUser" version_id="1685245433" version_string="2.10.1"><![CDATA[Use per-alert configuration]]></phrase>
+  <phrase title="sv_alerts_page_skips_summarize" version_id="2000070" version_string="2.0.0"><![CDATA[Alerts page skips summarizing]]></phrase>
+  <phrase title="sv_alerts_page_skips_summarize_hint" version_id="1683812804" version_string="2.10.0 Alpha 7"><![CDATA[Do not summarize/group alerts when viewing the alerts page]]></phrase>
+  <phrase title="sv_alerts_popup_read_behavior" version_id="1685991237" version_string="2.10.2"><![CDATA[Alert pop-up read behavior]]></phrase>
+  <phrase title="sv_alerts_summarize_threshold" version_id="2000071" version_string="2.0.0"><![CDATA[Alerts summarize threshold]]></phrase>
+  <phrase title="sv_alerts_summarize_threshold_hint" version_id="1683812804" version_string="2.10.0 Alpha 7"><![CDATA[Summarize similar alerts which group with a count greater than or equal this value]]></phrase>
+  <phrase title="sv_prompt_on_mark_read" version_id="1723557305" version_string="2.12.1"><![CDATA[Prompt on bulk mark read]]></phrase>
+  <phrase title="sv_prompt_on_mark_read_hint" version_id="1723557305" version_string="2.12.1"><![CDATA[Display a confirmation dialog if the "mark read" feature is used to mark all alerts as read]]></phrase>
+  <phrase title="sv_x_of_y_content_type" version_id="2000072" version_string="2.0.0"><![CDATA[{count} of your {contentType}]]></phrase>
+  <phrase title="sv_x_reacted_y_content_z_times" version_id="2080700" version_string="2.8.7"><![CDATA[{name} reacted to <a {unsummarizeAlertLinkAttributes}>{reactedcontent}</a> with {reactions}]]></phrase>
+  <phrase title="your_album_y_has_received_x_reactions" version_id="0"><![CDATA[<a {contentLinkParams}>Your album</a> {title} has received <a {unsummarizeAlertLinkAttributes}>reactions</a> {reactions}]]></phrase>
+  <phrase title="your_comment_in_the_report_y_has_received_x_reactions" version_id="2080500" version_string="2.8.5"><![CDATA[<a {contentLinkParams}>Your report comment</a> in the report {title} has received <a {unsummarizeAlertLinkAttributes}>reactions</a> {reactions}]]></phrase>
+  <phrase title="your_comment_on_media_y_has_received_x_reactions" version_id="0"><![CDATA[<a {contentLinkParams}>Your comment</a> on media {title} has received <a {unsummarizeAlertLinkAttributes}>reactions</a> {reactions}]]></phrase>
+  <phrase title="your_media_y_has_received_x_reactions" version_id="0"><![CDATA[<a {contentLinkParams}>Your media</a> {title} has received <a {unsummarizeAlertLinkAttributes}>reactions</a> {reactions}]]></phrase>
+  <phrase title="your_message_in_the_conversation_y_has_received_x_reactions" version_id="2080500" version_string="2.8.5"><![CDATA[<a {contentLinkParams}>Your message</a> in the conversation {title} has received <a {unsummarizeAlertLinkAttributes}>reactions</a> {reactions}]]></phrase>
+  <phrase title="your_post_in_the_thread_y_has_received_x_reactions" version_id="2080800" version_string="2.8.8"><![CDATA[<a {contentLinkParams}>Your post</a> in the thread {title} has received <a {unsummarizeAlertLinkAttributes}>reactions</a> {reactions}]]></phrase>
+  <phrase title="your_profile_comment_has_received_x_reactions" version_id="2080500" version_string="2.8.5"><![CDATA[<a {contentLinkParams}>Your comment</a> in the profile post has received <a {unsummarizeAlertLinkAttributes}>reactions</a> {reactions}]]></phrase>
+  <phrase title="your_profile_comment_on_ys_profile_has_received_x_reactions" version_id="2080500" version_string="2.8.5"><![CDATA[<a {contentLinkParams}>Your profile post comment</a> on {profileUserLink}'s profile has received <a {unsummarizeAlertLinkAttributes}>reactions</a> {reactions}]]></phrase>
+  <phrase title="your_profile_post_has_received_x_reactions" version_id="2080500" version_string="2.8.5"><![CDATA[<a {contentLinkParams}>Your profile post</a> has received <a {unsummarizeAlertLinkAttributes}>reactions</a> {reactions}]]></phrase>
+  <phrase title="your_profile_post_on_ys_profile_has_received_x_reactions" version_id="2080500" version_string="2.8.5"><![CDATA[<a {contentLinkParams}>Your profile post</a> on {profileUserLink}'s profile has received  <a {unsummarizeAlertLinkAttributes}>reactions</a> {reactions}]]></phrase>
+</phrases>

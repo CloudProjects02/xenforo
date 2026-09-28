@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<class_extensions>
+  <extension from_class="SV\ReportImprovements\Alert\ReportComment" to_class="SV\AlertImprovements\SV\ReportImprovements\Alert\ReportComment" execute_order="10" active="1"/>
+  <extension from_class="XFMG\Alert\Album" to_class="SV\AlertImprovements\XFMG\Alert\Album" execute_order="9" active="1"/>
+  <extension from_class="XFMG\Alert\Comment" to_class="SV\AlertImprovements\XFMG\Alert\Comment" execute_order="9" active="1"/>
+  <extension from_class="XFMG\Alert\Media" to_class="SV\AlertImprovements\XFMG\Alert\Media" execute_order="9" active="1"/>
+  <extension from_class="XF\Admin\Controller\User" to_class="SV\AlertImprovements\XF\Admin\Controller\User" execute_order="6398" active="1"/>
+  <extension from_class="XF\Alert\ConversationMessage" to_class="SV\AlertImprovements\XF\Alert\ConversationMessage" execute_order="6398" active="1"/>
+  <extension from_class="XF\Alert\Post" to_class="SV\AlertImprovements\XF\Alert\Post" execute_order="9" active="1"/>
+  <extension from_class="XF\Alert\ProfilePost" to_class="SV\AlertImprovements\XF\Alert\ProfilePost" execute_order="9" active="1"/>
+  <extension from_class="XF\Alert\ProfilePostComment" to_class="SV\AlertImprovements\XF\Alert\ProfilePostComment" execute_order="9" active="1"/>
+  <extension from_class="XF\Alert\User" to_class="SV\AlertImprovements\XF\Alert\User" execute_order="9" active="1"/>
+  <extension from_class="XF\ChangeLog\User" to_class="SV\AlertImprovements\XF\ChangeLog\User" execute_order="9" active="1"/>
+  <extension from_class="XF\Entity\ReactionContent" to_class="SV\AlertImprovements\XF\Entity\ReactionContentPatch" execute_order="2147483647" active="1"/>
+  <extension from_class="XF\Entity\User" to_class="SV\AlertImprovements\XF\Entity\User" execute_order="10" active="1"/>
+  <extension from_class="XF\Entity\UserAlert" to_class="SV\AlertImprovements\XF\Entity\UserAlert" execute_order="9" active="1"/>
+  <extension from_class="XF\Entity\UserOption" to_class="SV\AlertImprovements\XF\Entity\UserOption" execute_order="9" active="1"/>
+  <extension from_class="XF\Entity\UserOption" to_class="SV\AlertImprovements\XF\Entity\UserOptionPatch1" execute_order="1" active="1"/>
+  <extension from_class="XF\Entity\UserOption" to_class="SV\AlertImprovements\XF\Entity\UserOptionPatch2" execute_order="6529" active="1"/>
+  <extension from_class="XF\Finder\UserAlert" to_class="SV\AlertImprovements\XF\Finder\UserAlert" execute_order="6398" active="1"/>
+  <extension from_class="XF\Pub\Controller\Account" to_class="SV\AlertImprovements\XF\Pub\Controller\Account" execute_order="1" active="1"/>
+  <extension from_class="XF\Pub\Controller\Conversation" to_class="SV\AlertImprovements\XF\Pub\Controller\Conversation" execute_order="6398" active="1"/>
+  <extension from_class="XF\Pub\Controller\Post" to_class="SV\AlertImprovements\XF\Pub\Controller\Post" execute_order="6398" active="1"/>
+  <extension from_class="XF\Pub\Controller\Report" to_class="SV\AlertImprovements\XF\Pub\Controller\Report" execute_order="6398" active="1"/>
+  <extension from_class="XF\Pub\Controller\Thread" to_class="SV\AlertImprovements\XF\Pub\Controller\Thread" execute_order="6398" active="1"/>
+  <extension from_class="XF\Repository\UserAlert" to_class="SV\AlertImprovements\XF\Repository\UserAlert" execute_order="9" active="1"/>
+  <extension from_class="XF\Repository\UserAlert" to_class="SV\AlertImprovements\XF\Repository\UserAlertAutoReadPatch" execute_order="2147483647" active="1"/>
+  <extension from_class="XF\Repository\UserAlert" to_class="SV\AlertImprovements\XF\Repository\UserAlertPatch" execute_order="1" active="1"/>
+</class_extensions>

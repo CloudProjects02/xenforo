@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<options>
+  <option option_id="svAlertPreferences" edit_format="callback" data_type="array" validation_class="SV\AlertImprovements\Option\AlertPreferences" validation_method="verifyOption" advanced="1">
+    <default_value>{"autoRead":{"post":{"op_insert":false}}}</default_value>
+    <edit_format_params>SV\AlertImprovements\Option\AlertPreferences::renderOption</edit_format_params>
+    <sub_options>*</sub_options>
+    <relation group_id="AlertImprovements" display_order="200"/>
+  </option>
+  <option option_id="svAlertsGroupByDate" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="AlertImprovements" display_order="30"/>
+  </option>
+  <option option_id="svAlertsSummarize" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="AlertImprovements" display_order="10"/>
+    <relation group_id="alerts" display_order="410"/>
+  </option>
+  <option option_id="svAlertsSummarizeFlood" edit_format="spinbox" data_type="unsigned_integer" advanced="0">
+    <default_value>1</default_value>
+    <edit_format_params>min=0</edit_format_params>
+    <relation group_id="AlertImprovements" display_order="20"/>
+    <relation group_id="alerts" display_order="420"/>
+  </option>
+  <option option_id="svAlertsSummerizeLimit" edit_format="spinbox" data_type="integer" advanced="0">
+    <default_value>4000</default_value>
+    <edit_format_params>min=0</edit_format_params>
+    <relation group_id="AlertImprovements" display_order="15"/>
+  </option>
+  <option option_id="svMarkReadPromptOptout" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="AlertImprovements" display_order="45"/>
+  </option>
+  <option option_id="svUnreadAlertsAfterReadAlerts" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <relation group_id="AlertImprovements" display_order="40"/>
+  </option>
+  <option option_id="svUnviewedAlertExpiryDays" edit_format="spinbox" data_type="positive_integer" advanced="0">
+    <default_value>30</default_value>
+    <edit_format_params>min=0
+units={{ phrase('units_days') }}</edit_format_params>
+    <relation group_id="AlertImprovements" display_order="110"/>
+    <relation group_id="alerts" display_order="25"/>
+  </option>
+</options>

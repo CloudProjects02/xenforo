@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style_properties>
+  <style_property property_name="svAlertImprovJustReadAlertFlag" group_name="svAlertImprovements" title="Show &quot;just toggled read alert&quot; icon on alert" description="When toggling the alert's read status to read" property_type="value" value_type="boolean" has_variations="0" value_group="JustToggledReadAlertIcon" display_order="400">
+    <value>0</value>
+  </style_property>
+  <style_property property_name="svAlertImprovJustReadAlertIcon" group_name="svAlertImprovements" title="Just toggled read alert icon" description="The icon users for the recent alert" property_type="value" value_type="string" has_variations="1" depends_on="svAlertImprovJustReadAlertFlag" value_group="JustToggledReadAlertIcon" display_order="410">
+    <value>{
+    "default": "fas fa-star-exclamation"
+}</value>
+  </style_property>
+  <style_property property_name="svAlertImprovJustReadAlertIconColor" group_name="svAlertImprovements" title="Just toggled read alert icon color" property_type="value" value_type="color" has_variations="1" depends_on="svAlertImprovJustReadAlertFlag" value_group="JustToggledReadAlertIcon" display_order="420">
+    <value>{
+    "default": "#b8860b"
+}</value>
+  </style_property>
+  <style_property property_name="svAlertImprovRecentAlertFlag" group_name="svAlertImprovements" title="Show &quot;recent read alert&quot; icon on alert" description="For alerts which where viewed in the last 10 minutes and are read" property_type="value" value_type="boolean" has_variations="0" value_group="RecentReadAlertIcon" display_order="500">
+    <value>0</value>
+  </style_property>
+  <style_property property_name="svAlertImprovRecentAlertIcon" group_name="svAlertImprovements" title="Recent alert icon" description="The icon users for the recent alert" property_type="value" value_type="string" has_variations="1" depends_on="svAlertImprovRecentAlertFlag" value_group="RecentReadAlertIcon" display_order="510">
+    <value>{
+    "default": "far fa-star"
+}</value>
+  </style_property>
+  <style_property property_name="svAlertImprovRecentAlertIconColor" group_name="svAlertImprovements" title="Recent alert icon color" property_type="value" value_type="color" has_variations="1" depends_on="svAlertImprovRecentAlertFlag" value_group="RecentReadAlertIcon" display_order="520">
+    <value>{
+    "default": "#b8860b"
+}</value>
+  </style_property>
+  <style_property property_name="svAlertImprovUnreadAlertFlag" group_name="svAlertImprovements" title="Show &quot;unread alert&quot; icon on alert" property_type="value" value_type="boolean" has_variations="0" value_group="UnreadAlertIcon" display_order="300">
+    <value>0</value>
+  </style_property>
+  <style_property property_name="svAlertImprovUnreadAlertIcon" group_name="svAlertImprovements" title="Unread alert icon" description="The icon users for the unread alerts" property_type="value" value_type="string" has_variations="1" depends_on="svAlertImprovUnreadAlertFlag" value_group="UnreadAlertIcon" display_order="310">
+    <value>{
+    "default": "fas fa-star"
+}</value>
+  </style_property>
+  <style_property property_name="svAlertImprovUnreadAlertIconColor" group_name="svAlertImprovements" title="Unread alert icon color" property_type="value" value_type="color" has_variations="1" depends_on="svAlertImprovUnreadAlertFlag" value_group="UnreadAlertIcon" display_order="320">
+    <value>{
+    "default": "#b8860b"
+}</value>
+  </style_property>
+  <style_property property_name="svFadeJustReadDelay" group_name="svAlertImprovements" title="Just-read alert transition delay" property_type="value" value_type="number" has_variations="0" depends_on="svFadeJustReadToRead" value_group="JustReadAlerts" display_order="130">
+    <value_parameters>min=0
+step=any
+data-step=0.1
+units={{ phrase('units_seconds') }}</value_parameters>
+    <value>"2.5"</value>
+  </style_property>
+  <style_property property_name="svFadeJustReadDuration" group_name="svAlertImprovements" title="Just-read alert transition duration" description="Duration the transition to fade the is-just-read before removing it.&lt;br/&gt;&#10;0 to fade immediately" property_type="value" value_type="number" has_variations="0" depends_on="svFadeJustReadToRead" value_group="JustReadAlerts" display_order="120">
+    <value_parameters>min=0
+step=any
+data-step=0.1
+units={{ phrase('units_seconds') }}</value_parameters>
+    <value>"2"</value>
+  </style_property>
+  <style_property property_name="svFadeJustReadToRead" group_name="svAlertImprovements" title="Fade 'just read alerts' in alert popup into 'read alerts'" description="Remove the 'is-just-read' class name to allow styling to transition from unread to read" property_type="value" value_type="boolean" has_variations="0" depends_on="svStyleJustReadAsUnread" value_group="JustReadAlerts" display_order="110">
+    <value>1</value>
+  </style_property>
+  <style_property property_name="svIncludeStockStylingForAlerts" group_name="svAlertImprovements" title="Include stock styling for read/unread/recently-read alerts" description="The &quot;extra&quot; section support only pure LESS, which prevents use of &lt;i&gt;.xf-contentHighlightBase();&lt;/i&gt;/&lt;i&gt;.xf-contentAltBase();&lt;/i&gt; in the style property. As such, these are included in the template and this option controls if they are used." property_type="value" value_type="boolean" has_variations="0" display_order="10">
+    <value>1</value>
+  </style_property>
+  <style_property property_name="svReadAlerts" group_name="svAlertImprovements" title="Read alerts" property_type="css" has_variations="0" display_order="1020" css_components="text,background,border,border_radius,padding,extra">
+    <value>[]</value>
+  </style_property>
+  <style_property property_name="svRecentlyReadAlerts" group_name="svAlertImprovements" title="Recently read alerts" property_type="css" has_variations="0" display_order="1010" css_components="text,background,border,border_radius,padding,extra">
+    <value>[]</value>
+  </style_property>
+  <style_property property_name="svStockMarkAlertsRead" group_name="svAlertImprovements" title="Use stock UI for marking alerts as read" description="Instead of an explicit mark read/unread link, use a floating dot" property_type="value" value_type="boolean" has_variations="0" display_order="20">
+    <value>0</value>
+  </style_property>
+  <style_property property_name="svStyleJustReadAsUnread" group_name="svAlertImprovements" title="Style just-read alerts as unread alerts" property_type="value" value_type="boolean" has_variations="0" value_group="JustReadAlerts" display_order="100">
+    <value>1</value>
+  </style_property>
+  <style_property property_name="svUnreadAlerts" group_name="svAlertImprovements" title="Unread alerts" property_type="css" has_variations="0" display_order="1000" css_components="text,background,border,border_radius,padding,extra">
+    <value>[]</value>
+  </style_property>
+  <style_property property_name="svUnreadAlertsSeperator" group_name="svAlertImprovements" title="Unread seperator" property_type="css" has_variations="0" display_order="2000" css_components="text,background,border,border_radius,padding,extra">
+    <value>{
+    "border-top-width": "3px"
+}</value>
+  </style_property>
+</style_properties>

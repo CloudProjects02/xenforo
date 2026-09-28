@@ -1,0 +1,705 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="svAlertImprov_option_template_alert_preferences" version_id="1694737851" version_string="2.10.9"><![CDATA[<xf:formrow name="{$inputName}"
+			label="{$option.title}"
+			hint="{$hintHtml}"
+			explain="{$explainHtml}"
+			finalhtml="{$listedHtml}">
+</xf:formrow>
+<xf:foreach loop="$alertActions" key="$contentType" value="$actions">		
+	<xf:formrow label="{{ $xf.app.getContentTypePhrase($contentType) }}">
+		<xf:foreach loop="$actions" key="$action" value="$null">
+			<xf:checkboxrow rowtype="fullWidth"
+							label="{{ phrase_dynamic('alert_opt_out.' . $contentType . '_' . $action) }}"
+							data-content-type="{$contentType}"
+							data-action="{$action}">
+				<xf:foreach loop="$alertTypes" value="$alertType">
+					<xf:option label="{{ phrase_dynamic('svAlertImprov_alert_types.'.$alertType) }}"
+							   name="{$inputName}[{$alertType}][{$contentType}][{$action}]"							   
+							   selected="{{ ({$optionValue.{$alertType}.{$contentType}.{$action}}) ? '1' : ''}}"  
+							   />
+				</xf:foreach>
+			</xf:checkboxrow>
+		</xf:foreach>
+	</xf:formrow>
+</xf:foreach>]]></template>
+  <template type="admin" title="svAlertImprov_option_template_registrationDefaults" version_id="1723557305" version_string="2.12.1"><![CDATA[<xf:checkboxrow label="{{ phrase('svAlertImprov_alerts_page_options') }}">
+	<xf:if is="$xf.options.svMarkReadPromptOptout">
+    <xf:option name="{$inputName}[sv_prompt_on_mark_read]"
+               label="{{ phrase('sv_prompt_on_mark_read') }}"
+               checked="{{$option.option_value.sv_prompt_on_mark_read}}" />
+	</xf:if>
+    <xf:option name="{$inputName}[sv_alerts_page_skips_summarize]"
+               label="{{ phrase('sv_alerts_page_skips_summarize') }}"
+               checked="{{$option.option_value.sv_alerts_page_skips_summarize}}" />
+</xf:checkboxrow>
+<xf:radiorow name="{$inputName}[sv_alerts_popup_read_behavior]"
+             label="{{ phrase('svAlertImprov_alert_popup_options') }}"
+             value="{{ $option.option_value.sv_alerts_popup_read_behavior }}">
+    <xf:options source="{{ $xf.app.em.getRepository('SV\AlertImprovements:AlertPreferences').getAlertPopupBehaviourPairs() }}" />
+</xf:radiorow>
+
+<xf:textboxrow name="{$inputName}[sv_alerts_summarize_threshold]" value="{{$option.option_value.sv_alerts_summarize_threshold}}" 
+			   type="number"
+			   readonly="{{ $xf.options.svAlertsSummarize ? '': true}}"
+			   label="{{ phrase('sv_alerts_summarize_threshold') }}"/>]]></template>
+  <template type="admin" title="svAlertImprov_user_edits_alerts" version_id="1723557305" version_string="2.12.1"><![CDATA[<xf:checkboxrow label="{{ phrase('svAlertImprov_alerts_page_options') }}">
+	<xf:if is="$xf.options.svMarkReadPromptOptout">
+	<xf:option name="option[sv_prompt_on_mark_read]"
+			   label="{{ phrase('sv_prompt_on_mark_read') }}"
+			   checked="{{$user.Option.sv_prompt_on_mark_read}}" />
+	</xf:if>
+    <xf:option name="option[sv_alerts_page_skips_summarize]"
+               label="{{ phrase('sv_alerts_page_skips_summarize') }}"
+               checked="{{$user.Option.sv_alerts_page_skips_summarize}}" />
+</xf:checkboxrow>
+<xf:radiorow name="option[sv_alerts_popup_read_behavior]"
+             label="{{ phrase('svAlertImprov_alert_popup_options') }}"
+             value="{{ $user.Option.sv_alerts_popup_read_behavior }}">
+    <xf:options source="{{ $xf.app.em.getRepository('SV\AlertImprovements:AlertPreferences').getAlertPopupBehaviourPairs() }}" />
+</xf:radiorow>
+<xf:textboxrow name="option[sv_alerts_summarize_threshold]" value="{{$user.Option.sv_alerts_summarize_threshold}}" 
+			   type="number" min="0"
+			   readonly="{{ $xf.options.svAlertsSummarize ? '': true}}"
+			   label="{{ phrase('sv_alerts_summarize_threshold') }}"/>]]></template>
+  <template type="public" title="alert_conversation_message_reaction_summary" version_id="1773383748" version_string="2.14.4"><![CDATA[<xf:set var="$reactions">
+	<xf:macro template="svAlertImprov_macros" name="alert_reactions" arg-alert="{$alert}" />
+</xf:set>
+
+{{ phrase('your_message_in_the_conversation_y_has_received_x_reactions', {
+	'reactions': {$reactions}|raw,
+	'unsummarizeAlertLinkAttributes': 'href="' . link('account/alert', $alert) . '"',
+	'contentLinkParams': 'href="' . link('conversations/messages', $content) . '" class="fauxBlockLink-blockLink"',
+	'title': $content.Conversation.title
+}) }}]]></template>
+  <template type="public" title="alert_post_quote_summary" version_id="1683779540" version_string="2.10.0 Alpha 6"><![CDATA[{{ phrase('svAlertImprov_post_quote_summary', {
+    'quoteSummary': (($extra.sum === $extra.total)
+        ? phrase('svAlertImprov_x_quotes', {'quotes': $extra.sum|number})
+        : phrase('svAlertImprov_x_quotes_by_y_users', {'quotes': $extra.sum|number, 'users': $extra.total|number})),
+    'unsummarizeAlertLinkAttributes': 'href="' . link('account/alert', $alert) . '"',
+    'contentLinkParams': 'href="' . link('posts', $content) . '" class="fauxBlockLink-blockLink"',
+    'title': prefix('thread', $content.Thread) . $content.Thread.title
+}) }}]]></template>
+  <template type="public" title="alert_post_reaction_summary" version_id="2081100" version_string="2.8.11"><![CDATA[<xf:set var="$reactions">
+	<xf:macro template="svAlertImprov_macros" name="alert_reactions" arg-alert="{$alert}" />
+</xf:set>
+
+{{ phrase('your_post_in_the_thread_y_has_received_x_reactions', {
+	'reactions': {$reactions}|raw,
+	'unsummarizeAlertLinkAttributes': 'href="' . link('account/alert', $alert) . '"',
+	'contentLinkParams': 'href="' . link('posts', $content) . '" class="fauxBlockLink-blockLink"',
+	'title': prefix('thread', $content.Thread) . $content.Thread.title
+}) }}]]></template>
+  <template type="public" title="alert_profile_post_comment_reaction_summary" version_id="2081100" version_string="2.8.11"><![CDATA[<xf:set var="$reactions">
+	<xf:macro template="svAlertImprov_macros" name="alert_reactions" arg-alert="{$alert}" />
+</xf:set>
+
+<xf:if is="{$xf.visitor.user_id} === {$content.ProfilePost.profile_user_id}">
+	{{ phrase('your_profile_comment_has_received_x_reactions', {
+		'reactions': {$reactions}|raw,
+		'unsummarizeAlertLinkAttributes': 'href="' . link('account/alert', $alert) . '"',
+		'contentLinkParams': 'href="' . link('profile-posts/comments', $content) . '" class="fauxBlockLink-blockLink"'
+	}) }}
+<xf:else />
+	{{ phrase('your_profile_comment_on_ys_profile_has_received_x_reactions', {
+		'reactions': {$reactions}|raw,
+		'unsummarizeAlertLinkAttributes': 'href="' . link('account/alert', $alert) . '"',
+		'profileUserLink': '<a href="' . link('members', $content.ProfilePost.ProfileUser) . '">' . $content.ProfilePost.ProfileUser.username . '</a>',
+		'contentLinkParams': 'href="' . link('profile-posts/comments', $content) . '" class="fauxBlockLink-blockLink"'
+	}) }}
+</xf:if>]]></template>
+  <template type="public" title="alert_profile_post_reaction_summary" version_id="1681885138" version_string="2.10.0 Alpha 3"><![CDATA[<xf:set var="$reactions">
+	<xf:macro template="svAlertImprov_macros" name="alert_reactions" arg-alert="{$alert}" />
+</xf:set>
+
+<xf:if is="$xf.visitor.user_id === $content.profile_user_id">
+	{{ phrase('your_profile_post_has_received_x_reactions', {
+		'reactions': {$reactions}|raw,
+		'unsummarizeAlertLinkAttributes': 'href="' . link('account/alert', $alert) . '"',
+		'contentLinkParams': 'href="' . link('profile-posts', $content) . '" class="fauxBlockLink-blockLink"'
+	}) }}
+<xf:else />
+	{{ phrase('your_profile_post_on_ys_profile_has_received_x_reactions', {
+		'reactions': {$reactions}|raw,
+		'unsummarizeAlertLinkAttributes': 'href="' . link('account/alert', $alert) . '"',
+		'profileUserLink': '<a href="' . link('members', $content.ProfileUser) . '">' . $content.ProfileUser.username . '</a>',
+		'contentLinkParams': 'href="' . link('profile-posts', $content) . '" class="fauxBlockLink-blockLink"'
+	}) }}
+</xf:if>]]></template>
+  <template type="public" title="alert_report_comment_reaction_summary" version_id="2081100" version_string="2.8.11"><![CDATA[<xf:set var="$reactions">
+	<xf:macro template="svAlertImprov_macros" name="alert_reactions" arg-alert="{$alert}" />
+</xf:set>
+
+{{ phrase('your_comment_in_the_report_y_has_received_x_reactions', {
+	'reactions': {$reactions}|raw,
+	'unsummarizeAlertLinkAttributes': 'href="' . link('account/alert', $alert) . '"',
+	'contentLinkParams': 'href="' . link('reports/comment', $content, {'report_comment_id':$content.report_comment_id}) . '" class="fauxBlockLink-blockLink"',
+	'title': $content.Report.title
+}) }}]]></template>
+  <template type="public" title="alert_user_following_summary" version_id="1683779540" version_string="2.10.0 Alpha 6"><![CDATA[{{ phrase('svAlertImprov_user_following_summary', {
+    'usersCount': $extra.sum|number,
+    'unsummarizeAlertLinkAttributes': 'href="' . link('account/alert', $alert) . '"'
+}) }}]]></template>
+  <template type="public" title="alert_user_quote_summary" version_id="1683779540" version_string="2.10.0 Alpha 6"><![CDATA[{{ phrase('svAlertImprov_user_quote_summary', {
+    'name': username_link($user, false, {'defaultname': $alert.username}),
+    'count': $extra.sum|number,
+    'unsummarizeAlertLinkAttributes': 'href="' . link('account/alert', $alert) . '"'
+}) }}]]></template>
+  <template type="public" title="alert_user_reaction_summary" version_id="1694599116" version_string="2.10.8"><![CDATA[<xf:set var="$reactions">
+	<xf:macro template="svAlertImprov_macros" name="alert_reactions" arg-alert="{$alert}" />
+</xf:set>
+<xf:set var="$contentSummary" value="{{ $alert.hasOption('svAlertImprov') ? $alert.getReactedContentSummary(', ') : '' }}" />
+
+{{ phrase('sv_x_reacted_y_content_z_times', {
+	'name': username_link($user, false, {'defaultname': $alert.username}),
+	'unsummarizeAlertLinkAttributes': 'href="' . link('account/alert', $alert) . '" class="fauxBlockLink-blockLink"',
+	'reactions': {$reactions}|raw,
+	'reactedcontent': $contentSummary
+}) }}]]></template>
+  <template type="public" title="alert_xfmg_album_reaction_summary" version_id="1694599116" version_string="2.10.8"><![CDATA[<xf:set var="$reactions">
+	<xf:macro template="svAlertImprov_macros" name="alert_reactions" arg-alert="{$alert}" />
+</xf:set>
+<xf:set var="$contentSummary" value="{{ $alert.hasOption('svAlertImprov') ? $alert.getReactedContentSummary(', ') : '' }}" />
+
+{{ phrase('your_album_y_has_received_x_reactions', {
+    'reactions': {$reactions}|raw,
+    'unsummarizeAlertLinkAttributes': 'href="' . link('account/alert', $alert) . '"',
+    'contentLinkParams': 'href="' . link('media/albums', $content) . '" class="fauxBlockLink-blockLink"',
+    'title': $content.title
+}) }}]]></template>
+  <template type="public" title="alert_xfmg_comment_reaction_summary" version_id="1694599116" version_string="2.10.8"><![CDATA[<xf:set var="$reactions">
+	<xf:macro template="svAlertImprov_macros" name="alert_reactions" arg-alert="{$alert}" />
+</xf:set>
+<xf:set var="$contentSummary" value="{{ $alert.hasOption('svAlertImprov') ? $alert.getReactedContentSummary(', ') : '' }}" />
+
+{{ phrase('your_comment_on_media_y_has_received_x_reactions', {
+    'reactions': {$reactions}|raw,
+    'unsummarizeAlertLinkAttributes': 'href="' . link('account/alert', $alert) . '"',
+    'contentLinkParams': 'href="' . link('media/comments', $content) . '" class="fauxBlockLink-blockLink"',
+    'title': $content.Content.title
+}) }}]]></template>
+  <template type="public" title="alert_xfmg_media_reaction_summary" version_id="1694599116" version_string="2.10.8"><![CDATA[<xf:set var="$reactions">
+	<xf:macro template="svAlertImprov_macros" name="alert_reactions" arg-alert="{$alert}" />
+</xf:set>
+<xf:set var="$contentSummary" value="{{ $alert.hasOption('svAlertImprov') ? $alert.getReactedContentSummary(', ') : '' }}" />
+
+{{ phrase('your_media_y_has_received_x_reactions', {
+    'reactions': {$reactions}|raw,
+    'unsummarizeAlertLinkAttributes': 'href="' . link('account/alert', $alert) . '"',
+    'contentLinkParams': 'href="' . link('media', $content) . '" class="fauxBlockLink-blockLink"',
+    'title': $content.title
+}) }}]]></template>
+  <template type="public" title="svAlertImprov_account_alert_action" version_id="2081100" version_string="2.8.11"><![CDATA[<xf:title>{{ phrase('alert') }} - {$contentTitle}</xf:title>
+
+<xf:wrap template="account_wrapper" />
+
+<xf:form action="{$confirmUrl}" ajax="true" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:inforow rowtype="confirm">
+				{$actionText}
+			</xf:inforow>
+		</div>
+
+		<xf:submitrow submit="{$buttonText}" rowtype="simple" />
+	</div>
+
+	<xf:redirect url="{$redirect}" />
+</xf:form>]]></template>
+  <template type="public" title="svAlertImprov_account_alerts_mark_read" version_id="1721578331" version_string="2.11.1"><![CDATA[<xf:title>{{ phrase('svAlertImprov_mark_all_alerts_read') }}</xf:title>
+
+<xf:wrap template="account_wrapper" />
+
+<xf:form action="{{ link('account/alerts/mark-read') }}" ajax="true" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:inforow rowtype="confirm">
+				{{ phrase('svAlertImprov_please_confirm_that_you_want_to_mark_all_alerts_read') }}
+			</xf:inforow>
+		</div>
+
+		<xf:submitrow submit="{{ phrase('mark_read') }}" rowtype="simple" />
+	</div>
+
+	<xf:foreach loop="$listAlertIds" value="$alertId">
+		<xf:hiddenval name="list_alert_ids[]" value="{$alertId}" />
+	</xf:foreach>
+	<xf:foreach loop="$popupAlertIds" value="$alertId">
+		<xf:hiddenval name="popup_alert_ids[]" value="{$alertId}" />
+	</xf:foreach>
+
+	<xf:hiddenval name="confirm" value="1" />
+	<xf:redirect url="{$redirect}" />
+</xf:form>]]></template>
+  <template type="public" title="svAlertImprov_account_alerts_popup" version_id="2090003" version_string="2.9.0 Alpha 3"><![CDATA[<xf:if is="$unreadAlerts is not empty or $alerts is not empty">
+	<div class="menu-scroller">
+<xf:set var="$doFading" value="{{ property('svStyleJustReadAsUnread') && property('svFadeJustReadToRead') }}"/>
+		<ol class="listPlain"
+			data-xf-init="{{ $doFading ? ' fade-read-alerts' : '' }}"
+			data-transition-delay="{{ $doFading ? (property('svFadeJustReadDelay') ?: '0') : '' }}"
+			data-transition-duration="{{ $doFading ? (property('svFadeJustReadDuration') ?: '0') : '' }}">
+			<xf:foreach loop="$unreadAlerts" value="$alert">
+				<li data-alert-id="{$alert.alert_id}" class="alert js-alert menu-row menu-row--separated menu-row--clickable{{ $alert.getOption('force_unread_in_ui') ? ' is-just-read' : '' }}{{ $alert.isUnread() ? ' is-unread' : ($alert.isRecentlyRead() ? ' is-recently-read' : ' is-read') }}">
+					<xf:macro template="svAlertImprov_macros"
+							  name="alert_row"
+							  arg-alert="{$alert}"
+							  arg-showSelectCheckbox="{{ false }}"
+							  arg-inAlertsPopup="{{ true }}"
+							  />
+				</li>
+			</xf:foreach>
+
+			<xf:if is="$unreadAlerts is not empty and $alerts is not empty">
+				<li class="menu-row menu-row--separated alert--read-unread-seperator"></li>
+			</xf:if>
+
+			<xf:foreach loop="$alerts" value="$alert">
+				<li data-alert-id="{$alert.alert_id}" class="alert js-alert menu-row menu-row--separated menu-row--clickable{{ $alert.getOption('force_unread_in_ui') ? ' is-just-read' : '' }}{{ $alert.isUnread() ? ' is-unread' : ($alert.isRecentlyRead() ? ' is-recently-read' : ' is-read') }}">
+					<xf:macro template="svAlertImprov_macros"
+							  name="alert_row"
+							  arg-alert="{$alert}"
+							  arg-showSelectCheckbox="{{ false }}"
+							  arg-inAlertsPopup="{{ true }}"
+							  />
+				</li>
+			</xf:foreach>
+		</ol>
+	</div>
+<xf:else />
+	<div class="menu-row">{{ phrase('you_have_no_new_alerts') }}</div>
+</xf:if>]]></template>
+  <template type="public" title="svAlertImprov_account_alerts_summary" version_id="1706534512" version_string="2.10.13"><![CDATA[<xf:js addon="SV/AlertImprovements" src="sv/alerts/alerts.js" min="1" />
+<xf:title>{{ $alert.is_summary ? phrase('svAlertImprov_summarized_alerts') : phrase('alert') }}</xf:title>
+
+<xf:breadcrumb href="{{ link('account/alerts') }}">{{ phrase('alerts') }}</xf:breadcrumb>
+
+<xf:set var="$summaryAlert" value="{$alert}" />
+<div class="block-container">
+	<div class="block-body">
+		<ol class="listPlain">
+			<li data-alert-id="{$alert.alert_id}"
+				class="alert js-alert block-row block-row--separated{{ $alert.getOption('force_unread_in_ui') ? ' is-just-read' : '' }}{{ $alert.isUnread() ? ' is-unread' : ($alert.isRecentlyRead() ? ' is-recently-read' : ' is-read') }}">
+				<xf:macro template="svAlertImprov_macros" name="alert_row" arg-alert="{$alert}" />
+			</li>
+		</ol>
+		<xf:if is="$summaryAlert.is_summary">
+		<xf:if is="$alerts is not empty">
+			<ol class="listPlain">
+				<xf:if is="$groupedAlerts is not empty">
+					<xf:foreach loop="$groupedAlerts" key="$dateGroup" value="$dateAlerts">
+						<li>
+							<h2 class="block-formSectionHeader">{$dateGroup}</h2>
+							<ol class="listPlain">
+								<xf:foreach loop="$dateAlerts" value="$alert">
+									<li data-alert-id="{$alert.alert_id}"
+										class="alert js-alert block-row block-row--separated{{ $alert.getOption('force_unread_in_ui') ? ' is-just-read' : '' }}{{ $alert.isUnread() ? ' is-unread' : ($alert.isRecentlyRead() ? ' is-recently-read' : ' is-read') }}">
+										<xf:macro template="svAlertImprov_macros" name="alert_row" arg-alert="{$alert}" />
+									</li>
+								</xf:foreach>
+							</ol>
+						</li>
+					</xf:foreach>
+				<xf:else />
+					<xf:foreach loop="$alerts" value="$alert">
+						<li data-alert-id="{$alert.alert_id}"
+							class="alert js-alert block-row block-row--separated{{ $alert.isUnviewed() ? ' is-unread' : ($alert.isRecentlyRead() ? '' : ' block-row--alt') }}">
+							<xf:macro template="svAlertImprov_macros" name="alert_row" arg-alert="{$alert}" />
+						</li>
+					</xf:foreach>
+				</xf:if>
+			</ol>
+		<xf:else />
+			<div class="block-row">{{ phrase('no_alerts_can_be_shown') }}</div>		
+		</xf:if>
+		</xf:if>
+	</div>
+	<xf:if is="$summaryAlert.is_summary">
+	<xf:pagenav params="{$navParams}" data="{$summaryAlert}" link="account/alert" page="{$page}" perpage="{$perPage}" total="{$totalAlerts}" wrapperclass="block-outer block-outer--after" />
+	</xf:if>
+</div>]]></template>
+  <template type="public" title="svAlertImprov_account_preferences" version_id="1721578331" version_string="2.11.1"><![CDATA[<h2 class="block-formSectionHeader" id="alerts"><span class="block-formSectionHeader-aligner">{{ phrase('svAlertImprov_alert_preferences_header') }}</span></h2>
+<xf:if is="$xf.visitor.canCustomizeAdvAlertPreferences()">
+	<div class="block-body">
+		<xf:if is="$xf.options.svAlertsSummarize || $xf.options.svMarkReadPromptOptout">
+			<xf:checkboxrow label="{{ phrase('svAlertImprov_alerts_page_options') }}">
+				<xf:if is="$xf.options.svMarkReadPromptOptout">
+					<xf:option name="option[sv_prompt_on_mark_read]"
+							   label="{{ phrase('sv_prompt_on_mark_read') }}"
+							   checked="{{$xf.visitor.Option.sv_prompt_on_mark_read}}" />
+				</xf:if>
+				<xf:if is="$xf.options.svAlertsSummarize">
+				<xf:option name="option[sv_alerts_page_skips_summarize]"
+						   label="{{ phrase('sv_alerts_page_skips_summarize') }}"
+						   hint="{{ phrase('sv_alerts_page_skips_summarize_hint') }}"
+						   checked="{$xf.visitor.Option.sv_alerts_page_skips_summarize}"
+						   />
+				</xf:if>
+			</xf:checkboxrow>
+		</xf:if>
+		<xf:radiorow name="option[sv_alerts_popup_read_behavior]"
+					 label="{{ phrase('svAlertImprov_alert_popup_options') }}"
+					 value="{{ $xf.visitor.Option.sv_alerts_popup_read_behavior }}">
+			<xf:options source="{{ $xf.app.em.getRepository('SV\AlertImprovements:AlertPreferences').getAlertPopupBehaviourPairs() }}" />
+		</xf:radiorow>
+		<xf:if is="$xf.options.svAlertsSummarize">
+			<xf:numberboxrow name="option[sv_alerts_summarize_threshold]"
+							 value="{{$xf.visitor.Option.sv_alerts_summarize_threshold}}" 
+							 min="0" data-step="1"
+							 label="{{ phrase('sv_alerts_summarize_threshold') }}"
+							 explain="{{ phrase('sv_alerts_summarize_threshold_hint') }}" />
+		</xf:if>	
+	</div>
+	<!--[SV/AlertImprovements:PreferencesWithPermission]-->
+<xf:else />
+	<!--[SV/AlertImprovements:PreferencesWithoutPermission]-->
+</xf:if>]]></template>
+  <template type="public" title="svAlertImprov_account_preferences_autoread" version_id="1683779540" version_string="2.10.0 Alpha 6"><![CDATA[<li class="notificationChoices-choice notificationChoices-choice--autoread">
+	<xf:checkbox standalone="true">
+		<xf:option name="autoread[{$contentType}_{$action}]"
+				   checked="{{ $xf.visitor.Option.doesAutoReadAlert($contentType, $action) }}"
+				   label="{{ phrase('svAlertImprov_autoread') }}" />
+	</xf:checkbox>
+</li>]]></template>
+  <template type="public" title="svAlertImprov_alerts" version_id="1721578331" version_string="2.11.1"><![CDATA[<div>
+<xf:foreach loop="$listAlerts" value="$alert">
+	<div data-alert-id="{$alert.alert_id}">
+		<xf:macro template="svAlertImprov_macros"
+				  name="alert_row"
+				  arg-alert="{$alert}"
+				  arg-showSelectCheckbox="{{ true }}"
+				  arg-inAlertsPopup="{{ false }}"
+				  />
+	</div>
+</xf:foreach>
+<xf:foreach loop="$popupAlerts" value="$alert">
+	<div data-alert-id="{$alert.alert_id}">
+		<xf:macro template="svAlertImprov_macros"
+				  name="alert_row"
+				  arg-alert="{$alert}"
+				  arg-showSelectCheckbox="{{ false }}"
+				  arg-inAlertsPopup="{{ true }}"
+				  />
+	</div>
+</xf:foreach>
+</div>]]></template>
+  <template type="public" title="svAlertImprov_macros" version_id="1742237225" version_string="2.12.3"><![CDATA[<xf:macro name="alert_reactions" arg-alert="!">
+	<xf:set var="$reactions" value="{$alert.extra_data.reaction_id}" />
+	<xf:foreach loop="$reactions" key="$reactionId" value="$reactCounter">
+		<span class="react-summary react-summary--{$reactionId}">
+			<span class="react-summary--alert">{{ reaction({
+						'id': $reactionId,
+						'showtitle': false,
+						'hasreaction': true,
+						'tooltip': true,
+						'small': true
+					})|preescaped }}</span>
+			<span class="react-summary--count">x {$reactCounter|number}</span>
+		</span>
+	</xf:foreach>
+</xf:macro>
+
+<xf:macro name="alerts_filter" 
+		  arg-navParams="{{ [] }}"
+		  arg-selected=""
+		  >
+	<div class="block-outer-main">
+		<div class="buttonGroup alerts-filter"><xf:trim>
+			<xf:button href="{{ link('account/alerts', null, $navParams|replace('show_only', 'all')|replace('page', '')) }}" class="{{ $selected === 'all' ? 'button--primary' : 'button--link' }}"><xf:trim>
+				{{ phrase('all') }}
+				</xf:trim></xf:button>
+			<xf:button href="{{ link('account/alerts', null, $navParams|replace('show_only', 'unread')|replace('page', '')) }}" class="{{ $selected === 'unread' ? 'button--primary' : 'button--link' }}"><xf:trim>
+				{{ phrase('svAlertImprov_unread') }}
+				</xf:trim></xf:button>
+		</xf:trim></div>
+	</div>
+</xf:macro>
+
+<xf:macro name="alerts_controls">
+	<xf:css src="svAlertImprovements.less" />
+	<xf:js addon="SV/AlertImprovements" src="sv/alerts/alerts.js" min="1" />
+	<xf:button href="{{ link('account/preferences') }}#alerts" class="button--link"><xf:trim>
+		{{ phrase('svAlertImprov_alert_preferences') }}
+	</xf:trim></xf:button>
+
+	<xf:if is="$__globals.canResummarize">
+		<xf:button href="{{ link('account/summarize-alerts') }}" class="button--link"><xf:trim>
+			{{ phrase('svAlertImprov_resummarize_alerts') }}
+		</xf:trim></xf:button>
+	</xf:if>
+</xf:macro>
+
+<xf:macro name="alerts_popup_footer">
+	<xf:css src="svAlertImprovements.less" />
+	<xf:js addon="SV/AlertImprovements" src="sv/alerts/alerts.js" min="1" />
+    <span class="menu-footer-main">
+        <a href="{{ link('account/alerts', null, {'show_only':'all'}) }}">{{ phrase('show_all') }}</a>
+    </span>
+    <span class="menu-footer-opposite">
+        <ul class="listInline listInline--bullet">
+            <li><a href="{{ link('account/alerts/mark-read') }}" data-xf-click="sv-mark-alerts-read">{{ phrase('mark_read') }}</a></li>
+            <li><a href="{{ link('account/preferences') }}#alerts">{{ phrase('preferences') }}</a></li>
+        </ul>
+    </span>
+</xf:macro>
+
+<xf:macro name="alerts_select" arg-page="{{1}}" arg-navParams="{{ {} }}">
+	<div class="block-footer block-footer--split">
+		<span class="block-footer-counter"></span>
+		<span class="block-footer-select"><xf:checkbox standalone="true"><xf:option check-all="< .block-container" label="{{ phrase('select_all') }}" data-xf-init="tooltip" title="{{ phrase('select_all') }}" /></xf:checkbox></span>
+		<span class="block-footer-controls">
+			<xf:hiddenval name="show_only">{$navParams.show_only}</xf:hiddenval>
+			<xf:hiddenval name="skip_mark_read">1</xf:hiddenval>
+			<xf:hiddenval name="skip_summarize">1</xf:hiddenval>
+			<xf:hiddenval name="page">{$page}}</xf:hiddenval>
+			<xf:select name="state" class="input--inline">
+				<xf:option>{{ phrase('with_selected...') }}</xf:option>
+				<!--[XF:action_menu:top]-->
+				<xf:option value="read">{{ phrase('svAlertImprov_mark_read') }}</xf:option>
+				<xf:option value="unread">{{ phrase('svAlertImprov_mark_unread') }}</xf:option>
+				<!--[XF:action_menu:bottom]-->
+			</xf:select>
+			<xf:button type="submit">{{ phrase('go') }}</xf:button>
+		</span>
+	</div>
+</xf:macro>
+
+<xf:macro name="alert_recent_marker" arg-alert="!">
+	<xf:if is="$alert.getOption('force_unread_in_ui')">
+		<xf:set var="$icon" value="{{ property('svAlertImprovJustReadAlertFlag') ? property('svAlertImprovJustReadAlertIcon') : ''}}"/>
+		<xf:if is="$icon">
+			<xf:fa icon="{$icon}"
+				   class="unread-indicator-icon"
+				   aria-hidden="true"
+				   title="{{ phrase('svAlertImprov_just_read_alert')|for_attr}}" />
+		</xf:if>
+	<xf:elseif is="$alert.view_date === 0" />
+		<xf:set var="$icon" value="{{ property('svAlertImprovUnreadAlertFlag') ? property('svAlertImprovUnreadAlertIcon') : ''}}"/>
+		<xf:if is="$icon">
+			<xf:fa icon="{$icon}"
+				   class="unread-indicator-icon"
+				   aria-hidden="true"
+				   title="{{ phrase('svAlertImprov_unread_alert')|for_attr}}" />
+		</xf:if>
+	<xf:else />
+		<xf:set var="$icon" value="{{ property('svAlertImprovRecentAlertFlag') ? property('svAlertImprovRecentAlertIcon') : '' }}"/>
+		<xf:if is="$icon">
+			<xf:fa icon="{$icon}"
+				   class="recent-indicator-icon"
+				   aria-hidden="true"
+				   title="{{ phrase('svAlertImprov_recent_alert')|for_attr}}" />
+		</xf:if>
+	</xf:if>
+</xf:macro>
+
+<xf:macro name="alert_row"
+		  arg-alert="!"
+		  arg-showSelectCheckbox="{{ false }}"
+		  arg-inAlertsPopup="{{ false }}"
+		  >
+	<div class="contentRow" data-pop-up="{{ $inAlertsPopup ? '1' : '0' }}">
+		<xf:if is="$showSelectCheckbox">
+			<div class="contentRow-figure contentRow-figure--selector">
+				<xf:checkbox standalone="true">
+					<xf:option name="alert_ids[]" value="{$alert.alert_id}" data-xf-init="tooltip"
+							   title="{{ phrase('svAlertImprov_select_for_bulk_update') }}" />
+				</xf:checkbox>
+			</div>
+		</xf:if>
+		<div class="contentRow-figure contentRow-figure--user{{ $showSelectCheckbox ? '' : ' flex'}}">
+			<xf:avatar user="$alert.User" size="xxs" defaultname="{$alert.username}" />
+			<xf:if is="$inAlertsPopup && $alert.is_new">
+				<xf:macro name="alert_recent_marker" arg-alert="{$alert}" />
+			</xf:if>
+		</div>
+		<div class="contentRow-main contentRow-main--close">
+			<xf:if is="$inAlertsPopup"><div class="fauxBlockLink"></xf:if>
+			{$alert.render()|raw}
+			<xf:if is="$inAlertsPopup"></div></xf:if>
+			<div class="contentRow-minor contentRow-minor--smaller">
+				<ul class="listInline listInline--bullet">
+					<xf:if is="!$inAlertsPopup && $alert.is_new">
+						<xf:if contentcheck="false">
+							<li>
+								<xf:contentcheck><xf:macro name="alert_recent_marker" arg-alert="{$alert}" /></xf:contentcheck>
+							</li>
+						</xf:if>
+					</xf:if>
+					<li><xf:date time="$alert.event_date" /></li>
+					<xf:if is="$alert.view_date">
+						<li>{{ phrase('svAlertImprov_read_on:') }} <xf:date time="$alert.view_date" /></li>
+					</xf:if>
+					<xf:if is="$alert.is_summary && $alert.canUnsummarize()">
+						<li><a class="alert--unsummarize" data-xf-click="unsummarize-alert" href="{{ link('account/alert/unsummarize', $alert) }}">{{phrase('svAlertImprov_unsummarize_alert')}}</a></li>
+					</xf:if>
+					<xf:if is="property('svStockMarkAlertsRead')">
+						<span class="u-pullRight">
+							<a href="{{ link('account/alert-toggle', null, {'alert_id': $alert.alert_id}) }}"
+							   data-xf-click="mark-alert-unread" 
+							   data-xf-init="tooltip" data-content="{{ $alert.isUnreadInUi() ? phrase('mark_read')|for_attr : phrase('mark_unread')|for_attr }}"
+							   data-read="{{ phrase('mark_read')|for_attr }}" data-unread="{{ phrase('mark_unread')|for_attr }}"
+							   class="js-alertToggle alertToggler"><xf:trim>
+								<xf:fa icon="fa-circle" class="alertToggler-icon" />
+								</xf:trim></a>
+						</span>
+					<xf:else />
+						<xf:if is="$alert.view_date">
+							<li class="mark-read"><a class="alert--mark-unread" data-xf-click="mark-alert-unread" href="{{ link('account/alert/unread', $alert) }}">{{ phrase('svAlertImprov_mark_unread') }}</a></li>
+						<xf:else />
+							<li class="mark-read"><a class="alert--mark-read" data-xf-click="mark-alert-unread" href="{{ link('account/alert/read', $alert) }}">{{ phrase('svAlertImprov_mark_read') }}</a></li>
+						</xf:if>
+					</xf:if>
+				</ul>
+			</div>
+		</div>
+	</div>
+</xf:macro>
+
+
+<xf:macro name="alerting_preferences"
+		  arg-svAlertOptions="!"
+		  >
+	<xf:radiorow label="{{ phrase('svAlertImprov_alerting_preferences') }}"
+				 name="svAlertOptions"
+				 value="{$svAlertOptions}">
+		<xf:option value="none" label="{{ phrase('svAlertImprov_alert_none') }}" />
+		<xf:option value="defaults" label="{{ phrase('svAlertImprov_alerts_use_defaults') }}" />	
+		<xf:option value="custom"
+				   label="{{ phrase('svAlertImprov_alerts_use_custom') }}" 
+				   data-xf-init="disabler"
+				   data-container=".js-customAlertPreferences"
+				   data-hide="true">
+			<xf:html><div class="formRow-explain js-customAlertPreferences">{{ phrase('svAlertImprov_alerting_preferences_explain') }}</div></xf:html>
+		</xf:option>
+	</xf:radiorow>
+</xf:macro>]]></template>
+  <template type="public" title="svAlertImprovements.less" version_id="1742237225" version_string="2.12.3"><![CDATA[#uix_alertsMenuPanel .alert,
+.js-alertTabPanel .uix_canvasPanelBody .alert,
+.js-alertsMenuBody .alert,
+.alert-list .alert 
+{
+	<xf:if is="property('svIncludeStockStylingForAlerts')">
+	<xf:if is="property('svStyleJustReadAsUnread')">
+		&.is-recently-read.is-just-read,
+	</xf:if>
+		&.is-unread
+		{
+			.xf-contentHighlightBase();
+			&:first-child
+			{
+				border-radius: initial;
+			}
+		}
+
+		&.is-read
+		{
+			.xf-contentAltBase();
+		}
+
+		&.is-recently-read
+		{
+			.xf-contentAltBase();
+		}
+	</xf:if>
+	<xf:if is="property('svStyleJustReadAsUnread')">
+	&.is-recently-read.is-just-read,
+	</xf:if>
+	&.is-unread
+	{
+		.xf-svUnreadAlerts();
+	}
+
+	&.is-read
+	{
+		.xf-svReadAlerts();
+	}
+
+	&.is-recently-read
+	{
+		.xf-svRecentlyReadAlerts();
+	}
+
+	.contentRow-figure--selector
+	{
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
+
+		.iconic
+		{
+			width: initial;
+		}
+	}
+}
+
+.alert
+{
+	<xf:if is="property('svAlertImprovJustReadAlertFlag') && property('svAlertImprovJustReadAlertIconColor')">
+	.just-read-indicator-icon
+	{
+		color: @xf-svAlertImprovJustReadAlertIconColor;
+	}
+	</xf:if>
+	<xf:if is="property('svAlertImprovUnreadAlertFlag') && property('svAlertImprovUnreadAlertIconColor')">
+	.unread-indicator-icon
+	{
+		color: @xf-svAlertImprovUnreadAlertIconColor;
+	}
+	</xf:if>
+	<xf:if is="property('svAlertImprovRecentAlertFlag') && property('svAlertImprovRecentAlertIconColor')">
+	.recent-indicator-icon
+	{
+		color: @xf-svAlertImprovRecentAlertIconColor;
+	}
+	</xf:if>
+	.contentRow-figure
+	{
+		&--selector
+		{
+			width: 2rem;
+
+			+ .contentRow-figure
+			{
+				margin-left: 0.5rem;
+			}
+		}
+
+		&--user.flex
+		{
+			display:flex;
+			flex-direction: column;
+			flex-wrap: wrap;
+			justify-content: space-between;
+		}
+	}
+
+	.react-summary
+	{
+		&--alert
+		{
+			display: inline-block;
+		}
+		&--count
+		{
+			white-space: pre-wrap;
+		}
+	}
+
+	.alert-list &--mark-unread,
+	.alert-list &--mark-read
+	{
+		float:right;
+	}
+	.alert-list & li.mark-read:before
+	{
+		content:"";
+	}
+}
+
+.buttonGroup.alerts-filter .button {
+    min-width:0;
+}
+.js-alertsMenuBody .menu-row.alert--read-unread-seperator
+{
+	.xf-svUnreadAlertsSeperator();
+}]]></template>
+</templates>

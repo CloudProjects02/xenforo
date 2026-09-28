@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<routes>
+  <route route_type="public" route_prefix="account" sub_name="alert" format="alert/:int&lt;alert_id&gt;/" controller="XF:Account" context="account" action_prefix="alert"/>
+</routes>

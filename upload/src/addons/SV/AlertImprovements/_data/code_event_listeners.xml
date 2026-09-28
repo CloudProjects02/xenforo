@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<code_event_listeners>
+  <listener event_id="icon_usage_analyzer_steps" execute_order="10" callback_class="SV\AlertImprovements\Listener\IconUsage" callback_method="analyzerSteps" active="1"/>
+  <listener event_id="user_content_change_init" execute_order="10" callback_class="SV\AlertImprovements\Listener\UserChange" callback_method="userContentChangeInit" active="1"/>
+  <listener event_id="user_delete_clean_init" execute_order="10" callback_class="SV\AlertImprovements\Listener\UserChange" callback_method="userDeleteCleanInit" active="1"/>
+</code_event_listeners>

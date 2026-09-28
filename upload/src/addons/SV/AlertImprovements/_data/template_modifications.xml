@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="PAGE_CONTAINER" modification_key="svAlertImprov_PAGE_CONTAINER_a" description="Patch Alerts pop-up footer &amp; inject css/javascript" execution_order="1" enabled="1" action="preg_replace">
+    <find><![CDATA[#(js-alertsMenuBody.*?<div class="menu-footer[^"]*"\s*>)(?:\s*(?:(?:<div class="menu-footer-main">.*?</ul>\s*</div>)|(?:<span class="menu-footer-main.*?menu-footer-opposite.*?</span>))\s*?)([\t ]*</div>)#si]]></find>
+    <replace><![CDATA[$1
+<xf:macro template="svAlertImprov_macros" name="alerts_popup_footer" />
+$2]]></replace>
+  </modification>
+  <modification type="public" template="account_alerts" modification_key="svAlertImprov_account_alerts_a" description="Group alerts by day if grouped alerts are found and add required classes" execution_order="6398" enabled="1" action="preg_replace">
+    <find><![CDATA[#(^[\s]*<xf:if)( is="\$alerts.*?)(>$)(.*?^[\s]*<ol.*?>)(.*?^[\s]*<xf:foreach loop=")(.*?)(".*?>)(.*?class=".*?)(".*?>.*?<\/xf:foreach>)#sim]]></find>
+    <replace><![CDATA[$1 is="$groupedAlerts is not empty">$4	$5$groupedAlerts" key="$dateGroup" value="$dateAlerts">
+					<li>
+						<h2 class="block-formSectionHeader" data-xf-init="tooltip" title="{{ phrase('svAlertImprov_select_all_for', {'x': $dateGroup})|for_attr }}" data-position-over=">label>i"><xf:checkbox standalone="true"><xf:option check-all="< :up(3)" label="{$dateGroup}" /></xf:checkbox></h2>
+						<ol class="listPlain">$5$dateAlerts$7$8 $9
+						</ol>
+					</li>
+				</xf:foreach>
+				</ol>
+			<xf:elseif $2 /$3$4$5$6$7$8 $9]]></replace>
+  </modification>
+  <modification type="public" template="account_alerts" modification_key="svAlertImprov_account_alerts_b" description="Add &quot;Alert preferences&quot;, &quot;Resummarize alerts&quot; and &quot;Mark read&quot; buttons above alerts list" execution_order="6397" enabled="1" action="preg_replace">
+    <find><![CDATA[#(^[\s]*<div class="block-outer-opposite.*?>$.*?)([\s]*<\/div>$)#sim]]></find>
+    <replace><![CDATA[<xf:trim><xf:macro template="svAlertImprov_macros" name="alerts_filter" arg-navParams="{$navParams}" arg-selected="{$navParams.show_only}"/></xf:trim>
+$1
+<xf:macro template="svAlertImprov_macros" name="alerts_controls"/>$2]]></replace>
+  </modification>
+  <modification type="public" template="account_alerts" modification_key="svAlertImprov_account_alerts_c" description="Patch alert row macro usage" execution_order="6398" enabled="1" action="preg_replace">
+    <find><![CDATA[#<xf:macro (?:template="alert_macros" name="row"|id="alert_macros::row")#si]]></find>
+    <replace><![CDATA[<xf:macro name="svAlertImprov_macros::alert_row" arg-showSelectCheckbox="{{ true }}" arg-inAlertsPopup="{{ false }}"]]></replace>
+  </modification>
+  <modification type="public" template="account_alerts" modification_key="svAlertImprov_account_alerts_d" description="Wrap alerts listing with form to update alert read/view states" execution_order="9" enabled="1" action="preg_replace">
+    <find><![CDATA[#(^<div class="block(?:.*?)?".*?)(<div class="block-body.*?>.*?<\/xf:if>.*<\/div>)(.*?</div>\s*<xf:pagenav.*?^<\/div>$)#sim]]></find>
+    <replace><![CDATA[<xf:form action="{{ link('account/bulk-update-alerts') }}" ajax="true" data-force-flash-message="true">
+$1$2
+	<xf:if is="$alerts is not empty">
+		<xf:macro template="svAlertImprov_macros" name="alerts_select" 
+				  arg-page="{$page}"
+				  arg-navParams="{$navParams}"
+				  />
+	</xf:if>$3
+</xf:form>]]></replace>
+  </modification>
+  <modification type="public" template="account_alerts" modification_key="svAlertImprov_account_alerts_e" description="Patch pagenav" execution_order="9" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:pagenav]]></find>
+    <replace><![CDATA[$0 params="{$navParams}"]]></replace>
+  </modification>
+  <modification type="public" template="account_alerts" modification_key="svAlertImprov_account_alerts_f" description="Patch XF2.2 row highlighting" execution_order="6396" enabled="1" action="str_replace">
+    <find><![CDATA[{{ $alert.isUnreadInUi() ? 'is-unread' : '' }}]]></find>
+    <replace><![CDATA[{{ $alert.getOption('force_unread_in_ui') ? ' is-just-read' : '' }}{{ $alert.isUnread() ? ' is-unread' : ($alert.isRecentlyRead() ? ' is-recently-read' : ' is-read') }}]]></replace>
+  </modification>
+  <modification type="public" template="account_alerts" modification_key="svAlertImprov_account_alerts_h" description="Patch alert list css" execution_order="6396" enabled="1" action="str_replace">
+    <find><![CDATA[<ol class="listPlain]]></find>
+    <replace><![CDATA[$0 alert-list]]></replace>
+  </modification>
+  <modification type="public" template="account_alerts" modification_key="svAlertImprov_account_alerts_header2" description="Patch XF2.2 mark-read javascript" execution_order="6396" enabled="1" action="preg_replace">
+    <find><![CDATA[#(<xf:button href="{{ link\('account/alerts/mark-read'\) }}"\s*class="button--link")(?:\s*overlay="true"\s*)(.*?>)#si]]></find>
+    <replace><![CDATA[$1 data-xf-click="sv-mark-alerts-read" $2]]></replace>
+  </modification>
+  <modification type="public" template="account_preferences" modification_key="svAlertImprov_account_preferences" description="Adds additional alert preferences" execution_order="6397" enabled="1" action="preg_replace">
+    <find><![CDATA[#(?:[\t ]*<h2 class="block-formSectionHeader.*?{{ phrase\('alert_preferences'\))|(?:[\t ]*<xf:if is="\$alertOptOuts)#si]]></find>
+    <replace><![CDATA[<xf:include template="svAlertImprov_account_preferences" />
+$0]]></replace>
+  </modification>
+  <modification type="public" template="account_preferences" modification_key="svAlertImprov_account_preferences_alert_prefs" description="Rationalize alerting preferences" execution_order="1" enabled="1" action="preg_replace">
+    <find><![CDATA[$(<xf:if is="\$alertOptOuts is not empty">)(.*)(</xf:if>.*?<xf:submitrow icon="save" sticky="true" />)$si]]></find>
+    <replace><![CDATA[$1
+<xf:macro name="svAlertImprov_macros::alerting_preferences" arg-svAlertOptions="{$svAlertOptions}"/>
+<div class="js-customAlertPreferences">
+$2
+</div>
+$3]]></replace>
+  </modification>
+  <modification type="public" template="account_preferences" modification_key="svAlertImprov_account_preferences_autoread" description="Add auto-read preferences" execution_order="6398" enabled="1" action="preg_replace">
+    <find><![CDATA[#(<xf:foreach loop="\$alertOptOuts.*?)([\t ]+<xf:if is="\$canPush)#s]]></find>
+    <replace><![CDATA[$1<xf:include template="svAlertImprov_account_preferences_autoread" />
+$2]]></replace>
+  </modification>
+  <modification type="public" template="account_preferences" modification_key="svAlertImprov_account_preferences_category" description="Replace &quot;receive_notification_when_someone&quot; with a more relevant one" execution_order="2147483647" enabled="1" action="str_replace">
+    <find><![CDATA[phrase('receive_notification_when_someone]]></find>
+    <replace><![CDATA[phrase('svAlertImprov_receive_notification_when_someone]]></replace>
+  </modification>
+  <modification type="public" template="account_preferences" modification_key="svAlertImprov_account_preferences_reset" description="Inject per-alert-type reset toggle" execution_order="1" enabled="1" action="str_replace">
+    <find><![CDATA[<xf:formrow label="{$label}" data-content-type="{$contentType}" data-action="{$action}"]]></find>
+    <replace><![CDATA[<xf:set var="$hintHtml">
+	<xf:if is="$xf.visitor.Option.isCustomizedAlertPreference($contentType,$action)">
+	<xf:checkbox standalone="true">
+		<xf:option name="reset-alerts[{$contentType}_{$action}]" label="{{ phrase('svAlertImprov_reset_alert') }}" />
+	</xf:checkbox>	
+	</xf:if>
+</xf:set>
+
+$0 hint="{$hintHtml|raw}"
+	
+	]]></replace>
+  </modification>
+  <modification type="public" template="account_visitor_menu" modification_key="svAlertImprov_account_visitor_menu" description="Add alerts link to accounts menu" execution_order="6398" enabled="1" action="str_replace">
+    <find><![CDATA[<!--[XF:content_links:bottom]-->]]></find>
+    <replace><![CDATA[<li><a href="{{ link('account/alerts') }}" class="menu-linkRow">{{ phrase('alerts') }}</a></li>
+$0]]></replace>
+  </modification>
+  <modification type="admin" template="option_template_registrationDefaults" modification_key="svAlertImprov_option_template_registrationDefaults" execution_order="6398" enabled="1" action="str_replace">
+    <find><![CDATA[<div class="u-inputSpacer">]]></find>
+    <replace><![CDATA[$0
+<xf:include template="svAlertImprov_option_template_registrationDefaults" />]]></replace>
+  </modification>
+  <modification type="admin" template="user_edit" modification_key="svAlertImprov_user_edit" execution_order="6398" enabled="1" action="preg_replace">
+    <find><![CDATA[#<xf:option name="option\[email_on_conversation\]".*?</xf:option>.*?</xf:checkboxrow>#si]]></find>
+    <replace><![CDATA[$0
+<xf:include template="svAlertImprov_user_edits_alerts" />]]></replace>
+  </modification>
+</template_modifications>
