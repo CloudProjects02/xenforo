@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="public" title="cc_yos.less" version_id="1000010" version_string="1.0.0" addon_id="CloudCheats/YearsOfService"><![CDATA[.cc-yos-section {
+	display: flex;
+	justify-content: center;
+	padding: 8px 0 4px;
+}
+
+.dp-service-badge-profile {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	cursor: default;
+	padding: 4px 10px;
+	border-radius: 6px;
+	background: rgba(252, 211, 77, 0.08);
+	border: 1px solid rgba(252, 211, 77, 0.2);
+}
+
+.dp-service-badge-icon {
+	position: relative;
+	width: 40px;
+	height: 28px;
+	flex-shrink: 0;
+}
+
+.dp-service-badge-duration {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	font-weight: 700;
+	font-size: 11px;
+	color: #1a1a1a;
+	z-index: 2;
+	line-height: 1;
+	text-shadow: none;
+}
+
+.service-badge-svg {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1;
+}
+
+.service-badge-svg-bg {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 0;
+}
+
+.dp-service-badge-title {
+	font-size: 13px;
+	font-weight: 600;
+	color: #FCD34D;
+	white-space: nowrap;
+}
+
+// Year-specific accent colours (feel free to customise)
+.dp-service-badge-profile.year-1  { border-color: rgba(156, 163, 175, 0.4); background: rgba(156, 163, 175, 0.08); }
+.dp-service-badge-profile.year-1 .dp-service-badge-title { color: #9CA3AF; }
+.dp-service-badge-profile.year-1 .dp-service-badge-duration { color: #1a1a1a; }
+.dp-service-badge-profile.year-1 .service-badge-svg path,
+.dp-service-badge-profile.year-1 .service-badge-svg-bg path { fill: #9CA3AF; }
+
+.dp-service-badge-profile.year-2  { border-color: rgba(134, 239, 172, 0.4); background: rgba(134, 239, 172, 0.08); }
+.dp-service-badge-profile.year-2 .dp-service-badge-title { color: #86EFAC; }
+.dp-service-badge-profile.year-2 .service-badge-svg path,
+.dp-service-badge-profile.year-2 .service-badge-svg-bg path { fill: #86EFAC; }
+
+.dp-service-badge-profile.year-3  { border-color: rgba(147, 197, 253, 0.4); background: rgba(147, 197, 253, 0.08); }
+.dp-service-badge-profile.year-3 .dp-service-badge-title { color: #93C5FD; }
+.dp-service-badge-profile.year-3 .service-badge-svg path,
+.dp-service-badge-profile.year-3 .service-badge-svg-bg path { fill: #93C5FD; }
+
+.dp-service-badge-profile.year-4  { border-color: rgba(196, 181, 253, 0.4); background: rgba(196, 181, 253, 0.08); }
+.dp-service-badge-profile.year-4 .dp-service-badge-title { color: #C4B5FD; }
+.dp-service-badge-profile.year-4 .service-badge-svg path,
+.dp-service-badge-profile.year-4 .service-badge-svg-bg path { fill: #C4B5FD; }
+
+.dp-service-badge-profile.year-5  { border-color: rgba(252, 211, 77, 0.4); background: rgba(252, 211, 77, 0.08); }
+.dp-service-badge-profile.year-5 .dp-service-badge-title { color: #FCD34D; }
+.dp-service-badge-profile.year-5 .service-badge-svg path,
+.dp-service-badge-profile.year-5 .service-badge-svg-bg path { fill: #FCD34D; }
+
+// Year 6+ all use the gold/premium look
+.dp-service-badge-profile.year-6,
+.dp-service-badge-profile.year-7,
+.dp-service-badge-profile.year-8,
+.dp-service-badge-profile.year-9,
+.dp-service-badge-profile.year-10 { border-color: rgba(251, 191, 36, 0.5); background: rgba(251, 191, 36, 0.1); }
+.dp-service-badge-profile.year-6 .dp-service-badge-title,
+.dp-service-badge-profile.year-7 .dp-service-badge-title,
+.dp-service-badge-profile.year-8 .dp-service-badge-title,
+.dp-service-badge-profile.year-9 .dp-service-badge-title,
+.dp-service-badge-profile.year-10 .dp-service-badge-title { color: #FBBF24; }
+.dp-service-badge-profile.year-6 .service-badge-svg path,
+.dp-service-badge-profile.year-7 .service-badge-svg path,
+.dp-service-badge-profile.year-8 .service-badge-svg path,
+.dp-service-badge-profile.year-9 .service-badge-svg path,
+.dp-service-badge-profile.year-10 .service-badge-svg path { fill: #FBBF24; }
+]]></template>
+</templates>
