@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+    <modification addon_id="CloudCheats/HomeLock"
+                  template="PAGE_CONTAINER"
+                  modification_key="cloudcheats_footer_replace"
+                  description="Replace default XenForo footer with CloudCheats footer"
+                  execution_order="10"
+                  enabled="1"
+                  action="str_replace">
+        <find><![CDATA[<footer class="p-footer" id="footer">]]></find>
+        <replace><![CDATA[<xf:macro name="cloudcheats_footer_macro" />
+<footer class="p-footer cc-site-footer" id="footer">]]></replace>
+    </modification>
+</template_modifications>

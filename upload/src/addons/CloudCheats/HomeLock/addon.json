@@ -1,0 +1,13 @@
+{
+    "legacy_addon_id": "",
+    "title": "CloudCheats Home Lock",
+    "description": "Custom homepage and guest redirect. Guests can only see home, login, and register.",
+    "version_id": 1000010,
+    "version_string": "1.0.0",
+    "dev": "CloudCheats",
+    "dev_url": "",
+    "require": {
+        "XF": [2030000, "XenForo 2.3.0+"]
+    },
+    "icon": ""
+}

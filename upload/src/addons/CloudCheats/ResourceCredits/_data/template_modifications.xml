@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="xfrm_resource_edit" modification_key="cc_rc_edit_price" description="CloudCheats Resource Credits - price field on resource edit" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[			</xf:if>
+
+			<xf:if is="$resource.isExternalPurchasable()">]]></find>
+    <replace><![CDATA[			</xf:if>
+
+			<xf:textboxrow name="cc_credits_price" value="{{ $resource.cc_credits_price }}" label="Download Price (VZDP Credits)" type="number" min="0">
+				<xf:explain>Leave empty or 0 for free. Users pay this once, then download unlimited times.</xf:explain>
+			</xf:textboxrow>
+
+			<xf:if is="$resource.isExternalPurchasable()">]]></replace>
+  </modification>
+  <modification type="public" template="xfrm_category_add_resource" modification_key="cc_rc_add_price" description="CloudCheats Resource Credits - price field on resource create" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[			</xf:if>
+
+			<xf:if contentcheck="true">]]></find>
+    <replace><![CDATA[			</xf:if>
+
+			<xf:textboxrow name="cc_credits_price" value="" label="Download Price (VZDP Credits)" type="number" min="0">
+				<xf:explain>Leave empty or 0 for free. Users pay this once, then download unlimited times.</xf:explain>
+			</xf:textboxrow>
+
+			<xf:if contentcheck="true">]]></replace>
+  </modification>
+  <modification type="public" template="xfrm_resource_view" modification_key="cc_rc_sidebar_price" description="CloudCheats Resource Credits - price in resource sidebar" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[						<xf:if is="$resource.isDownloadable()">
+							<dl class="pairs pairs--justified">
+								<dt>{{ phrase('xfrm_downloads') }}</dt>]]></find>
+    <replace><![CDATA[						<xf:if is="$resource.cc_credits_price AND $resource.cc_credits_price > 0">
+							<dl class="pairs pairs--justified">
+								<dt>Price</dt>
+								<dd>{{ number_format($resource.cc_credits_price, 0) }} VZDP</dd>
+							</dl>
+						</xf:if>
+						<xf:if is="$resource.isDownloadable()">
+							<dl class="pairs pairs--justified">
+								<dt>{{ phrase('xfrm_downloads') }}</dt>]]></replace>
+  </modification>
+  <modification type="public" template="xfrm_resource_wrapper_macros" modification_key="cc_rc_buy_button_open" description="CloudCheats Resource Credits - Buy button (open wrapper)" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[					<xf:if is="$resource.isDownloadable()">
+						<div class="p-title-pageAction">
+							<xf:if is="$resource.canDownload()">]]></find>
+    <replace><![CDATA[					<xf:if is="$resource.isDownloadable()">
+						<div class="p-title-pageAction">
+							<xf:if is="$cc_credits_price AND !$cc_has_purchased">
+								<xf:button href="{{ link('resources/cc-purchase', $resource) }}" class="button--cta" icon="payment">
+									Buy for {{ number_format($cc_credits_price, 0) }} VZDP
+								</xf:button>
+							<xf:else />
+								<xf:if is="$resource.canDownload()">]]></replace>
+  </modification>
+  <modification type="public" template="xfrm_resource_wrapper_macros" modification_key="cc_rc_buy_button_close" description="CloudCheats Resource Credits - Buy button (close wrapper)" execution_order="20" enabled="1" action="str_replace">
+    <find><![CDATA[							</xf:if>
+						</div>
+					<xf:elseif is="$resource.isExternalPurchasable()" />]]></find>
+    <replace><![CDATA[								</xf:if>
+							</xf:if>
+						</div>
+					<xf:elseif is="$resource.isExternalPurchasable()" />]]></replace>
+  </modification>
+</template_modifications>

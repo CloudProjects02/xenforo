@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="cc_rc_insufficient_funds" version_id="1000010" version_string="1.0.0" global_cache="0" addon_id="CloudCheats/ResourceCredits"><![CDATA[Insufficient funds. This resource costs {price} {currency} but your balance is {balance} {currency}.]]></phrase>
+</phrases>

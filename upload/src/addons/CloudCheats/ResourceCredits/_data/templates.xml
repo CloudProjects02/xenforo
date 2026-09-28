@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="public" title="cc_resource_credits_purchase" version_id="1000010" version_string="1.0.0"><![CDATA[<xf:title>Purchase: {$resource.title}</xf:title>
+
+<xf:breadcrumb source="$resource.getBreadcrumbs()" />
+<xf:breadcrumb href="{{ link('resources', $resource) }}">{$resource.title}</xf:breadcrumb>
+
+<div class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<div class="p-body-inner">
+				<div class="cc-purchase-card">
+					<div class="cc-purchase-icon">
+						<img src="{{ $resource.getThumbnailUrl() }}" alt="" class="cc-purchase-thumb" onerror="this.style.display='none'" />
+					</div>
+					<div class="cc-purchase-info">
+						<p class="cc-purchase-question">Are you sure you want to purchase this resource?</p>
+						<dl class="pairs pairs--justified cc-purchase-meta">
+							<dt>Price:</dt>
+							<dd><strong>{{ number_format($price, 0) }} {$currency.title}</strong></dd>
+						</dl>
+						<xf:if is="!$canAfford">
+							<div class="blockMessage blockMessage--error" style="margin-top:12px">
+								Insufficient funds. Your balance: <strong>{{ number_format($balance, 0) }} {$currency.title}</strong>
+								(need {{ number_format($price - $balance, 0) }} more)
+							</div>
+						</xf:if>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="block-footer">
+			<div class="block-footer-main">
+				<xf:if is="$canAfford">
+					<xf:form method="post" action="{{ link('resources/cc-purchase', $resource) }}">
+						<xf:submitrow label="Purchase" icon="payment" />
+					</xf:form>
+				<xf:else />
+					<a href="{{ link('resources', $resource) }}" class="button">Back to resource</a>
+				</xf:if>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+.cc-purchase-card { display: flex; align-items: flex-start; gap: 20px; padding: 24px; }
+.cc-purchase-thumb { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; background: var(--xf-borderColor); display: block; }
+.cc-purchase-icon { flex-shrink: 0; width: 80px; height: 80px; background: var(--xf-borderColor); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 2em; }
+.cc-purchase-info { flex: 1; }
+.cc-purchase-question { font-size: 1.05em; margin: 0 0 12px; color: var(--xf-textColor); }
+.cc-purchase-meta { margin: 0; }
+</style>]]></template>
+</templates>

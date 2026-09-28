@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+<template type="public" title="cloudcheats_home" version_id="1000010" version_string="1.0.0"><![CDATA[
+<xf:title>CloudCheats — Premium Gaming Community</xf:title>
+
+<div class="cc-page">
+
+    <!-- HERO -->
+    <section class="cc-hero">
+        <div class="cc-hero__grid"></div>
+        <div class="cc-hero__glow cc-hero__glow--left"></div>
+        <div class="cc-hero__glow cc-hero__glow--right"></div>
+
+        <div class="cc-hero__inner">
+            <div class="cc-badge">Invite Only</div>
+
+            <h1 class="cc-logo">
+                <span class="cc-logo__cloud">Cloud</span><span class="cc-logo__cheats">Cheats</span>
+            </h1>
+
+            <p class="cc-hero__sub">The most trusted underground gaming community.<br>Private tools, private discussions.</p>
+
+            <div class="cc-stats">
+                <div class="cc-stat">
+                    <span class="cc-stat__num">{{ number($memberCount) }}</span>
+                    <span class="cc-stat__lbl">Members</span>
+                </div>
+                <div class="cc-stat__sep"></div>
+                <div class="cc-stat">
+                    <span class="cc-stat__num">{{ number($threadCount) }}</span>
+                    <span class="cc-stat__lbl">Threads</span>
+                </div>
+                <div class="cc-stat__sep"></div>
+                <div class="cc-stat">
+                    <span class="cc-stat__num">{{ number($postCount) }}</span>
+                    <span class="cc-stat__lbl">Posts</span>
+                </div>
+            </div>
+
+            <div class="cc-cta">
+                <a href="{{ link('register') }}" class="cc-btn cc-btn--primary">
+                    <svg viewBox="0 0 20 20" fill="currentColor"><path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z"/></svg>
+                    Request Invite
+                </a>
+                <a href="{{ link('login') }}" class="cc-btn cc-btn--ghost">
+                    <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 3a1 1 0 011 1v12a1 1 0 11-2 0V4a1 1 0 011-1zm7.707 3.293a1 1 0 010 1.414L9.414 9H17a1 1 0 110 2H9.414l1.293 1.293a1 1 0 01-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                    Sign In
+                </a>
+            </div>
+        </div>
+
+        <div class="cc-hero__scroll">
+            <div class="cc-scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="cc-features">
+        <div class="cc-container">
+            <h2 class="cc-section-title">Why CloudCheats?</h2>
+            <p class="cc-section-sub">Access only for invited members. Everything stays private.</p>
+
+            <div class="cc-cards">
+                <div class="cc-card">
+                    <div class="cc-card__icon cc-card__icon--green">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
+                    </div>
+                    <h3 class="cc-card__title">Undetected Tools</h3>
+                    <p class="cc-card__text">Our tools are constantly updated and maintained to stay ahead of anti-cheat systems. Tested by the community before release.</p>
+                </div>
+
+                <div class="cc-card cc-card--featured">
+                    <div class="cc-card__badge">Most Popular</div>
+                    <div class="cc-card__icon cc-card__icon--cyan">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"/></svg>
+                    </div>
+                    <h3 class="cc-card__title">Private Community</h3>
+                    <p class="cc-card__text">A verified, invite-only community of serious players. No randoms, no snitches. Just people who know what they're doing.</p>
+                </div>
+
+                <div class="cc-card">
+                    <div class="cc-card__icon cc-card__icon--purple">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/></svg>
+                    </div>
+                    <h3 class="cc-card__title">Exclusive Access</h3>
+                    <p class="cc-card__text">Premium releases, early access, and private tools available only to members. Content you won't find anywhere else.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- JOIN CTA -->
+    <section class="cc-join">
+        <div class="cc-container">
+            <div class="cc-join__box">
+                <div class="cc-join__glow"></div>
+                <div class="cc-join__inner">
+                    <h2 class="cc-join__title">Ready to join the community?</h2>
+                    <p class="cc-join__text">You need an invite code from an existing member to register. Already have one?</p>
+                    <div class="cc-cta">
+                        <a href="{{ link('register') }}" class="cc-btn cc-btn--primary cc-btn--lg">Create Account</a>
+                        <a href="{{ link('login') }}" class="cc-btn cc-btn--ghost cc-btn--lg">I have an account</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<style>
+/* Reset overrides */
+.p-body-inner { padding: 0 !important; max-width: none !important; }
+.p-body-pageContent { padding: 0 !important; margin: 0 !important; }
+
+/* Variables */
+:root {
+    --cc-bg:      #050508;
+    --cc-surface: #0c0c14;
+    --cc-border:  rgba(255,255,255,0.06);
+    --cc-green:   #00ff88;
+    --cc-cyan:    #00d4ff;
+    --cc-purple:  #a855f7;
+    --cc-text:    #e2e2f0;
+    --cc-muted:   #64647a;
+    --cc-hero-h:  100vh;
+    --cc-radius:  12px;
+    --cc-font:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Global */
+.cc-page * { box-sizing: border-box; margin: 0; padding: 0; }
+.cc-page { font-family: var(--cc-font); color: var(--cc-text); background: var(--cc-bg); }
+.cc-container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+/* Hero */
+.cc-hero {
+    position: relative;
+    min-height: var(--cc-hero-h);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: var(--cc-bg);
+    text-align: center;
+    padding: 80px 24px 60px;
+}
+
+.cc-hero__grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(0,255,136,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,136,.035) 1px, transparent 1px);
+    background-size: 64px 64px;
+    pointer-events: none;
+}
+
+.cc-hero__glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+    opacity: .18;
+}
+.cc-hero__glow--left  { background: var(--cc-green);  top: -100px; left: -150px; }
+.cc-hero__glow--right { background: var(--cc-cyan);   bottom: -100px; right: -150px; }
+
+.cc-hero__inner { position: relative; z-index: 1; max-width: 760px; }
+
+.cc-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    border: 1px solid rgba(0,255,136,.35);
+    border-radius: 99px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--cc-green);
+    background: rgba(0,255,136,.07);
+    margin-bottom: 28px;
+}
+.cc-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--cc-green);
+    animation: cc-pulse 2s infinite;
+}
+@keyframes cc-pulse {
+    0%,100% { opacity: 1; }
+    50% { opacity: .3; }
+}
+
+.cc-logo {
+    font-size: clamp(48px, 8vw, 88px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -.03em;
+    margin-bottom: 20px;
+}
+.cc-logo__cloud  { color: var(--cc-text); }
+.cc-logo__cheats {
+    background: linear-gradient(135deg, var(--cc-green), var(--cc-cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 24px rgba(0,255,136,.5));
+}
+
+.cc-hero__sub {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--cc-muted);
+    margin-bottom: 40px;
+}
+
+/* Stats */
+.cc-stats {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    background: rgba(255,255,255,.03);
+    border: 1px solid var(--cc-border);
+    border-radius: var(--cc-radius);
+    padding: 20px 40px;
+    margin-bottom: 36px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+.cc-stat { text-align: center; padding: 0 32px; }
+.cc-stat__num {
+    display: block;
+    font-size: 28px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--cc-green), var(--cc-cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.cc-stat__lbl {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--cc-muted);
+    margin-top: 2px;
+}
+.cc-stat__sep {
+    width: 1px;
+    height: 40px;
+    background: var(--cc-border);
+    flex-shrink: 0;
+}
+
+/* Buttons */
+.cc-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+.cc-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 26px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all .2s ease;
+    cursor: pointer;
+    border: none;
+}
+.cc-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+.cc-btn--lg { padding: 14px 32px; font-size: 15px; }
+
+.cc-btn--primary {
+    background: linear-gradient(135deg, var(--cc-green), #00cc6a);
+    color: #050508;
+    box-shadow: 0 0 24px rgba(0,255,136,.3);
+}
+.cc-btn--primary:hover {
+    box-shadow: 0 0 36px rgba(0,255,136,.5);
+    transform: translateY(-1px);
+    color: #050508;
+    text-decoration: none;
+}
+
+.cc-btn--ghost {
+    background: transparent;
+    color: var(--cc-text);
+    border: 1px solid rgba(255,255,255,.12);
+}
+.cc-btn--ghost:hover {
+    background: rgba(255,255,255,.06);
+    border-color: rgba(255,255,255,.2);
+    color: var(--cc-text);
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+/* Scroll arrow */
+.cc-hero__scroll {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: .35;
+}
+.cc-scroll-arrow {
+    width: 18px; height: 18px;
+    border-right: 2px solid var(--cc-text);
+    border-bottom: 2px solid var(--cc-text);
+    transform: rotate(45deg);
+    animation: cc-bounce .8s ease-in-out infinite alternate;
+}
+@keyframes cc-bounce {
+    from { transform: rotate(45deg) translateY(-3px); }
+    to   { transform: rotate(45deg) translateY(3px); }
+}
+
+/* Features */
+.cc-features {
+    background: var(--cc-surface);
+    border-top: 1px solid var(--cc-border);
+    border-bottom: 1px solid var(--cc-border);
+    padding: 80px 0;
+}
+
+.cc-section-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+.cc-section-sub {
+    text-align: center;
+    color: var(--cc-muted);
+    font-size: 15px;
+    margin-bottom: 52px;
+}
+
+.cc-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.cc-card {
+    position: relative;
+    background: var(--cc-bg);
+    border: 1px solid var(--cc-border);
+    border-radius: 16px;
+    padding: 32px;
+    transition: border-color .2s, transform .2s;
+}
+.cc-card:hover {
+    border-color: rgba(0,255,136,.25);
+    transform: translateY(-2px);
+}
+
+.cc-card--featured {
+    border-color: rgba(0,212,255,.3);
+    background: linear-gradient(135deg, rgba(0,212,255,.04), var(--cc-bg));
+}
+.cc-card--featured:hover { border-color: rgba(0,212,255,.5); }
+
+.cc-card__badge {
+    position: absolute;
+    top: -11px;
+    left: 24px;
+    background: linear-gradient(135deg, var(--cc-cyan), var(--cc-green));
+    color: #050508;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 99px;
+}
+
+.cc-card__icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.cc-card__icon svg { width: 24px; height: 24px; }
+.cc-card__icon--green  { background: rgba(0,255,136,.1);  color: var(--cc-green); }
+.cc-card__icon--cyan   { background: rgba(0,212,255,.1);  color: var(--cc-cyan); }
+.cc-card__icon--purple { background: rgba(168,85,247,.1); color: var(--cc-purple); }
+
+.cc-card__title { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+.cc-card__text  { font-size: 14px; line-height: 1.7; color: var(--cc-muted); }
+
+/* Join CTA */
+.cc-join { padding: 80px 0; background: var(--cc-bg); }
+
+.cc-join__box {
+    position: relative;
+    border: 1px solid rgba(0,255,136,.15);
+    border-radius: 20px;
+    overflow: hidden;
+    text-align: center;
+}
+.cc-join__glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(0,255,136,.07) 0%, transparent 70%);
+    pointer-events: none;
+}
+.cc-join__inner {
+    position: relative;
+    padding: 64px 32px;
+}
+.cc-join__title { font-size: 28px; font-weight: 700; margin-bottom: 12px; }
+.cc-join__text  { color: var(--cc-muted); font-size: 15px; margin-bottom: 32px; line-height: 1.7; }
+
+/* Responsive */
+@media (max-width: 600px) {
+    .cc-stats { padding: 16px 20px; }
+    .cc-stat  { padding: 0 16px; }
+    .cc-stat__num { font-size: 22px; }
+    .cc-logo  { font-size: 44px; }
+    .cc-features, .cc-join { padding: 52px 0; }
+}
+</style>
+]]></template>
+</templates>

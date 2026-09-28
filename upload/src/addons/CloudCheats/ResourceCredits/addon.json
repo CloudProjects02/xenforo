@@ -1,0 +1,18 @@
+{
+	"addon_id": "CloudCheats/ResourceCredits",
+	"title": "Resource Credits",
+	"description": "Per-resource credit pricing for XFRM downloads using DBTech Credits.",
+	"version_id": 1000010,
+	"version_string": "1.0.0",
+	"dev": "CloudCheats",
+	"dev_url": "",
+	"faq_url": "",
+	"support_url": "",
+	"extra_urls": [],
+	"require": {
+		"XF": [2030000, "XenForo 2.3.0+"],
+		"XFRM": [1000000, "XenForo Resource Manager"],
+		"DBTech/Credits": [6000000, "DragonByte Credits 6.x"]
+	},
+	"icon": ""
+}
