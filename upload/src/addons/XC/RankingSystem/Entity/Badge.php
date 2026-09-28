@@ -54,14 +54,18 @@ class Badge extends Entity {
          
     }
      public function getimageExit(){
-        
+
         $file_ex = $this->file_ex;
-        
+
         $badge_id = $this->badge_id;
-       
+
         $fileexit=sprintf('data://AwardeBadge/%d/%d.'.$file_ex, floor($badge_id / 1000), $badge_id);
-        
+
         return \XF\Util\File::abstractedPathExists($fileexit);
+    }
+
+    public function getBadgeImageExists(){
+        return $this->getimageExit();
     }
 
 }

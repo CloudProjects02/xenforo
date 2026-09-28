@@ -9,7 +9,6 @@
                   enabled="1"
                   action="str_replace">
         <find><![CDATA[<footer class="p-footer" id="footer">]]></find>
-        <replace><![CDATA[<xf:macro name="cloudcheats_footer_macro" />
-<footer class="p-footer cc-site-footer" id="footer">]]></replace>
+        <replace><![CDATA[<footer class="p-footer cc-site-footer" id="footer">]]></replace>
     </modification>
 </template_modifications>
