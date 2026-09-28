@@ -23,12 +23,20 @@ class Category extends XFCP_Category
 		// Save price after successful resource creation (redirect response = save succeeded)
 		if ($isPost && $response instanceof \XF\Mvc\Reply\Redirect)
 		{
-			// Get the newly created resource ID from the last inserted row
-			$resourceId = $this->db()->lastInsertId();
+			// Extract resource_id from the redirect URL (e.g. /resources/slug.123/)
+			$redirectUrl = $response->getUrl();
+			if (preg_match('/\.(\d+)\/?$/', $redirectUrl, $m))
+			{
+				$resourceId = (int) $m[1];
+			}
+			else
+			{
+				$resourceId = (int) \XF::db()->lastInsertId();
+			}
 
 			if ($resourceId && $creditPrice > 0)
 			{
-				$this->db()->query(
+				\XF::db()->query(
 					'UPDATE xf_rm_resource SET cc_credits_price = ? WHERE resource_id = ?',
 					[$creditPrice, $resourceId]
 				);
