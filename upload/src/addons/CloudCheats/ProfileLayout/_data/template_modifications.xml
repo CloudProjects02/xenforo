@@ -313,11 +313,12 @@
 
 <div class="cc-profile-wrap">
 
-    <!-- ── Profile header / cover ── -->
+    <!-- ── Profile cover / header ── -->
     <div class="cc-profile-cover{{ $user.Profile.banner_date ? ' cc-profile-cover--withBanner' : '' }}">
         <xf:profilebanner user="$user" size="l" class="cc-profile-banner-bg" toggle="cc-profile-cover--withBanner">
             <div class="cc-profile-header">
-                <div class="cc-profile-avatar">
+
+                <div class="cc-avatar-ring">
                     <span class="avatarWrapper">
                         <xf:avatar user="{$user}" size="l" href="{{ $user.getAvatarUrl('o') ?: '' }}" />
                         <xf:if is="$user.user_id == $xf.visitor.user_id && $xf.visitor.canUploadAvatar()">
@@ -325,6 +326,7 @@
                         </xf:if>
                     </span>
                 </div>
+
                 <div class="cc-profile-header-info">
                     <h1 class="cc-profile-username">
                         <span class="cc-profile-username-inner">
@@ -353,7 +355,6 @@
 
                     <xf:userblurb user="$user" tag="div" class="cc-profile-blurb" />
 
-                    <!-- Action buttons (Follow/Message/etc) -->
                     <xf:if contentcheck="true">
                         <div class="cc-profile-actions">
                             <xf:contentcheck>
@@ -365,7 +366,6 @@
                     </xf:if>
                 </div>
 
-                <!-- Report / Edit Banner / Moderator tools -->
                 <xf:if contentcheck="true">
                     <div class="cc-profile-admin-row">
                         <xf:contentcheck>
@@ -407,26 +407,46 @@
                         </xf:contentcheck>
                     </div>
                 </xf:if>
+
             </div>
         </xf:profilebanner>
     </div>
 
-    <!-- ── Two-column body ── -->
+    <!-- ── Three-column body ── -->
     <div class="cc-profile-body">
 
-        <!-- ── Sidebar ── -->
+        <!-- ── LEFT SIDEBAR ── -->
         <div class="cc-profile-sidebar">
 
-            <!-- Online / Offline status -->
+            <!-- Big ONLINE / OFFLINE status -->
             <div class="cc-sidebar-card cc-status-card{{ $user.isOnline() ? ' cc-status--online' : ' cc-status--offline' }}">
-                <span class="cc-status-dot"></span>
-                <span>{{ $user.isOnline() ? 'Online' : 'Offline' }}</span>
+                <div class="cc-status-main">
+                    <span class="cc-status-dot"></span>
+                    <span class="cc-status-label">{{ $user.isOnline() ? 'ONLINE' : 'OFFLINE' }}</span>
+                </div>
+                <xf:if contentcheck="true">
+                    <div class="cc-status-activity">
+                        <xf:contentcheck><xf:useractivity user="$user" /></xf:contentcheck>
+                    </div>
+                </xf:if>
+            </div>
+
+            <!-- Reputation / Trophy points mini-stat boxes -->
+            <div class="cc-mini-stats-grid">
+                <div class="cc-mini-stat">
+                    <div class="cc-mini-stat-val">{{ $user.reaction_score }}</div>
+                    <div class="cc-mini-stat-label">Reputation</div>
+                </div>
+                <div class="cc-mini-stat">
+                    <div class="cc-mini-stat-val">{{ $user.trophy_points }}</div>
+                    <div class="cc-mini-stat-label">Points</div>
+                </div>
             </div>
 
             <!-- Years of Service badge -->
             <xf:if is="cc_yos($user.register_date) > 0">
-                <div class="cc-sidebar-card cc-yos-sidebar-card">
-                    <div class="dp-service-badge-profile year-{{ cc_yos($user.register_date) }}">
+                <div class="cc-sidebar-card cc-yos-sidebar-card year-{{ cc_yos($user.register_date) }}">
+                    <div class="dp-service-badge-profile">
                         <div class="dp-service-badge-icon">
                             <svg class="service-badge-svg" width="27" height="19" viewBox="0 0 27 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M2.36011 0.449047L6.04499 5.72473L13.2986 0L20.5523 5.72473L24.2371 0.449047L26.597 5.72473L19.8109 12.0597H6.78631L0.000244141 5.72473L2.36011 0.449047Z" fill="currentColor"/>
@@ -443,29 +463,35 @@
                 </div>
             </xf:if>
 
-            <!-- User info rows -->
+            <!-- Info rows with icons -->
             <div class="cc-sidebar-card cc-info-card">
                 <div class="cc-info-row">
-                    <span class="cc-info-label">User ID</span>
+                    <span class="cc-info-label"><xf:fa icon="fa-id-badge" />&nbsp;User ID</span>
                     <span class="cc-info-val">#{{ $user.user_id }}</span>
                 </div>
                 <div class="cc-info-row">
-                    <span class="cc-info-label">Registered</span>
+                    <span class="cc-info-label"><xf:fa icon="fa-calendar" />&nbsp;Registered</span>
                     <span class="cc-info-val"><xf:date time="$user.register_date" /></span>
                 </div>
                 <xf:if contentcheck="true">
                     <div class="cc-info-row">
-                        <span class="cc-info-label">Last seen</span>
+                        <span class="cc-info-label"><xf:fa icon="fa-clock" />&nbsp;Last seen</span>
                         <span class="cc-info-val">
                             <xf:contentcheck><xf:useractivity user="$user" /></xf:contentcheck>
                         </span>
                     </div>
                 </xf:if>
+                <xf:if is="$user.message_count > 0 OR $xf.visitor.user_id == $user.user_id">
+                    <div class="cc-info-row">
+                        <span class="cc-info-label"><xf:fa icon="fa-comment" />&nbsp;Posts</span>
+                        <span class="cc-info-val">{{ $user.message_count }}</span>
+                    </div>
+                </xf:if>
             </div>
 
-        </div><!-- /cc-profile-sidebar -->
+        </div>
 
-        <!-- ── Main content ── -->
+        <!-- ── Center content ── -->
         <div class="cc-profile-content">
 
             <!-- Statistics grid -->
@@ -476,13 +502,6 @@
                         arg-context="profile" />
                 </div>
             </div>
-
-            <!-- User banners -->
-            <xf:if contentcheck="true">
-                <div class="cc-banners-card">
-                    <xf:contentcheck><xf:userbanners user="$user" /></xf:contentcheck>
-                </div>
-            </xf:if>
 
             <xf:ad position="member_view_below_tabs" arg-user="{$user}" />
 
@@ -539,20 +558,17 @@
                 </span>
             </h2>
 
-            <!-- Tab panes -->
             <ul class="tabPanes js-memberTabPanes">
                 <!--[XF:tab_panes:start]-->
                 <xf:if is="$user.canViewPostsOnProfile()">
                     <li class="is-active" role="tabpanel" id="profile-posts">
                         <xf:js src="xf/inline_mod.js" min="1" />
-
                         <xf:macro id="lightbox_macros::setup" arg-canViewAttachments="{$canViewAttachments}" />
 
                         <div class="block block--messages"
                             data-xf-init="lightbox inline-mod"
                             data-type="profile_post"
                             data-href="{{ link('inline-mod') }}">
-
                             <div class="block-container">
                                 <div class="block-body js-replyNewMessageContainer">
                                     <xf:if is="$user.canPostOnProfile()">
@@ -563,7 +579,6 @@
                                             arg-containerSelector="< .js-replyNewMessageContainer"
                                             arg-attachmentData="{$attachmentData}" />
                                     </xf:if>
-
                                     <xf:if is="$profilePosts is not empty">
                                         <xf:foreach loop="$profilePosts" value="$profilePost">
                                             <xf:macro id="profile_post_macros::{{ $profilePost.message_state == 'deleted' ? 'profile_post_deleted' : 'profile_post' }}"
@@ -575,10 +590,8 @@
                                     </xf:if>
                                 </div>
                             </div>
-
                             <div class="block-outer block-outer--after">
-                                <xf:pagenav
-                                    page="{$page}" perpage="{$perPage}" total="{$total}"
+                                <xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
                                     link="members" data="{$user}"
                                     wrapperclass="block-outer-main" />
                                 <div class="block-outer-opposite">
@@ -618,7 +631,6 @@
                                         </div>
                                     </xf:if>
                                 </div>
-
                                 <div class="block-outer block-outer--after">
                                     <div class="block-outer-opposite">
                                         <xf:showignored />
@@ -651,8 +663,25 @@
                 <!--[XF:tab_panes:end]-->
             </ul>
 
-        </div><!-- /cc-profile-content -->
-    </div><!-- /cc-profile-body -->
-</div><!-- /cc-profile-wrap -->]]></replace>
+        </div>
+
+        <!-- ── RIGHT SIDEBAR ── -->
+        <div class="cc-profile-right">
+
+            <!-- User banners (decorative images) -->
+            <xf:if contentcheck="true">
+                <div class="cc-sidebar-card cc-right-banners">
+                    <div class="cc-right-card-title">Badges</div>
+                    <xf:contentcheck><xf:userbanners user="$user" /></xf:contentcheck>
+                </div>
+            </xf:if>
+
+            <!-- Widgets / future content placeholder -->
+            <xf:widgetpos id="member_view_right_sidebar" />
+
+        </div>
+
+    </div>
+</div>]]></replace>
   </modification>
 </template_modifications>
