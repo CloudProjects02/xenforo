@@ -313,9 +313,9 @@
 
 <div class="cc-profile-wrap">
 
-    <!-- ── Profile cover / header ── -->
-    <div class="cc-profile-cover{{ $user.Profile.banner_date ? ' cc-profile-cover--withBanner' : '' }}">
-        <xf:profilebanner user="$user" size="l" class="cc-profile-banner-bg" toggle="cc-profile-cover--withBanner">
+    <!-- ── Header cover ── -->
+    <div class="cc-profile-cover">
+        <xf:profilebanner user="$user" size="l" class="cc-banner-bg" toggle="cc-profile-cover--hasBanner">
             <div class="cc-profile-header">
 
                 <div class="cc-avatar-ring">
@@ -327,86 +327,58 @@
                     </span>
                 </div>
 
-                <div class="cc-profile-header-info">
-                    <h1 class="cc-profile-username">
-                        <span class="cc-profile-username-inner">
-                            <xf:username user="{$user}" rich="true" href="" />
-                        </span>
+                <div class="cc-header-info">
+                    <h1 class="cc-username">
+                        <xf:username user="{$user}" rich="true" href="" />
                         <xf:if is="$user.hasViewableUsernameHistory()">
-                            <a class="memberHeader-nameChangeIndicator"
-                               data-xf-click="menu"
-                               data-xf-init="tooltip"
+                            <a class="cc-username-history-trigger"
+                               data-xf-click="menu" data-xf-init="tooltip"
                                title="{{ phrase('username_changed')|for_attr }}"
-                               role="button" tabindex="0"
-                               aria-expanded="false" aria-haspopup="true"
-                               aria-label="{{ phrase('username_changed')|for_attr }}"><xf:fa icon="fa-history" /></a>
+                               role="button" tabindex="0" aria-expanded="false" aria-haspopup="true"><i class="fas fa-history"></i></a>
                             <div class="menu" data-menu="menu" aria-hidden="true"
                                  data-href="{{ link('members/username-history', $user, {'menu': 1}) }}"
                                  data-load-target=".js-usernameHistoryBody">
                                 <div class="menu-content">
                                     <h3 class="menu-header">{{ phrase('previous_usernames') }}</h3>
-                                    <div class="js-usernameHistoryBody">
-                                        <div class="menu-row">{{ phrase('loading...') }}</div>
-                                    </div>
+                                    <div class="js-usernameHistoryBody"><div class="menu-row">{{ phrase('loading...') }}</div></div>
                                 </div>
                             </div>
                         </xf:if>
                     </h1>
+                    <xf:userblurb user="$user" tag="div" class="cc-header-blurb" />
+                </div>
 
-                    <xf:userblurb user="$user" tag="div" class="cc-profile-blurb" />
-
+                <div class="cc-header-actions">
                     <xf:if contentcheck="true">
-                        <div class="cc-profile-actions">
+                        <xf:contentcheck>
+                            <xf:macro id="member_macros::member_action_buttons" arg-user="{$user}" arg-context="profile" />
+                        </xf:contentcheck>
+                    </xf:if>
+                    <xf:if contentcheck="true">
+                        <div class="cc-staff-tools">
                             <xf:contentcheck>
-                                <xf:macro id="member_macros::member_action_buttons"
-                                    arg-user="{$user}"
-                                    arg-context="profile" />
+                                <!--[XF:action_top_start]-->
+                                <xf:if is="$user.user_id == $xf.visitor.user_id && $xf.visitor.canUploadProfileBanner()">
+                                    <a href="{{ link('account/banner') }}" class="button button--link" data-xf-click="overlay">{{ phrase('edit_profile_banner') }}</a>
+                                </xf:if>
+                                <xf:if contentcheck="true">
+                                    <div class="buttonGroup-buttonWrapper">
+                                        <a class="button button--link menuTrigger" data-xf-click="menu" aria-expanded="false" aria-haspopup="true">{{ phrase('moderator_tools') }}</a>
+                                        <div class="menu" data-menu="menu" aria-hidden="true">
+                                            <div class="menu-content">
+                                                <h3 class="menu-header">{{ phrase('moderator_tools') }}</h3>
+                                                <xf:contentcheck>
+                                                    <xf:macro id="member_macros::moderator_menu_actions" arg-user="{$user}" arg-context="profile" />
+                                                </xf:contentcheck>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </xf:if>
+                                <!--[XF:action_top_end]-->
                             </xf:contentcheck>
                         </div>
                     </xf:if>
                 </div>
-
-                <xf:if contentcheck="true">
-                    <div class="cc-profile-admin-row">
-                        <xf:contentcheck>
-                            <!--[XF:action_top_start]-->
-                            <xf:if contentcheck="true">
-                                <div class="buttonGroup">
-                                    <xf:contentcheck>
-                                        <xf:if is="$user.canBeReported()">
-                                            <xf:button href="{{ link('members/report', $user) }}"
-                                                class="button--link" overlay="true" data-cache="false">
-                                                {{ phrase('report_verb') }}
-                                            </xf:button>
-                                        </xf:if>
-                                        <xf:if is="$user.user_id == $xf.visitor.user_id && $xf.visitor.canUploadProfileBanner()">
-                                            <xf:button href="{{ link('account/banner') }}"
-                                                class="button--link" overlay="true">
-                                                {{ phrase('edit_profile_banner') }}
-                                            </xf:button>
-                                        </xf:if>
-                                        <xf:if contentcheck="true">
-                                            <div class="buttonGroup-buttonWrapper">
-                                                <xf:button class="button--link menuTrigger" data-xf-click="menu" aria-expanded="false" aria-haspopup="true">{{ phrase('moderator_tools') }}</xf:button>
-                                                <div class="menu" data-menu="menu" aria-hidden="true">
-                                                    <div class="menu-content">
-                                                        <h3 class="menu-header">{{ phrase('moderator_tools') }}</h3>
-                                                        <xf:contentcheck>
-                                                            <xf:macro id="member_macros::moderator_menu_actions"
-                                                                arg-user="{$user}"
-                                                                arg-context="profile" />
-                                                        </xf:contentcheck>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </xf:if>
-                                    </xf:contentcheck>
-                                </div>
-                            </xf:if>
-                            <!--[XF:action_top_end]-->
-                        </xf:contentcheck>
-                    </div>
-                </xf:if>
 
             </div>
         </xf:profilebanner>
@@ -418,94 +390,119 @@
         <!-- ── LEFT SIDEBAR ── -->
         <div class="cc-profile-sidebar">
 
-            <!-- Big ONLINE / OFFLINE status -->
+            <!-- Online / Offline status -->
             <div class="cc-sidebar-card cc-status-card{{ $user.isOnline() ? ' cc-status--online' : ' cc-status--offline' }}">
                 <div class="cc-status-main">
                     <span class="cc-status-dot"></span>
                     <span class="cc-status-label">{{ $user.isOnline() ? 'ONLINE' : 'OFFLINE' }}</span>
                 </div>
                 <xf:if contentcheck="true">
-                    <div class="cc-status-activity">
+                    <div class="cc-status-sub">
                         <xf:contentcheck><xf:useractivity user="$user" /></xf:contentcheck>
                     </div>
                 </xf:if>
             </div>
 
-            <!-- Reputation / Trophy points mini-stat boxes -->
-            <div class="cc-mini-stats-grid">
-                <div class="cc-mini-stat">
-                    <div class="cc-mini-stat-val">{{ $user.reaction_score }}</div>
-                    <div class="cc-mini-stat-label">Reputation</div>
+            <!-- Reputation / Points blocks (vacban style) -->
+            <div class="cc-rep-grid">
+                <div class="cc-rep-block">
+                    <div class="cc-rep-num">{{ $user.reaction_score }}</div>
+                    <div class="cc-rep-label">Reputations</div>
+                    <div class="cc-rep-icon"><i class="fas fa-exclamation-circle"></i></div>
                 </div>
-                <div class="cc-mini-stat">
-                    <div class="cc-mini-stat-val">{{ $user.trophy_points }}</div>
-                    <div class="cc-mini-stat-label">Points</div>
+                <div class="cc-rep-block">
+                    <div class="cc-rep-num">{{ $user.trophy_points }}</div>
+                    <div class="cc-rep-label">Points</div>
+                    <div class="cc-rep-icon"><i class="fas fa-star"></i></div>
                 </div>
             </div>
 
-            <!-- Years of Service badge -->
-            <xf:if is="cc_yos($user.register_date) > 0">
-                <div class="cc-sidebar-card cc-yos-sidebar-card year-{{ cc_yos($user.register_date) }}">
-                    <div class="dp-service-badge-profile">
-                        <div class="dp-service-badge-icon">
-                            <svg class="service-badge-svg" width="27" height="19" viewBox="0 0 27 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M2.36011 0.449047L6.04499 5.72473L13.2986 0L20.5523 5.72473L24.2371 0.449047L26.597 5.72473L19.8109 12.0597H6.78631L0.000244141 5.72473L2.36011 0.449047Z" fill="currentColor"/>
-                                <path d="M7.6167 13.4965H19.3804V15.3497C19.3804 16.3647 18.5548 17.1903 17.5398 17.1903H9.45726C8.44224 17.1903 7.6167 16.3647 7.6167 15.3497V13.4965Z" fill="currentColor"/>
-                            </svg>
-                            <svg class="service-badge-svg-bg" width="40" height="28" viewBox="0 0 40 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M3.49646 0.665255L8.95593 8.48468L19.7319 0L30.5079 8.48468L35.9674 0.665255L39.4627 8.48468L29.3417 17.8374L10.1221 17.8374L0.00112915 8.48468L3.49646 0.665255Z" fill="currentColor"/>
-                                <path d="M11.2869 19.9034H28.7113V22.6407C28.7113 24.1687 27.4742 25.4059 25.9461 25.4059H14.0521C12.524 25.4059 11.2869 24.1687 11.2869 22.6407V19.9034Z" fill="currentColor"/>
-                            </svg>
-                        </div>
-                        <div class="dp-service-badge-duration">{{ cc_yos($user.register_date) }}</div>
-                        <div class="dp-service-badge-title">Years of Service</div>
-                    </div>
-                </div>
-            </xf:if>
-
-            <!-- Info rows with icons -->
+            <!-- Info rows -->
             <div class="cc-sidebar-card cc-info-card">
                 <div class="cc-info-row">
-                    <span class="cc-info-label"><xf:fa icon="fa-id-badge" />&nbsp;User ID</span>
+                    <span class="cc-info-label"><i class="fas fa-user-circle"></i> User ID</span>
                     <span class="cc-info-val">#{{ $user.user_id }}</span>
                 </div>
                 <div class="cc-info-row">
-                    <span class="cc-info-label"><xf:fa icon="fa-calendar" />&nbsp;Registered</span>
+                    <span class="cc-info-label"><i class="fas fa-calendar-check"></i> Registered</span>
                     <span class="cc-info-val"><xf:date time="$user.register_date" /></span>
                 </div>
                 <xf:if contentcheck="true">
                     <div class="cc-info-row">
-                        <span class="cc-info-label"><xf:fa icon="fa-clock" />&nbsp;Last seen</span>
+                        <span class="cc-info-label"><i class="fas fa-clock"></i> Last Visited</span>
                         <span class="cc-info-val">
                             <xf:contentcheck><xf:useractivity user="$user" /></xf:contentcheck>
                         </span>
                     </div>
                 </xf:if>
-                <xf:if is="$user.message_count > 0 OR $xf.visitor.user_id == $user.user_id">
+                <xf:if is="$user.hasViewableUsernameHistory()">
                     <div class="cc-info-row">
-                        <span class="cc-info-label"><xf:fa icon="fa-comment" />&nbsp;Posts</span>
-                        <span class="cc-info-val">{{ $user.message_count }}</span>
+                        <span class="cc-info-label"><i class="fas fa-history"></i> Username History</span>
+                        <span class="cc-info-val">
+                            <a style="color:@xf-textColorMuted;" data-xf-click="menu" role="button" tabindex="0" aria-expanded="false" aria-haspopup="true">View</a>
+                            <div class="menu" data-menu="menu" aria-hidden="true"
+                                 data-href="{{ link('members/username-history', $user, {'menu': 1}) }}"
+                                 data-load-target=".js-usernameHistoryBody2">
+                                <div class="menu-content">
+                                    <h3 class="menu-header">{{ phrase('previous_usernames') }}</h3>
+                                    <div class="js-usernameHistoryBody2"><div class="menu-row">{{ phrase('loading...') }}</div></div>
+                                </div>
+                            </div>
+                        </span>
                     </div>
                 </xf:if>
+                <div class="cc-info-row">
+                    <span class="cc-info-label"><i class="fas fa-comment"></i> Posts</span>
+                    <span class="cc-info-val">{{ $user.message_count }}</span>
+                </div>
             </div>
 
         </div>
 
-        <!-- ── Center content ── -->
+        <!-- ── CENTER CONTENT ── -->
         <div class="cc-profile-content">
 
-            <!-- Statistics grid -->
-            <div class="cc-stats-card">
-                <div class="cc-stats-grid">
-                    <xf:macro id="member_macros::member_stat_pairs"
-                        arg-user="{$user}"
-                        arg-context="profile" />
+            <!-- Horizontal stats grid -->
+            <div class="cc-sidebar-card cc-stats-card">
+                <div class="cc-stats-hgrid">
+                    <xf:macro id="member_macros::member_stat_pairs" arg-user="{$user}" arg-context="profile" />
                 </div>
+            </div>
+
+            <!-- Decorative banners strip (horizontal) -->
+            <xf:if contentcheck="true">
+                <div class="cc-banners-strip">
+                    <xf:contentcheck><xf:userbanners user="$user" /></xf:contentcheck>
+                </div>
+            </xf:if>
+
+            <!-- About / Signature inline card -->
+            <div class="cc-about-card" data-xf-init="tabs" data-panes=".cc-about-panes">
+                <div class="cc-about-tabs tabs" role="tablist">
+                    <a class="tabs-tab is-active" role="tab" aria-controls="cc-about-about">About</a>
+                    <a class="tabs-tab" role="tab" aria-controls="cc-about-sig">Signature</a>
+                </div>
+                <ul class="cc-about-panes">
+                    <li class="is-active cc-about-pane" id="cc-about-about" role="tabpanel">
+                        <xf:if is="$user.Profile.about">
+                            {{ bb_code($user.Profile.about, 'user:about', $user) }}
+                        <xf:else />
+                            <span class="cc-about-empty">This user hasn't written anything yet.</span>
+                        </xf:if>
+                    </li>
+                    <li class="cc-about-pane" id="cc-about-sig" role="tabpanel">
+                        <xf:if is="$user.Profile.signature">
+                            {{ bb_code($user.Profile.signature, 'user:signature', $user) }}
+                        <xf:else />
+                            <span class="cc-about-empty">No signature.</span>
+                        </xf:if>
+                    </li>
+                </ul>
             </div>
 
             <xf:ad position="member_view_below_tabs" arg-user="{$user}" />
 
-            <!-- Tab bar -->
+            <!-- Main tab bar -->
             <h2 class="block-tabHeader block-tabHeader--memberTabs tabs hScroller"
                 data-xf-init="tabs h-scroller"
                 data-panes=".js-memberTabPanes"
@@ -514,45 +511,19 @@
                 <span class="hScroller-scroll">
                     <!--[XF:tabs:start]-->
                     <xf:if is="$user.canViewPostsOnProfile()">
-                        <a href="{{ link('members', $user) }}"
-                            class="tabs-tab is-active"
-                            role="tab"
-                            aria-controls="profile-posts">{{ phrase('profile_posts') }}</a>
+                        <a href="{{ link('members', $user) }}" class="tabs-tab is-active" role="tab" aria-controls="profile-posts">{{ phrase('profile_posts') }}</a>
                     </xf:if>
-
                     <xf:if is="$user.canViewLatestActivity()">
                         <xf:if is="!$user.canViewPostsOnProfile()">
-                            <a href="{{ link('members', $user) }}"
-                                class="tabs-tab is-active"
-                                role="tab"
-                                aria-controls="latest-activity">{{ phrase('latest_activity') }}</a>
+                            <a href="{{ link('members', $user) }}" class="tabs-tab is-active" role="tab" aria-controls="latest-activity">{{ phrase('latest_activity') }}</a>
                         <xf:else />
-                            <a href="{{ link('members/latest-activity', $user) }}"
-                                rel="nofollow"
-                                class="tabs-tab"
-                                id="latest-activity"
-                                role="tab">{{ phrase('latest_activity') }}</a>
+                            <a href="{{ link('members/latest-activity', $user) }}" rel="nofollow" class="tabs-tab" id="latest-activity" role="tab">{{ phrase('latest_activity') }}</a>
                         </xf:if>
                     </xf:if>
-
-                    <a href="{{ link('members/recent-content', $user) }}"
-                        rel="nofollow"
-                        class="tabs-tab"
-                        id="recent-content"
-                        role="tab">{{ phrase('postings') }}</a>
-
+                    <a href="{{ link('members/recent-content', $user) }}" rel="nofollow" class="tabs-tab" id="recent-content" role="tab">{{ phrase('postings') }}</a>
                     <!--[XF:tabs:after_recent_content]-->
-
-                    <a href="{{ link('members/about', $user) }}"
-                        class="tabs-tab"
-                        id="about"
-                        role="tab">{{ phrase('about') }}</a>
-
                     <xf:if is="$xf.visitor.canViewWarnings() && $user.warning_count">
-                        <a href="{{ link('members/warnings', $user) }}"
-                            class="tabs-tab"
-                            id="warnings"
-                            role="tab">{{ phrase('warnings') }}</a>
+                        <a href="{{ link('members/warnings', $user) }}" class="tabs-tab" id="warnings" role="tab">{{ phrase('warnings') }}</a>
                     </xf:if>
                     <!--[XF:tabs:end]-->
                 </span>
@@ -564,7 +535,6 @@
                     <li class="is-active" role="tabpanel" id="profile-posts">
                         <xf:js src="xf/inline_mod.js" min="1" />
                         <xf:macro id="lightbox_macros::setup" arg-canViewAttachments="{$canViewAttachments}" />
-
                         <div class="block block--messages"
                             data-xf-init="lightbox inline-mod"
                             data-type="profile_post"
@@ -591,14 +561,10 @@
                                 </div>
                             </div>
                             <div class="block-outer block-outer--after">
-                                <xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}"
-                                    link="members" data="{$user}"
-                                    wrapperclass="block-outer-main" />
+                                <xf:pagenav page="{$page}" perpage="{$perPage}" total="{$total}" link="members" data="{$user}" wrapperclass="block-outer-main" />
                                 <div class="block-outer-opposite">
                                     <xf:showignored />
-                                    <xf:if is="$canInlineMod">
-                                        <xf:macro id="inline_mod_macros::button" />
-                                    </xf:if>
+                                    <xf:if is="$canInlineMod"><xf:macro id="inline_mod_macros::button" /></xf:if>
                                 </div>
                             </div>
                         </div>
@@ -608,35 +574,22 @@
                 <xf:if is="$user.canViewLatestActivity()">
                     <xf:if is="!$user.canViewPostsOnProfile()">
                         <li class="is-active" role="tabpanel" id="latest-activity">
-                            <div class="block">
-                                <div class="block-container">
-                                    <xf:if is="$newsFeedItems is not empty">
-                                        <ul class="block-body js-newsFeedTarget">
-                                            <xf:foreach loop="$newsFeedItems" value="$item">
-                                                <xf:macro id="news_feed_macros::feed_row" arg-item="{$item}" />
-                                            </xf:foreach>
-                                        </ul>
-                                        <div class="block-footer js-newsFeedLoadMore">
-                                            <span class="block-footer-controls"><xf:button href="{{ link('members/latest-activity', $user, {'before_id': $newsFeedOldestItemId}) }}"
-                                                rel="nofollow"
-                                                data-xf-click="inserter"
-                                                data-append=".js-newsFeedTarget"
-                                                data-replace=".js-newsFeedLoadMore">
-                                                {{ phrase('show_older_items') }}
-                                            </xf:button></span>
-                                        </div>
-                                    <xf:else />
-                                        <div class="block-body js-newsFeedTarget">
-                                            <div class="block-row">{{ phrase('news_feed_is_currently_empty') }}</div>
-                                        </div>
-                                    </xf:if>
-                                </div>
-                                <div class="block-outer block-outer--after">
-                                    <div class="block-outer-opposite">
-                                        <xf:showignored />
+                            <div class="block"><div class="block-container">
+                                <xf:if is="$newsFeedItems is not empty">
+                                    <ul class="block-body js-newsFeedTarget">
+                                        <xf:foreach loop="$newsFeedItems" value="$item">
+                                            <xf:macro id="news_feed_macros::feed_row" arg-item="{$item}" />
+                                        </xf:foreach>
+                                    </ul>
+                                    <div class="block-footer js-newsFeedLoadMore">
+                                        <span class="block-footer-controls">
+                                            <xf:button href="{{ link('members/latest-activity', $user, {'before_id': $newsFeedOldestItemId}) }}" rel="nofollow" data-xf-click="inserter" data-append=".js-newsFeedTarget" data-replace=".js-newsFeedLoadMore">{{ phrase('show_older_items') }}</xf:button>
+                                        </span>
                                     </div>
-                                </div>
-                            </div>
+                                <xf:else />
+                                    <div class="block-body js-newsFeedTarget"><div class="block-row">{{ phrase('news_feed_is_currently_empty') }}</div></div>
+                                </xf:if>
+                            </div></div>
                         </li>
                     <xf:else />
                         <li data-href="{{ link('members/latest-activity', $user) }}" role="tabpanel" aria-labelledby="latest-activity">
@@ -651,10 +604,6 @@
 
                 <!--[XF:tab_panes:after_recent_content]-->
 
-                <li data-href="{{ link('members/about', $user) }}" role="tabpanel" aria-labelledby="about">
-                    <div class="blockMessage">{{ phrase('loading...') }}</div>
-                </li>
-
                 <xf:if is="$xf.visitor.canViewWarnings() && $user.warning_count">
                     <li data-href="{{ link('members/warnings', $user) }}" role="tabpanel" aria-labelledby="warnings">
                         <div class="blockMessage">{{ phrase('loading...') }}</div>
@@ -668,15 +617,22 @@
         <!-- ── RIGHT SIDEBAR ── -->
         <div class="cc-profile-right">
 
-            <!-- User banners (decorative images) -->
-            <xf:if contentcheck="true">
-                <div class="cc-sidebar-card cc-right-banners">
-                    <div class="cc-right-card-title">Badges</div>
-                    <xf:contentcheck><xf:userbanners user="$user" /></xf:contentcheck>
+            <!-- Years of Service -->
+            <xf:if is="cc_yos($user.register_date) > 0">
+                <div class="cc-sidebar-card cc-yos-sidebar-card year-{{ cc_yos($user.register_date) }}">
+                    <div class="dp-service-badge-profile">
+                        <div class="dp-service-badge-icon">
+                            <svg width="27" height="19" viewBox="0 0 27 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M2.36011 0.449047L6.04499 5.72473L13.2986 0L20.5523 5.72473L24.2371 0.449047L26.597 5.72473L19.8109 12.0597H6.78631L0.000244141 5.72473L2.36011 0.449047Z" fill="currentColor"/>
+                                <path d="M7.6167 13.4965H19.3804V15.3497C19.3804 16.3647 18.5548 17.1903 17.5398 17.1903H9.45726C8.44224 17.1903 7.6167 16.3647 7.6167 15.3497V13.4965Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="dp-service-badge-duration">{{ cc_yos($user.register_date) }}</div>
+                        <div class="dp-service-badge-title">Years of Service</div>
+                    </div>
                 </div>
             </xf:if>
 
-            <!-- Widgets / future content placeholder -->
             <xf:widgetpos id="member_view_right_sidebar" />
 
         </div>

@@ -1,32 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <templates>
-  <template type="public" title="cc_profile.less" version_id="1000010" version_string="1.0.0" addon_id="CloudCheats/ProfileLayout"><![CDATA[// CloudCheats Profile Layout v2
+  <template type="public" title="cc_profile.less" version_id="1000010" version_string="1.0.0" addon_id="CloudCheats/ProfileLayout"><![CDATA[// CloudCheats Profile Layout v3
 
-.cc-profile-wrap {
-    max-width: 100%;
-}
+.cc-profile-wrap { max-width: 100%; }
 
 // ── Header / Cover ────────────────────────────────────────────────────────────
 
 .cc-profile-cover {
     position: relative;
-    border-radius: @xf-borderRadius;
+    border-radius: 6px;
     overflow: hidden;
-    margin-bottom: 0;
 }
 
-.cc-profile-banner-bg {
+.cc-banner-bg {
     position: relative;
-    min-height: 200px;
-    background: linear-gradient(135deg, hsl(230, 38%, 13%) 0%, hsl(222, 30%, 15%) 60%, hsl(215, 45%, 18%) 100%);
+    min-height: 195px;
+    background: linear-gradient(135deg, hsl(230, 38%, 12%) 0%, hsl(222, 30%, 14%) 60%, hsl(215, 45%, 17%) 100%);
     display: block;
 }
 
-.cc-profile-banner-bg::after {
+.cc-banner-bg::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(to bottom, transparent 30%, rgba(0,0,0,.65) 100%);
+    background: linear-gradient(to bottom, transparent 25%, rgba(0,0,0,.7) 100%);
     pointer-events: none;
 }
 
@@ -35,90 +32,80 @@
     z-index: 2;
     display: flex;
     align-items: flex-end;
-    gap: 18px;
-    padding: 0 20px 20px;
+    gap: 16px;
+    padding: 0 20px 18px;
     flex-wrap: wrap;
 }
 
-// ── Avatar ring (colored border) ──────────────────────────────────────────────
+// ── Avatar gradient ring ──────────────────────────────────────────────────────
 
 .cc-avatar-ring {
     flex-shrink: 0;
-    margin-bottom: -14px;
+    margin-bottom: -16px;
     padding: 3px;
-    border-radius: 14px;
+    border-radius: 12px;
     background: linear-gradient(135deg, rgba(80,100,255,.9) 0%, rgba(160,60,255,.9) 100%);
     display: inline-block;
 }
 
-.cc-avatar-ring .avatarWrapper {
-    display: block;
-}
+.cc-avatar-ring .avatarWrapper { display: block; }
 
 .cc-avatar-ring .avatar {
-    width: 130px !important;
-    height: 130px !important;
-    border-radius: 10px !important;
+    width: 120px !important;
+    height: 120px !important;
+    border-radius: 8px !important;
     border: none !important;
     display: block;
 }
 
 .cc-avatar-ring .avatar--image {
-    width: 130px;
-    height: 130px;
+    width: 120px;
+    height: 120px;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: 8px;
 }
 
-.cc-avatar-ring .avatarWrapper-update {
-    border-radius: 0 0 8px 8px;
-    font-size: 0.75em;
-}
+// ── Header info ───────────────────────────────────────────────────────────────
 
-// ── Header text / actions ────────────────────────────────────────────────────
-
-.cc-profile-header-info {
+.cc-header-info {
     flex: 1;
-    min-width: 200px;
-    padding-bottom: 6px;
+    min-width: 180px;
+    padding-bottom: 4px;
 }
 
-.cc-profile-username {
-    font-size: 1.7em;
+.cc-username {
+    font-size: 1.6em;
     font-weight: 700;
     color: #fff;
     text-shadow: 0 1px 4px rgba(0,0,0,.6);
-    margin: 0 0 6px;
+    margin: 0 0 5px;
     display: flex;
     align-items: center;
     gap: 8px;
     flex-wrap: wrap;
 }
 
-.cc-profile-username .username,
-.cc-profile-username a {
-    color: inherit !important;
-    text-shadow: inherit;
+.cc-username .username, .cc-username a { color: inherit !important; text-shadow: inherit; }
+
+.cc-username-history-trigger { opacity: .6; font-size: .7em; }
+
+.cc-header-blurb {
+    color: rgba(255,255,255,.7);
+    font-size: 0.88em;
 }
 
-.cc-profile-blurb {
-    color: rgba(255,255,255,.75);
-    font-size: 0.9em;
-    margin-bottom: 10px;
-}
-
-.cc-profile-actions {
+.cc-header-actions {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
+    align-items: flex-end;
+    padding-bottom: 4px;
+    margin-left: auto;
 }
 
-.cc-profile-admin-row {
-    margin-top: auto;
-    padding-bottom: 6px;
-}
+.cc-staff-tools { display: flex; flex-wrap: wrap; gap: 6px; }
 
-// ── Three-column body ─────────────────────────────────────────────────────────
+// ── 3-column body ─────────────────────────────────────────────────────────────
 
 .cc-profile-body {
     display: flex;
@@ -129,14 +116,13 @@
 
 @media (max-width: 768px) {
     .cc-profile-body { flex-direction: column; }
-    .cc-profile-sidebar { width: 100% !important; }
-    .cc-profile-right { width: 100% !important; }
+    .cc-profile-sidebar, .cc-profile-right { width: 100% !important; }
 }
 
-// ── Left sidebar ─────────────────────────────────────────────────────────────
+// ── Left sidebar ──────────────────────────────────────────────────────────────
 
 .cc-profile-sidebar {
-    width: 230px;
+    width: 225px;
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
@@ -146,13 +132,11 @@
 .cc-sidebar-card {
     background: @xf-contentBg;
     border: 1px solid @xf-borderColor;
-    border-radius: @xf-borderRadius;
+    border-radius: 6px;
 }
 
-// Big online / offline status card
-.cc-status-card {
-    padding: 14px 16px;
-}
+// Online/Offline status
+.cc-status-card { padding: 14px 16px; }
 
 .cc-status-main {
     display: flex;
@@ -168,128 +152,62 @@
 }
 
 .cc-status-label {
-    font-size: 1.05em;
+    font-size: 1.1em;
     font-weight: 800;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.12rem;
     text-transform: uppercase;
 }
 
-.cc-status-activity {
+.cc-status-sub {
     font-size: 0.78em;
     color: @xf-textColorMuted;
     margin-top: 5px;
     line-height: 1.4;
 }
 
-.cc-status--online .cc-status-dot {
-    background: #22c55e;
-    box-shadow: 0 0 7px rgba(34,197,94,.75);
-}
+.cc-status--online .cc-status-dot { background: #55e180; box-shadow: 0 0 7px rgba(85,225,128,.7); }
+.cc-status--online .cc-status-label { color: #55e180; }
+.cc-status--offline .cc-status-dot { background: @xf-textColorMuted; }
+.cc-status--offline .cc-status-label { color: @xf-textColorMuted; }
 
-.cc-status--online .cc-status-label {
-    color: #22c55e;
-}
-
-.cc-status--offline .cc-status-dot {
-    background: @xf-textColorMuted;
-}
-
-.cc-status--offline .cc-status-label {
-    color: @xf-textColorMuted;
-}
-
-// Reputation / Points side-by-side mini stats
-.cc-mini-stats-grid {
+// Rep / Points blocks (vacban style)
+.cc-rep-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1px;
-    background: @xf-borderColor;
-    border: 1px solid @xf-borderColor;
-    border-radius: @xf-borderRadius;
-    overflow: hidden;
+    gap: 6px;
 }
 
-.cc-mini-stat {
+.cc-rep-block {
     background: @xf-contentBg;
-    padding: 12px 8px;
+    border: 1px solid @xf-borderColor;
+    border-radius: 6px;
+    padding: 12px 10px 10px;
     text-align: center;
+    position: relative;
 }
 
-.cc-mini-stat-val {
+.cc-rep-num {
     font-size: 1.3em;
     font-weight: 700;
     line-height: 1;
     margin-bottom: 4px;
 }
 
-.cc-mini-stat-label {
+.cc-rep-label {
     font-size: 0.7em;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
+    color: @xf-textColorMuted;
+    margin-bottom: 6px;
+}
+
+.cc-rep-icon {
+    font-size: 0.8em;
     color: @xf-textColorMuted;
 }
 
-// YOS badge card
-.cc-yos-sidebar-card {
-    padding: 12px 16px;
-}
-
-.cc-yos-sidebar-card .dp-service-badge-profile {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 14px;
-    border-radius: 20px;
-    font-size: 0.85em;
-    font-weight: 700;
-    width: 100%;
-    box-sizing: border-box;
-    justify-content: center;
-}
-
-.cc-yos-sidebar-card .dp-service-badge-icon {
-    position: relative;
-    width: 27px;
-    height: 19px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.cc-yos-sidebar-card .service-badge-svg {
-    position: absolute;
-    top: 0; left: 0;
-    width: 27px; height: 19px;
-}
-
-.cc-yos-sidebar-card .service-badge-svg-bg { display: none; }
-
-.cc-yos-sidebar-card .dp-service-badge-duration {
-    font-size: 1.3em;
-    font-weight: 800;
-}
-
-.cc-yos-sidebar-card .dp-service-badge-title {
-    font-size: 0.8em;
-    opacity: .85;
-}
-
-.cc-yos-sidebar-card.year-1 .dp-service-badge-profile  { background: rgba(180,140,100,.15); color: #b48c64; border: 1px solid #b48c64; }
-.cc-yos-sidebar-card.year-2 .dp-service-badge-profile  { background: rgba(160,160,170,.15); color: #a0a0aa; border: 1px solid #a0a0aa; }
-.cc-yos-sidebar-card.year-3 .dp-service-badge-profile  { background: rgba(255,215,  0,.15); color: #ffd700; border: 1px solid #ffd700; }
-.cc-yos-sidebar-card.year-4 .dp-service-badge-profile  { background: rgba(180,235,255,.15); color: #b4ebff; border: 1px solid #b4ebff; }
-.cc-yos-sidebar-card.year-5 .dp-service-badge-profile  { background: rgba(255,165,  0,.15); color: #ffa500; border: 1px solid #ffa500; }
-.cc-yos-sidebar-card.year-6 .dp-service-badge-profile  { background: rgba(160,200,255,.15); color: #a0c8ff; border: 1px solid #a0c8ff; }
-.cc-yos-sidebar-card.year-7 .dp-service-badge-profile  { background: rgba(220,160,255,.15); color: #dca0ff; border: 1px solid #dca0ff; }
-.cc-yos-sidebar-card.year-8 .dp-service-badge-profile  { background: rgba(255,100,100,.15); color: #ff6464; border: 1px solid #ff6464; }
-.cc-yos-sidebar-card.year-9 .dp-service-badge-profile  { background: rgba( 80,200,120,.15); color: #50c878; border: 1px solid #50c878; }
-.cc-yos-sidebar-card.year-10 .dp-service-badge-profile { background: rgba(255,215,  0,.20); color: #ffd700; border: 2px solid #ffd700; box-shadow: 0 0 12px rgba(255,215,0,.4); }
-
 // Info rows
-.cc-info-card {
-    padding: 8px 14px;
-}
+.cc-info-card { padding: 8px 14px; }
 
 .cc-info-row {
     display: flex;
@@ -298,12 +216,10 @@
     gap: 6px;
     padding: 6px 0;
     border-bottom: 1px solid @xf-borderColorFaint;
-    font-size: 0.82em;
+    font-size: 0.81em;
 }
 
-.cc-info-row:last-child {
-    border-bottom: none;
-}
+.cc-info-row:last-child { border-bottom: none; }
 
 .cc-info-label {
     color: @xf-textColorMuted;
@@ -311,7 +227,7 @@
     flex-shrink: 0;
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 5px;
 }
 
 .cc-info-val {
@@ -330,74 +246,130 @@
     gap: 8px;
 }
 
+// Stats card - HORIZONTAL GRID (4 per row like vacban)
 .cc-stats-card {
     background: @xf-contentBg;
     border: 1px solid @xf-borderColor;
-    border-radius: @xf-borderRadius;
+    border-radius: 6px;
     overflow: hidden;
 }
 
-.cc-stats-grid .pairJustifier {
+.cc-stats-hgrid .pairJustifier {
     display: flex;
     flex-wrap: wrap;
+    margin: 0;
 }
 
-.cc-stats-grid dl.pairs {
+.cc-stats-hgrid dl.pairs {
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    flex: 1 1 90px;
+    flex: 1 1 22%;
+    min-width: 80px;
     padding: 14px 8px;
     border-right: 1px solid @xf-borderColor;
     border-bottom: 1px solid @xf-borderColor;
     margin: 0;
-    min-width: 80px;
 }
 
-.cc-stats-grid dl.pairs:last-child {
-    border-right: none;
-}
+.cc-stats-hgrid dl.pairs:last-child { border-right: none; }
 
-.cc-stats-grid dl.pairs dd {
-    font-size: 1.35em;
+.cc-stats-hgrid dl.pairs dd {
+    font-size: 1.25em;
     font-weight: 700;
-    margin: 0 0 2px;
+    margin: 0 0 3px;
+    order: -1;
 }
 
-.cc-stats-grid dl.pairs dd a {
+.cc-stats-hgrid dl.pairs dd a {
     color: inherit;
     font-size: inherit;
     font-weight: inherit;
+    text-decoration: none;
 }
 
-.cc-stats-grid dl.pairs dt {
+.cc-stats-hgrid dl.pairs dt {
     font-size: 0.68em;
     text-transform: uppercase;
     letter-spacing: .05em;
     color: @xf-textColorMuted;
 }
 
+// User banners strip (horizontal in center)
+.cc-banners-strip {
+    background: @xf-contentBg;
+    border: 1px solid @xf-borderColor;
+    border-radius: 6px;
+    padding: 12px 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+}
+
+.cc-banners-strip .userBanners { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+
+.cc-banners-strip .userBanner {
+    flex: 0 0 auto;
+}
+
+// About / Signature mini-tab card
+.cc-about-card {
+    background: @xf-contentBg;
+    border: 1px solid @xf-borderColor;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.cc-about-tabs {
+    display: flex;
+    border-bottom: 1px solid @xf-borderColor;
+    padding: 0 2px;
+    gap: 2px;
+}
+
+.cc-about-tabs .tabs-tab {
+    padding: 10px 16px;
+    font-size: 0.85em;
+    font-weight: 600;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    color: @xf-textColorMuted;
+    text-decoration: none;
+}
+
+.cc-about-tabs .tabs-tab.is-active {
+    color: @xf-textColor;
+    border-bottom-color: @xf-paletteColor2;
+}
+
+.cc-about-panes { list-style: none; margin: 0; padding: 0; }
+
+.cc-about-pane {
+    display: none;
+    padding: 14px 16px;
+    font-size: 0.9em;
+    line-height: 1.65;
+    min-height: 48px;
+}
+
+.cc-about-pane.is-active { display: block; }
+
+.cc-about-empty { color: @xf-textColorMuted; font-style: italic; }
+
+// Main tab bar
 .cc-profile-content .block-tabHeader.tabs {
     margin-bottom: 0;
-    border-radius: @xf-borderRadius @xf-borderRadius 0 0;
+    border-radius: 6px 6px 0 0;
 }
 
-.cc-profile-content .block {
-    border-radius: 0 0 @xf-borderRadius @xf-borderRadius;
-    margin-top: 0;
-}
+.cc-profile-content .block { border-radius: 0 0 6px 6px; margin-top: 0; }
 
-.cc-profile-content .tabPanes {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-.cc-profile-content .p-adPlaceholder {
-    margin: 0;
-}
+.cc-profile-content .tabPanes { margin: 0; padding: 0; list-style: none; }
 
 // ── Right sidebar ─────────────────────────────────────────────────────────────
 
@@ -409,34 +381,33 @@
     gap: 8px;
 }
 
-.cc-right-banners {
-    padding: 12px;
-}
+// YOS badge in right sidebar
+.cc-yos-sidebar-card { padding: 12px 14px; }
 
-.cc-right-card-title {
-    font-size: 0.75em;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: @xf-textColorMuted;
-    margin-bottom: 10px;
-}
-
-.cc-right-banners .userBanners,
-.cc-right-banners .memberTooltip-banners {
+.cc-yos-sidebar-card .dp-service-badge-profile {
     display: flex;
-    flex-direction: column;
-    gap: 6px;
-    align-items: flex-start;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 14px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: 700;
+    justify-content: center;
 }
 
-.cc-right-banners .userBanner {
-    width: 100%;
-    max-width: 100%;
-}
+.cc-yos-sidebar-card .dp-service-badge-icon { flex-shrink: 0; width: 27px; }
+.cc-yos-sidebar-card .dp-service-badge-icon svg { display: block; }
+.cc-yos-sidebar-card .dp-service-badge-duration { font-size: 1.25em; font-weight: 800; }
+.cc-yos-sidebar-card .dp-service-badge-title { font-size: 0.78em; opacity: .85; }
 
-.cc-right-banners img {
-    max-width: 100%;
-    border-radius: 4px;
-}]]></template>
+.cc-yos-sidebar-card.year-1  .dp-service-badge-profile { background: rgba(180,140,100,.15); color: #b48c64; border: 1px solid #b48c64; }
+.cc-yos-sidebar-card.year-2  .dp-service-badge-profile { background: rgba(160,160,170,.15); color: #a0a0aa; border: 1px solid #a0a0aa; }
+.cc-yos-sidebar-card.year-3  .dp-service-badge-profile { background: rgba(255,215,  0,.15); color: #ffd700; border: 1px solid #ffd700; }
+.cc-yos-sidebar-card.year-4  .dp-service-badge-profile { background: rgba(180,235,255,.15); color: #b4ebff; border: 1px solid #b4ebff; }
+.cc-yos-sidebar-card.year-5  .dp-service-badge-profile { background: rgba(255,165,  0,.15); color: #ffa500; border: 1px solid #ffa500; }
+.cc-yos-sidebar-card.year-6  .dp-service-badge-profile { background: rgba(160,200,255,.15); color: #a0c8ff; border: 1px solid #a0c8ff; }
+.cc-yos-sidebar-card.year-7  .dp-service-badge-profile { background: rgba(220,160,255,.15); color: #dca0ff; border: 1px solid #dca0ff; }
+.cc-yos-sidebar-card.year-8  .dp-service-badge-profile { background: rgba(255,100,100,.15); color: #ff6464; border: 1px solid #ff6464; }
+.cc-yos-sidebar-card.year-9  .dp-service-badge-profile { background: rgba( 80,200,120,.15); color: #50c878; border: 1px solid #50c878; }
+.cc-yos-sidebar-card.year-10 .dp-service-badge-profile { background: rgba(255,215,  0,.20); color: #ffd700; border: 2px solid #ffd700; box-shadow: 0 0 12px rgba(255,215,0,.4); }]]></template>
 </templates>
