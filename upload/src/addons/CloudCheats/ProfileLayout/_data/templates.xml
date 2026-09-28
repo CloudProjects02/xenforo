@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <templates>
-  <template type="public" title="cc_profile.less" version_id="1000010" version_string="1.0.0" addon_id="CloudCheats/ProfileLayout"><![CDATA[// CloudCheats Profile Layout v3
+  <template type="public" title="cc_profile.less" version_id="1000010" version_string="1.0.0" addon_id="CloudCheats/ProfileLayout"><![CDATA[// CloudCheats Profile Layout v4
 
 .cc-profile-wrap { max-width: 100%; }
 
@@ -170,7 +170,7 @@
 .cc-status--offline .cc-status-dot { background: @xf-textColorMuted; }
 .cc-status--offline .cc-status-label { color: @xf-textColorMuted; }
 
-// Rep / Points blocks (vacban style)
+// Rep / Points blocks (vacban statusblock style)
 .cc-rep-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -215,7 +215,7 @@
     align-items: baseline;
     gap: 6px;
     padding: 6px 0;
-    border-bottom: 1px solid @xf-borderColorFaint;
+    border-bottom: 1px solid @xf-borderColor;
     font-size: 0.81em;
 }
 
@@ -246,7 +246,7 @@
     gap: 8px;
 }
 
-// Stats card - HORIZONTAL GRID (4 per row like vacban)
+// Stats card — horizontal grid 4 per row like vacban
 .cc-stats-card {
     background: @xf-contentBg;
     border: 1px solid @xf-borderColor;
@@ -311,55 +311,75 @@
 }
 
 .cc-banners-strip .userBanners { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.cc-banners-strip .userBanner { flex: 0 0 auto; }
 
-.cc-banners-strip .userBanner {
-    flex: 0 0 auto;
-}
+// ── Profile tabs block (vacban exact CSS) ─────────────────────────────────────
 
-// About / Signature mini-tab card
-.cc-about-card {
+.profile-tabs-block {
     background: @xf-contentBg;
-    border: 1px solid @xf-borderColor;
-    border-radius: 6px;
+    border-radius: .5rem;
     overflow: hidden;
+    margin-bottom: 0;
+    border: 1px solid @xf-borderColor;
 }
 
-.cc-about-tabs {
+.profile-tabs-bar {
     display: flex;
+    gap: 6px;
+    padding: 10px 10px 0 10px;
+    background: @xf-contentBg;
     border-bottom: 1px solid @xf-borderColor;
-    padding: 0 2px;
-    gap: 2px;
 }
 
-.cc-about-tabs .tabs-tab {
-    padding: 10px 16px;
-    font-size: 0.85em;
-    font-weight: 600;
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -1px;
+.profile-tab {
+    flex: 1;
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    border: 1px solid transparent;
     color: @xf-textColorMuted;
-    text-decoration: none;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 11px 18px;
+    border-radius: 10px 10px 0 0;
+    cursor: pointer;
+    transition: color .18s ease, background .18s ease, border-color .18s ease;
+    text-align: center;
+    user-select: none;
 }
 
-.cc-about-tabs .tabs-tab.is-active {
+.profile-tab:hover { color: @xf-textColor; }
+
+.profile-tab.is-active {
+    background: @xf-contentBg;
     color: @xf-textColor;
-    border-bottom-color: @xf-paletteColor2;
+    border-color: @xf-borderColor;
+    border-bottom-color: transparent;
 }
 
-.cc-about-panes { list-style: none; margin: 0; padding: 0; }
-
-.cc-about-pane {
-    display: none;
-    padding: 14px 16px;
-    font-size: 0.9em;
-    line-height: 1.65;
-    min-height: 48px;
+.profile-tabs-content {
+    border-radius: 0 0 .35rem .35rem;
+    text-align: center;
+    min-height: 80px;
+    padding: 18px;
 }
 
-.cc-about-pane.is-active { display: block; }
+.profile-tab-panel { display: none; text-align: center; }
+.profile-tab-panel > .profile-tab-panel-inner { display: inline-block; margin: 1px; max-width: 100%; text-align: left; }
+.profile-tab-panel.is-active { display: block; }
+.profile-tab-panel.is-entering { animation: profileTabFade .24s ease both; }
 
-.cc-about-empty { color: @xf-textColorMuted; font-style: italic; }
+@keyframes profileTabFade {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.profile-tab-empty {
+    color: @xf-textColorMuted;
+    font-style: italic;
+    font-size: 13px;
+}
 
 // Main tab bar
 .cc-profile-content .block-tabHeader.tabs {
