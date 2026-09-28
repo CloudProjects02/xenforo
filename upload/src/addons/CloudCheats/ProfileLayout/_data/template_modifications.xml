@@ -344,7 +344,7 @@
         <xf:profilebanner user="$user" size="l" class="cc-banner-bg" toggle="cc-profile-cover--hasBanner">
             <div class="cc-profile-header">
 
-                <div class="cc-avatar-ring">
+                <div class="cc-avatar-ring{{ $user.is_banned ? ' cc-avatar-ring--banned' : '' }}">
                     <span class="avatarWrapper">
                         <xf:avatar user="{$user}" size="l" href="{{ $user.getAvatarUrl('o') ?: '' }}" />
                         <xf:if is="$user.user_id == $xf.visitor.user_id && $xf.visitor.canUploadAvatar()">
@@ -389,7 +389,7 @@
                                 </xf:if>
                                 <xf:if contentcheck="true">
                                     <div class="buttonGroup-buttonWrapper">
-                                        <a class="button button--link menuTrigger" data-xf-click="menu" aria-expanded="false" aria-haspopup="true">{{ phrase('moderator_tools') }}</a>
+                                        <a class="button cc-staff-tools-btn menuTrigger" data-xf-click="menu" aria-expanded="false" aria-haspopup="true">Staff Tools</a>
                                         <div class="menu" data-menu="menu" aria-hidden="true">
                                             <div class="menu-content">
                                                 <h3 class="menu-header">{{ phrase('moderator_tools') }}</h3>

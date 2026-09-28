@@ -429,5 +429,70 @@
 .cc-yos-sidebar-card.year-7  .dp-service-badge-profile { background: rgba(220,160,255,.15); color: #dca0ff; border: 1px solid #dca0ff; }
 .cc-yos-sidebar-card.year-8  .dp-service-badge-profile { background: rgba(255,100,100,.15); color: #ff6464; border: 1px solid #ff6464; }
 .cc-yos-sidebar-card.year-9  .dp-service-badge-profile { background: rgba( 80,200,120,.15); color: #50c878; border: 1px solid #50c878; }
-.cc-yos-sidebar-card.year-10 .dp-service-badge-profile { background: rgba(255,215,  0,.20); color: #ffd700; border: 2px solid #ffd700; box-shadow: 0 0 12px rgba(255,215,0,.4); }]]></template>
+.cc-yos-sidebar-card.year-10 .dp-service-badge-profile { background: rgba(255,215,  0,.20); color: #ffd700; border: 2px solid #ffd700; box-shadow: 0 0 12px rgba(255,215,0,.4); }
+// ── v5: Banned stamp overlay on profile avatar ────────────────────────────────
+
+.cc-avatar-ring { position: relative; }
+
+.cc-avatar-ring--banned .avatarWrapper { position: relative; }
+
+.cc-avatar-ring--banned .avatarWrapper::after {
+    content: 'BANNED';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-12deg);
+    font-family: Impact, Arial Black, sans-serif;
+    font-size: 22px;
+    font-weight: 900;
+    color: rgba(215, 15, 15, 0.93);
+    border: 3px solid rgba(215, 15, 15, 0.88);
+    padding: 4px 9px;
+    border-radius: 3px;
+    pointer-events: none;
+    z-index: 5;
+    white-space: nowrap;
+    letter-spacing: 0.06em;
+    background: rgba(0,0,0,0.18);
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+
+// ── v5: Staff Tools button (red filled) ──────────────────────────────────────
+
+.cc-staff-tools-btn {
+    background: #c40f20 !important;
+    color: #fff !important;
+    border-color: #c40f20 !important;
+    font-weight: 700;
+    border-radius: 6px;
+    padding: 6px 14px;
+}
+
+.cc-staff-tools-btn:hover {
+    background: #a50d1b !important;
+    border-color: #a50d1b !important;
+    color: #fff !important;
+}
+
+// ── v5: Dark-themed ban info block ───────────────────────────────────────────
+
+.cc-profile-wrap .blockMessage--error,
+.p-body-pageContent .blockMessage--error {
+    background: rgba(180, 10, 10, 0.1);
+    border: 1px solid rgba(200, 20, 20, 0.35);
+    border-radius: 6px;
+    color: @xf-textColor;
+}
+
+.cc-profile-wrap .blockMessage--error strong {
+    color: #ff6060;
+}
+
+.cc-profile-wrap .blockMessage--error a {
+    color: #ff9090;
+}
+
+.cc-profile-wrap .blockMessage--error .fa--xf {
+    color: #ff6060;
+}]]></template>
 </templates>
