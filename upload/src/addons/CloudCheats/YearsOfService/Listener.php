@@ -4,7 +4,7 @@ namespace CloudCheats\YearsOfService;
 
 class Listener
 {
-    public static function templaterSetup(\XF\Template\Templater $templater): void
+    public static function templaterSetup(\XF\App $app, \XF\Template\Templater &$templater): void
     {
         // Register cc_yos($timestamp) template function.
         // Returns the number of complete years since the given Unix timestamp.
