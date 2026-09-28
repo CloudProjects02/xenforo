@@ -335,6 +335,30 @@
         initVbTabs();
     }
 })();
+
+    // CC: Mark/Unmark as Scammer — submit as hidden form so CSRF + redirect work natively
+    document.addEventListener('click', function(e) {
+        var btn = e.target.closest('.js-ccScammerToggle');
+        if (!btn) return;
+        e.preventDefault();
+        var label    = btn.querySelector('.cc-scammer-link');
+        var isMarked = label && label.textContent.indexOf('Unmark') >= 0;
+        var form = document.createElement('form');
+        form.method = 'post';
+        form.action = btn.href;
+        var fields = {
+            user_id:  btn.dataset.userId,
+            action:   isMarked ? 'unmark' : 'mark',
+            _xfToken: btn.dataset.xfToken
+        };
+        Object.keys(fields).forEach(function(k) {
+            var inp = document.createElement('input');
+            inp.type = 'hidden'; inp.name = k; inp.value = fields[k];
+            form.appendChild(inp);
+        });
+        document.body.appendChild(form);
+        form.submit();
+    });
 </script>
 
 <div class="cc-profile-wrap">
@@ -396,6 +420,17 @@
                                                 <xf:contentcheck>
                                                     <xf:macro id="member_macros::moderator_menu_actions" arg-user="{$user}" arg-context="profile" />
                                                 </xf:contentcheck>
+                                                <xf:if is="($xf.visitor.hasPermission('general', 'manageAnyUser') || $xf.visitor.hasPermission('general', 'warn')) && $user.user_id != $xf.visitor.user_id">
+                                                    <hr class="menu-separator" />
+                                                    <a class="menu-linkRow js-ccScammerToggle"
+                                                        href="{{ link('cc-scammer/mark') }}"
+                                                        data-user-id="{{ $user.user_id }}"
+                                                        data-xf-token="{{ $xf.visitor.csrf_token_page|for_attr }}">
+                                                        <span class="menu-linkRow-main cc-scammer-link">
+                                                            &#9888; Mark / Unmark Scammer
+                                                        </span>
+                                                    </a>
+                                                </xf:if>
                                             </div>
                                         </div>
                                     </div>

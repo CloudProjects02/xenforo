@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<routes>
+    <route type="public" route_prefix="cc-scammer" format="" build_class="" build_method="" controller="CloudCheats\ProfileLayout\Pub\Controller\Scammer" context="" action_prefix="" />
+</routes>
