@@ -13,10 +13,10 @@ use DBTech\Shop\Entity\Purchase;
 abstract class AbstractHandler
 {
 	/** @var array */
-	protected $defaultAdminConfig = [];
+	protected array $defaultAdminConfig = [];
 
 	/** @var array */
-	protected $defaultUserConfig = [];
+	protected array $defaultUserConfig = [];
 
 	/** @var array */
 	protected $listeners = [];

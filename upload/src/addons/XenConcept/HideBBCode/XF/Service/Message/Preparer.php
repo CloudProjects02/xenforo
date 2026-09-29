@@ -30,12 +30,19 @@ class Preparer extends XFCP_Preparer
 
     protected function addLimitProcessorAction(\XF\BbCode\Processor $processor)
     {
-        /** @var \XF\BbCode\ProcessorAction\LimitTags $limit */
-        $limit = $this->app->bbCode()->processorAction('limit');
+        $existing = $processor->getFilterer('limit');
+        if ($existing instanceof \XF\BbCode\ProcessorAction\LimitTags)
+        {
+            $limit = $existing;
+        }
+        else
+        {
+            /** @var \XF\BbCode\ProcessorAction\LimitTags $limit */
+            $limit = $this->app->bbCode()->processorAction('limit');
+            $processor->addProcessorAction('limit', $limit);
+        }
 
         $this->setupHideBbCodeLimits($limit);
-
-        $processor->addProcessorAction('limit', $limit);
 
         if ($limit->hasDisabledTags())
         {
